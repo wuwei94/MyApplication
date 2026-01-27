@@ -40,8 +40,8 @@ class AndroidEventBusConventionPlugin : Plugin<Project> {
                 }
             }
             dependencies {
-                add("implementation", libs.findLibrary("eventbus").get())
-                add("kapt", libs.findLibrary("eventbus.processor").get())
+                "implementation"(libs.findLibrary("eventbus").get())
+                "kapt"(libs.findLibrary("eventbus.processor").get())
             }
         }
     }

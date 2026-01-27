@@ -48,11 +48,11 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
             //    arg("room.generateKotlin", "true")
             //}
             dependencies {
-                add("implementation", libs.findLibrary("androidx.room").get())
-                add("implementation", libs.findLibrary("androidx.room.ktx").get())
-                add("implementation", libs.findLibrary("androidx.room.rxjava3").get())
-                add("implementation", libs.findLibrary("androidx.room.paging").get())
-                add("kapt", libs.findLibrary("androidx.room.compiler").get())
+                "implementation"(libs.findLibrary("androidx.room").get())
+                "implementation"(libs.findLibrary("androidx.room.ktx").get())
+                "implementation"(libs.findLibrary("androidx.room.rxjava3").get())
+                "implementation"(libs.findLibrary("androidx.room.paging").get())
+                "kapt"(libs.findLibrary("androidx.room.compiler").get())
             }
         }
     }

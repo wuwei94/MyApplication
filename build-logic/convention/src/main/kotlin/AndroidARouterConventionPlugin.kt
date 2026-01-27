@@ -32,8 +32,8 @@ class AndroidARouterConventionPlugin : Plugin<Project> {
                 }
             }
             dependencies {
-                add("implementation", libs.findLibrary("arouter").get())
-                add("kapt", libs.findLibrary("arouter.compiler").get())
+                "implementation"(libs.findLibrary("arouter").get())
+                "kapt"(libs.findLibrary("arouter.compiler").get())
             }
         }
     }

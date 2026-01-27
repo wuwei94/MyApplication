@@ -32,7 +32,7 @@ class AndroidGreenDaoConventionPlugin : Plugin<Project> {
                 targetGenDir("src/main/java")
             }
             dependencies {
-                add("implementation", libs.findLibrary("greendao").get())
+                "implementation"(libs.findLibrary("greendao").get())
             }
             tasks.configureEach {
                 if (name.matches(Regex("\\w*compile\\w*Kotlin"))) {

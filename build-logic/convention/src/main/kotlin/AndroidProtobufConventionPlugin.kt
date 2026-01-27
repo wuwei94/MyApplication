@@ -44,7 +44,7 @@ class AndroidProtobufConventionPlugin : Plugin<Project> {
             }
             dependencies {
                 // You need to depend on the lite runtime library, not protobuf-java
-                add("implementation", libs.findLibrary("google.protobuf.javalite").get())
+                "implementation"(libs.findLibrary("google.protobuf.javalite").get())
             }
         }
     }

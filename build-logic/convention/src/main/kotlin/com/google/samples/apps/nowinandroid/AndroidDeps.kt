@@ -25,49 +25,49 @@ import org.gradle.kotlin.dsl.dependencies
 internal fun Project.configureDepsAndroid() {
     dependencies {
 
-        add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
+        "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
 
-        add("implementation", libs.findLibrary("google.gson").get())
+        "implementation"(libs.findLibrary("google.gson").get())
 
-        add("implementation", libs.findLibrary("androidx.core.ktx").get())
-        add("implementation", libs.findLibrary("androidx.activity.ktx").get())
-        add("implementation", libs.findLibrary("androidx.fragment.ktx").get())
+        "implementation"(libs.findLibrary("androidx.core.ktx").get())
+        "implementation"(libs.findLibrary("androidx.activity.ktx").get())
+        "implementation"(libs.findLibrary("androidx.fragment.ktx").get())
 
-        add("implementation", libs.findLibrary("androidx.appCompat").get())
-        add("implementation", libs.findLibrary("androidx.appCompat").get())
-        add("implementation", libs.findLibrary("androidx.constraintLayout").get())
-        add("implementation", libs.findLibrary("androidx.recyclerView").get())
-        add("implementation", libs.findLibrary("androidx.viewPager2").get())
+        "implementation"(libs.findLibrary("androidx.appCompat").get())
+        "implementation"(libs.findLibrary("androidx.appCompat").get())
+        "implementation"(libs.findLibrary("androidx.constraintLayout").get())
+        "implementation"(libs.findLibrary("androidx.recyclerView").get())
+        "implementation"(libs.findLibrary("androidx.viewPager2").get())
 
-        add("implementation", libs.findLibrary("brvah").get())
-        add("implementation", libs.findLibrary("smartrefresh.layout").get())
-        add("implementation", libs.findLibrary("smartrefresh.header").get())
-        add("implementation", libs.findLibrary("smartrefresh.footer").get())
+        "implementation"(libs.findLibrary("brvah").get())
+        "implementation"(libs.findLibrary("smartrefresh.layout").get())
+        "implementation"(libs.findLibrary("smartrefresh.header").get())
+        "implementation"(libs.findLibrary("smartrefresh.footer").get())
 
-        add("testImplementation", libs.findLibrary("junit").get())
-        add("androidTestImplementation", libs.findLibrary("androidx-test-ext").get())
-        add("androidTestImplementation", libs.findLibrary("androidx-test-espresso").get())
+        "testImplementation"(libs.findLibrary("junit").get())
+        "androidTestImplementation"(libs.findLibrary("androidx-test-ext").get())
+        "androidTestImplementation"(libs.findLibrary("androidx-test-espresso").get())
     }
 }
 
 internal fun Project.configureFeatureAndroid() {
     dependencies {
-        add("implementation", project(":modules:module_demo"))
-        add("implementation", project(":modules:module_widget"))
-        add("implementation", project(":modules:module_libraries"))
+        "implementation"(project(":modules:module_demo"))
+        "implementation"(project(":modules:module_widget"))
+        "implementation"(project(":modules:module_libraries"))
 
-        add("implementation", project(":modules:module_opensource"))
-        add("implementation", project(":modules:module_database"))
-        add("implementation", project(":modules:module_utils"))
+        "implementation"(project(":modules:module_opensource"))
+        //"implementation"( project(":modules:module_database"))
+        "implementation"(project(":modules:module_utils"))
 
-        add("implementation", project(":modules:module_network"))
-        add("implementation", project(":modules:module_sample"))
+        "implementation"(project(":modules:module_network"))
+        "implementation"(project(":modules:module_sample"))
 
-        add("implementation", project(":modules:module_room"))
-        add("implementation", project(":modules:module_arch"))
+        "implementation"(project(":modules:module_room"))
+        "implementation"(project(":modules:module_arch"))
 
-        add("implementation", project(":modules:module_compose"))
+        "implementation"(project(":modules:module_compose"))
 
-        add("implementation", project(":modules:module_flutter"))
+        "implementation"(project(":modules:module_flutter"))
     }
 }
