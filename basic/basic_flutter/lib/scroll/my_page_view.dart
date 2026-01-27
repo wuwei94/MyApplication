@@ -47,7 +47,7 @@ class PageViewRoute extends StatelessWidget {
 }
 
 class Page extends StatefulWidget {
-  const Page({Key? key, required this.text}) : super(key: key);
+  const Page({super.key, required this.text});
 
   final String text;
 

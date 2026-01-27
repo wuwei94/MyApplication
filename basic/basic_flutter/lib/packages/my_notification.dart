@@ -35,7 +35,7 @@ class _NotificationRouteState extends State<NotificationRoute> {
     _notificationHelper.initialize();
   }
 
-  _showNotification() {
+  void _showNotification() {
     _notificationHelper.showNotification(
       id: 1,
       title: 'Hello',

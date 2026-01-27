@@ -72,10 +72,10 @@ class _InheritedWidgetRouteState extends State<InheritedWidgetRoute> {
 /// InheritedWidget 组件
 class ShareDataWidget extends InheritedWidget {
   const ShareDataWidget({
-    Key? key,
+    super.key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   final int data; //需要在子树中共享的数据，保存点击次数
 

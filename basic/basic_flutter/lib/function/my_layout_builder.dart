@@ -49,7 +49,7 @@ class LayoutBuilderRoute extends StatelessWidget {
 }
 
 class ResponsiveColumn extends StatelessWidget {
-  const ResponsiveColumn({Key? key, required this.children}) : super(key: key);
+  const ResponsiveColumn({super.key, required this.children});
 
   final List<Widget> children;
 

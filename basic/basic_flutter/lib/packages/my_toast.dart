@@ -21,7 +21,7 @@ class ToastRoute extends StatelessWidget {
 
   final String title;
 
-  _showToast() {
+  void _showToast() {
     showToast("show Toast");
   }
 

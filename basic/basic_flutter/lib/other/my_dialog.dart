@@ -43,7 +43,7 @@ class DialogRoute extends StatelessWidget {
         });
   }
 
-  _showDialog(BuildContext context, int index) {
+  void _showDialog(BuildContext context, int index) {
     if (index == 0) {
       showSimpleDialog(context);
     } else if (index == 1) {

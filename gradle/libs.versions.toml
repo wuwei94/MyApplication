@@ -107,13 +107,13 @@ androidxTestExt = "1.2.1"
 androidxTestEspresso = "3.6.1"
 # ##################################################################################################
 # https://developer.android.google.cn/studio/releases/gradle-plugin
-gradlePluginAndroid = "8.13.1"
+gradlePluginAndroid = "9.0.0"
 gradlePluginKotlin = "2.2.10"
 gradlePluginProtobuf = "0.9.5"
 gradlePluginArouter = "1.0.2"
 gradlePluginGreenDao = "3.3.1"
 gradlePluginObjectBox = "4.3.1"
-gradlePluginKsp = "2.1.10-1.0.31"
+gradlePluginKsp = "2.3.2"
 
 dependencyGuard = "0.5.0"
 junitVersion = "1.1.5"

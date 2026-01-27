@@ -14,7 +14,7 @@ class MyGetXLogic extends GetxController {
 
   final user = User().obs;
 
-  updateUser() {
+  void updateUser() {
     user.update((value) {
       value!.name = 'Jose';
       value.age = 30;
@@ -57,16 +57,16 @@ class MyGetXLogic extends GetxController {
 
   int get sum => count1.value + count2.value;
 
-  increment1() => count1.value++;
+  int increment1() => count1.value++;
 
-  increment2() => count2.value++;
+  int increment2() => count2.value++;
 
-  disposeWorker() {
+  void disposeWorker() {
     _ever.dispose();
     // or _ever();
   }
 
-  incrementList() => list.add(list.length);
+  void incrementList() => list.add(list.length);
 }
 
 class User {

@@ -16,7 +16,7 @@ class MyAnimatedList extends StatelessWidget {
 }
 
 class AnimatedListRoute extends StatefulWidget {
-  const AnimatedListRoute({Key? key, required this.title}) : super(key: key);
+  const AnimatedListRoute({super.key, required this.title});
 
   final String title;
 

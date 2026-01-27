@@ -14,8 +14,7 @@ class MyValueListenableBuilder extends StatelessWidget {
 }
 
 class ValueListenableBuilderRoute extends StatefulWidget {
-  const ValueListenableBuilderRoute({Key? key, required this.title})
-      : super(key: key);
+  const ValueListenableBuilderRoute({super.key, required this.title});
 
   final String title;
 

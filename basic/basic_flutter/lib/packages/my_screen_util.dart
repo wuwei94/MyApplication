@@ -6,7 +6,7 @@ import '../common/log.dart';
 /// ScreenUtil
 /// https://pub.dev/packages/flutter_screenutil
 class MyScreenUtil extends StatelessWidget {
-  const MyScreenUtil({Key? key}) : super(key: key);
+  const MyScreenUtil({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class MyScreenUtil extends StatelessWidget {
 }
 
 class ScreenUtilRoute extends StatelessWidget {
-  const ScreenUtilRoute({Key? key}) : super(key: key);
+  const ScreenUtilRoute({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ScreenUtilRoute extends StatelessWidget {
 }
 
 class ScreenUtilScaffold extends StatelessWidget {
-  const ScreenUtilScaffold({Key? key, required this.title}) : super(key: key);
+  const ScreenUtilScaffold({super.key, required this.title});
 
   void logScreenInformation() {
     log('设备宽度:${1.sw}dp');
