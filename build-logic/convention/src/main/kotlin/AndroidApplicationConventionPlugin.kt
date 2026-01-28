@@ -41,12 +41,12 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 testOptions.animationsDisabled = true
                 configureKotlinAndroid(this)
                 configureFlavors(this)
+                configureDepsAndroid(this)
+                configureFeatureAndroid(this)
             }
             extensions.configure<ApplicationAndroidComponentsExtension> {
                 configurePrintApksTask(this)
             }
-            configureDepsAndroid()
-            configureFeatureAndroid()
         }
     }
 }

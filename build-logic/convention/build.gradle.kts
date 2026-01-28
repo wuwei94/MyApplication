@@ -107,10 +107,10 @@ gradlePlugin {
         }
 
         //
-        register("androidGreenDao") {
-            id = libs.plugins.nowinandroid.android.greendao.get().pluginId
-            implementationClass = "AndroidGreenDaoConventionPlugin"
-        }
+        //register("androidGreenDao") {
+        //    id = libs.plugins.nowinandroid.android.greendao.get().pluginId
+        //    implementationClass = "AndroidGreenDaoConventionPlugin"
+        //}
         register("androidObjectBox") {
             id = libs.plugins.nowinandroid.android.objectbox.get().pluginId
             implementationClass = "AndroidObjectBoxConventionPlugin"

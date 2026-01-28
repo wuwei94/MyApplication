@@ -22,6 +22,7 @@ dependencies {
     implementation(libs.photoview)
     implementation(libs.pickerview)
     implementation(libs.pictureselector)
+    //CustomPopWindow
     //implementation(libs.popwindow)
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
@@ -50,6 +51,4 @@ dependencies {
 
     //implementation(libs.upgrade)
     //implementation(libs.upgrade.ui)
-    //implementation("com.github.lzjin:SideBarView:1.0.1")
-    //implementation("com.github.qdxxxx:StickyHeaderDecoration:1.0.1")
 }

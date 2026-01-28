@@ -3,12 +3,24 @@ pluginManagement {
     repositories {
         maven {
             url = uri("https://maven.aliyun.com/repository/google")
-            name = "Google"
+            name = "Aliyun Google"
+            content {
+                excludeGroupByRegex("com\\.google\\.firebase.*")
+            }
         }
         maven {
             url = uri("https://maven.aliyun.com/repository/public")
-            name = "Central&Jcenter"
+            name = "Aliyun Central"
         }
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
         maven {
             url = uri("https://jitpack.io")
             name = "JitPack"
@@ -21,15 +33,6 @@ pluginManagement {
             url = uri("https://storage.flutter-io.cn/download.flutter.io")
             name = "Flutter"
         }
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
-        mavenCentral()
-        gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
@@ -44,22 +47,29 @@ dependencyResolutionManagement {
     repositories {
         maven {
             url = uri("https://maven.aliyun.com/repository/google")
-            name = "Google"
+            name = "Aliyun Google"
+            content {
+                excludeGroupByRegex("com\\.google\\.firebase.*")
+            }
         }
         maven {
             url = uri("https://maven.aliyun.com/repository/public")
-            name = "Central&Jcenter"
+            name = "Aliyun Central"
         }
+        google()
+        mavenCentral()
         maven {
             url = uri("https://jitpack.io")
             name = "JitPack"
         }
         maven {
+            url = uri("https://tencent-tds-maven.pkg.coding.net/repository/shiply/repo")
+            name = "Shiply"
+        }
+        maven {
             url = uri("https://storage.flutter-io.cn/download.flutter.io")
             name = "Flutter"
         }
-        google()
-        mavenCentral()
     }
 }
 rootProject.name = "My Application"
@@ -91,7 +101,7 @@ include(":modules:module_widget")
 include(":modules:module_libraries")
 
 include(":modules:module_opensource")
-include(":modules:module_database")
+//include(":modules:module_database")
 include(":modules:module_utils")
 
 //:basic:basic_data

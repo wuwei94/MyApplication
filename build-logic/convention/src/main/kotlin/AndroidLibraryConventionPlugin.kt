@@ -15,7 +15,7 @@
  */
 
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.google.samples.apps.nowinandroid.configureDepsAndroid
 import com.google.samples.apps.nowinandroid.configureFlavors
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
@@ -37,11 +37,11 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 compileSdk = 36
                 defaultConfig.minSdk = 24
-                defaultConfig.targetSdk = 36
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 testOptions.animationsDisabled = true
                 configureKotlinAndroid(this)
                 configureFlavors(this)
+                configureDepsAndroid(this)
                 // The resource prefix is derived from the module name,
                 // so resources inside ":core:module1" must be prefixed with "core_module1_"
                 resourcePrefix =
@@ -52,7 +52,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 configurePrintApksTask(this)
                 disableUnnecessaryAndroidTests(target)
             }
-            configureDepsAndroid()
         }
     }
 }

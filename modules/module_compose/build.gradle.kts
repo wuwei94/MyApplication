@@ -36,6 +36,9 @@ dependencies {
 //    debugImplementation(libs.androidx.compose.ui.tooling)
 //    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+//    implementation("androidx.compose.material:material-icons-core")
+//    implementation("androidx.compose.material:material-icons-extended")
+
 //    implementation("com.google.accompanist:accompanist-pager:0.34.0")
 
     implementation(libs.smartrefresh.compose)
