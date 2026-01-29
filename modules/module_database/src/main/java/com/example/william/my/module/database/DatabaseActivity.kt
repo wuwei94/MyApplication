@@ -10,7 +10,6 @@ class DatabaseActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("GreenDao", RouterPath.Database.GreenDao))
         routerItems.add(RouterItem("ObjectBox", RouterPath.Database.ObjectBox))
         return routerItems
     }

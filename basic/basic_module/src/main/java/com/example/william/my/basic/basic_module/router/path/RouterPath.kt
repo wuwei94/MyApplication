@@ -131,7 +131,6 @@ object RouterPath {
         private const val Database = "/Database"
 
         const val Main = "${Database}/Main"
-        const val GreenDao = "${Database}/GreenDao"
         const val ObjectBox = "${Database}/ObjectBox"
     }
 

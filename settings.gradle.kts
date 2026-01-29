@@ -101,7 +101,7 @@ include(":modules:module_widget")
 include(":modules:module_libraries")
 
 include(":modules:module_opensource")
-//include(":modules:module_database")
+include(":modules:module_database")
 include(":modules:module_utils")
 
 //:basic:basic_data

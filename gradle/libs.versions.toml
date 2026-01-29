@@ -13,7 +13,7 @@ googleFlexbox = "3.0.0"
 googleMaterial = "1.13.0"
 # ##################################################################################################
 androidxCore = "1.17.0"
-androidxActivity = "1.12.2"
+androidxActivity = "1.12.3"
 androidxFragment = "1.8.9"
 androidxSplashscreen = "1.2.0"
 
@@ -25,36 +25,37 @@ androidxViewPager2 = "1.1.0"
 androidxLifecycle = "2.10.0"
 androidxPaging = "3.3.6"
 androidxDataStore = "1.2.0"
-androidxWorkManager = "2.11.0"
-androidxNavigation = "2.9.6"
+androidxWorkManager = "2.11.1"
+androidxNavigation = "2.9.7"
 androidxStartup = "1.2.0"
 
 # hilt对应kotlin版本
 # Hilt:2.40对应kotlin:1.6.0
 # Hilt:2.42对应kotlin:1.7.0
 # Hilt:2.44对应kotlin:1.8.0
+# Hilt:2.46对应kotlin:1.9.0
 # Hilt:2.48对应kotlin:1.9.0
 
 # Hilt:2.50对应kotlin:1.9.0
 # Hilt:2.51对应kotlin:2.0.0
-# Hilt:2.52对应kotlin:2.0.20
-# Hilt:2.53对应kotlin:2.0.20
-# Hilt:2.54对应kotlin:2.1.0
-# Hilt:2.55对应kotlin:2.1.10
-# Hilt:2.56对应kotlin:2.1.10
-# Hilt:2.57对应kotlin:2.3.0
-# Hilt:2.58对应kotlin:2.3.0
-# Hilt:2.59对应kotlin:2.3.0
+# Hilt:2.52对应kotlin:2.0.0
+# Hilt:2.53对应kotlin:2.0.0
+# Hilt:2.54对应kotlin:2.0.0
+# Hilt:2.55对应kotlin:2.0.0
+# Hilt:2.56对应kotlin:2.0.20
+# Hilt:2.57对应kotlin:2.0.20
+# Hilt:2.58对应kotlin:2.0.20
+# Hilt:2.59对应kotlin:2.0.20
 # https://mvnrepository.com/artifact/com.google.dagger/hilt-android
-androidxHilt = "2.59"
+androidxHilt = "2.50"
 
 androidxRoom = "2.8.4"
 
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin?hl=zh-cn
 androidxComposeCompiler = "1.5.14"
 
-androidxComposeBom = "2026.01.00"
-androidxLiveDataCompose = "1.10.1"
+androidxComposeBom = "2026.01.01"
+androidxLiveDataCompose = "1.10.2"
 androidxConstraintLayoutCompose = "1.1.1"
 smartRefreshcCompose = "2.1.0"
 # ##################################################################################################
@@ -114,7 +115,7 @@ androidxTestEspresso = "3.7.0"
 # ##################################################################################################
 # https://developer.android.google.cn/studio/releases/gradle-plugin
 gradlePluginAndroid = "9.0.0"
-gradlePluginKotlin = "2.3.0"
+gradlePluginKotlin = "2.2.10"
 gradlePluginProtobuf = "0.9.5"
 gradlePluginArouter = "1.0.2"
 gradlePluginGreenDao = "3.3.1"
@@ -392,6 +393,6 @@ nowinandroid-android-eventbus = { id = "nowinandroid.android.eventbus" }
 nowinandroid-android-protobuf = { id = "nowinandroid.android.protobuf" }
 nowinandroid-android-hilt = { id = "nowinandroid.android.hilt" }
 nowinandroid-android-room = { id = "nowinandroid.android.room" }
-#nowinandroid-android-greendao = { id = "nowinandroid.android.greendao" }
+nowinandroid-android-greendao = { id = "nowinandroid.android.greendao" }
 nowinandroid-android-objectbox = { id = "nowinandroid.android.objectbox" }
 nowinandroid-android-unity = { id = "nowinandroid.android.unity" }

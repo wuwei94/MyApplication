@@ -42,7 +42,7 @@ dependencies {
     compileOnly(libs.gradlePlugin.compose)
     compileOnly(libs.gradlePlugin.protobuf)
 
-    compileOnly(libs.gradlePlugin.greendao)
+    //compileOnly(libs.gradlePlugin.greendao)
     compileOnly(libs.gradlePlugin.objectbox)
 
     compileOnly(libs.gradlePlugin.ksp)
@@ -107,10 +107,10 @@ gradlePlugin {
         }
 
         //
-        //register("androidGreenDao") {
-        //    id = libs.plugins.nowinandroid.android.greendao.get().pluginId
-        //    implementationClass = "AndroidGreenDaoConventionPlugin"
-        //}
+        register("androidGreenDao") {
+            id = libs.plugins.nowinandroid.android.greendao.get().pluginId
+            implementationClass = "AndroidGreenDaoConventionPlugin"
+        }
         register("androidObjectBox") {
             id = libs.plugins.nowinandroid.android.objectbox.get().pluginId
             implementationClass = "AndroidObjectBoxConventionPlugin"

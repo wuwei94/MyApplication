@@ -14,37 +14,32 @@
  *   limitations under the License.
  */
 
-import com.google.samples.apps.nowinandroid.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
-import org.greenrobot.greendao.gradle.GreendaoOptions
 
 class AndroidGreenDaoConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target) {
-            apply(plugin = "org.greenrobot.greendao")
-            extensions.configure<GreendaoOptions> {
-                schemaVersion = 1
-                daoPackage = "com.example.william.my.module.database.greendao.dao"
-                targetGenDir("src/main/java")
-            }
-            dependencies {
-                "implementation"(libs.findLibrary("greendao").get())
-            }
-            tasks.configureEach {
-                if (name.matches(Regex("\\w*compile\\w*Kotlin"))) {
-                    dependsOn("greendao")
-                }
-                if (name.matches(Regex("\\w*kaptGenerateStubs\\w*Kotlin"))) {
-                    dependsOn("greendao")
-                }
-                if (name.matches(Regex("\\w*kapt\\w*Kotlin"))) {
-                    dependsOn("greendao")
-                }
-            }
-        }
+//        with(target) {
+//            apply(plugin = "org.greenrobot.greendao")
+//            extensions.configure<GreendaoOptions> {
+//                schemaVersion = 1
+//                daoPackage = "com.example.william.my.module.database.greendao.dao"
+//                targetGenDir("src/main/java")
+//            }
+//            dependencies {
+//                "implementation"(libs.findLibrary("greendao").get())
+//            }
+//            tasks.configureEach {
+//                if (name.matches(Regex("\\w*compile\\w*Kotlin"))) {
+//                    dependsOn("greendao")
+//                }
+//                if (name.matches(Regex("\\w*kaptGenerateStubs\\w*Kotlin"))) {
+//                    dependsOn("greendao")
+//                }
+//                if (name.matches(Regex("\\w*kapt\\w*Kotlin"))) {
+//                    dependsOn("greendao")
+//                }
+//            }
+//        }
     }
 }

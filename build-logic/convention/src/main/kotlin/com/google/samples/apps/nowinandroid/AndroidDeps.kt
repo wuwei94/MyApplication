@@ -60,7 +60,7 @@ internal fun Project.configureFeatureAndroid(commonExtension: CommonExtension) {
             "implementation"(project(":modules:module_libraries"))
 
             "implementation"(project(":modules:module_opensource"))
-            //"implementation"(project(":modules:module_database"))
+            "implementation"(project(":modules:module_database"))
             "implementation"(project(":modules:module_utils"))
 
             "implementation"(project(":modules:module_network"))
