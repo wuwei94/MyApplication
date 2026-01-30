@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.okhttp"
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {

@@ -5,14 +5,15 @@ plugins {
 android {
     namespace = "com.example.william.my.core.widget"
     buildFeatures {
-        renderScript = true
+        dataBinding = true
     }
 }
 
 dependencies {
     //BottomSheetDialogFragment
     api(libs.google.material)
-    api(libs.utils)
-
+    //Utils
+    implementation(libs.utils)
+    //PAG
     implementation(libs.pag)
 }

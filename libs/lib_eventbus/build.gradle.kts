@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.eventbus"
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {

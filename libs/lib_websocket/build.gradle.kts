@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.websocket"
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
