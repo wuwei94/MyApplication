@@ -26,9 +26,11 @@ import org.gradle.kotlin.dsl.dependencies
 internal fun Project.configureDepsAndroid(commonExtension: CommonExtension) {
     commonExtension.apply {
         dependencies {
+            "implementation"(libs.findLibrary("kotlinx-coroutines-core").get())
             "implementation"(libs.findLibrary("kotlinx-coroutines-android").get())
 
             "implementation"(libs.findLibrary("google-gson").get())
+            "implementation"(libs.findLibrary("google-guava").get())
 
             "implementation"(libs.findLibrary("androidx-core-ktx").get())
             "implementation"(libs.findLibrary("androidx-activity-ktx").get())

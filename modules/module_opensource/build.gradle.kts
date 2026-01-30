@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
+    alias(libs.plugins.nowinandroid.android.firebase)
 }
 
 android {
@@ -23,7 +24,7 @@ dependencies {
     implementation(libs.pickerview)
     implementation(libs.pictureselector)
     //CustomPopWindow
-    //implementation(libs.popwindow)
+    //implementation(libs.custompopwindow)
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
 
@@ -43,11 +44,11 @@ dependencies {
     implementation(libs.glide)//pictureselector
 
     // Import the BoM for the Firebase platform
-    implementation(platform(libs.google.firebase.bom))
+    //implementation(platform(libs.google.firebase.bom))
 
     // Add the dependency for the Firebase AI Logic library. When using the BoM,
     // you don't specify versions in Firebase library dependencies
-    implementation(libs.google.firebase.ai)
+    //implementation(libs.google.firebase.ai)
 
     //implementation(libs.upgrade)
     //implementation(libs.upgrade.ui)

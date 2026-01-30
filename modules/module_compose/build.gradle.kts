@@ -7,12 +7,13 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.compose"
+    //kotlin 2.0.0 以下时配置
     //buildFeatures {
     //    compose = true
     //}
     //https://developer.android.com/jetpack/androidx/releases/compose-kotlin?hl=zh-cn
     //composeOptions {
-    //    kotlinCompilerExtensionVersion = "1.5.14" // kotlin:1.9.24
+    //    kotlinCompilerExtensionVersion = "1.5.15" // kotlin:1.9.25
     //}
 }
 

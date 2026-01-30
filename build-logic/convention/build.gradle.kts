@@ -75,6 +75,8 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.library.compose.get().pluginId
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+
+        //
         register("androidLint") {
             id = libs.plugins.nowinandroid.android.lint.get().pluginId
             implementationClass = "AndroidLintConventionPlugin"
@@ -83,6 +85,8 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.test.get().pluginId
             implementationClass = "AndroidTestConventionPlugin"
         }
+
+        //
         register("androidARouter") {
             id = libs.plugins.nowinandroid.android.arouter.get().pluginId
             implementationClass = "AndroidARouterConventionPlugin"
@@ -97,6 +101,12 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.protobuf.get().pluginId
             implementationClass = "AndroidProtobufConventionPlugin"
         }
+        register("androidFirebase") {
+            id = libs.plugins.nowinandroid.android.firebase.get().pluginId
+            implementationClass = "AndroidFirebaseConventionPlugin"
+        }
+
+        //
         register("androidHilt") {
             id = libs.plugins.nowinandroid.android.hilt.get().pluginId
             implementationClass = "AndroidHiltConventionPlugin"

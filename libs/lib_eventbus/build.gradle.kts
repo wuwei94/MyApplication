@@ -10,7 +10,7 @@ dependencies {
     //RxEventBus
     api(libs.rxandroid)
     //FlowEventBus viewModelScope
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime)
     //FlowEventBus ProcessLifecycleOwner
     implementation(libs.androidx.lifecycle.process)
 }

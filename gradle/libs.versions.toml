@@ -2,7 +2,9 @@
 versionCode = "100"
 versionName = "1.0.0" # X.Y.Z; X = Major, Y = minor, Z = Patch level
 # ##################################################################################################
+# https://mvnrepository.com/artifact/com.android.tools/desugar_jdk_libs
 androidDesugarJdkLibs = "2.1.5"
+# https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
 kotlinxCoroutines = "1.10.2"
 
 googleGson = "2.13.1"
@@ -23,37 +25,28 @@ androidxRecyclerView = "1.4.0"
 androidxViewPager2 = "1.1.0"
 
 androidxLifecycle = "2.10.0"
+# https://mvnrepository.com/artifact/androidx.paging/paging-runtime
 androidxPaging = "3.3.6"
 androidxDataStore = "1.2.0"
 androidxWorkManager = "2.11.1"
 androidxNavigation = "2.9.7"
 androidxStartup = "1.2.0"
 
-# hilt对应kotlin版本
-# Hilt:2.40对应kotlin:1.6.0
-# Hilt:2.42对应kotlin:1.7.0
-# Hilt:2.44对应kotlin:1.8.0
-# Hilt:2.46对应kotlin:1.9.0
-# Hilt:2.48对应kotlin:1.9.0
-
-# Hilt:2.50对应kotlin:1.9.0
-# Hilt:2.51对应kotlin:2.0.0
-# Hilt:2.52对应kotlin:2.0.0
-# Hilt:2.53对应kotlin:2.0.0
-# Hilt:2.54对应kotlin:2.0.0
-# Hilt:2.55对应kotlin:2.0.0
-# Hilt:2.56对应kotlin:2.0.20
-# Hilt:2.57对应kotlin:2.0.20
-# Hilt:2.58对应kotlin:2.0.20
-# Hilt:2.59对应kotlin:2.0.20
+# Hilt 与 Kotlin 的兼容性对应关系
+# | Hilt 版本 | Kotlin 版本 |
+# |-----------|------------|
+# | 2.40      | 1.6.0      |
+# | 2.42      | 1.7.0      |
+# | 2.44      | 1.8.0      |
+# | 2.46      | 1.9.0      |
+# | 2.48      | 1.9.0      |
 # https://mvnrepository.com/artifact/com.google.dagger/hilt-android
-androidxHilt = "2.50"
-
+androidxHilt = "2.58"
 androidxRoom = "2.8.4"
 
+# Compose 与 Kotlin 的兼容性对应关系
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin?hl=zh-cn
-androidxComposeCompiler = "1.5.14"
-
+androidxComposeCompiler = "1.5.15"
 androidxComposeBom = "2026.01.01"
 androidxLiveDataCompose = "1.10.2"
 androidxConstraintLayoutCompose = "1.1.1"
@@ -72,7 +65,6 @@ mavericks = "3.0.10"
 # ##################################################################################################
 arouter = "1.5.2"
 eventbus = "3.3.1"
-rxjava = "3.1.8"
 rxandroid = "3.0.2"
 rxlifecycle = "4.0.2"
 autodispose = "2.2.1"
@@ -115,8 +107,9 @@ androidxTestEspresso = "3.7.0"
 # ##################################################################################################
 # https://developer.android.google.cn/studio/releases/gradle-plugin
 gradlePluginAndroid = "9.0.0"
+# https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
 gradlePluginKotlin = "2.2.10"
-gradlePluginProtobuf = "0.9.5"
+gradlePluginProtobuf = "0.9.6"
 gradlePluginArouter = "1.0.2"
 gradlePluginGreenDao = "3.3.1"
 gradlePluginObjectBox = "5.1.0"
@@ -126,9 +119,8 @@ dependencyGuard = "0.5.0"
 junitVersion = "1.3.0"
 # ##################################################################################################
 [libraries]
-#
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
-# https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 # ##################################################################################################
 # https://github.com/google/gson
@@ -162,12 +154,9 @@ androidx-viewPager2 = { group = "androidx.viewpager2", name = "viewpager2", vers
 # ##################################################################################################
 # 架构组件 - 界面层库
 # https://developer.android.google.cn/topic/libraries/architecture/lifecycle
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
-# LiveData
-androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
-# ViewModel
-androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
-# optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+# lifecycle
+androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+# lifecycle optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
 # 架构组件 - 界面层库
 # https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
@@ -235,8 +224,8 @@ smartrefresh-compose = { group = "io.github.loren-moon", name = "composesmartref
 # https://github.com/Tencent/MMKV
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 # https://github.com/BuglyDevTeam/BuglyBetaUploader
-upgrade = { group = "com.tencent.shiply", name = "upgrade", version.ref = "mmkv" }
-upgrade-ui = { group = "com.tencent.shiply", name = "upgrade-ui", version.ref = "mmkv" }
+upgrade = { group = "com.tencent.shiply", name = "upgrade", version.ref = "upgrade" }
+upgrade-ui = { group = "com.tencent.shiply", name = "upgrade-ui", version.ref = "upgrade" }
 # https://github.com/Blankj/AndroidUtilCode
 utils = { group = "com.blankj", name = "utilcodex", version.ref = "utils" }
 # https://github.com/guolindev/PermissionX
@@ -262,8 +251,6 @@ arouter-compiler = { group = "com.alibaba", name = "arouter-compiler", version.r
 # https://github.com/greenrobot/EventBus
 eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
 eventbus-processor = { group = "org.greenrobot", name = "eventbus-annotation-processor", version.ref = "eventbus" }
-# https://github.com/ReactiveX/RxJava
-# rxjava3 = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
 # https://github.com/ReactiveX/RxAndroid # 线程调度工具
 rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 # https://github.com/trello/RxLifecycle # 生命周期管理工具
@@ -339,7 +326,7 @@ pickerview = { group = "com.contrarywind", name = "Android-PickerView", version.
 # https://github.com/LuckSiege/PictureSelector
 pictureselector = { group = "io.github.lucksiege", name = "pictureselector", version.ref = "pictureselector" }
 # https://github.com/pinguo-zhouwei/CustomPopwindow
-popwindow = { group = "com.github.pinguo-zhouwei", name = "CustomPopwindow", version.ref = "popwindow" }
+custompopwindow = { group = "com.github.pinguo-zhouwei", name = "CustomPopwindow", version.ref = "popwindow" }
 # https://github.com/lihangleo2/ShadowLayout
 shadowlayout = { group = "com.github.lihangleo2", name = "ShadowLayout", version.ref = "shadowlayout" }
 # https://github.com/daimajia/AndroidSwipeLayout
@@ -391,6 +378,7 @@ nowinandroid-android-test = { id = "nowinandroid.android.test" }
 nowinandroid-android-arouter = { id = "nowinandroid.android.arouter" }
 nowinandroid-android-eventbus = { id = "nowinandroid.android.eventbus" }
 nowinandroid-android-protobuf = { id = "nowinandroid.android.protobuf" }
+nowinandroid-android-firebase = { id = "nowinandroid.android.firebase" }
 nowinandroid-android-hilt = { id = "nowinandroid.android.hilt" }
 nowinandroid-android-room = { id = "nowinandroid.android.room" }
 nowinandroid-android-greendao = { id = "nowinandroid.android.greendao" }
