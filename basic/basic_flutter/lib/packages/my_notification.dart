@@ -40,6 +40,7 @@ class _NotificationRouteState extends State<NotificationRoute> {
       id: 1,
       title: 'Hello',
       body: 'This is a notification!',
+      payload: null
     );
   }
 

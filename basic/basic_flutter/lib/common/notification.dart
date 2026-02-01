@@ -25,11 +25,11 @@ class NotificationHelper {
     InitializationSettings(
         android: initializationSettingsAndroid,
         iOS: initializationSettingsIOS);
-    await _notificationsPlugin.initialize(initializationSettings);
+    await _notificationsPlugin.initialize(settings: initializationSettings);
   }
 
   Future<void> showNotification(
-      {required int id, required String title, required String body}) async {
+      {required int id, required String title, required String body, required String? payload}) async {
     // 安卓的通知
     // 'your channel id'：用于指定通知通道的ID。
     // 'your channel name'：用于指定通知通道的名称。
@@ -56,10 +56,11 @@ class NotificationHelper {
 
     // 发起一个通知
     await _notificationsPlugin.show(
-      id,
-      title,
-      body,
-      platformChannelSpecifics,
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: platformChannelSpecifics,
+      payload: payload,
     );
   }
 }
