@@ -25,7 +25,6 @@ androidxRecyclerView = "1.4.0"
 androidxViewPager2 = "1.1.0"
 
 androidxLifecycle = "2.10.0"
-# https://mvnrepository.com/artifact/androidx.paging/paging-runtime
 androidxPaging = "3.3.6"
 androidxDataStore = "1.2.0"
 androidxWorkManager = "2.11.1"
@@ -108,7 +107,7 @@ androidxTestEspresso = "3.7.0"
 # https://developer.android.google.cn/studio/releases/gradle-plugin
 gradlePluginAndroid = "9.0.0"
 # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
-gradlePluginKotlin = "2.2.10"
+gradlePluginKotlin = "2.3.0"
 gradlePluginProtobuf = "0.9.6"
 gradlePluginArouter = "1.0.2"
 gradlePluginGreenDao = "3.3.1"

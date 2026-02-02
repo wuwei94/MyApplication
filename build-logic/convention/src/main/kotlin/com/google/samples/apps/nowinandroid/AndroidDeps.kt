@@ -24,6 +24,17 @@ import org.gradle.kotlin.dsl.dependencies
  * Configure base Dependencies with Android options
  */
 internal fun Project.configureDepsAndroid(commonExtension: CommonExtension) {
+    // Exclude deprecated kotlin-android-extensions-runtime to avoid conflict with kotlin-parcelize-runtime
+    // This is needed when upgrading to Kotlin 2.3.0+
+    configurations.all {
+        exclude(
+            mapOf(
+                "group" to "org.jetbrains.kotlin",
+                "module" to "kotlin-android-extensions-runtime"
+            )
+        )
+    }
+
     commonExtension.apply {
         dependencies {
             "implementation"(libs.findLibrary("kotlinx-coroutines-core").get())

@@ -7,9 +7,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.flutter"
-    compileOptions {
-        //coreLibraryDesugaringEnabled true
-    }
     resourcePrefix("flutter_")
 }
 
@@ -18,5 +15,4 @@ dependencies {
     implementation(project(":basic:basic_module"))
 
     implementation(project(":flutter"))
-    //coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
