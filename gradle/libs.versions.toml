@@ -34,11 +34,16 @@ androidxStartup = "1.2.0"
 # Hilt 与 Kotlin 的兼容性对应关系
 # | Hilt 版本 | Kotlin 版本 |
 # |-----------|------------|
-# | 2.40      | 1.6.0      |
-# | 2.42      | 1.7.0      |
-# | 2.44      | 1.8.0      |
-# | 2.46      | 1.9.0      |
-# | 2.48      | 1.9.0      |
+# | 2.50      | 2.0.0      |
+# | 2.51      | 2.0.0      |
+# | 2.52      | 2.0.0      |
+# | 2.53      | 2.1.0      |
+# | 2.54      | 2.2.0      |
+# | 2.55      | 2.2.0      |
+# | 2.56      | 2.2.0      |
+# | 2.57      | 2.2.0      |
+# | 2.58      | 2.3.0      |
+# | 2.59      | 2.3.0      |
 # https://mvnrepository.com/artifact/com.google.dagger/hilt-android
 androidxHilt = "2.58"
 androidxRoom = "2.8.4"
@@ -104,7 +109,7 @@ junit = "4.13.2"
 androidxTestExt = "1.3.0"
 androidxTestEspresso = "3.7.0"
 # ##################################################################################################
-# https://developer.android.google.cn/studio/releases/gradle-plugin
+# https://mvnrepository.com/artifact/com.android.tools.build/gradle
 gradlePluginAndroid = "9.0.0"
 # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
 gradlePluginKotlin = "2.3.0"
@@ -336,6 +341,7 @@ androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.r
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxTestEspresso" }
 # ##################################################################################################
 # Dependencies of the included build-logic
+# https://developer.android.google.cn/studio/releases/gradle-plugin
 gradlePlugin-android = { group = "com.android.tools.build", name = "gradle", version.ref = "gradlePluginAndroid" }
 gradlePlugin-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "gradlePluginKotlin" }
 gradlePlugin-compose = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "gradlePluginKotlin" }
