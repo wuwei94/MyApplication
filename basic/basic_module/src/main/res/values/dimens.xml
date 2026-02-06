@@ -3,4 +3,5 @@
     <dimen name="basics_dimen_height_200">200dp</dimen>
     <dimen name="basics_dimen_48">48dp</dimen>
     <dimen name="basics_dimen_24">24dp</dimen>
+    <dimen name="basics_dimen_16">16dp</dimen>
 </resources>

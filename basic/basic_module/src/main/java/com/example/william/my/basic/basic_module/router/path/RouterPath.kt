@@ -55,6 +55,7 @@ object RouterPath {
 
         const val Camera = "${Demo}/Camera"
         const val Crop = "${Demo}/Crop"
+        const val EditorView = "${Demo}/EditorView"
         const val FloatWindow = "${Demo}/FloatWindow"
         const val Hook = "${Demo}/Hook"
         const val Turntable = "${Demo}/Turntable"

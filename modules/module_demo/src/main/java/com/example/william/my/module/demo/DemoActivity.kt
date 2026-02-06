@@ -33,6 +33,7 @@ class DemoActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("Camera", RouterPath.Demo.Camera))
         routerItems.add(RouterItem("Crop", RouterPath.Demo.Crop))
+        routerItems.add(RouterItem("EditorView", RouterPath.Demo.EditorView))
         routerItems.add(RouterItem("FloatWindow", RouterPath.Demo.FloatWindow))
         routerItems.add(RouterItem("Hook", RouterPath.Demo.Hook))
         routerItems.add(RouterItem("Turntable", RouterPath.Demo.Turntable))
