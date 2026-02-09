@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../common/dio_client.dart';
+import '../common/log.dart';
 import '../common/urls.dart';
 
 /// dio
@@ -28,22 +30,67 @@ class DioRoute extends StatefulWidget {
 
 class _DioRouteState extends State<DioRoute> {
   String info = "";
+  bool isLoading = false;
 
-  void _loginByDio() async {
-    Response response;
-    var dio = Dio();
-    response = await dio.post(
-      Urls().login,
-      data: {
-        Urls().keyUsername: Urls().valueUsername,
-        Urls().keyPassword: Urls().valuePassword,
-      },
-      options: Options(contentType: Headers.formUrlEncodedContentType),
-    );
-    var result = await response.data;
+  Future<void> _loginByDio() async {
+    if (isLoading) return;
+
     setState(() {
-      info = result.toString();
+      isLoading = true;
+      info = "加载中...";
     });
+
+    try {
+      final response = await DioClient.instance.post(
+        Urls().login,
+        data: {
+          Urls().keyUsername: Urls().valueUsername,
+          Urls().keyPassword: Urls().valuePassword,
+        },
+      );
+
+      setState(() {
+        info = response.data.toString();
+      });
+    } on DioException catch (e) {
+      String errorMessage;
+      switch (e.type) {
+        case DioExceptionType.connectionTimeout:
+          errorMessage = "连接超时，请检查网络";
+          break;
+        case DioExceptionType.sendTimeout:
+          errorMessage = "发送超时，请重试";
+          break;
+        case DioExceptionType.receiveTimeout:
+          errorMessage = "接收超时，请重试";
+          break;
+        case DioExceptionType.badResponse:
+          final statusCode = e.response?.statusCode;
+          errorMessage = "服务器错误: $statusCode";
+          break;
+        case DioExceptionType.cancel:
+          errorMessage = "请求已取消";
+          break;
+        case DioExceptionType.connectionError:
+          errorMessage = "网络连接失败，请检查网络";
+          break;
+        default:
+          errorMessage = "请求失败: ${e.message}";
+      }
+      logError("Dio请求失败", e);
+      setState(() {
+        info = errorMessage;
+      });
+    } catch (e) {
+      logError("未知错误", e);
+      setState(() {
+        info = "未知错误: $e";
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -56,16 +103,29 @@ class _DioRouteState extends State<DioRoute> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              info,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                info,
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _loginByDio(),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: isLoading ? null : () => _loginByDio(),
+        tooltip: 'Login',
+        child: isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
+              )
+            : const Icon(Icons.login),
       ),
     );
   }
