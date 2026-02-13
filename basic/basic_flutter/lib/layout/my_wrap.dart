@@ -7,14 +7,9 @@ class MyWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Wrap demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Wrap demo'),
-        ),
-        body: const WrapRoute(),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Wrap demo')),
+      body: const WrapRoute(),
     );
   }
 }
@@ -24,9 +19,7 @@ class WrapRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: buildChildren(),
-    );
+    return Wrap(children: buildChildren());
   }
 
   List<Widget> buildChildren() {

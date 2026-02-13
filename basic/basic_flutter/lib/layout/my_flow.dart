@@ -9,14 +9,9 @@ class MyFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Flow demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Flow demo'),
-        ),
-        body: const FlowRoute(),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Flow demo')),
+      body: const FlowRoute(),
     );
   }
 }
@@ -63,11 +58,11 @@ class MyFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    var x = margin.left;
-    var y = margin.top;
+    double x = margin.left;
+    double y = margin.top;
     //计算每一个子widget的位置
     for (int i = 0; i < context.childCount; i++) {
-      var w = context.getChildSize(i)!.width + x + margin.right;
+      final w = context.getChildSize(i)!.width + x + margin.right;
       if (w < context.size.width) {
         context.paintChild(i, transform: Matrix4.translationValues(x, y, 0.0));
         x = w + margin.left;

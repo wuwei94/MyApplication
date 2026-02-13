@@ -1,6 +1,5 @@
+import 'package:basic_flutter/common/notification.dart';
 import 'package:flutter/material.dart';
-
-import '../common/notification.dart';
 
 /// Notifications
 /// https://pub.dev/packages/flutter_local_notifications
@@ -9,10 +8,7 @@ class MyNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Notification demo',
-      home: NotificationRoute(title: 'Flutter Notification demo'),
-    );
+    return const NotificationRoute(title: 'Flutter Notification demo');
   }
 }
 
@@ -31,7 +27,7 @@ class _NotificationRouteState extends State<NotificationRoute> {
   @override
   void initState() {
     super.initState();
-    _notificationHelper = NotificationHelper();
+    _notificationHelper = NotificationHelper.instance;
     _notificationHelper.initialize();
   }
 
@@ -40,16 +36,14 @@ class _NotificationRouteState extends State<NotificationRoute> {
       id: 1,
       title: 'Hello',
       body: 'This is a notification!',
-      payload: null
+      payload: null,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: getBody(),
       floatingActionButton: getFAB(),
     );

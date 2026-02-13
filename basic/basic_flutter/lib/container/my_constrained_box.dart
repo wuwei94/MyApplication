@@ -6,14 +6,9 @@ class MyConstrainedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter ConstrainedBox demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter ConstrainedBox demo'),
-        ),
-        body: const Center(child: ConstrainedBoxRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter ConstrainedBox demo')),
+      body: const Center(child: ConstrainedBoxRoute()),
     );
   }
 }
@@ -23,18 +18,14 @@ class ConstrainedBoxRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: boxConstraints(),
-      child: buildChild(),
-    );
+    return ConstrainedBox(constraints: boxConstraints(), child: buildChild());
   }
 
   /// 传递给子元素的约束信息
-  BoxConstraints boxConstraints() =>
-      const BoxConstraints(
-        minWidth: double.infinity, //宽度尽可能大
-        minHeight: 50.0, //最小高度为50像素
-      );
+  BoxConstraints boxConstraints() => const BoxConstraints(
+    minWidth: double.infinity, //宽度尽可能大
+    minHeight: 50.0, //最小高度为50像素
+  );
 
   Widget buildChild() {
     return Padding(

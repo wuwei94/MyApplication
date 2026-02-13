@@ -7,10 +7,7 @@ class MyScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter ScrollView demo',
-      home: SingleChildScrollViewRoute(title: 'Flutter ScrollView demo'),
-    );
+    return const SingleChildScrollViewRoute(title: 'Flutter ScrollView demo');
   }
 }
 
@@ -23,9 +20,7 @@ class SingleChildScrollViewRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: getBody(),
     );
   }
@@ -48,12 +43,11 @@ class SingleChildScrollViewRoute extends StatelessWidget {
     return generateWordPairs()
         .take(20)
         .map(
-          (word) =>
-          Padding(
+          (word) => Padding(
             padding: const EdgeInsets.all(10),
             child: Text(word.asPascalCase),
           ),
-    )
+        )
         .toList();
   }
 }

@@ -7,14 +7,9 @@ class MyPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Padding demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Padding demo'),
-        ),
-        body: const Center(child: PaddingRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Padding demo')),
+      body: const Center(child: PaddingRoute()),
     );
   }
 }
@@ -52,7 +47,7 @@ class PaddingRoute extends StatelessWidget {
           // 分别指定四个方向的补白
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: buildChild(),
-        )
+        ),
       ],
     );
   }

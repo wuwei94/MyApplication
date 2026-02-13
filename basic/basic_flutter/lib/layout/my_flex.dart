@@ -6,14 +6,9 @@ class MyFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Flex demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Flex demo'),
-        ),
-        body: const Center(child: FlexRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Flex demo')),
+      body: const Center(child: FlexRoute()),
     );
   }
 }
@@ -26,24 +21,11 @@ class FlexRoute extends StatelessWidget {
     return Flex(
       direction: Axis.horizontal,
       children: [
-        Expanded(
-          flex: 2,
-          child: Image.asset('images/pic1.jpg'),
-        ),
-        const Spacer(
-          flex: 1,
-        ),
-        Expanded(
-          flex: 4,
-          child: Image.asset('images/pic2.jpg'),
-        ),
-        const Spacer(
-          flex: 1,
-        ),
-        Expanded(
-          flex: 2,
-          child: Image.asset('images/pic3.jpg'),
-        ),
+        Expanded(flex: 2, child: Image.asset('images/pic1.jpg')),
+        const Spacer(flex: 1),
+        Expanded(flex: 4, child: Image.asset('images/pic2.jpg')),
+        const Spacer(flex: 1),
+        Expanded(flex: 2, child: Image.asset('images/pic3.jpg')),
       ],
     );
   }

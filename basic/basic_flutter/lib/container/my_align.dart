@@ -6,14 +6,9 @@ class MyAlign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Align demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Align demo'),
-        ),
-        body: const Center(child: AlignRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Align demo')),
+      body: const Center(child: AlignRoute()),
     );
   }
 }
@@ -24,13 +19,9 @@ class AlignRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          AlignRoute1(),
-          AlignRoute2(),
-          AlignRoute3(),
-          AlignRoute4(),
-        ]);
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [AlignRoute1(), AlignRoute2(), AlignRoute3(), AlignRoute4()],
+    );
   }
 }
 
@@ -42,12 +33,10 @@ class AlignRoute1 extends StatelessWidget {
     return DecoratedBox(
       decoration: const BoxDecoration(color: Colors.blue),
       child: SizedBox(
-          width: 120,
-          height: 120,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: buildChild(),
-          )),
+        width: 120,
+        height: 120,
+        child: Align(alignment: Alignment.topLeft, child: buildChild()),
+      ),
     );
   }
 }

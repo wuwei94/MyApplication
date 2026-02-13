@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
-void start(var context, String routeName) {
+/// 启动页面（无参数）
+void start(BuildContext context, String routeName) {
   Navigator.of(context).pushNamed(routeName);
 }
 
-void startWithArg(var context, String routeName,
-    Map<String, dynamic>? arguments) {
+/// 启动页面（带参数）
+void startWithArg(
+  BuildContext context,
+  String routeName,
+  Map<String, dynamic>? arguments,
+) {
   Navigator.of(context).pushNamed(routeName, arguments: arguments);
 }

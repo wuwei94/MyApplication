@@ -6,14 +6,9 @@ class MyDecoratedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter DecoratedBox demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter DecoratedBox demo'),
-        ),
-        body: const Center(child: DecoratedBoxRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter DecoratedBox demo')),
+      body: const Center(child: DecoratedBoxRoute()),
     );
   }
 }
@@ -27,21 +22,19 @@ class DecoratedBoxRoute extends StatelessWidget {
   }
 
   Widget getBody() {
-    return DecoratedBox(
-      decoration: buildBoxDecoration(),
-      child: buildChild(),
-    );
+    return DecoratedBox(decoration: buildBoxDecoration(), child: buildChild());
   }
 
   BoxDecoration buildBoxDecoration() {
     return BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Colors.blue, Colors.blue.shade700],
-      ),
+      gradient: LinearGradient(colors: [Colors.blue, Colors.blue.shade700]),
       borderRadius: BorderRadius.circular(6.0),
       boxShadow: const [
         BoxShadow(
-            color: Colors.grey, offset: Offset(2.0, 2.0), blurRadius: 4.0),
+          color: Colors.grey,
+          offset: Offset(2.0, 2.0),
+          blurRadius: 4.0,
+        ),
       ],
     );
   }

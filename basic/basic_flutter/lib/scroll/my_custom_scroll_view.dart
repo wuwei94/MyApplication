@@ -6,10 +6,7 @@ class MyCustomScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter CustomScrollView demo',
-      home: CustomScrollViewRoute(title: 'Flutter CustomScrollView demo'),
-    );
+    return const CustomScrollViewRoute(title: 'Flutter CustomScrollView demo');
   }
 }
 
@@ -37,33 +34,28 @@ class CustomScrollViewRoute extends StatelessWidget {
       expandedHeight: 200.0,
       flexibleSpace: FlexibleSpaceBar(
         title: Text(title),
-        background: Image.asset(
-          'images/pic1.jpg',
-          fit: BoxFit.cover,
-        ),
+        background: Image.asset('images/pic1.jpg', fit: BoxFit.cover),
       ),
     );
   }
 
   Widget getSliverBody() {
-    var delegate = const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      childAspectRatio: 4.0,
-    );
+    const SliverGridDelegateWithFixedCrossAxisCount delegate =
+        SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 4.0,
+        );
     return SliverPadding(
       padding: const EdgeInsets.all(0.0),
       sliver: SliverGrid(
         gridDelegate: delegate,
-        delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-            return Container(
-              alignment: Alignment.center,
-              color: Colors.blue[100 * (index % 9)],
-              child: Text('grid item $index'),
-            );
-          },
-          childCount: 20,
-        ),
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          return Container(
+            alignment: Alignment.center,
+            color: Colors.blue[100 * (index % 9)],
+            child: Text('grid item $index'),
+          );
+        }, childCount: 20),
       ),
     );
   }
@@ -71,16 +63,13 @@ class CustomScrollViewRoute extends StatelessWidget {
   Widget getSliverFixedExtentList() {
     return SliverFixedExtentList(
       itemExtent: 50.0,
-      delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-          return Container(
-            alignment: Alignment.center,
-            color: Colors.lightBlue[100 * (index % 9)],
-            child: Text('list item $index'),
-          );
-        },
-        childCount: 20,
-      ),
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        return Container(
+          alignment: Alignment.center,
+          color: Colors.lightBlue[100 * (index % 9)],
+          child: Text('list item $index'),
+        );
+      }, childCount: 20),
     );
   }
 }

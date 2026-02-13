@@ -6,14 +6,9 @@ class MySizedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter SizedBox demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter SizedBox demo'),
-        ),
-        body: const Center(child: SizedBoxRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter SizedBox demo')),
+      body: const Center(child: SizedBoxRoute()),
     );
   }
 }
@@ -23,11 +18,7 @@ class SizedBoxRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100.0,
-      height: 100.0,
-      child: buildChild(),
-    );
+    return SizedBox(width: 100.0, height: 100.0, child: buildChild());
   }
 
   Widget buildChild() {

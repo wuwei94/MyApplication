@@ -1,47 +1,46 @@
-import 'package:basic_flutter/http/my_dio.dart';
-import 'package:basic_flutter/other/my_animation.dart';
-import 'package:basic_flutter/other/my_dialog.dart';
-import 'package:basic_flutter/other/my_isolate.dart';
+import 'package:basic_flutter/animation/my_animation.dart';
+import 'package:basic_flutter/concurrency/my_isolate.dart';
+import 'package:basic_flutter/container/my_align.dart';
+import 'package:basic_flutter/container/my_center.dart';
+import 'package:basic_flutter/container/my_constrained_box.dart';
+import 'package:basic_flutter/container/my_container.dart';
+import 'package:basic_flutter/container/my_decorated_box.dart';
+import 'package:basic_flutter/container/my_padding.dart';
+import 'package:basic_flutter/container/my_sized_box.dart';
+import 'package:basic_flutter/dialog/my_dialog.dart';
+import 'package:basic_flutter/examples/my_counter.dart';
+import 'package:basic_flutter/functional/my_future_builder.dart';
+import 'package:basic_flutter/functional/my_gesture_detector.dart';
+import 'package:basic_flutter/functional/my_inherited_widget.dart';
+import 'package:basic_flutter/functional/my_layout_builder.dart';
+import 'package:basic_flutter/functional/my_pop_scope.dart';
+import 'package:basic_flutter/functional/my_stream_builder.dart';
+import 'package:basic_flutter/functional/my_value_listenable_builder.dart';
+import 'package:basic_flutter/layout/my_column.dart';
+import 'package:basic_flutter/layout/my_flex.dart';
+import 'package:basic_flutter/layout/my_flow.dart';
+import 'package:basic_flutter/layout/my_row.dart';
+import 'package:basic_flutter/layout/my_stack.dart';
+import 'package:basic_flutter/layout/my_wrap.dart';
+import 'package:basic_flutter/packages/my_dio.dart';
 import 'package:basic_flutter/packages/my_notification.dart';
 import 'package:basic_flutter/packages/my_screen_util.dart';
 import 'package:basic_flutter/packages/my_shared_preferences.dart';
 import 'package:basic_flutter/packages/my_toast.dart';
-import 'package:basic_flutter/state/bloc/my_bloc.dart';
-import 'package:basic_flutter/state/get/my_get_app.dart';
-import 'package:basic_flutter/state/getX/my_get_app.dart';
-import 'package:basic_flutter/state/provider/my_provider.dart';
+import 'package:basic_flutter/routes/route_item.dart';
+import 'package:basic_flutter/scroll/my_animated_list.dart';
+import 'package:basic_flutter/scroll/my_custom_scroll_view.dart';
+import 'package:basic_flutter/scroll/my_grid_view.dart';
+import 'package:basic_flutter/scroll/my_list_view.dart';
+import 'package:basic_flutter/scroll/my_nested_scroll_view.dart';
+import 'package:basic_flutter/scroll/my_page_view.dart';
+import 'package:basic_flutter/scroll/my_scroll_view.dart';
+import 'package:basic_flutter/scroll/my_tab_bar_view.dart';
+import 'package:basic_flutter/state_management/bloc/my_bloc.dart';
+import 'package:basic_flutter/state_management/get/my_get_app.dart';
+import 'package:basic_flutter/state_management/getX/my_get_app.dart';
+import 'package:basic_flutter/state_management/provider/my_provider.dart';
 import 'package:flutter/material.dart';
-
-import '../container/my_align.dart';
-import '../container/my_center.dart';
-import '../container/my_constrained_box.dart';
-import '../container/my_container.dart';
-import '../container/my_decorated_box.dart';
-import '../container/my_padding.dart';
-import '../container/my_sized_box.dart';
-import '../function/my_future_builder.dart';
-import '../function/my_gesture_detector.dart';
-import '../function/my_inherited_widget.dart';
-import '../function/my_pop_scope.dart';
-import '../function/my_stream_builder.dart';
-import '../function/my_value_listenable_builder.dart';
-import '../layout/my_column.dart';
-import '../layout/my_flex.dart';
-import '../layout/my_flow.dart';
-import '../function/my_layout_builder.dart';
-import '../layout/my_row.dart';
-import '../layout/my_stack.dart';
-import '../layout/my_wrap.dart';
-import '../page/my_counter.dart';
-import '../scroll/my_animated_list.dart';
-import '../scroll/my_custom_scroll_view.dart';
-import '../scroll/my_grid_view.dart';
-import '../scroll/my_list_view.dart';
-import '../scroll/my_nested_scroll_view.dart';
-import '../scroll/my_page_view.dart';
-import '../scroll/my_scroll_view.dart';
-import '../scroll/my_tab_bar_view.dart';
-import 'route_item.dart';
 
 class Routes {
   static const String counter = '/Counter';
@@ -197,128 +196,170 @@ class Routes {
   static List<RouteItem> getRouteList() {
     return [
       //
-      RouteItem(
-          routeName: counter, routePath: counter, routeDescribe: "计时器"),
+      RouteItem(routeName: counter, routePath: counter, routeDescribe: "计时器"),
       //
       RouteItem(
-          routeName: "—— Layout 布局 ——"
-              "\n会有一个children属性",
-          routePath: ""),
+        routeName:
+            "—— Layout 布局 ——"
+            "\n会有一个children属性",
+        routePath: "",
+      ),
       RouteItem(routeName: row, routePath: row, routeDescribe: "水平线性布局"),
+      RouteItem(routeName: column, routePath: column, routeDescribe: "垂直线性布局"),
       RouteItem(
-          routeName: column, routePath: column, routeDescribe: "垂直线性布局"),
+        routeName: flex,
+        routePath: flex,
+        routeDescribe: "弹性布局，按照一定比例来分配父容器空间",
+      ),
       RouteItem(
-          routeName: flex,
-          routePath: flex,
-          routeDescribe: "弹性布局，按照一定比例来分配父容器空间"),
+        routeName: wrap,
+        routePath: wrap,
+        routeDescribe: "流式布局，根据子组件大小自动换行的布局",
+      ),
       RouteItem(
-          routeName: wrap,
-          routePath: wrap,
-          routeDescribe: "流式布局，根据子组件大小自动换行的布局"),
+        routeName: flow,
+        routePath: flow,
+        routeDescribe: "流式布局，根据子组件大小自动换行的布局",
+      ),
       RouteItem(
-          routeName: flow,
-          routePath: flow,
-          routeDescribe: "流式布局，根据子组件大小自动换行的布局"),
-      RouteItem(
-          routeName: stack,
-          routePath: stack,
-          routeDescribe: "堆叠布局，根据距父容器四个角的位置来确定自身的位置"),
+        routeName: stack,
+        routePath: stack,
+        routeDescribe: "堆叠布局，根据距父容器四个角的位置来确定自身的位置",
+      ),
       //
       RouteItem(
-          routeName: "—— Container 容器 ——"
-              "\n会有一个child属性",
-          routePath: ""),
+        routeName:
+            "—— Container 容器 ——"
+            "\n会有一个child属性",
+        routePath: "",
+      ),
       RouteItem(
-          routeName: container, routePath: container, routeDescribe: "容器"),
-      RouteItem(
-          routeName: padding, routePath: padding, routeDescribe: "填充容器"),
+        routeName: container,
+        routePath: container,
+        routeDescribe: "容器",
+      ),
+      RouteItem(routeName: padding, routePath: padding, routeDescribe: "填充容器"),
       RouteItem(routeName: align, routePath: align, routeDescribe: "对齐容器"),
+      RouteItem(routeName: center, routePath: center, routeDescribe: "居中容器"),
       RouteItem(
-          routeName: center, routePath: center, routeDescribe: "居中容器"),
+        routeName: constrainedBox,
+        routePath: constrainedBox,
+        routeDescribe: "约束容器",
+      ),
       RouteItem(
-          routeName: constrainedBox,
-          routePath: constrainedBox,
-          routeDescribe: "约束容器"),
+        routeName: decoratedBox,
+        routePath: decoratedBox,
+        routeDescribe: "装饰容器",
+      ),
       RouteItem(
-          routeName: decoratedBox,
-          routePath: decoratedBox,
-          routeDescribe: "装饰容器"),
-      RouteItem(
-          routeName: sizedBox, routePath: sizedBox, routeDescribe: "尺寸容器"),
+        routeName: sizedBox,
+        routePath: sizedBox,
+        routeDescribe: "尺寸容器",
+      ),
       //
       RouteItem(routeName: "—— 可滚动组件 ——", routePath: ""),
       RouteItem(
-          routeName: listView, routePath: listView, routeDescribe: "ListView"),
+        routeName: listView,
+        routePath: listView,
+        routeDescribe: "ListView",
+      ),
       RouteItem(
-          routeName: gridView, routePath: gridView, routeDescribe: "GridView"),
+        routeName: gridView,
+        routePath: gridView,
+        routeDescribe: "GridView",
+      ),
       RouteItem(
-          routeName: scrollView,
-          routePath: scrollView,
-          routeDescribe: "ScrollView"),
+        routeName: scrollView,
+        routePath: scrollView,
+        routeDescribe: "ScrollView",
+      ),
       //
       RouteItem(
-          routeName: pageView, routePath: pageView, routeDescribe: "PageView"),
+        routeName: pageView,
+        routePath: pageView,
+        routeDescribe: "PageView",
+      ),
       RouteItem(
-          routeName: tabBarView,
-          routePath: tabBarView,
-          routeDescribe: "TabBarView"),
+        routeName: tabBarView,
+        routePath: tabBarView,
+        routeDescribe: "TabBarView",
+      ),
       //
       RouteItem(
-          routeName: animatedList,
-          routePath: animatedList,
-          routeDescribe: "AnimatedList"),
+        routeName: animatedList,
+        routePath: animatedList,
+        routeDescribe: "AnimatedList",
+      ),
       RouteItem(
-          routeName: customScrollView,
-          routePath: customScrollView,
-          routeDescribe: "CustomScrollView"),
+        routeName: customScrollView,
+        routePath: customScrollView,
+        routeDescribe: "CustomScrollView",
+      ),
       RouteItem(
-          routeName: nestedScrollView,
-          routePath: nestedScrollView,
-          routeDescribe: "NestedScrollView"),
+        routeName: nestedScrollView,
+        routePath: nestedScrollView,
+        routeDescribe: "NestedScrollView",
+      ),
       //
       RouteItem(routeName: "—— 功能型组件 ——", routePath: ""),
       RouteItem(
-          routeName: layoutBuilder,
-          routePath: layoutBuilder,
-          routeDescribe: "获取父组件大小并布局容器"),
+        routeName: layoutBuilder,
+        routePath: layoutBuilder,
+        routeDescribe: "获取父组件大小并布局容器",
+      ),
       RouteItem(
-          routeName: gestureDetector,
-          routePath: gestureDetector,
-          routeDescribe: "手势检测"),
+        routeName: gestureDetector,
+        routePath: gestureDetector,
+        routeDescribe: "手势检测",
+      ),
       RouteItem(
-          routeName: popScope, routePath: popScope, routeDescribe: "返回拦截"),
+        routeName: popScope,
+        routePath: popScope,
+        routeDescribe: "返回拦截",
+      ),
       RouteItem(
-          routeName: inheritedWidget,
-          routePath: inheritedWidget,
-          routeDescribe: "数据共享"),
+        routeName: inheritedWidget,
+        routePath: inheritedWidget,
+        routeDescribe: "数据共享",
+      ),
       RouteItem(
-          routeName: valueListenableBuilder,
-          routePath: valueListenableBuilder,
-          routeDescribe: "数据源监听"),
+        routeName: valueListenableBuilder,
+        routePath: valueListenableBuilder,
+        routeDescribe: "数据源监听",
+      ),
       RouteItem(
-          routeName: futureBuilder,
-          routePath: futureBuilder,
-          routeDescribe: "异步UI更新"),
+        routeName: futureBuilder,
+        routePath: futureBuilder,
+        routeDescribe: "异步UI更新",
+      ),
       RouteItem(
-          routeName: streamBuilder,
-          routePath: streamBuilder,
-          routeDescribe: "异步UI更新"),
+        routeName: streamBuilder,
+        routePath: streamBuilder,
+        routeDescribe: "异步UI更新",
+      ),
       //
       RouteItem(routeName: "—— 其他组件 ——", routePath: ""),
       RouteItem(
-          routeName: animation,
-          routePath: animation,
-          routeDescribe: "Animation"),
+        routeName: animation,
+        routePath: animation,
+        routeDescribe: "Animation",
+      ),
       RouteItem(routeName: dialog, routePath: dialog, routeDescribe: "Dialog"),
       RouteItem(
-          routeName: isolate, routePath: isolate, routeDescribe: "Isolate"),
+        routeName: isolate,
+        routePath: isolate,
+        routeDescribe: "Isolate",
+      ),
       //
       RouteItem(routeName: "—— 网络请求 ——", routePath: ""),
       RouteItem(routeName: dio, routePath: dio, routeDescribe: "Dio"),
       //
       RouteItem(routeName: "—— 状态管理 ——", routePath: ""),
       RouteItem(
-          routeName: provider, routePath: provider, routeDescribe: "Provider"),
+        routeName: provider,
+        routePath: provider,
+        routeDescribe: "Provider",
+      ),
       RouteItem(routeName: getX, routePath: getX, routeDescribe: "GetX"),
       RouteItem(routeName: getX2, routePath: getX2, routeDescribe: "GetX"),
       RouteItem(routeName: bloC, routePath: bloC, routeDescribe: "BloC"),
@@ -326,17 +367,20 @@ class Routes {
       RouteItem(routeName: "—— 三方框架 ——", routePath: ""),
       RouteItem(routeName: toast, routePath: toast, routeDescribe: "Toast"),
       RouteItem(
-          routeName: notification,
-          routePath: notification,
-          routeDescribe: "Notification"),
+        routeName: notification,
+        routePath: notification,
+        routeDescribe: "Notification",
+      ),
       RouteItem(
-          routeName: sharedPreferences,
-          routePath: sharedPreferences,
-          routeDescribe: "SharedPreferences"),
+        routeName: sharedPreferences,
+        routePath: sharedPreferences,
+        routeDescribe: "SharedPreferences",
+      ),
       RouteItem(
-          routeName: screenUtil,
-          routePath: screenUtil,
-          routeDescribe: "ScreenUtil"),
+        routeName: screenUtil,
+        routePath: screenUtil,
+        routeDescribe: "ScreenUtil",
+      ),
     ];
   }
 }

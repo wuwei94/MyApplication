@@ -8,9 +8,8 @@ class MySharedPreferences extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const SharedPreferencesRoute(
       title: 'Flutter Shared Preferences demo',
-      home: SharedPreferencesRoute(title: 'Flutter Shared Preferences demo'),
     );
   }
 }
@@ -28,12 +27,12 @@ class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
   int _counter = 0;
 
   void _incrementCounter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int counter = prefs.getInt('counter') ?? 0;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final counter = prefs.getInt('counter') ?? 0;
     await prefs.setInt('counter', counter + 1);
 
     setState(() {
-      int counter = prefs.getInt('counter') ?? 0;
+      final counter = prefs.getInt('counter') ?? 0;
       _counter = counter;
     });
   }
@@ -41,9 +40,7 @@ class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: getBody(),
       floatingActionButton: getFAB(),
     );

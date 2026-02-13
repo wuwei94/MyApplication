@@ -6,9 +6,7 @@ class MyNestedScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        title: 'Flutter NestedScrollView demo',
-        home: NestedScrollViewRoute(title: 'Flutter NestedScrollView demo'));
+    return const NestedScrollViewRoute(title: 'Flutter NestedScrollView demo');
   }
 }
 
@@ -39,33 +37,31 @@ class NestedScrollViewRoute extends StatelessWidget {
       expandedHeight: 200.0,
       flexibleSpace: FlexibleSpaceBar(
         title: Text(title),
-        background: Image.asset(
-          'images/pic1.jpg',
-          fit: BoxFit.cover,
-        ),
+        background: Image.asset('images/pic1.jpg', fit: BoxFit.cover),
       ),
     );
   }
 
   Widget getSliverBody() {
-    var delegate = const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      childAspectRatio: 4.0,
-    );
+    const SliverGridDelegateWithFixedCrossAxisCount delegate =
+        SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 4.0,
+        );
     return SliverPadding(
       padding: const EdgeInsets.all(0.0),
       sliver: SliverGrid(
         gridDelegate: delegate,
-        delegate: SliverChildBuilderDelegate(
-          childCount: 20,
-              (BuildContext context, int index) {
-            return Container(
-              alignment: Alignment.center,
-              color: Colors.blue[100 * (index % 9)],
-              child: Text('grid item $index'),
-            );
-          },
-        ),
+        delegate: SliverChildBuilderDelegate(childCount: 20, (
+          BuildContext context,
+          int index,
+        ) {
+          return Container(
+            alignment: Alignment.center,
+            color: Colors.blue[100 * (index % 9)],
+            child: Text('grid item $index'),
+          );
+        }),
       ),
     );
   }
@@ -73,16 +69,13 @@ class NestedScrollViewRoute extends StatelessWidget {
   Widget getSliverFixedExtentList() {
     return SliverFixedExtentList(
       itemExtent: 50.0,
-      delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-          return Container(
-            alignment: Alignment.center,
-            color: Colors.lightBlue[100 * (index % 9)],
-            child: Text('list item $index'),
-          );
-        },
-        childCount: 20,
-      ),
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        return Container(
+          alignment: Alignment.center,
+          color: Colors.lightBlue[100 * (index % 9)],
+          child: Text('list item $index'),
+        );
+      }, childCount: 20),
     );
   }
 
@@ -92,10 +85,7 @@ class NestedScrollViewRoute extends StatelessWidget {
       physics: const ClampingScrollPhysics(), // 注意
       itemCount: 30,
       itemBuilder: (context, index) {
-        return SizedBox(
-          height: 50,
-          child: Center(child: Text('Item $index')),
-        );
+        return SizedBox(height: 50, child: Center(child: Text('Item $index')));
       },
     );
   }

@@ -9,17 +9,15 @@ class RouteItem {
     this.routeDescribe = "",
   });
 
-  factory RouteItem.fromJson(Map<String, dynamic> json) =>
-      RouteItem(
-        routeName: json['routeName'],
-        routePath: json['routePath'],
-        routeDescribe: json['routeDescribe'],
-      );
+  factory RouteItem.fromJson(Map<String, String> json) => RouteItem(
+    routeName: json['routeName'] ?? "",
+    routePath: json['routePath'] ?? "",
+    routeDescribe: json['routeDescribe'] ?? "",
+  );
 
-  Map<String, dynamic> toJson() =>
-      {
-        'routeName': routeName,
-        'routePath': routePath,
-        'routeDescribe': routeDescribe,
-      };
+  Map<String, String?> toJson() => {
+    'routeName': routeName,
+    'routePath': routePath,
+    'routeDescribe': routeDescribe,
+  };
 }

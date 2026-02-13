@@ -1,3 +1,4 @@
+/// 单例示例
 class Singleton {
   // 私有的静态变量，保存类的唯一实例
   static final Singleton _singleton = Singleton._internal();

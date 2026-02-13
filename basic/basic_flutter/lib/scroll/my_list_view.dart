@@ -7,10 +7,7 @@ class MyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter ListView demo',
-      home: ListViewRoute(title: 'Flutter ListView demo'),
-    );
+    return const ListViewRoute(title: 'Flutter ListView demo');
   }
 }
 
@@ -22,9 +19,7 @@ class ListViewRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: getBody(),
     );
   }
@@ -90,7 +85,7 @@ class InfiniteListView extends StatefulWidget {
 
 class _InfiniteListViewState extends State<InfiniteListView> {
   static const loadingTag = "##loading##";
-  final _words = <String>[loadingTag];
+  final List<String> _words = <String>[loadingTag];
 
   @override
   void initState() {
@@ -101,8 +96,8 @@ class _InfiniteListViewState extends State<InfiniteListView> {
   @override
   Widget build(BuildContext context) {
     //下划线widget预定义以供复用。
-    Widget divider1 = const Divider(color: Colors.blue);
-    Widget divider2 = const Divider(color: Colors.red);
+    const Widget divider1 = Divider(color: Colors.blue);
+    const Widget divider2 = Divider(color: Colors.red);
     return ListView.separated(
       itemCount: _words.length,
       //列表项构造器
@@ -118,7 +113,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
   }
 
   void _retrieveData() {
-    Future.delayed(const Duration(seconds: 2)).then((e) {
+    Future<void>.delayed(const Duration(seconds: 2)).then((void e) {
       setState(() {
         //重新构建列表
         _words.insertAll(

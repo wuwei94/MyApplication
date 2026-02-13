@@ -1,7 +1,6 @@
+import 'package:basic_flutter/common/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../common/log.dart';
 
 /// ScreenUtil
 /// https://pub.dev/packages/flutter_screenutil
@@ -24,19 +23,8 @@ class ScreenUtilRoute extends StatelessWidget {
       //填入设计稿中设备的屏幕尺寸,单位dp
       designSize: const Size(360, 640),
       builder: (_, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter ScreenUtil demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            textTheme: TextTheme(
-              bodyMedium: TextStyle(fontSize: 30.sp),
-            ),
-          ),
-          home: child,
-        );
+        return const ScreenUtilScaffold(title: 'Flutter ScreenUtil demo');
       },
-      child: const ScreenUtilScaffold(title: 'Flutter ScreenUtil demo'),
     );
   }
 }
@@ -45,18 +33,18 @@ class ScreenUtilScaffold extends StatelessWidget {
   const ScreenUtilScaffold({super.key, required this.title});
 
   void logScreenInformation() {
-    log('设备宽度:${1.sw}dp');
-    log('设备高度:${1.sh}dp');
-    log('设备的像素密度:${ScreenUtil().pixelRatio}');
-    log('底部安全区距离:${ScreenUtil().bottomBarHeight}dp');
-    log('状态栏高度:${ScreenUtil().statusBarHeight}dp');
-    log('实际宽度和字体(dp)与设计稿(dp)的比例:${ScreenUtil().scaleWidth}');
-    log('实际高度(dp)与设计稿(dp)的比例:${ScreenUtil().scaleHeight}');
-    log('高度相对于设计稿放大的比例:${ScreenUtil().scaleHeight}');
-    log('系统的字体缩放比例:${ScreenUtil().textScaleFactor}');
-    log('屏幕宽度的0.5:${0.5.sw}dp');
-    log('屏幕高度的0.5:${0.5.sh}dp');
-    log('屏幕方向:${ScreenUtil().orientation}');
+    logDebug('设备宽度:${1.sw}dp');
+    logDebug('设备高度:${1.sh}dp');
+    logDebug('设备的像素密度:${ScreenUtil().pixelRatio}');
+    logDebug('底部安全区距离:${ScreenUtil().bottomBarHeight}dp');
+    logDebug('状态栏高度:${ScreenUtil().statusBarHeight}dp');
+    logDebug('实际宽度和字体(dp)与设计稿(dp)的比例:${ScreenUtil().scaleWidth}');
+    logDebug('实际高度(dp)与设计稿(dp)的比例:${ScreenUtil().scaleHeight}');
+    logDebug('高度相对于设计稿放大的比例:${ScreenUtil().scaleHeight}');
+    logDebug('系统的字体缩放比例:${ScreenUtil().textScaleFactor}');
+    logDebug('屏幕宽度的0.5:${0.5.sw}dp');
+    logDebug('屏幕高度的0.5:${0.5.sh}dp');
+    logDebug('屏幕方向:${ScreenUtil().orientation}');
   }
 
   final String title;
@@ -66,9 +54,7 @@ class ScreenUtilScaffold extends StatelessWidget {
     logScreenInformation();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,11 +68,8 @@ class ScreenUtilScaffold extends StatelessWidget {
                   color: Colors.red,
                   child: Text(
                     '我的实际宽度:${180.w}dp \n'
-                        '我的实际高度:${200.h}dp',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                    ),
+                    '我的实际高度:${200.h}dp',
+                    style: TextStyle(color: Colors.white, fontSize: 12.sp),
                   ),
                 ),
                 Container(
@@ -96,7 +79,7 @@ class ScreenUtilScaffold extends StatelessWidget {
                   color: Colors.blue,
                   child: Text(
                     '我的设计稿宽度: 180dp \n'
-                        '我的设计稿高度: 200dp',
+                    '我的设计稿高度: 200dp',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: ScreenUtil().setSp(12),
@@ -110,8 +93,10 @@ class ScreenUtilScaffold extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(16)).w,
                 color: Colors.green,
               ),
-              constraints:
-              const BoxConstraints(maxWidth: 200, maxHeight: 200).r,
+              constraints: const BoxConstraints(
+                maxWidth: 200,
+                maxHeight: 200,
+              ).r,
               padding: const EdgeInsets.all(10).w,
               alignment: Alignment.center,
               child: Text(
@@ -136,20 +121,14 @@ class ScreenUtilScaffold extends StatelessWidget {
               children: <Widget>[
                 Text(
                   '我的文字大小在设计稿上是16dp，因为设置了`textScaleFactor`,所以不会随着系统的文字缩放比例变化',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.sp,
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 16.sp),
                 ),
                 Text(
                   '我的文字大小在设计稿上是16dp，会随着系统的文字缩放比例变化',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.sp,
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 16.sp),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

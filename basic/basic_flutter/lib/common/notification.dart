@@ -1,60 +1,73 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+/// 本地通知工具类
 class NotificationHelper {
-  // 使用单例模式进行初始化
-  static final NotificationHelper _instance = NotificationHelper._internal();
+  static NotificationHelper? _instance;
+  late final FlutterLocalNotificationsPlugin _notificationsPlugin;
 
-  factory NotificationHelper() => _instance;
+  /// 初始化 NotificationHelper 实例
+  NotificationHelper._internal() {
+    _notificationsPlugin = FlutterLocalNotificationsPlugin();
+  }
 
-  NotificationHelper._internal();
+  /// 获取单例实例
+  static NotificationHelper get instance {
+    _instance ??= NotificationHelper._internal();
+    return _instance!;
+  }
 
-  // FlutterLocalNotificationsPlugin是一个用于处理本地通知的插件，它提供了在Flutter应用程序中发送和接收本地通知的功能。
-  final FlutterLocalNotificationsPlugin _notificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+  /// 通知插件实例
+  FlutterLocalNotificationsPlugin get notificationsPlugin =>
+      _notificationsPlugin;
 
-  // 初始化函数
+  /// 初始化通知插件
   Future<void> initialize() async {
-    // AndroidInitializationSettings是一个用于设置Android上的本地通知初始化的类
-    // 使用了app_icon作为参数，这意味着在Android上，应用程序的图标将被用作本地通知的图标。
+    // Android 初始化设置
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
-    // 15.1是DarwinInitializationSettings，旧版本好像是IOSInitializationSettings（有些例子中就是这个）
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    // iOS 初始化设置
     const DarwinInitializationSettings initializationSettingsIOS =
-    DarwinInitializationSettings();
+        DarwinInitializationSettings();
     const InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS);
+        InitializationSettings(
+          android: initializationSettingsAndroid,
+          iOS: initializationSettingsIOS,
+        );
     await _notificationsPlugin.initialize(settings: initializationSettings);
   }
 
-  Future<void> showNotification(
-      {required int id, required String title, required String body, required String? payload}) async {
-    // 安卓的通知
-    // 'your channel id'：用于指定通知通道的ID。
-    // 'your channel name'：用于指定通知通道的名称。
-    // 'your channel description'：用于指定通知通道的描述。
-    // Importance.max：用于指定通知的重要性，设置为最高级别。
-    // Priority.high：用于指定通知的优先级，设置为高优先级。
-    // 'ticker'：用于指定通知的提示文本，即通知出现在通知中心的文本内容。
+  /// 显示通知
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String body,
+    required String? payload,
+  }) async {
+    // Android 通知配置
     const AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails('your.channel.id', 'your channel name',
-        channelDescription: 'your channel description',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker');
+        AndroidNotificationDetails(
+          'your.channel.id',
+          'your channel name',
+          channelDescription: 'your channel description',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+        );
 
-    // ios的通知
+    // iOS 通知配置
     const String darwinNotificationCategoryPlain = 'plainCategory';
     const DarwinNotificationDetails iosNotificationDetails =
-    DarwinNotificationDetails(
-      categoryIdentifier: darwinNotificationCategoryPlain,
-    );
-    // 创建跨平台通知
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: androidNotificationDetails, iOS: iosNotificationDetails);
+        DarwinNotificationDetails(
+          categoryIdentifier: darwinNotificationCategoryPlain,
+        );
 
-    // 发起一个通知
+    // 跨平台通知配置
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: iosNotificationDetails,
+    );
+
+    // 显示通知
     await _notificationsPlugin.show(
       id: id,
       title: title,

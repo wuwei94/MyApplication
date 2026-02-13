@@ -8,14 +8,9 @@ class MyCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Center demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Center demo'),
-        ),
-        body: const Center(child: CenterRoute()),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Center demo')),
+      body: const Center(child: CenterRoute()),
     );
   }
 }
@@ -26,11 +21,9 @@ class CenterRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          CenterRoute1(),
-          CenterRoute2(),
-        ]);
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [CenterRoute1(), CenterRoute2()],
+    );
   }
 }
 
@@ -41,11 +34,7 @@ class CenterRoute1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(color: Colors.blue),
-      child: Center(
-        widthFactor: 1.2,
-        heightFactor: 1.2,
-        child: buildChild(),
-      ),
+      child: Center(widthFactor: 1.2, heightFactor: 1.2, child: buildChild()),
     );
   }
 }
@@ -58,10 +47,7 @@ class CenterRoute2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(color: Colors.blue),
-      child: Center(
-        heightFactor: 1.2,
-        child: buildChild(),
-      ),
+      child: Center(heightFactor: 1.2, child: buildChild()),
     );
   }
 }

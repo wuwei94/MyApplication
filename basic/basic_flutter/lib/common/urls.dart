@@ -1,10 +1,19 @@
 class Urls {
-  final String login = "https://www.wanandroid.com/user/login";
+  /// 登录接口
+  final login = "https://www.wanandroid.com/user/login";
 
-  final String posts = "https://jsonplaceholder.typicode.com/posts";
+  /// 帖子列表接口
+  final posts = "https://jsonplaceholder.typicode.com/posts";
 
-  final String keyUsername = "username";
-  final String keyPassword = "password";
-  final String valueUsername = "17778060027";
-  final String valuePassword = "123456";
+  /// 用户名 key
+  final keyUsername = "username";
+
+  /// 密码 key
+  final keyPassword = "password";
+
+  /// 用户名
+  final valueUsername = "17778060027";
+
+  /// 密码
+  final valuePassword = "123456";
 }

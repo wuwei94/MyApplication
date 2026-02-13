@@ -6,10 +6,7 @@ class MyGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter GridView demo',
-      home: GridViewRoute(title: 'Flutter GridView demo'),
-    );
+    return const GridViewRoute(title: 'Flutter GridView demo');
   }
 }
 
@@ -21,9 +18,7 @@ class GridViewRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: getBody(),
     );
   }
@@ -101,16 +96,18 @@ class _InfiniteGridViewRouteState extends State<InfiniteGridViewRoute> {
   final List<String> _icons = [];
 
   /// SliverGridDelegateWithFixedCrossAxisCount 横轴为固定数量子元素
-  var gridCountDelegate = const SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 2, //每行三列
-    childAspectRatio: 1.0, //宽高比为1
-  );
+  SliverGridDelegateWithFixedCrossAxisCount gridCountDelegate =
+      const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, //每行三列
+        childAspectRatio: 1.0, //宽高比为1
+      );
 
   /// SliverGridDelegateWithMaxCrossAxisExtent 横轴子元素为固定最大长度
-  var gridExtentDelegate = const SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 100.0, // 子元素在横轴上的最大宽度
-      childAspectRatio: 1.0 //宽高比为1
-  );
+  SliverGridDelegateWithMaxCrossAxisExtent gridExtentDelegate =
+      const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 100.0, // 子元素在横轴上的最大宽度
+        childAspectRatio: 1.0, //宽高比为1
+      );
 
   @override
   void initState() {
@@ -133,7 +130,7 @@ class _InfiniteGridViewRouteState extends State<InfiniteGridViewRoute> {
 
   //模拟异步获取数据
   void _retrieveIcons() {
-    Future.delayed(const Duration(seconds: 2)).then((e) {
+    Future<void>.delayed(const Duration(seconds: 2)).then((void e) {
       setState(() {
         _icons.addAll([
           'images/pic1.jpg',

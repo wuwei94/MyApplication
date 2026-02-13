@@ -1,6 +1,5 @@
+import 'package:basic_flutter/widget/keep_alive.dart';
 import 'package:flutter/material.dart';
-
-import '../common/keep_alive.dart';
 
 /// TabBarView
 class MyTabBarView extends StatelessWidget {
@@ -8,10 +7,7 @@ class MyTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter TabView demo',
-      home: TabBarViewRoute(title: 'Flutter TabView demo'),
-    );
+    return const TabBarViewRoute(title: 'Flutter TabView demo');
   }
 }
 
@@ -22,33 +18,24 @@ class TabBarViewRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List tabs = ["新闻", "历史", "图片"];
+    final List<String> tabs = ["新闻", "历史", "图片"];
     return DefaultTabController(
       length: tabs.length,
-      child: Scaffold(
-        appBar: getAppBar(tabs),
-        body: getBody(tabs),
-      ),
+      child: Scaffold(appBar: getAppBar(tabs), body: getBody(tabs)),
     );
   }
 
-  AppBar getAppBar(List tabs) {
+  AppBar getAppBar(List<String> tabs) {
     return AppBar(
       title: Text(title),
-      bottom: TabBar(
-        tabs: tabs.map((tab) => Tab(text: tab)).toList(),
-      ),
+      bottom: TabBar(tabs: tabs.map((String tab) => Tab(text: tab)).toList()),
     );
   }
 
-  Widget getBody(List tabs) {
+  Widget getBody(List<String> tabs) {
     return TabBarView(
-      children: tabs.map((e) {
-        return KeepAliveWrapper(
-          child: Center(
-            child: Text(e),
-          ),
-        );
+      children: tabs.map((String e) {
+        return KeepAliveWrapper(child: Center(child: Text(e)));
       }).toList(),
     );
   }

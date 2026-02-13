@@ -1,6 +1,5 @@
+import 'package:basic_flutter/common/log.dart';
 import 'package:flutter/material.dart';
-
-import '../common/log.dart';
 
 /// AnimatedList
 class MyAnimatedList extends StatelessWidget {
@@ -8,10 +7,7 @@ class MyAnimatedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter AnimatedList demo',
-      home: AnimatedListRoute(title: 'Flutter AnimatedList demo'),
-    );
+    return const AnimatedListRoute(title: 'Flutter AnimatedList demo');
   }
 }
 
@@ -25,10 +21,10 @@ class AnimatedListRoute extends StatefulWidget {
 }
 
 class _AnimatedListRouteState extends State<AnimatedListRoute> {
-  var data = <String>[];
+  List<String> data = <String>[];
   int counter = 5;
 
-  final globalKey = GlobalKey<AnimatedListState>();
+  final GlobalKey<AnimatedListState> globalKey = GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
@@ -41,9 +37,7 @@ class _AnimatedListRouteState extends State<AnimatedListRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title)),
       body: getBody(),
       floatingActionButton: getFAB(),
     );
@@ -71,8 +65,8 @@ class _AnimatedListRouteState extends State<AnimatedListRoute> {
     );
   }
 
-  Widget buildItem(context, index) {
-    String char = data[index];
+  Widget buildItem(BuildContext context, int index) {
+    final char = data[index];
     return ListTile(
       key: ValueKey(char),
       title: Text(char),
@@ -87,17 +81,17 @@ class _AnimatedListRouteState extends State<AnimatedListRoute> {
     setState(() {
       data.add('${++counter}');
       globalKey.currentState!.insertItem(data.length - 1);
-      log('添加 $counter');
+      logDebug('添加 $counter');
     });
   }
 
-  void _delete(context, index) {
+  void _delete(BuildContext context, int index) {
     setState(() {
       globalKey.currentState!.removeItem(
         index,
-            (context, animation) {
-          var item = buildItem(context, index);
-          log('删除 ${data[index]}');
+        (context, animation) {
+          final item = buildItem(context, index);
+          logDebug('删除 ${data[index]}');
           data.removeAt(index);
           //删除列表项时会执行 渐隐动画
           return FadeTransition(

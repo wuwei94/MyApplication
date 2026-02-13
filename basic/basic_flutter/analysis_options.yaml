@@ -5,107 +5,108 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   errors:
-    missing_required_param: error
-    missing_return: error
-    todo: ignore
+    missing_required_param: error      # 缺少必需参数时报错
+    missing_return: error              # 缺少返回值时报错
+    todo: ignore                       # 忽略 TODO 注释警告
   language:
-    strict-casts: true
-    strict-inference: true
-    strict-raw-types: true
+    strict-casts: true                 # 严格类型转换检查
+    strict-inference: true             # 严格类型推断检查
+    strict-raw-types: true             # 禁止使用原始类型（如 List 而不是 List<String>）
   exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
+    - "**/*.g.dart"                    # 排除生成的代码文件（如 json_serializable 生成的文件）
+    - "**/*.freezed.dart"              # 排除 freezed 包生成的代码文件（不可变数据类代码生成）
 
 linter:
   rules:
     # 错误预防
-    - avoid_print
-    - avoid_empty_else
-    - avoid_relative_lib_imports
-    - avoid_returning_null_for_future
-    - avoid_slow_async_io
-    - avoid_type_to_string
-    - cancel_subscriptions
-    - close_sinks
-    - empty_statements
-    - no_duplicate_case_values
-    - throw_in_finally
-    - unnecessary_statements
+    - avoid_dynamic_calls              # 避免在 dynamic 类型上调用方法，防止运行时错误
+    - avoid_print                      # 避免使用 print，推荐使用日志库
+    - avoid_types_as_parameter_names   # 避免使用类型名作为参数名（如 int、String），防止混淆
+    - avoid_empty_else                 # 避免空的 else 块
+    - avoid_relative_lib_imports       # 避免使用相对路径导入 lib 目录下的文件
+    - avoid_slow_async_io              # 避免使用性能较慢的异步 IO 方法
+    - avoid_type_to_string             # 避免对类型调用 toString()
+    - cancel_subscriptions             # 确保取消 Stream 订阅
+    - close_sinks                      # 确保关闭 Stream 控制器
+    - empty_statements                 # 避免空语句（多余的冒号）
+    - no_duplicate_case_values         # 避免 switch 中有重复的 case 值
+    - throw_in_finally                 # 避免在 finally 块中抛出异常
+    - unnecessary_statements           # 避免不必要的语句
 
     # 代码风格
-    - always_declare_return_types
-    - always_use_package_imports
-    - annotate_overrides
-    - avoid_init_to_null
-    - avoid_null_checks_in_equality_operators
-    - avoid_renaming_method_parameters
-    - avoid_return_types_on_setters
-    - avoid_unnecessary_containers
-    - await_only_futures
-    - camel_case_extensions
-    - camel_case_types
-    - constant_identifier_names
-    - curly_braces_in_flow_control_structures
-    - empty_catches
-    - empty_constructor_bodies
-    - exhaustive_cases
-    - file_names
-    - implementation_imports
-    - library_names
-    - library_prefixes
-    - no_leading_underscores_for_library_prefixes
-    - no_leading_underscores_for_local_identifiers
-    - null_check_on_nullable_type_parameter
-    - null_closures
-    - prefer_adjacent_string_concatenation
-    - prefer_collection_literals
-    - prefer_conditional_assignment
-    - prefer_const_constructors
-    - prefer_const_constructors_in_immutables
-    - prefer_const_declarations
-    - prefer_const_literals_to_create_immutables
-    - prefer_contains
-    - prefer_final_fields
-    - prefer_final_in_for_each
-    - prefer_final_locals
-    - prefer_for_elements_to_map_fromIterable
-    - prefer_function_declarations_over_variables
-    - prefer_if_null_operators
-    - prefer_initializing_formals
-    - prefer_inlined_adds
-    - prefer_interpolation_to_compose_strings
-    - prefer_is_empty
-    - prefer_is_not_empty
-    - prefer_is_not_operator
-    - prefer_iterable_whereType
-    - prefer_null_aware_method_calls
-    - prefer_null_aware_operators
-    - prefer_spread_collections
-    - prefer_typing_uninitialized_variables
-    - recursive_getters
-    - sized_box_for_whitespace
-    - slash_for_doc_comments
-    - sort_child_properties_last
-    - type_init_formals
-    - unawaited_futures
-    - unnecessary_brace_in_string_interps
-    - unnecessary_const
-    - unnecessary_constructor_name
-    - unnecessary_getters_setters
-    - unnecessary_late
-    - unnecessary_new
-    - unnecessary_null_aware_assignments
-    - unnecessary_null_in_if_null_operators
-    - unnecessary_nullable_for_final_variable_declarations
-    - unnecessary_overrides
-    - unnecessary_parenthesis
-    - unnecessary_string_escapes
-    - unnecessary_string_interpolations
-    - unnecessary_this
-    - use_build_context_synchronously
-    - use_full_hex_values_for_flutter_colors
-    - use_function_type_syntax_for_parameters
-    - use_key_in_widget_constructors
-    - use_rethrow_when_possible
-    - use_super_parameters
-    - void_checks
+    - always_declare_return_types      # 始终声明函数返回类型
+    - always_use_package_imports       # 始终使用 package 导入方式
+    - annotate_overrides               # 标记重写的方法必须添加 @override
+    - avoid_init_to_null               # 避免显式将变量初始化为 null
+    - avoid_null_checks_in_equality_operators  # 避免在 == 操作符中进行 null 检查
+    - avoid_renaming_method_parameters # 避免重命名继承方法的参数
+    - avoid_return_types_on_setters    # 避免在 setter 上声明返回类型
+    - avoid_unnecessary_containers     # 避免使用不必要的 Container
+    - await_only_futures               # 只在 Future 上使用 await
+    - camel_case_extensions            # 扩展名使用驼峰命名法
+    - camel_case_types                 # 类型名使用驼峰命名法
+    - constant_identifier_names        # 常量使用大写下划线命名法
+    - curly_braces_in_flow_control_structures  # 流程控制语句使用大括号
+    - empty_catches                    # 避免空的 catch 块
+    - empty_constructor_bodies         # 避免空的构造函数体
+    - exhaustive_cases                 # switch 语句必须处理所有枚举值
+    - file_names                       # 文件名使用小写下划线命名法
+    - implementation_imports           # 避免导入 src 目录下的实现文件
+    - library_names                    # 库名使用小写下划线命名法
+    - library_prefixes                 # 库前缀使用小写下划线命名法
+    - no_leading_underscores_for_library_prefixes  # 库前缀不要使用下划线开头
+    - no_leading_underscores_for_local_identifiers # 局部标识符不要使用下划线开头
+    - null_check_on_nullable_type_parameter      # 避免对可空类型参数进行 null 检查
+    - null_closures                    # 避免传递 null 作为闭包
+    - prefer_adjacent_string_concatenation       # 优先使用相邻字符串连接
+    - prefer_collection_literals       # 优先使用集合字面量
+    - prefer_conditional_assignment    # 优先使用条件赋值
+    - prefer_const_constructors        # 优先使用 const 构造函数
+    - prefer_const_constructors_in_immutables    # 不可变类优先使用 const 构造函数
+    - prefer_const_declarations        # 优先使用 const 声明
+    - prefer_const_literals_to_create_immutables # 创建不可变对象时优先使用 const 字面量
+    - prefer_contains                  # 优先使用 contains 方法
+    - prefer_final_fields              # 优先使用 final 字段
+    - prefer_final_in_for_each         # forEach 中优先使用 final
+    - prefer_final_locals              # 局部变量优先使用 final
+    - prefer_for_elements_to_map_fromIterable    # 优先使用 for 元素而不是 map fromIterable
+    - prefer_function_declarations_over_variables # 优先使用函数声明而不是变量
+    - prefer_if_null_operators         # 优先使用 ?? 运算符
+    - prefer_initializing_formals      # 优先使用初始化形式参数
+    - prefer_inlined_adds              # 优先使用内联 add 方法
+    - prefer_interpolation_to_compose_strings    # 优先使用插值来组合字符串
+    - prefer_is_empty                  # 优先使用 isEmpty
+    - prefer_is_not_empty              # 优先使用 isNotEmpty
+    - prefer_is_not_operator           # 优先使用 is! 操作符
+    - prefer_iterable_whereType        # 优先使用 whereType 方法
+    - prefer_null_aware_method_calls   # 优先使用空感知方法调用
+    - prefer_null_aware_operators      # 优先使用空感知运算符
+    - prefer_spread_collections        # 优先使用展开集合
+    - prefer_typing_uninitialized_variables      # 未初始化变量优先声明类型
+    - recursive_getters                # 避免递归 getter
+    - sized_box_for_whitespace         # 使用 SizedBox 代替空白 Container
+    - slash_for_doc_comments           # 文档注释使用 //
+    - sort_child_properties_last       # 将 child 属性排在最后
+    - type_init_formals                # 类型初始化形式参数
+    - unawaited_futures                # 标记未等待的 Future
+    - unnecessary_brace_in_string_interps        # 避免字符串插值中不必要的括号
+    - unnecessary_const                # 避免不必要的 const
+    - unnecessary_constructor_name     # 避免不必要的构造函数名
+    - unnecessary_getters_setters      # 避免不必要的 getter/setter
+    - unnecessary_late                 # 避免不必要的 late
+    - unnecessary_new                  # 避免不必要的 new
+    - unnecessary_null_aware_assignments         # 避免不必要的空感知赋值
+    - unnecessary_null_in_if_null_operators      # 避免 ?? 运算符中不必要的 null
+    - unnecessary_nullable_for_final_variable_declarations  # 避免 final 变量使用可空类型
+    - unnecessary_overrides            # 避免不必要的方法重写
+    - unnecessary_parenthesis          # 避免不必要的括号
+    - unnecessary_string_escapes       # 避免不必要的字符串转义
+    - unnecessary_string_interpolations # 避免不必要的字符串插值
+    - unnecessary_this                 # 避免不必要的 this
+    - use_build_context_synchronously  # 异步操作后检查 BuildContext 是否可用
+    - use_full_hex_values_for_flutter_colors     # 使用完整的十六进制颜色值
+    - use_function_type_syntax_for_parameters    # 使用函数类型语法声明参数
+    - use_key_in_widget_constructors   # Widget 构造函数中使用 Key 参数
+    - use_rethrow_when_possible        # 尽可能使用 rethrow
+    - use_super_parameters             # 使用 super 参数
+    - void_checks                      # 检查 void 返回值使用

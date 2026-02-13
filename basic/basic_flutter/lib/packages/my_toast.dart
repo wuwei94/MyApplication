@@ -1,6 +1,5 @@
+import 'package:basic_flutter/common/toast.dart';
 import 'package:flutter/material.dart';
-
-import '../common/toast.dart';
 
 /// toast
 /// https://pub.dev/packages/fluttertoast
@@ -9,10 +8,7 @@ class MyToast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Toast demo',
-      home: ToastRoute(title: 'Flutter Toast Example'),
-    );
+    return const ToastRoute(title: 'Flutter Toast Example');
   }
 }
 
@@ -28,9 +24,7 @@ class ToastRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: getBody(),
       floatingActionButton: getFAB(),
     );
