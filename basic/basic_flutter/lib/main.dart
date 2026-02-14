@@ -1,9 +1,9 @@
-import 'package:basic_flutter/boost/boost_navigator.dart';
-import 'package:basic_flutter/routes/route_path.dart';
+import 'package:basic_flutter/routes/app_router.dart';
 import 'package:basic_flutter/state_management/bloc/observer/my_bloc_observer.dart';
 import 'package:basic_flutter/state_management/provider/notifier/my_provider_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -32,25 +32,46 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      routes: Routes.getRoutes(),
-      home: Scaffold(
-        appBar: AppBar(title: const Text("Flutter Demo")),
-        body: ListView.builder(
-          itemCount: Routes.getRouteList().length,
-          itemBuilder: (context, index) {
+      routerConfig: appRouter,
+    );
+  }
+}
+
+/// 首页 - 路由列表
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter Demo')),
+      body: ListView.builder(
+        itemCount: AppRouteList.getRouteList().length,
+        itemBuilder: (context, index) {
+          final item = AppRouteList.getRouteList()[index];
+          if (item.routePath.isEmpty) {
             return ListTile(
-              title: Text(Routes.getRouteList()[index].routeName),
-              subtitle: Text(Routes.getRouteList()[index].routeDescribe),
-              onTap: () {
-                start(context, Routes.getRouteList()[index].routePath);
-              },
+              title: Text(
+                item.routeName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+              ),
             );
-          },
-        ),
+          }
+          return ListTile(
+            title: Text(item.routeName),
+            subtitle: item.routeDescribe.isNotEmpty
+                ? Text(item.routeDescribe)
+                : null,
+            onTap: () => context.push(item.routePath),
+          );
+        },
       ),
     );
   }
