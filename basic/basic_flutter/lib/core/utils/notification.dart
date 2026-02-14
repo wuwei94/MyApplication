@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-/// 本地通知工具类
+/// Notification 工具类
 class NotificationHelper {
   static NotificationHelper? _instance;
   late final FlutterLocalNotificationsPlugin _notificationsPlugin;

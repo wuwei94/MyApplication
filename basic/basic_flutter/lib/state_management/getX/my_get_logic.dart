@@ -1,4 +1,4 @@
-import 'package:basic_flutter/common/log.dart';
+import 'package:basic_flutter/core/utils/log.dart';
 import 'package:get/get.dart';
 
 // 编写界面业务逻辑代码，包含生命周期回调函数

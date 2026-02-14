@@ -1,6 +1,6 @@
-import 'package:basic_flutter/common/dio.dart';
-import 'package:basic_flutter/common/log.dart';
-import 'package:basic_flutter/common/urls.dart';
+import 'package:basic_flutter/core/utils/dio.dart';
+import 'package:basic_flutter/core/utils/log.dart';
+import 'package:basic_flutter/core/constants/urls.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

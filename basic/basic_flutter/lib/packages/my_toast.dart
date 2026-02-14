@@ -1,4 +1,4 @@
-import 'package:basic_flutter/common/toast.dart';
+import 'package:basic_flutter/core/utils/toast.dart';
 import 'package:flutter/material.dart';
 
 /// toast

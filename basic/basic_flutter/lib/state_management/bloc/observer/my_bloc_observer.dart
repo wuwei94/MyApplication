@@ -1,4 +1,4 @@
-import 'package:basic_flutter/common/log.dart';
+import 'package:basic_flutter/core/utils/log.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// {@template app_bloc_observer}

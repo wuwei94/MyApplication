@@ -1,4 +1,4 @@
-import 'package:basic_flutter/common/notification.dart';
+import 'package:basic_flutter/core/utils/notification.dart';
 import 'package:flutter/material.dart';
 
 /// Notifications
