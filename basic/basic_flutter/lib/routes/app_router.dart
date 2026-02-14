@@ -110,14 +110,14 @@ class AppRouteList {
   static List<RouteItem> getRouteList() {
     return [
       RouteItem(
+        routeName: '—— Example ——',
+        routePath: '',
+        routeDescribe: '',
+      ),
+      RouteItem(
         routeName: '计数器',
         routePath: AppRoutes.counter,
         routeDescribe: '基础计数器示例',
-      ),
-      RouteItem(
-        routeName: '首页',
-        routePath: AppRoutes.home,
-        routeDescribe: '路由列表示例',
       ),
       RouteItem(
         routeName: '—— Layout 布局 ——',

@@ -55,13 +55,7 @@ class HomePage extends StatelessWidget {
           final item = AppRouteList.getRouteList()[index];
           if (item.routePath.isEmpty) {
             return ListTile(
-              title: Text(
-                item.routeName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
+              title: Text(item.routeName),
             );
           }
           return ListTile(
