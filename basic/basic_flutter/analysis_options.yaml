@@ -50,11 +50,11 @@ linter:
     - empty_catches                    # 避免空的 catch 块
     - empty_constructor_bodies         # 避免空的构造函数体
     - exhaustive_cases                 # switch 语句必须处理所有枚举值
-    - file_names                       # 文件名使用小写下划线命名法
+    - file_names: false  # 禁用文件名检查，允许数字前缀
     - implementation_imports           # 避免导入 src 目录下的实现文件
     - library_names                    # 库名使用小写下划线命名法
-    - library_prefixes                 # 库前缀使用小写下划线命名法
-    - no_leading_underscores_for_library_prefixes  # 库前缀不要使用下划线开头
+    - library_names: false  # 禁用库名命名检查，允许数字前缀
+    - library_prefixes: false  # 禁用库前缀命名检查，允许数字前缀文件名
     - no_leading_underscores_for_local_identifiers # 局部标识符不要使用下划线开头
     - null_check_on_nullable_type_parameter      # 避免对可空类型参数进行 null 检查
     - null_closures                    # 避免传递 null 作为闭包
