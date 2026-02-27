@@ -1,231 +1,231 @@
 import 'package:basic_flutter/routes/constants/route_groups.dart';
-import 'package:basic_flutter/routes/route_item.dart';
+import 'package:basic_flutter/routes/data/app_route_info.dart';
 
 /// 路由列表数据
 class AppRouteList {
-  static List<RouteItem> getRouteList() {
+  static List<AppRouteInfo> getRouteList() {
     return [
-      RouteItem(routeName: '—— Example ——', routePath: '', routeDescribe: ''),
-      RouteItem(
-        routeName: '计数器',
-        routePath: ExampleRoutes.counter,
-        routeDescribe: '基础计数器示例',
+      AppRouteInfo(name: '—— Example ——', path: '', describe: ''),
+      AppRouteInfo(
+        name: '计数器',
+        path: ExampleRoutes.counter,
+        describe: '基础计数器示例',
       ),
-      RouteItem(
-        routeName: '—— Layout 布局 ——',
-        routePath: '',
-        routeDescribe: '会有一个children属性',
+      AppRouteInfo(
+        name: '—— Layout 布局 ——',
+        path: '',
+        describe: '会有一个children属性',
       ),
-      RouteItem(
-        routeName: 'Row',
-        routePath: LayoutRoutes.row,
-        routeDescribe: '水平线性布局',
+      AppRouteInfo(
+        name: 'Row',
+        path: LayoutRoutes.row,
+        describe: '水平线性布局',
       ),
-      RouteItem(
-        routeName: 'Column',
-        routePath: LayoutRoutes.column,
-        routeDescribe: '垂直线性布局',
+      AppRouteInfo(
+        name: 'Column',
+        path: LayoutRoutes.column,
+        describe: '垂直线性布局',
       ),
-      RouteItem(
-        routeName: 'Flex',
-        routePath: LayoutRoutes.flex,
-        routeDescribe: '弹性布局，按照一定比例来分配父容器空间',
+      AppRouteInfo(
+        name: 'Flex',
+        path: LayoutRoutes.flex,
+        describe: '弹性布局，按照一定比例来分配父容器空间',
       ),
-      RouteItem(
-        routeName: 'Wrap',
-        routePath: LayoutRoutes.wrap,
-        routeDescribe: '流式布局，根据子组件大小自动换行的布局',
+      AppRouteInfo(
+        name: 'Wrap',
+        path: LayoutRoutes.wrap,
+        describe: '流式布局，根据子组件大小自动换行的布局',
       ),
-      RouteItem(
-        routeName: 'Flow',
-        routePath: LayoutRoutes.flow,
-        routeDescribe: '流式布局，根据子组件大小自动换行的布局',
+      AppRouteInfo(
+        name: 'Flow',
+        path: LayoutRoutes.flow,
+        describe: '流式布局，根据子组件大小自动换行的布局',
       ),
-      RouteItem(
-        routeName: 'Stack',
-        routePath: LayoutRoutes.stack,
-        routeDescribe: '堆叠布局，根据距父容器四个角的位置来确定自身的位置',
+      AppRouteInfo(
+        name: 'Stack',
+        path: LayoutRoutes.stack,
+        describe: '堆叠布局，根据距父容器四个角的位置来确定自身的位置',
       ),
-      RouteItem(
-        routeName: '—— Container 容器 ——',
-        routePath: '',
-        routeDescribe: '会有一个child属性',
+      AppRouteInfo(
+        name: '—— Container 容器 ——',
+        path: '',
+        describe: '会有一个child属性',
       ),
-      RouteItem(
-        routeName: 'Container',
-        routePath: ContainerRoutes.container,
-        routeDescribe: '容器',
+      AppRouteInfo(
+        name: 'Container',
+        path: ContainerRoutes.container,
+        describe: '容器',
       ),
-      RouteItem(
-        routeName: 'Padding',
-        routePath: ContainerRoutes.padding,
-        routeDescribe: '填充容器',
+      AppRouteInfo(
+        name: 'Padding',
+        path: ContainerRoutes.padding,
+        describe: '填充容器',
       ),
-      RouteItem(
-        routeName: 'Align',
-        routePath: ContainerRoutes.align,
-        routeDescribe: '对齐容器',
+      AppRouteInfo(
+        name: 'Align',
+        path: ContainerRoutes.align,
+        describe: '对齐容器',
       ),
-      RouteItem(
-        routeName: 'Center',
-        routePath: ContainerRoutes.center,
-        routeDescribe: '居中容器',
+      AppRouteInfo(
+        name: 'Center',
+        path: ContainerRoutes.center,
+        describe: '居中容器',
       ),
-      RouteItem(
-        routeName: 'ConstrainedBox',
-        routePath: ContainerRoutes.constrainedBox,
-        routeDescribe: '约束容器',
+      AppRouteInfo(
+        name: 'ConstrainedBox',
+        path: ContainerRoutes.constrainedBox,
+        describe: '约束容器',
       ),
-      RouteItem(
-        routeName: 'DecoratedBox',
-        routePath: ContainerRoutes.decoratedBox,
-        routeDescribe: '装饰容器',
+      AppRouteInfo(
+        name: 'DecoratedBox',
+        path: ContainerRoutes.decoratedBox,
+        describe: '装饰容器',
       ),
-      RouteItem(
-        routeName: 'SizedBox',
-        routePath: ContainerRoutes.sizedBox,
-        routeDescribe: '尺寸容器',
+      AppRouteInfo(
+        name: 'SizedBox',
+        path: ContainerRoutes.sizedBox,
+        describe: '尺寸容器',
       ),
-      RouteItem(routeName: '—— 可滚动组件 ——', routePath: ''),
-      RouteItem(
-        routeName: 'ListView',
-        routePath: ScrollingRoutes.listView,
-        routeDescribe: 'ListView',
+      AppRouteInfo(name: '—— 可滚动组件 ——', path: ''),
+      AppRouteInfo(
+        name: 'ListView',
+        path: ScrollingRoutes.listView,
+        describe: 'ListView',
       ),
-      RouteItem(
-        routeName: 'GridView',
-        routePath: ScrollingRoutes.gridView,
-        routeDescribe: 'GridView',
+      AppRouteInfo(
+        name: 'GridView',
+        path: ScrollingRoutes.gridView,
+        describe: 'GridView',
       ),
-      RouteItem(
-        routeName: 'ScrollView',
-        routePath: ScrollingRoutes.scrollView,
-        routeDescribe: 'ScrollView',
+      AppRouteInfo(
+        name: 'ScrollView',
+        path: ScrollingRoutes.scrollView,
+        describe: 'ScrollView',
       ),
-      RouteItem(
-        routeName: 'PageView',
-        routePath: ScrollingRoutes.pageView,
-        routeDescribe: 'PageView',
+      AppRouteInfo(
+        name: 'PageView',
+        path: ScrollingRoutes.pageView,
+        describe: 'PageView',
       ),
-      RouteItem(
-        routeName: 'TabBarView',
-        routePath: ScrollingRoutes.tabBarView,
-        routeDescribe: 'TabBarView',
+      AppRouteInfo(
+        name: 'TabBarView',
+        path: ScrollingRoutes.tabBarView,
+        describe: 'TabBarView',
       ),
-      RouteItem(
-        routeName: 'AnimatedList',
-        routePath: ScrollingRoutes.animatedList,
-        routeDescribe: 'AnimatedList',
+      AppRouteInfo(
+        name: 'AnimatedList',
+        path: ScrollingRoutes.animatedList,
+        describe: 'AnimatedList',
       ),
-      RouteItem(
-        routeName: 'CustomScrollView',
-        routePath: ScrollingRoutes.customScrollView,
-        routeDescribe: 'CustomScrollView',
+      AppRouteInfo(
+        name: 'CustomScrollView',
+        path: ScrollingRoutes.customScrollView,
+        describe: 'CustomScrollView',
       ),
-      RouteItem(
-        routeName: 'NestedScrollView',
-        routePath: ScrollingRoutes.nestedScrollView,
-        routeDescribe: 'NestedScrollView',
+      AppRouteInfo(
+        name: 'NestedScrollView',
+        path: ScrollingRoutes.nestedScrollView,
+        describe: 'NestedScrollView',
       ),
-      RouteItem(routeName: '—— 功能型组件 ——', routePath: ''),
-      RouteItem(
-        routeName: 'LayoutBuilder',
-        routePath: FunctionalRoutes.layoutBuilder,
-        routeDescribe: '获取父组件大小并布局容器',
+      AppRouteInfo(name: '—— 功能型组件 ——', path: ''),
+      AppRouteInfo(
+        name: 'LayoutBuilder',
+        path: FunctionalRoutes.layoutBuilder,
+        describe: '获取父组件大小并布局容器',
       ),
-      RouteItem(
-        routeName: 'GestureDetector',
-        routePath: FunctionalRoutes.gestureDetector,
-        routeDescribe: '手势检测',
+      AppRouteInfo(
+        name: 'GestureDetector',
+        path: FunctionalRoutes.gestureDetector,
+        describe: '手势检测',
       ),
-      RouteItem(
-        routeName: 'PopScope',
-        routePath: FunctionalRoutes.popScope,
-        routeDescribe: '返回拦截',
+      AppRouteInfo(
+        name: 'PopScope',
+        path: FunctionalRoutes.popScope,
+        describe: '返回拦截',
       ),
-      RouteItem(
-        routeName: 'InheritedWidget',
-        routePath: FunctionalRoutes.inheritedWidget,
-        routeDescribe: '数据共享',
+      AppRouteInfo(
+        name: 'InheritedWidget',
+        path: FunctionalRoutes.inheritedWidget,
+        describe: '数据共享',
       ),
-      RouteItem(
-        routeName: 'ValueListenableBuilder',
-        routePath: FunctionalRoutes.valueListenableBuilder,
-        routeDescribe: '数据源监听',
+      AppRouteInfo(
+        name: 'ValueListenableBuilder',
+        path: FunctionalRoutes.valueListenableBuilder,
+        describe: '数据源监听',
       ),
-      RouteItem(
-        routeName: 'FutureBuilder',
-        routePath: FunctionalRoutes.futureBuilder,
-        routeDescribe: '异步UI更新',
+      AppRouteInfo(
+        name: 'FutureBuilder',
+        path: FunctionalRoutes.futureBuilder,
+        describe: '异步UI更新',
       ),
-      RouteItem(
-        routeName: 'StreamBuilder',
-        routePath: FunctionalRoutes.streamBuilder,
-        routeDescribe: '异步UI更新',
+      AppRouteInfo(
+        name: 'StreamBuilder',
+        path: FunctionalRoutes.streamBuilder,
+        describe: '异步UI更新',
       ),
-      RouteItem(routeName: '—— 其他组件 ——', routePath: ''),
-      RouteItem(
-        routeName: 'Animation',
-        routePath: AnimationRoutes.animation,
-        routeDescribe: 'Animation',
+      AppRouteInfo(name: '—— 其他组件 ——', path: ''),
+      AppRouteInfo(
+        name: 'Animation',
+        path: AnimationRoutes.animation,
+        describe: 'Animation',
       ),
-      RouteItem(
-        routeName: 'Dialog',
-        routePath: DialogRoutes.dialog,
-        routeDescribe: 'Dialog',
+      AppRouteInfo(
+        name: 'Dialog',
+        path: DialogRoutes.dialog,
+        describe: 'Dialog',
       ),
-      RouteItem(
-        routeName: 'Isolate',
-        routePath: ConcurrencyRoutes.isolate,
-        routeDescribe: 'Isolate',
+      AppRouteInfo(
+        name: 'Isolate',
+        path: ConcurrencyRoutes.isolate,
+        describe: 'Isolate',
       ),
-      RouteItem(routeName: '—— 网络请求 ——', routePath: ''),
-      RouteItem(
-        routeName: 'Dio',
-        routePath: NetworkRoutes.dio,
-        routeDescribe: 'Dio',
+      AppRouteInfo(name: '—— 网络请求 ——', path: ''),
+      AppRouteInfo(
+        name: 'Dio',
+        path: NetworkRoutes.dio,
+        describe: 'Dio',
       ),
-      RouteItem(routeName: '—— 状态管理 ——', routePath: ''),
-      RouteItem(
-        routeName: 'Provider',
-        routePath: StateManagementRoutes.provider,
-        routeDescribe: 'Provider',
+      AppRouteInfo(name: '—— 状态管理 ——', path: ''),
+      AppRouteInfo(
+        name: 'Provider',
+        path: StateManagementRoutes.provider,
+        describe: 'Provider',
       ),
-      RouteItem(
-        routeName: 'GetX',
-        routePath: StateManagementRoutes.getX,
-        routeDescribe: 'GetX',
+      AppRouteInfo(
+        name: 'GetX',
+        path: StateManagementRoutes.getX,
+        describe: 'GetX',
       ),
-      RouteItem(
-        routeName: 'GetX2',
-        routePath: StateManagementRoutes.getX2,
-        routeDescribe: 'GetX',
+      AppRouteInfo(
+        name: 'GetX2',
+        path: StateManagementRoutes.getX2,
+        describe: 'GetX',
       ),
-      RouteItem(
-        routeName: 'BloC',
-        routePath: StateManagementRoutes.bloC,
-        routeDescribe: 'BloC',
+      AppRouteInfo(
+        name: 'BloC',
+        path: StateManagementRoutes.bloC,
+        describe: 'BloC',
       ),
-      RouteItem(routeName: '—— 三方框架 ——', routePath: ''),
-      RouteItem(
-        routeName: 'Toast',
-        routePath: PackageRoutes.toast,
-        routeDescribe: 'Toast',
+      AppRouteInfo(name: '—— 三方框架 ——', path: ''),
+      AppRouteInfo(
+        name: 'Toast',
+        path: PackageRoutes.toast,
+        describe: 'Toast',
       ),
-      RouteItem(
-        routeName: 'Notification',
-        routePath: PackageRoutes.notification,
-        routeDescribe: 'Notification',
+      AppRouteInfo(
+        name: 'Notification',
+        path: PackageRoutes.notification,
+        describe: 'Notification',
       ),
-      RouteItem(
-        routeName: 'SharedPreferences',
-        routePath: PackageRoutes.sharedPreferences,
-        routeDescribe: 'SharedPreferences',
+      AppRouteInfo(
+        name: 'SharedPreferences',
+        path: PackageRoutes.sharedPreferences,
+        describe: 'SharedPreferences',
       ),
-      RouteItem(
-        routeName: 'ScreenUtil',
-        routePath: PackageRoutes.screenUtil,
-        routeDescribe: 'ScreenUtil',
+      AppRouteInfo(
+        name: 'ScreenUtil',
+        path: PackageRoutes.screenUtil,
+        describe: 'ScreenUtil',
       ),
     ];
   }

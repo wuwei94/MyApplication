@@ -54,15 +54,15 @@ class HomePage extends StatelessWidget {
         itemCount: AppRouteList.getRouteList().length,
         itemBuilder: (context, index) {
           final item = AppRouteList.getRouteList()[index];
-          if (item.routePath.isEmpty) {
-            return ListTile(title: Text(item.routeName));
+          if (item.path.isEmpty) {
+            return ListTile(title: Text(item.name));
           }
           return ListTile(
-            title: Text(item.routeName),
-            subtitle: item.routeDescribe.isNotEmpty
-                ? Text(item.routeDescribe)
+            title: Text(item.name),
+            subtitle: item.describe.isNotEmpty
+                ? Text(item.describe)
                 : null,
-            onTap: () => context.push(item.routePath),
+            onTap: () => context.push(item.path),
           );
         },
       ),
