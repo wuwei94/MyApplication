@@ -1,10 +1,10 @@
-import 'package:basic_flutter/core/constants/app_router_list.dart';
+import 'package:basic_flutter/routes/groups/route_groups.dart';
+import 'package:basic_flutter/features/features_list_page.dart';
 import 'package:basic_flutter/routes/app_router.dart';
-import 'package:basic_flutter/features/state_management/bloc/observer/my_bloc_observer.dart';
-import 'package:basic_flutter/features/state_management/provider/notifier/my_provider_notifier.dart';
+import 'package:basic_flutter/features/9_state_management/bloc/observer/my_bloc_observer.dart';
+import 'package:basic_flutter/features/9_state_management/provider/notifier/my_provider_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// 首页 - 路由列表
+/// 首页 - 分组入口
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -51,18 +51,24 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Flutter Demo')),
       body: ListView.builder(
-        itemCount: AppRouteList.getRouteList().length,
+        itemCount: routeGroups.length,
         itemBuilder: (context, index) {
-          final item = AppRouteList.getRouteList()[index];
-          if (item.path.isEmpty) {
-            return ListTile(title: Text(item.name));
-          }
+          final group = routeGroups[index];
           return ListTile(
-            title: Text(item.name),
-            subtitle: item.describe.isNotEmpty
-                ? Text(item.describe)
-                : null,
-            onTap: () => context.push(item.path),
+            title: Text(group.name),
+            subtitle: Text(group.name),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (context) => FeaturesListPage(
+                    title: group.name,
+                    routes: group.routes,
+                  ),
+                ),
+              );
+            },
           );
         },
       ),
