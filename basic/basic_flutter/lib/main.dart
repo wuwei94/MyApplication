@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
           final group = routeGroups[index];
           return ListTile(
             title: Text(group.name),
-            subtitle: Text(group.name),
+            subtitle: Text(group.describe),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.push(
@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                 MaterialPageRoute<dynamic>(
                   builder: (context) => FeaturesListPage(
                     title: group.name,
-                    routes: group.routes,
+                    routes: group.routeItems,
                   ),
                 ),
               );
