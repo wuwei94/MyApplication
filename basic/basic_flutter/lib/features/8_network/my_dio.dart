@@ -1,5 +1,5 @@
 import 'package:basic_flutter/core/utils/network/dio.dart';
-import 'package:basic_flutter/core/utils/logger/log.dart';
+import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:basic_flutter/core/constants/urls.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

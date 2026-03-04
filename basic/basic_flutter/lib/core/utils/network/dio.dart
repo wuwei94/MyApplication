@@ -1,4 +1,4 @@
-import 'package:basic_flutter/core/utils/logger/log.dart';
+import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:dio/dio.dart';
 
 /// Dio 网络请求工具类

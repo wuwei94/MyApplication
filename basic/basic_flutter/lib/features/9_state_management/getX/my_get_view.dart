@@ -1,4 +1,4 @@
-import 'package:basic_flutter/core/utils/logger/log.dart';
+import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:basic_flutter/features/9_state_management/getX/my_get_logic.dart';
 import 'package:basic_flutter/features/9_state_management/getX/res/strings/str_res_keys.dart';
 import 'package:basic_flutter/features/9_state_management/getX/routes/my_route.dart';
