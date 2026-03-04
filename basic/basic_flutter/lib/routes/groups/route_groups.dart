@@ -5,7 +5,7 @@ import 'package:basic_flutter/routes/modules/index.dart';
 /// 用于首页展示分组入口
 final List<RouteGroup> routeGroups = [
   RouteGroup(name: 'Example', describe: "示例", routeItems: exampleRoutes),
-  RouteGroup(name: 'Layout', describe: "布局", routeItems: layoutRoutes),
+  RouteGroup(name: 'Layout', describe: "布局组件", routeItems: layoutRoutes),
   RouteGroup(name: 'Container', describe: "容器组件", routeItems: containerRoutes),
   RouteGroup(name: 'Scrolling', describe: "滑动组件", routeItems: scrollingRoutes),
   RouteGroup(
