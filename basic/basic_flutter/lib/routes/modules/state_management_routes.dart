@@ -10,18 +10,18 @@ final List<RouteItem> stateManagementRoutes = [
     name: 'Provider',
     path: '/provider',
     describe: 'Provider',
-    builder: (BuildContext context, _) => const MyProvider(),
+    routeBuilder: (BuildContext context, _) => const MyProvider(),
   ),
   RouteItem(
     name: 'GetX',
     path: '/getx',
     describe: 'GetX',
-    builder: (BuildContext context, _) => const MyGet(),
+    routeBuilder: (BuildContext context, _) => const MyGet(),
   ),
   RouteItem(
     name: 'BloC',
     path: '/bloc',
     describe: 'BloC',
-    builder: (BuildContext context, _) => const MyBloC(),
+    routeBuilder: (BuildContext context, _) => const MyBloC(),
   ),
 ];

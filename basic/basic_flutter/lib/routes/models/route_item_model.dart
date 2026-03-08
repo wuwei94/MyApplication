@@ -3,17 +3,19 @@ import 'package:go_router/go_router.dart';
 
 class RouteItem {
   final String path;
-  final Widget Function(BuildContext, GoRouterState) builder;
   final String name;
   final String describe;
+  final List<RouteItem> routeItems;
+  final Widget Function(BuildContext, GoRouterState) routeBuilder;
 
   RouteItem({
-    required this.path,
-    required this.builder,
+    this.path = "",
     this.name = "",
     this.describe = "",
-  });
+    this.routeItems = const [],
+    Widget Function(BuildContext, GoRouterState)? routeBuilder,
+  }) : routeBuilder = routeBuilder ?? ((_, _) => const SizedBox.shrink());
 
   // 转换为 GoRoute
-  GoRoute toGoRoute() => GoRoute(path: path, name: name, builder: builder);
+  GoRoute toGoRoute() => GoRoute(path: path, name: name, builder: routeBuilder);
 }

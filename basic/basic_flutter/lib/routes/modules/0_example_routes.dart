@@ -8,6 +8,6 @@ final List<RouteItem> exampleRoutes = [
     name: '计数器',
     path: '/counter',
     describe: '基础计数器示例',
-    builder: (BuildContext context, _) => const Counter(),
+    routeBuilder: (BuildContext context, _) => const Counter(),
   ),
 ];

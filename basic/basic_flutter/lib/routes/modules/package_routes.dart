@@ -13,37 +13,37 @@ final List<RouteItem> packageRoutes = [
     name: 'Dio',
     path: '/dio',
     describe: 'Dio',
-    builder: (BuildContext context, _) => const MyDio(),
+    routeBuilder: (BuildContext context, _) => const MyDio(),
   ),
   RouteItem(
     name: 'Http',
     path: '/http',
     describe: 'Http',
-    builder: (BuildContext context, _) => const MyHttp(),
+    routeBuilder: (BuildContext context, _) => const MyHttp(),
   ),
 
   RouteItem(
     name: 'Notification',
     path: '/notification',
     describe: 'Notification',
-    builder: (BuildContext context, _) => const MyNotification(),
+    routeBuilder: (BuildContext context, _) => const MyNotification(),
   ),
   RouteItem(
     name: 'SharedPreferences',
     path: '/shared-preferences',
     describe: 'SharedPreferences',
-    builder: (BuildContext context, _) => const MySharedPreferences(),
+    routeBuilder: (BuildContext context, _) => const MySharedPreferences(),
   ),
   RouteItem(
     name: 'Toast',
     path: '/toast',
     describe: 'Toast',
-    builder: (BuildContext context, _) => const MyToast(),
+    routeBuilder: (BuildContext context, _) => const MyToast(),
   ),
   RouteItem(
     name: 'ScreenUtil',
     path: '/screen-util',
     describe: 'ScreenUtil',
-    builder: (BuildContext context, _) => const MyScreenUtil(),
+    routeBuilder: (BuildContext context, _) => const MyScreenUtil(),
   ),
 ];

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 /// GetX
 /// https://pub.dev/packages/get
-class MyGetX2 extends StatelessWidget {
-  const MyGetX2({super.key});
+class MyGetX extends StatelessWidget {
+  const MyGetX({super.key});
 
   @override
   Widget build(BuildContext context) {
