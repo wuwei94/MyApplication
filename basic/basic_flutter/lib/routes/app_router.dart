@@ -25,8 +25,6 @@ final GoRouter appRouter = GoRouter(
     ...RouteConverter.toGoRoutes(animationRoutes),
     // 并发路由
     ...RouteConverter.toGoRoutes(concurrencyRoutes),
-    // 网络路由
-    ...RouteConverter.toGoRoutes(networkRoutes),
     // 状态管理路由
     ...RouteConverter.toGoRoutes(stateManagementRoutes),
     // 第三方包路由

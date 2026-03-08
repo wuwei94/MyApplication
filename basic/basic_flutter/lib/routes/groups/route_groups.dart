@@ -20,7 +20,6 @@ final List<RouteGroup> routeGroups = [
     describe: "并发组件",
     routeItems: concurrencyRoutes,
   ),
-  RouteGroup(name: 'Network', describe: "网络请求", routeItems: networkRoutes),
   RouteGroup(
     name: 'State Management',
     describe: "状态管理",
