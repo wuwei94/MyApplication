@@ -37,7 +37,7 @@ class MyGetXPage extends StatelessWidget {
   Widget getFAB() {
     return FloatingActionButton(
       tooltip: 'increment',
-      onPressed: () => controller.increment,
+      onPressed: () => controller.increment(),
       child: const Icon(Icons.add),
     );
   }
