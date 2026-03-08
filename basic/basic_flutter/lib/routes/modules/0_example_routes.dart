@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/0_examples/my_counter.dart';
+import 'package:basic_flutter/features/0_examples/counter/counter_page.dart';
 import 'package:basic_flutter/routes/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,6 +8,6 @@ final List<RouteItem> exampleRoutes = [
     name: '计数器',
     path: '/counter',
     describe: '基础计数器示例',
-    builder: (BuildContext context, _) => const MyCounter(),
+    builder: (BuildContext context, _) => const Counter(),
   ),
 ];

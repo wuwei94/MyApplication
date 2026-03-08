@@ -1,7 +1,7 @@
 import 'package:basic_flutter/core/utils/logger/logger.dart';
-import 'package:basic_flutter/features/state_management/getX/my_get_logic.dart';
-import 'package:basic_flutter/features/state_management/getX/res/strings/str_res_keys.dart';
-import 'package:basic_flutter/features/state_management/getX/routes/my_route.dart';
+import 'package:basic_flutter/features/0_examples/getX/my_get_logic.dart';
+import 'package:basic_flutter/features/0_examples/getX/res/strings/str_res_keys.dart';
+import 'package:basic_flutter/features/0_examples/getX/routes/my_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

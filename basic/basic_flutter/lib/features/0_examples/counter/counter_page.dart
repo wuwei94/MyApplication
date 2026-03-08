@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyCounter extends StatelessWidget {
-  const MyCounter({super.key});
+class Counter extends StatelessWidget {
+  const Counter({super.key});
 
   // This widget is the root of your application.
   @override

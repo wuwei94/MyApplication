@@ -1,5 +1,4 @@
 import 'package:basic_flutter/features/state_management/bloc/my_bloc.dart';
-import 'package:basic_flutter/features/state_management/get/my_get_app.dart';
 import 'package:basic_flutter/features/state_management/getX/my_get_app.dart';
 import 'package:basic_flutter/features/state_management/provider/my_provider.dart';
 import 'package:basic_flutter/routes/models/route_item_model.dart';
@@ -18,12 +17,6 @@ final List<RouteItem> stateManagementRoutes = [
     path: '/getx',
     describe: 'GetX',
     builder: (BuildContext context, _) => const MyGet(),
-  ),
-  RouteItem(
-    name: 'GetX2',
-    path: '/getx2',
-    describe: 'GetX',
-    builder: (BuildContext context, _) => const MyGetX2(),
   ),
   RouteItem(
     name: 'BloC',

@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/provider/notifier/my_provider_notifier.dart';
+import 'package:basic_flutter/features/state_management/provider/notifier/my_provider_change_notifier.dart';
 import 'package:basic_flutter/features/state_management/provider/page/my_provider_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class MyProvider extends StatelessWidget {
       // Initialize the model in the builder.
       // That way, Provider can own Counter's lifecycle,
       // making sure to call `dispose` when not needed anymore.
-      create: (_) => MyProviderNotifier(),
+      create: (_) => MyProviderChangeNotifier(),
       child: const MyProviderPage(title: 'Provider Example'),
     );
   }

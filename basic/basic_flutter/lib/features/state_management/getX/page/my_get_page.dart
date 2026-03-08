@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/get/controller/my_get_controller.dart';
+import 'package:basic_flutter/features/state_management/getX/controller/my_get_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +26,7 @@ class MyGetXPage extends StatelessWidget {
           const Text('You have pushed the button this many times:'),
           GetX<MyGetXController>(
             builder: (_) {
-              return Text('clicks: ${controller.count}');
+              return Text('${controller.count}');
             },
           ),
         ],

@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/provider/notifier/my_provider_notifier.dart';
+import 'package:basic_flutter/features/state_management/provider/notifier/my_provider_change_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +8,7 @@ class MyProviderPage extends StatelessWidget {
   final String title;
 
   void _incrementCounter(BuildContext context) {
-    final MyProviderNotifier counter = context.read<MyProviderNotifier>();
-    counter.increment();
+    context.read<MyProviderChangeNotifier>().increment();
   }
 
   @override
@@ -27,7 +26,7 @@ class MyProviderPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('You have pushed the button this many times:'),
-          Consumer<MyProviderNotifier>(
+          Consumer<MyProviderChangeNotifier>(
             builder: (context, counter, child) {
               return Text('${counter.value}');
             },

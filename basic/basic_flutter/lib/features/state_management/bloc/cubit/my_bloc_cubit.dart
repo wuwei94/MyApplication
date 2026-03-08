@@ -9,4 +9,6 @@ class MyBloCCubit extends Cubit<int> {
   void increment() => emit(state + 1);
 
   void decrement() => emit(state - 1);
+
+  void reset() => emit(0);
 }

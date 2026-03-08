@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/getX/my_get_logic.dart';
+import 'package:basic_flutter/features/0_examples/getX/my_get_logic.dart';
 import 'package:get/get.dart';
 
 // 用于懒加载对应的Controller

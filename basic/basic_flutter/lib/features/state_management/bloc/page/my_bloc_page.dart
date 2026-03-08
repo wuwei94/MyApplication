@@ -7,15 +7,15 @@ class MyBloCPage extends StatelessWidget {
 
   final String title;
 
+  void _incrementCounter(BuildContext context) {
+    final MyBloCCubit cubit = context.read<MyBloCCubit>();
+    cubit.increment();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      // body: BlocBuilder<MyBloCCubit, int>(
-      //   builder: (context, count) {
-      //     return getBody(count);
-      //   },
-      // ),
       body: getBody(),
       floatingActionButton: getFAB(context),
     );
@@ -38,21 +38,10 @@ class MyBloCPage extends StatelessWidget {
   }
 
   Widget getFAB(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        FloatingActionButton(
-          tooltip: "increment",
-          onPressed: () => context.read<MyBloCCubit>().increment(),
-          child: const Icon(Icons.add),
-        ),
-        FloatingActionButton(
-          tooltip: "decrement",
-          onPressed: () => context.read<MyBloCCubit>().decrement(),
-          child: const Icon(Icons.remove),
-        ),
-      ],
+    return FloatingActionButton(
+      onPressed: () => _incrementCounter(context),
+      tooltip: 'increment',
+      child: const Icon(Icons.add),
     );
   }
 }

@@ -6,4 +6,12 @@ class MyGetXController extends GetxController {
   void increment() {
     count++;
   }
+
+  void decrement() {
+    count--;
+  }
+
+  void reset() {
+    count.value = 0;
+  }
 }
