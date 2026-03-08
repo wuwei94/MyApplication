@@ -1,9 +1,9 @@
-import 'package:basic_flutter/features/10_packages/my_notification.dart';
-import 'package:basic_flutter/features/10_packages/my_screen_util.dart';
-import 'package:basic_flutter/features/10_packages/my_shared_preferences.dart';
-import 'package:basic_flutter/features/10_packages/my_toast.dart';
-import 'package:basic_flutter/features/10_packages/my_dio.dart';
-import 'package:basic_flutter/features/10_packages/my_http.dart';
+import 'package:basic_flutter/features/packages/my_notification.dart';
+import 'package:basic_flutter/features/packages/my_screen_util.dart';
+import 'package:basic_flutter/features/packages/my_shared_preferences.dart';
+import 'package:basic_flutter/features/packages/my_toast.dart';
+import 'package:basic_flutter/features/packages/my_dio.dart';
+import 'package:basic_flutter/features/packages/my_http.dart';
 import 'package:basic_flutter/routes/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,12 +21,7 @@ final List<RouteItem> packageRoutes = [
     describe: 'Http',
     builder: (BuildContext context, _) => const MyHttp(),
   ),
-  RouteItem(
-    name: 'Toast',
-    path: '/toast',
-    describe: 'Toast',
-    builder: (BuildContext context, _) => const MyToast(),
-  ),
+
   RouteItem(
     name: 'Notification',
     path: '/notification',
@@ -38,6 +33,12 @@ final List<RouteItem> packageRoutes = [
     path: '/shared-preferences',
     describe: 'SharedPreferences',
     builder: (BuildContext context, _) => const MySharedPreferences(),
+  ),
+  RouteItem(
+    name: 'Toast',
+    path: '/toast',
+    describe: 'Toast',
+    builder: (BuildContext context, _) => const MyToast(),
   ),
   RouteItem(
     name: 'ScreenUtil',

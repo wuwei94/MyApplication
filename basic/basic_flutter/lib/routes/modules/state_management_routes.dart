@@ -1,7 +1,7 @@
-import 'package:basic_flutter/features/9_state_management/bloc/my_bloc.dart';
-import 'package:basic_flutter/features/9_state_management/get/my_get_app.dart';
-import 'package:basic_flutter/features/9_state_management/getX/my_get_app.dart';
-import 'package:basic_flutter/features/9_state_management/provider/my_provider.dart';
+import 'package:basic_flutter/features/state_management/bloc/my_bloc.dart';
+import 'package:basic_flutter/features/state_management/get/my_get_app.dart';
+import 'package:basic_flutter/features/state_management/getX/my_get_app.dart';
+import 'package:basic_flutter/features/state_management/provider/my_provider.dart';
 import 'package:basic_flutter/routes/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 

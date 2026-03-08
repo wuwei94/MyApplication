@@ -1,8 +1,8 @@
 import 'package:basic_flutter/routes/groups/route_groups.dart';
 import 'package:basic_flutter/features/features_list_page.dart';
 import 'package:basic_flutter/routes/app_router.dart';
-import 'package:basic_flutter/features/9_state_management/bloc/observer/my_bloc_observer.dart';
-import 'package:basic_flutter/features/9_state_management/provider/notifier/my_provider_notifier.dart';
+import 'package:basic_flutter/features/state_management/bloc/observer/my_bloc_observer.dart';
+import 'package:basic_flutter/features/state_management/provider/notifier/my_provider_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
