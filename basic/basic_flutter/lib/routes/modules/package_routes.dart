@@ -10,21 +10,21 @@ import 'package:flutter/widgets.dart';
 /// Package 三方框架路由
 final List<RouteItem> packageRoutes = [
   RouteItem(
+    path: '/package/dio',
     name: 'Dio',
-    path: '/dio',
     describe: 'Dio',
     routeBuilder: (BuildContext context, _) => const MyDio(),
   ),
   RouteItem(
+    path: '/package/http',
     name: 'Http',
-    path: '/http',
     describe: 'Http',
     routeBuilder: (BuildContext context, _) => const MyHttp(),
   ),
 
   RouteItem(
+    path: '/package/notification',
     name: 'Notification',
-    path: '/notification',
     describe: 'Notification',
     routeBuilder: (BuildContext context, _) => const MyNotification(),
   ),
@@ -35,14 +35,14 @@ final List<RouteItem> packageRoutes = [
     routeBuilder: (BuildContext context, _) => const MySharedPreferences(),
   ),
   RouteItem(
+    path: '/package/toast',
     name: 'Toast',
-    path: '/toast',
     describe: 'Toast',
     routeBuilder: (BuildContext context, _) => const MyToast(),
   ),
   RouteItem(
+    path: '/package/screen-util',
     name: 'ScreenUtil',
-    path: '/screen-util',
     describe: 'ScreenUtil',
     routeBuilder: (BuildContext context, _) => const MyScreenUtil(),
   ),

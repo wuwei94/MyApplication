@@ -7,21 +7,21 @@ import 'package:flutter/widgets.dart';
 /// State Management 状态管理路由
 final List<RouteItem> stateManagementRoutes = [
   RouteItem(
+    path: '/state/provider',
     name: 'Provider',
-    path: '/provider',
     describe: 'Provider',
     routeBuilder: (BuildContext context, _) => const MyProvider(),
   ),
   RouteItem(
-    name: 'GetX',
-    path: '/getx',
-    describe: 'GetX',
-    routeBuilder: (BuildContext context, _) => const MyGet(),
-  ),
-  RouteItem(
+    path: '/state/bloc',
     name: 'BloC',
-    path: '/bloc',
     describe: 'BloC',
     routeBuilder: (BuildContext context, _) => const MyBloC(),
+  ),
+  RouteItem(
+    path: '/state/getx',
+    name: 'GetX',
+    describe: 'GetX',
+    routeBuilder: (BuildContext context, _) => const MyGet(),
   ),
 ];
