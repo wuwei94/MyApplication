@@ -1,4 +1,4 @@
-import 'package:basic_flutter/routes/models/route_item_model.dart';
+import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,8 +23,8 @@ class FeaturesListPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final item = routes[index];
           return ListTile(
-            title: Text(item.name),
-            subtitle: item.describe.isNotEmpty ? Text(item.describe) : null,
+            title: Text(item.title),
+            subtitle: item.subtitle.isNotEmpty ? Text(item.subtitle) : null,
             onTap: () => context.push(item.path),
           );
         },

@@ -1,19 +1,21 @@
 class Urls {
+  Urls._();
+
   /// 登录接口
-  final login = "https://www.wanandroid.com/user/login";
+  static const String login = 'https://www.wanandroid.com/user/login';
 
   /// 帖子列表接口
-  final posts = "https://jsonplaceholder.typicode.com/posts";
+  static const String posts = 'https://jsonplaceholder.typicode.com/posts';
 
   /// 用户名 key
-  final keyUsername = "username";
+  static const String keyUsername = 'username';
 
   /// 密码 key
-  final keyPassword = "password";
+  static const String keyPassword = 'password';
 
-  /// 用户名
-  final valueUsername = "17778060027";
+  /// 用户名（示例值）
+  static const String valueUsername = '17778060027';
 
-  /// 密码
-  final valuePassword = "123456";
+  /// 密码（示例值）
+  static const String valuePassword = '123456';
 }

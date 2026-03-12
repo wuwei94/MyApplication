@@ -1,7 +1,5 @@
-import 'package:basic_flutter/routes/groups/route_groups.dart';
-import 'package:basic_flutter/features/features_list_page.dart';
-import 'package:basic_flutter/routes/app_router.dart';
-import 'package:basic_flutter/features/state_management/bloc/observer/my_bloc_observer.dart';
+import 'package:basic_flutter/features/state_management/bloc/observers/bloc_observer.dart';
+import 'package:basic_flutter/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,40 +22,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       routerConfig: appRouter,
-    );
-  }
-}
-
-/// 首页 - 分组入口
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Demo')),
-      body: ListView.builder(
-        itemCount: routeGroups.length,
-        itemBuilder: (context, index) {
-          final group = routeGroups[index];
-          return ListTile(
-            title: Text(group.name),
-            subtitle: Text(group.describe),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<dynamic>(
-                  builder: (context) => FeaturesListPage(
-                    title: group.name,
-                    routes: group.routeItems,
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
     );
   }
 }
