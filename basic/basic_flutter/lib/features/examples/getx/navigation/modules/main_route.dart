@@ -1,5 +1,5 @@
-import 'package:basic_flutter/features/examples/getx/pages/home_page.dart';
 import 'package:basic_flutter/features/examples/getx/navigation/base/base_route.dart';
+import 'package:basic_flutter/features/examples/getx/pages/home_page.dart';
 import 'package:get/get.dart';
 
 class MainRoute extends BaseRoute {

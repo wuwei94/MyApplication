@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:basic_flutter/core/utils/storage/shared_preferences.dart';
 
 /// Shared Preferences
 /// https://pub.dev/packages/shared_preferences
@@ -22,16 +22,31 @@ class SharedPreferencesRoute extends StatefulWidget {
 }
 
 class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
+  static const String _counterKey = 'counter';
   int _counter = 0;
 
-  void _incrementCounter() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final counter = prefs.getInt('counter') ?? 0;
-    await prefs.setInt('counter', counter + 1);
+  @override
+  void initState() {
+    super.initState();
+    _loadCounter();
+  }
 
+  Future<void> _loadCounter() async {
+    final counter = await SharedPreferencesUtils.getInt(_counterKey);
+
+    if (!mounted) return;
     setState(() {
-      final counter = prefs.getInt('counter') ?? 0;
       _counter = counter;
+    });
+  }
+
+  Future<void> _incrementCounter() async {
+    final counter = await SharedPreferencesUtils.getInt(_counterKey);
+    await SharedPreferencesUtils.setInt(_counterKey, counter + 1);
+
+    if (!mounted) return;
+    setState(() {
+      _counter = counter + 1;
     });
   }
 
@@ -58,7 +73,7 @@ class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
 
   Widget getFAB() {
     return FloatingActionButton(
-      onPressed: () => _incrementCounter(),
+      onPressed: _incrementCounter,
       tooltip: 'Increment',
       child: const Icon(Icons.add),
     );

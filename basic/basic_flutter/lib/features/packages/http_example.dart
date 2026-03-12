@@ -1,7 +1,5 @@
 import 'package:basic_flutter/core/constants/urls.dart';
-import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 /// http
 /// https://pub.dev/packages/http
@@ -27,72 +25,52 @@ class _HttpRouteState extends State<HttpRoute> {
   String info = "";
   bool isLoading = false;
 
-  Future<void> _loginByHttp() async {
-    if (isLoading) return;
-
-    setState(() {
-      isLoading = true;
-      info = "加载中...";
-    });
-
-    try {
-      final response = await http.post(
-        Uri.parse(Urls.login),
-        body: <String, String>{
-          Urls.keyUsername: Urls.valueUsername,
-          Urls.keyPassword: Urls.valuePassword,
-        },
-      );
-
-      setState(() {
-        info = response.body.toString();
-      });
-    } on http.ClientException catch (e) {
-      logError("Http请求失败", e);
-      setState(() {
-        info = "网络连接失败，请检查网络";
-      });
-    } catch (e) {
-      logError("未知错误", e);
-      setState(() {
-        info = "未知错误: $e";
-      });
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
+  Map<String, String> _buildLoginData() {
+    return <String, String>{
+      Urls.keyUsername: Urls.valueUsername,
+      Urls.keyPassword: Urls.valuePassword,
+    };
   }
+
+  Future<void> _handleLogin() async {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(info, textAlign: TextAlign.center),
-            ),
-          ],
-        ),
+      body: _buildBody(),
+      floatingActionButton: _buildFab(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(info, textAlign: TextAlign.center),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: isLoading ? null : () => _loginByHttp(),
-        tooltip: 'Login',
-        child: isLoading
-            ? const SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2,
-                ),
-              )
-            : const Icon(Icons.login),
-      ),
+    );
+  }
+
+  Widget _buildFab() {
+    return FloatingActionButton(
+      onPressed: isLoading ? null : _handleLogin,
+      tooltip: 'Login',
+      child: isLoading
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 2,
+              ),
+            )
+          : const Icon(Icons.login),
     );
   }
 }

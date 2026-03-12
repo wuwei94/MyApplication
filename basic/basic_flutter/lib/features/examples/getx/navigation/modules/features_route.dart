@@ -1,8 +1,8 @@
-import 'package:basic_flutter/features/examples/getx/pages/counter_page.dart';
-import 'package:basic_flutter/features/examples/getx/pages/utils_page.dart';
 import 'package:basic_flutter/features/examples/getx/navigation/base/base_route.dart';
 import 'package:basic_flutter/features/examples/getx/navigation/models/route_model.dart';
 import 'package:basic_flutter/features/examples/getx/navigation/utils/route_converter.dart';
+import 'package:basic_flutter/features/examples/getx/pages/counter_page.dart';
+import 'package:basic_flutter/features/examples/getx/pages/utils_page.dart';
 import 'package:get/get.dart';
 
 class FeaturesRoute extends BaseRoute {

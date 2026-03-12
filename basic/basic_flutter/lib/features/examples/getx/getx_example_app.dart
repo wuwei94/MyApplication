@@ -1,6 +1,6 @@
+import 'package:basic_flutter/features/examples/getx/navigation/app_routes.dart';
 import 'package:basic_flutter/features/examples/getx/pages/home_page.dart';
 import 'package:basic_flutter/l10n/app_translations.dart';
-import 'package:basic_flutter/features/examples/getx/navigation/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

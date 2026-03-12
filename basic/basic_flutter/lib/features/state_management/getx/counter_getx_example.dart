@@ -9,6 +9,6 @@ class CounterGetxExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 子页面不应该使用 GetMaterialApp，直接使用页面组件
-    return CounterGetxPage(title: 'GetX Example');
+    return const CounterGetxPage(title: 'GetX Example');
   }
 }
