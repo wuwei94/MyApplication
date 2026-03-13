@@ -1,5 +1,6 @@
 import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// ScreenUtil
@@ -132,17 +133,17 @@ class ScreenUtilScaffold extends StatelessWidget {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //     SystemChrome.setPreferredOrientations([
-      //       MediaQuery.of(context).orientation == Orientation.portrait
-      //           ? DeviceOrientation.landscapeRight
-      //           : DeviceOrientation.portraitUp,
-      //     ]);
-      //     //  setState(() {});
-      //   },
-      //   label: const Text('旋转'),
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          SystemChrome.setPreferredOrientations([
+            MediaQuery.of(context).orientation == Orientation.portrait
+                ? DeviceOrientation.landscapeRight
+                : DeviceOrientation.portraitUp,
+          ]);
+          //  setState(() {});
+        },
+        label: const Text('旋转'),
+      ),
     );
   }
 }
