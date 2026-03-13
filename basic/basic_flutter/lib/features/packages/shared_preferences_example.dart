@@ -32,7 +32,7 @@ class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
   }
 
   Future<void> _loadCounter() async {
-    final counter = await SharedPreferencesUtils.getInt(_counterKey);
+    final counter = await SharedPreferencesUtils.getValue<int>(_counterKey, 0);
 
     if (!mounted) return;
     setState(() {
@@ -41,8 +41,8 @@ class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
   }
 
   Future<void> _incrementCounter() async {
-    final counter = await SharedPreferencesUtils.getInt(_counterKey);
-    await SharedPreferencesUtils.setInt(_counterKey, counter + 1);
+    final counter = await SharedPreferencesUtils.getValue<int>(_counterKey, 0);
+    await SharedPreferencesUtils.setValue(_counterKey, counter + 1);
 
     if (!mounted) return;
     setState(() {
