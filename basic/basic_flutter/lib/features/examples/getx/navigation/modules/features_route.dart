@@ -4,6 +4,7 @@ import 'package:basic_flutter/features/examples/getx/navigation/utils/route_conv
 import 'package:basic_flutter/features/examples/getx/bindings/worker_binding.dart';
 import 'package:basic_flutter/features/examples/getx/pages/counter_page.dart';
 import 'package:basic_flutter/features/examples/getx/pages/locale_page.dart';
+import 'package:basic_flutter/features/examples/getx/pages/storage_page.dart';
 import 'package:basic_flutter/features/examples/getx/pages/update_page.dart';
 import 'package:basic_flutter/features/examples/getx/pages/worker_page.dart';
 import 'package:basic_flutter/features/examples/getx/pages/utils_page.dart';
@@ -47,10 +48,18 @@ class FeaturesRoute extends BaseRoute {
         subtitle: "工具类示例",
         page: () => const UtilsPage(),
       ),
+      // 工具类示例
+      GetRouteItem(
+        name: "$prefix/storage",
+        title: "Storage",
+        subtitle: "存储类示例",
+        page: () => const StoragePage(),
+      ),
+      // 语言切换示例
       GetRouteItem(
         name: "$prefix/locale",
         title: "Locale",
-        subtitle: "工具类示例",
+        subtitle: "语言切换示例",
         page: () => const LocalePage(),
       ),
     ];
