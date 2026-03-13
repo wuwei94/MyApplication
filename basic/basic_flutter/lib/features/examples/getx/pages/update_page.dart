@@ -15,9 +15,20 @@ class UpdatePage extends StatelessWidget {
 
       // 用一个简单的Get.to()即可代替Navigator.push那8行，无需上下文！
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => Get.to<void>(() => UpdateValuePage()),
-          child: const Text("Go to Other"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Obx(
+              () => Text(
+                "User: ${controller.user.value.name}, Age: ${controller.user.value.age}",
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => Get.to<void>(() => UpdateValuePage()),
+              child: const Text("Go to Other"),
+            ),
+          ],
         ),
       ),
 

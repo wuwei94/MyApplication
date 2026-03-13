@@ -2,7 +2,7 @@ import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:get/get.dart';
 
 // 编写界面业务逻辑代码，包含生命周期回调函数
-class MyGetXLogic extends GetxController {
+class WorkerController extends GetxController {
   final count1 = 0.obs;
   final count2 = 0.obs;
 
@@ -32,7 +32,7 @@ class MyGetXLogic extends GetxController {
     );
 
     // 监听多个变量
-    everAll([
+    _everAll = everAll([
       count1,
       count2,
     ], (value) => {logDebug("$value has been changed (everAll)")});
@@ -41,14 +41,14 @@ class MyGetXLogic extends GetxController {
     debounce(
       count1,
       (value) => {logDebug("debouce$value (debounce)")},
-      time: const Duration(seconds: 1),
+      time: const Duration(seconds: 3),
     );
 
     // 节流
     interval(
-      count1,
+      count2,
       (value) => {logDebug("interval $value (interval)")},
-      time: const Duration(seconds: 1),
+      time: const Duration(seconds: 3),
     );
   }
 

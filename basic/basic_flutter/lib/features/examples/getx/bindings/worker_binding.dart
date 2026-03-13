@@ -2,10 +2,10 @@ import 'package:basic_flutter/features/examples/getx/controllers/worker_controll
 import 'package:get/get.dart';
 
 // 用于懒加载对应的Controller
-class MyGetXBinding extends Bindings {
+class WorkerBinding extends Bindings {
   @override
   void dependencies() {
     //
-    Get.lazyPut(() => MyGetXLogic());
+    Get.lazyPut(() => WorkerController());
   }
 }
