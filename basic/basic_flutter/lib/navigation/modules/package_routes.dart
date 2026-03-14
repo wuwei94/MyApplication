@@ -1,6 +1,7 @@
 import 'package:basic_flutter/features/packages/dio_example.dart';
 import 'package:basic_flutter/features/packages/http_example.dart';
 import 'package:basic_flutter/features/packages/notification_example.dart';
+import 'package:basic_flutter/features/packages/permission_example.dart';
 import 'package:basic_flutter/features/packages/screen_util_example.dart';
 import 'package:basic_flutter/features/packages/shared_preferences_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
@@ -27,6 +28,12 @@ final List<RouteItem> packageRoutes = [
     title: 'Notification',
     subtitle: 'Notification',
     routeBuilder: (BuildContext context, _) => const NotificationExample(),
+  ),
+  RouteItem(
+    path: '/package/permission',
+    title: 'Permission',
+    subtitle: 'Permission',
+    routeBuilder: (BuildContext context, _) => const PermissionExample(),
   ),
   RouteItem(
     path: '/package/shared-preferences',
