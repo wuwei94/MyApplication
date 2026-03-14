@@ -52,4 +52,4 @@
 ## 工具与技能
 
 - 项目在 `.fvmrc` 中固定 Flutter 版本为 `3.41.0`，命令优先使用 `fvm flutter ...`。
-- OpenCode 的 Flutter skills 已安装在 `.opencode/skills/`。
+- 项目自定义了 `flutter-example` skill，用来生成统一的 `XxxExample -> XxxRoute` 页面骨架。

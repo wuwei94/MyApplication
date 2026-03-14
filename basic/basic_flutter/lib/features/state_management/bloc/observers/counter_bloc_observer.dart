@@ -1,12 +1,12 @@
 import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// {@template app_bloc_observer}
+/// {@template counter_bloc_observer}
 /// Custom [BlocObserver] that observes all bloc and cubit state_management changes.
 /// {@endtemplate}
-class AppBlocObserver extends BlocObserver {
-  /// {@macro app_bloc_observer}
-  const AppBlocObserver();
+class CounterBlocObserver extends BlocObserver {
+  /// {@macro counter_bloc_observer}
+  const CounterBlocObserver();
 
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {

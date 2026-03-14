@@ -1,11 +1,7 @@
-import 'package:basic_flutter/features/state_management/bloc/observers/bloc_observer.dart';
 import 'package:basic_flutter/navigation/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  Bloc.observer = const AppBlocObserver();
-
   runApp(const MyApp());
 }
 
