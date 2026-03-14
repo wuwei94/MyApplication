@@ -53,4 +53,3 @@
 
 - 项目在 `.fvmrc` 中固定 Flutter 版本为 `3.41.0`，命令优先使用 `fvm flutter ...`。
 - OpenCode 的 Flutter skills 已安装在 `.opencode/skills/`。
-- 这个项目最常用的 skills 是 `flutter-layout`、`flutter-routing-and-navigation`、`flutter-state-management`、`flutter-testing`。
