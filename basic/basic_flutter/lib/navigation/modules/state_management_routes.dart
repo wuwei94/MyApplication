@@ -1,6 +1,7 @@
 import 'package:basic_flutter/features/state_management/bloc/counter_bloc_example.dart';
 import 'package:basic_flutter/features/state_management/getx/counter_getx_example.dart';
 import 'package:basic_flutter/features/state_management/provider/counter_provider_example.dart';
+import 'package:basic_flutter/features/state_management/riverpod/counter_riverpod_example.dart';
 import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -23,5 +24,11 @@ final List<RouteItem> stateManagementRoutes = [
     title: 'GetX',
     subtitle: 'GetX',
     routeBuilder: (BuildContext context, _) => const CounterGetxExample(),
+  ),
+  RouteItem(
+    path: '/state/riverpod',
+    title: 'Riverpod',
+    subtitle: 'Riverpod',
+    routeBuilder: (BuildContext context, _) => const CounterRiverpodExample(),
   ),
 ];

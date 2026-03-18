@@ -50,6 +50,8 @@ dependencies:
   get_storage: ^2.1.1
   # https://pub.dev/packages/flutter_bloc
   flutter_bloc: ^9.1.1
+  # https://pub.dev/packages/flutter_riverpod
+  flutter_riverpod: ^2.6.1
   # https://pub.dev/packages/go_router
   go_router: ^17.1.0
   # https://pub.dev/packages/logger
