@@ -1,4 +1,8 @@
 import 'package:basic_flutter/core/constants/urls.dart';
+import 'package:basic_flutter/core/utils/network/dio_client.dart';
+import 'package:basic_flutter/core/utils/network/network_exception.dart';
+import 'package:basic_flutter/core/utils/network/network_response.dart';
+import 'package:basic_flutter/core/utils/network/request_body_type.dart';
 import 'package:flutter/material.dart';
 
 /// dio
@@ -22,8 +26,10 @@ class DioRoute extends StatefulWidget {
 }
 
 class _DioRouteState extends State<DioRoute> {
-  String info = "";
-  bool isLoading = false;
+  final DioClient _dioClient = DioClient();
+
+  String _info = 'Tap the button to send a POST request.';
+  bool _isLoading = false;
 
   Map<String, String> _buildLoginData() {
     return <String, String>{
@@ -32,36 +38,95 @@ class _DioRouteState extends State<DioRoute> {
     };
   }
 
-  Future<void> _handleLogin() async {}
+  Future<void> _handlePost() async {
+    await _handleRequest(
+      request: () => _dioClient.post(
+        Urls.login,
+        body: _buildLoginData(),
+        bodyType: RequestBodyType.form,
+      ),
+      successPrefix: 'POST success',
+    );
+  }
+
+  Future<void> _handleRequest({
+    required Future<NetworkResponse<dynamic>> Function() request,
+    required String successPrefix,
+  }) async {
+    _setStateIfMounted(() {
+      _isLoading = true;
+      _info = 'Loading...';
+    });
+
+    try {
+      final NetworkResponse<dynamic> response = await request();
+      _setStateIfMounted(() {
+        _info = _formatResponse(successPrefix, response);
+      });
+    } on NetworkException catch (error) {
+      _setStateIfMounted(() {
+        _info =
+            'Request failed\nType: ${error.type.name}\nMessage: ${error.message}';
+      });
+    } catch (error) {
+      _setStateIfMounted(() {
+        _info = 'Unexpected error\n$error';
+      });
+    } finally {
+      _setStateIfMounted(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _setStateIfMounted(VoidCallback fn) {
+    if (!mounted) {
+      return;
+    }
+
+    setState(fn);
+  }
+
+  String _formatResponse(
+    String successPrefix,
+    NetworkResponse<dynamic> response,
+  ) {
+    final dynamic data = response.data;
+    final String dataPreview;
+
+    if (data is List<dynamic>) {
+      dataPreview = data.isEmpty ? '[]' : data.first.toString();
+    } else {
+      dataPreview = data.toString();
+    }
+
+    return '$successPrefix\n'
+        'StatusCode: ${response.statusCode ?? '-'}\n'
+        'StatusMessage: ${response.statusMessage ?? '-'}\n'
+        'Data: $dataPreview';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: _buildBody(),
-      floatingActionButton: _buildFab(),
+      floatingActionButton: getFAB(),
     );
   }
 
   Widget _buildBody() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(info, textAlign: TextAlign.center),
-          ),
-        ],
-      ),
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: SizedBox.expand(child: SingleChildScrollView(child: Text(_info))),
     );
   }
 
-  Widget _buildFab() {
+  Widget getFAB() {
     return FloatingActionButton(
-      onPressed: isLoading ? null : _handleLogin,
-      tooltip: 'Login',
-      child: isLoading
+      onPressed: _isLoading ? null : _handlePost,
+      tooltip: 'Send POST Request',
+      child: _isLoading
           ? const SizedBox(
               width: 24,
               height: 24,
@@ -70,7 +135,7 @@ class _DioRouteState extends State<DioRoute> {
                 strokeWidth: 2,
               ),
             )
-          : const Icon(Icons.login),
+          : const Icon(Icons.send),
     );
   }
 }
