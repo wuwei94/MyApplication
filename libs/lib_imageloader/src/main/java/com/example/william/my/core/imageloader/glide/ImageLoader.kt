@@ -35,7 +35,7 @@ object ImageLoader : IImageLoader {
     override fun resumeRequests(context: Context?) {
         context?.let {
             GlideApp.with(it)
-                .pauseRequests()
+                .resumeRequests()
         }
     }
 
