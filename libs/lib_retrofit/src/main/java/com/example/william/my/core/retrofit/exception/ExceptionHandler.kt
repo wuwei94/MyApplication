@@ -38,10 +38,10 @@ object ExceptionHandler {
                         val error = Gson().fromJson(errorBody.string(), HttpException::class.java)
                         error.message?.let { message ->
                             exception.message = message
-                        } ?: {
+                        } ?: run {
                             exception.message = "请求网络失败，请检查您的网络设置或稍后重试！"
                         }
-                    } ?: {
+                    } ?: run {
                         exception.message = "请求网络失败，请检查您的网络设置或稍后重试！"
                     }
                 } catch (e1: Exception) {

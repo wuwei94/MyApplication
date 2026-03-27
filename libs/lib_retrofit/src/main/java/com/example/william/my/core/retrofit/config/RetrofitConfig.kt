@@ -59,6 +59,7 @@ object RetrofitConfig {
         }
 
         fun setConverterFactory(factory: Converter.Factory): Builder {
+            mConverterFactory = factory
             return this
         }
 

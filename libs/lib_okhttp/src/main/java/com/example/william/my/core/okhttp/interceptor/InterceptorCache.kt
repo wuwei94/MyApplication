@@ -24,7 +24,8 @@ class InterceptorCache(private val mContext: Context) : Interceptor {
         if (request.headers(Header.RETROFIT_CACHE_ALIVE_SECOND).isEmpty()) {
             return chain.proceed(request)
         }
-        val age = request.headers(Header.RETROFIT_CACHE_ALIVE_SECOND)[0].toInt()
+        val age = request.headers(Header.RETROFIT_CACHE_ALIVE_SECOND)[0].toIntOrNull()
+            ?: return chain.proceed(request)
         return buildResponse(chain.proceed(buildRequest(request, age)), age)
     }
 

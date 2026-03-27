@@ -21,8 +21,9 @@ class InterceptorProgress(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
         val response: Response = chain.proceed(request)
+        val body = response.body ?: return response
         return response.newBuilder()
-            .body(ResponseProgressBody(request.url.toString(), response.body!!, listener))
+            .body(ResponseProgressBody(request.url.toString(), body, listener))
             .build()
     }
 }

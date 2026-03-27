@@ -19,7 +19,7 @@ object CompatCache {
                 OkHttpConfig.getCacheDir() ?: File(getCacheDir(app), OkHttpConfig.getCacheDirName())
             builder.cache(Cache(cacheFile, OkHttpConfig.getCacheDirSize()))
             builder.addNetworkInterceptor(InterceptorCache(app))
-        } ?: {
+        } ?: run {
             HttpLogger.error("context == null. 缓存未启用.")
         }
     }
@@ -27,7 +27,7 @@ object CompatCache {
     private fun getCacheDir(context: Application): File {
         return if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
             //外部存储可用
-            context.externalCacheDir!!
+            context.externalCacheDir ?: context.cacheDir
         } else {
             //外部存储不可用
             context.cacheDir

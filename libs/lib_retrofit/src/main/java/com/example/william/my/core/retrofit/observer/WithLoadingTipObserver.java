@@ -23,11 +23,16 @@ public abstract class WithLoadingTipObserver<T> implements Observer<RetrofitResp
 
     public WithLoadingTipObserver(LoadingTip loadingTip, String message) {
         this.mLoadingTip = loadingTip;
-        this.mLoadingTip.setMessage(message);
+        if (this.mLoadingTip != null) {
+            this.mLoadingTip.setMessage(message);
+        }
     }
 
     @Override
     public void onChanged(RetrofitResponse<T> tRetrofitResponse) {
+        if (tRetrofitResponse == null) {
+            return;
+        }
         switch (tRetrofitResponse.getCode()) {
             case State.LOADING:
                 if (mLoadingTip != null) {

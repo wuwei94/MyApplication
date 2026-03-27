@@ -24,39 +24,37 @@ class RxRetrofit<T>(private val builder: RetrofitBuilder<T>) {
     }
 
     fun createResponse(): Single<RetrofitResponse<T>> {
-        lateinit var response: Single<RetrofitResponse<T>>
-        lateinit var responseJsonElement: Single<RetrofitResponse<JsonElement>>
-        when (builder.getMethod()) {
-            Method.GET -> {
-                responseJsonElement =
+        val source =
+            when (builder.getMethod()) {
+                Method.GET -> {
                     buildApi().get(builder.getApi(), builder.getHeader(), builder.getParam())
-            }
+                }
 
-            Method.POST -> {
-                responseJsonElement = if (builder.getMultipartBody() != null) {
-                    val requestBody = builder.getMultipartBody()?.build()
-                    buildApi().post(builder.getApi(), builder.getHeader(), requestBody)
-                } else if (builder.getJsonObject() != null) {
-                    val requestBody =
-                        builder.getJsonObject().toString().toRequestBody(MediaType.MEDIA_TYPE_JSON)
-                    buildApi().post(builder.getApi(), builder.getHeader(), requestBody)
-                } else {
-                    buildApi().post(builder.getApi(), builder.getHeader(), builder.getParam())
+                Method.POST -> {
+                    if (builder.getMultipartBody() != null) {
+                        val requestBody = builder.getMultipartBody()?.build()
+                        buildApi().post(builder.getApi(), builder.getHeader(), requestBody)
+                    } else if (builder.getJsonObject() != null) {
+                        val requestBody =
+                            builder.getJsonObject().toString()
+                                .toRequestBody(MediaType.MEDIA_TYPE_JSON)
+                        buildApi().post(builder.getApi(), builder.getHeader(), requestBody)
+                    } else {
+                        buildApi().post(builder.getApi(), builder.getHeader(), builder.getParam())
+                    }
+                }
+
+                Method.PUT -> {
+                    buildApi().put(builder.getApi(), builder.getHeader(), builder.getParam())
+                }
+
+                Method.DELETE -> {
+                    buildApi().delete(builder.getApi(), builder.getHeader(), builder.getParam())
                 }
             }
 
-            Method.PUT -> {
-                responseJsonElement =
-                    buildApi().put(builder.getApi(), builder.getHeader(), builder.getParam())
-            }
-
-            Method.DELETE -> {
-                responseJsonElement =
-                    buildApi().delete(builder.getApi(), builder.getHeader(), builder.getParam())
-            }
-        }
-        response =
-            responseJsonElement.map(RxRetrofitFunction<T>()).onErrorResumeNext(HttpResultFunction())
+        var response =
+            source.map(RxRetrofitFunction<T>()).onErrorResumeNext(HttpResultFunction())
 
         builder.getLifecycle()?.let { lifecycle ->
             response = response.compose(lifecycle.bindToLifecycle())

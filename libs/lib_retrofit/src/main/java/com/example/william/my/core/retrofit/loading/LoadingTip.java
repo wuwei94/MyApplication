@@ -102,7 +102,7 @@ public class LoadingTip extends LinearLayout implements View.OnClickListener {
         LoadingTip loadingTip = new LoadingTip(context);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.setMargins(0, getStatusBarHeight(), 0, 0);
-        ((FrameLayout) context.getWindow().getDecorView()).addView(loadingTip);
+        ((FrameLayout) context.getWindow().getDecorView()).addView(loadingTip, params);
         return loadingTip;
     }
 
@@ -114,7 +114,7 @@ public class LoadingTip extends LinearLayout implements View.OnClickListener {
         LoadingTip loadingTip = new LoadingTip(context);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.setMargins(0, getToolBarHeight() + getStatusBarHeight(), 0, 0);
-        ((FrameLayout) context.getWindow().getDecorView()).addView(loadingTip);
+        ((FrameLayout) context.getWindow().getDecorView()).addView(loadingTip, params);
         return loadingTip;
     }
 
@@ -126,7 +126,7 @@ public class LoadingTip extends LinearLayout implements View.OnClickListener {
     public static int getStatusBarHeight() {
         Resources resources = Resources.getSystem();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        return resources.getDimensionPixelSize(resourceId);
+        return resourceId > 0 ? resources.getDimensionPixelSize(resourceId) : 0;
     }
 
     private LoadingTipListener onReloadListener;
