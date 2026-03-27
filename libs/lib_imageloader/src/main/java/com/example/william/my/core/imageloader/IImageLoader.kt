@@ -40,7 +40,7 @@ interface IImageLoader {
         context: Context?,
         url: String?,
         options: RequestOptions? = null,
-        requestListener: (() -> Unit)? = null,
+        onComplete: (() -> Unit)? = null,
     )
 
     fun ImageView.loadImageRound(

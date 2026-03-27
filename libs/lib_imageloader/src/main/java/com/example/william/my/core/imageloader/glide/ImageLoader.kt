@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.text.TextUtils
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -95,7 +94,7 @@ object ImageLoader : IImageLoader {
         context: Context?,
         url: String?,
         options: RequestOptions?,
-        requestListener: (() -> Unit)?
+        onComplete: (() -> Unit)?
     ) {
         context?.let {
             options?.let { options ->
@@ -109,7 +108,7 @@ object ImageLoader : IImageLoader {
                             target: Target<Drawable?>,
                             isFirstResource: Boolean
                         ): Boolean {
-                            requestListener?.invoke()
+                            onComplete?.invoke()
                             return false
                         }
 
@@ -120,7 +119,7 @@ object ImageLoader : IImageLoader {
                             dataSource: DataSource,
                             isFirstResource: Boolean
                         ): Boolean {
-                            requestListener?.invoke()
+                            onComplete?.invoke()
                             return false
                         }
                     })
@@ -135,7 +134,7 @@ object ImageLoader : IImageLoader {
                             target: Target<Drawable?>,
                             isFirstResource: Boolean
                         ): Boolean {
-                            requestListener?.invoke()
+                            onComplete?.invoke()
                             return false
                         }
 
@@ -146,7 +145,7 @@ object ImageLoader : IImageLoader {
                             dataSource: DataSource,
                             isFirstResource: Boolean
                         ): Boolean {
-                            requestListener?.invoke()
+                            onComplete?.invoke()
                             return false
                         }
                     })
@@ -289,7 +288,7 @@ object ImageLoader : IImageLoader {
     }
 
     override fun getImageDrawable(context: Context?, url: String?): Drawable? {
-        if (TextUtils.isEmpty(url)) {
+        if (url.isNullOrEmpty()) {
             return null
         }
         context?.let {
@@ -308,7 +307,7 @@ object ImageLoader : IImageLoader {
     }
 
     override fun getImageBitmap(context: Context?, url: String?): Bitmap? {
-        if (TextUtils.isEmpty(url)) {
+        if (url.isNullOrEmpty()) {
             return null
         }
         context?.let {
@@ -332,30 +331,24 @@ object ImageLoader : IImageLoader {
         url: String?,
         onResourceReady: ((drawable: Drawable) -> Unit)
     ) {
-        if (TextUtils.isEmpty(url)) {
+        if (url.isNullOrEmpty()) {
             return
         }
         context?.let {
-            try {
-                Glide.with(it)
-                    .load(url)
-                    .into(object : CustomTarget<Drawable>() {
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable>?
-                        ) {
-                            onResourceReady.invoke(resource)
-                        }
+            Glide.with(it)
+                .load(url)
+                .into(object : CustomTarget<Drawable>() {
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        transition: Transition<in Drawable>?
+                    ) {
+                        onResourceReady(resource)
+                    }
 
-                        override fun onLoadCleared(placeholder: Drawable?) {
+                    override fun onLoadCleared(placeholder: Drawable?) {
 
-                        }
-                    })
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+                    }
+                })
         }
     }
 
@@ -364,31 +357,25 @@ object ImageLoader : IImageLoader {
         url: String?,
         onResourceReady: ((bitmap: Bitmap?) -> Unit)
     ) {
-        if (TextUtils.isEmpty(url)) {
+        if (url.isNullOrEmpty()) {
             return
         }
         context?.let {
-            try {
-                Glide.with(it)
-                    .asBitmap()
-                    .load(url)
-                    .into(object : CustomTarget<Bitmap?>() {
-                        override fun onResourceReady(
-                            resource: Bitmap,
-                            transition: Transition<in Bitmap?>?
-                        ) {
-                            onResourceReady.invoke(resource)
-                        }
+            Glide.with(it)
+                .asBitmap()
+                .load(url)
+                .into(object : CustomTarget<Bitmap?>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap?>?
+                    ) {
+                        onResourceReady(resource)
+                    }
 
-                        override fun onLoadCleared(placeholder: Drawable?) {
+                    override fun onLoadCleared(placeholder: Drawable?) {
 
-                        }
-                    })
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+                    }
+                })
         }
     }
 }
