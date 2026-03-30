@@ -4,6 +4,7 @@ import 'package:basic_flutter/features/packages/image_picker_example.dart';
 import 'package:basic_flutter/features/packages/notification_example.dart';
 import 'package:basic_flutter/features/packages/permission_example.dart';
 import 'package:basic_flutter/features/packages/screen_util_example.dart';
+import 'package:basic_flutter/features/packages/secure_storage_example.dart';
 import 'package:basic_flutter/features/packages/shared_preferences_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
 import 'package:basic_flutter/features/packages/wechat_picker_example.dart';
@@ -48,6 +49,12 @@ final List<RouteItem> packageRoutes = [
     title: 'WechatPicker',
     subtitle: 'WechatPicker',
     routeBuilder: (BuildContext context, _) => const WechatPickerExample(),
+  ),
+  RouteItem(
+    path: '/package/secure-storage',
+    title: 'SecureStorage',
+    subtitle: 'SecureStorage',
+    routeBuilder: (BuildContext context, _) => const SecureStorageExample(),
   ),
   RouteItem(
     path: '/package/shared-preferences',

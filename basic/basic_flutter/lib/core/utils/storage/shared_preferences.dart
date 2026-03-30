@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// SharedPreferences 工具类
-/// 基于 SharedPreferencesAsync，避免缓存导致的脏读问题。
+/// 基于 SharedPreferencesAsync，适合保存普通本地配置和非敏感数据。
 class SharedPreferencesUtils {
   SharedPreferencesUtils._();
 
