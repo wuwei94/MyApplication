@@ -84,6 +84,8 @@ dependencies:
   wechat_camera_picker: ^4.5.0
   # https://pub.dev/packages/english_words
   english_words: ^4.0.0
+  # https://pub.dev/packages/webview_flutter
+  webview_flutter: ^4.13.0
 
 dev_dependencies:
   flutter_test:

@@ -7,6 +7,7 @@ import 'package:basic_flutter/features/packages/screen_util_example.dart';
 import 'package:basic_flutter/features/packages/secure_storage_example.dart';
 import 'package:basic_flutter/features/packages/shared_preferences_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
+import 'package:basic_flutter/features/packages/webview_flutter_example.dart';
 import 'package:basic_flutter/features/packages/wechat_picker_example.dart';
 import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
@@ -73,5 +74,11 @@ final List<RouteItem> packageRoutes = [
     title: 'ScreenUtil',
     subtitle: 'ScreenUtil',
     routeBuilder: (BuildContext context, _) => const ScreenUtilExample(),
+  ),
+  RouteItem(
+    path: '/package/webview-flutter',
+    title: 'WebViewFlutter',
+    subtitle: 'WebViewFlutter',
+    routeBuilder: (BuildContext context, _) => const WebViewFlutterExample(),
   ),
 ];
