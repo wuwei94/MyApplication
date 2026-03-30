@@ -1,6 +1,7 @@
 import 'package:basic_flutter/features/state_management/riverpod/providers/counter_riverpod_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 class CounterRiverpodPage extends ConsumerWidget {
   const CounterRiverpodPage({super.key, required this.title});
