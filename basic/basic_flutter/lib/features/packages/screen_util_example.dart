@@ -24,7 +24,7 @@ class ScreenUtilRoute extends StatelessWidget {
       //填入设计稿中设备的屏幕尺寸,单位dp
       designSize: const Size(360, 640),
       builder: (_, child) {
-        return const ScreenUtilScaffold(title: 'ScreenUtil demo');
+        return const ScreenUtilScaffold(title: 'ScreenUtil Example');
       },
     );
   }

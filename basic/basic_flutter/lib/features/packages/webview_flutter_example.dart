@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -27,9 +25,6 @@ class _WebViewFlutterRouteState extends State<WebViewFlutterRoute> {
   static const String _initialUrl = 'https://www.baidu.com';
 
   late final WebViewController _controller;
-  String _pageTitle = 'Loading...';
-  String _currentUrl = _initialUrl;
-  String? _errorMessage;
   int _loadingProgress = 0;
 
   @override
@@ -39,15 +34,12 @@ class _WebViewFlutterRouteState extends State<WebViewFlutterRoute> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onPageStarted: (String url) {
+          onPageStarted: (_) {
             if (!mounted) {
               return;
             }
 
             setState(() {
-              _currentUrl = url;
-              _pageTitle = 'Loading...';
-              _errorMessage = null;
               _loadingProgress = 0;
             });
           },
@@ -60,36 +52,27 @@ class _WebViewFlutterRouteState extends State<WebViewFlutterRoute> {
               _loadingProgress = progress;
             });
           },
-          onPageFinished: (String url) {
-            unawaited(_syncPageInfo(url));
-          },
-          onWebResourceError: (WebResourceError error) {
+          onPageFinished: (_) {
             if (!mounted) {
               return;
             }
 
             setState(() {
-              _errorMessage = error.description;
+              _loadingProgress = 100;
+            });
+          },
+          onWebResourceError: (_) {
+            if (!mounted) {
+              return;
+            }
+
+            setState(() {
               _loadingProgress = 100;
             });
           },
         ),
       )
       ..loadRequest(Uri.parse(_initialUrl));
-  }
-
-  Future<void> _syncPageInfo(String url) async {
-    final String? title = await _controller.getTitle();
-
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _currentUrl = url;
-      _pageTitle = title ?? 'Untitled Page';
-      _loadingProgress = 100;
-    });
   }
 
   Future<void> _reloadPage() async {
