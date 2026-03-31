@@ -11,6 +11,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: '/', builder: (context, state) => const HomePage()),
     // 示例路由
     ...RouteConverter.toGoRoutes(exampleRoutes),
+    // 网络请求路由
+    ...RouteConverter.toGoRoutes(networkRoutes),
+    // 本地存储路由
+    ...RouteConverter.toGoRoutes(storageRoutes),
     // 三方组件包路由
     ...RouteConverter.toGoRoutes(packageRoutes),
     // 状态管理路由

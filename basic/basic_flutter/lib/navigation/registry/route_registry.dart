@@ -5,6 +5,8 @@ import 'package:basic_flutter/navigation/modules/index.dart';
 /// 用于首页展示分组入口
 final List<RouteItem> routeRegistry = [
   RouteItem(title: 'Example', subtitle: "示例", routeItems: exampleRoutes),
+  RouteItem(title: 'Network', subtitle: "网络请求", routeItems: networkRoutes),
+  RouteItem(title: 'Storage', subtitle: "本地存储", routeItems: storageRoutes),
   RouteItem(title: 'Packages', subtitle: "三方组件", routeItems: packageRoutes),
   RouteItem(
     title: 'State Management',

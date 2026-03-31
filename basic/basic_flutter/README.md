@@ -28,19 +28,22 @@ dart tool/apply_android_fixes.dart
 * 网络请求
     * [Dio](https://pub.dev/packages/dio)
     * [Http](https://pub.dev/packages/http)
+* 数据存储
+    * [freezed](https://pub.dev/packages/freezed)
+    * [json_serializable](https://pub.dev/packages/json_serializable)
+    * [Shared Preferences](https://pub.dev/packages/shared_preferences)
+    * [Secure Storage](https://pub.dev/packages/secure_storage)
+    * [hive](https://pub.dev/packages/hive)
+    * [hive_flutter](https://pub.dev/packages/hive_flutter)
 * 三方框架
+    * [GoRouter](https://pub.dev/packages/go_router)
+    * [Logger](https://pub.dev/packages/logger)
     * [Toast](https://pub.dev/packages/fluttertoast)
     * [Notification](https://pub.dev/packages/flutter_local_notifications)
-
     * [Image Picker](https://pub.dev/packages/image_picker)
     * [WeChat Assets Picker](https://pub.dev/packages/wechat_assets_picker)
     * [WeChat Camera Picker](https://pub.dev/packages/wechat_camera_picker)
-
-    * [Secure Storage](https://pub.dev/packages/secure_storage)
-    * [Shared Preferences](https://pub.dev/packages/shared_preferences)
-    
     * [Webview](https://pub.dev/packages/webview_flutter)
-    
     * [Permission](https://pub.dev/packages/permission_handler)
     * [ScreenUtil](https://pub.dev/packages/flutter_screenutil)
 * 状态管理

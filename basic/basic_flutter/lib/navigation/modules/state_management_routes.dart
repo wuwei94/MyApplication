@@ -8,10 +8,10 @@ import 'package:flutter/widgets.dart';
 /// State Management 状态管理路由
 final List<RouteItem> stateManagementRoutes = [
   RouteItem(
-    path: '/state/provider',
-    title: 'Provider',
-    subtitle: 'Provider',
-    routeBuilder: (BuildContext context, _) => const CounterProviderExample(),
+    path: '/state/getx',
+    title: 'GetX',
+    subtitle: 'GetX',
+    routeBuilder: (BuildContext context, _) => const CounterGetxExample(),
   ),
   RouteItem(
     path: '/state/bloc',
@@ -20,10 +20,10 @@ final List<RouteItem> stateManagementRoutes = [
     routeBuilder: (BuildContext context, _) => const CounterBlocExample(),
   ),
   RouteItem(
-    path: '/state/getx',
-    title: 'GetX',
-    subtitle: 'GetX',
-    routeBuilder: (BuildContext context, _) => const CounterGetxExample(),
+    path: '/state/provider',
+    title: 'Provider',
+    subtitle: 'Provider',
+    routeBuilder: (BuildContext context, _) => const CounterProviderExample(),
   ),
   RouteItem(
     path: '/state/riverpod',

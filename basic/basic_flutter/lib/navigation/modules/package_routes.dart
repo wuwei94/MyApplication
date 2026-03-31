@@ -1,39 +1,15 @@
-import 'package:basic_flutter/features/packages/dio_example.dart';
-import 'package:basic_flutter/features/packages/hive_example.dart';
-import 'package:basic_flutter/features/packages/http_example.dart';
 import 'package:basic_flutter/features/packages/image_picker_example.dart';
 import 'package:basic_flutter/features/packages/notification_example.dart';
 import 'package:basic_flutter/features/packages/permission_example.dart';
 import 'package:basic_flutter/features/packages/screen_util_example.dart';
-import 'package:basic_flutter/features/packages/secure_storage_example.dart';
-import 'package:basic_flutter/features/packages/shared_preferences_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
-import 'package:basic_flutter/features/packages/webview_flutter_example.dart';
+import 'package:basic_flutter/features/packages/webview_example.dart';
 import 'package:basic_flutter/features/packages/wechat_picker_example.dart';
 import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 
 /// Package 三方框架路由
 final List<RouteItem> packageRoutes = [
-  RouteItem(
-    path: '/package/dio',
-    title: 'Dio',
-    subtitle: 'Dio',
-    routeBuilder: (BuildContext context, _) => const DioExample(),
-  ),
-  RouteItem(
-    path: '/package/http',
-    title: 'Http',
-    subtitle: 'Http',
-    routeBuilder: (BuildContext context, _) => const HttpExample(),
-  ),
-  RouteItem(
-    path: '/package/hive',
-    title: 'Hive',
-    subtitle: 'Hive',
-    routeBuilder: (BuildContext context, _) => const HiveExample(),
-  ),
-
   RouteItem(
     path: '/package/notification',
     title: 'Notification',
@@ -59,18 +35,6 @@ final List<RouteItem> packageRoutes = [
     routeBuilder: (BuildContext context, _) => const WechatPickerExample(),
   ),
   RouteItem(
-    path: '/package/secure-storage',
-    title: 'SecureStorage',
-    subtitle: 'SecureStorage',
-    routeBuilder: (BuildContext context, _) => const SecureStorageExample(),
-  ),
-  RouteItem(
-    path: '/package/shared-preferences',
-    title: 'SharedPreferences',
-    subtitle: 'SharedPreferences',
-    routeBuilder: (BuildContext context, _) => const SharedPreferencesExample(),
-  ),
-  RouteItem(
     path: '/package/toast',
     title: 'Toast',
     subtitle: 'Toast',
@@ -83,9 +47,9 @@ final List<RouteItem> packageRoutes = [
     routeBuilder: (BuildContext context, _) => const ScreenUtilExample(),
   ),
   RouteItem(
-    path: '/package/webview-flutter',
+    path: '/package/webview',
     title: 'WebViewFlutter',
     subtitle: 'WebViewFlutter',
-    routeBuilder: (BuildContext context, _) => const WebViewFlutterExample(),
+    routeBuilder: (BuildContext context, _) => const WebViewExample(),
   ),
 ];

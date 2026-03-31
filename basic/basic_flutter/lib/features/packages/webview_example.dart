@@ -3,25 +3,25 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 /// WebView Flutter
 /// https://pub.dev/packages/webview_flutter
-class WebViewFlutterExample extends StatelessWidget {
-  const WebViewFlutterExample({super.key});
+class WebViewExample extends StatelessWidget {
+  const WebViewExample({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const WebViewFlutterRoute(title: 'WebView Example');
+    return const WebViewRoute(title: 'WebView Example');
   }
 }
 
-class WebViewFlutterRoute extends StatefulWidget {
-  const WebViewFlutterRoute({super.key, required this.title});
+class WebViewRoute extends StatefulWidget {
+  const WebViewRoute({super.key, required this.title});
 
   final String title;
 
   @override
-  State<WebViewFlutterRoute> createState() => _WebViewFlutterRouteState();
+  State<WebViewRoute> createState() => _WebViewRouteState();
 }
 
-class _WebViewFlutterRouteState extends State<WebViewFlutterRoute> {
+class _WebViewRouteState extends State<WebViewRoute> {
   static const String _initialUrl = 'https://www.baidu.com';
 
   late final WebViewController _controller;

@@ -42,58 +42,66 @@ dependencies:
   #   git:
   #     url: 'https://github.com/alibaba/flutter_boost.git'
   #    ref: '4.5.7'
-  # https://pub.dev/packages/provider
-  provider: ^6.1.5
-  # https://pub.dev/packages/get
-  get: ^4.7.2
-  # https://pub.dev/packages/get_storage
-  get_storage: ^2.1.1
-  # https://pub.dev/packages/flutter_bloc
-  flutter_bloc: ^9.1.1
-  # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^3.3.1
-  # https://pub.dev/packages/go_router
-  go_router: ^17.1.0
-  # https://pub.dev/packages/logger
-  logger: ^2.6.1
-  # https://pub.dev/packages/flutter_screenutil
-  flutter_screenutil: ^5.9.3
-  # https://pub.dev/packages/fluttertoast
-  fluttertoast: ^9.0.0
-  # https://pub.dev/packages/flutter_local_notifications
-  flutter_local_notifications: ^21.0.0
-  # https://pub.dev/packages/shared_preferences
-  shared_preferences: ^2.5.3
-  # https://pub.dev/packages/hive
-  hive: ^2.2.3
-  # https://pub.dev/packages/hive_flutter
-  hive_flutter: ^1.1.0
-  # https://pub.dev/packages/flutter_secure_storage
-  flutter_secure_storage: ^10.0.0
+
+  # 网络请求相关
   # https://pub.dev/packages/dio
   dio: ^5.9.0
   # https://pub.dev/packages/http
   http: ^1.5.0
+
+  # 数据存储相关
   # https://pub.dev/packages/freezed_annotation
   freezed_annotation: ^3.1.0
-  # https://pub.dev/packages/json_annotation
-  json_annotation: ^4.9.0
-  # https://pub.dev/packages/permission_handler
-  permission_handler: ^12.0.1
+  # https://pub.dev/packages/shared_preferences
+  shared_preferences: ^2.5.3
+  # https://pub.dev/packages/flutter_secure_storage
+  flutter_secure_storage: ^10.0.0
+  # https://pub.dev/packages/hive
+  hive: ^2.2.3
+  # https://pub.dev/packages/hive_flutter
+  hive_flutter: ^1.1.0
+
+  # 状态管理相关
+  # https://pub.dev/packages/get
+  get: ^4.7.2
+  # https://pub.dev/packages/get_storage
+  get_storage: ^2.1.1
+  # https://pub.dev/packages/provider
+  provider: ^6.1.5
+  # https://pub.dev/packages/flutter_bloc
+  flutter_bloc: ^9.1.1
+  # https://pub.dev/packages/flutter_riverpod
+  flutter_riverpod: ^3.3.1
+
+  # 其他第三方库
+  # https://pub.dev/packages/go_router
+  go_router: ^17.1.0
+  # https://pub.dev/packages/logger
+  logger: ^2.6.1
+  # https://pub.dev/packages/fluttertoast
+  fluttertoast: ^9.0.0
+  # https://pub.dev/packages/flutter_local_notifications
+  flutter_local_notifications: ^21.0.0
   # https://pub.dev/packages/image_picker
   image_picker: ^1.2.1
   # https://pub.dev/packages/wechat_assets_picker
   wechat_assets_picker: ^10.1.1
   # https://pub.dev/packages/wechat_camera_picker
   wechat_camera_picker: ^4.5.0
-  # https://pub.dev/packages/english_words
-  english_words: ^4.0.0
   # https://pub.dev/packages/webview_flutter
   webview_flutter: ^4.13.0
+  # https://pub.dev/packages/permission_handler
+  permission_handler: ^12.0.1
+  # https://pub.dev/packages/flutter_screenutil
+  flutter_screenutil: ^5.9.3
+  
+  # https://pub.dev/packages/english_words
+  english_words: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # https://pub.dev/packages/flutter_lints
   flutter_lints: ^6.0.0
   # https://pub.dev/packages/freezed
   freezed: ^3.2.3
