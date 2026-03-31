@@ -1,5 +1,6 @@
 import 'package:basic_flutter/features/network/dio_example.dart';
 import 'package:basic_flutter/features/network/http_example.dart';
+import 'package:basic_flutter/features/network/image_example.dart';
 import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -16,5 +17,11 @@ final List<RouteItem> networkRoutes = [
     title: 'Http',
     subtitle: 'Http',
     routeBuilder: (BuildContext context, _) => const HttpExample(),
+  ),
+  RouteItem(
+    path: '/network/image',
+    title: 'CachedNetworkImage',
+    subtitle: 'CachedNetworkImage',
+    routeBuilder: (BuildContext context, _) => const ImageExample(),
   ),
 ];
