@@ -1,4 +1,5 @@
 import 'package:basic_flutter/features/packages/dio_example.dart';
+import 'package:basic_flutter/features/packages/hive_example.dart';
 import 'package:basic_flutter/features/packages/http_example.dart';
 import 'package:basic_flutter/features/packages/image_picker_example.dart';
 import 'package:basic_flutter/features/packages/notification_example.dart';
@@ -25,6 +26,12 @@ final List<RouteItem> packageRoutes = [
     title: 'Http',
     subtitle: 'Http',
     routeBuilder: (BuildContext context, _) => const HttpExample(),
+  ),
+  RouteItem(
+    path: '/package/hive',
+    title: 'Hive',
+    subtitle: 'Hive',
+    routeBuilder: (BuildContext context, _) => const HiveExample(),
   ),
 
   RouteItem(
