@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/riverpod/pages/counter_riverpod_page.dart';
+import 'package:basic_flutter/features/state/riverpod/pages/counter_riverpod_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

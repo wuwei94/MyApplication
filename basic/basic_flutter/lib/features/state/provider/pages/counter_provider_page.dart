@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/provider/notifiers/counter_provider_change_notifier.dart';
+import 'package:basic_flutter/features/state/provider/notifiers/counter_provider_change_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,12 +1,12 @@
-import 'package:basic_flutter/features/state_management/bloc/counter_bloc_example.dart';
-import 'package:basic_flutter/features/state_management/getx/counter_getx_example.dart';
-import 'package:basic_flutter/features/state_management/provider/counter_provider_example.dart';
-import 'package:basic_flutter/features/state_management/riverpod/counter_riverpod_example.dart';
+import 'package:basic_flutter/features/state/bloc/counter_bloc_example.dart';
+import 'package:basic_flutter/features/state/getx/counter_getx_example.dart';
+import 'package:basic_flutter/features/state/provider/counter_provider_example.dart';
+import 'package:basic_flutter/features/state/riverpod/counter_riverpod_example.dart';
 import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/widgets.dart';
 
-/// State Management 状态管理路由
-final List<RouteItem> stateManagementRoutes = [
+/// State 状态管理路由
+final List<RouteItem> stateRoutes = [
   RouteItem(
     path: '/state/getx',
     title: 'GetX',

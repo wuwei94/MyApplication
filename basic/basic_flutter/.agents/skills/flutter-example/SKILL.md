@@ -22,7 +22,9 @@ metadata:
 - 目录选择规则：
   - `lib/features/packages/`：三方包、平台能力、工具封装演示
   - `lib/features/examples/`：基础示例、完整小型示例应用
-  - `lib/features/state_management/`：`provider`、`bloc`、`getx` 等状态管理示例
+  - `lib/features/state/`：`provider`、`bloc`、`getx`、`riverpod` 等状态管理示例
+  - `lib/features/storage/`：本地存储相关示例，如 `shared_preferences`、`hive`、`secure_storage`
+  - `lib/features/network/`：网络请求相关示例，如 `dio`、`http`
 - 如果一个新示例已经明显属于现有分组，就放到对应分组下，不要新建平行目录。
 
 ### 2. 先选骨架
@@ -104,13 +106,16 @@ class XxxRoute extends StatelessWidget {
   - `controllers/`
   - `notifiers/`
   - `cubits/`
+  - `providers/`
   - `observers/`
   - `bindings/`
 - `*_example.dart` 优先只保留路由入口、注入层、包裹层和必要的轻量生命周期逻辑。
 - 可参考：
-  - `lib/features/state_management/provider/`
-  - `lib/features/state_management/bloc/`
-  - `lib/features/state_management/getx/`
+  - `lib/features/state/provider/`
+  - `lib/features/state/bloc/`
+  - `lib/features/state/getx/`
+  - `lib/features/state/riverpod/`
+  - `lib/features/examples/getx/`
 
 ### 6. 命名与 helper 约定
 - 类名、文件名、路由标题保持一致语义，例如：
@@ -130,9 +135,12 @@ class XxxRoute extends StatelessWidget {
   - example: `/example/...`
   - packages: `/package/...`
   - state management: `/state/...`
+  - storage: `/storage/...`
+  - network: `/network/...`
 - 多单词 path 优先使用 kebab-case，例如：
   - `/package/shared-preferences`
   - `/package/screen-util`
+  - `/storage/secure-storage`
 - 路由项统一使用 `RouteItem`。
 - `routeBuilder` 应直接返回 `const XxxExample()`。
 - 需要包示例说明时，可在文件顶部保留这种注释风格：
@@ -185,4 +193,4 @@ class XxxRoute extends StatelessWidget {
 - `XxxExample` 不承载复杂页面 UI 和业务细节，但允许承载轻量注入、包裹层和必要生命周期逻辑。
 - 只有在确实需要本地状态时，才让内层 `XxxRoute` 或 `XxxPage` 使用 `StatefulWidget`。
 - 只有在确实需要注入层生命周期管理、observer 恢复、全局包装恢复时，才让外层 `XxxExample` 使用 `StatefulWidget`。
-- 保持和现有 `lib/features/packages/toast_example.dart`、`lib/features/packages/notification_example.dart`、`lib/features/state_management/provider/counter_provider_example.dart` 一致的组织方式。
+- 保持和现有 `lib/features/packages/toast_example.dart`、`lib/features/packages/notification_example.dart`、`lib/features/state/provider/counter_provider_example.dart` 一致的组织方式。

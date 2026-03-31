@@ -2,7 +2,7 @@ import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// {@template counter_bloc_observer}
-/// Custom [BlocObserver] that observes all bloc and cubit state_management changes.
+/// Custom [BlocObserver] that observes all bloc and cubit state changes.
 /// {@endtemplate}
 class CounterBlocObserver extends BlocObserver {
   /// {@macro counter_bloc_observer}

@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/bloc/cubits/counter_bloc_cubit.dart';
+import 'package:basic_flutter/features/state/bloc/cubits/counter_bloc_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

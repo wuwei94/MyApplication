@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state_management/getx/pages/counter_getx_page.dart';
+import 'package:basic_flutter/features/state/getx/pages/counter_getx_page.dart';
 import 'package:flutter/material.dart';
 
 /// GetX

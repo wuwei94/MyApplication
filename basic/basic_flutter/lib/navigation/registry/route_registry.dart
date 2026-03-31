@@ -8,9 +8,5 @@ final List<RouteItem> routeRegistry = [
   RouteItem(title: 'Network', subtitle: "网络请求", routeItems: networkRoutes),
   RouteItem(title: 'Storage', subtitle: "本地存储", routeItems: storageRoutes),
   RouteItem(title: 'Packages', subtitle: "三方组件", routeItems: packageRoutes),
-  RouteItem(
-    title: 'State Management',
-    subtitle: "状态管理",
-    routeItems: stateManagementRoutes,
-  ),
+  RouteItem(title: 'State', subtitle: "状态管理", routeItems: stateRoutes),
 ];

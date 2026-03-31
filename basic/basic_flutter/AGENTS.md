@@ -12,7 +12,7 @@
 - `lib/features/home/`：首页和顶层功能入口。
 - `lib/features/examples/`：基础示例，例如 counter 和较完整的 GetX 示例。
 - `lib/features/packages/`：三方包示例，包括 `dio`、`http`、`fluttertoast`、`flutter_local_notifications`、`shared_preferences`、`flutter_screenutil`。
-- `lib/features/state_management/`：`provider`、`bloc`、`getx` 的并列示例。
+- `lib/features/state/`：`provider`、`bloc`、`getx` 的并列示例。
 - `lib/navigation/modules/`：各个功能分组的路由列表。
 - `lib/navigation/registry/route_registry.dart`：首页展示的顶层分组注册表。
 - `lib/core/`：通用工具，例如网络、日志、存储、UI 辅助工具。
