@@ -8,6 +8,11 @@ const List<_PermissionModel> _permissionDefinitions = <_PermissionModel>[
     subtitle: '消息提醒和系统通知',
   ),
   _PermissionModel(
+    permission: Permission.locationWhenInUse,
+    title: '定位权限',
+    subtitle: '使用期间获取位置信息',
+  ),
+  _PermissionModel(
     permission: Permission.camera,
     title: '相机权限',
     subtitle: '拍照、扫码和图像采集',
@@ -16,11 +21,6 @@ const List<_PermissionModel> _permissionDefinitions = <_PermissionModel>[
     permission: Permission.photos,
     title: '相册权限',
     subtitle: '读取照片和媒体文件',
-  ),
-  _PermissionModel(
-    permission: Permission.locationWhenInUse,
-    title: '定位权限',
-    subtitle: '使用期间获取位置信息',
   ),
 ];
 

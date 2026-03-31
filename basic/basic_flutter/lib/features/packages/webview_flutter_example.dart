@@ -8,7 +8,7 @@ class WebViewFlutterExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WebViewFlutterRoute(title: 'WebViewFlutter Example');
+    return const WebViewFlutterRoute(title: 'WebView Example');
   }
 }
 
