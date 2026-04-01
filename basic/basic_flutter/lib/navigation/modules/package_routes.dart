@@ -1,7 +1,11 @@
 import 'package:basic_flutter/features/packages/image_picker_example.dart';
+import 'package:basic_flutter/features/packages/lottie_example.dart';
 import 'package:basic_flutter/features/packages/notification_example.dart';
+import 'package:basic_flutter/features/packages/pag_example.dart';
 import 'package:basic_flutter/features/packages/permission_example.dart';
 import 'package:basic_flutter/features/packages/screen_util_example.dart';
+import 'package:basic_flutter/features/packages/svg_example.dart';
+import 'package:basic_flutter/features/packages/svga_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
 import 'package:basic_flutter/features/packages/webview_example.dart';
 import 'package:basic_flutter/features/packages/wechat_picker_example.dart';
@@ -45,6 +49,30 @@ final List<RouteItem> packageRoutes = [
     title: 'ScreenUtil',
     subtitle: 'ScreenUtil',
     routeBuilder: (BuildContext context, _) => const ScreenUtilExample(),
+  ),
+  RouteItem(
+    path: '/package/lottie',
+    title: 'Lottie',
+    subtitle: 'Lottie Animation',
+    routeBuilder: (BuildContext context, _) => const LottieExample(),
+  ),
+  RouteItem(
+    path: '/package/svg',
+    title: 'SVG',
+    subtitle: 'SVG Image',
+    routeBuilder: (BuildContext context, _) => const SvgExample(),
+  ),
+  RouteItem(
+    path: '/package/pag',
+    title: 'PAG',
+    subtitle: 'PAG Animation',
+    routeBuilder: (BuildContext context, _) => const PagExample(),
+  ),
+  RouteItem(
+    path: '/package/svga',
+    title: 'SVGA',
+    subtitle: 'SVGA Animation',
+    routeBuilder: (BuildContext context, _) => const SvgaExample(),
   ),
   RouteItem(
     path: '/package/webview',
