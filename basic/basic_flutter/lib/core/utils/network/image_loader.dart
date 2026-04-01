@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 /// 缓存图片工具类
 /// 基于 cached_network_image 封装的常用图片加载方式
-class ImageUtils {
-  ImageUtils._();
+class ImageLoader {
+  ImageLoader._();
 
   /// 基础网络图片
   static Widget load({

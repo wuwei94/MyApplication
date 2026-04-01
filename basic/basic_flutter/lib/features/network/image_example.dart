@@ -1,4 +1,4 @@
-import 'package:basic_flutter/core/utils/ui/image.dart';
+import 'package:basic_flutter/core/utils/network/image_loader.dart';
 import 'package:flutter/material.dart';
 
 /// cached_network_image
@@ -61,7 +61,7 @@ class ImageRoute extends StatelessWidget {
   }
 
   Widget _buildBasicExample() {
-    return ImageUtils.load(
+    return ImageLoader.load(
       url: _sampleImageUrl,
       width: double.infinity,
       height: 200,
@@ -69,7 +69,7 @@ class ImageRoute extends StatelessWidget {
   }
 
   Widget _buildRoundedImage() {
-    return ImageUtils.radius(
+    return ImageLoader.radius(
       url: '$_sampleImageUrl?random=1',
       width: double.infinity,
       height: 200,
@@ -79,7 +79,7 @@ class ImageRoute extends StatelessWidget {
 
   Widget _buildCircleAvatar() {
     return Center(
-      child: ImageUtils.round(url: '$_sampleImageUrl?random=2', size: 120),
+      child: ImageLoader.round(url: '$_sampleImageUrl?random=2', size: 120),
     );
   }
 
@@ -94,7 +94,7 @@ class ImageRoute extends StatelessWidget {
         const SizedBox(height: 12),
         ElevatedButton.icon(
           onPressed: () async {
-            await ImageUtils.clear(_sampleImageUrl);
+            await ImageLoader.clear(_sampleImageUrl);
           },
           icon: const Icon(Icons.delete_outline),
           label: const Text('清除缓存'),
