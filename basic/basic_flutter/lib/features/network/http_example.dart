@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 /// http
 /// https://pub.dev/packages/http
 class HttpExample extends StatelessWidget {
-  const HttpExample({super.key});
+  const HttpExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const HttpRoute(title: 'Http Example');
+    return HttpRoute(title: title);
   }
 }
 

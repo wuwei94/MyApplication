@@ -27,11 +27,13 @@ const List<_PermissionModel> _permissionDefinitions = <_PermissionModel>[
 /// Permission Handler
 /// https://pub.dev/packages/permission_handler
 class PermissionExample extends StatelessWidget {
-  const PermissionExample({super.key});
+  const PermissionExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const PermissionRoute(title: 'Permission Example');
+    return PermissionRoute(title: title);
   }
 }
 

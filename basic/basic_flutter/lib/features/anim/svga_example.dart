@@ -6,11 +6,13 @@ import 'package:flutter_svga/flutter_svga.dart';
 /// SVGA animation
 /// https://pub.dev/packages/flutter_svga
 class SvgaExample extends StatelessWidget {
-  const SvgaExample({super.key});
+  const SvgaExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const SvgaRoute(title: 'SVGA Example');
+    return SvgaRoute(title: title);
   }
 }
 

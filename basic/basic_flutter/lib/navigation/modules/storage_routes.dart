@@ -9,19 +9,21 @@ final List<RouteItem> storageRoutes = [
   RouteItem(
     path: '/storage/hive',
     title: 'Hive',
-    subtitle: 'Hive',
-    routeBuilder: (BuildContext context, _) => const HiveExample(),
+    subtitle: 'Hive示例',
+    routeBuilder: (BuildContext context, _) => const HiveExample(title: 'Hive'),
   ),
   RouteItem(
     path: '/storage/secure-storage',
     title: 'SecureStorage',
-    subtitle: 'SecureStorage',
-    routeBuilder: (BuildContext context, _) => const SecureStorageExample(),
+    subtitle: 'SecureStorage示例',
+    routeBuilder: (BuildContext context, _) =>
+        const SecureStorageExample(title: 'SecureStorage'),
   ),
   RouteItem(
     path: '/storage/shared-preferences',
     title: 'SharedPreferences',
-    subtitle: 'SharedPreferences',
-    routeBuilder: (BuildContext context, _) => const SharedPreferencesExample(),
+    subtitle: 'SharedPreferences示例',
+    routeBuilder: (BuildContext context, _) =>
+        const SharedPreferencesExample(title: 'SharedPreferences'),
   ),
 ];

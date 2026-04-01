@@ -1,12 +1,14 @@
-import 'package:basic_flutter/features/state/provider/notifiers/counter_provider_change_notifier.dart';
-import 'package:basic_flutter/features/state/provider/pages/counter_provider_page.dart';
+import 'package:basic_flutter/features/state_manager/provider/notifiers/counter_provider_change_notifier.dart';
+import 'package:basic_flutter/features/state_manager/provider/pages/counter_provider_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 /// Provider
 /// https://pub.dev/packages/provider
 class CounterProviderExample extends StatelessWidget {
-  const CounterProviderExample({super.key});
+  const CounterProviderExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CounterProviderExample extends StatelessWidget {
       // That way, Provider can own Counter's lifecycle,
       // making sure to call `dispose` when not needed anymore.
       create: (_) => CounterProviderChangeNotifier(),
-      child: const CounterProviderPage(title: 'Provider Example'),
+      child: CounterProviderPage(title: title),
     );
   }
 }

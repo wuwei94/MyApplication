@@ -1,54 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:pag_flutter/pag_flutter.dart';
+import 'package:lottie/lottie.dart';
 
-/// PAG animation
-/// https://pub.dev/packages/pag_flutter
-class PagExample extends StatelessWidget {
-  const PagExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const PagRoute(title: 'PAG Example');
-  }
-}
-
-class PagRoute extends StatefulWidget {
-  const PagRoute({super.key, required this.title});
+/// Lottie animation
+/// https://pub.dev/packages/lottie
+class LottieExample extends StatelessWidget {
+  const LottieExample({super.key, required this.title});
 
   final String title;
 
   @override
-  State<PagRoute> createState() => _PagRouteState();
+  Widget build(BuildContext context) {
+    return LottieRoute(title: title);
+  }
 }
 
-class _PagRouteState extends State<PagRoute> {
-  static const String _sampleAsset = 'assets/anim/pag/diamond.pag';
+class LottieRoute extends StatelessWidget {
+  const LottieRoute({super.key, required this.title});
 
-  late final PAGController _controller;
+  static const String _sampleAsset = 'assets/anim/lottie/playing.json';
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = PAGController()..play();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(title: Text(title)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Local PAG sample',
+              'Local Lottie sample',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
@@ -74,12 +57,7 @@ class _PagRouteState extends State<PagRoute> {
         child: SizedBox(
           width: 280,
           height: 280,
-          child: PAGView.asset(
-            _sampleAsset,
-            controller: _controller,
-            repeatCount: 0,
-            scaleMode: PAGScaleMode.letterBox,
-          ),
+          child: Lottie.asset(_sampleAsset, fit: BoxFit.contain),
         ),
       ),
     );

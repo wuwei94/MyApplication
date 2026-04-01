@@ -2,11 +2,13 @@ import 'package:basic_flutter/features/examples/getx/utils/storage_utils.dart';
 import 'package:flutter/material.dart';
 
 class StoragePage extends StatelessWidget {
-  const StoragePage({super.key});
+  const StoragePage({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const StorageRoute(title: 'Storage Example');
+    return StorageRoute(title: title);
   }
 }
 

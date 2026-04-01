@@ -7,14 +7,16 @@ import 'package:flutter/widgets.dart';
 final List<RouteItem> exampleRoutes = [
   RouteItem(
     path: '/example/counter',
-    title: '计数器示例',
+    title: 'Counter Example',
     subtitle: '计数器示例',
-    routeBuilder: (BuildContext context, _) => const Counter(),
+    routeBuilder: (BuildContext context, _) =>
+        const Counter(title: 'Counter Example'),
   ),
   RouteItem(
     path: '/example/getx',
-    title: 'GetX示例',
+    title: 'GetX Example',
     subtitle: 'GetX示例',
-    routeBuilder: (BuildContext context, _) => const GetXApp(),
+    routeBuilder: (BuildContext context, _) =>
+        const GetXApp(title: 'GetX Example'),
   ),
 ];

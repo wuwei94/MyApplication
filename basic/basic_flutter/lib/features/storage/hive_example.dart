@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 /// Hive
 /// https://pub.dev/packages/hive
 class HiveExample extends StatelessWidget {
-  const HiveExample({super.key});
+  const HiveExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const HiveRoute(title: 'Hive Example');
+    return HiveRoute(title: title);
   }
 }
 

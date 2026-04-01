@@ -7,11 +7,13 @@ import 'package:image_picker/image_picker.dart';
 /// Image Picker
 /// https://pub.dev/packages/image_picker
 class ImagePickerExample extends StatelessWidget {
-  const ImagePickerExample({super.key});
+  const ImagePickerExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const ImagePickerRoute(title: 'ImagePicker 图片选择示例');
+    return ImagePickerRoute(title: title);
   }
 }
 

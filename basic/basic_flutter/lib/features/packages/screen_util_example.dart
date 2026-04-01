@@ -6,16 +6,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// ScreenUtil
 /// https://pub.dev/packages/flutter_screenutil
 class ScreenUtilExample extends StatelessWidget {
-  const ScreenUtilExample({super.key});
+  const ScreenUtilExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const ScreenUtilRoute();
+    return ScreenUtilRoute(title: title);
   }
 }
 
 class ScreenUtilRoute extends StatelessWidget {
-  const ScreenUtilRoute({super.key});
+  const ScreenUtilRoute({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class ScreenUtilRoute extends StatelessWidget {
       //填入设计稿中设备的屏幕尺寸,单位dp
       designSize: const Size(360, 640),
       builder: (_, child) {
-        return const ScreenUtilScaffold(title: 'ScreenUtil Example');
+        return ScreenUtilScaffold(title: title);
       },
     );
   }

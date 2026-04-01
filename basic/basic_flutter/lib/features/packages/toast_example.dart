@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 /// toast
 /// https://pub.dev/packages/fluttertoast
 class ToastExample extends StatelessWidget {
-  const ToastExample({super.key});
+  const ToastExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const ToastRoute(title: 'Toast Example');
+    return ToastRoute(title: title);
   }
 }
 

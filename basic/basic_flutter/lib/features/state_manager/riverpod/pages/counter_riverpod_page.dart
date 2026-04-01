@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/state/riverpod/providers/counter_riverpod_provider.dart';
+import 'package:basic_flutter/features/state_manager/riverpod/providers/counter_riverpod_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';

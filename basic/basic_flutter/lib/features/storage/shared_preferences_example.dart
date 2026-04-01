@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 /// Shared Preferences
 /// https://pub.dev/packages/shared_preferences
 class SharedPreferencesExample extends StatelessWidget {
-  const SharedPreferencesExample({super.key});
+  const SharedPreferencesExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const SharedPreferencesRoute(title: 'SharedPreferences Example');
+    return SharedPreferencesRoute(title: title);
   }
 }
 

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-/// Lottie animation
-/// https://pub.dev/packages/lottie
-class LottieExample extends StatelessWidget {
-  const LottieExample({super.key});
+/// SVG image
+/// https://pub.dev/packages/flutter_svg
+class SvgExample extends StatelessWidget {
+  const SvgExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const LottieRoute(title: 'Lottie Example');
+    return SvgRoute(title: title);
   }
 }
 
-class LottieRoute extends StatelessWidget {
-  const LottieRoute({super.key, required this.title});
+class SvgRoute extends StatelessWidget {
+  const SvgRoute({super.key, required this.title});
 
-  static const String _sampleAsset = 'assets/anim/lottie/playing.json';
+  static const String _sampleAsset = 'assets/anim/svg/playing.svg';
 
   final String title;
 
@@ -29,7 +31,7 @@ class LottieRoute extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Local Lottie sample',
+              'Local SVG sample',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
@@ -55,7 +57,7 @@ class LottieRoute extends StatelessWidget {
         child: SizedBox(
           width: 280,
           height: 280,
-          child: Lottie.asset(_sampleAsset, fit: BoxFit.contain),
+          child: SvgPicture.asset(_sampleAsset, fit: BoxFit.contain),
         ),
       ),
     );

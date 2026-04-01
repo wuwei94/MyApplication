@@ -5,13 +5,15 @@ import 'package:get/get.dart';
 /// GetX 示例列表页面
 /// 用于展示所有 GetX 示例的入口
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     final routes = FeaturesRoute().getRouteItems();
     return Scaffold(
-      appBar: AppBar(title: const Text("GetX Examples")),
+      appBar: AppBar(title: Text(title)),
       body: ListView.builder(
         itemCount: routes.length,
         itemBuilder: (context, index) {

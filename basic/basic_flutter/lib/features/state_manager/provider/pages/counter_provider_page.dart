@@ -1,15 +1,14 @@
-import 'package:basic_flutter/features/state/bloc/cubits/counter_bloc_cubit.dart';
+import 'package:basic_flutter/features/state_manager/provider/notifiers/counter_provider_change_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
-class CounterBlocPage extends StatelessWidget {
-  const CounterBlocPage({super.key, required this.title});
+class CounterProviderPage extends StatelessWidget {
+  const CounterProviderPage({super.key, required this.title});
 
   final String title;
 
   void _incrementCounter(BuildContext context) {
-    final CounterBlocCubit cubit = context.read<CounterBlocCubit>();
-    cubit.increment();
+    context.read<CounterProviderChangeNotifier>().increment();
   }
 
   @override
@@ -27,9 +26,9 @@ class CounterBlocPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('You have pushed the button this many times:'),
-          BlocBuilder<CounterBlocCubit, int>(
-            builder: (context, count) {
-              return Text('$count');
+          Consumer<CounterProviderChangeNotifier>(
+            builder: (context, counter, child) {
+              return Text('${counter.value}');
             },
           ),
         ],

@@ -8,11 +8,13 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 /// WeChat Camera Picker
 /// https://pub.dev/packages/wechat_camera_picker
 class WechatPickerExample extends StatelessWidget {
-  const WechatPickerExample({super.key});
+  const WechatPickerExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const WechatPickerRoute(title: 'WechatPicker 图片选择示例');
+    return WechatPickerRoute(title: title);
   }
 }
 

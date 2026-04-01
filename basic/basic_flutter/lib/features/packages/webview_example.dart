@@ -4,11 +4,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 /// WebView Flutter
 /// https://pub.dev/packages/webview_flutter
 class WebViewExample extends StatelessWidget {
-  const WebViewExample({super.key});
+  const WebViewExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const WebViewRoute(title: 'WebView Example');
+    return WebViewRoute(title: title);
   }
 }
 

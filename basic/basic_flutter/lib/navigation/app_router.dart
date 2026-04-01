@@ -18,6 +18,6 @@ final GoRouter appRouter = GoRouter(
     // 三方组件包路由
     ...RouteConverter.toGoRoutes(packageRoutes),
     // 状态管理路由
-    ...RouteConverter.toGoRoutes(stateRoutes),
+    ...RouteConverter.toGoRoutes(stateManagerRoutes),
   ],
 );

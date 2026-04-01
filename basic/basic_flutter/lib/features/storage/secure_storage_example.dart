@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 /// Flutter Secure Storage
 /// https://pub.dev/packages/flutter_secure_storage
 class SecureStorageExample extends StatelessWidget {
-  const SecureStorageExample({super.key});
+  const SecureStorageExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const SecureStorageRoute(title: 'SecureStorage Example');
+    return SecureStorageRoute(title: title);
   }
 }
 

@@ -9,7 +9,10 @@ class AppRoutes {
   static List<GetPage<void>> getPages() {
     return [
       ...features.getRoutePages(),
-      GetPage(name: "/home", page: () => const HomePage())
+      GetPage(
+        name: '/home',
+        page: () => const HomePage(title: 'GetX示例'),
+      ),
     ];
   }
 

@@ -16,7 +16,6 @@ class RouteItem {
     Widget Function(BuildContext, GoRouterState)? routeBuilder,
   }) : routeBuilder = routeBuilder ?? ((_, _) => const SizedBox.shrink());
 
-  // 转换为 GoRoute
-  GoRoute toGoRoute() =>
-      GoRoute(path: path, name: title, builder: routeBuilder);
+   // 转换为 GoRoute
+  GoRoute toGoRoute() => GoRoute(path: path, name: title, builder: routeBuilder);
 }

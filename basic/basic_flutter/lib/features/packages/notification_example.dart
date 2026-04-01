@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 /// Notifications
 /// https://pub.dev/packages/flutter_local_notifications
 class NotificationExample extends StatelessWidget {
-  const NotificationExample({super.key});
+  const NotificationExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const NotificationRoute(title: 'Notification Example');
+    return NotificationRoute(title: title);
   }
 }
 

@@ -9,19 +9,20 @@ final List<RouteItem> networkRoutes = [
   RouteItem(
     path: '/network/dio',
     title: 'Dio',
-    subtitle: 'Dio',
-    routeBuilder: (BuildContext context, _) => const DioExample(),
+    subtitle: 'Dio网络请求示例',
+    routeBuilder: (BuildContext context, _) => const DioExample(title: 'Dio'),
   ),
   RouteItem(
     path: '/network/http',
     title: 'Http',
-    subtitle: 'Http',
-    routeBuilder: (BuildContext context, _) => const HttpExample(),
+    subtitle: 'Http网络请求示例',
+    routeBuilder: (BuildContext context, _) => const HttpExample(title: 'Http'),
   ),
   RouteItem(
     path: '/network/image',
-    title: 'CachedNetworkImage',
-    subtitle: 'CachedNetworkImage',
-    routeBuilder: (BuildContext context, _) => const ImageExample(),
+    title: 'ImageLoader',
+    subtitle: 'ImageLoader图片加载示例',
+    routeBuilder: (BuildContext context, _) =>
+        const ImageExample(title: 'ImageLoader'),
   ),
 ];

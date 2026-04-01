@@ -1,35 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pag_flutter/pag_flutter.dart';
 
-/// SVG image
-/// https://pub.dev/packages/flutter_svg
-class SvgExample extends StatelessWidget {
-  const SvgExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SvgRoute(title: 'SVG Example');
-  }
-}
-
-class SvgRoute extends StatelessWidget {
-  const SvgRoute({super.key, required this.title});
-
-  static const String _sampleAsset = 'assets/anim/svg/playing.svg';
+/// PAG animation
+/// https://pub.dev/packages/pag_flutter
+class PagExample extends StatelessWidget {
+  const PagExample({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
+    return PagRoute(title: title);
+  }
+}
+
+class PagRoute extends StatefulWidget {
+  const PagRoute({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<PagRoute> createState() => _PagRouteState();
+}
+
+class _PagRouteState extends State<PagRoute> {
+  static const String _sampleAsset = 'assets/anim/pag/diamond.pag';
+
+  late final PAGController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PAGController()..play();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(widget.title)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Local SVG sample',
+              'Local PAG sample',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
@@ -55,7 +76,12 @@ class SvgRoute extends StatelessWidget {
         child: SizedBox(
           width: 280,
           height: 280,
-          child: SvgPicture.asset(_sampleAsset, fit: BoxFit.contain),
+          child: PAGView.asset(
+            _sampleAsset,
+            controller: _controller,
+            repeatCount: 0,
+            scaleMode: PAGScaleMode.letterBox,
+          ),
         ),
       ),
     );

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UpdatePage extends StatelessWidget {
-  const UpdatePage({super.key});
+  const UpdatePage({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(context) {
@@ -11,7 +13,7 @@ class UpdatePage extends StatelessWidget {
     final UpdateController controller = Get.put(UpdateController());
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Home Page")),
+      appBar: AppBar(title: Text(title)),
 
       // 用一个简单的Get.to()即可代替Navigator.push那8行，无需上下文！
       body: Center(

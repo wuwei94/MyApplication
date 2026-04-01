@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 /// GetX
 /// https://pub.dev/packages/get
 class GetXApp extends StatelessWidget {
-  const GetXApp({super.key});
+  const GetXApp({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class GetXApp extends StatelessWidget {
       translations: AppTranslations(),
       locale: const Locale('zh', 'CN'),
       fallbackLocale: const Locale('en', 'US'),
-      home: const HomePage(),
+      home: HomePage(title: title),
       getPages: AppRoutes.getPages(),
       unknownRoute: AppRoutes.getUnknown(),
     );

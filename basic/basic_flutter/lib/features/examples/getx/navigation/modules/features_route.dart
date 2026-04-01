@@ -26,19 +26,19 @@ class FeaturesRoute extends BaseRoute {
         name: "$prefix/counter",
         title: "Counter",
         subtitle: "计数器示例",
-        page: () => const CounterPage(),
+        page: () => const CounterPage(title: 'Counter'),
       ),
       GetRouteItem(
         name: "$prefix/update",
         title: "Update",
         subtitle: "计数器示例",
-        page: () => const UpdatePage(),
+        page: () => const UpdatePage(title: 'Update'),
       ),
       GetRouteItem(
         name: "$prefix/worker",
         title: "Worker",
         subtitle: "计数器示例",
-        page: () => const WorkerPage(),
+        page: () => const WorkerPage(title: 'Worker'),
         binding: WorkerBinding(),
       ),
       // 工具类示例
@@ -46,21 +46,21 @@ class FeaturesRoute extends BaseRoute {
         name: "$prefix/utils",
         title: "Utils",
         subtitle: "工具类示例",
-        page: () => const UtilsPage(),
+        page: () => const UtilsPage(title: 'Utils'),
       ),
       // 工具类示例
       GetRouteItem(
         name: "$prefix/storage",
         title: "Storage",
         subtitle: "存储类示例",
-        page: () => const StoragePage(),
+        page: () => const StoragePage(title: 'Storage'),
       ),
       // 语言切换示例
       GetRouteItem(
         name: "$prefix/locale",
         title: "Locale",
         subtitle: "语言切换示例",
-        page: () => const LocalePage(),
+        page: () => const LocalePage(title: 'Locale'),
       ),
     ];
   }

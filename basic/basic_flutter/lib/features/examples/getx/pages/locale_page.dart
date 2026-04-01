@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LocalePage extends StatelessWidget {
-  const LocalePage({super.key});
+  const LocalePage({super.key, required this.title});
+
+  final String title;
 
   void _toggleLocale() {
     if (Get.locale?.languageCode == 'zh') {
@@ -16,7 +18,7 @@ class LocalePage extends StatelessWidget {
   @override
   Widget build(context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Locale Page")),
+      appBar: AppBar(title: Text(title)),
       body: Center(
         child: ElevatedButton(
           onPressed: _toggleLocale,

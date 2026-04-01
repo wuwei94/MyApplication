@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 /// dio
 /// https://pub.dev/packages/dio
 class DioExample extends StatelessWidget {
-  const DioExample({super.key});
+  const DioExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const DioRoute(title: 'Dio Example');
+    return DioRoute(title: title);
   }
 }
 

@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 /// cached_network_image
 /// https://pub.dev/packages/cached_network_image
 class ImageExample extends StatelessWidget {
-  const ImageExample({super.key});
+  const ImageExample({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const ImageRoute(title: 'CachedNetworkImage Example');
+    return ImageRoute(title: title);
   }
 }
 

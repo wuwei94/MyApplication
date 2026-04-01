@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UtilsPage extends StatelessWidget {
-  const UtilsPage({super.key});
+  const UtilsPage({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('GetX 工具类示例')),
+      appBar: AppBar(title: Text(title)),
       body: ListView(
         children: [
           // 显示 SnackBar
