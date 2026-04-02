@@ -94,6 +94,8 @@ dependencies:
   # 其他第三方库
   # https://pub.dev/packages/go_router
   go_router: ^17.1.0
+  # https://pub.dev/packages/auto_route
+  auto_route: ^11.1.0
   # https://pub.dev/packages/logger
   logger: ^2.6.1
   # https://pub.dev/packages/fluttertoast
