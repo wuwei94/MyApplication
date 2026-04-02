@@ -61,6 +61,12 @@ dependencies:
   # https://pub.dev/packages/pag_flutter
   pag_flutter: ^0.0.1
 
+  # 视频组件相关
+  # https://pub.dev/packages/video_player
+  video_player: ^2.11.1
+  # https://pub.dev/packages/chewie
+  chewie: ^1.13.0
+
   # 数据存储相关
   # https://pub.dev/packages/freezed_annotation
   freezed_annotation: ^3.1.0
@@ -143,6 +149,7 @@ flutter:
     - assets/anim/pag/
     - assets/anim/svg/
     - assets/anim/svga/
+    - assets/video/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

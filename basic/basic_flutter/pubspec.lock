@@ -209,6 +209,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.4"
+  chewie:
+    dependency: "direct main"
+    description:
+      name: chewie
+      sha256: "44bcfc5f0dfd1de290c87c9d86a61308b3282a70b63435d5557cfd60f54a69ca"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.13.0"
   cli_config:
     dependency: transitive
     description:
@@ -928,6 +936,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.2.0"
+  package_info_plus:
+    dependency: transitive
+    description:
+      name: package_info_plus
+      sha256: "468c26b4254ab01979fa5e4a98cb343ea3631b9acee6f21028997419a80e1a20"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "9.0.1"
+  package_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: package_info_plus_platform_interface
+      sha256: "202a487f08836a592a6bd4f901ac69b3a8f146af552bbd14407b6b41e1c3f086"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.2.1"
   pag_android:
     dependency: transitive
     description:
@@ -1510,7 +1534,7 @@ packages:
     source: hosted
     version: "2.2.0"
   video_player:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: video_player
       sha256: "48a7bdaa38a3d50ec10c78627abdbfad863fdf6f0d6e08c7c3c040cfd80ae36f"
@@ -1565,6 +1589,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "15.0.2"
+  wakelock_plus:
+    dependency: transitive
+    description:
+      name: wakelock_plus
+      sha256: "8b12256f616346910c519a35606fb69b1fe0737c06b6a447c6df43888b097f39"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.5.1"
+  wakelock_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: wakelock_plus_platform_interface
+      sha256: "24b84143787220a403491c2e5de0877fbbb87baf3f0b18a2a988973863db4b03"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.4.0"
   watcher:
     dependency: transitive
     description:
