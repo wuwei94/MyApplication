@@ -19,6 +19,7 @@
         <activity android:name=".activity2.PermissionActivity" />
         <activity android:name=".activity2.RenderEffectActivity" />
         <activity android:name=".activity2.RenderScriptActivity" />
+        <activity android:name=".activity2.SecureKeyDemoActivity" />
         <activity android:name=".activity2.TransitionFirstActivity" />
         <activity android:name=".activity2.TransitionSecondActivity" />
         <activity android:name=".activity2.TypefaceActivity" />

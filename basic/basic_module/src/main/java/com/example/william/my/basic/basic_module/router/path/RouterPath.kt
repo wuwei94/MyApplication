@@ -66,6 +66,7 @@ object RouterPath {
         const val JobScheduler = "${Demo}/JobScheduler"
         const val Messenger = "${Demo}/Messenger"
         const val Service = "${Demo}/Service"
+        const val SecureKey = "${Demo}/SecureKey"
     }
 
     object Widget {

@@ -29,6 +29,7 @@ class DemoActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Typeface", RouterPath.Demo.Typeface))
         routerItems.add(RouterItem("RenderEffect", RouterPath.Demo.RenderEffect))
         routerItems.add(RouterItem("RenderScript", RouterPath.Demo.RenderScript))
+        routerItems.add(RouterItem("SecureKey", RouterPath.Demo.SecureKey))
 
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("Camera", RouterPath.Demo.Camera))
