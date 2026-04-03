@@ -1,4 +1,4 @@
-import 'package:basic_flutter/navigation/app_router.dart';
+import 'package:basic_flutter/navigation/app_go_router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Example',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      routerConfig: appRouter,
+      routerConfig: appGoRouter,
     );
   }
 }

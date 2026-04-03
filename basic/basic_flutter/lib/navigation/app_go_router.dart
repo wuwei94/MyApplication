@@ -7,9 +7,9 @@ final GoRouter appGoRouter = GoRouter(
   initialLocation: '/',
   routes: [
     // 首页路由
-    RouteConverter.getHomeRoute(),
+    ...RouteConverter.toGoRoutes(homeRoutes),
     // 分组路由
-    RouteConverter.getGroupRoute(),
+    ...RouteConverter.toGoRoutes(featuresRoutes),
     // 示例路由
     ...RouteConverter.toGoRoutes(exampleRoutes),
     // 网络请求路由

@@ -18,12 +18,14 @@ class RouteItem {
   }) : pageBuilder = pageBuilder ?? ((_) => const SizedBox.shrink());
 
   // 转换为 go_router 的 GoRoute
-  go_router.GoRoute toGoRoute() => go_router.GoRoute(
-    path: path,
-    name: title,
-    builder: (BuildContext context, go_router.GoRouterState state) =>
-        pageBuilder(context),
-  );
+  go_router.GoRoute toGoRoute() {
+    return go_router.GoRoute(
+      path: path,
+      name: title,
+      builder: (BuildContext context, go_router.GoRouterState state) =>
+          pageBuilder(context),
+    );
+  }
 
   // 转换为 auto_route 的 NamedRouteDef
   auto_route.AutoRoute toAutoRoute() => auto_route.NamedRouteDef(

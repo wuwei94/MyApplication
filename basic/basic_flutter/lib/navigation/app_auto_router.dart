@@ -7,9 +7,9 @@ import 'package:flutter/widgets.dart';
 final RootStackRouter _appAutoRootRouter = RootStackRouter.build(
   routes: [
     // 首页路由
-    RouteConverter.getAutoHomeRoute(),
+    ...RouteConverter.toAutoRoutes(homeRoutes),
     // 分组路由
-    RouteConverter.getAutoGroupRoute(),
+    ...RouteConverter.toAutoRoutes(featuresRoutes),
     // 示例路由
     ...RouteConverter.toAutoRoutes(exampleRoutes),
     // 网络请求路由
