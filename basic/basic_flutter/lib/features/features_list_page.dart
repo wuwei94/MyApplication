@@ -1,6 +1,5 @@
 import 'package:basic_flutter/navigation/models/route_item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 /// 分组列表页面
 /// 用于展示某一分类下的所有路由
@@ -25,7 +24,7 @@ class FeaturesListPage extends StatelessWidget {
           return ListTile(
             title: Text(item.title),
             subtitle: item.subtitle.isNotEmpty ? Text(item.subtitle) : null,
-            onTap: () => context.push(item.path),
+            onTap: () => item.pushByAuto(context),
           );
         },
       ),

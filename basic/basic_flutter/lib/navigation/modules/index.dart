@@ -23,7 +23,7 @@ final List<RouteItem> homeRoutes = [
   ),
 ];
 
-final List<RouteItem> featuresRoutes = [
+final List<RouteItem> goFeaturesRoutes = [
   RouteItem(
     path: '/group',
     title: 'FeaturesGroup',

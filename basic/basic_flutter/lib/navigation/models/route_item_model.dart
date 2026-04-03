@@ -17,6 +17,20 @@ class RouteItem {
     WidgetBuilder? pageBuilder,
   }) : pageBuilder = pageBuilder ?? ((_) => const SizedBox.shrink());
 
+  Future<T?> pushByGo<T extends Object?>(
+    BuildContext context, {
+    Object? extra,
+  }) {
+    return go_router.GoRouter.of(context).push<T>(path, extra: extra);
+  }
+
+  Future<T?> pushByAuto<T extends Object?>(
+    BuildContext context, {
+    Object? args,
+  }) {
+    return auto_route.AutoRouter.of(context).push<T>(auto_route.PageRouteInfo(title, args: args));
+  }
+
   // 转换为 go_router 的 GoRoute
   go_router.GoRoute toGoRoute() {
     return go_router.GoRoute(

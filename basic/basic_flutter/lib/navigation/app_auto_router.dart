@@ -9,7 +9,7 @@ final RootStackRouter _appAutoRootRouter = RootStackRouter.build(
     // 首页路由
     ...RouteConverter.toAutoRoutes(homeRoutes),
     // 分组路由
-    ...RouteConverter.toAutoRoutes(featuresRoutes),
+    ...RouteConverter.toAutoRoutes(autoFeaturesRoutes),
     // 示例路由
     ...RouteConverter.toAutoRoutes(exampleRoutes),
     // 网络请求路由
