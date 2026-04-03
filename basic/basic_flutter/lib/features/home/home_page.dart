@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:basic_flutter/navigation/registry/route_registry.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
             title: Text(item.title),
             subtitle: Text(item.subtitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => item.pushByAuto(context),
+            onTap: () => item.pushByAuto(context, args: item),
           );
         },
       ),
