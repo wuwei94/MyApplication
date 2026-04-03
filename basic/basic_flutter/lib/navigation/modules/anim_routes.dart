@@ -10,25 +10,24 @@ final List<RouteItem> animRoutes = [
     path: '/package/svg',
     title: 'SVG',
     subtitle: 'SVG动画示例',
-    routeBuilder: (BuildContext context, _) => const SvgExample(title: 'SVG'),
+    pageBuilder: (BuildContext context) => const SvgExample(title: 'SVG'),
   ),
   RouteItem(
     path: '/package/svga',
     title: 'SVGA',
     subtitle: 'SVGA动画示例',
-    routeBuilder: (BuildContext context, _) => const SvgaExample(title: 'SVGA'),
+    pageBuilder: (BuildContext context) => const SvgaExample(title: 'SVGA'),
   ),
   RouteItem(
     path: '/package/lottie',
     title: 'Lottie',
     subtitle: 'Lottie动画示例',
-    routeBuilder: (BuildContext context, _) =>
-        const LottieExample(title: 'Lottie'),
+    pageBuilder: (BuildContext context) => const LottieExample(title: 'Lottie'),
   ),
   RouteItem(
     path: '/package/pag',
     title: 'PAG',
     subtitle: 'PAG动画示例',
-    routeBuilder: (BuildContext context, _) => const PagExample(title: 'PAG'),
+    pageBuilder: (BuildContext context) => const PagExample(title: 'PAG'),
   ),
 ];

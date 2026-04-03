@@ -14,49 +14,48 @@ final List<RouteItem> packageRoutes = [
     path: '/package/toast',
     title: 'Toast',
     subtitle: 'Toast示例',
-    routeBuilder: (BuildContext context, _) =>
-        const ToastExample(title: 'Toast'),
+    pageBuilder: (BuildContext context) => const ToastExample(title: 'Toast'),
   ),
   RouteItem(
     path: '/package/notification',
     title: 'Notification',
     subtitle: 'Notification示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const NotificationExample(title: 'Notification'),
   ),
   RouteItem(
     path: '/package/permission',
     title: 'Permission',
     subtitle: 'Permission示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const PermissionExample(title: 'Permission'),
   ),
   RouteItem(
     path: '/package/image-picker',
     title: 'ImagePicker',
     subtitle: 'ImagePicker示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const ImagePickerExample(title: 'ImagePicker'),
   ),
   RouteItem(
     path: '/package/wechat-picker',
     title: 'WechatPicker',
     subtitle: 'WechatPicker示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const WechatPickerExample(title: 'WechatPicker'),
   ),
   RouteItem(
     path: '/package/webview',
     title: 'WebView',
     subtitle: 'WebView示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const WebViewExample(title: 'WebView'),
   ),
   RouteItem(
     path: '/package/screen-util',
     title: 'ScreenUtil',
     subtitle: 'ScreenUtil示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const ScreenUtilExample(title: 'ScreenUtil'),
   ),
 ];

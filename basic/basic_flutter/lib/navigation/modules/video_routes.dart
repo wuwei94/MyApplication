@@ -8,14 +8,14 @@ final List<RouteItem> videoRoutes = [
     path: '/video/video-player',
     title: 'VideoPlayer',
     subtitle: 'video_player 示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const VideoPlayerExample(title: 'VideoPlayer'),
   ),
   RouteItem(
     path: '/video/chewie-video-player',
     title: 'ChewieVideoPlayer',
     subtitle: 'chewie + video_player 示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const ChewieVideoPlayerExample(title: 'ChewieVideoPlayer'),
   ),
 ];

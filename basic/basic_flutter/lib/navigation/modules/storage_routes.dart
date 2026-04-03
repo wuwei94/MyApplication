@@ -10,20 +10,20 @@ final List<RouteItem> storageRoutes = [
     path: '/storage/hive',
     title: 'Hive',
     subtitle: 'Hive示例',
-    routeBuilder: (BuildContext context, _) => const HiveExample(title: 'Hive'),
+    pageBuilder: (BuildContext context) => const HiveExample(title: 'Hive'),
   ),
   RouteItem(
     path: '/storage/secure-storage',
     title: 'SecureStorage',
     subtitle: 'SecureStorage示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const SecureStorageExample(title: 'SecureStorage'),
   ),
   RouteItem(
     path: '/storage/shared-preferences',
     title: 'SharedPreferences',
     subtitle: 'SharedPreferences示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const SharedPreferencesExample(title: 'SharedPreferences'),
   ),
 ];

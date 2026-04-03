@@ -11,28 +11,28 @@ final List<RouteItem> stateManagerRoutes = [
     path: '/state_manager/getx',
     title: 'GetX',
     subtitle: 'GetX示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const CounterGetxExample(title: 'GetX'),
   ),
   RouteItem(
     path: '/state_manager/bloc',
     title: 'BloC',
     subtitle: 'BloC示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const CounterBlocExample(title: 'BloC'),
   ),
   RouteItem(
     path: '/state_manager/provider',
     title: 'Provider',
     subtitle: 'Provider示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const CounterProviderExample(title: 'Provider'),
   ),
   RouteItem(
     path: '/state/riverpod',
     title: 'Riverpod',
     subtitle: 'Riverpod示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const CounterRiverpodExample(title: 'Riverpod'),
   ),
 ];

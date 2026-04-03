@@ -9,14 +9,13 @@ final List<RouteItem> exampleRoutes = [
     path: '/example/counter',
     title: 'Counter Example',
     subtitle: '计数器示例',
-    routeBuilder: (BuildContext context, _) =>
+    pageBuilder: (BuildContext context) =>
         const Counter(title: 'Counter Example'),
   ),
   RouteItem(
     path: '/example/getx',
     title: 'GetX Example',
     subtitle: 'GetX示例',
-    routeBuilder: (BuildContext context, _) =>
-        const GetXApp(title: 'GetX Example'),
+    pageBuilder: (BuildContext context) => const GetXApp(title: 'GetX Example'),
   ),
 ];
