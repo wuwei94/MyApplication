@@ -23,7 +23,9 @@ import org.gradle.kotlin.dsl.dependencies
 /**
  * Configure base Dependencies with Android options
  */
-internal fun Project.configureDepsAndroid(commonExtension: CommonExtension) {
+internal fun Project.configureDepsAndroid(
+    commonExtension: CommonExtension<*, *, *, *, *, *>
+) {
     // Exclude deprecated kotlin-android-extensions-runtime to avoid conflict with kotlin-parcelize-runtime
     // This is needed when upgrading to Kotlin 2.3.0+
     configurations.all {
@@ -65,7 +67,9 @@ internal fun Project.configureDepsAndroid(commonExtension: CommonExtension) {
     }
 }
 
-internal fun Project.configureFeatureAndroid(commonExtension: CommonExtension) {
+internal fun Project.configureFeatureAndroid(
+    commonExtension: CommonExtension<*, *, *, *, *, *>
+) {
     commonExtension.apply {
         dependencies {
             "implementation"(project(":modules:module_demo"))

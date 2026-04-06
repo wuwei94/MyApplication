@@ -110,9 +110,9 @@ androidxTestExt = "1.3.0"
 androidxTestEspresso = "3.7.0"
 # ##################################################################################################
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle
-gradlePluginAndroid = "9.0.0"
+gradlePluginAndroid = "8.11.1"
 # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
-gradlePluginKotlin = "2.3.0"
+gradlePluginKotlin = "2.2.20"
 gradlePluginProtobuf = "0.9.6"
 gradlePluginArouter = "1.0.2"
 gradlePluginGreenDao = "3.3.1"
