@@ -1,8 +1,9 @@
+import 'package:auto_route/auto_route.dart' as auto_route;
 import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart' as go_router;
 
 /// 通用路由列表页：首页展示分组，分组页展示具体示例
 class FeatureListPage extends StatelessWidget {
@@ -15,12 +16,24 @@ class FeatureListPage extends StatelessWidget {
     logInfo('点击了 ${item.title}, 路由详情: $item');
 
     if (item.routeItems.isNotEmpty) {
-      context.push(groupRoutePath, extra: item);
+      switch (currentAppRouterType) {
+        case AppRouterType.goRouter:
+          go_router.GoRouter.of(context).push(groupRoutePath, extra: item);
+        case AppRouterType.autoRoute:
+          auto_route.AutoRouter.of(
+            context,
+          ).push<void>(auto_route.PageRouteInfo(groupRouteTitle, args: item));
+      }
       return;
     }
 
     if (item.path.isNotEmpty) {
-      item.pushByGo(context);
+      switch (currentAppRouterType) {
+        case AppRouterType.goRouter:
+          item.pushByGo(context);
+        case AppRouterType.autoRoute:
+          item.pushByAuto(context);
+      }
     }
   }
 

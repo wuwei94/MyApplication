@@ -1,13 +1,11 @@
+import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:basic_flutter/navigation/router/auto_app_router.dart';
 import 'package:basic_flutter/navigation/router/go_app_router.dart';
 
 export 'auto_app_router.dart';
 export 'go_app_router.dart';
-
-enum AppRouterType { goRouter, autoRoute }
-
-const AppRouterType currentAppRouterType = AppRouterType.autoRoute;
+export '../constants/navigation_constants.dart';
 
 final RouterConfig<Object> appRouter = switch (currentAppRouterType) {
   AppRouterType.goRouter => goAppRouter,
