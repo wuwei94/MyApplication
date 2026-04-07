@@ -24,7 +24,7 @@ import org.gradle.kotlin.dsl.dependencies
  * Configure base Dependencies with Android options
  */
 internal fun Project.configureDepsAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>
+    commonExtension: CommonExtension
 ) {
     // Exclude deprecated kotlin-android-extensions-runtime to avoid conflict with kotlin-parcelize-runtime
     // This is needed when upgrading to Kotlin 2.3.0+
@@ -68,7 +68,7 @@ internal fun Project.configureDepsAndroid(
 }
 
 internal fun Project.configureFeatureAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>
+    commonExtension: CommonExtension
 ) {
     commonExtension.apply {
         dependencies {
@@ -88,7 +88,7 @@ internal fun Project.configureFeatureAndroid(
 
             "implementation"(project(":modules:module_compose"))
 
-            "implementation"(project(":modules:module_flutter"))
+            //"implementation"(project(":modules:module_flutter"))
         }
     }
 }

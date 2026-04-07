@@ -116,7 +116,7 @@ include(":modules:module_arch")
 
 include(":modules:module_compose")
 
-apply {
-    from("configs_flutter.gradle")
-}
-include(":modules:module_flutter")
+//apply {
+//    from("configs_flutter.gradle")
+//}
+//include(":modules:module_flutter")

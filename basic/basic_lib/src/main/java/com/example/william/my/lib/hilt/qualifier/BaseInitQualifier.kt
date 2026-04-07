@@ -26,6 +26,6 @@ annotation class OpenInit
 @Retention(AnnotationRetention.BINARY)
 annotation class ArchInit
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class FlutterInit
+//@Qualifier
+//@Retention(AnnotationRetention.BINARY)
+//annotation class FlutterInit
