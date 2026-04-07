@@ -1,7 +1,7 @@
 import 'package:basic_flutter/features/storage/hive_example.dart';
 import 'package:basic_flutter/features/storage/secure_storage_example.dart';
 import 'package:basic_flutter/features/storage/shared_preferences_example.dart';
-import 'package:basic_flutter/navigation/models/route_item_model.dart';
+import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 /// Storage 本地存储路由

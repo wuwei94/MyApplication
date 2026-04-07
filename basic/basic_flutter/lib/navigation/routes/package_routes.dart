@@ -5,7 +5,7 @@ import 'package:basic_flutter/features/packages/screen_util_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
 import 'package:basic_flutter/features/packages/webview_example.dart';
 import 'package:basic_flutter/features/packages/wechat_picker_example.dart';
-import 'package:basic_flutter/navigation/models/route_item_model.dart';
+import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 /// Package 三方框架路由

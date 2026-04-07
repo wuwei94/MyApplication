@@ -2,7 +2,7 @@ import 'package:basic_flutter/features/state_manager/bloc/counter_bloc_example.d
 import 'package:basic_flutter/features/state_manager/getx/counter_getx_example.dart';
 import 'package:basic_flutter/features/state_manager/provider/counter_provider_example.dart';
 import 'package:basic_flutter/features/state_manager/riverpod/counter_riverpod_example.dart';
-import 'package:basic_flutter/navigation/models/route_item_model.dart';
+import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 /// State 状态管理路由

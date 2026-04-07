@@ -1,6 +1,6 @@
 import 'package:basic_flutter/features/video/chewie_video_player_example.dart';
 import 'package:basic_flutter/features/video/video_player_example.dart';
-import 'package:basic_flutter/navigation/models/route_item_model.dart';
+import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 final List<RouteItem> videoRoutes = [

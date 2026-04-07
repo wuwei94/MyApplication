@@ -28,7 +28,9 @@ class RouteItem {
     BuildContext context, {
     Object? args,
   }) {
-    return auto_route.AutoRouter.of(context).push<T>(auto_route.PageRouteInfo(title, args: args));
+    return auto_route.AutoRouter.of(
+      context,
+    ).push<T>(auto_route.PageRouteInfo(title, args: args));
   }
 
   // 转换为 go_router 的 GoRoute
@@ -48,4 +50,14 @@ class RouteItem {
     builder: (BuildContext context, auto_route.RouteData<dynamic> data) =>
         pageBuilder(context),
   );
+
+  @override
+  String toString() {
+    return 'RouteItem('
+        'path: $path, '
+        'title: $title, '
+        'subtitle: $subtitle, '
+        'routeItems: $routeItems'
+        ')';
+  }
 }

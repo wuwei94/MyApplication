@@ -1,4 +1,5 @@
-import 'package:basic_flutter/navigation/app_auto_router.dart';
+import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
+import 'package:basic_flutter/navigation/router/app_router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,10 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Example',
+      title: appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      routerConfig: appAutoRouter,
+      routerConfig: appRouter,
     );
   }
 }

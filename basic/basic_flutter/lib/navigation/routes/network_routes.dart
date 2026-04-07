@@ -1,7 +1,7 @@
 import 'package:basic_flutter/features/network/dio_example.dart';
 import 'package:basic_flutter/features/network/http_example.dart';
 import 'package:basic_flutter/features/network/image_example.dart';
-import 'package:basic_flutter/navigation/models/route_item_model.dart';
+import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 /// Network 网络请求路由
