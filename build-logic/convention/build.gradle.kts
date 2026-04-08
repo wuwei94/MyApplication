@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     `kotlin-dsl`
-    //alias(libs.plugins.android.lint)
+    alias(libs.plugins.android.lint)
 }
 
 group = "com.google.samples.apps.nowinandroid.buildlogic"
@@ -42,7 +42,7 @@ dependencies {
     compileOnly(libs.gradlePlugin.compose)
     compileOnly(libs.gradlePlugin.protobuf)
 
-    //compileOnly(libs.gradlePlugin.greendao)
+    compileOnly(libs.gradlePlugin.greendao)
     compileOnly(libs.gradlePlugin.objectbox)
 
     compileOnly(libs.gradlePlugin.ksp)

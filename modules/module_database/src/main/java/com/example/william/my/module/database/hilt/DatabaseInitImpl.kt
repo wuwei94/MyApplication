@@ -2,6 +2,7 @@ package com.example.william.my.module.database.hilt
 
 import android.app.Application
 import com.example.william.my.lib.hilt.interfaces.IAppInit
+import com.example.william.my.module.database.greendao.Greendao
 import com.example.william.my.module.database.objectbox.ObjectBox
 import javax.inject.Inject
 
@@ -12,6 +13,7 @@ class DatabaseInitImpl @Inject constructor() : IAppInit {
     override fun init(app: Application) {
         this.mApp = app
 
+        Greendao.init(app)
         ObjectBox.init(app)
     }
 

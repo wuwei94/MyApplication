@@ -24,7 +24,7 @@ import org.gradle.kotlin.dsl.dependencies
  * Configure base Dependencies with Android options
  */
 internal fun Project.configureDepsAndroid(
-    commonExtension: CommonExtension
+    commonExtension: CommonExtension<*, *, *, *, *, *>
 ) {
     // Exclude deprecated kotlin-android-extensions-runtime to avoid conflict with kotlin-parcelize-runtime
     // This is needed when upgrading to Kotlin 2.3.0+
@@ -50,7 +50,6 @@ internal fun Project.configureDepsAndroid(
             "implementation"(libs.findLibrary("androidx-fragment-ktx").get())
 
             "implementation"(libs.findLibrary("androidx-appCompat").get())
-            "implementation"(libs.findLibrary("androidx-appCompat").get())
             "implementation"(libs.findLibrary("androidx-constraintLayout").get())
             "implementation"(libs.findLibrary("androidx-recyclerView").get())
             "implementation"(libs.findLibrary("androidx-viewPager2").get())
@@ -68,7 +67,7 @@ internal fun Project.configureDepsAndroid(
 }
 
 internal fun Project.configureFeatureAndroid(
-    commonExtension: CommonExtension
+    commonExtension: CommonExtension<*, *, *, *, *, *>
 ) {
     commonExtension.apply {
         dependencies {
