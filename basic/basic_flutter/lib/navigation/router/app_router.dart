@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
 import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
-import 'package:basic_flutter/navigation/routes/demo_routes.dart';
 import 'package:basic_flutter/navigation/routes/features_routes.dart';
 import 'package:basic_flutter/navigation/routes/home_routes.dart';
+import 'package:basic_flutter/navigation/routes/layout_routes.dart';
 import 'package:basic_flutter/navigation/routes/navigation_routes.dart';
 import 'package:basic_flutter/navigation/utils/route_converter.dart';
 import 'package:flutter/widgets.dart';
@@ -22,7 +22,7 @@ final List<RouteItem> appRoutes = [
   ...packageRoutes,
   ...videoRoutes,
   ...stateManagerRoutes,
-  ...demoRoutes,
+  ...layoutRoutes,
 ];
 
 /// GoRouter 实例
