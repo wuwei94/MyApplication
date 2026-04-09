@@ -8,6 +8,7 @@ import com.example.william.my.lib.utils.CrashUtils
 import com.example.william.my.lib.utils.FileSDCardUtil
 import com.example.william.my.module.arch.app.ArchApp
 import com.example.william.my.module.database.app.DatabaseApp
+import com.example.william.my.module.flutter.app.FlutterApp
 import com.example.william.my.module.libraries.app.LibrariesApp
 import com.example.william.my.module.opensource.app.OpenApp
 import com.example.william.my.modules.module_libraries.MyLibrariesEventBusIndex
@@ -32,7 +33,7 @@ class App : BaseApp() {
         registerAppInit(OpenApp::class.java) //
         registerAppInit(ArchApp::class.java) // Mavericks
 
-//        registerAppInit(FlutterApp::class.java) // FlutterEngine
+        registerAppInit(FlutterApp::class.java) // FlutterEngine
     }
 
     private fun initCrash() {

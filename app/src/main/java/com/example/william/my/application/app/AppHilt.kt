@@ -6,6 +6,7 @@ import com.example.william.my.lib.hilt.qualifier.AppInit
 import com.example.william.my.lib.hilt.qualifier.ArchInit
 import com.example.william.my.lib.hilt.qualifier.BaseInit
 import com.example.william.my.lib.hilt.qualifier.DatabaseInit
+import com.example.william.my.lib.hilt.qualifier.FlutterInit
 import com.example.william.my.lib.hilt.qualifier.LibrariesInit
 import com.example.william.my.lib.hilt.qualifier.OpenInit
 import dagger.hilt.android.HiltAndroidApp
@@ -38,9 +39,9 @@ class AppHilt : Application() {
     @Inject
     lateinit var archInit: IAppInit
 
-//    @FlutterInit
-//    @Inject
-//    lateinit var flutterInit: IAppInit
+    @FlutterInit
+    @Inject
+    lateinit var flutterInit: IAppInit
 
 
     override fun onCreate() {
@@ -55,6 +56,6 @@ class AppHilt : Application() {
         openInit.init(this) //
         archInit.init(this) // Mavericks
 
-//        flutterInit.init(this) // FlutterEngine
+        flutterInit.init(this) // FlutterEngine
     }
 }
