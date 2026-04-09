@@ -33,22 +33,30 @@ class RouteItem {
     ).push<T>(auto_route.PageRouteInfo(title, args: args));
   }
 
-  // 转换为 go_router 的 GoRoute
+  // 转换为 go_router 的 GoRoute（支持子路由）
   go_router.GoRoute toGoRoute() {
     return go_router.GoRoute(
       path: path,
       name: title,
       builder: (BuildContext context, go_router.GoRouterState state) =>
           pageBuilder(context),
+      routes: routeItems
+          .where((route) => route.path.isNotEmpty)
+          .map((route) => route.toGoRoute())
+          .toList(),
     );
   }
 
-  // 转换为 auto_route 的 NamedRouteDef
+  // 转换为 auto_route 的 NamedRouteDef（支持子路由）
   auto_route.AutoRoute toAutoRoute() => auto_route.NamedRouteDef(
     path: path,
     name: title,
     builder: (BuildContext context, auto_route.RouteData<dynamic> data) =>
         pageBuilder(context),
+    children: routeItems
+        .where((route) => route.path.isNotEmpty)
+        .map((route) => route.toAutoRoute())
+        .toList(),
   );
 
   @override
