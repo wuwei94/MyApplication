@@ -116,7 +116,5 @@ include(":modules:module_arch")
 
 include(":modules:module_compose")
 
-apply {
-   from("configs_flutter.gradle")
-}
+apply("flutter.gradle.kts")
 include(":modules:module_flutter")
