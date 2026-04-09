@@ -147,13 +147,13 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - images/
     - assets/json/
+    - assets/images/
+    - assets/video/
+    - assets/anim/svg/
     - assets/anim/lottie/
     - assets/anim/pag/
-    - assets/anim/svg/
     - assets/anim/svga/
-    - assets/video/
 
   fonts:
     - family: Juice

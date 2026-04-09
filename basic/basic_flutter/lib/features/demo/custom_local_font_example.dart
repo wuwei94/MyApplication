@@ -71,26 +71,17 @@ class CustomLocalFontRoute extends StatelessWidget {
         children: [
           Text(
             'Juice Font',
-            style: TextStyle(
-              fontFamily: 'Juice',
-              fontSize: 28,
-            ),
+            style: TextStyle(fontFamily: 'Juice', fontSize: 28),
           ),
           SizedBox(height: 12),
           Text(
             'Hello World 你好世界',
-            style: TextStyle(
-              fontFamily: 'Juice',
-              fontSize: 22,
-            ),
+            style: TextStyle(fontFamily: 'Juice', fontSize: 22),
           ),
           SizedBox(height: 12),
           Text(
             'The quick brown fox jumps over the lazy dog',
-            style: TextStyle(
-              fontFamily: 'Juice',
-              fontSize: 18,
-            ),
+            style: TextStyle(fontFamily: 'Juice', fontSize: 18),
           ),
         ],
       ),
@@ -158,17 +149,11 @@ class CustomLocalFontRoute extends StatelessWidget {
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'System Default Font',
-            style: TextStyle(fontSize: 18),
-          ),
+          Text('System Default Font', style: TextStyle(fontSize: 18)),
           SizedBox(height: 12),
           Text(
             'Juice Custom Font',
-            style: TextStyle(
-              fontFamily: 'Juice',
-              fontSize: 18,
-            ),
+            style: TextStyle(fontFamily: 'Juice', fontSize: 18),
           ),
         ],
       ),

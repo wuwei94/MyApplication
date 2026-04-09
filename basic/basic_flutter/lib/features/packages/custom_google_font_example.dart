@@ -70,25 +70,13 @@ class CustomGoogleFontRoute extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Roboto Font',
-            style: GoogleFonts.roboto(
-              fontSize: 28,
-            ),
-          ),
+          Text('Roboto Font', style: GoogleFonts.roboto(fontSize: 28)),
           const SizedBox(height: 12),
-          Text(
-            'Hello World 你好世界',
-            style: GoogleFonts.roboto(
-              fontSize: 22,
-            ),
-          ),
+          Text('Hello World 你好世界', style: GoogleFonts.roboto(fontSize: 22)),
           const SizedBox(height: 12),
           Text(
             'The quick brown fox jumps over the lazy dog',
-            style: GoogleFonts.roboto(
-              fontSize: 18,
-            ),
+            style: GoogleFonts.roboto(fontSize: 18),
           ),
         ],
       ),
@@ -152,17 +140,9 @@ class CustomGoogleFontRoute extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'System Default Font',
-            style: TextStyle(fontSize: 18),
-          ),
+          const Text('System Default Font', style: TextStyle(fontSize: 18)),
           const SizedBox(height: 12),
-          Text(
-            'Roboto Google Font',
-            style: GoogleFonts.roboto(
-              fontSize: 18,
-            ),
-          ),
+          Text('Roboto Google Font', style: GoogleFonts.roboto(fontSize: 18)),
         ],
       ),
     );
@@ -191,10 +171,7 @@ class CustomGoogleFontRoute extends StatelessWidget {
             '3. 使用 GoogleFonts.roboto() 等方法应用字体',
             style: TextStyle(fontSize: 14, height: 1.6),
           ),
-          Text(
-            '4. 字体会自动从网络下载并缓存',
-            style: TextStyle(fontSize: 14, height: 1.6),
-          ),
+          Text('4. 字体会自动从网络下载并缓存', style: TextStyle(fontSize: 14, height: 1.6)),
         ],
       ),
     );
