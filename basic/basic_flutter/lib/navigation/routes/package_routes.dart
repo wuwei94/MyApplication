@@ -1,3 +1,4 @@
+import 'package:basic_flutter/features/packages/custom_google_font_example.dart';
 import 'package:basic_flutter/features/packages/image_picker_example.dart';
 import 'package:basic_flutter/features/packages/notification_example.dart';
 import 'package:basic_flutter/features/packages/permission_example.dart';
@@ -57,5 +58,12 @@ final List<RouteItem> packageRoutes = [
     subtitle: 'ScreenUtil示例',
     pageBuilder: (BuildContext context) =>
         const ScreenUtilExample(title: 'ScreenUtil'),
+  ),
+  RouteItem(
+    path: '/package/custom-google-font',
+    title: 'Custom Google Font',
+    subtitle: 'Google Fonts 第三方字体示例',
+    pageBuilder: (BuildContext context) =>
+        const CustomGoogleFontExample(title: 'Custom Google Font'),
   ),
 ];

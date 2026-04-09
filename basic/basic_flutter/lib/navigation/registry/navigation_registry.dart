@@ -1,4 +1,5 @@
 import 'package:basic_flutter/navigation/models/route_item.dart';
+import 'package:basic_flutter/navigation/routes/demo_routes.dart';
 import 'package:basic_flutter/navigation/routes/navigation_routes.dart';
 
 /// 路由注册中心
@@ -15,4 +16,5 @@ final List<RouteItem> navigationRegistry = [
     subtitle: "状态管理",
     routeItems: stateManagerRoutes,
   ),
+  RouteItem(title: 'Demo', subtitle: "演示组件", routeItems: demoRoutes),
 ];

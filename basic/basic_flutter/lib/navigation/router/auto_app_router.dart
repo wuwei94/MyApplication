@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart' as auto_route;
 import 'package:basic_flutter/features/feature_list_page.dart';
 import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
+import 'package:basic_flutter/navigation/routes/demo_routes.dart';
 import 'package:basic_flutter/navigation/routes/navigation_routes.dart';
 import 'package:basic_flutter/navigation/routes/home_routes.dart';
 import 'package:basic_flutter/navigation/utils/route_converter.dart';
@@ -34,6 +35,7 @@ final auto_route.RootStackRouter _autoAppRootRouter =
         ...RouteConverter.toAutoRoutes(packageRoutes),
         ...RouteConverter.toAutoRoutes(videoRoutes),
         ...RouteConverter.toAutoRoutes(stateManagerRoutes),
+        ...RouteConverter.toAutoRoutes(demoRoutes),
       ],
     );
 

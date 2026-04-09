@@ -118,6 +118,8 @@ dependencies:
   
   # https://pub.dev/packages/english_words
   english_words: ^4.0.0
+  # https://pub.dev/packages/google_fonts
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -152,6 +154,11 @@ flutter:
     - assets/anim/svg/
     - assets/anim/svga/
     - assets/video/
+
+  fonts:
+    - family: Juice
+      fonts:
+        - asset: assets/fonts/juice.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
