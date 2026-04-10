@@ -9,35 +9,35 @@ import 'package:flutter/widgets.dart';
 /// Dialogs & Sheets 路由
 final List<RouteItem> dialogsSheetsRoutes = [
   RouteItem(
-    path: '/dialogs-sheets/dialogs',
+    path: 'dialogs',
     title: 'Dialogs',
     subtitle: '对话框示例',
     pageBuilder: (BuildContext context) =>
         const AlertDialogExample(title: 'Dialogs'),
   ),
   RouteItem(
-    path: '/dialogs-sheets/custom-dialog',
+    path: 'custom-dialog',
     title: 'CustomDialog',
     subtitle: '自定义对话框',
     pageBuilder: (BuildContext context) =>
         const CustomDialogExample(title: 'CustomDialog'),
   ),
   RouteItem(
-    path: '/dialogs-sheets/date-picker',
+    path: 'date-picker',
     title: 'DatePicker',
     subtitle: '日期选择器',
     pageBuilder: (BuildContext context) =>
         const DatePickerExample(title: 'DatePicker'),
   ),
   RouteItem(
-    path: '/dialogs-sheets/modal-bottom-sheet',
+    path: 'modal-bottom-sheet',
     title: 'ModalBottomSheet',
     subtitle: '底部弹窗',
     pageBuilder: (BuildContext context) =>
         const ModalBottomSheetExample(title: 'ModalBottomSheet'),
   ),
   RouteItem(
-    path: '/dialogs-sheets/cupertino-dialogs',
+    path: 'cupertino-dialogs',
     title: 'Cupertino Dialogs',
     subtitle: 'iOS风格对话框',
     pageBuilder: (BuildContext context) =>

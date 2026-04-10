@@ -6,13 +6,13 @@ import 'package:flutter/widgets.dart';
 /// Stack & Positioning 路由
 final List<RouteItem> stackPositioningRoutes = [
   RouteItem(
-    path: '/stack-positioning/stack',
+    path: 'stack',
     title: 'Stack',
     subtitle: '堆叠布局组件',
     pageBuilder: (BuildContext context) => const StackExample(title: 'Stack'),
   ),
   RouteItem(
-    path: '/stack-positioning/positioned',
+    path: 'positioned',
     title: 'Positioned',
     subtitle: '绝对定位组件',
     pageBuilder: (BuildContext context) =>

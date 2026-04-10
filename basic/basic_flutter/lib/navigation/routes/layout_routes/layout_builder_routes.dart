@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 /// Layout Builder 路由
 final List<RouteItem> layoutBuilderRoutes = [
   RouteItem(
-    path: '/layout-builder/layout-builder',
+    path: 'layout-builder',
     title: 'LayoutBuilder',
     subtitle: '布局感知',
     pageBuilder: (BuildContext context) =>

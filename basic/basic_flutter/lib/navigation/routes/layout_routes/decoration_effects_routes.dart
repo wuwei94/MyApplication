@@ -9,34 +9,34 @@ import 'package:flutter/widgets.dart';
 /// Decoration & Effects 路由
 final List<RouteItem> decorationEffectsRoutes = [
   RouteItem(
-    path: '/decoration-effects/decoratedbox',
+    path: 'decoratedbox',
     title: 'DecoratedBox',
     subtitle: '装饰盒子组件',
     pageBuilder: (BuildContext context) =>
         const DecoratedBoxExample(title: 'DecoratedBox'),
   ),
   RouteItem(
-    path: '/decoration-effects/opacity',
+    path: 'opacity',
     title: 'Opacity',
     subtitle: '透明度组件',
     pageBuilder: (BuildContext context) =>
         const OpacityExample(title: 'Opacity'),
   ),
   RouteItem(
-    path: '/decoration-effects/clip',
+    path: 'clip',
     title: 'Clip',
     subtitle: '裁剪组件',
     pageBuilder: (BuildContext context) => const ClipExample(title: 'Clip'),
   ),
   RouteItem(
-    path: '/decoration-effects/backdrop-filter',
+    path: 'backdrop-filter',
     title: 'BackdropFilter',
     subtitle: '毛玻璃效果',
     pageBuilder: (BuildContext context) =>
         const BackdropFilterExample(title: 'BackdropFilter'),
   ),
   RouteItem(
-    path: '/decoration-effects/shader-mask',
+    path: 'shader-mask',
     title: 'ShaderMask',
     subtitle: '着色器遮罩',
     pageBuilder: (BuildContext context) =>
