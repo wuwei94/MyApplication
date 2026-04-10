@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
 import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
+import 'package:basic_flutter/navigation/routes/demo_routes.dart';
 import 'package:basic_flutter/navigation/routes/features_routes.dart';
 import 'package:basic_flutter/navigation/routes/home_routes.dart';
 import 'package:basic_flutter/navigation/routes/layout_routes.dart';
@@ -16,6 +17,7 @@ final List<RouteItem> appRoutes = [
   ...homeRoutes,
   ...featuresRoutes,
   ...exampleRoutes,
+  ...demoRoutes,
   ...networkRoutes,
   ...storageRoutes,
   ...animRoutes,

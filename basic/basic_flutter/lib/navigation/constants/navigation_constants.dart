@@ -4,4 +4,4 @@ const String groupRouteTitle = 'Group';
 
 enum AppRouterType { goRouter, autoRoute }
 
-const AppRouterType currentAppRouterType = AppRouterType.autoRoute;
+const AppRouterType currentAppRouterType = AppRouterType.goRouter;

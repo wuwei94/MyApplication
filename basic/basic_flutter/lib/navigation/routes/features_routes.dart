@@ -16,7 +16,11 @@ final List<RouteItem> featuresRoutes = [
         AppRouterType.autoRoute =>
           auto_route.RouteData.of(context).args! as RouteItem,
       };
-      return FeatureListPage(title: group.title, routes: group.routeItems);
+
+      return FeatureListPage(
+        title: group.title,
+        routes: group.routeItems,
+      );
     },
   ),
 ];
