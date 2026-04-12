@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 /// Gesture Interaction 路由
 final List<RouteItem> gestureInteractionRoutes = [
   RouteItem(
-    path: 'gesturedetector',
+    path: 'gesture-detector',
     title: 'GestureDetector',
     subtitle: '手势检测组件',
     pageBuilder: (BuildContext context) =>

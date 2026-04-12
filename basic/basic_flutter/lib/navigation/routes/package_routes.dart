@@ -46,7 +46,7 @@ final List<RouteItem> packageRoutes = [
         const WechatPickerExample(title: 'WechatPicker'),
   ),
   RouteItem(
-    path: '/package/webview',
+    path: '/package/web-view',
     title: 'WebView',
     subtitle: 'WebView示例',
     pageBuilder: (BuildContext context) =>

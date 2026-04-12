@@ -21,7 +21,7 @@ final List<RouteItem> sliverWidgetsRoutes = [
         const SliverGridExample(title: 'SliverGrid'),
   ),
   RouteItem(
-    path: 'sliver-appbar',
+    path: 'sliver-app-bar',
     title: 'SliverAppBar',
     subtitle: '折叠导航栏',
     pageBuilder: (BuildContext context) =>

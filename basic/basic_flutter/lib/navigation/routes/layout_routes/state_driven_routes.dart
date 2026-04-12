@@ -6,14 +6,14 @@ import 'package:flutter/widgets.dart';
 /// State Driven 路由
 final List<RouteItem> stateDrivenRoutes = [
   RouteItem(
-    path: 'futurebuilder',
+    path: 'future-builder',
     title: 'FutureBuilder',
     subtitle: '异步数据组件',
     pageBuilder: (BuildContext context) =>
         const FutureBuilderExample(title: 'FutureBuilder'),
   ),
   RouteItem(
-    path: 'streambuilder',
+    path: 'stream-builder',
     title: 'StreamBuilder',
     subtitle: '流数据组件',
     pageBuilder: (BuildContext context) =>

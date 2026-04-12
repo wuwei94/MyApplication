@@ -1,4 +1,4 @@
-import 'package:basic_flutter/features/layout/dialogs_sheets/alertdialog_example.dart';
+import 'package:basic_flutter/features/layout/dialogs_sheets/alert_dialog_example.dart';
 import 'package:basic_flutter/features/layout/dialogs_sheets/cupertino_dialogs_example.dart';
 import 'package:basic_flutter/features/layout/dialogs_sheets/custom_dialog_example.dart';
 import 'package:basic_flutter/features/layout/dialogs_sheets/date_picker_example.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 /// Dialogs & Sheets 路由
 final List<RouteItem> dialogsSheetsRoutes = [
   RouteItem(
-    path: 'dialogs',
+    path: 'alert-dialog',
     title: 'Dialogs',
     subtitle: '对话框示例',
     pageBuilder: (BuildContext context) =>
@@ -30,7 +30,7 @@ final List<RouteItem> dialogsSheetsRoutes = [
         const DatePickerExample(title: 'DatePicker'),
   ),
   RouteItem(
-    path: 'modal-bottom-sheet',
+    path: 'bottom-sheet',
     title: 'ModalBottomSheet',
     subtitle: '底部弹窗',
     pageBuilder: (BuildContext context) =>

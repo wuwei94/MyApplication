@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 final List<RouteItem> homeRoutes = [
   RouteItem(
-    path: '/',
+    path: '/home',
     title: 'Home',
     pageBuilder: (BuildContext context) {
       return FeatureListPage(title: appTitle, routes: navigationRegistry);

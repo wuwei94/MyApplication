@@ -12,21 +12,21 @@ import 'package:flutter/widgets.dart';
 /// Scroll Widgets 路由
 final List<RouteItem> scrollWidgetsRoutes = [
   RouteItem(
-    path: 'listview',
+    path: 'list-view',
     title: 'ListView',
     subtitle: '列表滚动组件',
     pageBuilder: (BuildContext context) =>
         const ListViewExample(title: 'ListView'),
   ),
   RouteItem(
-    path: 'gridview',
+    path: 'grid-view',
     title: 'GridView',
     subtitle: '网格滚动组件',
     pageBuilder: (BuildContext context) =>
         const GridViewExample(title: 'GridView'),
   ),
   RouteItem(
-    path: 'tabbar-view',
+    path: 'tab-bar-view',
     title: 'TabBarView',
     subtitle: '标签页组件',
     pageBuilder: (BuildContext context) =>

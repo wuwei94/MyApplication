@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 /// Decoration & Effects 路由
 final List<RouteItem> decorationEffectsRoutes = [
   RouteItem(
-    path: 'decoratedbox',
+    path: 'decorated-box',
     title: 'DecoratedBox',
     subtitle: '装饰盒子组件',
     pageBuilder: (BuildContext context) =>

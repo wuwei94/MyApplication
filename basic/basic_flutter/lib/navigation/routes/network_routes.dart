@@ -19,7 +19,7 @@ final List<RouteItem> networkRoutes = [
     pageBuilder: (BuildContext context) => const HttpExample(title: 'Http'),
   ),
   RouteItem(
-    path: '/network/image',
+    path: '/network/image-loader',
     title: 'ImageLoader',
     subtitle: 'ImageLoader图片加载示例',
     pageBuilder: (BuildContext context) =>

@@ -12,7 +12,7 @@ final List<RouteItem> flowLayoutRoutes = [
     pageBuilder: (BuildContext context) => const WrapExample(title: 'Wrap'),
   ),
   RouteItem(
-    path: 'flow',
+    path: 'flow-widget',
     title: 'Flow',
     subtitle: '自定义流式布局',
     pageBuilder: (BuildContext context) => const FlowExample(title: 'Flow'),

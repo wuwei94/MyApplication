@@ -29,7 +29,7 @@ final List<RouteItem> appRoutes = [
 
 /// GoRouter 实例
 final go_router.GoRouter goAppRouter = go_router.GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home',
   routes: RouteConverter.toGoRoutes(appRoutes),
 );
 

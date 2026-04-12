@@ -36,14 +36,14 @@ final List<RouteItem> layoutContainersRoutes = [
     pageBuilder: (BuildContext context) => const AlignExample(title: 'Align'),
   ),
   RouteItem(
-    path: 'sizedbox',
+    path: 'sized-box',
     title: 'SizedBox',
     subtitle: '固定尺寸组件',
     pageBuilder: (BuildContext context) =>
         const SizedBoxExample(title: 'SizedBox'),
   ),
   RouteItem(
-    path: 'constrainedbox',
+    path: 'constrained-box',
     title: 'ConstrainedBox',
     subtitle: '约束组件',
     pageBuilder: (BuildContext context) =>

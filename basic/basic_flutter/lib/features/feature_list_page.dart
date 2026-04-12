@@ -8,11 +8,7 @@ class FeatureListPage extends StatelessWidget {
   final String title;
   final List<RouteItem> routes;
 
-  const FeatureListPage({
-    super.key,
-    required this.title,
-    required this.routes,
-  });
+  const FeatureListPage({super.key, required this.title, required this.routes});
 
   void _handleTap(BuildContext context, RouteItem item) {
     logInfo('点击了 ${item.title}, 路由详情: $item');
