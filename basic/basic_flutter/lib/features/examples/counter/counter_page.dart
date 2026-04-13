@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Counter extends StatelessWidget {
-  const Counter({super.key, required this.title});
+class CounterExample extends StatelessWidget {
+  const CounterExample({super.key, required this.title});
 
   final String title;
 

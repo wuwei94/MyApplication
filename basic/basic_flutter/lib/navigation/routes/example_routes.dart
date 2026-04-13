@@ -10,7 +10,7 @@ final List<RouteItem> exampleRoutes = [
     title: 'Counter Example',
     subtitle: '计数器示例',
     pageBuilder: (BuildContext context) =>
-        const Counter(title: 'Counter Example'),
+        const CounterExample(title: 'Counter Example'),
   ),
   RouteItem(
     path: '/example/getx',
