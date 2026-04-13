@@ -6,21 +6,21 @@ import 'package:flutter/widgets.dart';
 
 /// Sliver Widgets 路由
 final List<RouteItem> sliverWidgetsRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'sliver-list',
     title: 'SliverList',
     subtitle: 'Sliver列表组件',
     pageBuilder: (BuildContext context) =>
         const SliverListExample(title: 'SliverList'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'sliver-grid',
     title: 'SliverGrid',
     subtitle: 'Sliver网格组件',
     pageBuilder: (BuildContext context) =>
         const SliverGridExample(title: 'SliverGrid'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'sliver-app-bar',
     title: 'SliverAppBar',
     subtitle: '折叠导航栏',

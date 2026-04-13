@@ -6,19 +6,19 @@ import 'package:flutter/widgets.dart';
 
 /// Linear Layout 路由
 final List<RouteItem> linearLayoutRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'row',
     title: 'Row',
     subtitle: '水平布局组件',
     pageBuilder: (BuildContext context) => const RowExample(title: 'Row'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'column',
     title: 'Column',
     subtitle: '垂直布局组件',
     pageBuilder: (BuildContext context) => const ColumnExample(title: 'Column'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'flexible-expanded',
     title: 'Flexible & Expanded',
     subtitle: '弹性布局组件',

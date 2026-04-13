@@ -5,14 +5,14 @@ import 'package:flutter/widgets.dart';
 
 /// Gesture Interaction 路由
 final List<RouteItem> gestureInteractionRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'gesture-detector',
     title: 'GestureDetector',
     subtitle: '手势检测组件',
     pageBuilder: (BuildContext context) =>
         const GestureDetectorExample(title: 'GestureDetector'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'pop-scope',
     title: 'PopScope',
     subtitle: '返回拦截组件',

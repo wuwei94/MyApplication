@@ -5,13 +5,13 @@ import 'package:flutter/widgets.dart';
 
 /// Flow Layout 路由
 final List<RouteItem> flowLayoutRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'wrap',
     title: 'Wrap',
     subtitle: '流式布局组件',
     pageBuilder: (BuildContext context) => const WrapExample(title: 'Wrap'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'flow-widget',
     title: 'Flow',
     subtitle: '自定义流式布局',

@@ -4,55 +4,55 @@ import 'package:basic_flutter/navigation/routes/layout_routes.dart';
 import 'package:basic_flutter/navigation/routes/navigation_routes.dart';
 
 final List<RouteItem> navigationRegistry = <RouteItem>[
-  RouteItem(
+  RouteItem.section(
     path: '/examples',
     title: 'Example',
     subtitle: '示例',
     routeItems: exampleRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/network',
     title: 'Network',
     subtitle: '网络请求',
     routeItems: networkRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/storage',
     title: 'Storage',
     subtitle: '本地存储',
     routeItems: storageRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/animations',
     title: 'Animations',
     subtitle: '动画组件',
     routeItems: animRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/packages',
     title: 'Packages',
     subtitle: '三方组件',
     routeItems: packageRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/video',
     title: 'Video',
     subtitle: '视频组件',
     routeItems: videoRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/state-manager',
     title: 'StateManager',
     subtitle: '状态管理',
     routeItems: stateManagerRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/layout',
     title: 'Layout',
     subtitle: '布局组件',
     routeItems: layoutRoutes,
   ),
-  RouteItem(
+  RouteItem.section(
     path: '/demo',
     title: 'Demo',
     subtitle: '演示组件',

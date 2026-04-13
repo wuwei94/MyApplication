@@ -8,33 +8,33 @@ import 'package:flutter/widgets.dart';
 
 /// Async Programming 路由
 final List<RouteItem> asyncProgrammingRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'future',
     title: 'Future',
     subtitle: 'Future异步',
     pageBuilder: (BuildContext context) => const FutureExample(title: 'Future'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'stream',
     title: 'Stream',
     subtitle: 'Stream异步',
     pageBuilder: (BuildContext context) => const StreamExample(title: 'Stream'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'compute',
     title: 'Compute',
     subtitle: '后台计算',
     pageBuilder: (BuildContext context) =>
         const ComputeExample(title: 'Compute'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'completer',
     title: 'Completer',
     subtitle: '手动完成Future',
     pageBuilder: (BuildContext context) =>
         const CompleterExample(title: 'Completer'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'isolate',
     title: 'Isolate',
     subtitle: '多线程Isolate',

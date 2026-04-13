@@ -6,19 +6,19 @@ import 'package:flutter/widgets.dart';
 
 /// Network 网络请求路由
 final List<RouteItem> networkRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: '/network/dio',
     title: 'Dio',
     subtitle: 'Dio网络请求示例',
     pageBuilder: (BuildContext context) => const DioExample(title: 'Dio'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/network/http',
     title: 'Http',
     subtitle: 'Http网络请求示例',
     pageBuilder: (BuildContext context) => const HttpExample(title: 'Http'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/network/image-loader',
     title: 'ImageLoader',
     subtitle: 'ImageLoader图片加载示例',

@@ -5,7 +5,7 @@ import 'package:basic_flutter/navigation/registry/navigation_registry.dart';
 import 'package:flutter/widgets.dart';
 
 final List<RouteItem> homeRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: '/home',
     title: 'Home',
     pageBuilder: (BuildContext context) {

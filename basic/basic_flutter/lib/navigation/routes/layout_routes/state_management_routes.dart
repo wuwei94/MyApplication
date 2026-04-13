@@ -6,21 +6,21 @@ import 'package:flutter/widgets.dart';
 
 /// State Management 路由
 final List<RouteItem> stateManagementRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'value-listenable-builder',
     title: 'ValueListenableBuilder',
     subtitle: '值监听',
     pageBuilder: (BuildContext context) =>
         const ValueListenableBuilderExample(title: 'ValueListenableBuilder'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'listenable-builder',
     title: 'ListenableBuilder',
     subtitle: 'Listenable监听',
     pageBuilder: (BuildContext context) =>
         const ListenableBuilderExample(title: 'ListenableBuilder'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'inherited-widget',
     title: 'InheritedWidget',
     subtitle: '状态共享',

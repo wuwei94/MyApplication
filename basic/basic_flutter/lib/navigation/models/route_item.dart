@@ -17,6 +17,30 @@ class RouteItem {
     WidgetBuilder? pageBuilder,
   }) : pageBuilder = pageBuilder ?? ((_) => const SizedBox.shrink());
 
+  RouteItem.page({
+    String path = "",
+    String title = "",
+    String subtitle = "",
+    required WidgetBuilder pageBuilder,
+  }) : this(
+         path: path,
+         title: title,
+         subtitle: subtitle,
+         pageBuilder: pageBuilder,
+       );
+
+  RouteItem.section({
+    String path = "",
+    String title = "",
+    String subtitle = "",
+    required List<RouteItem> routeItems,
+  }) : this(
+         path: path,
+         title: title,
+         subtitle: subtitle,
+         routeItems: routeItems,
+       );
+
   /// 使用 go_router 跳转
   Future<T?> pushByGo<T extends Object?>(
     BuildContext context, {
@@ -39,7 +63,7 @@ class RouteItem {
   go_router.GoRoute toGoRoute() {
     return go_router.GoRoute(
       path: path,
-      name: title,
+      name: path,
       builder: (BuildContext context, go_router.GoRouterState state) =>
           pageBuilder(context),
       routes: routeItems

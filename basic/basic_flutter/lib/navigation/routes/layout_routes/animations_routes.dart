@@ -8,35 +8,35 @@ import 'package:flutter/widgets.dart';
 
 /// Animations 路由
 final List<RouteItem> animationsRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'fade-transition',
     title: 'FadeTransition',
     subtitle: '淡入淡出动画',
     pageBuilder: (BuildContext context) =>
         const FadeTransitionExample(title: 'FadeTransition'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'scale-transition',
     title: 'ScaleTransition',
     subtitle: '缩放动画',
     pageBuilder: (BuildContext context) =>
         const ScaleTransitionExample(title: 'ScaleTransition'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'rotation-transition',
     title: 'RotationTransition',
     subtitle: '旋转动画',
     pageBuilder: (BuildContext context) =>
         const RotationTransitionExample(title: 'RotationTransition'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'size-transition',
     title: 'SizeTransition',
     subtitle: '尺寸动画',
     pageBuilder: (BuildContext context) =>
         const SizeTransitionExample(title: 'SizeTransition'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'slide-transition',
     title: 'SlideTransition',
     subtitle: '滑动动画',

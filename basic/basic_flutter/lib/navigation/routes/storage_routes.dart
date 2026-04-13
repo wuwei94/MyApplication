@@ -6,20 +6,20 @@ import 'package:flutter/widgets.dart';
 
 /// Storage 本地存储路由
 final List<RouteItem> storageRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: '/storage/hive',
     title: 'Hive',
     subtitle: 'Hive示例',
     pageBuilder: (BuildContext context) => const HiveExample(title: 'Hive'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/storage/secure-storage',
     title: 'SecureStorage',
     subtitle: 'SecureStorage示例',
     pageBuilder: (BuildContext context) =>
         const SecureStorageExample(title: 'SecureStorage'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/storage/shared-preferences',
     title: 'SharedPreferences',
     subtitle: 'SharedPreferences示例',

@@ -16,7 +16,7 @@ import 'package:basic_flutter/navigation/routes/layout_routes/state_management_r
 
 final List<RouteItem> layoutRoutes = [
   // ========== 容器布局 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/containers',
     title: '容器布局',
     subtitle: 'Container、Padding、Center、Align、SizedBox、ConstrainedBox',
@@ -24,7 +24,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 线性布局 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/linear',
     title: '线性布局',
     subtitle: 'Row、Column、Flexible、Expanded',
@@ -32,7 +32,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 堆叠定位 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/stacking',
     title: '堆叠定位',
     subtitle: 'Stack、Positioned',
@@ -40,7 +40,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 流式布局 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/flow',
     title: '流式布局',
     subtitle: 'Wrap、Flow',
@@ -48,7 +48,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 滚动组件 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/scroll',
     title: '滚动组件',
     subtitle: 'ListView、GridView、PageView、TabBarView、NestedScrollView...',
@@ -56,7 +56,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== Sliver 组件 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/slivers',
     title: 'Sliver 组件',
     subtitle: 'SliverList、SliverGrid、SliverAppBar',
@@ -64,7 +64,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 手势交互 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/gestures',
     title: '手势交互',
     subtitle: 'GestureDetector、PopScope',
@@ -72,7 +72,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 动画效果 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/animations',
     title: '动画效果',
     subtitle: 'FadeTransition、ScaleTransition、RotationTransition...',
@@ -80,7 +80,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 弹窗与底部面板 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/dialogs',
     title: '弹窗与底部面板',
     subtitle: 'Dialog、BottomSheet、DatePicker、Cupertino Dialogs',
@@ -88,7 +88,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 装饰效果 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/decorations',
     title: '装饰效果',
     subtitle: 'DecoratedBox、Opacity、Clip、BackdropFilter、ShaderMask',
@@ -96,7 +96,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 布局构建器 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/builders',
     title: '布局构建器',
     subtitle: 'LayoutBuilder',
@@ -104,7 +104,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 状态驱动组件 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/state-driven',
     title: '状态驱动组件',
     subtitle: 'FutureBuilder、StreamBuilder',
@@ -112,7 +112,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 状态管理 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/state-management',
     title: '状态管理',
     subtitle: 'InheritedWidget、ValueListenableBuilder、ListenableBuilder',
@@ -120,7 +120,7 @@ final List<RouteItem> layoutRoutes = [
   ),
 
   // ========== 异步编程 ==========
-  RouteItem(
+  RouteItem.section(
     path: '/layout/async',
     title: '异步编程',
     subtitle: 'Future、Stream、Compute、Completer、Isolate',

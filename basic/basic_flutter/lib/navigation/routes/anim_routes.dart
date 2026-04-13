@@ -6,25 +6,25 @@ import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 final List<RouteItem> animRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: '/package/svg',
     title: 'SVG',
     subtitle: 'SVG动画示例',
     pageBuilder: (BuildContext context) => const SvgExample(title: 'SVG'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/svga',
     title: 'SVGA',
     subtitle: 'SVGA动画示例',
     pageBuilder: (BuildContext context) => const SvgaExample(title: 'SVGA'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/lottie',
     title: 'Lottie',
     subtitle: 'Lottie动画示例',
     pageBuilder: (BuildContext context) => const LottieExample(title: 'Lottie'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/pag',
     title: 'PAG',
     subtitle: 'PAG动画示例',

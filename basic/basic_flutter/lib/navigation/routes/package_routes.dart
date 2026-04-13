@@ -11,55 +11,55 @@ import 'package:flutter/widgets.dart';
 
 /// Package 三方框架路由
 final List<RouteItem> packageRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: '/package/toast',
     title: 'Toast',
     subtitle: 'Toast示例',
     pageBuilder: (BuildContext context) => const ToastExample(title: 'Toast'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/notification',
     title: 'Notification',
     subtitle: 'Notification示例',
     pageBuilder: (BuildContext context) =>
         const NotificationExample(title: 'Notification'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/permission',
     title: 'Permission',
     subtitle: 'Permission示例',
     pageBuilder: (BuildContext context) =>
         const PermissionExample(title: 'Permission'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/image-picker',
     title: 'ImagePicker',
     subtitle: 'ImagePicker示例',
     pageBuilder: (BuildContext context) =>
         const ImagePickerExample(title: 'ImagePicker'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/wechat-picker',
     title: 'WechatPicker',
     subtitle: 'WechatPicker示例',
     pageBuilder: (BuildContext context) =>
         const WechatPickerExample(title: 'WechatPicker'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/web-view',
     title: 'WebView',
     subtitle: 'WebView示例',
     pageBuilder: (BuildContext context) =>
         const WebViewExample(title: 'WebView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/screen-util',
     title: 'ScreenUtil',
     subtitle: 'ScreenUtil示例',
     pageBuilder: (BuildContext context) =>
         const ScreenUtilExample(title: 'ScreenUtil'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: '/package/custom-google-font',
     title: 'Custom Google Font',
     subtitle: 'Google Fonts 第三方字体示例',

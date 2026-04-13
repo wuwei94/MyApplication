@@ -11,56 +11,56 @@ import 'package:flutter/widgets.dart';
 
 /// Scroll Widgets 路由
 final List<RouteItem> scrollWidgetsRoutes = [
-  RouteItem(
+  RouteItem.page(
     path: 'list-view',
     title: 'ListView',
     subtitle: '列表滚动组件',
     pageBuilder: (BuildContext context) =>
         const ListViewExample(title: 'ListView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'grid-view',
     title: 'GridView',
     subtitle: '网格滚动组件',
     pageBuilder: (BuildContext context) =>
         const GridViewExample(title: 'GridView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'tab-bar-view',
     title: 'TabBarView',
     subtitle: '标签页组件',
     pageBuilder: (BuildContext context) =>
         const TabBarViewExample(title: 'TabBarView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'nested-scroll-view',
     title: 'NestedScrollView',
     subtitle: '嵌套滚动组件',
     pageBuilder: (BuildContext context) =>
         const NestedScrollViewExample(title: 'NestedScrollView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'animated-list',
     title: 'AnimatedList',
     subtitle: '动画列表',
     pageBuilder: (BuildContext context) =>
         const AnimatedListExample(title: 'AnimatedList'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'page-view',
     title: 'PageView',
     subtitle: '页面滑动',
     pageBuilder: (BuildContext context) =>
         const PageViewExample(title: 'PageView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'single-child-scroll-view',
     title: 'SingleChildScrollView',
     subtitle: '单孩子滚动',
     pageBuilder: (BuildContext context) =>
         const SingleChildScrollViewExample(title: 'SingleChildScrollView'),
   ),
-  RouteItem(
+  RouteItem.page(
     path: 'custom-scroll-view',
     title: 'CustomScrollView',
     subtitle: '自定义滚动',
