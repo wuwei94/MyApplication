@@ -22,7 +22,7 @@ final List<RouteItem> appRoutes = [
   ...packageModule.routes,
   ...videoModule.routes,
   ...stateManagerModule.routes,
-  ...layoutRoutes,
+  ...layoutModule.routes,
 ];
 
 /// GoRouter 实例

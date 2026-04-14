@@ -1,3 +1,4 @@
+import 'package:basic_flutter/navigation/models/route_module.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:basic_flutter/navigation/routes/layout_routes/animations_routes.dart';
 import 'package:basic_flutter/navigation/routes/layout_routes/async_programming_routes.dart';
@@ -13,6 +14,16 @@ import 'package:basic_flutter/navigation/routes/layout_routes/sliver_widgets_rou
 import 'package:basic_flutter/navigation/routes/layout_routes/stack_positioning_routes.dart';
 import 'package:basic_flutter/navigation/routes/layout_routes/state_driven_routes.dart';
 import 'package:basic_flutter/navigation/routes/layout_routes/state_management_routes.dart';
+
+final RouteModule layoutModule = RouteModule(
+  entry: RouteItem.section(
+    path: '/layout',
+    title: 'Layout',
+    subtitle: '布局组件',
+    routeItems: layoutRoutes,
+  ),
+  routes: layoutRoutes,
+);
 
 final List<RouteItem> layoutRoutes = [
   // ========== 容器布局 ==========

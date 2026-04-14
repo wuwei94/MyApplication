@@ -11,11 +11,6 @@ final List<RouteItem> navigationRegistry = <RouteItem>[
   packageModule.entry,
   videoModule.entry,
   stateManagerModule.entry,
-  RouteItem.section(
-    path: '/layout',
-    title: 'Layout',
-    subtitle: '布局组件',
-    routeItems: layoutRoutes,
-  ),
+  layoutModule.entry,
   demoModule.entry,
 ];
