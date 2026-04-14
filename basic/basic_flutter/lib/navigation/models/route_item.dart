@@ -59,7 +59,7 @@ class RouteItem {
   auto_route.AutoRoute toAutoRoute() {
     return auto_route.NamedRouteDef(
       path: path,
-      name: title,
+      name: path,
       builder: (BuildContext context, auto_route.RouteData<dynamic> data) =>
           pageBuilder(context),
       children: routeItems
