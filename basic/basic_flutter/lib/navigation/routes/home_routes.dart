@@ -1,5 +1,4 @@
 import 'package:basic_flutter/features/feature_list_page.dart';
-import 'package:basic_flutter/navigation/constants/app_router_type.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:basic_flutter/navigation/registry/navigation_registry.dart';
 import 'package:flutter/widgets.dart';
