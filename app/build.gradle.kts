@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
+    alias(libs.plugins.dependencyGuard)
 }
 
 android {
@@ -86,4 +87,17 @@ dependencies {
 
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.startup)
+}
+
+dependencyGuard {
+    // 生产环境 Release 配置 - 建议监控此配置以了解生产构建中包含的内容
+    configuration("prodReleaseRuntimeClasspath") {
+        // 可选：添加允许规则，例如禁止测试依赖进入生产环境
+        // allowedFilter = { !it.contains("junit") }
+    }
+    // 生产环境 Debug 配置
+    configuration("prodDebugRuntimeClasspath") {
+        // 可选：添加允许规则
+        // allowedFilter = { !it.contains("junit") }
+    }
 }
