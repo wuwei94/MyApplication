@@ -107,8 +107,8 @@ gradlePluginGreenDao = "3.3.1"
 gradlePluginObjectBox = "5.1.0"
 gradlePluginKsp = "2.3.4"
 
+# https://mvnrepository.com/artifact/com.dropbox.dependency-guard/dependency-guard
 dependencyGuard = "0.5.0"
-junitVersion = "1.3.0"
 # ##################################################################################################
 [libraries]
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
@@ -342,7 +342,6 @@ gradlePlugin-objectbox = { group = "io.objectbox", name = "objectbox-gradle-plug
 gradlePlugin-ksp = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "gradlePluginKsp" }
 gradlePlugin-hilt = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "androidxHilt" }
 gradlePlugin-room = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "androidxRoom" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradlePluginAndroid" }
@@ -359,6 +358,7 @@ android-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePluginKsp" 
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androidxHilt" }
 android-room = { id = "androidx.room", version.ref = "androidxRoom" }
 
+# https://github.com/dropbox/dependency-guard
 dependencyGuard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
 
 # Plugins defined by this project
