@@ -14,14 +14,14 @@ export 'package:basic_flutter/navigation/constants/app_router_type.dart';
 /// 公共路由列表，用于所有路由器
 final List<RouteItem> appRoutes = [
   ...homeRoutes,
-  ...exampleRoutes,
-  ...demoRoutes,
-  ...networkRoutes,
-  ...storageRoutes,
-  ...animRoutes,
-  ...packageRoutes,
-  ...videoRoutes,
-  ...stateManagerRoutes,
+  ...exampleModule.routes,
+  ...demoModule.routes,
+  ...networkModule.routes,
+  ...storageModule.routes,
+  ...animModule.routes,
+  ...packageModule.routes,
+  ...videoModule.routes,
+  ...stateManagerModule.routes,
   ...layoutRoutes,
 ];
 

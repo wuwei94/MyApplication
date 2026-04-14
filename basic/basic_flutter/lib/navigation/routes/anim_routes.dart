@@ -2,8 +2,19 @@ import 'package:basic_flutter/features/anim/lottie_example.dart';
 import 'package:basic_flutter/features/anim/pag_example.dart';
 import 'package:basic_flutter/features/anim/svg_example.dart';
 import 'package:basic_flutter/features/anim/svga_example.dart';
+import 'package:basic_flutter/navigation/models/route_module.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
+
+final RouteModule animModule = RouteModule(
+  entry: RouteItem.section(
+    path: '/animations',
+    title: 'Animations',
+    subtitle: '动画组件',
+    routeItems: animRoutes,
+  ),
+  routes: animRoutes,
+);
 
 final List<RouteItem> animRoutes = [
   RouteItem.page(

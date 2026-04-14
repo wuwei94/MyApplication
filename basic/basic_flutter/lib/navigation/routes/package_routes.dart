@@ -6,10 +6,21 @@ import 'package:basic_flutter/features/packages/screen_util_example.dart';
 import 'package:basic_flutter/features/packages/toast_example.dart';
 import 'package:basic_flutter/features/packages/webview_example.dart';
 import 'package:basic_flutter/features/packages/wechat_picker_example.dart';
+import 'package:basic_flutter/navigation/models/route_module.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
 import 'package:flutter/widgets.dart';
 
 /// Package 三方框架路由
+final RouteModule packageModule = RouteModule(
+  entry: RouteItem.section(
+    path: '/packages',
+    title: 'Packages',
+    subtitle: '三方组件',
+    routeItems: packageRoutes,
+  ),
+  routes: packageRoutes,
+);
+
 final List<RouteItem> packageRoutes = [
   RouteItem.page(
     path: '/package/toast',
