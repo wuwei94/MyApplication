@@ -79,42 +79,42 @@ class LayoutModule {
       subtitle: 'Container、Padding、Center、Align、SizedBox、ConstrainedBox',
       routeItems: [
         RouteItem.page(
-          path: 'container',
+          path: '/layout/containers/container',
           title: 'Container',
           subtitle: '容器组件',
           pageBuilder: (BuildContext context) =>
               const ContainerExample(title: 'Container'),
         ),
         RouteItem.page(
-          path: 'padding',
+          path: '/layout/containers/padding',
           title: 'Padding',
           subtitle: '内边距组件',
           pageBuilder: (BuildContext context) =>
               const PaddingExample(title: 'Padding'),
         ),
         RouteItem.page(
-          path: 'center',
+          path: '/layout/containers/center',
           title: 'Center',
           subtitle: '居中组件',
           pageBuilder: (BuildContext context) =>
               const CenterExample(title: 'Center'),
         ),
         RouteItem.page(
-          path: 'align',
+          path: '/layout/containers/align',
           title: 'Align',
           subtitle: '对齐组件',
           pageBuilder: (BuildContext context) =>
               const AlignExample(title: 'Align'),
         ),
         RouteItem.page(
-          path: 'sized-box',
+          path: '/layout/containers/sized-box',
           title: 'SizedBox',
           subtitle: '尺寸组件',
           pageBuilder: (BuildContext context) =>
               const SizedBoxExample(title: 'SizedBox'),
         ),
         RouteItem.page(
-          path: 'constrained-box',
+          path: '/layout/containers/constrained-box',
           title: 'ConstrainedBox',
           subtitle: '约束组件',
           pageBuilder: (BuildContext context) =>
@@ -130,20 +130,20 @@ class LayoutModule {
       subtitle: 'Row、Column、Flexible、Expanded',
       routeItems: [
         RouteItem.page(
-          path: 'row',
+          path: '/layout/linear/row',
           title: 'Row',
           subtitle: '水平布局',
           pageBuilder: (BuildContext context) => const RowExample(title: 'Row'),
         ),
         RouteItem.page(
-          path: 'column',
+          path: '/layout/linear/column',
           title: 'Column',
           subtitle: '垂直布局',
           pageBuilder: (BuildContext context) =>
               const ColumnExample(title: 'Column'),
         ),
         RouteItem.page(
-          path: 'flexible-expanded',
+          path: '/layout/linear/flexible-expanded',
           title: 'Flexible & Expanded',
           subtitle: '弹性布局',
           pageBuilder: (BuildContext context) =>
@@ -159,14 +159,14 @@ class LayoutModule {
       subtitle: 'Stack、Positioned',
       routeItems: [
         RouteItem.page(
-          path: 'stack',
+          path: '/layout/stacking/stack',
           title: 'Stack',
           subtitle: '堆叠布局',
           pageBuilder: (BuildContext context) =>
               const StackExample(title: 'Stack'),
         ),
         RouteItem.page(
-          path: 'positioned',
+          path: '/layout/stacking/positioned',
           title: 'Positioned',
           subtitle: '定位组件',
           pageBuilder: (BuildContext context) =>
@@ -182,13 +182,13 @@ class LayoutModule {
       subtitle: 'Wrap、Flow',
       routeItems: [
         RouteItem.page(
-          path: 'wrap',
+          path: '/layout/flow/wrap',
           title: 'Wrap',
           subtitle: '自动换行',
           pageBuilder: (BuildContext context) => const WrapExample(title: 'Wrap'),
         ),
         RouteItem.page(
-          path: 'flow',
+          path: '/layout/flow/flow',
           title: 'Flow',
           subtitle: '流式布局',
           pageBuilder: (BuildContext context) => const FlowExample(title: 'Flow'),
@@ -203,56 +203,56 @@ class LayoutModule {
       subtitle: 'ListView、GridView、PageView、TabBarView、NestedScrollView...',
       routeItems: [
         RouteItem.page(
-          path: 'list-view',
+          path: '/layout/scroll/list-view',
           title: 'ListView',
           subtitle: '列表滚动组件',
           pageBuilder: (BuildContext context) =>
               const ListViewExample(title: 'ListView'),
         ),
         RouteItem.page(
-          path: 'grid-view',
+          path: '/layout/scroll/grid-view',
           title: 'GridView',
           subtitle: '网格滚动组件',
           pageBuilder: (BuildContext context) =>
               const GridViewExample(title: 'GridView'),
         ),
         RouteItem.page(
-          path: 'tab-bar-view',
+          path: '/layout/scroll/tab-bar-view',
           title: 'TabBarView',
           subtitle: '标签页组件',
           pageBuilder: (BuildContext context) =>
               const TabBarViewExample(title: 'TabBarView'),
         ),
         RouteItem.page(
-          path: 'nested-scroll-view',
+          path: '/layout/scroll/nested-scroll-view',
           title: 'NestedScrollView',
           subtitle: '嵌套滚动组件',
           pageBuilder: (BuildContext context) =>
               const NestedScrollViewExample(title: 'NestedScrollView'),
         ),
         RouteItem.page(
-          path: 'animated-list',
+          path: '/layout/scroll/animated-list',
           title: 'AnimatedList',
           subtitle: '动画列表',
           pageBuilder: (BuildContext context) =>
               const AnimatedListExample(title: 'AnimatedList'),
         ),
         RouteItem.page(
-          path: 'page-view',
+          path: '/layout/scroll/page-view',
           title: 'PageView',
           subtitle: '页面滑动',
           pageBuilder: (BuildContext context) =>
               const PageViewExample(title: 'PageView'),
         ),
         RouteItem.page(
-          path: 'single-child-scroll-view',
+          path: '/layout/scroll/single-child-scroll-view',
           title: 'SingleChildScrollView',
           subtitle: '单孩子滚动',
           pageBuilder: (BuildContext context) =>
               const SingleChildScrollViewExample(title: 'SingleChildScrollView'),
         ),
         RouteItem.page(
-          path: 'custom-scroll-view',
+          path: '/layout/scroll/custom-scroll-view',
           title: 'CustomScrollView',
           subtitle: '自定义滚动',
           pageBuilder: (BuildContext context) =>
@@ -268,21 +268,21 @@ class LayoutModule {
       subtitle: 'SliverList、SliverGrid、SliverAppBar',
       routeItems: [
         RouteItem.page(
-          path: 'sliver-list',
+          path: '/layout/slivers/sliver-list',
           title: 'SliverList',
           subtitle: 'Sliver列表',
           pageBuilder: (BuildContext context) =>
               const SliverListExample(title: 'SliverList'),
         ),
         RouteItem.page(
-          path: 'sliver-grid',
+          path: '/layout/slivers/sliver-grid',
           title: 'SliverGrid',
           subtitle: 'Sliver网格',
           pageBuilder: (BuildContext context) =>
               const SliverGridExample(title: 'SliverGrid'),
         ),
         RouteItem.page(
-          path: 'sliver-app-bar',
+          path: '/layout/slivers/sliver-app-bar',
           title: 'SliverAppBar',
           subtitle: 'Sliver应用栏',
           pageBuilder: (BuildContext context) =>
@@ -298,14 +298,14 @@ class LayoutModule {
       subtitle: 'GestureDetector、PopScope',
       routeItems: [
         RouteItem.page(
-          path: 'gesture-detector',
+          path: '/layout/gestures/gesture-detector',
           title: 'GestureDetector',
           subtitle: '手势检测',
           pageBuilder: (BuildContext context) =>
               const GestureDetectorExample(title: 'GestureDetector'),
         ),
         RouteItem.page(
-          path: 'pop-scope',
+          path: '/layout/gestures/pop-scope',
           title: 'PopScope',
           subtitle: '返回拦截',
           pageBuilder: (BuildContext context) =>
@@ -321,35 +321,35 @@ class LayoutModule {
       subtitle: 'FadeTransition、ScaleTransition、RotationTransition...',
       routeItems: [
         RouteItem.page(
-          path: 'fade-transition',
+          path: '/layout/animations/fade-transition',
           title: 'FadeTransition',
           subtitle: '淡入淡出动画',
           pageBuilder: (BuildContext context) =>
               const FadeTransitionExample(title: 'FadeTransition'),
         ),
         RouteItem.page(
-          path: 'scale-transition',
+          path: '/layout/animations/scale-transition',
           title: 'ScaleTransition',
           subtitle: '缩放动画',
           pageBuilder: (BuildContext context) =>
               const ScaleTransitionExample(title: 'ScaleTransition'),
         ),
         RouteItem.page(
-          path: 'rotation-transition',
+          path: '/layout/animations/rotation-transition',
           title: 'RotationTransition',
           subtitle: '旋转动画',
           pageBuilder: (BuildContext context) =>
               const RotationTransitionExample(title: 'RotationTransition'),
         ),
         RouteItem.page(
-          path: 'size-transition',
+          path: '/layout/animations/size-transition',
           title: 'SizeTransition',
           subtitle: '尺寸动画',
           pageBuilder: (BuildContext context) =>
               const SizeTransitionExample(title: 'SizeTransition'),
         ),
         RouteItem.page(
-          path: 'slide-transition',
+          path: '/layout/animations/slide-transition',
           title: 'SlideTransition',
           subtitle: '滑动动画',
           pageBuilder: (BuildContext context) =>
@@ -365,35 +365,35 @@ class LayoutModule {
       subtitle: 'Dialog、BottomSheet、DatePicker、Cupertino Dialogs',
       routeItems: [
         RouteItem.page(
-          path: 'alert-dialog',
+          path: '/layout/dialogs/alert-dialog',
           title: 'AlertDialog',
           subtitle: 'Material弹窗',
           pageBuilder: (BuildContext context) =>
               const AlertDialogExample(title: 'AlertDialog'),
         ),
         RouteItem.page(
-          path: 'cupertino-dialogs',
+          path: '/layout/dialogs/cupertino-dialogs',
           title: 'Cupertino Dialogs',
           subtitle: 'iOS风格弹窗',
           pageBuilder: (BuildContext context) =>
               const CupertinoDialogsExample(title: 'Cupertino Dialogs'),
         ),
         RouteItem.page(
-          path: 'custom-dialog',
+          path: '/layout/dialogs/custom-dialog',
           title: 'Custom Dialog',
           subtitle: '自定义弹窗',
           pageBuilder: (BuildContext context) =>
               const CustomDialogExample(title: 'Custom Dialog'),
         ),
         RouteItem.page(
-          path: 'date-picker',
+          path: '/layout/dialogs/date-picker',
           title: 'DatePicker',
           subtitle: '日期选择器',
           pageBuilder: (BuildContext context) =>
               const DatePickerExample(title: 'DatePicker'),
         ),
         RouteItem.page(
-          path: 'modal-bottom-sheet',
+          path: '/layout/dialogs/modal-bottom-sheet',
           title: 'ModalBottomSheet',
           subtitle: '底部面板',
           pageBuilder: (BuildContext context) =>
@@ -409,34 +409,34 @@ class LayoutModule {
       subtitle: 'DecoratedBox、Opacity、Clip、BackdropFilter、ShaderMask',
       routeItems: [
         RouteItem.page(
-          path: 'decorated-box',
+          path: '/layout/decorations/decorated-box',
           title: 'DecoratedBox',
           subtitle: '装饰盒子',
           pageBuilder: (BuildContext context) =>
               const DecoratedBoxExample(title: 'DecoratedBox'),
         ),
         RouteItem.page(
-          path: 'opacity',
+          path: '/layout/decorations/opacity',
           title: 'Opacity',
           subtitle: '透明度',
           pageBuilder: (BuildContext context) =>
               const OpacityExample(title: 'Opacity'),
         ),
         RouteItem.page(
-          path: 'clip',
+          path: '/layout/decorations/clip',
           title: 'Clip',
           subtitle: '裁剪',
           pageBuilder: (BuildContext context) => const ClipExample(title: 'Clip'),
         ),
         RouteItem.page(
-          path: 'backdrop-filter',
+          path: '/layout/decorations/backdrop-filter',
           title: 'BackdropFilter',
           subtitle: '背景滤镜',
           pageBuilder: (BuildContext context) =>
               const BackdropFilterExample(title: 'BackdropFilter'),
         ),
         RouteItem.page(
-          path: 'shader-mask',
+          path: '/layout/decorations/shader-mask',
           title: 'ShaderMask',
           subtitle: '着色器遮罩',
           pageBuilder: (BuildContext context) =>
@@ -452,7 +452,7 @@ class LayoutModule {
       subtitle: 'LayoutBuilder',
       routeItems: [
         RouteItem.page(
-          path: 'layout-builder',
+          path: '/layout/builders/layout-builder',
           title: 'LayoutBuilder',
           subtitle: '响应式布局',
           pageBuilder: (BuildContext context) =>
@@ -468,14 +468,14 @@ class LayoutModule {
       subtitle: 'FutureBuilder、StreamBuilder',
       routeItems: [
         RouteItem.page(
-          path: 'future-builder',
+          path: '/layout/state-driven/future-builder',
           title: 'FutureBuilder',
           subtitle: 'Future构建器',
           pageBuilder: (BuildContext context) =>
               const FutureBuilderExample(title: 'FutureBuilder'),
         ),
         RouteItem.page(
-          path: 'stream-builder',
+          path: '/layout/state-driven/stream-builder',
           title: 'StreamBuilder',
           subtitle: 'Stream构建器',
           pageBuilder: (BuildContext context) =>
@@ -491,21 +491,21 @@ class LayoutModule {
       subtitle: 'InheritedWidget、ValueListenableBuilder、ListenableBuilder',
       routeItems: [
         RouteItem.page(
-          path: 'inherited-widget',
+          path: '/layout/state-management/inherited-widget',
           title: 'InheritedWidget',
           subtitle: '数据共享',
           pageBuilder: (BuildContext context) =>
               const InheritedWidgetExample(title: 'InheritedWidget'),
         ),
         RouteItem.page(
-          path: 'value-listenable-builder',
+          path: '/layout/state-management/value-listenable-builder',
           title: 'ValueListenableBuilder',
           subtitle: '值监听构建器',
           pageBuilder: (BuildContext context) =>
               const ValueListenableBuilderExample(title: 'ValueListenableBuilder'),
         ),
         RouteItem.page(
-          path: 'listenable-builder',
+          path: '/layout/state-management/listenable-builder',
           title: 'ListenableBuilder',
           subtitle: '可监听构建器',
           pageBuilder: (BuildContext context) =>
@@ -521,35 +521,35 @@ class LayoutModule {
       subtitle: 'Future、Stream、Compute、Completer、Isolate',
       routeItems: [
         RouteItem.page(
-          path: 'future',
+          path: '/layout/async/future',
           title: 'Future',
           subtitle: '异步任务',
           pageBuilder: (BuildContext context) =>
               const FutureExample(title: 'Future'),
         ),
         RouteItem.page(
-          path: 'stream',
+          path: '/layout/async/stream',
           title: 'Stream',
           subtitle: '异步流',
           pageBuilder: (BuildContext context) =>
               const StreamExample(title: 'Stream'),
         ),
         RouteItem.page(
-          path: 'compute',
+          path: '/layout/async/compute',
           title: 'Compute',
           subtitle: '计算隔离',
           pageBuilder: (BuildContext context) =>
               const ComputeExample(title: 'Compute'),
         ),
         RouteItem.page(
-          path: 'completer',
+          path: '/layout/async/completer',
           title: 'Completer',
           subtitle: '异步完成器',
           pageBuilder: (BuildContext context) =>
               const CompleterExample(title: 'Completer'),
         ),
         RouteItem.page(
-          path: 'isolate',
+          path: '/layout/async/isolate',
           title: 'Isolate',
           subtitle: '多线程',
           pageBuilder: (BuildContext context) =>

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
 import 'package:basic_flutter/app/catalog/app_catalog.dart';
+import 'package:basic_flutter/features/feature_list_page.dart';
 import 'package:basic_flutter/features/home/home_module.dart';
 import 'package:basic_flutter/navigation/constants/app_router_type.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
@@ -9,60 +10,108 @@ import 'package:go_router/go_router.dart' as go_router;
 
 export 'package:basic_flutter/navigation/constants/app_router_type.dart';
 
-/// 从所有模块聚合路由
+/// Build GoRouter routes list
 ///
-/// 遍历 appCatalog 中每个模块的 entry，收集所有 routes
-List<RouteItem> get _allPageRoutes {
-  final List<RouteItem> routes = <RouteItem>[];
+/// Structure:
+/// - Home route
+/// - Each module's group route (with sub-items list)
+/// - All page routes (independent top-level routes)
+List<go_router.GoRoute> _buildGoRoutes() {
+  final List<go_router.GoRoute> routes = <go_router.GoRoute>[];
+
+  // Home route
+  routes.add(
+    go_router.GoRoute(
+      path: '/home',
+      name: '/home',
+      builder: (BuildContext context, go_router.GoRouterState state) =>
+          homeModule.homeRoute.pageBuilder(context),
+    ),
+  );
+
+  // Iterate each module
   for (final RouteItem catalogItem in appCatalog) {
-    // 为每个 catalog 项创建分组路由
+    // Add group route (displays sub-items list)
     routes.add(
-      RouteItem.section(
+      go_router.GoRoute(
         path: catalogItem.path,
-        title: catalogItem.title,
-        subtitle: catalogItem.subtitle,
-        routeItems: _flattenRoutes(catalogItem.routeItems),
+        name: catalogItem.path,
+        builder: (BuildContext context, go_router.GoRouterState state) =>
+            FeatureListPage(
+          title: catalogItem.title,
+          routes: catalogItem.routeItems,
+        ),
       ),
     );
+
+    // Add all sub-routes (flattened as independent top-level routes)
+    routes.addAll(_buildSubGoRoutes(catalogItem.routeItems));
   }
+
   return routes;
 }
 
-/// 扁平化路由列表，将所有嵌套路由转换为顶层路由
-List<RouteItem> _flattenRoutes(List<RouteItem> items) {
-  final List<RouteItem> result = <RouteItem>[];
+/// Build sub-routes list (recursive)
+/// Includes both group routes and page routes
+List<go_router.GoRoute> _buildSubGoRoutes(List<RouteItem> items) {
+  final List<go_router.GoRoute> result = <go_router.GoRoute>[];
   for (final RouteItem item in items) {
     if (item.routeItems.isEmpty) {
-      // 叶子节点（页面）
-      result.add(item);
+      // Leaf node (page)
+      result.add(
+        go_router.GoRoute(
+          path: item.path,
+          name: item.path,
+          builder: (BuildContext context, go_router.GoRouterState state) =>
+              item.pageBuilder(context),
+        ),
+      );
     } else {
-      // 分组节点，递归扁平化子路由
-      result.addAll(_flattenRoutes(item.routeItems));
+      // Group node, add group route and recursively process sub-routes
+      result.add(
+        go_router.GoRoute(
+          path: item.path,
+          name: item.path,
+          builder: (BuildContext context, go_router.GoRouterState state) =>
+              FeatureListPage(
+            title: item.title,
+            routes: item.routeItems,
+          ),
+        ),
+      );
+      // Recursively add sub-routes
+      result.addAll(_buildSubGoRoutes(item.routeItems));
     }
   }
   return result;
 }
 
-/// GoRouter 实例
+/// GoRouter instance
 final go_router.GoRouter goAppRouter = go_router.GoRouter(
   initialLocation: '/home',
-  routes: RouteConverter.toGoRoutes(<RouteItem>[
-    homeModule.homeRoute,
-    ..._allPageRoutes,
-  ]),
+  routes: _buildGoRoutes(),
 );
 
-/// AutoRoute 实例
+/// AutoRoute instance (using RouteConverter)
 final RouterConfig<Object> autoAppRouter =
     auto_route.RootStackRouter.build(
           routes: RouteConverter.toAutoRoutes(<RouteItem>[
             homeModule.homeRoute,
-            ..._allPageRoutes,
+            ..._collectAllRouteItems(),
           ]),
         ).config()
         as RouterConfig<Object>;
 
-/// 应用主路由器
+/// Collect all RouteItems (for AutoRoute)
+List<RouteItem> _collectAllRouteItems() {
+  final List<RouteItem> routes = <RouteItem>[];
+  for (final RouteItem catalogItem in appCatalog) {
+    routes.add(catalogItem);
+  }
+  return routes;
+}
+
+/// App main router
 final RouterConfig<Object> appRouter = switch (currentAppRouterType) {
   AppRouterType.goRouter => goAppRouter,
   AppRouterType.autoRoute => autoAppRouter,
