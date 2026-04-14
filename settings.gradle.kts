@@ -116,5 +116,11 @@ include(":modules:module_arch")
 
 include(":modules:module_compose")
 
-apply("flutter.gradle.kts")
+val enableFlutter = providers.gradleProperty("enableFlutter")
+    .orElse("true")
+    .get()
+    .toBoolean()
+if (enableFlutter) {
+    apply("flutter.gradle.kts")
+}
 include(":modules:module_flutter")

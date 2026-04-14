@@ -1,0 +1,15 @@
+package com.example.william.my.module.flutter
+
+import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_module.router.path.RouterPath
+
+@Route(path = RouterPath.Flutter.Main)
+class FlutterMainActivity : BasicResponseActivity() {
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showResponse("Flutter is disabled. Set enableFlutter=true to restore the Flutter page.")
+    }
+}
