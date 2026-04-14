@@ -1,6 +1,6 @@
 import 'package:basic_flutter/core/utils/logger/logger.dart';
-import 'package:basic_flutter/navigation/constants/navigation_constants.dart';
 import 'package:basic_flutter/navigation/models/route_item.dart';
+import 'package:basic_flutter/navigation/utils/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 /// 通用路由列表页：首页展示分组，分组页展示具体示例
@@ -12,13 +12,7 @@ class FeatureListPage extends StatelessWidget {
 
   void _handleTap(BuildContext context, RouteItem item) {
     logInfo('点击了 ${item.title}, 路由详情: $item');
-
-    switch (currentAppRouterType) {
-      case AppRouterType.goRouter:
-        item.pushByGo(context);
-      case AppRouterType.autoRoute:
-        item.pushByAuto(context);
-    }
+    AppNavigator.pushPath<void>(context, item.path);
   }
 
   @override

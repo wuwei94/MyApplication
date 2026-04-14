@@ -9,37 +9,19 @@ class RouteItem {
   final List<RouteItem> routeItems;
   final WidgetBuilder pageBuilder;
 
-  RouteItem({
-    this.path = "",
-    this.title = "",
-    this.subtitle = "",
-    this.routeItems = const [],
-    WidgetBuilder? pageBuilder,
-  }) : pageBuilder = pageBuilder ?? ((_) => const SizedBox.shrink());
-
   RouteItem.page({
-    String path = "",
-    String title = "",
-    String subtitle = "",
-    required WidgetBuilder pageBuilder,
-  }) : this(
-         path: path,
-         title: title,
-         subtitle: subtitle,
-         pageBuilder: pageBuilder,
-       );
+    required this.path,
+    required this.title,
+    this.subtitle = "",
+    required this.pageBuilder,
+  }) : routeItems = const <RouteItem>[];
 
   RouteItem.section({
-    String path = "",
-    String title = "",
-    String subtitle = "",
-    required List<RouteItem> routeItems,
-  }) : this(
-         path: path,
-         title: title,
-         subtitle: subtitle,
-         routeItems: routeItems,
-       );
+    required this.path,
+    required this.title,
+    this.subtitle = "",
+    required this.routeItems,
+  }) : pageBuilder = ((_) => const SizedBox.shrink());
 
   /// 使用 go_router 跳转
   Future<T?> pushByGo<T extends Object?>(
