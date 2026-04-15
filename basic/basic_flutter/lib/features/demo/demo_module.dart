@@ -21,7 +21,7 @@ class DemoModule {
 
   static final List<RouteItem> _routes = [
     RouteItem.page(
-      path: '/demo/custom-local-font',
+      path: 'custom-local-font',
       title: 'Custom Local Font',
       subtitle: '本地自定义字体示例',
       pageBuilder: (BuildContext context) =>

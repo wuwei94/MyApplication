@@ -24,25 +24,25 @@ class AnimModule {
 
   static final List<RouteItem> _routes = [
     RouteItem.page(
-      path: '/package/svg',
+      path: 'svg',
       title: 'SVG',
       subtitle: 'SVG动画示例',
       pageBuilder: (BuildContext context) => const SvgExample(title: 'SVG'),
     ),
     RouteItem.page(
-      path: '/package/svga',
+      path: 'svga',
       title: 'SVGA',
       subtitle: 'SVGA动画示例',
       pageBuilder: (BuildContext context) => const SvgaExample(title: 'SVGA'),
     ),
     RouteItem.page(
-      path: '/package/lottie',
+      path: 'lottie',
       title: 'Lottie',
       subtitle: 'Lottie动画示例',
       pageBuilder: (BuildContext context) => const LottieExample(title: 'Lottie'),
     ),
     RouteItem.page(
-      path: '/package/pag',
+      path: 'pag',
       title: 'PAG',
       subtitle: 'PAG动画示例',
       pageBuilder: (BuildContext context) => const PagExample(title: 'PAG'),

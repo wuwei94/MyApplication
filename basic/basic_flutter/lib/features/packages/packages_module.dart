@@ -29,55 +29,55 @@ class PackagesModule {
 
   static final List<RouteItem> _routes = [
     RouteItem.page(
-      path: '/package/toast',
+      path: 'toast',
       title: 'Toast',
       subtitle: 'Toast示例',
       pageBuilder: (BuildContext context) => const ToastExample(title: 'Toast'),
     ),
     RouteItem.page(
-      path: '/package/notification',
+      path: 'notification',
       title: 'Notification',
       subtitle: 'Notification示例',
       pageBuilder: (BuildContext context) =>
           const NotificationExample(title: 'Notification'),
     ),
     RouteItem.page(
-      path: '/package/permission',
+      path: 'permission',
       title: 'Permission',
       subtitle: 'Permission示例',
       pageBuilder: (BuildContext context) =>
           const PermissionExample(title: 'Permission'),
     ),
     RouteItem.page(
-      path: '/package/image-picker',
+      path: 'image-picker',
       title: 'ImagePicker',
       subtitle: 'ImagePicker示例',
       pageBuilder: (BuildContext context) =>
           const ImagePickerExample(title: 'ImagePicker'),
     ),
     RouteItem.page(
-      path: '/package/wechat-picker',
+      path: 'wechat-picker',
       title: 'WechatPicker',
       subtitle: 'WechatPicker示例',
       pageBuilder: (BuildContext context) =>
           const WechatPickerExample(title: 'WechatPicker'),
     ),
     RouteItem.page(
-      path: '/package/web-view',
+      path: 'web-view',
       title: 'WebView',
       subtitle: 'WebView示例',
       pageBuilder: (BuildContext context) =>
           const WebViewExample(title: 'WebView'),
     ),
     RouteItem.page(
-      path: '/package/screen-util',
+      path: 'screen-util',
       title: 'ScreenUtil',
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilExample(title: 'ScreenUtil'),
     ),
     RouteItem.page(
-      path: '/package/custom-google-font',
+      path: 'custom-google-font',
       title: 'Custom Google Font',
       subtitle: 'Google Fonts 第三方字体示例',
       pageBuilder: (BuildContext context) =>

@@ -18,19 +18,19 @@ final RouteModule networkModule = RouteModule(
 
 final List<RouteItem> networkRoutes = [
   RouteItem.page(
-    path: '/network/dio',
+    path: 'dio',
     title: 'Dio',
     subtitle: 'Dio网络请求示例',
     pageBuilder: (BuildContext context) => const DioExample(title: 'Dio'),
   ),
   RouteItem.page(
-    path: '/network/http',
+    path: 'http',
     title: 'Http',
     subtitle: 'Http网络请求示例',
     pageBuilder: (BuildContext context) => const HttpExample(title: 'Http'),
   ),
   RouteItem.page(
-    path: '/network/image-loader',
+    path: 'image-loader',
     title: 'ImageLoader',
     subtitle: 'ImageLoader图片加载示例',
     pageBuilder: (BuildContext context) =>

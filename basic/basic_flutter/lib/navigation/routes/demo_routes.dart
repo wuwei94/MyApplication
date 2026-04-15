@@ -16,7 +16,7 @@ final RouteModule demoModule = RouteModule(
 
 final List<RouteItem> demoRoutes = [
   RouteItem.page(
-    path: '/demo/custom-local-font',
+    path: 'custom-local-font',
     title: 'Custom Local Font',
     subtitle: '本地自定义字体示例',
     pageBuilder: (BuildContext context) =>

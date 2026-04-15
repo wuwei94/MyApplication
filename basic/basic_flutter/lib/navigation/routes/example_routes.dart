@@ -17,14 +17,14 @@ final RouteModule exampleModule = RouteModule(
 
 final List<RouteItem> exampleRoutes = [
   RouteItem.page(
-    path: '/example/counter',
+    path: 'counter',
     title: 'Counter Example',
     subtitle: '计数器示例',
     pageBuilder: (BuildContext context) =>
         const CounterExample(title: 'Counter Example'),
   ),
   RouteItem.page(
-    path: '/example/getx',
+    path: 'getx',
     title: 'GetX Example',
     subtitle: 'GetX示例',
     pageBuilder: (BuildContext context) => const GetXApp(title: 'GetX Example'),

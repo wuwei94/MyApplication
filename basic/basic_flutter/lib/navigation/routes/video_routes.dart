@@ -16,14 +16,14 @@ final RouteModule videoModule = RouteModule(
 
 final List<RouteItem> videoRoutes = [
   RouteItem.page(
-    path: '/video/video-player',
+    path: 'video-player',
     title: 'VideoPlayer',
     subtitle: 'video_player 示例',
     pageBuilder: (BuildContext context) =>
         const VideoPlayerExample(title: 'VideoPlayer'),
   ),
   RouteItem.page(
-    path: '/video/chewie-video-player',
+    path: 'chewie-video-player',
     title: 'ChewieVideoPlayer',
     subtitle: 'chewie + video_player 示例',
     pageBuilder: (BuildContext context) =>

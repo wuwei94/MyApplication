@@ -18,21 +18,21 @@ final RouteModule stateManagerModule = RouteModule(
 
 final List<RouteItem> stateManagerRoutes = [
   RouteItem.page(
-    path: '/state-manager/bloc',
+    path: 'bloc',
     title: 'BloC',
     subtitle: 'BloC示例',
     pageBuilder: (BuildContext context) =>
         const CounterBlocExample(title: 'BloC'),
   ),
   RouteItem.page(
-    path: '/state-manager/provider',
+    path: 'provider',
     title: 'Provider',
     subtitle: 'Provider示例',
     pageBuilder: (BuildContext context) =>
         const CounterProviderExample(title: 'Provider'),
   ),
   RouteItem.page(
-    path: '/state-manager/riverpod',
+    path: 'riverpod',
     title: 'Riverpod',
     subtitle: 'Riverpod示例',
     pageBuilder: (BuildContext context) =>

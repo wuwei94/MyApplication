@@ -18,20 +18,20 @@ final RouteModule storageModule = RouteModule(
 
 final List<RouteItem> storageRoutes = [
   RouteItem.page(
-    path: '/storage/hive',
+    path: 'hive',
     title: 'Hive',
     subtitle: 'Hive示例',
     pageBuilder: (BuildContext context) => const HiveExample(title: 'Hive'),
   ),
   RouteItem.page(
-    path: '/storage/secure-storage',
+    path: 'secure-storage',
     title: 'SecureStorage',
     subtitle: 'SecureStorage示例',
     pageBuilder: (BuildContext context) =>
         const SecureStorageExample(title: 'SecureStorage'),
   ),
   RouteItem.page(
-    path: '/storage/shared-preferences',
+    path: 'shared-preferences',
     title: 'SharedPreferences',
     subtitle: 'SharedPreferences示例',
     pageBuilder: (BuildContext context) =>
