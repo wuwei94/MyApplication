@@ -1,0 +1,35 @@
+import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/demos/layout/state_management/inherited_widget_example.dart';
+import 'package:basic_flutter/demos/layout/state_management/listenable_builder_example.dart';
+import 'package:basic_flutter/demos/layout/state_management/value_listenable_builder_example.dart';
+import 'package:flutter/widgets.dart';
+
+final CatalogItem stateManagementCatalog = CatalogItem.catalog(
+  path: '/layout/state-management',
+  title: '状态管理',
+  subtitle: 'InheritedWidget、ValueListenableBuilder、ListenableBuilder',
+  children: <CatalogItem>[
+    CatalogItem.page(
+      path: '/layout/state-management/inherited-widget',
+      title: 'InheritedWidget',
+      subtitle: '数据共享',
+      pageBuilder: (BuildContext context) =>
+          const InheritedWidgetExample(title: 'InheritedWidget'),
+    ),
+    CatalogItem.page(
+      path: '/layout/state-management/value-listenable-builder',
+      title: 'ValueListenableBuilder',
+      subtitle: '值监听构建器',
+      pageBuilder: (BuildContext context) => const ValueListenableBuilderExample(
+        title: 'ValueListenableBuilder',
+      ),
+    ),
+    CatalogItem.page(
+      path: '/layout/state-management/listenable-builder',
+      title: 'ListenableBuilder',
+      subtitle: '可监听构建器',
+      pageBuilder: (BuildContext context) =>
+          const ListenableBuilderExample(title: 'ListenableBuilder'),
+    ),
+  ],
+);
