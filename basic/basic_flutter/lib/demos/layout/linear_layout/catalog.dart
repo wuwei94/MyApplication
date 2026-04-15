@@ -5,24 +5,24 @@ import 'package:basic_flutter/demos/layout/linear_layout/row_example.dart';
 import 'package:flutter/widgets.dart';
 
 final CatalogItem linearLayoutCatalog = CatalogItem.catalog(
-  path: '/layout/linear',
+  path: 'linear',
   title: '线性布局',
   subtitle: 'Row、Column、Flexible、Expanded',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/linear/row',
+      path: 'row',
       title: 'Row',
       subtitle: '水平布局',
       pageBuilder: (BuildContext context) => const RowExample(title: 'Row'),
     ),
     CatalogItem.page(
-      path: '/layout/linear/column',
+      path: 'column',
       title: 'Column',
       subtitle: '垂直布局',
       pageBuilder: (BuildContext context) => const ColumnExample(title: 'Column'),
     ),
     CatalogItem.page(
-      path: '/layout/linear/flexible-expanded',
+      path: 'flexible-expanded',
       title: 'Flexible & Expanded',
       subtitle: '弹性布局',
       pageBuilder: (BuildContext context) =>

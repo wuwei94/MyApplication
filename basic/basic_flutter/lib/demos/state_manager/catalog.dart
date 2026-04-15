@@ -12,7 +12,7 @@ class StateManagerCatalog extends CatalogSection {
   const StateManagerCatalog._();
 
   @override
-  String get path => '/state-manager';
+  String get path => 'state-manager';
 
   @override
   String get title => 'StateManager';
@@ -25,21 +25,21 @@ class StateManagerCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/state-manager/bloc',
+      path: 'bloc',
       title: 'BloC',
       subtitle: 'BloC示例',
       pageBuilder: (BuildContext context) =>
           const CounterBlocExample(title: 'BloC'),
     ),
     CatalogItem.page(
-      path: '/state-manager/provider',
+      path: 'provider',
       title: 'Provider',
       subtitle: 'Provider示例',
       pageBuilder: (BuildContext context) =>
           const CounterProviderExample(title: 'Provider'),
     ),
     CatalogItem.page(
-      path: '/state-manager/riverpod',
+      path: 'riverpod',
       title: 'Riverpod',
       subtitle: 'Riverpod示例',
       pageBuilder: (BuildContext context) =>

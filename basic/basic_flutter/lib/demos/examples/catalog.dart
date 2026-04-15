@@ -11,7 +11,7 @@ class ExamplesCatalog extends CatalogSection {
   const ExamplesCatalog._();
 
   @override
-  String get path => '/examples';
+  String get path => 'examples';
 
   @override
   String get title => 'Examples';
@@ -24,14 +24,14 @@ class ExamplesCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/examples/counter',
+      path: 'counter',
       title: 'Counter Example',
       subtitle: '计数器示例',
       pageBuilder: (BuildContext context) =>
           const CounterExample(title: 'Counter Example'),
     ),
     CatalogItem.page(
-      path: '/examples/getx',
+      path: 'getx',
       title: 'GetX Example',
       subtitle: 'GetX示例',
       pageBuilder: (BuildContext context) => const GetXApp(title: 'GetX Example'),

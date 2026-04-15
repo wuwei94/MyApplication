@@ -4,18 +4,18 @@ import 'package:basic_flutter/demos/layout/flow_layout/wrap_example.dart';
 import 'package:flutter/widgets.dart';
 
 final CatalogItem flowLayoutCatalog = CatalogItem.catalog(
-  path: '/layout/flow',
+  path: 'flow',
   title: '流式布局',
   subtitle: 'Wrap、Flow',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/flow/wrap',
+      path: 'wrap',
       title: 'Wrap',
       subtitle: '自动换行',
       pageBuilder: (BuildContext context) => const WrapExample(title: 'Wrap'),
     ),
     CatalogItem.page(
-      path: '/layout/flow/flow-widget',
+      path: 'flow-widget',
       title: 'Flow',
       subtitle: '流式布局',
       pageBuilder: (BuildContext context) => const FlowExample(title: 'Flow'),

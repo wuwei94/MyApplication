@@ -9,14 +9,22 @@ import 'package:go_router/go_router.dart' as go_router;
 class CatalogRouteConverter {
   CatalogRouteConverter._();
 
+  static List<CatalogItem> resolvePaths(List<CatalogItem> items) {
+    return _resolveItems(items, '');
+  }
+
   /// 将 `List<CatalogItem>` 转换为 `List<GoRoute>`
   static List<go_router.GoRoute> toGoRoutes(List<CatalogItem> routeInfos) {
-    return _flattenItems(routeInfos).map(_toGoRoute).toList(growable: false);
+    return _flattenItems(resolvePaths(routeInfos))
+        .map(_toGoRoute)
+        .toList(growable: false);
   }
 
   /// 将 `List<CatalogItem>` 转换为 `List<AutoRoute>`
   static List<auto_route.AutoRoute> toAutoRoutes(List<CatalogItem> routeInfos) {
-    return _flattenItems(routeInfos).map(_toAutoRoute).toList(growable: false);
+    return _flattenItems(resolvePaths(routeInfos))
+        .map(_toAutoRoute)
+        .toList(growable: false);
   }
 
   static go_router.GoRoute _toGoRoute(CatalogItem routeItem) {
@@ -66,5 +74,38 @@ class CatalogRouteConverter {
 
     visit(items);
     return flattened;
+  }
+
+  static List<CatalogItem> _resolveItems(
+    List<CatalogItem> items,
+    String parentPath,
+  ) {
+    return items.map((CatalogItem item) {
+      final String fullPath = _joinPaths(parentPath, item.path);
+      final List<CatalogItem> resolvedChildren = item.children.isEmpty
+          ? const <CatalogItem>[]
+          : _resolveItems(item.children, fullPath);
+
+      return item.copyWithResolvedPath(
+        path: fullPath,
+        children: resolvedChildren,
+      );
+    }).toList(growable: false);
+  }
+
+  static String _joinPaths(String parentPath, String childPath) {
+    if (childPath.startsWith('/')) {
+      return childPath;
+    }
+
+    final String normalizedParent = parentPath.endsWith('/')
+        ? parentPath.substring(0, parentPath.length - 1)
+        : parentPath;
+
+    if (normalizedParent.isEmpty) {
+      return '/$childPath';
+    }
+
+    return '$normalizedParent/$childPath';
   }
 }

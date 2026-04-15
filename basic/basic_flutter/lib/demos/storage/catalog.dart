@@ -12,7 +12,7 @@ class StorageCatalog extends CatalogSection {
   const StorageCatalog._();
 
   @override
-  String get path => '/storage';
+  String get path => 'storage';
 
   @override
   String get title => 'Storage';
@@ -25,20 +25,20 @@ class StorageCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/storage/hive',
+      path: 'hive',
       title: 'Hive',
       subtitle: 'Hive示例',
       pageBuilder: (BuildContext context) => const HiveExample(title: 'Hive'),
     ),
     CatalogItem.page(
-      path: '/storage/secure-storage',
+      path: 'secure-storage',
       title: 'SecureStorage',
       subtitle: 'SecureStorage示例',
       pageBuilder: (BuildContext context) =>
           const SecureStorageExample(title: 'SecureStorage'),
     ),
     CatalogItem.page(
-      path: '/storage/shared-preferences',
+      path: 'shared-preferences',
       title: 'SharedPreferences',
       subtitle: 'SharedPreferences示例',
       pageBuilder: (BuildContext context) =>

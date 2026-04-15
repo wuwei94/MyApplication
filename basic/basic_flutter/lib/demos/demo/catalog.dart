@@ -10,7 +10,7 @@ class ShowcaseCatalog extends CatalogSection {
   const ShowcaseCatalog._();
 
   @override
-  String get path => '/demo';
+  String get path => 'demo';
 
   @override
   String get title => 'Demo';
@@ -23,7 +23,7 @@ class ShowcaseCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/demo/custom-local-font',
+      path: 'custom-local-font',
       title: 'Custom Local Font',
       subtitle: '本地自定义字体示例',
       pageBuilder: (BuildContext context) =>

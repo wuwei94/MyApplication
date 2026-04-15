@@ -13,7 +13,7 @@ class AnimCatalog extends CatalogSection {
   const AnimCatalog._();
 
   @override
-  String get path => '/animations';
+  String get path => 'animations';
 
   @override
   String get title => 'Animations';
@@ -26,25 +26,25 @@ class AnimCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/animations/svg',
+      path: 'svg',
       title: 'SVG',
       subtitle: 'SVG动画示例',
       pageBuilder: (BuildContext context) => const SvgExample(title: 'SVG'),
     ),
     CatalogItem.page(
-      path: '/animations/svga',
+      path: 'svga',
       title: 'SVGA',
       subtitle: 'SVGA动画示例',
       pageBuilder: (BuildContext context) => const SvgaExample(title: 'SVGA'),
     ),
     CatalogItem.page(
-      path: '/animations/lottie',
+      path: 'lottie',
       title: 'Lottie',
       subtitle: 'Lottie动画示例',
       pageBuilder: (BuildContext context) => const LottieExample(title: 'Lottie'),
     ),
     CatalogItem.page(
-      path: '/animations/pag',
+      path: 'pag',
       title: 'PAG',
       subtitle: 'PAG动画示例',
       pageBuilder: (BuildContext context) => const PagExample(title: 'PAG'),

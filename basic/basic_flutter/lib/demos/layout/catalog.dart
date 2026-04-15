@@ -20,7 +20,7 @@ class LayoutCatalog extends CatalogSection {
   const LayoutCatalog._();
 
   @override
-  String get path => '/layout';
+  String get path => 'layout';
 
   @override
   String get title => 'Layout';

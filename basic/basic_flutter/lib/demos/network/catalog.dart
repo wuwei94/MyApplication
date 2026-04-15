@@ -12,7 +12,7 @@ class NetworkCatalog extends CatalogSection {
   const NetworkCatalog._();
 
   @override
-  String get path => '/network';
+  String get path => 'network';
 
   @override
   String get title => 'Network';
@@ -25,19 +25,19 @@ class NetworkCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/network/dio',
+      path: 'dio',
       title: 'Dio',
       subtitle: 'Dio网络请求示例',
       pageBuilder: (BuildContext context) => const DioExample(title: 'Dio'),
     ),
     CatalogItem.page(
-      path: '/network/http',
+      path: 'http',
       title: 'Http',
       subtitle: 'Http网络请求示例',
       pageBuilder: (BuildContext context) => const HttpExample(title: 'Http'),
     ),
     CatalogItem.page(
-      path: '/network/image-loader',
+      path: 'image-loader',
       title: 'ImageLoader',
       subtitle: 'ImageLoader图片加载示例',
       pageBuilder: (BuildContext context) =>

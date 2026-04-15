@@ -5,26 +5,26 @@ import 'package:basic_flutter/demos/layout/sliver_widgets/sliver_list_example.da
 import 'package:flutter/widgets.dart';
 
 final CatalogItem sliverWidgetsCatalog = CatalogItem.catalog(
-  path: '/layout/slivers',
+  path: 'slivers',
   title: 'Sliver 组件',
   subtitle: 'SliverList、SliverGrid、SliverAppBar',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/slivers/sliver-list',
+      path: 'sliver-list',
       title: 'SliverList',
       subtitle: 'Sliver列表',
       pageBuilder: (BuildContext context) =>
           const SliverListExample(title: 'SliverList'),
     ),
     CatalogItem.page(
-      path: '/layout/slivers/sliver-grid',
+      path: 'sliver-grid',
       title: 'SliverGrid',
       subtitle: 'Sliver网格',
       pageBuilder: (BuildContext context) =>
           const SliverGridExample(title: 'SliverGrid'),
     ),
     CatalogItem.page(
-      path: '/layout/slivers/sliver-app-bar',
+      path: 'sliver-app-bar',
       title: 'SliverAppBar',
       subtitle: 'Sliver应用栏',
       pageBuilder: (BuildContext context) =>

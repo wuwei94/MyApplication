@@ -4,19 +4,19 @@ import 'package:basic_flutter/demos/layout/gesture_interaction/pop_scope_example
 import 'package:flutter/widgets.dart';
 
 final CatalogItem gestureInteractionCatalog = CatalogItem.catalog(
-  path: '/layout/gestures',
+  path: 'gestures',
   title: '手势交互',
   subtitle: 'GestureDetector、PopScope',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/gestures/gesture-detector',
+      path: 'gesture-detector',
       title: 'GestureDetector',
       subtitle: '手势检测',
       pageBuilder: (BuildContext context) =>
           const GestureDetectorExample(title: 'GestureDetector'),
     ),
     CatalogItem.page(
-      path: '/layout/gestures/pop-scope',
+      path: 'pop-scope',
       title: 'PopScope',
       subtitle: '返回拦截',
       pageBuilder: (BuildContext context) =>

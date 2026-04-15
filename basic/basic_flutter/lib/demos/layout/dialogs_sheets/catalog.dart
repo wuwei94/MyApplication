@@ -7,40 +7,40 @@ import 'package:basic_flutter/demos/layout/dialogs_sheets/modal_bottom_sheet_exa
 import 'package:flutter/widgets.dart';
 
 final CatalogItem dialogsSheetsCatalog = CatalogItem.catalog(
-  path: '/layout/dialogs',
+  path: 'dialogs',
   title: '弹窗与底部面板',
   subtitle: 'Dialog、BottomSheet、DatePicker、Cupertino Dialogs',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/dialogs/alert-dialog',
+      path: 'alert-dialog',
       title: 'AlertDialog',
       subtitle: 'Material弹窗',
       pageBuilder: (BuildContext context) =>
           const AlertDialogExample(title: 'AlertDialog'),
     ),
     CatalogItem.page(
-      path: '/layout/dialogs/cupertino-dialogs',
+      path: 'cupertino-dialogs',
       title: 'Cupertino Dialogs',
       subtitle: 'iOS风格弹窗',
       pageBuilder: (BuildContext context) =>
           const CupertinoDialogsExample(title: 'Cupertino Dialogs'),
     ),
     CatalogItem.page(
-      path: '/layout/dialogs/custom-dialog',
+      path: 'custom-dialog',
       title: 'Custom Dialog',
       subtitle: '自定义弹窗',
       pageBuilder: (BuildContext context) =>
           const CustomDialogExample(title: 'Custom Dialog'),
     ),
     CatalogItem.page(
-      path: '/layout/dialogs/date-picker',
+      path: 'date-picker',
       title: 'DatePicker',
       subtitle: '日期选择器',
       pageBuilder: (BuildContext context) =>
           const DatePickerExample(title: 'DatePicker'),
     ),
     CatalogItem.page(
-      path: '/layout/dialogs/modal-bottom-sheet',
+      path: 'modal-bottom-sheet',
       title: 'ModalBottomSheet',
       subtitle: '底部面板',
       pageBuilder: (BuildContext context) =>

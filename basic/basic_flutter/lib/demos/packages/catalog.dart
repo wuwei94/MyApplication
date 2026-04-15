@@ -18,7 +18,7 @@ class PackagesCatalog extends CatalogSection {
   const PackagesCatalog._();
 
   @override
-  String get path => '/packages';
+  String get path => 'packages';
 
   @override
   String get title => 'Packages';
@@ -31,55 +31,55 @@ class PackagesCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/packages/toast',
+      path: 'toast',
       title: 'Toast',
       subtitle: 'Toast示例',
       pageBuilder: (BuildContext context) => const ToastExample(title: 'Toast'),
     ),
     CatalogItem.page(
-      path: '/packages/notification',
+      path: 'notification',
       title: 'Notification',
       subtitle: 'Notification示例',
       pageBuilder: (BuildContext context) =>
           const NotificationExample(title: 'Notification'),
     ),
     CatalogItem.page(
-      path: '/packages/permission',
+      path: 'permission',
       title: 'Permission',
       subtitle: 'Permission示例',
       pageBuilder: (BuildContext context) =>
           const PermissionExample(title: 'Permission'),
     ),
     CatalogItem.page(
-      path: '/packages/image-picker',
+      path: 'image-picker',
       title: 'ImagePicker',
       subtitle: 'ImagePicker示例',
       pageBuilder: (BuildContext context) =>
           const ImagePickerExample(title: 'ImagePicker'),
     ),
     CatalogItem.page(
-      path: '/packages/wechat-picker',
+      path: 'wechat-picker',
       title: 'WechatPicker',
       subtitle: 'WechatPicker示例',
       pageBuilder: (BuildContext context) =>
           const WechatPickerExample(title: 'WechatPicker'),
     ),
     CatalogItem.page(
-      path: '/packages/web-view',
+      path: 'web-view',
       title: 'WebView',
       subtitle: 'WebView示例',
       pageBuilder: (BuildContext context) =>
           const WebViewExample(title: 'WebView'),
     ),
     CatalogItem.page(
-      path: '/packages/screen-util',
+      path: 'screen-util',
       title: 'ScreenUtil',
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilExample(title: 'ScreenUtil'),
     ),
     CatalogItem.page(
-      path: '/packages/custom-google-font',
+      path: 'custom-google-font',
       title: 'Custom Google Font',
       subtitle: 'Google Fonts 第三方字体示例',
       pageBuilder: (BuildContext context) =>

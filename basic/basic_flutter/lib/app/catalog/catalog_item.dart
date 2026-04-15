@@ -21,6 +21,29 @@ class CatalogItem {
     required this.children,
   }) : pageBuilder = ((_) => const SizedBox.shrink());
 
+  CatalogItem copyWithResolvedPath({
+    required String path,
+    List<CatalogItem>? children,
+  }) {
+    final List<CatalogItem> resolvedChildren = children ?? this.children;
+
+    if (resolvedChildren.isEmpty) {
+      return CatalogItem.page(
+        path: path,
+        title: title,
+        subtitle: subtitle,
+        pageBuilder: pageBuilder,
+      );
+    }
+
+    return CatalogItem.catalog(
+      path: path,
+      title: title,
+      subtitle: subtitle,
+      children: resolvedChildren,
+    );
+  }
+
   @override
   String toString() {
     return 'CatalogItem('

@@ -7,39 +7,39 @@ import 'package:basic_flutter/demos/layout/decoration_effects/shader_mask_exampl
 import 'package:flutter/widgets.dart';
 
 final CatalogItem decorationEffectsCatalog = CatalogItem.catalog(
-  path: '/layout/decorations',
+  path: 'decorations',
   title: '装饰效果',
   subtitle: 'DecoratedBox、Opacity、Clip、BackdropFilter、ShaderMask',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/decorations/decorated-box',
+      path: 'decorated-box',
       title: 'DecoratedBox',
       subtitle: '装饰盒子',
       pageBuilder: (BuildContext context) =>
           const DecoratedBoxExample(title: 'DecoratedBox'),
     ),
     CatalogItem.page(
-      path: '/layout/decorations/opacity',
+      path: 'opacity',
       title: 'Opacity',
       subtitle: '透明度',
       pageBuilder: (BuildContext context) =>
           const OpacityExample(title: 'Opacity'),
     ),
     CatalogItem.page(
-      path: '/layout/decorations/clip',
+      path: 'clip',
       title: 'Clip',
       subtitle: '裁剪',
       pageBuilder: (BuildContext context) => const ClipExample(title: 'Clip'),
     ),
     CatalogItem.page(
-      path: '/layout/decorations/backdrop-filter',
+      path: 'backdrop-filter',
       title: 'BackdropFilter',
       subtitle: '背景滤镜',
       pageBuilder: (BuildContext context) =>
           const BackdropFilterExample(title: 'BackdropFilter'),
     ),
     CatalogItem.page(
-      path: '/layout/decorations/shader-mask',
+      path: 'shader-mask',
       title: 'ShaderMask',
       subtitle: '着色器遮罩',
       pageBuilder: (BuildContext context) =>

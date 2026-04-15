@@ -11,7 +11,7 @@ class VideoCatalog extends CatalogSection {
   const VideoCatalog._();
 
   @override
-  String get path => '/video';
+  String get path => 'video';
 
   @override
   String get title => 'Video';
@@ -24,14 +24,14 @@ class VideoCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: '/video/video-player',
+      path: 'video-player',
       title: 'VideoPlayer',
       subtitle: 'video_player 示例',
       pageBuilder: (BuildContext context) =>
           const VideoPlayerExample(title: 'VideoPlayer'),
     ),
     CatalogItem.page(
-      path: '/video/chewie-video-player',
+      path: 'chewie-video-player',
       title: 'ChewieVideoPlayer',
       subtitle: 'chewie + video_player 示例',
       pageBuilder: (BuildContext context) =>

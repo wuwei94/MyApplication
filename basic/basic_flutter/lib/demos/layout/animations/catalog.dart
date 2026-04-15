@@ -7,40 +7,40 @@ import 'package:basic_flutter/demos/layout/animations/slide_transition_example.d
 import 'package:flutter/widgets.dart';
 
 final CatalogItem animationsCatalog = CatalogItem.catalog(
-  path: '/layout/animations',
+  path: 'animations',
   title: '动画效果',
   subtitle: 'FadeTransition、ScaleTransition、RotationTransition...',
   children: <CatalogItem>[
     CatalogItem.page(
-      path: '/layout/animations/fade-transition',
+      path: 'fade-transition',
       title: 'FadeTransition',
       subtitle: '淡入淡出动画',
       pageBuilder: (BuildContext context) =>
           const FadeTransitionExample(title: 'FadeTransition'),
     ),
     CatalogItem.page(
-      path: '/layout/animations/scale-transition',
+      path: 'scale-transition',
       title: 'ScaleTransition',
       subtitle: '缩放动画',
       pageBuilder: (BuildContext context) =>
           const ScaleTransitionExample(title: 'ScaleTransition'),
     ),
     CatalogItem.page(
-      path: '/layout/animations/rotation-transition',
+      path: 'rotation-transition',
       title: 'RotationTransition',
       subtitle: '旋转动画',
       pageBuilder: (BuildContext context) =>
           const RotationTransitionExample(title: 'RotationTransition'),
     ),
     CatalogItem.page(
-      path: '/layout/animations/size-transition',
+      path: 'size-transition',
       title: 'SizeTransition',
       subtitle: '尺寸动画',
       pageBuilder: (BuildContext context) =>
           const SizeTransitionExample(title: 'SizeTransition'),
     ),
     CatalogItem.page(
-      path: '/layout/animations/slide-transition',
+      path: 'slide-transition',
       title: 'SlideTransition',
       subtitle: '滑动动画',
       pageBuilder: (BuildContext context) =>
