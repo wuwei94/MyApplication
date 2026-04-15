@@ -171,7 +171,7 @@ class XxxRoute extends StatelessWidget {
 - 新增示例时不要随意改掉这三层结构，也不要把首页分组入口和最终示例页混成同一级。
 
 ### 10. 新增页面时同步文件
-- 如果只是向现有分组新增页面，通常只需要更新对应分组下的 `lib/demos/*/*_module.dart`。
+- 如果只是向现有分组新增页面，通常只需要更新对应分组下的 `lib/demos/*/catalog.dart`。
 - 如果新增的是首页一级分组，还要同步更新：
   - `lib/app/catalog/demo_catalog.dart`
   - 必要时检查 `lib/app/router/app_router.dart`

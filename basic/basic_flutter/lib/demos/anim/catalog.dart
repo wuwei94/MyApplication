@@ -3,14 +3,14 @@ import 'package:basic_flutter/demos/anim/pag_example.dart';
 import 'package:basic_flutter/demos/anim/svg_example.dart';
 import 'package:basic_flutter/demos/anim/svga_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Anim 模块
 /// 
 /// 包含：SVG、SVGA、Lottie、PAG 等动画组件示例
-class AnimModule extends CatalogModule {
-  const AnimModule._();
+class AnimCatalog extends CatalogSection {
+  const AnimCatalog._();
 
   @override
   String get path => '/animations';
@@ -53,4 +53,4 @@ class AnimModule extends CatalogModule {
 }
 
 /// 单例实例
-const AnimModule animModule = AnimModule._();
+const AnimCatalog animCatalog = AnimCatalog._();

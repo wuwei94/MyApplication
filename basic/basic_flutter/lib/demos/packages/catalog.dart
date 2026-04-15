@@ -7,15 +7,15 @@ import 'package:basic_flutter/demos/packages/toast_example.dart';
 import 'package:basic_flutter/demos/packages/webview_example.dart';
 import 'package:basic_flutter/demos/packages/wechat_picker_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Packages 模块
 /// 
 /// 包含：Toast、Notification、Permission、ImagePicker、WechatPicker、
 /// WebView、ScreenUtil、Google Fonts 等第三方包示例
-class PackagesModule extends CatalogModule {
-  const PackagesModule._();
+class PackagesCatalog extends CatalogSection {
+  const PackagesCatalog._();
 
   @override
   String get path => '/packages';
@@ -89,4 +89,4 @@ class PackagesModule extends CatalogModule {
 }
 
 /// 单例实例
-const PackagesModule packagesModule = PackagesModule._();
+const PackagesCatalog packagesCatalog = PackagesCatalog._();

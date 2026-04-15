@@ -1,13 +1,13 @@
 import 'package:basic_flutter/demos/demo/custom_local_font_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Demo 模块
 /// 
 /// 包含：自定义字体等演示示例
-class DemoModule extends CatalogModule {
-  const DemoModule._();
+class ShowcaseCatalog extends CatalogSection {
+  const ShowcaseCatalog._();
 
   @override
   String get path => '/demo';
@@ -33,4 +33,4 @@ class DemoModule extends CatalogModule {
 }
 
 /// 单例实例
-const DemoModule demoModule = DemoModule._();
+const ShowcaseCatalog showcaseCatalog = ShowcaseCatalog._();

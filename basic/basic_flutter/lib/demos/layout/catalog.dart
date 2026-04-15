@@ -51,15 +51,15 @@ import 'package:basic_flutter/demos/layout/state_management/inherited_widget_exa
 import 'package:basic_flutter/demos/layout/state_management/listenable_builder_example.dart';
 import 'package:basic_flutter/demos/layout/state_management/value_listenable_builder_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Layout 模块
 ///
 /// 包含：容器布局、线性布局、堆叠定位、流式布局、滚动组件、Sliver组件、
 /// 手势交互、动画效果、弹窗面板、装饰效果、布局构建器、状态驱动、状态管理、异步编程
-class LayoutModule extends CatalogModule {
-  const LayoutModule._();
+class LayoutCatalog extends CatalogSection {
+  const LayoutCatalog._();
 
   @override
   String get path => '/layout';
@@ -563,4 +563,4 @@ class LayoutModule extends CatalogModule {
 }
 
 /// 单例实例
-const LayoutModule layoutModule = LayoutModule._();
+const LayoutCatalog layoutCatalog = LayoutCatalog._();

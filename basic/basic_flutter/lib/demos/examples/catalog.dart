@@ -1,14 +1,14 @@
 import 'package:basic_flutter/demos/examples/counter/counter_page.dart';
 import 'package:basic_flutter/demos/examples/getx/getx_example_app.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Examples 模块
 /// 
 /// 包含：计数器示例、GetX 完整示例等
-class ExamplesModule extends CatalogModule {
-  const ExamplesModule._();
+class ExamplesCatalog extends CatalogSection {
+  const ExamplesCatalog._();
 
   @override
   String get path => '/examples';
@@ -40,4 +40,4 @@ class ExamplesModule extends CatalogModule {
 }
 
 /// 单例实例
-const ExamplesModule examplesModule = ExamplesModule._();
+const ExamplesCatalog examplesCatalog = ExamplesCatalog._();

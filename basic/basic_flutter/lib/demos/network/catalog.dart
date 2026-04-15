@@ -2,14 +2,14 @@ import 'package:basic_flutter/demos/network/dio_example.dart';
 import 'package:basic_flutter/demos/network/http_example.dart';
 import 'package:basic_flutter/demos/network/image_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Network 模块
 /// 
 /// 包含：Dio、Http、图片加载等网络请求示例
-class NetworkModule extends CatalogModule {
-  const NetworkModule._();
+class NetworkCatalog extends CatalogSection {
+  const NetworkCatalog._();
 
   @override
   String get path => '/network';
@@ -47,4 +47,4 @@ class NetworkModule extends CatalogModule {
 }
 
 /// 单例实例
-const NetworkModule networkModule = NetworkModule._();
+const NetworkCatalog networkCatalog = NetworkCatalog._();

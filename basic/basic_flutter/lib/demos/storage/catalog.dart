@@ -2,14 +2,14 @@ import 'package:basic_flutter/demos/storage/hive_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
 import 'package:basic_flutter/demos/storage/shared_preferences_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Storage 模块
 /// 
 /// 包含：Hive、SecureStorage、SharedPreferences 等本地存储示例
-class StorageModule extends CatalogModule {
-  const StorageModule._();
+class StorageCatalog extends CatalogSection {
+  const StorageCatalog._();
 
   @override
   String get path => '/storage';
@@ -48,4 +48,4 @@ class StorageModule extends CatalogModule {
 }
 
 /// 单例实例
-const StorageModule storageModule = StorageModule._();
+const StorageCatalog storageCatalog = StorageCatalog._();

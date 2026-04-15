@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/demos/demo_catalog_page.dart';
+import 'package:basic_flutter/app/catalog/demo_catalog_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart' as go_router;
 

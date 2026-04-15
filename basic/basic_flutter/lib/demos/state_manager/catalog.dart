@@ -2,14 +2,14 @@ import 'package:basic_flutter/demos/state_manager/bloc/counter_bloc_example.dart
 import 'package:basic_flutter/demos/state_manager/provider/counter_provider_example.dart';
 import 'package:basic_flutter/demos/state_manager/riverpod/counter_riverpod_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// StateManager 模块
 /// 
 /// 包含：GetX、BloC、Provider、Riverpod 等状态管理示例
-class StateManagerModule extends CatalogModule {
-  const StateManagerModule._();
+class StateManagerCatalog extends CatalogSection {
+  const StateManagerCatalog._();
 
   @override
   String get path => '/state-manager';
@@ -49,4 +49,4 @@ class StateManagerModule extends CatalogModule {
 }
 
 /// 单例实例
-const StateManagerModule stateManagerModule = StateManagerModule._();
+const StateManagerCatalog stateManagerCatalog = StateManagerCatalog._();

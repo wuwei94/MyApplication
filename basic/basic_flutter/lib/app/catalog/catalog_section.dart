@@ -1,8 +1,8 @@
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
 
 /// 顶层 Demo 分组统一接口。
-abstract class CatalogModule {
-  const CatalogModule();
+abstract class CatalogSection {
+  const CatalogSection();
 
   String get path;
   String get title;

@@ -1,14 +1,14 @@
 import 'package:basic_flutter/demos/video/chewie_video_player_example.dart';
 import 'package:basic_flutter/demos/video/video_player_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Video 模块
 /// 
 /// 包含：VideoPlayer、Chewie 等视频播放示例
-class VideoModule extends CatalogModule {
-  const VideoModule._();
+class VideoCatalog extends CatalogSection {
+  const VideoCatalog._();
 
   @override
   String get path => '/video';
@@ -41,4 +41,4 @@ class VideoModule extends CatalogModule {
 }
 
 /// 单例实例
-const VideoModule videoModule = VideoModule._();
+const VideoCatalog videoCatalog = VideoCatalog._();
