@@ -1,26 +1,28 @@
 import 'package:basic_flutter/demos/examples/counter/counter_page.dart';
 import 'package:basic_flutter/demos/examples/getx/getx_example_app.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/app/catalog/catalog_module.dart';
 import 'package:flutter/widgets.dart';
 
 /// Examples 模块
 /// 
 /// 包含：计数器示例、GetX 完整示例等
-class ExamplesModule {
+class ExamplesModule extends CatalogModule {
   const ExamplesModule._();
 
-  /// 首页目录入口
-  CatalogItem get catalog => CatalogItem.catalog(
-        path: '/examples',
-        title: 'Examples',
-        subtitle: '基础示例',
-        children: routes,
-      );
+  @override
+  String get path => '/examples';
 
-  /// 所有路由列表
-  List<CatalogItem> get routes => _routes;
+  @override
+  String get title => 'Examples';
 
-  static final List<CatalogItem> _routes = [
+  @override
+  String get subtitle => '基础示例';
+
+  @override
+  List<CatalogItem> get items => _items;
+
+  static final List<CatalogItem> _items = [
     CatalogItem.page(
       path: 'counter',
       title: 'Counter Example',

@@ -2,26 +2,28 @@ import 'package:basic_flutter/demos/storage/hive_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
 import 'package:basic_flutter/demos/storage/shared_preferences_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/app/catalog/catalog_module.dart';
 import 'package:flutter/widgets.dart';
 
 /// Storage 模块
 /// 
 /// 包含：Hive、SecureStorage、SharedPreferences 等本地存储示例
-class StorageModule {
+class StorageModule extends CatalogModule {
   const StorageModule._();
 
-  /// 首页目录入口
-  CatalogItem get catalog => CatalogItem.catalog(
-        path: '/storage',
-        title: 'Storage',
-        subtitle: '本地存储',
-        children: routes,
-      );
+  @override
+  String get path => '/storage';
 
-  /// 所有路由列表
-  List<CatalogItem> get routes => _routes;
+  @override
+  String get title => 'Storage';
 
-  static final List<CatalogItem> _routes = [
+  @override
+  String get subtitle => '本地存储';
+
+  @override
+  List<CatalogItem> get items => _items;
+
+  static final List<CatalogItem> _items = [
     CatalogItem.page(
       path: 'hive',
       title: 'Hive',

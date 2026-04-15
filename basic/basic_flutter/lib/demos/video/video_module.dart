@@ -1,26 +1,28 @@
 import 'package:basic_flutter/demos/video/chewie_video_player_example.dart';
 import 'package:basic_flutter/demos/video/video_player_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/app/catalog/catalog_module.dart';
 import 'package:flutter/widgets.dart';
 
 /// Video 模块
 /// 
 /// 包含：VideoPlayer、Chewie 等视频播放示例
-class VideoModule {
+class VideoModule extends CatalogModule {
   const VideoModule._();
 
-  /// 首页目录入口
-  CatalogItem get catalog => CatalogItem.catalog(
-        path: '/video',
-        title: 'Video',
-        subtitle: '视频组件',
-        children: routes,
-      );
+  @override
+  String get path => '/video';
 
-  /// 所有路由列表
-  List<CatalogItem> get routes => _routes;
+  @override
+  String get title => 'Video';
 
-  static final List<CatalogItem> _routes = [
+  @override
+  String get subtitle => '视频组件';
+
+  @override
+  List<CatalogItem> get items => _items;
+
+  static final List<CatalogItem> _items = [
     CatalogItem.page(
       path: 'video-player',
       title: 'VideoPlayer',

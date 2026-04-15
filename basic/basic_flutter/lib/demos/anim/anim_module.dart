@@ -3,26 +3,28 @@ import 'package:basic_flutter/demos/anim/pag_example.dart';
 import 'package:basic_flutter/demos/anim/svg_example.dart';
 import 'package:basic_flutter/demos/anim/svga_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/app/catalog/catalog_module.dart';
 import 'package:flutter/widgets.dart';
 
 /// Anim 模块
 /// 
 /// 包含：SVG、SVGA、Lottie、PAG 等动画组件示例
-class AnimModule {
+class AnimModule extends CatalogModule {
   const AnimModule._();
 
-  /// 首页目录入口
-  CatalogItem get catalog => CatalogItem.catalog(
-        path: '/animations',
-        title: 'Animations',
-        subtitle: '动画组件',
-        children: routes,
-      );
+  @override
+  String get path => '/animations';
 
-  /// 所有路由列表
-  List<CatalogItem> get routes => _routes;
+  @override
+  String get title => 'Animations';
 
-  static final List<CatalogItem> _routes = [
+  @override
+  String get subtitle => '动画组件';
+
+  @override
+  List<CatalogItem> get items => _items;
+
+  static final List<CatalogItem> _items = [
     CatalogItem.page(
       path: 'svg',
       title: 'SVG',

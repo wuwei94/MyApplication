@@ -1,25 +1,27 @@
 import 'package:basic_flutter/demos/demo/custom_local_font_example.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/app/catalog/catalog_module.dart';
 import 'package:flutter/widgets.dart';
 
 /// Demo 模块
 /// 
 /// 包含：自定义字体等演示示例
-class DemoModule {
+class DemoModule extends CatalogModule {
   const DemoModule._();
 
-  /// 首页目录入口
-  CatalogItem get catalog => CatalogItem.catalog(
-        path: '/demo',
-        title: 'Demo',
-        subtitle: '演示组件',
-        children: routes,
-      );
+  @override
+  String get path => '/demo';
 
-  /// 所有路由列表
-  List<CatalogItem> get routes => _routes;
+  @override
+  String get title => 'Demo';
 
-  static final List<CatalogItem> _routes = [
+  @override
+  String get subtitle => '演示组件';
+
+  @override
+  List<CatalogItem> get items => _items;
+
+  static final List<CatalogItem> _items = [
     CatalogItem.page(
       path: 'custom-local-font',
       title: 'Custom Local Font',
