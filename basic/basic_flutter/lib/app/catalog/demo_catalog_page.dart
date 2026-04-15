@@ -1,6 +1,6 @@
 import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/navigation/utils/app_navigator.dart';
+import 'package:basic_flutter/app/router/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 /// 通用 Demo 目录页：首页展示分组，分组页展示具体示例

@@ -166,8 +166,8 @@ class XxxRoute extends StatelessWidget {
 ### 9. 保持现有导航层级
 - 这个项目的导航链路是固定三层：
   - `HomePage` 用 `Navigator.push` 打开分组列表页
-  - `DemoCatalogPage` 用 `context.push(item.path)` 进入最终示例页
-  - 最终示例页由 `GoRouter` 路由表提供
+  - `DemoCatalogPage` 用 `AppNavigator.pushPath(item.path)` 进入最终示例页
+  - 最终示例页由当前启用的路由器提供
 - 新增示例时不要随意改掉这三层结构，也不要把首页分组入口和最终示例页混成同一级。
 
 ### 10. 新增页面时同步文件
