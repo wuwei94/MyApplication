@@ -10,21 +10,13 @@ class CatalogRouteConverter {
   CatalogRouteConverter._();
 
   /// 将 `List<CatalogItem>` 转换为 `List<GoRoute>`
-  /// 自动过滤掉 path 为空的分组标题项
   static List<go_router.GoRoute> toGoRoutes(List<CatalogItem> routeInfos) {
-    return routeInfos
-        .where((route) => route.path.isNotEmpty)
-        .map(_toGoRoute)
-        .toList();
+    return _flattenItems(routeInfos).map(_toGoRoute).toList(growable: false);
   }
 
   /// 将 `List<CatalogItem>` 转换为 `List<AutoRoute>`
-  /// 自动过滤掉 path 为空的分组标题项
   static List<auto_route.AutoRoute> toAutoRoutes(List<CatalogItem> routeInfos) {
-    return routeInfos
-        .where((route) => route.path.isNotEmpty)
-        .map(_toAutoRoute)
-        .toList();
+    return _flattenItems(routeInfos).map(_toAutoRoute).toList(growable: false);
   }
 
   static go_router.GoRoute _toGoRoute(CatalogItem routeItem) {
@@ -33,10 +25,6 @@ class CatalogRouteConverter {
       name: routeItem.path,
       builder: (BuildContext context, go_router.GoRouterState state) =>
           _buildPage(context, routeItem),
-      routes: routeItem.children
-          .where((route) => route.path.isNotEmpty)
-          .map(_toGoRoute)
-          .toList(),
     );
   }
 
@@ -46,10 +34,6 @@ class CatalogRouteConverter {
       name: routeItem.path,
       builder: (BuildContext context, auto_route.RouteData<dynamic> data) =>
           _buildPage(context, routeItem),
-      children: routeItem.children
-          .where((route) => route.path.isNotEmpty)
-          .map(_toAutoRoute)
-          .toList(),
     );
   }
 
@@ -62,5 +46,25 @@ class CatalogRouteConverter {
     }
 
     return routeItem.pageBuilder(context);
+  }
+
+  static List<CatalogItem> _flattenItems(List<CatalogItem> items) {
+    final List<CatalogItem> flattened = <CatalogItem>[];
+
+    void visit(List<CatalogItem> currentItems) {
+      for (final CatalogItem item in currentItems) {
+        if (item.path.isEmpty) {
+          continue;
+        }
+
+        flattened.add(item);
+        if (item.children.isNotEmpty) {
+          visit(item.children);
+        }
+      }
+    }
+
+    visit(items);
+    return flattened;
   }
 }

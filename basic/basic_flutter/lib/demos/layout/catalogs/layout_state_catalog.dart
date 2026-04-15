@@ -14,12 +14,12 @@ import 'package:flutter/widgets.dart';
 
 final List<CatalogItem> layoutStateCatalogItems = <CatalogItem>[
   CatalogItem.catalog(
-    path: 'builders',
+    path: '/layout/builders',
     title: '布局构建器',
     subtitle: 'LayoutBuilder',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'layout-builder',
+        path: '/layout/builders/layout-builder',
         title: 'LayoutBuilder',
         subtitle: '响应式布局',
         pageBuilder: (BuildContext context) =>
@@ -28,19 +28,19 @@ final List<CatalogItem> layoutStateCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'state-driven',
+    path: '/layout/state-driven',
     title: '状态驱动组件',
     subtitle: 'FutureBuilder、StreamBuilder',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'future-builder',
+        path: '/layout/state-driven/future-builder',
         title: 'FutureBuilder',
         subtitle: 'Future构建器',
         pageBuilder: (BuildContext context) =>
             const FutureBuilderExample(title: 'FutureBuilder'),
       ),
       CatalogItem.page(
-        path: 'stream-builder',
+        path: '/layout/state-driven/stream-builder',
         title: 'StreamBuilder',
         subtitle: 'Stream构建器',
         pageBuilder: (BuildContext context) =>
@@ -49,19 +49,19 @@ final List<CatalogItem> layoutStateCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'state-management',
+    path: '/layout/state-management',
     title: '状态管理',
     subtitle: 'InheritedWidget、ValueListenableBuilder、ListenableBuilder',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'inherited-widget',
+        path: '/layout/state-management/inherited-widget',
         title: 'InheritedWidget',
         subtitle: '数据共享',
         pageBuilder: (BuildContext context) =>
             const InheritedWidgetExample(title: 'InheritedWidget'),
       ),
       CatalogItem.page(
-        path: 'value-listenable-builder',
+        path: '/layout/state-management/value-listenable-builder',
         title: 'ValueListenableBuilder',
         subtitle: '值监听构建器',
         pageBuilder: (BuildContext context) => const ValueListenableBuilderExample(
@@ -69,7 +69,7 @@ final List<CatalogItem> layoutStateCatalogItems = <CatalogItem>[
         ),
       ),
       CatalogItem.page(
-        path: 'listenable-builder',
+        path: '/layout/state-management/listenable-builder',
         title: 'ListenableBuilder',
         subtitle: '可监听构建器',
         pageBuilder: (BuildContext context) =>
@@ -78,40 +78,40 @@ final List<CatalogItem> layoutStateCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'async',
+    path: '/layout/async',
     title: '异步编程',
     subtitle: 'Future、Stream、Compute、Completer、Isolate',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'future',
+        path: '/layout/async/future',
         title: 'Future',
         subtitle: '异步任务',
         pageBuilder: (BuildContext context) =>
             const FutureExample(title: 'Future'),
       ),
       CatalogItem.page(
-        path: 'stream',
+        path: '/layout/async/stream',
         title: 'Stream',
         subtitle: '异步流',
         pageBuilder: (BuildContext context) =>
             const StreamExample(title: 'Stream'),
       ),
       CatalogItem.page(
-        path: 'compute',
+        path: '/layout/async/compute',
         title: 'Compute',
         subtitle: '计算隔离',
         pageBuilder: (BuildContext context) =>
             const ComputeExample(title: 'Compute'),
       ),
       CatalogItem.page(
-        path: 'completer',
+        path: '/layout/async/completer',
         title: 'Completer',
         subtitle: '异步完成器',
         pageBuilder: (BuildContext context) =>
             const CompleterExample(title: 'Completer'),
       ),
       CatalogItem.page(
-        path: 'isolate',
+        path: '/layout/async/isolate',
         title: 'Isolate',
         subtitle: '多线程',
         pageBuilder: (BuildContext context) =>

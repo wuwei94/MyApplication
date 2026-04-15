@@ -23,7 +23,7 @@ class ShowcaseCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'custom-local-font',
+      path: '/demo/custom-local-font',
       title: 'Custom Local Font',
       subtitle: '本地自定义字体示例',
       pageBuilder: (BuildContext context) =>

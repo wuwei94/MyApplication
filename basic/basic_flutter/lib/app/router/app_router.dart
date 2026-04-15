@@ -10,13 +10,13 @@ export 'package:basic_flutter/app/router/app_router_type.dart';
 
 final go_router.GoRoute _homeGoRoute = go_router.GoRoute(
   path: '/home',
-  name: '/home',
+  name: 'Home',
   builder: (context, state) => const HomePage(),
 );
 
 final auto_route.AutoRoute _homeAutoRoute = auto_route.NamedRouteDef(
   path: '/home',
-  name: '/home',
+  name: 'Home',
   builder: (context, data) => const HomePage(),
 );
 

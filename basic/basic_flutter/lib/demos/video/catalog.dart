@@ -24,14 +24,14 @@ class VideoCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'video-player',
+      path: '/video/video-player',
       title: 'VideoPlayer',
       subtitle: 'video_player 示例',
       pageBuilder: (BuildContext context) =>
           const VideoPlayerExample(title: 'VideoPlayer'),
     ),
     CatalogItem.page(
-      path: 'chewie-video-player',
+      path: '/video/chewie-video-player',
       title: 'ChewieVideoPlayer',
       subtitle: 'chewie + video_player 示例',
       pageBuilder: (BuildContext context) =>

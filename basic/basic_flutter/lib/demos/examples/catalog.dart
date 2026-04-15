@@ -24,14 +24,14 @@ class ExamplesCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'counter',
+      path: '/examples/counter',
       title: 'Counter Example',
       subtitle: '计数器示例',
       pageBuilder: (BuildContext context) =>
           const CounterExample(title: 'Counter Example'),
     ),
     CatalogItem.page(
-      path: 'getx',
+      path: '/examples/getx',
       title: 'GetX Example',
       subtitle: 'GetX示例',
       pageBuilder: (BuildContext context) => const GetXApp(title: 'GetX Example'),

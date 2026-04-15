@@ -26,25 +26,25 @@ class AnimCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'svg',
+      path: '/animations/svg',
       title: 'SVG',
       subtitle: 'SVG动画示例',
       pageBuilder: (BuildContext context) => const SvgExample(title: 'SVG'),
     ),
     CatalogItem.page(
-      path: 'svga',
+      path: '/animations/svga',
       title: 'SVGA',
       subtitle: 'SVGA动画示例',
       pageBuilder: (BuildContext context) => const SvgaExample(title: 'SVGA'),
     ),
     CatalogItem.page(
-      path: 'lottie',
+      path: '/animations/lottie',
       title: 'Lottie',
       subtitle: 'Lottie动画示例',
       pageBuilder: (BuildContext context) => const LottieExample(title: 'Lottie'),
     ),
     CatalogItem.page(
-      path: 'pag',
+      path: '/animations/pag',
       title: 'PAG',
       subtitle: 'PAG动画示例',
       pageBuilder: (BuildContext context) => const PagExample(title: 'PAG'),

@@ -25,20 +25,20 @@ class StorageCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'hive',
+      path: '/storage/hive',
       title: 'Hive',
       subtitle: 'Hive示例',
       pageBuilder: (BuildContext context) => const HiveExample(title: 'Hive'),
     ),
     CatalogItem.page(
-      path: 'secure-storage',
+      path: '/storage/secure-storage',
       title: 'SecureStorage',
       subtitle: 'SecureStorage示例',
       pageBuilder: (BuildContext context) =>
           const SecureStorageExample(title: 'SecureStorage'),
     ),
     CatalogItem.page(
-      path: 'shared-preferences',
+      path: '/storage/shared-preferences',
       title: 'SharedPreferences',
       subtitle: 'SharedPreferences示例',
       pageBuilder: (BuildContext context) =>

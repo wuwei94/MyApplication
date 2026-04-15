@@ -16,47 +16,47 @@ import 'package:flutter/widgets.dart';
 
 final List<CatalogItem> layoutBasicsCatalogItems = <CatalogItem>[
   CatalogItem.catalog(
-    path: 'containers',
+    path: '/layout/containers',
     title: '容器布局',
     subtitle: 'Container、Padding、Center、Align、SizedBox、ConstrainedBox',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'container',
+        path: '/layout/containers/container',
         title: 'Container',
         subtitle: '容器组件',
         pageBuilder: (BuildContext context) =>
             const ContainerExample(title: 'Container'),
       ),
       CatalogItem.page(
-        path: 'padding',
+        path: '/layout/containers/padding',
         title: 'Padding',
         subtitle: '内边距组件',
         pageBuilder: (BuildContext context) =>
             const PaddingExample(title: 'Padding'),
       ),
       CatalogItem.page(
-        path: 'center',
+        path: '/layout/containers/center',
         title: 'Center',
         subtitle: '居中组件',
         pageBuilder: (BuildContext context) =>
             const CenterExample(title: 'Center'),
       ),
       CatalogItem.page(
-        path: 'align',
+        path: '/layout/containers/align',
         title: 'Align',
         subtitle: '对齐组件',
         pageBuilder: (BuildContext context) =>
             const AlignExample(title: 'Align'),
       ),
       CatalogItem.page(
-        path: 'sized-box',
+        path: '/layout/containers/sized-box',
         title: 'SizedBox',
         subtitle: '尺寸组件',
         pageBuilder: (BuildContext context) =>
             const SizedBoxExample(title: 'SizedBox'),
       ),
       CatalogItem.page(
-        path: 'constrained-box',
+        path: '/layout/containers/constrained-box',
         title: 'ConstrainedBox',
         subtitle: '约束组件',
         pageBuilder: (BuildContext context) =>
@@ -65,25 +65,25 @@ final List<CatalogItem> layoutBasicsCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'linear',
+    path: '/layout/linear',
     title: '线性布局',
     subtitle: 'Row、Column、Flexible、Expanded',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'row',
+        path: '/layout/linear/row',
         title: 'Row',
         subtitle: '水平布局',
         pageBuilder: (BuildContext context) => const RowExample(title: 'Row'),
       ),
       CatalogItem.page(
-        path: 'column',
+        path: '/layout/linear/column',
         title: 'Column',
         subtitle: '垂直布局',
         pageBuilder: (BuildContext context) =>
             const ColumnExample(title: 'Column'),
       ),
       CatalogItem.page(
-        path: 'flexible-expanded',
+        path: '/layout/linear/flexible-expanded',
         title: 'Flexible & Expanded',
         subtitle: '弹性布局',
         pageBuilder: (BuildContext context) =>
@@ -92,18 +92,18 @@ final List<CatalogItem> layoutBasicsCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'stacking',
+    path: '/layout/stacking',
     title: '堆叠定位',
     subtitle: 'Stack、Positioned',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'stack',
+        path: '/layout/stacking/stack',
         title: 'Stack',
         subtitle: '堆叠布局',
         pageBuilder: (BuildContext context) => const StackExample(title: 'Stack'),
       ),
       CatalogItem.page(
-        path: 'positioned',
+        path: '/layout/stacking/positioned',
         title: 'Positioned',
         subtitle: '定位组件',
         pageBuilder: (BuildContext context) =>
@@ -112,18 +112,18 @@ final List<CatalogItem> layoutBasicsCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'flow',
+    path: '/layout/flow',
     title: '流式布局',
     subtitle: 'Wrap、Flow',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'wrap',
+        path: '/layout/flow/wrap',
         title: 'Wrap',
         subtitle: '自动换行',
         pageBuilder: (BuildContext context) => const WrapExample(title: 'Wrap'),
       ),
       CatalogItem.page(
-        path: 'flow-widget',
+        path: '/layout/flow/flow-widget',
         title: 'Flow',
         subtitle: '流式布局',
         pageBuilder: (BuildContext context) => const FlowExample(title: 'Flow'),

@@ -25,19 +25,19 @@ class NetworkCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'dio',
+      path: '/network/dio',
       title: 'Dio',
       subtitle: 'Dio网络请求示例',
       pageBuilder: (BuildContext context) => const DioExample(title: 'Dio'),
     ),
     CatalogItem.page(
-      path: 'http',
+      path: '/network/http',
       title: 'Http',
       subtitle: 'Http网络请求示例',
       pageBuilder: (BuildContext context) => const HttpExample(title: 'Http'),
     ),
     CatalogItem.page(
-      path: 'image-loader',
+      path: '/network/image-loader',
       title: 'ImageLoader',
       subtitle: 'ImageLoader图片加载示例',
       pageBuilder: (BuildContext context) =>

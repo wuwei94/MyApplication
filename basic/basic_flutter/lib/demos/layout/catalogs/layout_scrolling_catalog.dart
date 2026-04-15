@@ -14,61 +14,61 @@ import 'package:flutter/widgets.dart';
 
 final List<CatalogItem> layoutScrollingCatalogItems = <CatalogItem>[
   CatalogItem.catalog(
-    path: 'scroll',
+    path: '/layout/scroll',
     title: '滚动组件',
     subtitle: 'ListView、GridView、PageView、TabBarView、NestedScrollView...',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'list-view',
+        path: '/layout/scroll/list-view',
         title: 'ListView',
         subtitle: '列表滚动组件',
         pageBuilder: (BuildContext context) =>
             const ListViewExample(title: 'ListView'),
       ),
       CatalogItem.page(
-        path: 'grid-view',
+        path: '/layout/scroll/grid-view',
         title: 'GridView',
         subtitle: '网格滚动组件',
         pageBuilder: (BuildContext context) =>
             const GridViewExample(title: 'GridView'),
       ),
       CatalogItem.page(
-        path: 'tab-bar-view',
+        path: '/layout/scroll/tab-bar-view',
         title: 'TabBarView',
         subtitle: '标签页组件',
         pageBuilder: (BuildContext context) =>
             const TabBarViewExample(title: 'TabBarView'),
       ),
       CatalogItem.page(
-        path: 'nested-scroll-view',
+        path: '/layout/scroll/nested-scroll-view',
         title: 'NestedScrollView',
         subtitle: '嵌套滚动组件',
         pageBuilder: (BuildContext context) =>
             const NestedScrollViewExample(title: 'NestedScrollView'),
       ),
       CatalogItem.page(
-        path: 'animated-list',
+        path: '/layout/scroll/animated-list',
         title: 'AnimatedList',
         subtitle: '动画列表',
         pageBuilder: (BuildContext context) =>
             const AnimatedListExample(title: 'AnimatedList'),
       ),
       CatalogItem.page(
-        path: 'page-view',
+        path: '/layout/scroll/page-view',
         title: 'PageView',
         subtitle: '页面滑动',
         pageBuilder: (BuildContext context) =>
             const PageViewExample(title: 'PageView'),
       ),
       CatalogItem.page(
-        path: 'single-child-scroll-view',
+        path: '/layout/scroll/single-child-scroll-view',
         title: 'SingleChildScrollView',
         subtitle: '单孩子滚动',
         pageBuilder: (BuildContext context) =>
             const SingleChildScrollViewExample(title: 'SingleChildScrollView'),
       ),
       CatalogItem.page(
-        path: 'custom-scroll-view',
+        path: '/layout/scroll/custom-scroll-view',
         title: 'CustomScrollView',
         subtitle: '自定义滚动',
         pageBuilder: (BuildContext context) =>
@@ -77,26 +77,26 @@ final List<CatalogItem> layoutScrollingCatalogItems = <CatalogItem>[
     ],
   ),
   CatalogItem.catalog(
-    path: 'slivers',
+    path: '/layout/slivers',
     title: 'Sliver 组件',
     subtitle: 'SliverList、SliverGrid、SliverAppBar',
     children: <CatalogItem>[
       CatalogItem.page(
-        path: 'sliver-list',
+        path: '/layout/slivers/sliver-list',
         title: 'SliverList',
         subtitle: 'Sliver列表',
         pageBuilder: (BuildContext context) =>
             const SliverListExample(title: 'SliverList'),
       ),
       CatalogItem.page(
-        path: 'sliver-grid',
+        path: '/layout/slivers/sliver-grid',
         title: 'SliverGrid',
         subtitle: 'Sliver网格',
         pageBuilder: (BuildContext context) =>
             const SliverGridExample(title: 'SliverGrid'),
       ),
       CatalogItem.page(
-        path: 'sliver-app-bar',
+        path: '/layout/slivers/sliver-app-bar',
         title: 'SliverAppBar',
         subtitle: 'Sliver应用栏',
         pageBuilder: (BuildContext context) =>

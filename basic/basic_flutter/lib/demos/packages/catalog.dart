@@ -31,55 +31,55 @@ class PackagesCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'toast',
+      path: '/packages/toast',
       title: 'Toast',
       subtitle: 'Toast示例',
       pageBuilder: (BuildContext context) => const ToastExample(title: 'Toast'),
     ),
     CatalogItem.page(
-      path: 'notification',
+      path: '/packages/notification',
       title: 'Notification',
       subtitle: 'Notification示例',
       pageBuilder: (BuildContext context) =>
           const NotificationExample(title: 'Notification'),
     ),
     CatalogItem.page(
-      path: 'permission',
+      path: '/packages/permission',
       title: 'Permission',
       subtitle: 'Permission示例',
       pageBuilder: (BuildContext context) =>
           const PermissionExample(title: 'Permission'),
     ),
     CatalogItem.page(
-      path: 'image-picker',
+      path: '/packages/image-picker',
       title: 'ImagePicker',
       subtitle: 'ImagePicker示例',
       pageBuilder: (BuildContext context) =>
           const ImagePickerExample(title: 'ImagePicker'),
     ),
     CatalogItem.page(
-      path: 'wechat-picker',
+      path: '/packages/wechat-picker',
       title: 'WechatPicker',
       subtitle: 'WechatPicker示例',
       pageBuilder: (BuildContext context) =>
           const WechatPickerExample(title: 'WechatPicker'),
     ),
     CatalogItem.page(
-      path: 'web-view',
+      path: '/packages/web-view',
       title: 'WebView',
       subtitle: 'WebView示例',
       pageBuilder: (BuildContext context) =>
           const WebViewExample(title: 'WebView'),
     ),
     CatalogItem.page(
-      path: 'screen-util',
+      path: '/packages/screen-util',
       title: 'ScreenUtil',
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilExample(title: 'ScreenUtil'),
     ),
     CatalogItem.page(
-      path: 'custom-google-font',
+      path: '/packages/custom-google-font',
       title: 'Custom Google Font',
       subtitle: 'Google Fonts 第三方字体示例',
       pageBuilder: (BuildContext context) =>

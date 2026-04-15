@@ -25,21 +25,21 @@ class StateManagerCatalog extends CatalogSection {
 
   static final List<CatalogItem> _items = [
     CatalogItem.page(
-      path: 'bloc',
+      path: '/state-manager/bloc',
       title: 'BloC',
       subtitle: 'BloC示例',
       pageBuilder: (BuildContext context) =>
           const CounterBlocExample(title: 'BloC'),
     ),
     CatalogItem.page(
-      path: 'provider',
+      path: '/state-manager/provider',
       title: 'Provider',
       subtitle: 'Provider示例',
       pageBuilder: (BuildContext context) =>
           const CounterProviderExample(title: 'Provider'),
     ),
     CatalogItem.page(
-      path: 'riverpod',
+      path: '/state-manager/riverpod',
       title: 'Riverpod',
       subtitle: 'Riverpod示例',
       pageBuilder: (BuildContext context) =>
