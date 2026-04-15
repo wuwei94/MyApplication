@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
-import 'package:basic_flutter/app/catalog/app_catalog.dart';
-import 'package:basic_flutter/features/feature_list_page.dart';
-import 'package:basic_flutter/features/home/home_module.dart';
+import 'package:basic_flutter/app/catalog/demo_catalog.dart';
+import 'package:basic_flutter/demos/demo_catalog_page.dart';
+import 'package:basic_flutter/demos/home/home_module.dart';
+import 'package:basic_flutter/app/catalog/catalog_item.dart';
+import 'package:basic_flutter/app/router/catalog_route_converter.dart';
 import 'package:basic_flutter/navigation/constants/app_router_type.dart';
-import 'package:basic_flutter/navigation/models/route_item.dart';
-import 'package:basic_flutter/navigation/utils/route_converter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart' as go_router;
 
@@ -30,22 +30,22 @@ List<go_router.GoRoute> _buildGoRoutes() {
   );
 
   // Iterate each module
-  for (final RouteItem catalogItem in appCatalog) {
+  for (final CatalogItem catalogItem in demoCatalog) {
     // Add group route (displays sub-items list)
     routes.add(
       go_router.GoRoute(
         path: catalogItem.path,
         name: catalogItem.path,
         builder: (BuildContext context, go_router.GoRouterState state) =>
-            FeatureListPage(
+            DemoCatalogPage(
           title: catalogItem.title,
-          routes: catalogItem.routeItems,
+          routes: catalogItem.children,
         ),
       ),
     );
 
     // Add all sub-routes (flattened as independent top-level routes)
-    routes.addAll(_buildSubGoRoutes(catalogItem.routeItems));
+    routes.addAll(_buildSubGoRoutes(catalogItem.children));
   }
 
   return routes;
@@ -53,10 +53,10 @@ List<go_router.GoRoute> _buildGoRoutes() {
 
 /// Build sub-routes list (recursive)
 /// Includes both group routes and page routes
-List<go_router.GoRoute> _buildSubGoRoutes(List<RouteItem> items) {
+List<go_router.GoRoute> _buildSubGoRoutes(List<CatalogItem> items) {
   final List<go_router.GoRoute> result = <go_router.GoRoute>[];
-  for (final RouteItem item in items) {
-    if (item.routeItems.isEmpty) {
+  for (final CatalogItem item in items) {
+    if (item.children.isEmpty) {
       // Leaf node (page)
       result.add(
         go_router.GoRoute(
@@ -73,14 +73,14 @@ List<go_router.GoRoute> _buildSubGoRoutes(List<RouteItem> items) {
           path: item.path,
           name: item.path,
           builder: (BuildContext context, go_router.GoRouterState state) =>
-              FeatureListPage(
+              DemoCatalogPage(
             title: item.title,
-            routes: item.routeItems,
+            routes: item.children,
           ),
         ),
       );
       // Recursively add sub-routes
-      result.addAll(_buildSubGoRoutes(item.routeItems));
+      result.addAll(_buildSubGoRoutes(item.children));
     }
   }
   return result;
@@ -92,20 +92,20 @@ final go_router.GoRouter goAppRouter = go_router.GoRouter(
   routes: _buildGoRoutes(),
 );
 
-/// AutoRoute instance (using RouteConverter)
+/// AutoRoute instance (using CatalogRouteConverter)
 final RouterConfig<Object> autoAppRouter =
     auto_route.RootStackRouter.build(
-          routes: RouteConverter.toAutoRoutes(<RouteItem>[
+          routes: CatalogRouteConverter.toAutoRoutes(<CatalogItem>[
             homeModule.homeRoute,
             ..._collectAllRouteItems(),
           ]),
         ).config()
         as RouterConfig<Object>;
 
-/// Collect all RouteItems (for AutoRoute)
-List<RouteItem> _collectAllRouteItems() {
-  final List<RouteItem> routes = <RouteItem>[];
-  for (final RouteItem catalogItem in appCatalog) {
+/// Collect all catalog items (for AutoRoute)
+List<CatalogItem> _collectAllRouteItems() {
+  final List<CatalogItem> routes = <CatalogItem>[];
+  for (final CatalogItem catalogItem in demoCatalog) {
     routes.add(catalogItem);
   }
   return routes;

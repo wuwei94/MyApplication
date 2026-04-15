@@ -1,0 +1,22 @@
+import 'package:basic_flutter/demos/examples/getx/navigation/base/error_route.dart';
+import 'package:basic_flutter/demos/examples/getx/navigation/modules/features_route.dart';
+import 'package:basic_flutter/demos/examples/getx/pages/home_page.dart';
+import 'package:get/get.dart';
+
+class AppRoutes {
+  static final features = FeaturesRoute();
+
+  static List<GetPage<void>> getPages() {
+    return [
+      ...features.getRoutePages(),
+      GetPage(
+        name: '/home',
+        page: () => const HomePage(title: 'GetX示例'),
+      ),
+    ];
+  }
+
+  static GetPage<void> getUnknown() {
+    return ErrorRoute().unknown;
+  }
+}
