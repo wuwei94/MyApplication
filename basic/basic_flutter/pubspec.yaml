@@ -50,6 +50,8 @@ dependencies:
   http: ^1.5.0
   # https://pub.dev/packages/cached_network_image
   cached_network_image: ^3.4.1
+  # https://pub.dev/packages/extended_image
+  extended_image: ^10.0.1
 
   # 动画组件相关
   # https://pub.dev/packages/flutter_svg

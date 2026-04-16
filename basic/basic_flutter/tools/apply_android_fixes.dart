@@ -7,8 +7,8 @@ import 'dart:io';
 
 void main() {
   final List<String> scripts = <String>[
-    'tool/apply_desugaring.dart',
-    'tool/apply_permissions.dart',
+    'tools/apply_desugaring.dart',
+    'tools/apply_permissions.dart',
   ];
 
   for (final String script in scripts) {
