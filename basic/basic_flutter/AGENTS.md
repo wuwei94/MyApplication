@@ -41,6 +41,7 @@
 - `lib/demos/storage/`：本地存储示例，例如 `shared_preferences`、`secure_storage`、`hive`。
 - `lib/demos/animation/`：动画资源和播放示例，例如 `lottie`、`svg`、`svga`、`pag`。
 - `lib/demos/packages/`：三方包示例，例如 `notification`、`permission`、`image_picker`、`wechat_picker`、`webview`、`flutter_screenutil`、`toast`。
+- `lib/demos/video/`：视频播放示例，例如 `video_player`、`chewie`。
 - `lib/demos/state_management/`：`provider`、`bloc`、`riverpod` 等状态管理示例。
 - `lib/demos/layout/`：布局和交互类示例；子目录各自拥有 `catalog.dart`。
 - `lib/demos/showcase/`：杂项展示类示例，例如本地字体。

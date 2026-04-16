@@ -25,6 +25,7 @@ description: "为 basic_flutter 项目生成统一的 DemoPage/DemoView 页面�
 - 目录选择规则：
   - `lib/demos/packages/`：三方包、平台能力、工具封装演示
   - `lib/demos/basics/`：基础示例和完整小型示例应用，例如 `counter`、`getx_app`
+  - `lib/demos/video/`：视频播放相关示例，如 `video_player`、`chewie`
   - `lib/demos/state_management/`：`provider`、`bloc`、`riverpod` 等状态管理示例
   - `lib/demos/storage/`：本地存储相关示例，如 `shared_preferences`、`hive`、`secure_storage`
   - `lib/demos/network/`：网络请求相关示例，如 `dio`、`http`
@@ -129,7 +130,7 @@ class XxxDemoView extends StatelessWidget {
 ### 6. 命名与 helper 约定
 - 类名、文件名、路由标题保持一致语义，例如：
   - `ToastDemoPage` / `ToastDemoView` / `packages/toast_example.dart`
-  - `ProviderCounterDemoPage` / `CounterProviderPage` / `state_management/provider_example.dart`
+  - `ProviderCounterDemoPage` / `CounterProviderPage` / `state_management/provider/provider_example.dart`
 - `title` 默认与 demo 名称语义一致，例如 `Toast`、`SharedPreferences`、`Counter Example`。
 - `subtitle` 默认与当前分组现有风格保持一致；若无额外说明，可与 `title` 主语义一致。
 - 同一个文件内保持一种 helper 命名风格，不要混用 `getBody()` 和 `_buildBody()`。
@@ -203,4 +204,4 @@ class XxxDemoView extends StatelessWidget {
 - `XxxDemoPage` 不承载复杂页面 UI 和业务细节，但允许承载轻量注入、包裹层和必要生命周期逻辑。
 - 只有在确实需要本地状态时，才让内层 `XxxDemoView` 或拆分后的页面组件使用 `StatefulWidget`。
 - 只有在确实需要注入层生命周期管理、observer 恢复、全局包装恢复时，才让外层 `XxxDemoPage` 使用 `StatefulWidget`。
-- 保持和现有 `lib/demos/packages/toast_example.dart`、`lib/demos/packages/notification_example.dart`、`lib/demos/state_management/provider_example.dart` 一致的组织方式。
+- 保持和现有 `lib/demos/packages/toast_example.dart`、`lib/demos/packages/notification_example.dart`、`lib/demos/state_management/provider/provider_example.dart` 一致的组织方式。

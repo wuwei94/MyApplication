@@ -1,7 +1,7 @@
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/layout/transitions/catalog.dart';
-import 'package:basic_flutter/demos/layout/async/catalog.dart';
+import 'package:basic_flutter/demos/layout/asynchronous/catalog.dart';
 import 'package:basic_flutter/demos/layout/decoration/catalog.dart';
 import 'package:basic_flutter/demos/layout/dialogs/catalog.dart';
 import 'package:basic_flutter/demos/layout/flow/catalog.dart';
@@ -45,7 +45,7 @@ class LayoutCatalog extends CatalogSection {
     adaptiveCatalog,
     asyncWidgetsCatalog,
     statePrimitivesCatalog,
-    asyncCatalog,
+    asynchronousCatalog,
   ];
 }
 
