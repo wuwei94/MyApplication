@@ -3,27 +3,28 @@ import 'package:flutter/material.dart';
 
 /// Shared Preferences
 /// https://pub.dev/packages/shared_preferences
-class SharedPreferencesExample extends StatelessWidget {
-  const SharedPreferencesExample({super.key, required this.title});
+class SharedPreferencesDemoPage extends StatelessWidget {
+  const SharedPreferencesDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return SharedPreferencesRoute(title: title);
+    return SharedPreferencesDemoView(title: title);
   }
 }
 
-class SharedPreferencesRoute extends StatefulWidget {
-  const SharedPreferencesRoute({super.key, required this.title});
+class SharedPreferencesDemoView extends StatefulWidget {
+  const SharedPreferencesDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<StatefulWidget> createState() => _SharedPreferencesRouteState();
+  State<SharedPreferencesDemoView> createState() =>
+      _SharedPreferencesDemoViewState();
 }
 
-class _SharedPreferencesRouteState extends State<SharedPreferencesRoute> {
+class _SharedPreferencesDemoViewState extends State<SharedPreferencesDemoView> {
   static const String _counterKey = 'counter';
   int _counter = 0;
 

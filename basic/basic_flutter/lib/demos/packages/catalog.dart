@@ -6,8 +6,8 @@ import 'package:basic_flutter/demos/packages/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
 import 'package:basic_flutter/demos/packages/webview_example.dart';
 import 'package:basic_flutter/demos/packages/wechat_picker_example.dart';
-import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_section.dart';
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Packages 模块
@@ -21,69 +21,69 @@ class PackagesCatalog extends CatalogSection {
   String get path => 'packages';
 
   @override
-  String get title => 'Packages';
+  String get title => 'Packages Example';
 
   @override
   String get subtitle => '三方组件';
 
   @override
-  List<CatalogItem> get items => _items;
+  List<CatalogEntry> get items => _items;
 
-  static final List<CatalogItem> _items = [
-    CatalogItem.page(
+  static final List<CatalogEntry> _items = [
+    CatalogEntry.page(
       path: 'toast',
       title: 'Toast',
       subtitle: 'Toast示例',
-      pageBuilder: (BuildContext context) => const ToastExample(title: 'Toast'),
+      pageBuilder: (BuildContext context) => const ToastDemoPage(title: 'Toast'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'notification',
       title: 'Notification',
       subtitle: 'Notification示例',
       pageBuilder: (BuildContext context) =>
-          const NotificationExample(title: 'Notification'),
+          const NotificationDemoPage(title: 'Notification'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'permission',
       title: 'Permission',
       subtitle: 'Permission示例',
       pageBuilder: (BuildContext context) =>
-          const PermissionExample(title: 'Permission'),
+          const PermissionDemoPage(title: 'Permission'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'image-picker',
       title: 'ImagePicker',
       subtitle: 'ImagePicker示例',
       pageBuilder: (BuildContext context) =>
-          const ImagePickerExample(title: 'ImagePicker'),
+          const ImagePickerDemoPage(title: 'ImagePicker'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'wechat-picker',
       title: 'WechatPicker',
       subtitle: 'WechatPicker示例',
       pageBuilder: (BuildContext context) =>
-          const WechatPickerExample(title: 'WechatPicker'),
+          const WechatPickerDemoPage(title: 'WechatPicker'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'web-view',
       title: 'WebView',
       subtitle: 'WebView示例',
       pageBuilder: (BuildContext context) =>
-          const WebViewExample(title: 'WebView'),
+          const WebViewDemoPage(title: 'WebView'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'screen-util',
       title: 'ScreenUtil',
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
-          const ScreenUtilExample(title: 'ScreenUtil'),
+          const ScreenUtilDemoPage(title: 'ScreenUtil'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'custom-google-font',
       title: 'Custom Google Font',
       subtitle: 'Google Fonts 第三方字体示例',
       pageBuilder: (BuildContext context) =>
-          const CustomGoogleFontExample(title: 'Custom Google Font'),
+          const CustomGoogleFontDemoPage(title: 'Custom Google Font'),
     ),
   ];
 }

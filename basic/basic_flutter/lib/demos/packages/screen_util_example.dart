@@ -5,19 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// ScreenUtil
 /// https://pub.dev/packages/flutter_screenutil
-class ScreenUtilExample extends StatelessWidget {
-  const ScreenUtilExample({super.key, required this.title});
+class ScreenUtilDemoPage extends StatelessWidget {
+  const ScreenUtilDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilRoute(title: title);
+    return ScreenUtilDemoView(title: title);
   }
 }
 
-class ScreenUtilRoute extends StatelessWidget {
-  const ScreenUtilRoute({super.key, required this.title});
+class ScreenUtilDemoView extends StatelessWidget {
+  const ScreenUtilDemoView({super.key, required this.title});
 
   final String title;
 

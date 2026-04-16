@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 
 /// Flutter Secure Storage
 /// https://pub.dev/packages/flutter_secure_storage
-class SecureStorageExample extends StatelessWidget {
-  const SecureStorageExample({super.key, required this.title});
+class SecureStorageDemoPage extends StatelessWidget {
+  const SecureStorageDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return SecureStorageRoute(title: title);
+    return SecureStorageDemoView(title: title);
   }
 }
 
-class SecureStorageRoute extends StatefulWidget {
-  const SecureStorageRoute({super.key, required this.title});
+class SecureStorageDemoView extends StatefulWidget {
+  const SecureStorageDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<StatefulWidget> createState() => _SecureStorageRouteState();
+  State<SecureStorageDemoView> createState() => _SecureStorageDemoViewState();
 }
 
-class _SecureStorageRouteState extends State<SecureStorageRoute> {
+class _SecureStorageDemoViewState extends State<SecureStorageDemoView> {
   static const String _counterKey = 'counter';
   int _counter = 0;
 

@@ -1,7 +1,7 @@
 import 'package:basic_flutter/demos/video/chewie_video_player_example.dart';
 import 'package:basic_flutter/demos/video/video_player_example.dart';
-import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_section.dart';
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Video 模块
@@ -14,28 +14,28 @@ class VideoCatalog extends CatalogSection {
   String get path => 'video';
 
   @override
-  String get title => 'Video';
+  String get title => 'Video Example';
 
   @override
   String get subtitle => '视频组件';
 
   @override
-  List<CatalogItem> get items => _items;
+  List<CatalogEntry> get items => _items;
 
-  static final List<CatalogItem> _items = [
-    CatalogItem.page(
+  static final List<CatalogEntry> _items = [
+    CatalogEntry.page(
       path: 'video-player',
       title: 'VideoPlayer',
       subtitle: 'video_player 示例',
       pageBuilder: (BuildContext context) =>
-          const VideoPlayerExample(title: 'VideoPlayer'),
+          const VideoPlayerDemoPage(title: 'VideoPlayer'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'chewie-video-player',
       title: 'ChewieVideoPlayer',
       subtitle: 'chewie + video_player 示例',
       pageBuilder: (BuildContext context) =>
-          const ChewieVideoPlayerExample(title: 'ChewieVideoPlayer'),
+          const ChewieVideoPlayerDemoPage(title: 'ChewieVideoPlayer'),
     ),
   ];
 }

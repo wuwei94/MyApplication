@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 
 /// cached_network_image
 /// https://pub.dev/packages/cached_network_image
-class ImageExample extends StatelessWidget {
-  const ImageExample({super.key, required this.title});
+class ImageDemoPage extends StatelessWidget {
+  const ImageDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return ImageRoute(title: title);
+    return ImageDemoView(title: title);
   }
 }
 
-class ImageRoute extends StatelessWidget {
-  const ImageRoute({super.key, required this.title});
+class ImageDemoView extends StatelessWidget {
+  const ImageDemoView({super.key, required this.title});
 
   final String title;
 

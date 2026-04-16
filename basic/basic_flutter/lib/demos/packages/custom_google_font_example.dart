@@ -3,19 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Custom Google Font
 /// 使用 Google Fonts 第三方字体的示例页面
-class CustomGoogleFontExample extends StatelessWidget {
-  const CustomGoogleFontExample({super.key, required this.title});
+class CustomGoogleFontDemoPage extends StatelessWidget {
+  const CustomGoogleFontDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return CustomGoogleFontRoute(title: title);
+    return CustomGoogleFontDemoView(title: title);
   }
 }
 
-class CustomGoogleFontRoute extends StatelessWidget {
-  const CustomGoogleFontRoute({super.key, required this.title});
+class CustomGoogleFontDemoView extends StatelessWidget {
+  const CustomGoogleFontDemoView({super.key, required this.title});
 
   final String title;
 

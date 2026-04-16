@@ -7,27 +7,27 @@ enum _VideoSourceType { asset, network }
 /// Chewie + Video Player
 /// https://pub.dev/packages/chewie
 /// https://pub.dev/packages/video_player
-class ChewieVideoPlayerExample extends StatelessWidget {
-  const ChewieVideoPlayerExample({super.key, required this.title});
+class ChewieVideoPlayerDemoPage extends StatelessWidget {
+  const ChewieVideoPlayerDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return ChewieVideoPlayerRoute(title: title);
+    return ChewieVideoPlayerDemoView(title: title);
   }
 }
 
-class ChewieVideoPlayerRoute extends StatefulWidget {
-  const ChewieVideoPlayerRoute({super.key, required this.title});
+class ChewieVideoPlayerDemoView extends StatefulWidget {
+  const ChewieVideoPlayerDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<ChewieVideoPlayerRoute> createState() => _ChewieVideoPlayerRouteState();
+  State<ChewieVideoPlayerDemoView> createState() => _ChewieVideoPlayerDemoViewState();
 }
 
-class _ChewieVideoPlayerRouteState extends State<ChewieVideoPlayerRoute> {
+class _ChewieVideoPlayerDemoViewState extends State<ChewieVideoPlayerDemoView> {
   static const String _assetVideoPath = 'assets/video/sample.mp4';
   static const String _networkVideoUrl =
       'https://samplelib.com/lib/preview/mp4/sample-5s.mp4';

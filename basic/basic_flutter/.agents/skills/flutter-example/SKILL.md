@@ -1,19 +1,22 @@
 ---
 name: "flutter-example"
-description: "为 basic_flutter 项目生成统一的 Example/Route 页面骨架，复杂场景可扩展到 Example/Page"
-metadata:
-  model: "998Code/gpt-5.4"
-  last_modified: "Sun, 15 Mar 2026 00:00:00 GMT"
+description: "为 basic_flutter 项目生成统一的 DemoPage/DemoView 页面骨架，叶子 demo 使用 xxx_example.dart 命名，并按当前目录惯例与 CatalogEntry 架构接入"
 
 ---
 # flutter-example
 
 ## Goal
-为 `basic_flutter` 项目生成风格统一的示例页面骨架，并按场景选择合适模式：
-- 默认模式：`XxxExample -> XxxRoute`
-- 扩展模式：复杂场景允许 `XxxExample -> XxxPage`
+为 `basic_flutter` 项目生成风格统一的 demo 页面骨架，并接入当前 `Catalog First` 架构。
 
-核心原则：外层 `Example` 负责路由入口和轻量组装，内层 `Route` 或 `Page` 负责真实页面内容。
+默认模式：
+- `XxxDemoPage -> XxxDemoView`
+- 叶子 demo 按当前目录惯例放置：
+  - 顶层分组示例：`lib/demos/network/dio_example.dart`
+  - 子分组示例：`lib/demos/layout/containers/align_example.dart`
+
+复杂场景：
+- 允许在 demo 目录下继续拆 `pages/`、`controllers/`、`providers/`、`cubits/`、`bindings/` 等子目录
+- `xxx_example.dart` 继续作为对外入口
 
 ## Instructions
 
@@ -21,47 +24,53 @@ metadata:
 - 新页面优先放到已有分类目录，不要随意在 `lib/` 顶层新增页面文件。
 - 目录选择规则：
   - `lib/demos/packages/`：三方包、平台能力、工具封装演示
-  - `lib/demos/examples/`：基础示例、完整小型示例应用
-  - `lib/demos/state_manager/`：`provider`、`bloc`、`riverpod` 等状态管理示例
+  - `lib/demos/basics/`：基础示例和完整小型示例应用，例如 `counter`、`getx_app`
+  - `lib/demos/state_management/`：`provider`、`bloc`、`riverpod` 等状态管理示例
   - `lib/demos/storage/`：本地存储相关示例，如 `shared_preferences`、`hive`、`secure_storage`
   - `lib/demos/network/`：网络请求相关示例，如 `dio`、`http`
+  - `lib/demos/animation/`：动画资源和播放示例
+  - `lib/demos/layout/`：布局和交互类示例
+  - `lib/demos/showcase/`：展示类示例
 - 如果一个新示例已经明显属于现有分组，就放到对应分组下，不要新建平行目录。
+- 普通叶子 demo 优先直接放在分组目录或子分组目录下，不要再额外嵌套一层同名目录。
+- 如果某个分类已经有稳定的子目录组织，就沿用现有结构，例如 `lib/demos/basics/counter/counter_example.dart`、`lib/demos/state_management/provider/provider_example.dart`。
 
 ### 2. 先选骨架
 - 按复杂度选择模板：
-  - 默认情况：`XxxExample -> XxxRoute`
-  - 带本地状态类：`XxxExample -> Stateful XxxRoute`
-  - 复杂场景：`XxxExample -> XxxPage`
+  - 默认情况：`XxxDemoPage -> XxxDemoView`
+  - 带本地状态类：`XxxDemoPage -> Stateful XxxDemoView`
+  - 复杂场景：`xxx_example.dart` 作为入口，再拆 `pages/` 等子目录
 - 同一个示例内保持一种清晰模式，不要混入多套入口风格。
 
-### 3. 外层 Example 规则
-- 页面文件命名使用 `xxx_example.dart`。
-- 对外入口组件默认命名为 `XxxExample`，优先使用 `StatelessWidget`。
-- 默认只负责返回对应的 `XxxRoute`。
-- 只有在复杂场景下，才让 `XxxExample` 返回 `XxxPage`。
+### 3. 对外入口规则
+- 叶子 demo 页面文件统一使用 `xxx_example.dart`。
+- 对外入口组件默认命名为 `XxxDemoPage`，优先使用 `StatelessWidget`。
+- 默认只负责返回对应的 `XxxDemoView`。
 - 允许承担轻量组装职责，例如：
   - provider / bloc / controller 注入
   - `ScreenUtilInit` 之类的外层包裹
   - observer 注册与恢复
   - 必要的生命周期桥接
-- 不要把具体业务 UI、复杂布局、列表渲染和页面交互细节塞进 `XxxExample`。
-- 如果外层需要管理注入层生命周期、恢复全局设置或注册/注销 observer，允许 `XxxExample` 使用 `StatefulWidget`。
+- 不要把具体业务 UI、复杂布局、列表渲染和页面交互细节塞进 `XxxDemoPage`。
+- 如果外层需要管理注入层生命周期、恢复全局设置或注册/注销 observer，允许 `XxxDemoPage` 使用 `StatefulWidget`。
 
 ```dart
-class ToastExample extends StatelessWidget {
-  const ToastExample({super.key});
+class ToastDemoPage extends StatelessWidget {
+  const ToastDemoPage({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const ToastRoute(title: 'Toast Example');
+    return ToastDemoView(title: title);
   }
 }
 ```
 
-### 4. 内层 Route/Page 规则
-- `XxxRoute`：单文件内承载 `Scaffold` 的页面组件。
-- `XxxPage`：复杂场景下拆到 `pages/` 目录中的真实页面组件。
-- 默认优先生成 `XxxRoute`；只有在页面明显变复杂时，才扩展为 `XxxPage`。
+### 4. 内层页面规则
+- `XxxDemoView`：单文件内承载 `Scaffold` 的真实页面组件。
+- 复杂场景下可拆到 `pages/` 目录中的真实页面组件，但 `xxx_example.dart` 仍然是统一入口。
+- 默认优先生成 `XxxDemoView`；只有在页面明显变复杂时，才继续拆目录。
 - 无本地状态时用 `StatelessWidget`；需要 `initState`、`setState`、控制器生命周期时改用 `StatefulWidget`。
 - 有 `await` 后再更新 UI、弹 `SnackBar`、`setState` 或访问上下文时：
   - 在 `State` 里优先使用 `if (!mounted) return;`
@@ -69,8 +78,8 @@ class ToastExample extends StatelessWidget {
 - 常规页面优先保持这个骨架：
 
 ```dart
-class XxxRoute extends StatelessWidget {
-  const XxxRoute({super.key, required this.title});
+class XxxDemoView extends StatelessWidget {
+  const XxxDemoView({super.key, required this.title});
 
   final String title;
 
@@ -100,7 +109,7 @@ class XxxRoute extends StatelessWidget {
 - 如果页面明显变复杂，就继续拆小组件或拆目录，但保持入口模式一致。
 
 ### 5. 复杂示例及时拆目录
-- 当示例包含状态管理、controller、notifier、observer、binding、可复用页面组件时，不要把所有内容塞进一个 `*_example.dart`。
+- 当示例包含状态管理、controller、notifier、observer、binding、可复用页面组件时，不要把所有内容塞进一个 `xxx_example.dart`。
 - 应按现有项目风格拆分，例如：
   - `pages/`
   - `controllers/`
@@ -109,18 +118,19 @@ class XxxRoute extends StatelessWidget {
   - `providers/`
   - `observers/`
   - `bindings/`
-- `*_example.dart` 优先只保留路由入口、注入层、包裹层和必要的轻量生命周期逻辑。
+- `xxx_example.dart` 优先只保留对外入口、注入层、包裹层和必要的轻量生命周期逻辑。
+- 只有在 demo 本身确实有多文件支撑内容时，才保留额外目录；不要为了单页 demo 再嵌套一层同名目录。
 - 可参考：
-  - `lib/demos/state_manager/provider/`
-  - `lib/demos/state_manager/bloc/`
-  - `lib/demos/state_manager/riverpod/`
-  - `lib/demos/examples/getx/`
+  - `lib/demos/state_management/provider/`
+  - `lib/demos/state_management/bloc/`
+  - `lib/demos/state_management/riverpod/`
+  - `lib/demos/basics/getx_app/`
 
 ### 6. 命名与 helper 约定
 - 类名、文件名、路由标题保持一致语义，例如：
-  - `ToastExample` / `ToastRoute` / `toast_example.dart`
-  - `CounterProviderExample` / `CounterProviderPage` / `counter_provider_example.dart`
-- `title` 默认使用 `Xxx Example` 风格，和现有示例保持一致。
+  - `ToastDemoPage` / `ToastDemoView` / `packages/toast_example.dart`
+  - `ProviderCounterDemoPage` / `CounterProviderPage` / `state_management/provider_example.dart`
+- `title` 默认与 demo 名称语义一致，例如 `Toast`、`SharedPreferences`、`Counter Example`。
 - `subtitle` 默认与当前分组现有风格保持一致；若无额外说明，可与 `title` 主语义一致。
 - 同一个文件内保持一种 helper 命名风格，不要混用 `getBody()` 和 `_buildBody()`。
 - 默认骨架优先使用：
@@ -129,19 +139,19 @@ class XxxRoute extends StatelessWidget {
 - 如果 FAB 逻辑依赖上下文，优先写成 `Widget getFAB(BuildContext context)`。
 - 只有在页面明显更复杂、且整个文件已经采用私有 build helper 风格时，才使用 `_buildBody()`、`_buildFab()`。
 
-### 7. 路由接入规则
-- 新增路由时，path 按现有分组前缀组织：
-  - example: `/example/...`
-  - packages: `/package/...`
-  - state management: `/state/...`
-  - storage: `/storage/...`
-  - network: `/network/...`
+### 7. Catalog 接入规则
+- 普通 demo 不手写额外 app 路由，统一通过 `catalog.dart` 接入。
+- 路由项统一使用 `CatalogEntry`。
+- 叶子页面使用 `CatalogEntry.page(...)`。
+- 子分组使用 `CatalogEntry.catalog(...)`。
+- `path` 统一写相对路径：
+  - 顶层分组相对根目录，例如 `basics`、`layout`、`network`
+  - 子分组和页面相对父分组目录，例如 `containers`、`dio`、`shared-preferences`
 - 多单词 path 优先使用 kebab-case，例如：
-  - `/package/shared-preferences`
-  - `/package/screen-util`
-  - `/storage/secure-storage`
-- 路由项统一使用 `CatalogItem`。
-- `routeBuilder` 应直接返回 `const XxxExample()`。
+  - `shared-preferences`
+  - `screen-util`
+  - `secure-storage`
+- `pageBuilder` 应直接返回 `const XxxDemoPage(...)`。
 - 需要包示例说明时，可在文件顶部保留这种注释风格：
 
 ```dart
@@ -161,20 +171,22 @@ class XxxRoute extends StatelessWidget {
   - `lib/core/utils/ui/notification.dart`
   - `lib/core/utils/storage/shared_preferences.dart`
   - `lib/core/utils/logger/logger.dart`
-- 默认禁止在普通 routed page 外再包一层 `MaterialApp`、`GetMaterialApp`。
+- 默认禁止在普通 demo page 外再包一层 `MaterialApp`、`GetMaterialApp`。
+- 只有像 `lib/demos/basics/getx_app/` 这种独立实验应用，才允许自带 `GetMaterialApp`。
 
 ### 9. 保持现有导航层级
 - 这个项目的导航链路是固定三层：
-  - `HomePage` 用 `Navigator.push` 打开分组列表页
-  - `DemoCatalogPage` 用 `AppNavigator.pushPath(item.path)` 进入最终示例页
+  - `AppHome` 展示首页顶层分组
+  - `CatalogPage` 展示分组列表
+  - `CatalogPage` 内通过 `AppNavigator.pushPath(item.path)` 进入最终示例页
   - 最终示例页由当前启用的路由器提供
 - 新增示例时不要随意改掉这三层结构，也不要把首页分组入口和最终示例页混成同一级。
 
 ### 10. 新增页面时同步文件
 - 如果只是向现有分组新增页面，通常只需要更新对应分组下的 `lib/demos/*/catalog.dart`。
 - 如果新增的是首页一级分组，还要同步更新：
-  - `lib/app/catalog/demo_catalog.dart`
-  - 必要时检查 `lib/app/router/app_router.dart`
+  - `lib/catalog/registry/catalog_registry.dart`
+  - 必要时检查 `lib/app/router/app_router_config.dart`
 
 ### 11. 完成后验证
 - 优先运行：
@@ -182,13 +194,13 @@ class XxxRoute extends StatelessWidget {
   - `fvm flutter test`
 - 如果改动了路由，至少验证：
   - 首页分组入口正常
-  - `DemoCatalogPage` 分组列表入口正常
+  - `CatalogPage` 分组列表入口正常
   - 最终页面跳转正常
 
 ## Constraints
-- 默认优先生成 `XxxExample -> XxxRoute`。
-- 只有在复杂场景下，才扩展为 `XxxExample -> XxxPage`。
-- `XxxExample` 不承载复杂页面 UI 和业务细节，但允许承载轻量注入、包裹层和必要生命周期逻辑。
-- 只有在确实需要本地状态时，才让内层 `XxxRoute` 或 `XxxPage` 使用 `StatefulWidget`。
-- 只有在确实需要注入层生命周期管理、observer 恢复、全局包装恢复时，才让外层 `XxxExample` 使用 `StatefulWidget`。
-- 保持和现有 `lib/demos/packages/toast_example.dart`、`lib/demos/packages/notification_example.dart`、`lib/demos/state_manager/provider/counter_provider_example.dart` 一致的组织方式。
+- 默认优先生成 `XxxDemoPage -> XxxDemoView`。
+- 只有在复杂场景下，才扩展为 `xxx_example.dart + pages/` 等子目录。
+- `XxxDemoPage` 不承载复杂页面 UI 和业务细节，但允许承载轻量注入、包裹层和必要生命周期逻辑。
+- 只有在确实需要本地状态时，才让内层 `XxxDemoView` 或拆分后的页面组件使用 `StatefulWidget`。
+- 只有在确实需要注入层生命周期管理、observer 恢复、全局包装恢复时，才让外层 `XxxDemoPage` 使用 `StatefulWidget`。
+- 保持和现有 `lib/demos/packages/toast_example.dart`、`lib/demos/packages/notification_example.dart`、`lib/demos/state_management/provider_example.dart` 一致的组织方式。

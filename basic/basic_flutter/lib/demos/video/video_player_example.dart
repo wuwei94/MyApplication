@@ -5,27 +5,27 @@ enum _VideoSourceType { asset, network }
 
 /// Video Player
 /// https://pub.dev/packages/video_player
-class VideoPlayerExample extends StatelessWidget {
-  const VideoPlayerExample({super.key, required this.title});
+class VideoPlayerDemoPage extends StatelessWidget {
+  const VideoPlayerDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayerRoute(title: title);
+    return VideoPlayerDemoView(title: title);
   }
 }
 
-class VideoPlayerRoute extends StatefulWidget {
-  const VideoPlayerRoute({super.key, required this.title});
+class VideoPlayerDemoView extends StatefulWidget {
+  const VideoPlayerDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<VideoPlayerRoute> createState() => _VideoPlayerRouteState();
+  State<VideoPlayerDemoView> createState() => _VideoPlayerDemoViewState();
 }
 
-class _VideoPlayerRouteState extends State<VideoPlayerRoute> {
+class _VideoPlayerDemoViewState extends State<VideoPlayerDemoView> {
   static const String _assetVideoPath = 'assets/video/sample.mp4';
   static const String _networkVideoUrl =
       'https://samplelib.com/lib/preview/mp4/sample-5s.mp4';

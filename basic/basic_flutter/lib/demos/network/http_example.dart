@@ -7,27 +7,27 @@ import 'package:flutter/material.dart';
 
 /// http
 /// https://pub.dev/packages/http
-class HttpExample extends StatelessWidget {
-  const HttpExample({super.key, required this.title});
+class HttpDemoPage extends StatelessWidget {
+  const HttpDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return HttpRoute(title: title);
+    return HttpDemoView(title: title);
   }
 }
 
-class HttpRoute extends StatefulWidget {
-  const HttpRoute({super.key, required this.title});
+class HttpDemoView extends StatefulWidget {
+  const HttpDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HttpRoute> createState() => _HttpRouteState();
+  State<HttpDemoView> createState() => _HttpDemoViewState();
 }
 
-class _HttpRouteState extends State<HttpRoute> {
+class _HttpDemoViewState extends State<HttpDemoView> {
   final HttpClient _httpClient = HttpClient();
 
   String _info = 'Tap the button to send a POST request.';

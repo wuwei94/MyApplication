@@ -26,27 +26,27 @@ const List<_PermissionModel> _permissionDefinitions = <_PermissionModel>[
 
 /// Permission Handler
 /// https://pub.dev/packages/permission_handler
-class PermissionExample extends StatelessWidget {
-  const PermissionExample({super.key, required this.title});
+class PermissionDemoPage extends StatelessWidget {
+  const PermissionDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return PermissionRoute(title: title);
+    return PermissionDemoView(title: title);
   }
 }
 
-class PermissionRoute extends StatefulWidget {
-  const PermissionRoute({super.key, required this.title});
+class PermissionDemoView extends StatefulWidget {
+  const PermissionDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<PermissionRoute> createState() => _PermissionRouteState();
+  State<PermissionDemoView> createState() => _PermissionDemoViewState();
 }
 
-class _PermissionRouteState extends State<PermissionRoute> {
+class _PermissionDemoViewState extends State<PermissionDemoView> {
   Map<Permission, PermissionStatus> _statuses =
       <Permission, PermissionStatus>{};
 

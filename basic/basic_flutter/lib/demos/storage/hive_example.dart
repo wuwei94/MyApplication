@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 
 /// Hive
 /// https://pub.dev/packages/hive
-class HiveExample extends StatelessWidget {
-  const HiveExample({super.key, required this.title});
+class HiveDemoPage extends StatelessWidget {
+  const HiveDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return HiveRoute(title: title);
+    return HiveDemoView(title: title);
   }
 }
 
-class HiveRoute extends StatefulWidget {
-  const HiveRoute({super.key, required this.title});
+class HiveDemoView extends StatefulWidget {
+  const HiveDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<StatefulWidget> createState() => _HiveRouteState();
+  State<HiveDemoView> createState() => _HiveDemoViewState();
 }
 
-class _HiveRouteState extends State<HiveRoute> {
+class _HiveDemoViewState extends State<HiveDemoView> {
   static const String _counterKey = 'counter';
   int _counter = 0;
 

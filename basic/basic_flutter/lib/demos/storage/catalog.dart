@@ -1,8 +1,8 @@
 import 'package:basic_flutter/demos/storage/hive_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
 import 'package:basic_flutter/demos/storage/shared_preferences_example.dart';
-import 'package:basic_flutter/app/catalog/catalog_item.dart';
-import 'package:basic_flutter/app/catalog/catalog_section.dart';
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Storage 模块
@@ -15,34 +15,34 @@ class StorageCatalog extends CatalogSection {
   String get path => 'storage';
 
   @override
-  String get title => 'Storage';
+  String get title => 'Storage Example';
 
   @override
   String get subtitle => '本地存储';
 
   @override
-  List<CatalogItem> get items => _items;
+  List<CatalogEntry> get items => _items;
 
-  static final List<CatalogItem> _items = [
-    CatalogItem.page(
+  static final List<CatalogEntry> _items = [
+    CatalogEntry.page(
       path: 'hive',
       title: 'Hive',
       subtitle: 'Hive示例',
-      pageBuilder: (BuildContext context) => const HiveExample(title: 'Hive'),
+      pageBuilder: (BuildContext context) => const HiveDemoPage(title: 'Hive'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'secure-storage',
       title: 'SecureStorage',
       subtitle: 'SecureStorage示例',
       pageBuilder: (BuildContext context) =>
-          const SecureStorageExample(title: 'SecureStorage'),
+          const SecureStorageDemoPage(title: 'SecureStorage'),
     ),
-    CatalogItem.page(
+    CatalogEntry.page(
       path: 'shared-preferences',
       title: 'SharedPreferences',
       subtitle: 'SharedPreferences示例',
       pageBuilder: (BuildContext context) =>
-          const SharedPreferencesExample(title: 'SharedPreferences'),
+          const SharedPreferencesDemoPage(title: 'SharedPreferences'),
     ),
   ];
 }

@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 
 /// Notifications
 /// https://pub.dev/packages/flutter_local_notifications
-class NotificationExample extends StatelessWidget {
-  const NotificationExample({super.key, required this.title});
+class NotificationDemoPage extends StatelessWidget {
+  const NotificationDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return NotificationRoute(title: title);
+    return NotificationDemoView(title: title);
   }
 }
 
-class NotificationRoute extends StatefulWidget {
-  const NotificationRoute({super.key, required this.title});
+class NotificationDemoView extends StatefulWidget {
+  const NotificationDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<NotificationRoute> createState() => _NotificationRouteState();
+  State<NotificationDemoView> createState() => _NotificationDemoViewState();
 }
 
-class _NotificationRouteState extends State<NotificationRoute> {
+class _NotificationDemoViewState extends State<NotificationDemoView> {
   late NotificationHelper _notificationHelper;
 
   @override

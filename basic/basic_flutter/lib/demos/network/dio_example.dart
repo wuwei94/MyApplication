@@ -7,27 +7,27 @@ import 'package:flutter/material.dart';
 
 /// dio
 /// https://pub.dev/packages/dio
-class DioExample extends StatelessWidget {
-  const DioExample({super.key, required this.title});
+class DioDemoPage extends StatelessWidget {
+  const DioDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return DioRoute(title: title);
+    return DioDemoView(title: title);
   }
 }
 
-class DioRoute extends StatefulWidget {
-  const DioRoute({super.key, required this.title});
+class DioDemoView extends StatefulWidget {
+  const DioDemoView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<DioRoute> createState() => _DioRouteState();
+  State<DioDemoView> createState() => _DioDemoViewState();
 }
 
-class _DioRouteState extends State<DioRoute> {
+class _DioDemoViewState extends State<DioDemoView> {
   final DioClient _dioClient = DioClient();
 
   String _info = 'Tap the button to send a POST request.';

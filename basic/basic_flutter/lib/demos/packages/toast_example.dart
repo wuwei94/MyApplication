@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 
 /// toast
 /// https://pub.dev/packages/fluttertoast
-class ToastExample extends StatelessWidget {
-  const ToastExample({super.key, required this.title});
+class ToastDemoPage extends StatelessWidget {
+  const ToastDemoPage({super.key, required this.title});
 
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    return ToastRoute(title: title);
+    return ToastDemoView(title: title);
   }
 }
 
-class ToastRoute extends StatelessWidget {
-  const ToastRoute({super.key, required this.title});
+class ToastDemoView extends StatelessWidget {
+  const ToastDemoView({super.key, required this.title});
 
   final String title;
 
