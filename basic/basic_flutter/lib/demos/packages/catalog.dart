@@ -5,6 +5,7 @@ import 'package:basic_flutter/demos/packages/image_picker_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
+import 'package:basic_flutter/demos/packages/scroll_to_index_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
 import 'package:basic_flutter/demos/packages/uuid_example.dart';
 import 'package:basic_flutter/demos/packages/webview_example.dart';
@@ -101,6 +102,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '下拉刷新与上拉加载示例',
       pageBuilder: (BuildContext context) =>
           const EasyRefreshDemoPage(title: 'EasyRefresh'),
+    ),
+    CatalogEntry.page(
+      path: 'scroll-to-index',
+      title: 'ScrollToIndex',
+      subtitle: '按索引定位滚动列表项示例',
+      pageBuilder: (BuildContext context) =>
+          const ScrollToIndexDemoPage(title: 'ScrollToIndex'),
     ),
     CatalogEntry.page(
       path: 'custom-google-font',
