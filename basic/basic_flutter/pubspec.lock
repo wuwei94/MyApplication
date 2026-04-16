@@ -337,6 +337,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.2"
+  easy_refresh:
+    dependency: "direct main"
+    description:
+      name: easy_refresh
+      sha256: "73eb6119f7275270cedc764fa22e724b62a2f110265945699c9bc3290681ee70"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.5.0"
   english_words:
     dependency: "direct main"
     description:

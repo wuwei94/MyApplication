@@ -1,4 +1,5 @@
 import 'package:basic_flutter/demos/packages/custom_google_font_example.dart';
+import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/image_picker_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
@@ -93,6 +94,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilDemoPage(title: 'ScreenUtil'),
+    ),
+    CatalogEntry.page(
+      path: 'easy-refresh',
+      title: 'EasyRefresh',
+      subtitle: '下拉刷新与上拉加载示例',
+      pageBuilder: (BuildContext context) =>
+          const EasyRefreshDemoPage(title: 'EasyRefresh'),
     ),
     CatalogEntry.page(
       path: 'custom-google-font',
