@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 
 final CatalogEntry containersCatalog = CatalogEntry.catalog(
   path: 'containers',
-  title: '容器布局',
+  title: '基础容器',
   subtitle: 'Container、Padding、Center、Align、SizedBox、ConstrainedBox',
   children: <CatalogEntry>[
     CatalogEntry.page(

@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 final CatalogEntry sliversCatalog = CatalogEntry.catalog(
   path: 'slivers',
-  title: 'Sliver 组件',
+  title: 'Sliver组件',
   subtitle: 'SliverList、SliverGrid、SliverAppBar',
   children: <CatalogEntry>[
     CatalogEntry.page(

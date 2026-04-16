@@ -2,9 +2,9 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/demos/layout/adaptive/layout_builder_example.dart';
 import 'package:flutter/widgets.dart';
 
-final CatalogEntry adaptiveCatalog = CatalogEntry.catalog(
+final CatalogEntry layoutAwareCatalog = CatalogEntry.catalog(
   path: 'adaptive',
-  title: '布局构建器',
+  title: '布局感知组件',
   subtitle: 'LayoutBuilder',
   children: <CatalogEntry>[
     CatalogEntry.page(

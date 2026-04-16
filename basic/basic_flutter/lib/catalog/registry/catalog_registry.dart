@@ -16,14 +16,14 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 /// 首页目录由统一的分组列表自动生成。
 final List<CatalogSection> catalogSections = <CatalogSection>[
   basicsCatalog,
+  layoutCatalog,
+  showcaseCatalog,
   networkCatalog,
   storageCatalog,
   animationCatalog,
-  packagesCatalog,
   videoCatalog,
+  packagesCatalog,
   stateManagementCatalog,
-  layoutCatalog,
-  showcaseCatalog,
 ];
 
 /// 新增模块只需将对应模块加入 `catalogSections`。

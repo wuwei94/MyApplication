@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 final CatalogEntry transitionsCatalog = CatalogEntry.catalog(
   path: 'transitions',
-  title: '动画效果',
+  title: '过渡动画组件',
   subtitle: 'FadeTransition、ScaleTransition、RotationTransition...',
   children: <CatalogEntry>[
     CatalogEntry.page(

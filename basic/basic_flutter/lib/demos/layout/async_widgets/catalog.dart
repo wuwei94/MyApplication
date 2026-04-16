@@ -3,9 +3,9 @@ import 'package:basic_flutter/demos/layout/async_widgets/futurebuilder_example.d
 import 'package:basic_flutter/demos/layout/async_widgets/streambuilder_example.dart';
 import 'package:flutter/widgets.dart';
 
-final CatalogEntry asyncWidgetsCatalog = CatalogEntry.catalog(
+final CatalogEntry asyncDataDrivenCatalog = CatalogEntry.catalog(
   path: 'async-widgets',
-  title: '状态驱动组件',
+  title: '异步数据驱动组件',
   subtitle: 'FutureBuilder、StreamBuilder',
   children: <CatalogEntry>[
     CatalogEntry.page(

@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 final CatalogEntry decorationCatalog = CatalogEntry.catalog(
   path: 'decoration',
-  title: '装饰效果',
+  title: '装饰组件',
   subtitle: 'DecoratedBox、Opacity、Clip、BackdropFilter、ShaderMask',
   children: <CatalogEntry>[
     CatalogEntry.page(

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 final CatalogEntry stackCatalog = CatalogEntry.catalog(
   path: 'stack',
-  title: '堆叠定位',
+  title: '堆叠布局',
   subtitle: 'Stack、Positioned',
   children: <CatalogEntry>[
     CatalogEntry.page(

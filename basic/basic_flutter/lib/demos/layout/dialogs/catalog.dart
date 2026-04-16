@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 final CatalogEntry dialogsCatalog = CatalogEntry.catalog(
   path: 'dialogs',
-  title: '弹窗与底部面板',
+  title: '弹窗与模态组件',
   subtitle: 'Dialog、BottomSheet、DatePicker、Cupertino Dialogs',
   children: <CatalogEntry>[
     CatalogEntry.page(

@@ -4,9 +4,9 @@ import 'package:basic_flutter/demos/layout/state_primitives/listenable_builder_e
 import 'package:basic_flutter/demos/layout/state_primitives/value_listenable_builder_example.dart';
 import 'package:flutter/widgets.dart';
 
-final CatalogEntry statePrimitivesCatalog = CatalogEntry.catalog(
+final CatalogEntry stateSharingCatalog = CatalogEntry.catalog(
   path: 'state-primitives',
-  title: '状态管理',
+  title: '状态监听与共享组件',
   subtitle: 'InheritedWidget、ValueListenableBuilder、ListenableBuilder',
   children: <CatalogEntry>[
     CatalogEntry.page(
