@@ -1,4 +1,4 @@
-import 'package:basic_flutter/core/utils/network/cached_network_image_loader.dart';
+import 'package:basic_flutter/core/utils/image/cached_network_image_loader.dart';
 import 'package:flutter/material.dart';
 
 /// cached_network_image
@@ -30,8 +30,8 @@ class _CachedNetworkImageDemoViewState
   static const Color _accentColor = Color(0xFF2563EB);
   static const List<String> _capabilities = <String>[
     '网络缓存',
-    '占位图',
-    '错误态',
+    '占位图', 
+    '错误态'
   ];
   static const String _basicImageUrl =
       'https://picsum.photos/seed/cached-basic/900/520';
@@ -70,7 +70,7 @@ class _CachedNetworkImageDemoViewState
         const SizedBox(height: 16),
         _buildAvatarSection(),
         const SizedBox(height: 16),
-        _buildCacheControlSection(),
+        _buildCacheSection(),
       ],
     );
   }
@@ -114,10 +114,10 @@ class _CachedNetworkImageDemoViewState
     );
   }
 
-  Widget _buildCacheControlSection() {
+  Widget _buildCacheSection() {
     return _ImageDemoSectionCard(
       title: '缓存控制',
-      subtitle: '清理后再次进入页面会重新请求网络资源，方便验证缓存是否生效。',
+      subtitle: '清理当前示例相关缓存后，重新进入页面会再次请求网络资源，方便验证缓存是否生效。',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

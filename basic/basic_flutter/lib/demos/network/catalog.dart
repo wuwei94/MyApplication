@@ -1,6 +1,4 @@
-import 'package:basic_flutter/demos/network/cached_network_image_example.dart';
 import 'package:basic_flutter/demos/network/dio_example.dart';
-import 'package:basic_flutter/demos/network/extended_image_example.dart';
 import 'package:basic_flutter/demos/network/http_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
@@ -8,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 /// Network 模块
 ///
-/// 包含：Dio、Http、图片加载等网络请求示例
+/// 包含：Dio、Http 等网络请求示例
 class NetworkCatalog extends CatalogSection {
   const NetworkCatalog._();
 
@@ -36,20 +34,6 @@ class NetworkCatalog extends CatalogSection {
       title: 'Http',
       subtitle: 'Http网络请求示例',
       pageBuilder: (BuildContext context) => const HttpDemoPage(title: 'Http'),
-    ),
-    CatalogEntry.page(
-      path: 'cached-network-image',
-      title: 'CachedNetworkImage',
-      subtitle: '基于cached_network_image的\nCachedNetworkImageLoader示例',
-      pageBuilder: (BuildContext context) =>
-          const CachedNetworkImageDemoPage(title: 'CachedNetworkImage'),
-    ),
-    CatalogEntry.page(
-      path: 'extended-image',
-      title: 'ExtendedImage',
-      subtitle: '基于extended_image的\nExtendedImageLoader示例',
-      pageBuilder: (BuildContext context) =>
-          const ExtendedImageDemoPage(title: 'ExtendedImage'),
     ),
   ];
 }

@@ -1,5 +1,6 @@
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/basics/catalog.dart';
+import 'package:basic_flutter/demos/image/catalog.dart';
 import 'package:basic_flutter/demos/network/catalog.dart';
 import 'package:basic_flutter/demos/storage/catalog.dart';
 import 'package:basic_flutter/demos/animation/catalog.dart';
@@ -19,6 +20,7 @@ final List<CatalogSection> catalogSections = <CatalogSection>[
   layoutCatalog,
   showcaseCatalog,
   networkCatalog,
+  imageCatalog,
   storageCatalog,
   animationCatalog,
   videoCatalog,

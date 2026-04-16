@@ -1,4 +1,4 @@
-import 'package:basic_flutter/core/utils/network/extended_image_loader.dart';
+import 'package:basic_flutter/core/utils/image/extended_image_loader.dart';
 import 'package:flutter/material.dart';
 
 /// extended_image
@@ -81,7 +81,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildBasicSection() {
     return _ImageDemoSectionCard(
       title: '基础用法',
-      subtitle: '基础加载方式与 cached 版保持一致，仍然适合常规封面图、列表图和详情头图。',
+      subtitle: '基础加载方式适合常规封面图、列表图和详情头图，默认已经包含缓存、占位图和错误态。',
       child: _ImageDemoPreviewFrame(
         child: ExtendedImageLoader.load(
           url: _basicImageUrl,
@@ -95,7 +95,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildRoundedSection() {
     return _ImageDemoSectionCard(
       title: '圆角图片',
-      subtitle: '圆角场景也沿用相同的签名和调用方式，方便在两个 Loader 之间对齐使用体验。',
+      subtitle: '圆角场景也沿用同一套调用方式，更适合 Banner、卡片头图这类常见展示场景。',
       child: _ImageDemoPreviewFrame(
         child: ExtendedImageLoader.radius(
           url: _roundedImageUrl,
@@ -110,7 +110,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildAvatarSection() {
     return _ImageDemoSectionCard(
       title: '圆形头像',
-      subtitle: '圆形头像与 cached 版保持同样的调用方式，只是底层换成了 extended_image。',
+      subtitle: '头像、群组缩略图等固定尺寸小图可以继续复用统一的圆形方法。',
       child: Center(
         child: ExtendedImageLoader.round(url: _avatarImageUrl, size: 120),
       ),
@@ -142,7 +142,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildCacheSection() {
     return _ImageDemoSectionCard(
       title: '缓存控制',
-      subtitle: '清理后再次进入页面会重新请求网络资源，同时也会移除本页相关内存缓存。',
+      subtitle: '清理当前示例相关缓存后，重新进入页面会再次请求网络资源，方便验证缓存是否生效。',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
