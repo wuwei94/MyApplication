@@ -100,6 +100,8 @@ dependencies:
   auto_route: ^11.1.0
   # https://pub.dev/packages/logger
   logger: ^2.6.1
+  # https://pub.dev/packages/event_bus
+  event_bus: ^2.0.1
   # https://pub.dev/packages/fluttertoast
   fluttertoast: ^9.0.0
   # https://pub.dev/packages/flutter_local_notifications

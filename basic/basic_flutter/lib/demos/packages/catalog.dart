@@ -1,4 +1,5 @@
 import 'package:basic_flutter/demos/packages/custom_google_font_example.dart';
+import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/image_picker_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
@@ -11,7 +12,7 @@ import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Packages 模块
-/// 
+///
 /// 包含：Toast、Notification、Permission、ImagePicker、WechatPicker、
 /// WebView、ScreenUtil、Google Fonts 等第三方包示例
 class PackagesCatalog extends CatalogSection {
@@ -34,7 +35,8 @@ class PackagesCatalog extends CatalogSection {
       path: 'toast',
       title: 'Toast',
       subtitle: 'Toast示例',
-      pageBuilder: (BuildContext context) => const ToastDemoPage(title: 'Toast'),
+      pageBuilder: (BuildContext context) =>
+          const ToastDemoPage(title: 'Toast'),
     ),
     CatalogEntry.page(
       path: 'notification',
@@ -42,6 +44,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'Notification示例',
       pageBuilder: (BuildContext context) =>
           const NotificationDemoPage(title: 'Notification'),
+    ),
+    CatalogEntry.page(
+      path: 'event-bus',
+      title: 'EventBus',
+      subtitle: 'EventBus事件总线示例',
+      pageBuilder: (BuildContext context) =>
+          const EventBusDemoPage(title: 'EventBus'),
     ),
     CatalogEntry.page(
       path: 'permission',
