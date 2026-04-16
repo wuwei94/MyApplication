@@ -23,7 +23,6 @@ final CatalogEntry asynchronousCatalog = CatalogEntry.catalog(
       subtitle: '异步流',
       pageBuilder: (BuildContext context) => const StreamDemoPage(title: 'Stream'),
     ),
-
     CatalogEntry.page(
       path: 'completer',
       title: 'Completer',
