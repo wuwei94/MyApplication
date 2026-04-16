@@ -23,13 +23,7 @@ final CatalogEntry asynchronousCatalog = CatalogEntry.catalog(
       subtitle: '异步流',
       pageBuilder: (BuildContext context) => const StreamDemoPage(title: 'Stream'),
     ),
-    CatalogEntry.page(
-      path: 'compute',
-      title: 'Compute',
-      subtitle: '计算隔离',
-      pageBuilder: (BuildContext context) =>
-          const ComputeDemoPage(title: 'Compute'),
-    ),
+
     CatalogEntry.page(
       path: 'completer',
       title: 'Completer',
@@ -43,6 +37,13 @@ final CatalogEntry asynchronousCatalog = CatalogEntry.catalog(
       subtitle: '多线程',
       pageBuilder: (BuildContext context) =>
           const IsolateDemoPage(title: 'Isolate'),
+    ),
+    CatalogEntry.page(
+      path: 'compute',
+      title: 'Compute',
+      subtitle: '计算隔离',
+      pageBuilder: (BuildContext context) =>
+          const ComputeDemoPage(title: 'Compute'),
     ),
   ],
 );
