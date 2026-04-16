@@ -82,6 +82,8 @@ dependencies:
   hive: ^2.2.3
   # https://pub.dev/packages/hive_flutter
   hive_flutter: ^1.1.0
+  # https://pub.dev/packages/path_provider
+  path_provider: ^2.1.5
 
   # 状态管理相关
   # https://pub.dev/packages/get

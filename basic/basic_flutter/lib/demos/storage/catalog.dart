@@ -1,4 +1,5 @@
 import 'package:basic_flutter/demos/storage/hive_example.dart';
+import 'package:basic_flutter/demos/storage/path_provider_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
 import 'package:basic_flutter/demos/storage/shared_preferences_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
@@ -6,8 +7,8 @@ import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Storage 模块
-/// 
-/// 包含：Hive、SecureStorage、SharedPreferences 等本地存储示例
+///
+/// 包含：Hive、SecureStorage、SharedPreferences、PathProvider 等本地存储示例
 class StorageCatalog extends CatalogSection {
   const StorageCatalog._();
 
@@ -43,6 +44,13 @@ class StorageCatalog extends CatalogSection {
       subtitle: 'SharedPreferences示例',
       pageBuilder: (BuildContext context) =>
           const SharedPreferencesDemoPage(title: 'SharedPreferences'),
+    ),
+    CatalogEntry.page(
+      path: 'path-provider',
+      title: 'PathProvider',
+      subtitle: '系统目录与本地文件路径示例',
+      pageBuilder: (BuildContext context) =>
+          const PathProviderDemoPage(title: 'PathProvider'),
     ),
   ];
 }
