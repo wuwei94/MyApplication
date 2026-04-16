@@ -48,6 +48,8 @@ dependencies:
   dio: ^5.9.0
   # https://pub.dev/packages/http
   http: ^1.5.0
+
+  # 图片加载相关
   # https://pub.dev/packages/cached_network_image
   cached_network_image: ^3.4.1
   # https://pub.dev/packages/extended_image
@@ -102,6 +104,8 @@ dependencies:
   logger: ^2.6.1
   # https://pub.dev/packages/event_bus
   event_bus: ^2.0.1
+  # https://pub.dev/packages/uuid
+  uuid: ^4.5.3
   # https://pub.dev/packages/fluttertoast
   fluttertoast: ^9.0.0
   # https://pub.dev/packages/flutter_local_notifications

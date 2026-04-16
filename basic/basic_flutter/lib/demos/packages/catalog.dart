@@ -5,6 +5,7 @@ import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
+import 'package:basic_flutter/demos/packages/uuid_example.dart';
 import 'package:basic_flutter/demos/packages/webview_example.dart';
 import 'package:basic_flutter/demos/packages/wechat_picker_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
@@ -51,6 +52,12 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'EventBus事件总线示例',
       pageBuilder: (BuildContext context) =>
           const EventBusDemoPage(title: 'EventBus'),
+    ),
+    CatalogEntry.page(
+      path: 'uuid',
+      title: 'Uuid',
+      subtitle: 'UUID 生成与校验示例',
+      pageBuilder: (BuildContext context) => const UuidDemoPage(title: 'Uuid'),
     ),
     CatalogEntry.page(
       path: 'permission',
