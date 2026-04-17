@@ -130,6 +130,8 @@ dependencies:
   scroll_to_index: ^3.0.1
   # https://pub.dev/packages/flutter_slidable
   flutter_slidable: ^4.0.3
+  # https://pub.dev/packages/extended_text_field
+  extended_text_field: ^16.0.2
 
   
   # https://pub.dev/packages/english_words

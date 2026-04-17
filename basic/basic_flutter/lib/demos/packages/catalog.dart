@@ -1,5 +1,6 @@
 import 'package:basic_flutter/demos/packages/custom_google_font_example.dart';
 import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
+import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/image_picker_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
@@ -103,6 +104,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '下拉刷新与上拉加载示例',
       pageBuilder: (BuildContext context) =>
           const EasyRefreshDemoPage(title: 'EasyRefresh'),
+    ),
+    CatalogEntry.page(
+      path: 'extended-text-field',
+      title: 'ExtendedTextField',
+      subtitle: '富文本输入与特殊文本 span 示例',
+      pageBuilder: (BuildContext context) =>
+          const ExtendedTextFieldDemoPage(title: 'ExtendedTextField'),
     ),
     CatalogEntry.page(
       path: 'scroll-to-index',
