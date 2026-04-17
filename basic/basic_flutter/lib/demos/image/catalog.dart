@@ -2,11 +2,13 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/image/cached_network_image_example.dart';
 import 'package:basic_flutter/demos/image/extended_image_example.dart';
+import 'package:basic_flutter/demos/image/image_picker_example.dart';
+import 'package:basic_flutter/demos/image/wechat_picker_example.dart';
 import 'package:flutter/widgets.dart';
 
 /// Image 模块
 ///
-/// 包含：图片加载、缓存与预览示例
+/// 包含：图片加载、缓存、预览与图片选择示例
 class ImageCatalog extends CatalogSection {
   const ImageCatalog._();
 
@@ -36,6 +38,20 @@ class ImageCatalog extends CatalogSection {
       subtitle: '基于extended_image的\nExtendedImageLoader示例',
       pageBuilder: (BuildContext context) =>
           const ExtendedImageDemoPage(title: 'ExtendedImage'),
+    ),
+    CatalogEntry.page(
+      path: 'image-picker',
+      title: 'ImagePicker',
+      subtitle: '系统相册与拍照选择示例',
+      pageBuilder: (BuildContext context) =>
+          const ImagePickerDemoPage(title: 'ImagePicker'),
+    ),
+    CatalogEntry.page(
+      path: 'wechat-picker',
+      title: 'WechatPicker',
+      subtitle: '微信风格相册与拍照示例',
+      pageBuilder: (BuildContext context) =>
+          const WechatPickerDemoPage(title: 'WechatPicker'),
     ),
   ];
 }

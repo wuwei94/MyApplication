@@ -4,7 +4,6 @@ import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/flutter_linkify_example.dart';
-import 'package:basic_flutter/demos/packages/image_picker_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
@@ -15,15 +14,14 @@ import 'package:basic_flutter/demos/packages/toast_example.dart';
 import 'package:basic_flutter/demos/packages/url_launcher_example.dart';
 import 'package:basic_flutter/demos/packages/uuid_example.dart';
 import 'package:basic_flutter/demos/packages/webview_example.dart';
-import 'package:basic_flutter/demos/packages/wechat_picker_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Packages 模块
 ///
-/// 包含：Toast、Notification、Permission、ImagePicker、WechatPicker、
-/// WebView、ScreenUtil、Google Fonts 等第三方包示例
+/// 包含：Toast、Notification、Permission、WebView、ScreenUtil、
+/// Google Fonts 等第三方包示例
 class PackagesCatalog extends CatalogSection {
   const PackagesCatalog._();
 
@@ -73,20 +71,6 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'Permission示例',
       pageBuilder: (BuildContext context) =>
           const PermissionDemoPage(title: 'Permission'),
-    ),
-    CatalogEntry.page(
-      path: 'image-picker',
-      title: 'ImagePicker',
-      subtitle: 'ImagePicker示例',
-      pageBuilder: (BuildContext context) =>
-          const ImagePickerDemoPage(title: 'ImagePicker'),
-    ),
-    CatalogEntry.page(
-      path: 'wechat-picker',
-      title: 'WechatPicker',
-      subtitle: 'WechatPicker示例',
-      pageBuilder: (BuildContext context) =>
-          const WechatPickerDemoPage(title: 'WechatPicker'),
     ),
     CatalogEntry.page(
       path: 'web-view',
