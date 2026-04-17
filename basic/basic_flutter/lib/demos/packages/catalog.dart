@@ -1,3 +1,4 @@
+import 'package:basic_flutter/demos/packages/auto_size_text_example.dart';
 import 'package:basic_flutter/demos/packages/custom_google_font_example.dart';
 import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
@@ -97,6 +98,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilDemoPage(title: 'ScreenUtil'),
+    ),
+    CatalogEntry.page(
+      path: 'auto-size-text',
+      title: 'AutoSizeText',
+      subtitle: '自适应文本缩放示例',
+      pageBuilder: (BuildContext context) =>
+          const AutoSizeTextDemoPage(title: 'AutoSizeText'),
     ),
     CatalogEntry.page(
       path: 'easy-refresh',
