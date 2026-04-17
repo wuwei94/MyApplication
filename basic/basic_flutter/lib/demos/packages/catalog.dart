@@ -10,6 +10,7 @@ import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/scroll_to_index_example.dart';
 import 'package:basic_flutter/demos/packages/slidable_example.dart';
+import 'package:basic_flutter/demos/packages/time_machine_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
 import 'package:basic_flutter/demos/packages/url_launcher_example.dart';
 import 'package:basic_flutter/demos/packages/uuid_example.dart';
@@ -149,6 +150,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '滑动操作列表项示例',
       pageBuilder: (BuildContext context) =>
           const SlidableDemoPage(title: 'Slidable'),
+    ),
+    CatalogEntry.page(
+      path: 'time-machine',
+      title: 'TimeMachine',
+      subtitle: '日期时间、时区与文化格式化示例',
+      pageBuilder: (BuildContext context) =>
+          const TimeMachineDemoPage(title: 'TimeMachine'),
     ),
     CatalogEntry.page(
       path: 'custom-google-font',
