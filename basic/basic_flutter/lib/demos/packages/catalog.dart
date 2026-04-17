@@ -10,6 +10,7 @@ import 'package:basic_flutter/demos/packages/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/scroll_to_index_example.dart';
 import 'package:basic_flutter/demos/packages/slidable_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
+import 'package:basic_flutter/demos/packages/url_launcher_example.dart';
 import 'package:basic_flutter/demos/packages/uuid_example.dart';
 import 'package:basic_flutter/demos/packages/webview_example.dart';
 import 'package:basic_flutter/demos/packages/wechat_picker_example.dart';
@@ -91,6 +92,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'WebView示例',
       pageBuilder: (BuildContext context) =>
           const WebViewDemoPage(title: 'WebView'),
+    ),
+    CatalogEntry.page(
+      path: 'url-launcher',
+      title: 'UrlLauncher',
+      subtitle: '链接跳转与系统能力唤起示例',
+      pageBuilder: (BuildContext context) =>
+          const UrlLauncherDemoPage(title: 'UrlLauncher'),
     ),
     CatalogEntry.page(
       path: 'screen-util',
