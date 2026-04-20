@@ -3,6 +3,7 @@ import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/image/cached_network_image_example.dart';
 import 'package:basic_flutter/demos/image/extended_image_example.dart';
 import 'package:basic_flutter/demos/image/image_picker_example.dart';
+import 'package:basic_flutter/demos/image/photo_view_example.dart';
 import 'package:basic_flutter/demos/image/wechat_picker_example.dart';
 import 'package:flutter/widgets.dart';
 
@@ -45,6 +46,13 @@ class ImageCatalog extends CatalogSection {
       subtitle: '系统相册与拍照选择示例',
       pageBuilder: (BuildContext context) =>
           const ImagePickerDemoPage(title: 'ImagePicker'),
+    ),
+    CatalogEntry.page(
+      path: 'photo-view',
+      title: 'PhotoView',
+      subtitle: '基于photo_view的\n缩放预览与图库浏览示例',
+      pageBuilder: (BuildContext context) =>
+          const PhotoViewDemoPage(title: 'PhotoView'),
     ),
     CatalogEntry.page(
       path: 'wechat-picker',
