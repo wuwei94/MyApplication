@@ -1,5 +1,6 @@
 import 'package:basic_flutter/demos/packages/auto_size_text_example.dart';
 import 'package:basic_flutter/demos/packages/custom_google_font_example.dart';
+import 'package:basic_flutter/demos/packages/constraint_layout_example.dart';
 import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
@@ -100,6 +101,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilDemoPage(title: 'ScreenUtil'),
+    ),
+    CatalogEntry.page(
+      path: 'constraint-layout',
+      title: 'ConstraintLayout',
+      subtitle: 'flutter_constraintlayout 约束布局示例',
+      pageBuilder: (BuildContext context) =>
+          const ConstraintLayoutDemoPage(title: 'ConstraintLayout'),
     ),
     CatalogEntry.page(
       path: 'auto-size-text',
