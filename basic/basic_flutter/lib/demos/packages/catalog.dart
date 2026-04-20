@@ -4,6 +4,7 @@ import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/flutter_linkify_example.dart';
+import 'package:basic_flutter/demos/packages/keyboard_visibility_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
@@ -120,6 +121,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '富文本输入与特殊文本 span 示例',
       pageBuilder: (BuildContext context) =>
           const ExtendedTextFieldDemoPage(title: 'ExtendedTextField'),
+    ),
+    CatalogEntry.page(
+      path: 'keyboard-visibility',
+      title: 'KeyboardVisibility',
+      subtitle: '键盘显隐监听与点击空白收起示例',
+      pageBuilder: (BuildContext context) =>
+          const KeyboardVisibilityDemoPage(title: 'KeyboardVisibility'),
     ),
     CatalogEntry.page(
       path: 'scroll-to-index',

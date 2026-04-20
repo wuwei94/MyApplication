@@ -136,6 +136,8 @@ dependencies:
   flutter_slidable: ^4.0.3
   # https://pub.dev/packages/extended_text_field
   extended_text_field: ^16.0.2
+  # https://pub.dev/packages/flutter_keyboard_visibility
+  flutter_keyboard_visibility: ^6.0.0
   # https://pub.dev/packages/auto_size_text
   auto_size_text: ^3.0.0
   # https://pub.dev/packages/time_machine
