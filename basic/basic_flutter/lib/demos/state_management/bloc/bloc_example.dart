@@ -1,10 +1,10 @@
-import 'package:basic_flutter/demos/state_management/bloc/cubits/counter_bloc_cubit.dart';
+import 'package:basic_flutter/demos/state_management/bloc/blocs/counter_bloc.dart';
 import 'package:basic_flutter/demos/state_management/bloc/observers/counter_bloc_observer.dart';
 import 'package:basic_flutter/demos/state_management/bloc/pages/counter_bloc_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// BloC
+/// Bloc
 /// https://pub.dev/packages/flutter_bloc
 class BlocCounterDemoPage extends StatefulWidget {
   const BlocCounterDemoPage({super.key, required this.title});
@@ -34,7 +34,7 @@ class _BlocCounterDemoPageState extends State<BlocCounterDemoPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CounterBlocCubit(),
+      create: (_) => CounterBloc(),
       child: CounterBlocPage(title: widget.title),
     );
   }

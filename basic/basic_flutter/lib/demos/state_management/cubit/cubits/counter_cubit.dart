@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// {@template counter_cubit}
 /// A simple [Cubit] that manages an `int` as its state.
 /// {@endtemplate}
-class CounterBlocCubit extends Cubit<int> {
-  CounterBlocCubit() : super(0);
+class CounterCubit extends Cubit<int> {
+  CounterCubit() : super(0);
 
   void increment() => emit(state + 1);
 

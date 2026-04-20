@@ -1,4 +1,5 @@
 import 'package:basic_flutter/demos/state_management/bloc/bloc_example.dart';
+import 'package:basic_flutter/demos/state_management/cubit/cubit_example.dart';
 import 'package:basic_flutter/demos/state_management/provider/provider_example.dart';
 import 'package:basic_flutter/demos/state_management/riverpod/riverpod_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 /// State Management 模块
 ///
-/// 包含：BloC、Provider、Riverpod 等状态管理示例
+/// 包含：Cubit、Bloc、Provider、Riverpod 等状态管理示例
 class StateManagementCatalog extends CatalogSection {
   const StateManagementCatalog._();
 
@@ -25,11 +26,18 @@ class StateManagementCatalog extends CatalogSection {
 
   static final List<CatalogEntry> _items = [
     CatalogEntry.page(
-      path: 'bloc',
-      title: 'BloC',
-      subtitle: 'BloC示例',
+      path: 'cubit',
+      title: 'Cubit',
+      subtitle: 'Cubit示例',
       pageBuilder: (BuildContext context) =>
-          const BlocCounterDemoPage(title: 'BloC'),
+          const CubitCounterDemoPage(title: 'Cubit'),
+    ),
+    CatalogEntry.page(
+      path: 'bloc',
+      title: 'Bloc',
+      subtitle: 'Bloc示例',
+      pageBuilder: (BuildContext context) =>
+          const BlocCounterDemoPage(title: 'Bloc'),
     ),
     CatalogEntry.page(
       path: 'provider',

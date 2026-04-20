@@ -1,14 +1,15 @@
-import 'package:basic_flutter/demos/state_management/bloc/blocs/counter_bloc.dart';
+import 'package:basic_flutter/demos/state_management/cubit/cubits/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CounterBlocPage extends StatelessWidget {
-  const CounterBlocPage({super.key, required this.title});
+class CounterCubitPage extends StatelessWidget {
+  const CounterCubitPage({super.key, required this.title});
 
   final String title;
 
   void _incrementCounter(BuildContext context) {
-    context.read<CounterBloc>().add(const CounterIncrementPressed());
+    final CounterCubit cubit = context.read<CounterCubit>();
+    cubit.increment();
   }
 
   @override
@@ -26,7 +27,7 @@ class CounterBlocPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('You have pushed the button this many times:'),
-          BlocBuilder<CounterBloc, int>(
+          BlocBuilder<CounterCubit, int>(
             builder: (BuildContext context, int count) {
               return Text('$count');
             },
