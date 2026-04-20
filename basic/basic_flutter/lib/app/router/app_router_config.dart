@@ -9,20 +9,20 @@ import 'package:go_router/go_router.dart' as go_router;
 export 'package:basic_flutter/app/router/app_router_type.dart';
 
 final go_router.GoRoute _homeGoRoute = go_router.GoRoute(
-  path: '/home',
+  path: '/',
   name: 'Home',
   builder: (context, state) => const AppHome(),
 );
 
 final auto_route.AutoRoute _homeAutoRoute = auto_route.NamedRouteDef(
-  path: '/home',
+  path: '/',
   name: 'Home',
   builder: (context, data) => const AppHome(),
 );
 
-/// GoRouter instance
+/// GoRouter instance (using CatalogRouteFactory)
 final go_router.GoRouter goAppRouter = go_router.GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/',
   routes: <go_router.GoRoute>[
     _homeGoRoute,
     ...CatalogRouteFactory.toGoRoutes(catalogRegistry),
