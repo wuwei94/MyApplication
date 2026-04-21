@@ -13,6 +13,7 @@ import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/scroll_to_index_example.dart';
 import 'package:basic_flutter/demos/packages/slidable_example.dart';
+import 'package:basic_flutter/demos/packages/slider_captcha_example.dart';
 import 'package:basic_flutter/demos/packages/timeago_example.dart';
 import 'package:basic_flutter/demos/packages/time_machine_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
@@ -166,6 +167,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '滑动操作列表项示例',
       pageBuilder: (BuildContext context) =>
           const SlidableDemoPage(title: 'Slidable'),
+    ),
+    CatalogEntry.page(
+      path: 'slider-captcha',
+      title: 'SliderCaptcha',
+      subtitle: '拼图滑块验证示例',
+      pageBuilder: (BuildContext context) =>
+          const SliderCaptchaDemoPage(title: 'SliderCaptcha'),
     ),
     CatalogEntry.page(
       path: 'time-machine',
