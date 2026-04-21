@@ -5,6 +5,7 @@ import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/flutter_linkify_example.dart';
+import 'package:basic_flutter/demos/packages/intl_example.dart';
 import 'package:basic_flutter/demos/packages/keyboard_visibility_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
@@ -94,6 +95,12 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '正文链接自动识别示例',
       pageBuilder: (BuildContext context) =>
           const FlutterLinkifyDemoPage(title: 'FlutterLinkify'),
+    ),
+    CatalogEntry.page(
+      path: 'intl',
+      title: 'Intl',
+      subtitle: '中英文日期时间格式化示例',
+      pageBuilder: (BuildContext context) => const IntlDemoPage(title: 'Intl'),
     ),
     CatalogEntry.page(
       path: 'screen-util',
