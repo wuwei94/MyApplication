@@ -7,6 +7,7 @@ import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
 import 'package:basic_flutter/demos/packages/event_bus_example.dart';
 import 'package:basic_flutter/demos/packages/flutter_linkify_example.dart';
 import 'package:basic_flutter/demos/packages/intl_example.dart';
+import 'package:basic_flutter/demos/packages/infinite_scroll_pagination_example.dart';
 import 'package:basic_flutter/demos/packages/keyboard_visibility_example.dart';
 import 'package:basic_flutter/demos/packages/notification_example.dart';
 import 'package:basic_flutter/demos/packages/permission_example.dart';
@@ -118,6 +119,15 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'ScreenUtil示例',
       pageBuilder: (BuildContext context) =>
           const ScreenUtilDemoPage(title: 'ScreenUtil'),
+    ),
+    CatalogEntry.page(
+      path: 'infinite-scroll-pagination',
+      title: 'InfiniteScrollPagination',
+      subtitle: '无限滚动分页列表示例',
+      pageBuilder: (BuildContext context) =>
+          const InfiniteScrollPaginationDemoPage(
+            title: 'InfiniteScrollPagination',
+          ),
     ),
     CatalogEntry.page(
       path: 'constraint-layout',
