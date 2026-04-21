@@ -12,6 +12,7 @@ import 'package:basic_flutter/demos/packages/permission_example.dart';
 import 'package:basic_flutter/demos/packages/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/scroll_to_index_example.dart';
 import 'package:basic_flutter/demos/packages/slidable_example.dart';
+import 'package:basic_flutter/demos/packages/timeago_example.dart';
 import 'package:basic_flutter/demos/packages/time_machine_example.dart';
 import 'package:basic_flutter/demos/packages/toast_example.dart';
 import 'package:basic_flutter/demos/packages/url_launcher_example.dart';
@@ -164,6 +165,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: '日期时间、时区与文化格式化示例',
       pageBuilder: (BuildContext context) =>
           const TimeMachineDemoPage(title: 'TimeMachine'),
+    ),
+    CatalogEntry.page(
+      path: 'timeago',
+      title: 'Timeago',
+      subtitle: '相对时间文案格式化示例',
+      pageBuilder: (BuildContext context) =>
+          const TimeagoDemoPage(title: 'Timeago'),
     ),
     CatalogEntry.page(
       path: 'custom-google-font',
