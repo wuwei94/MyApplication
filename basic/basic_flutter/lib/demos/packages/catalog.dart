@@ -1,5 +1,6 @@
 import 'package:basic_flutter/demos/packages/auto_size_text_example.dart';
 import 'package:basic_flutter/demos/packages/custom_google_font_example.dart';
+import 'package:basic_flutter/demos/packages/connectivity_plus_example.dart';
 import 'package:basic_flutter/demos/packages/constraint_layout_example.dart';
 import 'package:basic_flutter/demos/packages/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/extended_text_field_example.dart';
@@ -75,6 +76,13 @@ class PackagesCatalog extends CatalogSection {
       subtitle: 'Permission示例',
       pageBuilder: (BuildContext context) =>
           const PermissionDemoPage(title: 'Permission'),
+    ),
+    CatalogEntry.page(
+      path: 'connectivity-plus',
+      title: 'ConnectivityPlus',
+      subtitle: '网络连接状态监听示例',
+      pageBuilder: (BuildContext context) =>
+          const ConnectivityPlusDemoPage(title: 'ConnectivityPlus'),
     ),
     CatalogEntry.page(
       path: 'web-view',
