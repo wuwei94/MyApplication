@@ -2,6 +2,7 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/image/cached_network_image_example.dart';
 import 'package:basic_flutter/demos/image/extended_image_example.dart';
+import 'package:basic_flutter/demos/image/flutter_image_compress_example.dart';
 import 'package:basic_flutter/demos/image/image_picker_example.dart';
 import 'package:basic_flutter/demos/image/photo_view_example.dart';
 import 'package:basic_flutter/demos/image/wechat_picker_example.dart';
@@ -39,6 +40,13 @@ class ImageCatalog extends CatalogSection {
       subtitle: '基于extended_image的\nExtendedImageLoader示例',
       pageBuilder: (BuildContext context) =>
           const ExtendedImageDemoPage(title: 'ExtendedImage'),
+    ),
+    CatalogEntry.page(
+      path: 'flutter-image-compress',
+      title: 'FlutterImageCompress',
+      subtitle: '图片压缩、质量调节与\n临时文件输出示例',
+      pageBuilder: (BuildContext context) =>
+          const FlutterImageCompressDemoPage(title: 'FlutterImageCompress'),
     ),
     CatalogEntry.page(
       path: 'image-picker',
