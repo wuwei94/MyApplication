@@ -1,4 +1,5 @@
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/demos/packages/platform/android_id_example.dart';
 import 'package:basic_flutter/demos/packages/platform/connectivity_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/device_info_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/notification_example.dart';
@@ -25,6 +26,13 @@ final CatalogEntry packagesPlatformCatalog = CatalogEntry.catalog(
       subtitle: '网络连接状态监听',
       pageBuilder: (BuildContext context) =>
           const ConnectivityPlusDemoPage(title: 'ConnectivityPlus'),
+    ),
+    CatalogEntry.page(
+      path: 'android-id',
+      title: 'AndroidId',
+      subtitle: '读取 Android ID',
+      pageBuilder: (BuildContext context) =>
+          const AndroidIdDemoPage(title: 'AndroidId'),
     ),
     CatalogEntry.page(
       path: 'device-info-plus',
