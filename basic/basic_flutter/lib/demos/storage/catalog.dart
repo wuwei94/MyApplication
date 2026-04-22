@@ -1,3 +1,4 @@
+import 'package:basic_flutter/demos/storage/drift_example.dart';
 import 'package:basic_flutter/demos/storage/hive_example.dart';
 import 'package:basic_flutter/demos/storage/objectbox_example.dart';
 import 'package:basic_flutter/demos/storage/path_provider_example.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/widgets.dart';
 
 /// Storage 模块
 ///
-/// 包含：Hive、ObjectBox、SecureStorage、SharedPreferences、PathProvider 等本地存储示例
+/// 包含：Hive、Drift、ObjectBox、SecureStorage、SharedPreferences、PathProvider 等本地存储示例
 class StorageCatalog extends CatalogSection {
   const StorageCatalog._();
 
@@ -52,6 +53,13 @@ class StorageCatalog extends CatalogSection {
       subtitle: 'ObjectBox 对象数据库示例',
       pageBuilder: (BuildContext context) =>
           const ObjectBoxDemoPage(title: 'ObjectBox'),
+    ),
+    CatalogEntry.page(
+      path: 'drift',
+      title: 'Drift',
+      subtitle: 'Drift 关系型数据库示例',
+      pageBuilder: (BuildContext context) =>
+          const DriftDemoPage(title: 'Drift'),
     ),
     CatalogEntry.page(
       path: 'path-provider',
