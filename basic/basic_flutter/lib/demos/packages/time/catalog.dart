@@ -1,6 +1,5 @@
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/demos/packages/time/intl_example.dart';
-import 'package:basic_flutter/demos/packages/time/time_machine_example.dart';
 import 'package:basic_flutter/demos/packages/time/timeago_example.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,13 +13,6 @@ final CatalogEntry packagesTimeCatalog = CatalogEntry.catalog(
       title: 'Intl',
       subtitle: '日期时间与多语言格式化',
       pageBuilder: (BuildContext context) => const IntlDemoPage(title: 'Intl'),
-    ),
-    CatalogEntry.page(
-      path: 'time-machine',
-      title: 'TimeMachine',
-      subtitle: '时区、历法与文化格式化',
-      pageBuilder: (BuildContext context) =>
-          const TimeMachineDemoPage(title: 'TimeMachine'),
     ),
     CatalogEntry.page(
       path: 'timeago',

@@ -164,8 +164,6 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   # https://pub.dev/packages/auto_size_text
   auto_size_text: ^3.0.0
-  # https://pub.dev/packages/time_machine
-  time_machine: ^0.9.17
   # https://pub.dev/packages/timeago
   timeago: ^3.7.1
   # https://pub.dev/packages/flutter_constraintlayout
@@ -226,8 +224,6 @@ flutter:
     - assets/anim/lottie/
     - assets/anim/pag/
     - assets/anim/svga/
-    - packages/time_machine/data/cultures/cultures.bin
-    - packages/time_machine/data/tzdb/tzdb.bin
 
   fonts:
     - family: Juice
