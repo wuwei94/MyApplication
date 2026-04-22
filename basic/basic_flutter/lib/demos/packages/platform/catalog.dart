@@ -1,5 +1,6 @@
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/demos/packages/platform/connectivity_plus_example.dart';
+import 'package:basic_flutter/demos/packages/platform/device_info_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/notification_example.dart';
 import 'package:basic_flutter/demos/packages/platform/permission_example.dart';
 import 'package:basic_flutter/demos/packages/platform/url_launcher_example.dart';
@@ -24,6 +25,13 @@ final CatalogEntry packagesPlatformCatalog = CatalogEntry.catalog(
       subtitle: '网络连接状态监听',
       pageBuilder: (BuildContext context) =>
           const ConnectivityPlusDemoPage(title: 'ConnectivityPlus'),
+    ),
+    CatalogEntry.page(
+      path: 'device-info-plus',
+      title: 'DeviceInfoPlus',
+      subtitle: '读取设备与系统信息',
+      pageBuilder: (BuildContext context) =>
+          const DeviceInfoPlusDemoPage(title: 'DeviceInfoPlus'),
     ),
     CatalogEntry.page(
       path: 'notification',
