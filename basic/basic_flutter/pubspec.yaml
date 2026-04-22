@@ -164,7 +164,12 @@ dependencies:
   google_fonts: ^8.0.2
   # https://pub.dev/packages/intl
   intl: ^0.20.2
+  # https://pub.dev/packages/infinite_scroll_pagination
   infinite_scroll_pagination: ^5.1.1
+  # https://pub.dev/packages/objectbox
+  objectbox: ^5.3.1
+  # https://pub.dev/packages/objectbox_flutter_libs
+  objectbox_flutter_libs: ^5.3.1
 
 dev_dependencies:
   flutter_test:
@@ -175,6 +180,13 @@ dev_dependencies:
   freezed: ^3.2.3
   # https://pub.dev/packages/json_serializable
   json_serializable: ^6.7.1
+  # https://pub.dev/packages/build_runner
+  build_runner: ^2.13.1
+  # https://pub.dev/packages/objectbox_generator
+  objectbox_generator: ^5.3.1
+
+objectbox:
+  output_dir: objectbox
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
