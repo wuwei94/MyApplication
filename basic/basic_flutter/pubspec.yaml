@@ -170,6 +170,10 @@ dependencies:
   objectbox: ^5.3.1
   # https://pub.dev/packages/objectbox_flutter_libs
   objectbox_flutter_libs: ^5.3.1
+  # https://pub.dev/packages/isar_community
+  isar_community: ^3.3.2
+  # https://pub.dev/packages/isar_community_flutter_libs
+  isar_community_flutter_libs: ^3.3.2
   drift: ^2.32.1
 
 dev_dependencies:
@@ -186,6 +190,8 @@ dev_dependencies:
   # https://pub.dev/packages/objectbox_generator
   objectbox_generator: ^5.3.1
   drift_dev: ^2.32.1
+  # https://pub.dev/packages/isar_community_generator
+  isar_community_generator: ^3.3.2
 
 objectbox:
   output_dir: objectbox

@@ -1,5 +1,6 @@
 import 'package:basic_flutter/demos/storage/drift_example.dart';
 import 'package:basic_flutter/demos/storage/hive_example.dart';
+import 'package:basic_flutter/demos/storage/isar_example.dart';
 import 'package:basic_flutter/demos/storage/objectbox_example.dart';
 import 'package:basic_flutter/demos/storage/path_provider_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/widgets.dart';
 
 /// Storage 模块
 ///
-/// 包含：Hive、Drift、ObjectBox、SecureStorage、SharedPreferences、PathProvider 等本地存储示例
+/// 包含：Hive、Drift、Isar、ObjectBox、SecureStorage、SharedPreferences、PathProvider 等本地存储示例
 class StorageCatalog extends CatalogSection {
   const StorageCatalog._();
 
@@ -60,6 +61,12 @@ class StorageCatalog extends CatalogSection {
       subtitle: 'Drift 关系型数据库示例',
       pageBuilder: (BuildContext context) =>
           const DriftDemoPage(title: 'Drift'),
+    ),
+    CatalogEntry.page(
+      path: 'isar',
+      title: 'Isar',
+      subtitle: 'Isar 对象数据库示例',
+      pageBuilder: (BuildContext context) => const IsarDemoPage(title: 'Isar'),
     ),
     CatalogEntry.page(
       path: 'path-provider',
