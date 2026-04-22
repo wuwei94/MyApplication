@@ -42,6 +42,13 @@ class ImageCatalog extends CatalogSection {
           const ExtendedImageDemoPage(title: 'ExtendedImage'),
     ),
     CatalogEntry.page(
+      path: 'photo-view',
+      title: 'PhotoView',
+      subtitle: '基于photo_view的\n缩放预览与图库浏览示例',
+      pageBuilder: (BuildContext context) =>
+          const PhotoViewDemoPage(title: 'PhotoView'),
+    ),
+    CatalogEntry.page(
       path: 'flutter-image-compress',
       title: 'FlutterImageCompress',
       subtitle: '图片压缩、质量调节与\n临时文件输出示例',
@@ -54,13 +61,6 @@ class ImageCatalog extends CatalogSection {
       subtitle: '系统相册与拍照选择示例',
       pageBuilder: (BuildContext context) =>
           const ImagePickerDemoPage(title: 'ImagePicker'),
-    ),
-    CatalogEntry.page(
-      path: 'photo-view',
-      title: 'PhotoView',
-      subtitle: '基于photo_view的\n缩放预览与图库浏览示例',
-      pageBuilder: (BuildContext context) =>
-          const PhotoViewDemoPage(title: 'PhotoView'),
     ),
     CatalogEntry.page(
       path: 'wechat-picker',
