@@ -16,7 +16,7 @@ class ShowcaseCatalog extends CatalogSection {
   String get title => 'Showcase Example';
 
   @override
-  String get subtitle => '演示组件';
+  String get subtitle => '视觉展示与本地资源效果';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -25,7 +25,7 @@ class ShowcaseCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'custom-local-font',
       title: 'Custom Local Font',
-      subtitle: '本地自定义字体示例',
+      subtitle: '本地字体接入、字重展示与系统字体对比',
       pageBuilder: (BuildContext context) =>
           const CustomLocalFontDemoPage(title: 'Custom Local Font'),
     ),

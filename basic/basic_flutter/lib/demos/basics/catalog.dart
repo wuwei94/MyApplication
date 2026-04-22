@@ -17,7 +17,7 @@ class BasicsCatalog extends CatalogSection {
   String get title => 'Basics Example';
 
   @override
-  String get subtitle => '基础示例';
+  String get subtitle => '计数器入门与 GetX 小应用';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -26,14 +26,14 @@ class BasicsCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'counter',
       title: 'Counter Example',
-      subtitle: '计数器示例',
+      subtitle: 'Flutter 默认计数器与 setState 刷新',
       pageBuilder: (BuildContext context) =>
           const CounterDemoPage(title: 'Counter Example'),
     ),
     CatalogEntry.page(
       path: 'getx-app',
       title: 'GetX Example',
-      subtitle: 'GetX示例',
+      subtitle: '路由、状态、国际化与依赖注入小应用',
       pageBuilder: (BuildContext context) =>
           const GetXDemoApp(title: 'GetX Example'),
     ),

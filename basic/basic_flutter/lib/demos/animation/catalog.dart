@@ -19,7 +19,7 @@ class AnimationCatalog extends CatalogSection {
   String get title => 'Animation Example';
 
   @override
-  String get subtitle => '动画组件';
+  String get subtitle => '矢量、序列与特效动画预览';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -28,25 +28,26 @@ class AnimationCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'svg',
       title: 'SVG',
-      subtitle: 'SVG动画示例',
+      subtitle: '本地 SVG 资源渲染与预览',
       pageBuilder: (BuildContext context) => const SvgDemoPage(title: 'SVG'),
-    ),
-    CatalogEntry.page(
-      path: 'svga',
-      title: 'SVGA',
-      subtitle: 'SVGA动画示例',
-      pageBuilder: (BuildContext context) => const SvgaDemoPage(title: 'SVGA'),
     ),
     CatalogEntry.page(
       path: 'lottie',
       title: 'Lottie',
-      subtitle: 'Lottie动画示例',
-      pageBuilder: (BuildContext context) => const LottieDemoPage(title: 'Lottie'),
+      subtitle: 'Lottie JSON 动画资源预览',
+      pageBuilder: (BuildContext context) =>
+          const LottieDemoPage(title: 'Lottie'),
+    ),
+    CatalogEntry.page(
+      path: 'svga',
+      title: 'SVGA',
+      subtitle: 'SVGA 动画资源加载与循环播放',
+      pageBuilder: (BuildContext context) => const SvgaDemoPage(title: 'SVGA'),
     ),
     CatalogEntry.page(
       path: 'pag',
       title: 'PAG',
-      subtitle: 'PAG动画示例',
+      subtitle: 'PAG 特效动画播放与适配展示',
       pageBuilder: (BuildContext context) => const PagDemoPage(title: 'PAG'),
     ),
   ];

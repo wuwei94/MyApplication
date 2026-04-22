@@ -7,26 +7,26 @@ import 'package:flutter/widgets.dart';
 final CatalogEntry packagesUtilsCatalog = CatalogEntry.catalog(
   path: 'utils',
   title: 'Utils',
-  subtitle: '提示、事件通信与通用标识',
+  subtitle: '提示、事件广播与标识生成',
   children: <CatalogEntry>[
     CatalogEntry.page(
       path: 'toast',
       title: 'Toast',
-      subtitle: '轻提示展示',
+      subtitle: '轻提示展示与统一 toast 封装',
       pageBuilder: (BuildContext context) =>
           const ToastDemoPage(title: 'Toast'),
     ),
     CatalogEntry.page(
       path: 'event-bus',
       title: 'EventBus',
-      subtitle: '应用内事件总线通信',
+      subtitle: '事件广播、监听结果与消息流转',
       pageBuilder: (BuildContext context) =>
           const EventBusDemoPage(title: 'EventBus'),
     ),
     CatalogEntry.page(
       path: 'uuid',
       title: 'Uuid',
-      subtitle: 'UUID 生成与校验',
+      subtitle: '多版本 UUID 生成、校验与复制',
       pageBuilder: (BuildContext context) => const UuidDemoPage(title: 'Uuid'),
     ),
   ],

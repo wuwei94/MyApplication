@@ -22,56 +22,56 @@ class StorageCatalog extends CatalogSection {
   String get title => 'Storage Example';
 
   @override
-  String get subtitle => '本地存储';
+  String get subtitle => '键值存储、数据库与文件目录';
 
   @override
   List<CatalogEntry> get items => _items;
 
   static final List<CatalogEntry> _items = [
     CatalogEntry.page(
-      path: 'hive',
-      title: 'Hive',
-      subtitle: 'Hive示例',
-      pageBuilder: (BuildContext context) => const HiveDemoPage(title: 'Hive'),
-    ),
-    CatalogEntry.page(
-      path: 'secure-storage',
-      title: 'SecureStorage',
-      subtitle: 'SecureStorage示例',
-      pageBuilder: (BuildContext context) =>
-          const SecureStorageDemoPage(title: 'SecureStorage'),
-    ),
-    CatalogEntry.page(
       path: 'shared-preferences',
       title: 'SharedPreferences',
-      subtitle: 'SharedPreferences示例',
+      subtitle: '轻量键值存储与计数器持久化',
       pageBuilder: (BuildContext context) =>
           const SharedPreferencesDemoPage(title: 'SharedPreferences'),
     ),
     CatalogEntry.page(
-      path: 'objectbox',
-      title: 'ObjectBox',
-      subtitle: 'ObjectBox 对象数据库示例',
+      path: 'secure-storage',
+      title: 'SecureStorage',
+      subtitle: '安全键值存储与敏感数据持久化',
       pageBuilder: (BuildContext context) =>
-          const ObjectBoxDemoPage(title: 'ObjectBox'),
+          const SecureStorageDemoPage(title: 'SecureStorage'),
+    ),
+    CatalogEntry.page(
+      path: 'hive',
+      title: 'Hive',
+      subtitle: '本地键值存储与计数器持久化',
+      pageBuilder: (BuildContext context) => const HiveDemoPage(title: 'Hive'),
     ),
     CatalogEntry.page(
       path: 'drift',
       title: 'Drift',
-      subtitle: 'Drift 关系型数据库示例',
+      subtitle: 'SQL 任务列表示例与查询监听',
       pageBuilder: (BuildContext context) =>
           const DriftDemoPage(title: 'Drift'),
     ),
     CatalogEntry.page(
       path: 'isar',
       title: 'Isar',
-      subtitle: 'Isar 对象数据库示例',
+      subtitle: '对象数据库任务列表示例与变更监听',
       pageBuilder: (BuildContext context) => const IsarDemoPage(title: 'Isar'),
+    ),
+    CatalogEntry.page(
+      path: 'objectbox',
+      title: 'ObjectBox',
+      subtitle: '对象数据库任务列表示例与自动刷新',
+      pageBuilder: (BuildContext context) =>
+          const ObjectBoxDemoPage(title: 'ObjectBox'),
     ),
     CatalogEntry.page(
       path: 'path-provider',
       title: 'PathProvider',
-      subtitle: '系统目录与本地文件路径示例',
+      subtitle: '系统目录探测与示例文件读写',
       pageBuilder: (BuildContext context) =>
           const PathProviderDemoPage(title: 'PathProvider'),
     ),

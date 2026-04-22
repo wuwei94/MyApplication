@@ -21,7 +21,7 @@ class ImageCatalog extends CatalogSection {
   String get title => 'Image Example';
 
   @override
-  String get subtitle => '图片加载';
+  String get subtitle => '加载、预览、压缩与媒体选择';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -30,42 +30,42 @@ class ImageCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'cached-network-image',
       title: 'CachedNetworkImage',
-      subtitle: '基于cached_network_image的\nCachedNetworkImageLoader示例',
+      subtitle: '网络缓存、占位图与错误态封装',
       pageBuilder: (BuildContext context) =>
           const CachedNetworkImageDemoPage(title: 'CachedNetworkImage'),
     ),
     CatalogEntry.page(
       path: 'extended-image',
       title: 'ExtendedImage',
-      subtitle: '基于extended_image的\nExtendedImageLoader示例',
+      subtitle: '网络加载结合手势缩放与缓存控制',
       pageBuilder: (BuildContext context) =>
           const ExtendedImageDemoPage(title: 'ExtendedImage'),
     ),
     CatalogEntry.page(
       path: 'photo-view',
       title: 'PhotoView',
-      subtitle: '基于photo_view的\n缩放预览与图库浏览示例',
+      subtitle: '大图缩放、拖拽平移与图库浏览',
       pageBuilder: (BuildContext context) =>
           const PhotoViewDemoPage(title: 'PhotoView'),
     ),
     CatalogEntry.page(
       path: 'flutter-image-compress',
       title: 'FlutterImageCompress',
-      subtitle: '图片压缩、质量调节与\n临时文件输出示例',
+      subtitle: '质量压缩、尺寸控制与临时文件输出',
       pageBuilder: (BuildContext context) =>
           const FlutterImageCompressDemoPage(title: 'FlutterImageCompress'),
     ),
     CatalogEntry.page(
       path: 'image-picker',
       title: 'ImagePicker',
-      subtitle: '系统相册与拍照选择示例',
+      subtitle: '系统相册单选、多选与拍照流程',
       pageBuilder: (BuildContext context) =>
           const ImagePickerDemoPage(title: 'ImagePicker'),
     ),
     CatalogEntry.page(
       path: 'wechat-picker',
       title: 'WechatPicker',
-      subtitle: '微信风格相册与拍照示例',
+      subtitle: '微信风格相册选择、拍照与结果预览',
       pageBuilder: (BuildContext context) =>
           const WechatPickerDemoPage(title: 'WechatPicker'),
     ),

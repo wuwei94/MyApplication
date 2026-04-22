@@ -6,18 +6,18 @@ import 'package:flutter/widgets.dart';
 final CatalogEntry packagesTimeCatalog = CatalogEntry.catalog(
   path: 'time',
   title: 'Time',
-  subtitle: '格式化、时区与相对时间文案',
+  subtitle: '日期格式化与相对时间文案',
   children: <CatalogEntry>[
     CatalogEntry.page(
       path: 'intl',
       title: 'Intl',
-      subtitle: '日期时间与多语言格式化',
+      subtitle: '中英文日期时间格式化与 Locale 切换',
       pageBuilder: (BuildContext context) => const IntlDemoPage(title: 'Intl'),
     ),
     CatalogEntry.page(
       path: 'timeago',
       title: 'Timeago',
-      subtitle: '相对时间文案生成',
+      subtitle: '相对时间文案与未来时间展示',
       pageBuilder: (BuildContext context) =>
           const TimeagoDemoPage(title: 'Timeago'),
     ),

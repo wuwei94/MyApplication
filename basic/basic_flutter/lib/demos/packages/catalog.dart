@@ -19,7 +19,7 @@ class PackagesCatalog extends CatalogSection {
   String get title => 'Packages Example';
 
   @override
-  String get subtitle => '按能力分类的第三方包示例';
+  String get subtitle => '按能力整理的第三方包示例';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -27,8 +27,8 @@ class PackagesCatalog extends CatalogSection {
   static final List<CatalogEntry> _items = [
     packagesLayoutCatalog,
     packagesContentCatalog,
-    packagesTimeCatalog,
     packagesPlatformCatalog,
+    packagesTimeCatalog,
     packagesUtilsCatalog,
   ];
 }

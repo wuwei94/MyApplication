@@ -5,7 +5,7 @@ import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Video 模块
-/// 
+///
 /// 包含：VideoPlayer、Chewie 等视频播放示例
 class VideoCatalog extends CatalogSection {
   const VideoCatalog._();
@@ -17,7 +17,7 @@ class VideoCatalog extends CatalogSection {
   String get title => 'Video Example';
 
   @override
-  String get subtitle => '视频组件';
+  String get subtitle => '本地/网络播放与控制层对比';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -26,14 +26,14 @@ class VideoCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'video-player',
       title: 'VideoPlayer',
-      subtitle: 'video_player 示例',
+      subtitle: '纯播放器实现的本地与网络视频播放',
       pageBuilder: (BuildContext context) =>
           const VideoPlayerDemoPage(title: 'VideoPlayer'),
     ),
     CatalogEntry.page(
       path: 'chewie-video-player',
       title: 'ChewieVideoPlayer',
-      subtitle: 'chewie + video_player 示例',
+      subtitle: '带控制条、全屏与倍速的视频播放体验',
       pageBuilder: (BuildContext context) =>
           const ChewieVideoPlayerDemoPage(title: 'ChewieVideoPlayer'),
     ),

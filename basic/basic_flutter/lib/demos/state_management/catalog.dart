@@ -19,7 +19,7 @@ class StateManagementCatalog extends CatalogSection {
   String get title => 'State Management Example';
 
   @override
-  String get subtitle => '状态管理';
+  String get subtitle => '常见响应式状态管理方案';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -28,28 +28,28 @@ class StateManagementCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'cubit',
       title: 'Cubit',
-      subtitle: 'Cubit示例',
+      subtitle: '轻量事件驱动计数器与状态流',
       pageBuilder: (BuildContext context) =>
           const CubitCounterDemoPage(title: 'Cubit'),
     ),
     CatalogEntry.page(
       path: 'bloc',
       title: 'Bloc',
-      subtitle: 'Bloc示例',
+      subtitle: '事件到状态流转的计数器示例',
       pageBuilder: (BuildContext context) =>
           const BlocCounterDemoPage(title: 'Bloc'),
     ),
     CatalogEntry.page(
       path: 'provider',
       title: 'Provider',
-      subtitle: 'Provider示例',
+      subtitle: 'ChangeNotifier 计数器与局部刷新',
       pageBuilder: (BuildContext context) =>
           const ProviderCounterDemoPage(title: 'Provider'),
     ),
     CatalogEntry.page(
       path: 'riverpod',
       title: 'Riverpod',
-      subtitle: 'Riverpod示例',
+      subtitle: 'ProviderScope 下的计数器状态读取',
       pageBuilder: (BuildContext context) =>
           const RiverpodCounterDemoPage(title: 'Riverpod'),
     ),

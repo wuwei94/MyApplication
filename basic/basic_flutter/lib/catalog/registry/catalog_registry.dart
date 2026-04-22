@@ -18,14 +18,14 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 final List<CatalogSection> catalogSections = <CatalogSection>[
   basicsCatalog,
   layoutCatalog,
-  showcaseCatalog,
+  stateManagementCatalog,
   networkCatalog,
-  imageCatalog,
   storageCatalog,
+  imageCatalog,
   animationCatalog,
   videoCatalog,
   packagesCatalog,
-  stateManagementCatalog,
+  showcaseCatalog,
 ];
 
 /// 新增模块只需将对应模块加入 `catalogSections`。
