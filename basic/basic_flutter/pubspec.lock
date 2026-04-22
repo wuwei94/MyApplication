@@ -465,6 +465,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.32.1"
+  easy_paging:
+    dependency: "direct main"
+    description:
+      name: easy_paging
+      sha256: "101f9e9c03d32b405e53b306a696ea3e56dca0153e30b1125a2f284ed3607315"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.5.0"
   easy_refresh:
     dependency: "direct main"
     description:

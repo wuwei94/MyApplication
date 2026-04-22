@@ -1,6 +1,7 @@
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/demos/packages/layout/auto_size_text_example.dart';
 import 'package:basic_flutter/demos/packages/layout/constraint_layout_example.dart';
+import 'package:basic_flutter/demos/packages/layout/easy_paging_example.dart';
 import 'package:basic_flutter/demos/packages/layout/easy_refresh_example.dart';
 import 'package:basic_flutter/demos/packages/layout/infinite_scroll_pagination_example.dart';
 import 'package:basic_flutter/demos/packages/layout/keyboard_visibility_example.dart';
@@ -35,6 +36,13 @@ final CatalogEntry packagesLayoutCatalog = CatalogEntry.catalog(
       subtitle: '下拉刷新与上拉加载',
       pageBuilder: (BuildContext context) =>
           const EasyRefreshDemoPage(title: 'EasyRefresh'),
+    ),
+    CatalogEntry.page(
+      path: 'easy-paging',
+      title: 'EasyPaging',
+      subtitle: '基于 easy_refresh 的分页列表',
+      pageBuilder: (BuildContext context) =>
+          const EasyPagingDemoPage(title: 'EasyPaging'),
     ),
     CatalogEntry.page(
       path: 'scroll-to-index',
