@@ -3,6 +3,7 @@ import 'package:basic_flutter/catalog/registry/catalog_registry.dart';
 import 'package:basic_flutter/app/home/app_home.dart';
 import 'package:basic_flutter/app/router/app_router_type.dart';
 import 'package:basic_flutter/catalog/routing/catalog_route_factory.dart';
+import 'package:basic_flutter/core/utils/ui/smart_dialog.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart' as go_router;
 
@@ -20,9 +21,14 @@ final auto_route.AutoRoute _homeAutoRoute = auto_route.NamedRouteDef(
   builder: (context, data) => const AppHome(),
 );
 
+List<NavigatorObserver> _createNavigatorObservers() {
+  return AppSmartDialog.createNavigatorObservers();
+}
+
 /// GoRouter instance (using CatalogRouteFactory)
 final go_router.GoRouter goAppRouter = go_router.GoRouter(
   initialLocation: '/',
+  observers: _createNavigatorObservers(),
   routes: <go_router.GoRoute>[
     _homeGoRoute,
     ...CatalogRouteFactory.toGoRoutes(catalogRegistry),
@@ -36,7 +42,7 @@ final RouterConfig<Object> autoAppRouter =
             _homeAutoRoute,
             ...CatalogRouteFactory.toAutoRoutes(catalogRegistry),
           ],
-        ).config()
+        ).config(navigatorObservers: _createNavigatorObservers)
         as RouterConfig<Object>;
 
 /// App main router
