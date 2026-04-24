@@ -3,6 +3,7 @@ import 'package:basic_flutter/demos/packages/platform/android_id_example.dart';
 import 'package:basic_flutter/demos/packages/platform/connectivity_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/device_info_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/notification_example.dart';
+import 'package:basic_flutter/demos/packages/platform/package_info_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/permission_example.dart';
 import 'package:basic_flutter/demos/packages/platform/url_launcher_example.dart';
 import 'package:basic_flutter/demos/packages/platform/webview_example.dart';
@@ -54,6 +55,13 @@ final CatalogEntry packagesPlatformCatalog = CatalogEntry.catalog(
       subtitle: '跨平台设备信息读取与字段展示',
       pageBuilder: (BuildContext context) =>
           const DeviceInfoPlusDemoPage(title: 'DeviceInfoPlus'),
+    ),
+    CatalogEntry.page(
+      path: 'package-info-plus',
+      title: 'PackageInfoPlus',
+      subtitle: '应用名、包名、版本号与安装来源读取',
+      pageBuilder: (BuildContext context) =>
+          const PackageInfoPlusDemoPage(title: 'PackageInfoPlus'),
     ),
     CatalogEntry.page(
       path: 'android-id',

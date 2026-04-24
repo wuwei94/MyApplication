@@ -168,6 +168,8 @@ dependencies:
   connectivity_plus: ^7.1.1
   # https://pub.dev/packages/device_info_plus
   device_info_plus: ^12.4.0
+  # https://pub.dev/packages/package_info_plus
+  package_info_plus: ^9.0.1
   # https://pub.dev/packages/android_id
   android_id: ^0.5.1
 
