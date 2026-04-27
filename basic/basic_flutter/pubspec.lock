@@ -774,6 +774,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.0"
+  flutter_luban:
+    dependency: "direct main"
+    description:
+      name: flutter_luban
+      sha256: e3736993298b01b184f67c1e2afd7b44d44a061996be121368ba5a22fd79b55b
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.15"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -1040,6 +1048,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.1.2"
+  image:
+    dependency: transitive
+    description:
+      name: image
+      sha256: f9881ff4998044947ec38d098bc7c8316ae1186fa786eddffdb867b9bc94dfce
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.8.0"
   image_picker:
     dependency: "direct main"
     description:
