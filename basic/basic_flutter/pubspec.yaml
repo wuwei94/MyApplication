@@ -104,6 +104,8 @@ dependencies:
   flutter_image_compress: ^2.4.0
   # https://pub.dev/packages/flutter_luban
   flutter_luban: ^0.1.15
+  # https://pub.dev/packages/image_cropper
+  image_cropper: ^12.2.1
   # https://pub.dev/packages/image_picker
   image_picker: ^1.2.1
   # https://pub.dev/packages/wechat_assets_picker

@@ -4,6 +4,7 @@ import 'package:basic_flutter/demos/image/cached_network_image_example.dart';
 import 'package:basic_flutter/demos/image/extended_image_example.dart';
 import 'package:basic_flutter/demos/image/flutter_image_compress_example.dart';
 import 'package:basic_flutter/demos/image/flutter_luban_example.dart';
+import 'package:basic_flutter/demos/image/image_cropper_example.dart';
 import 'package:basic_flutter/demos/image/image_picker_example.dart';
 import 'package:basic_flutter/demos/image/photo_view_example.dart';
 import 'package:basic_flutter/demos/image/wechat_picker_example.dart';
@@ -62,6 +63,13 @@ class ImageCatalog extends CatalogSection {
       subtitle: '基于 Luban 算法的图片体积压缩',
       pageBuilder: (BuildContext context) =>
           const FlutterLubanDemoPage(title: 'FlutterLuban'),
+    ),
+    CatalogEntry.page(
+      path: 'image-cropper',
+      title: 'ImageCropper',
+      subtitle: '原生图片裁剪、比例锁定与输出质量控制',
+      pageBuilder: (BuildContext context) =>
+          const ImageCropperDemoPage(title: 'ImageCropper'),
     ),
     CatalogEntry.page(
       path: 'image-picker',

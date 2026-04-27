@@ -210,6 +210,7 @@ dart tools/apply_android_fixes.dart
 
 - `coreLibraryDesugaring` 配置
 - 常用 Android 权限声明，包括通知、定位、相机、图片读取权限
+- `image_cropper` 需要的 `UCropActivity` 声明
 
 如果 `.android/` 目录尚未生成，请先执行一次 `flutter pub get` 或 `fvm flutter pub get`。
 
