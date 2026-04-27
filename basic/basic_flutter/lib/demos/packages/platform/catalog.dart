@@ -5,6 +5,7 @@ import 'package:basic_flutter/demos/packages/platform/device_info_plus_example.d
 import 'package:basic_flutter/demos/packages/platform/notification_example.dart';
 import 'package:basic_flutter/demos/packages/platform/package_info_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/permission_example.dart';
+import 'package:basic_flutter/demos/packages/platform/share_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/url_launcher_example.dart';
 import 'package:basic_flutter/demos/packages/platform/webview_example.dart';
 import 'package:flutter/widgets.dart';
@@ -62,6 +63,13 @@ final CatalogEntry packagesPlatformCatalog = CatalogEntry.catalog(
       subtitle: '应用名、包名、版本号与安装来源读取',
       pageBuilder: (BuildContext context) =>
           const PackageInfoPlusDemoPage(title: 'PackageInfoPlus'),
+    ),
+    CatalogEntry.page(
+      path: 'share-plus',
+      title: 'SharePlus',
+      subtitle: '系统分享面板、文本链接分享与结果状态',
+      pageBuilder: (BuildContext context) =>
+          const SharePlusDemoPage(title: 'SharePlus'),
     ),
     CatalogEntry.page(
       path: 'android-id',
