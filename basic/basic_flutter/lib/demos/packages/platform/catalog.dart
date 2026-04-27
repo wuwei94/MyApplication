@@ -2,6 +2,7 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/demos/packages/platform/android_id_example.dart';
 import 'package:basic_flutter/demos/packages/platform/connectivity_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/device_info_plus_example.dart';
+import 'package:basic_flutter/demos/packages/platform/geolocator_example.dart';
 import 'package:basic_flutter/demos/packages/platform/notification_example.dart';
 import 'package:basic_flutter/demos/packages/platform/package_info_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/permission_example.dart';
@@ -49,6 +50,13 @@ final CatalogEntry packagesPlatformCatalog = CatalogEntry.catalog(
       subtitle: '网络状态读取、监听与历史记录',
       pageBuilder: (BuildContext context) =>
           const ConnectivityPlusDemoPage(title: 'ConnectivityPlus'),
+    ),
+    CatalogEntry.page(
+      path: 'geolocator',
+      title: 'Geolocator',
+      subtitle: '定位权限、当前位置读取与定位设置跳转',
+      pageBuilder: (BuildContext context) =>
+          const GeolocatorDemoPage(title: 'Geolocator'),
     ),
     CatalogEntry.page(
       path: 'device-info-plus',

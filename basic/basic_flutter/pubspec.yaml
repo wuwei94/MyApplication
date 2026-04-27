@@ -172,6 +172,8 @@ dependencies:
   webview_flutter: ^4.13.0
   # https://pub.dev/packages/connectivity_plus
   connectivity_plus: ^7.1.1
+  # https://pub.dev/packages/geolocator
+  geolocator: ^14.0.2
   # https://pub.dev/packages/device_info_plus
   device_info_plus: ^12.4.0
   # https://pub.dev/packages/package_info_plus

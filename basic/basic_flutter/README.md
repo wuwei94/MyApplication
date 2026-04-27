@@ -8,7 +8,7 @@
 
 - Demo Catalog First 架构：`app` 负责壳层和路由，`catalog` 负责目录树和解析，`demos` 负责示例内容。
 - 同时支持 `GoRouter` 和 `AutoRoute`，通过常量切换路由实现。
-- 当前已收录 10 个顶层分组、92 个叶子示例页面。
+- 当前已收录 10 个顶层分组、93 个叶子示例页面。
 - 既有基础 Flutter 组件示例，也有三方包、网络、存储、状态管理、动画、视频等专项示例。
 - 保留 Flutter module 能力，可用于原生宿主 App 的 add-to-app 集成。
 
@@ -57,6 +57,7 @@
     * [Url Launcher](https://pub.dev/packages/url_launcher)
     * [Flutter Linkify](https://pub.dev/packages/flutter_linkify)
     * [Permission](https://pub.dev/packages/permission_handler)
+    * [Geolocator](https://pub.dev/packages/geolocator)
     * [ScreenUtil](https://pub.dev/packages/flutter_screenutil)
     * [Easy Refresh](https://pub.dev/packages/easy_refresh)
     * [Scroll To Index](https://pub.dev/packages/scroll_to_index)
@@ -213,6 +214,19 @@ dart tools/apply_android_fixes.dart
 - `image_cropper` 需要的 `UCropActivity` 声明
 
 如果 `.android/` 目录尚未生成，请先执行一次 `flutter pub get` 或 `fvm flutter pub get`。
+
+## iOS geolocator 配置脚本
+
+当 `.ios/` 重新生成后，如果 geolocator 的 iOS 前台定位配置丢失，可以执行：
+
+```bash
+dart tools/apply_ios_geolocator.dart
+```
+
+该脚本会自动补齐：
+
+- `NSLocationWhenInUseUsageDescription` 前台定位用途说明
+- `geolocator_apple` 的 `BYPASS_PERMISSION_LOCATION_ALWAYS=1` Podfile 宏
 
 ## 开发约定
 
