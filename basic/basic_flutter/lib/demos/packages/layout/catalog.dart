@@ -7,8 +7,9 @@ import 'package:basic_flutter/demos/packages/layout/infinite_scroll_pagination_e
 import 'package:basic_flutter/demos/packages/layout/keyboard_visibility_example.dart';
 import 'package:basic_flutter/demos/packages/layout/screen_util_example.dart';
 import 'package:basic_flutter/demos/packages/layout/scroll_to_index_example.dart';
-import 'package:basic_flutter/demos/packages/layout/slider_captcha_example.dart';
 import 'package:basic_flutter/demos/packages/layout/slidable_example.dart';
+import 'package:basic_flutter/demos/packages/layout/slider_captcha_example.dart';
+import 'package:basic_flutter/demos/packages/layout/staggered_grid_view_example.dart';
 import 'package:flutter/widgets.dart';
 
 final CatalogEntry packagesLayoutCatalog = CatalogEntry.catalog(
@@ -57,6 +58,13 @@ final CatalogEntry packagesLayoutCatalog = CatalogEntry.catalog(
       subtitle: '侧滑操作列表项',
       pageBuilder: (BuildContext context) =>
           const SlidableDemoPage(title: 'Slidable'),
+    ),
+    CatalogEntry.page(
+      path: 'staggered-grid-view',
+      title: 'StaggeredGridView',
+      subtitle: '瀑布流、错落与拼贴网格',
+      pageBuilder: (BuildContext context) =>
+          const StaggeredGridViewDemoPage(title: 'StaggeredGridView'),
     ),
     CatalogEntry.page(
       path: 'auto-size-text',
