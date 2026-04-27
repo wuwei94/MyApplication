@@ -221,6 +221,14 @@ dev_dependencies:
 objectbox:
   output_dir: objectbox
 
+# sqlite3 3.x 默认会在 native assets 构建时从 GitHub 下载预编译 SQLite。
+# Android 调试构建使用系统 SQLite，避免网络受限时下载 libsqlite3.so 超时。
+hooks:
+  user_defines:
+    sqlite3:
+      source: system
+      name_android: sqlite
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
