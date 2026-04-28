@@ -182,6 +182,8 @@ dependencies:
   share_plus: ^12.0.2
   # https://pub.dev/packages/android_id
   android_id: ^0.5.1
+  # https://pub.dev/packages/flutter_udid
+  flutter_udid: ^4.1.2
 
   # lib/demos/packages/time
   # https://pub.dev/packages/intl

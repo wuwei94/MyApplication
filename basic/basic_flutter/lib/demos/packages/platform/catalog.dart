@@ -2,6 +2,7 @@ import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/demos/packages/platform/android_id_example.dart';
 import 'package:basic_flutter/demos/packages/platform/connectivity_plus_example.dart';
 import 'package:basic_flutter/demos/packages/platform/device_info_plus_example.dart';
+import 'package:basic_flutter/demos/packages/platform/flutter_udid_example.dart';
 import 'package:basic_flutter/demos/packages/platform/geolocator_example.dart';
 import 'package:basic_flutter/demos/packages/platform/notification_example.dart';
 import 'package:basic_flutter/demos/packages/platform/package_info_plus_example.dart';
@@ -85,6 +86,13 @@ final CatalogEntry packagesPlatformCatalog = CatalogEntry.catalog(
       subtitle: 'Android 设备标识读取与平台兼容提示',
       pageBuilder: (BuildContext context) =>
           const AndroidIdDemoPage(title: 'AndroidId'),
+    ),
+    CatalogEntry.page(
+      path: 'flutter-udid',
+      title: 'FlutterUdid',
+      subtitle: '跨平台 UDID 与统一格式标识读取',
+      pageBuilder: (BuildContext context) =>
+          const FlutterUdidDemoPage(title: 'FlutterUdid'),
     ),
   ],
 );
