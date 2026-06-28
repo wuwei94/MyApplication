@@ -38,6 +38,7 @@ class DemoActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("FloatWindow", RouterPath.Demo.FloatWindow))
         routerItems.add(RouterItem("Hook", RouterPath.Demo.Hook))
         routerItems.add(RouterItem("Turntable", RouterPath.Demo.Turntable))
+        routerItems.add(RouterItem("LayoutAnimation", RouterPath.Demo.LayoutAnimation))
 
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("AsyncTask", RouterPath.Demo.AsyncTask))

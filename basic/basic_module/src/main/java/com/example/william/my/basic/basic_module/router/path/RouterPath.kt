@@ -59,6 +59,7 @@ object RouterPath {
         const val FloatWindow = "${Demo}/FloatWindow"
         const val Hook = "${Demo}/Hook"
         const val Turntable = "${Demo}/Turntable"
+        const val LayoutAnimation = "${Demo}/LayoutAnimation"
 
         const val AsyncTask = "${Demo}/AsyncTask"
         const val Broadcast = "${Demo}/Broadcast"

@@ -29,6 +29,7 @@
         <activity android:name=".activity3.FloatWindowActivity" />
         <activity android:name=".activity3.HookActivity" />
         <activity android:name=".activity3.TurntableActivity" />
+        <activity android:name=".activity3.LayoutAnimationActivity" />
         <activity android:name=".activity4.AsyncTaskActivity" />
         <activity android:name=".activity4.BroadcastActivity" />
         <activity android:name=".activity4.HandlerThreadActivity" />
