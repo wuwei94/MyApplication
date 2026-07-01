@@ -5,7 +5,7 @@ buildscript {
         //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:x.x.x"
         classpath(libs.gradlePlugin.protobuf)
         classpath(libs.gradlePlugin.arouter)
-        classpath(libs.gradlePlugin.greendao)
+        //classpath(libs.gradlePlugin.greendao)
         classpath(libs.gradlePlugin.objectbox)
     }
 }
