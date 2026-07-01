@@ -4,10 +4,6 @@
     <application>
         <activity android:name=".WidgetActivity" />
 
-
-        <activity android:name=".activity2.FragmentViewPagerActivity" />
-        <activity android:name=".activity2.RecyclerViewNestedActivity" />
-
         <activity android:name=".activity.AlertDialogActivity" />
         <activity android:name=".activity.BlurViewActivity" />
         <activity android:name=".activity.InfiniteImageActivity" />
@@ -16,6 +12,7 @@
         <activity android:name=".activity.SpinnerActivity" />
         <activity android:name=".activity.TitleBarActivity" />
         <activity android:name=".activity.VerifyCodeActivity" />
+        <activity android:name=".activity.NinePatchActivity" />
 
     </application>
 </manifest>

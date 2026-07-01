@@ -8,7 +8,6 @@ import com.example.william.my.core.retrofit.function.RxRetrofitFunction
 import com.example.william.my.core.retrofit.helper.RetrofitHelper
 import com.example.william.my.core.retrofit.method.Method
 import com.example.william.my.core.retrofit.response.RetrofitResponse
-import com.google.gson.JsonElement
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers

@@ -12,19 +12,15 @@ annotation class AppInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class LibrariesInit
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class DatabaseInit
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class OpenInit
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
 annotation class ArchInit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class EventInit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class OpenSourceInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

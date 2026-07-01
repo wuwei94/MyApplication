@@ -29,27 +29,25 @@ class ModuleActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("DemoActivity", RouterPath.Demo.Main))
-        routerItems.add(RouterItem("WidgetActivity", RouterPath.Widget.Main))
-        routerItems.add(RouterItem("LibrariesActivity", RouterPath.Libraries.Main))
-
-        routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("OpensourceActivity", RouterPath.Opensource.Main))
-        routerItems.add(RouterItem("DatabaseActivity", RouterPath.Database.Main))
-        routerItems.add(RouterItem("UtilsActivity", RouterPath.Utils.Main))
-
-        routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("NetworkActivity", RouterPath.Network.Main))
         routerItems.add(RouterItem("SampleActivity", RouterPath.Sample.Main))
+        routerItems.add(RouterItem("WidgetActivity", RouterPath.Widget.Main))
 
         routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("RoomActivity", RouterPath.Room.Main))
+        routerItems.add(RouterItem("UtilsActivity", RouterPath.Utils.Main))
+        routerItems.add(RouterItem("NetworkActivity", RouterPath.Network.Main))
+        routerItems.add(RouterItem("OpensourceActivity", RouterPath.OpenSource.Main))
+
+        routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("ArchActivity", RouterPath.Arch.Main))
+        routerItems.add(RouterItem("EventBusActivity", RouterPath.Event.Main))
+        routerItems.add(RouterItem("FeaturesActivity", RouterPath.Features.Main))
+
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("KotlinActivity", RouterPath.Kotlin.Main))
+        routerItems.add(RouterItem("JetPackActivity", RouterPath.JetPack.Main))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("ComposeActivity", RouterPath.Compose.Main))
-
-        routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("FlutterActivity", RouterPath.Flutter.Main))
         return routerItems
     }

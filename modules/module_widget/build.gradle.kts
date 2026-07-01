@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.widget"
-    //resourcePrefix("widget_")
+    resourcePrefix("widget_")
 }
 
 dependencies {
@@ -14,4 +14,5 @@ dependencies {
     implementation(project(":basic:basic_module"))
 
     implementation(project(":libs:lib_widget"))
+    implementation(project(":libs:lib_ninepatch"))
 }

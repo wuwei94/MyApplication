@@ -7,7 +7,7 @@ import com.example.william.my.lib.eventbus.EventBusHelper
 import com.example.william.my.lib.hilt.interfaces.IAppInit
 import com.example.william.my.lib.utils.CrashUtils
 import com.example.william.my.lib.utils.FileSDCardUtil
-import com.example.william.my.modules.module_libraries.MyLibrariesEventBusIndex
+import com.example.william.my.modules.module_event.MyEventEventBusIndex
 import javax.inject.Inject
 
 class AppInitImpl @Inject constructor() : IAppInit {
@@ -37,6 +37,9 @@ class AppInitImpl @Inject constructor() : IAppInit {
     }
 
     private fun initEventBus() {
-        EventBusHelper.addIndex(MyLibEventBusIndex()).addIndex(MyLibrariesEventBusIndex()).init()
+        EventBusHelper
+            .addIndex(MyLibEventBusIndex())
+            .addIndex(MyEventEventBusIndex())
+            .init()
     }
 }

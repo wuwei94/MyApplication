@@ -7,11 +7,10 @@ import com.example.william.my.lib.eventbus.EventBusHelper
 import com.example.william.my.lib.utils.CrashUtils
 import com.example.william.my.lib.utils.FileSDCardUtil
 import com.example.william.my.module.arch.app.ArchApp
-import com.example.william.my.module.database.app.DatabaseApp
+import com.example.william.my.module.eventbus.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp
-import com.example.william.my.module.libraries.app.LibrariesApp
-import com.example.william.my.module.opensource.app.OpenApp
-import com.example.william.my.modules.module_libraries.MyLibrariesEventBusIndex
+import com.example.william.my.module.opensource.app.OpenSourceApp
+import com.example.william.my.modules.module_event.MyEventEventBusIndex
 
 /**
  * gradlew :app:dependencies 查询app依赖
@@ -27,11 +26,10 @@ class App : BaseApp() {
     }
 
     override fun initApp() {
-        registerAppInit(LibrariesApp::class.java) // FlowEventBus
-        registerAppInit(DatabaseApp::class.java) // Greendao, ObjectBox
 
-        registerAppInit(OpenApp::class.java) //
-        registerAppInit(ArchApp::class.java) // Mavericks
+        registerAppInit(ArchApp::class.java)
+        registerAppInit(EventApp::class.java)
+        registerAppInit(OpenSourceApp::class.java)
 
         registerAppInit(FlutterApp::class.java) // FlutterEngine
     }
@@ -49,7 +47,7 @@ class App : BaseApp() {
     private fun initEventBus() {
         EventBusHelper
             .addIndex(MyLibEventBusIndex())
-            .addIndex(MyLibrariesEventBusIndex())
+            .addIndex(MyEventEventBusIndex())
             .init()
     }
 }

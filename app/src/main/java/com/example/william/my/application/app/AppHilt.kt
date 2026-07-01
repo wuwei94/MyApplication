@@ -5,10 +5,9 @@ import com.example.william.my.lib.hilt.interfaces.IAppInit
 import com.example.william.my.lib.hilt.qualifier.AppInit
 import com.example.william.my.lib.hilt.qualifier.ArchInit
 import com.example.william.my.lib.hilt.qualifier.BaseInit
-import com.example.william.my.lib.hilt.qualifier.DatabaseInit
+import com.example.william.my.lib.hilt.qualifier.EventInit
 import com.example.william.my.lib.hilt.qualifier.FlutterInit
-import com.example.william.my.lib.hilt.qualifier.LibrariesInit
-import com.example.william.my.lib.hilt.qualifier.OpenInit
+import com.example.william.my.lib.hilt.qualifier.OpenSourceInit
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -23,21 +22,17 @@ class AppHilt : Application() {
     @Inject
     lateinit var appInit: IAppInit
 
-    @LibrariesInit
-    @Inject
-    lateinit var librariesInit: IAppInit
-
-    @DatabaseInit
-    @Inject
-    lateinit var databaseInit: IAppInit
-
-    @OpenInit
-    @Inject
-    lateinit var openInit: IAppInit
-
     @ArchInit
     @Inject
     lateinit var archInit: IAppInit
+
+    @EventInit
+    @Inject
+    lateinit var eventInit: IAppInit
+
+    @OpenSourceInit
+    @Inject
+    lateinit var openSourceInit: IAppInit
 
     @FlutterInit
     @Inject
@@ -48,13 +43,12 @@ class AppHilt : Application() {
         super.onCreate()
 
         baseInit.init(this)
+
         appInit.init(this)
 
-        librariesInit.init(this) // FlowEventBus
-        databaseInit.init(this) // Greendao, ObjectBox
-
-        openInit.init(this) //
         archInit.init(this) // Mavericks
+        eventInit.init(this)
+        openSourceInit.init(this)
 
         flutterInit.init(this) // FlutterEngine
     }

@@ -27,49 +27,68 @@ object RouterPath {
         const val FragmentBasicRecycler = "${Fragment}/fragment/basic_recycler"
     }
 
-    object Demo {
-        private const val Demo = "/Demo"
+    // 示例
+    object Sample {
+        private const val Sample = "/Sample"
 
-        const val Main = "${Demo}/Main"
+        const val Main = "${Sample}/Main"
 
-        const val Appbar = "${Demo}/Appbar"
-        const val Dialog = "${Demo}/Dialog"
-        const val FlexBox = "${Demo}/FlexBox"
-        const val Fragment1 = "${Demo}/Fragment1"
-        const val Fragment2 = "${Demo}/Fragment2"
-        const val FragmentTabHost = "${Demo}/FragmentTabHost"
-        const val RecyclerView = "${Demo}/RecyclerView"
-        const val ViewFlipper = "${Demo}/ViewFlipper"
-        const val ViewPager = "${Demo}/ViewPager"
-        const val ViewPager2 = "${Demo}/ViewPager2"
-        const val WebView = "${Demo}/WebView"
+        object UI {
+            private const val UI = "${Sample}/UI"
 
-        const val Animator = "${Demo}/Animator"
-        const val Notification = "${Demo}/Notification"
-        const val Permission = "${Demo}/Permission"
-        const val TransitionFirst = "${Demo}/TransitionFirst"
-        const val TransitionSecond = "${Demo}/TransitionSecond"
-        const val Typeface = "${Demo}/Typeface"
-        const val RenderEffect = "${Demo}/RenderEffect"
-        const val RenderScript = "${Demo}/RenderScript"
+            const val Appbar = "${UI}/Appbar"
+            const val Dialog = "${UI}/Dialog"
+            const val FlexBox = "${UI}/FlexBox"
+            const val Fragment1 = "${UI}/Fragment1"
+            const val Fragment2 = "${UI}/Fragment2"
+            const val FragmentTabHost = "${UI}/FragmentTabHost"
+            const val RecyclerView = "${UI}/RecyclerView"
+            const val ViewFlipper = "${UI}/ViewFlipper"
+            const val ViewPager = "${UI}/ViewPager"
+            const val ViewPager2 = "${UI}/ViewPager2"
+            const val WebView = "${UI}/WebView"
+            const val FragmentViewPager = "${UI}/FragmentViewPager"
+            const val RecyclerViewNested = "${UI}/RecyclerViewNested"
+        }
 
-        const val Camera = "${Demo}/Camera"
-        const val Crop = "${Demo}/Crop"
-        const val EditorView = "${Demo}/EditorView"
-        const val FloatWindow = "${Demo}/FloatWindow"
-        const val Hook = "${Demo}/Hook"
-        const val Turntable = "${Demo}/Turntable"
-        const val LayoutAnimation = "${Demo}/LayoutAnimation"
+        object Animation {
+            private const val Animation = "${Sample}/Anim"
 
-        const val AsyncTask = "${Demo}/AsyncTask"
-        const val Broadcast = "${Demo}/Broadcast"
-        const val HandlerThread = "${Demo}/HandlerThread"
-        const val JobScheduler = "${Demo}/JobScheduler"
-        const val Messenger = "${Demo}/Messenger"
-        const val Service = "${Demo}/Service"
-        const val SecureKey = "${Demo}/SecureKey"
+            const val Animator = "${Animation}/Animator"
+            const val TransitionFirst = "${Animation}/TransitionFirst"
+            const val TransitionSecond = "${Animation}/TransitionSecond"
+            const val RenderEffect = "${Animation}/RenderEffect"
+            const val RenderScript = "${Animation}/RenderScript"
+        }
+
+        object Background {
+            private const val Background = "${Sample}/Background"
+
+            const val AsyncTask = "${Background}/AsyncTask"
+            const val HandlerThread = "${Background}/HandlerThread"
+            const val JobScheduler = "${Background}/JobScheduler"
+        }
+
+        object Communication {
+            private const val Communication = "${Sample}/Communication"
+
+            const val Broadcast = "${Communication}/Broadcast"
+            const val Messenger = "${Communication}/Messenger"
+            const val Service = "${Communication}/Service"
+        }
+
+        object System {
+            private const val System = "${Sample}/System"
+
+            const val ActivityResult = "${System}/ActivityResult"
+            const val OnBackPressed = "${System}/OnBackPressed"
+            const val Notification = "${System}/Notification"
+            const val Permission = "${System}/Permission"
+            const val Typeface = "${System}/Typeface"
+        }
     }
 
+    // 控件
     object Widget {
         private const val Widget = "/Widget"
 
@@ -83,60 +102,10 @@ object RouterPath {
         const val Spinner = "${Widget}/Spinner"
         const val TitleBar = "${Widget}/TitleBar"
         const val VerifyCode = "${Widget}/VerifyCode"
-
-        const val FragmentViewPager = "${Widget}/FragmentViewPager"
-        const val RecyclerViewNested = "${Widget}/RecyclerViewNested"
+        const val NinePatch = "${Widget}/NinePatch"
     }
 
-    object Libraries {
-        private const val Libraries = "/Libraries"
-
-        const val Main = "${Libraries}/Main"
-        const val EventBus = "${Libraries}/event_bus"
-        const val RxEventBus = "${Libraries}/rx_event_bus"
-        const val LiveEventBus = "${Libraries}/live_event_bus"
-        const val FlowEventBus = "${Libraries}/flow_event_bus"
-        const val NinePatch = "${Libraries}/nine_patch"
-    }
-
-    object Opensource {
-        private const val Opensource = "/Opensource"
-
-        const val Main = "${Opensource}/Main"
-        const val Banner = "${Opensource}/Banner"
-
-        const val CityPicker = "${Opensource}/CityPicker"
-        const val CountdownView = "${Opensource}/CountdownView"
-        const val EasyFloat = "${Opensource}/EasyFloat"
-        const val FlycoTabLayout = "${Opensource}/FlycoTabLayout"
-        const val PhotoView = "${Opensource}/PhotoView"
-        const val PickerView = "${Opensource}/PickerView"
-        const val PictureSelector = "${Opensource}/PictureSelector"
-        const val PopWindow = "${Opensource}/PopWindow"
-        const val ShadowLayout = "${Opensource}/ShadowLayout"
-        const val SwipeLayout = "${Opensource}/SwipeLayout"
-
-        const val Pag = "${Opensource}/Pag"
-        const val Lottie = "${Opensource}/Lottie"
-        const val SVGAPlayer = "${Opensource}/SVGAPlayer"
-
-        const val LoadSir = "${Opensource}/LoadSir"
-        const val MMKV = "${Opensource}/MMKV"
-        const val PermissionX = "${Opensource}/PermissionX"
-
-        const val RxJava = "${Opensource}/RxJava"
-
-        const val Imagen = "${Opensource}/Imagen"
-        const val BlurView = "${Opensource}/BlurView"
-    }
-
-    object Database {
-        private const val Database = "/Database"
-
-        const val Main = "${Database}/Main"
-        const val ObjectBox = "${Database}/ObjectBox"
-    }
-
+    // 工具库
     object Utils {
         private const val Utils = "/Utils"
 
@@ -148,64 +117,140 @@ object RouterPath {
         const val ThreadUtilsActivity = "${Utils}/ThreadUtilsActivity"
     }
 
+    // 网络库
     object Network {
-        private const val Network = "/Network"
+        private const val PATH = "/Network"
 
-        const val Main = "${Network}/Main"
+        const val Main = "${PATH}/Main"
 
-        const val Coil = "${Network}/Coil"
-        const val Ktor = "${Network}/Ktor"
-        const val KtorUtils = "${Network}/KtorUtils"
+        object Coil {
+            private const val COIL_PATH = "${PATH}/Coil"
 
-        const val HttpURL = "${Network}/HttpURL"
+            const val Coil = "${COIL_PATH}/Coil"
+        }
 
-        const val Volley = "${Network}/Volley"
-        const val VolleyHelper = "${Network}/VolleyHelper"
+        object Ktor {
+            private const val KTOR_PATH = "${PATH}/Ktor"
 
-        const val OkHttp = "${Network}/OkHttp"
-        const val OkHttpHelper = "${Network}/OkHttpHelper"
+            const val Ktor = "${KTOR_PATH}/Ktor"
+            const val KtorUtils = "${KTOR_PATH}/KtorUtils"
+        }
 
-        const val Retrofit = "${Network}/Retrofit"
-        const val RetrofitHelper = "${Network}/RetrofitHelper"
+        object HttpURL {
+            private const val HTTP_URL_PATH = "${PATH}/HttpURL"
 
-        const val RetrofitRxJava = "${Network}/RetrofitRxJava"
-        const val RetrofitRxJavaHelper = "${Network}/RetrofitRxJavaHelper"
+            const val HttpURL = "${HTTP_URL_PATH}/HttpURL"
+        }
 
-        const val RxRetrofit = "${Network}/RxRetrofit"
+        object Volley {
+            private const val VOLLEY_PATH = "${PATH}/Volley"
 
-        const val OkHttpUpload = "${Network}/OkHttpUpload"
-        const val OkHttpDownload = "${Network}/OkHttpDownload"
+            const val Volley = "${VOLLEY_PATH}/Volley"
+            const val VolleyHelper = "${VOLLEY_PATH}/VolleyHelper"
+        }
 
-        const val RetrofitUpload = "${Network}/RetrofitUpload"
-        const val RetrofitDownload = "${Network}/RetrofitDownload"
+        object OkHttp {
+            private const val OKHTTP_PATH = "${PATH}/OkHttp"
 
-        const val RxUpload = "${Network}/RxUpload"
-        const val RxDownload = "${Network}/RxDownload"
+            const val OkHttp = "${OKHTTP_PATH}/OkHttp"
+            const val OkHttpHelper = "${OKHTTP_PATH}/OkHttpHelper"
+        }
 
-        const val WebSocket = "${Network}/WebSocket"
-        const val WebSocketUtils = "${Network}/WebSocketUtils"
+        object Retrofit {
+            private const val RETROFIT_PATH = "${PATH}/Retrofit"
 
-        const val Nano = "${Network}/Nano"
-        const val Netty = "${Network}/Netty"
-        const val Socket = "${Network}/Socket"
+            const val Retrofit = "${RETROFIT_PATH}/Retrofit"
+            const val RetrofitHelper = "${RETROFIT_PATH}/RetrofitHelper"
+
+            const val RetrofitRxJava = "${RETROFIT_PATH}/RetrofitRxJava"
+            const val RetrofitRxJavaHelper = "${RETROFIT_PATH}/RetrofitRxJavaHelper"
+
+            const val RxRetrofit = "${RETROFIT_PATH}/RxRetrofit"
+        }
+
+        object Download {
+            private const val DOWNLOAD_PATH = "${PATH}/Download"
+
+            const val OkHttpDownload = "${DOWNLOAD_PATH}/OkHttpDownload"
+            const val RetrofitDownload = "${DOWNLOAD_PATH}/RetrofitDownload"
+            const val RxDownload = "${DOWNLOAD_PATH}/RxDownload"
+        }
+
+        object WebSocket {
+            private const val WS_PATH = "${PATH}/WebSocket"
+
+            const val WebSocket = "${WS_PATH}/WebSocket"
+            const val WebSocketUtils = "${WS_PATH}/WebSocketUtils"
+        }
+
+        object Socket {
+            private const val SOCKET_PATH = "${PATH}/Socket"
+
+            const val Nano = "${SOCKET_PATH}/Nano"
+            const val Netty = "${SOCKET_PATH}/Netty"
+            const val Socket = "${SOCKET_PATH}/Socket"
+        }
     }
 
-    object Sample {
-        private const val Sample = "/Sample"
+    // 第三方库
+    object OpenSource {
+        private const val Opensource = "/Opensource"
 
-        const val Main = "${Sample}/Main"
+        const val Main = "${Opensource}/Main"
 
-        const val DataStore = "${Sample}/DataStore"
-        const val ViewModel = "${Sample}/ViewModel"
-        const val WorkManager = "${Sample}/WorkManager"
+        object Widget {
+            private const val Widget = "${Opensource}/Widget"
 
-        const val Coroutines = "${Sample}/Coroutines"
-        const val Flow = "${Sample}/Flow"
+            const val Banner = "${Widget}/Banner"
+            const val CountdownView = "${Widget}/CountdownView"
+            const val EasyFloat = "${Widget}/EasyFloat"
+            const val FlycoTabLayout = "${Widget}/FlycoTabLayout"
+            const val PhotoView = "${Widget}/PhotoView"
+            const val PopWindow = "${Widget}/PopWindow"
+            const val ShadowLayout = "${Widget}/ShadowLayout"
+            const val SwipeLayout = "${Widget}/SwipeLayout"
+            const val RealtimeBlurView = "${Widget}/BlurView"
+        }
 
-        const val ActivityResultContract = "${Sample}/ActivityResultContract"
-        const val OnBackPressedDispatcher = "${Sample}/OnBackPressedDispatcher"
+        object Animation {
+            private const val Animation = "${Opensource}/Animation"
+
+            const val Pag = "${Animation}/Pag"
+            const val Lottie = "${Animation}/Lottie"
+            const val SVGAPlayer = "${Animation}/SVGAPlayer"
+        }
+
+        object Selector {
+            private const val Selector = "${Opensource}/Selector"
+
+            const val CityPicker = "${Selector}/CityPicker"
+            const val PickerView = "${Selector}/PickerView"
+            const val PictureSelector = "${Selector}/PictureSelector"
+        }
+
+        object Utils {
+            private const val Utils = "${Opensource}/Utils"
+
+            const val LoadSir = "${Utils}/LoadSir"
+            const val MMKV = "${Utils}/MMKV"
+            const val PermissionX = "${Utils}/PermissionX"
+            const val RxJava = "${Utils}/RxJava"
+        }
+
+        object Image {
+            private const val Image = "${Opensource}/Image"
+
+            const val Imagen = "${Image}/Imagen"
+        }
+
+        object Database {
+            private const val Database = "${Opensource}/Database"
+
+            const val ObjectBox = "${Database}/ObjectBox"
+        }
     }
 
+    // 架构模式
     object Arch {
         private const val Arch = "/Arch"
 
@@ -219,23 +264,65 @@ object RouterPath {
         const val Mavericks = "${Arch}/Mavericks"
     }
 
-    object Room {
-        private const val R = "/Room"
+    // 事件总线
+    object Event {
+        private const val Event = "/Event"
 
-        const val Main = "${R}/Main"
-
-        const val Room = "${R}/Room"
-        const val Paging = "${R}/Paging"
-
-        const val ViewModel = "${R}/ViewModel"
+        const val Main = "${Event}/Main"
+        const val EventBus = "${Event}/event_bus"
+        const val RxEventBus = "${Event}/rx_event_bus"
+        const val LiveEventBus = "${Event}/live_event_bus"
+        const val FlowEventBus = "${Event}/flow_event_bus"
     }
 
-    object Hilt {
-        private const val H = "/Hilt"
+    // 业务功能
+    object Features {
+        private const val Features = "/Features"
 
-        const val Main = "${H}/Main"
+        const val Main = "${Features}/Main"
+
+        object Business {
+            private const val Business = "${Features}/Business"
+
+            const val Turntable = "${Business}/Turntable"
+            const val MicAnimation = "${Business}/MicAnimation"
+            const val SecureKey = "${Business}/SecureKey"
+        }
+
+        object Media {
+            private const val Media = "${Features}/Media"
+
+            const val Camera = "${Media}/Camera"
+            const val Crop = "${Media}/Crop"
+            const val FloatWindow = "${Media}/FloatWindow"
+            const val Hook = "${Media}/Hook"
+        }
     }
 
+    // Kotlin 特性
+    object Kotlin {
+        private const val Kotlin = "/Kotlin"
+
+        const val Main = "${Kotlin}/Main"
+
+        const val Coroutines = "${Kotlin}/Coroutines"
+        const val Flow = "${Kotlin}/Flow"
+    }
+
+    // Jetpack 组件库
+    object JetPack {
+        private const val JetPack = "/JetPack"
+
+        const val Main = "${JetPack}/Main"
+
+        const val DataStore = "${JetPack}/DataStore"
+        const val WorkManager = "${JetPack}/WorkManager"
+        const val Room = "${JetPack}/Room"
+        const val Paging = "${JetPack}/Paging"
+        const val Hilt = "${JetPack}/Hilt"
+    }
+
+    // Compose
     object Compose {
         private const val Compose = "/Compose"
 
@@ -274,17 +361,10 @@ object RouterPath {
         const val ScrollableTab = "${Compose}/ScrollableTab"
     }
 
+    // Flutter
     object Flutter {
         private const val Flutter = "/Flutter"
 
         const val Main = "${Flutter}/Main"
-        const val Layout = "${Flutter}/Layout"
-        const val Container = "${Flutter}/Container"
-        const val Scroll = "${Flutter}/Scroll"
-        const val Function = "${Flutter}/Function"
-        const val Http = "${Flutter}/Http"
-        const val State = "${Flutter}/State"
-        const val Packages = "${Flutter}/Packages"
-        const val Other = "${Flutter}/Other"
     }
 }

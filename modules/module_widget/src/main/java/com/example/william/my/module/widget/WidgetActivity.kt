@@ -18,10 +18,7 @@ class WidgetActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Spinner", RouterPath.Widget.Spinner))
         routerItems.add(RouterItem("TitleBar", RouterPath.Widget.TitleBar))
         routerItems.add(RouterItem("VerifyCode", RouterPath.Widget.VerifyCode))
-
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("FragmentViewPager", RouterPath.Widget.FragmentViewPager))
-        routerItems.add(RouterItem("RecyclerViewNested", RouterPath.Widget.RecyclerViewNested))
+        routerItems.add(RouterItem("NinePatch", RouterPath.Widget.NinePatch))
         return routerItems
     }
 }

@@ -96,24 +96,31 @@ include(":libs:lib_widget")
 include(":libs:lib_eventbus")
 include(":libs:lib_ninepatch")
 
-include(":modules:module_demo")
-include(":modules:module_widget")
-include(":modules:module_libraries")
-
-include(":modules:module_opensource")
-include(":modules:module_database")
-include(":modules:module_utils")
-
-//:basic:basic_data
-include(":modules:module_network")
-//:basic:basic_data
+// 示例
 include(":modules:module_sample")
+// 控件
+include(":modules:module_widget")
 
-//:basic:basic_repo
-include(":modules:module_room")
-//:basic:basic_repo
+// 工具库
+include(":modules:module_utils")
+// 网络库
+include(":modules:module_network")
+// 第三方库
+include(":modules:module_opensource")
+
+// 架构模式
 include(":modules:module_arch")
+// 事件总线
+include(":modules:module_event")
+// 业务功能
+include(":modules:module_features")
 
+// Kotlin 特性
+include(":modules:module_kotlin")
+// Jetpack 组件库
+include(":modules:module_jetpack")
+
+// Compoe
 include(":modules:module_compose")
 
 val enableFlutter = providers.gradleProperty("enableFlutter")
@@ -124,3 +131,4 @@ if (enableFlutter) {
     apply("flutter.gradle.kts")
 }
 include(":modules:module_flutter")
+

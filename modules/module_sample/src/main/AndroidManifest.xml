@@ -4,14 +4,52 @@
     <application>
         <activity android:name=".SampleActivity" />
 
-        <activity android:name=".activity.kotlin.CoroutinesActivity" />
-        <activity android:name=".activity.kotlin.FLowActivity" />
+        <activity android:name=".activity.system.ActivityResultActivity" />
+        <activity android:name=".activity.system.ActivityResultActivity2" />
+        <activity android:name=".activity.system.OnBackPressedActivity" />
 
-        <activity android:name=".activity.topic.DataStoreActivity" />
-        <activity android:name=".activity.topic.WorkManagerActivity" />
+        <!-- UI组件 -->
+        <activity android:name=".activity.ui.AppBarActivity" />
+        <activity android:name=".activity.ui.DialogActivity" />
+        <activity android:name=".activity.ui.FlexBoxActivity" />
+        <activity android:name=".activity.ui.FragmentActivity1" />
+        <activity android:name=".activity.ui.FragmentActivity2" />
+        <activity android:name=".activity.ui.FragmentTabHostActivity" />
+        <activity android:name=".activity.ui.RecyclerViewActivity" />
+        <activity android:name=".activity.ui.ViewFlipperActivity" />
+        <activity android:name=".activity.ui.ViewPagerActivity" />
+        <activity android:name=".activity.ui.ViewPagerActivity2" />
+        <activity android:name=".activity.ui.WebViewActivity" />
+        <activity android:name=".activity.ui.FragmentViewPagerActivity" />
+        <activity android:name=".activity.ui.RecyclerViewNestedActivity" />
 
-        <activity android:name=".activity.androidx.ActivityResultActivity" />
-        <activity android:name=".activity.androidx.ActivityResultActivity2" />
-        <activity android:name=".activity.androidx.OnBackPressedActivity" />
+        <!-- 动画效果 -->
+        <activity android:name=".activity.animation.AnimatorActivity" />
+        <activity android:name=".activity.animation.RenderEffectActivity" />
+        <activity android:name=".activity.animation.RenderScriptActivity" />
+        <activity android:name=".activity.animation.TransitionFirstActivity" />
+        <activity android:name=".activity.animation.TransitionSecondActivity" />
+
+        <!-- 后台任务 -->
+        <activity android:name=".activity.background.AsyncTaskActivity" />
+        <activity android:name=".activity.background.HandlerThreadActivity" />
+        <activity android:name=".activity.background.JobSchedulerActivity" />
+
+        <!-- 组件通信 -->
+        <activity android:name=".activity.communication.BroadcastActivity" />
+        <activity android:name=".activity.communication.MessengerActivity" />
+        <activity android:name=".activity.communication.ServiceActivity" />
+
+        <!-- 系统功能 -->
+        <activity android:name=".activity.system.NotificationActivity" />
+        <activity android:name=".activity.system.PermissionActivity" />
+        <activity android:name=".activity.system.TypefaceActivity" />
+
+        <service android:name=".service.MyAIDLService" />
+        <service android:name=".service.MyForegroundService" />
+        <service android:name=".service.MyMessageService" />
+        <service
+            android:name=".service.MyJobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 </manifest>

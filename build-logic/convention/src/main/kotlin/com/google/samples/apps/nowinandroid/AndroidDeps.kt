@@ -71,22 +71,21 @@ internal fun Project.configureFeatureAndroid(
 ) {
     commonExtension.apply {
         dependencies {
-            "implementation"(project(":modules:module_demo"))
-            "implementation"(project(":modules:module_widget"))
-            "implementation"(project(":modules:module_libraries"))
-
-            "implementation"(project(":modules:module_opensource"))
-            "implementation"(project(":modules:module_database"))
-            "implementation"(project(":modules:module_utils"))
-
-            "implementation"(project(":modules:module_network"))
             "implementation"(project(":modules:module_sample"))
+            "implementation"(project(":modules:module_widget"))
 
-            "implementation"(project(":modules:module_room"))
+            "implementation"(project(":modules:module_utils"))
+            "implementation"(project(":modules:module_network"))
+            "implementation"(project(":modules:module_opensource"))
+
             "implementation"(project(":modules:module_arch"))
+            "implementation"(project(":modules:module_event"))
+            "implementation"(project(":modules:module_features"))
+
+            "implementation"(project(":modules:module_kotlin"))
+            "implementation"(project(":modules:module_jetpack"))
 
             "implementation"(project(":modules:module_compose"))
-
             "implementation"(project(":modules:module_flutter"))
         }
     }

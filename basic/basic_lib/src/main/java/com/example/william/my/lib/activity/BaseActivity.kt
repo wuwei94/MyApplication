@@ -79,6 +79,7 @@ open class BaseActivity : AppCompatActivity() {
     private fun initEventBus() {
 
     }
+
     protected open fun initStatusBar() {
         if (enableTransparentStatusBar()) {
             transparentStatusBar()

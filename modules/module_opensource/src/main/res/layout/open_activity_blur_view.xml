@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity5.BlurViewActivity">
+    tools:context=".activity.widget.RealtimeBlurViewActivity">
 
     <RelativeLayout
         android:id="@+id/blur_frame"
@@ -16,7 +16,7 @@
             android:src="@drawable/ic_launcher" />
 
         <com.github.mmin18.widget.RealtimeBlurView
-            android:id="@+id/blur_view"
+            android:id="@+id/realtime_blur_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

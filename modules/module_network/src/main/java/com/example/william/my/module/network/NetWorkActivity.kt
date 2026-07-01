@@ -11,107 +11,110 @@ class NetWorkActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(
-            RouterItem("CoilActivity", RouterPath.Network.Coil)
+            RouterItem("CoilActivity", RouterPath.Network.Coil.Coil)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("KtorActivity", RouterPath.Network.Ktor)
+            RouterItem("KtorActivity", RouterPath.Network.Ktor.Ktor)
         )
         routerItems.add(
-            RouterItem("KtorUtilsActivity", RouterPath.Network.KtorUtils)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("HttpURLActivity", RouterPath.Network.HttpURL)
+            RouterItem("KtorUtilsActivity", RouterPath.Network.Ktor.KtorUtils)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("VolleyActivity", RouterPath.Network.Volley)
-        )
-        routerItems.add(
-            RouterItem("VolleyHelperActivity", RouterPath.Network.VolleyHelper)
+            RouterItem("HttpURLActivity", RouterPath.Network.HttpURL.HttpURL)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("OkHttpActivity", RouterPath.Network.OkHttp)
+            RouterItem("VolleyActivity", RouterPath.Network.Volley.Volley)
         )
         routerItems.add(
-            RouterItem("OkHttpHelperActivity", RouterPath.Network.OkHttpHelper)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitActivity", RouterPath.Network.Retrofit)
-        )
-        routerItems.add(
-            RouterItem("RetrofitHelperActivity", RouterPath.Network.RetrofitHelper)
+            RouterItem("VolleyHelperActivity", RouterPath.Network.Volley.VolleyHelper)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("RetrofitRxJavaActivity", RouterPath.Network.RetrofitRxJava)
+            RouterItem("OkHttpActivity", RouterPath.Network.OkHttp.OkHttp)
         )
         routerItems.add(
-            RouterItem("RetrofitRxJavaHelperActivity", RouterPath.Network.RetrofitRxJavaHelper)
+            RouterItem("OkHttpHelperActivity", RouterPath.Network.OkHttp.OkHttpHelper)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("RxRetrofitActivity", RouterPath.Network.RxRetrofit)
+            RouterItem("RetrofitActivity", RouterPath.Network.Retrofit.Retrofit)
+        )
+        routerItems.add(
+            RouterItem("RetrofitHelperActivity", RouterPath.Network.Retrofit.RetrofitHelper)
+        )
+
+        routerItems.add(
+            RouterItem("", "")
+        )
+        routerItems.add(
+            RouterItem("RetrofitRxJavaActivity", RouterPath.Network.Retrofit.RetrofitRxJava)
+        )
+        routerItems.add(
+            RouterItem(
+                "RetrofitRxJavaHelperActivity",
+                RouterPath.Network.Retrofit.RetrofitRxJavaHelper
+            )
+        )
+
+        routerItems.add(
+            RouterItem("", "")
+        )
+        routerItems.add(
+            RouterItem("RxRetrofitActivity", RouterPath.Network.Retrofit.RxRetrofit)
         )
 
         //routerItems.add(
         //    RouterItem("", "")
         //)
         //routerItems.add(
-        //    RouterItem("OkHttpDownloadActivity", RouterPath.Network.OkHttpDownload)
+        //    RouterItem("OkHttpDownloadActivity", RouterPath.Network.Download.OkHttpDownload)
         //)
         //routerItems.add(
-        //    RouterItem("RetrofitDownloadActivity", RouterPath.Network.RetrofitDownload)
+        //    RouterItem("RetrofitDownloadActivity", RouterPath.Network.Download.RetrofitDownload)
         //)
         //routerItems.add(
-        //    RouterItem("RxDownloadActivity", RouterPath.Network.RxDownload)
+        //    RouterItem("RxDownloadActivity", RouterPath.Network.Download.RxDownload)
         //)
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("WebSocketActivity", RouterPath.Network.WebSocket)
+            RouterItem("WebSocketActivity", RouterPath.Network.WebSocket.WebSocket)
         )
         routerItems.add(
-            RouterItem("WebSocketUtilsActivity", RouterPath.Network.WebSocketUtils)
+            RouterItem("WebSocketUtilsActivity", RouterPath.Network.WebSocket.WebSocketUtils)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("NanoActivity", RouterPath.Network.Nano)
+            RouterItem("NanoActivity", RouterPath.Network.Socket.Nano)
         )
         routerItems.add(
-            RouterItem("NettyActivity", RouterPath.Network.Netty)
+            RouterItem("NettyActivity", RouterPath.Network.Socket.Netty)
         )
         routerItems.add(
-            RouterItem("SocketActivity", RouterPath.Network.Socket)
+            RouterItem("SocketActivity", RouterPath.Network.Socket.Socket)
         )
         return routerItems
     }

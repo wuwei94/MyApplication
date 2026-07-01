@@ -4,10 +4,15 @@ plugins {
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
     alias(libs.plugins.nowinandroid.android.firebase)
+    alias(libs.plugins.nowinandroid.android.objectbox)
 }
 
 android {
     namespace = "com.example.william.my.module.opensource"
+    resourcePrefix("opensource_")
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -42,14 +47,30 @@ dependencies {
 
     //extra
     implementation(libs.glide)//pictureselector
-
-    // Import the BoM for the Firebase platform
-    //implementation(platform(libs.google.firebase.bom))
-
-    // Add the dependency for the Firebase AI Logic library. When using the BoM,
-    // you don't specify versions in Firebase library dependencies
-    //implementation(libs.google.firebase.ai)
-
-    //implementation(libs.upgrade)
-    //implementation(libs.upgrade.ui)
 }
+
+//https://github.com/greenrobot/greenDAO/issues/1110
+//Kotlin
+//tasks.configureEach {
+//    if (name.matches(Regex("\\w*compile\\w*Kotlin"))) {
+//        dependsOn("greendao")
+//    }
+//    if (name.matches(Regex("\\w*kaptGenerateStubs\\w*Kotlin"))) {
+//        dependsOn("greendao")
+//    }
+//    if (name.matches(Regex("\\w*kapt\\w*Kotlin"))) {
+//        dependsOn("greendao")
+//    }
+//}
+//Groovy
+//tasks.configureEach { task ->
+//    if (task.name.matches("\\w*compile\\w*Kotlin")) {
+//        task.dependsOn('greendao')
+//    }
+//    if (task.name.matches("\\w*kaptGenerateStubs\\w*Kotlin")) {
+//        task.dependsOn('greendao')
+//    }
+//    if (task.name.matches("\\w*kapt\\w*Kotlin")) {
+//        task.dependsOn('greendao')
+//    }
+//}

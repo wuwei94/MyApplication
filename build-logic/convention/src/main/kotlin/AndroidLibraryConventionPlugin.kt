@@ -14,8 +14,8 @@
  *   limitations under the License.
  */
 
-import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.google.samples.apps.nowinandroid.configureDepsAndroid
 import com.google.samples.apps.nowinandroid.configureFlavors
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
