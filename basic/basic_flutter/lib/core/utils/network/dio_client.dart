@@ -257,6 +257,7 @@ class DioClient {
         );
       case DioExceptionType.badCertificate:
       case DioExceptionType.unknown:
+      case DioExceptionType.transformTimeout:
         return NetworkException(
           type: NetworkErrorType.unknown,
           message: message,

@@ -155,7 +155,7 @@ dependencies:
 
   # lib/demos/packages/content
   # https://pub.dev/packages/extended_text_field
-  extended_text_field: ^16.0.2
+  # extended_text_field: ^16.0.2
   # https://pub.dev/packages/flutter_linkify
   flutter_linkify: ^6.0.0
   # https://pub.dev/packages/google_fonts
