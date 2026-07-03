@@ -1,14 +1,13 @@
 #!/usr/bin/env dart
 // ignore_for_file: avoid_print
-// 自动应用 Flutter Android 侧常见修复
-// 使用方法: dart tools/apply_android_fixes.dart
+// 自动应用 Flutter iOS 侧常见修复
+// 使用方法: dart tools/apply_ios_fixes.dart
 
 import 'dart:io';
 
 void main() {
   final List<String> scripts = <String>[
-    'tools/android/apply_desugaring.dart',
-    'tools/android/apply_permissions.dart',
+    'tools/ios/apply_ios_geolocator.dart',
   ];
 
   for (final String script in scripts) {
@@ -23,5 +22,5 @@ void main() {
     }
   }
 
-  print('✅ 已完成 Android module 修复脚本执行');
+  print('✅ 已完成 iOS module 修复脚本执行');
 }
