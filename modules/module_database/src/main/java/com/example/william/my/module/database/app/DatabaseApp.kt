@@ -7,7 +7,6 @@ class DatabaseApp : BaseAppInit() {
 
     override fun init() {
         super.init()
-        //Greendao.init(app)
         ObjectBox.init(app)
     }
 }

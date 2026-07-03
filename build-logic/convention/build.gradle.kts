@@ -42,7 +42,6 @@ dependencies {
     compileOnly(libs.gradlePlugin.compose)
     compileOnly(libs.gradlePlugin.protobuf)
 
-    //compileOnly(libs.gradlePlugin.greendao)
     compileOnly(libs.gradlePlugin.objectbox)
 
     compileOnly(libs.gradlePlugin.ksp)

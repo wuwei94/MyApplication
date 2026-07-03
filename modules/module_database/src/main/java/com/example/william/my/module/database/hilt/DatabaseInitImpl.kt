@@ -12,7 +12,6 @@ class DatabaseInitImpl @Inject constructor() : IAppInit {
     override fun init(app: Application) {
         this.mApp = app
 
-        //Greendao.init(app)
         ObjectBox.init(app)
     }
 
