@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     `kotlin-dsl`
-    alias(libs.plugins.android.lint)
+    //alias(libs.plugins.android.lint)
 }
 
 group = "com.google.samples.apps.nowinandroid.buildlogic"
