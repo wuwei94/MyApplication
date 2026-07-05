@@ -11,7 +11,7 @@ plugins {
     alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
-    alias(libs.plugins.dependencyGuard)
+    alias(libs.plugins.dependency.guard)
 }
 
 android {

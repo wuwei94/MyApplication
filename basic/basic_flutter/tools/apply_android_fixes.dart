@@ -9,6 +9,7 @@ void main() {
   final List<String> scripts = <String>[
     'tools/android/apply_desugaring.dart',
     'tools/android/apply_permissions.dart',
+    'tools/android/apply_compile_sdk.dart',
   ];
 
   for (final String script in scripts) {
