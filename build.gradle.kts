@@ -30,5 +30,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.kotlin.compose) apply false
 
-    alias(libs.plugins.dependencyGuard) apply false
+    alias(libs.plugins.flutter.gradle.plugin) apply false
+
+    alias(libs.plugins.dependency.guard) apply false
 }

@@ -358,9 +358,11 @@ android-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePluginKsp" 
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androidxHilt" }
 android-room = { id = "androidx.room", version.ref = "androidxRoom" }
 
-# https://github.com/dropbox/dependency-guard
-dependencyGuard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
+# https://github.com/flutter/flutter/issues/188339
+flutter-gradle-plugin = { id = "dev.flutter.flutter-gradle-plugin", version = "1.0.0" }
 
+# https://github.com/dropbox/dependency-guard
+dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
 # Plugins defined by this project
 nowinandroid-android-application = { id = "nowinandroid.android.application" }
 nowinandroid-android-application-compose = { id = "nowinandroid.android.application.compose" }
