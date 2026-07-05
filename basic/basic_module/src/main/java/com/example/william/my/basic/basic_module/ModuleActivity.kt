@@ -13,7 +13,6 @@ import com.example.william.my.basic.basic_module.utils.Utils
  * Plugins:
  * GsonForMartPlus
  * Google library Version Querier
- * DeteKt
  * Alibaba Java Coding Guidelines
  * <p>
  * str：页面名_str_模块_描述
