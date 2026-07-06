@@ -7,7 +7,7 @@
 
 ## ✨ Highlights
 
-- **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化。
+- **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
 - **网络层**：Volley / OkHttp / Retrofit / Ktor / WebSocket / Netty / NanoHTTPD，含拦截器、下载库、点九图解析。
 - **持久层**：Room / GreenDAO / ObjectBox 三种 ORM 对比 + DataStore（Preferences / Proto）。
@@ -36,6 +36,7 @@
 | Messaging   | EventBus · RxBus · LiveDataBus · FlowBus |
 | Others      | WorkManager · Paging 3 · SplashScreen · MMKV |
 | Quality     | Dependency Guard（已接入） |
+| CI/CD       | GitHub Actions（lint + assemble） |
 
 > 各库版本详见 `gradle/libs.versions.toml`。
 
