@@ -51,16 +51,6 @@ object RouterPath {
             const val RecyclerViewNested = "${UI}/RecyclerViewNested"
         }
 
-        object Animation {
-            private const val Animation = "${Sample}/Anim"
-
-            const val Animator = "${Animation}/Animator"
-            const val TransitionFirst = "${Animation}/TransitionFirst"
-            const val TransitionSecond = "${Animation}/TransitionSecond"
-            const val RenderEffect = "${Animation}/RenderEffect"
-            const val RenderScript = "${Animation}/RenderScript"
-        }
-
         object Background {
             private const val Background = "${Sample}/Background"
 
@@ -86,6 +76,20 @@ object RouterPath {
             const val Permission = "${System}/Permission"
             const val Typeface = "${System}/Typeface"
         }
+    }
+
+    // 动画
+    object Animation {
+
+        private const val Animation = "/Animation"
+
+        const val Main = "${Animation}/Main"
+
+        const val Animator = "${Animation}/Animator"
+        const val Transition = "${Animation}/Transition"
+        const val Transition2 = "${Animation}/Transition2"
+        const val RenderEffect = "${Animation}/RenderEffect"
+        const val RenderScript = "${Animation}/RenderScript"
     }
 
     // 控件

@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.animation
+package com.example.william.my.module.animation.activity
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,12 +10,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_module.R
 import com.example.william.my.basic.basic_module.activity.BasicImageActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 import kotlin.math.max
 import kotlin.math.min
 
-@Route(path = RouterPath.Sample.Animation.RenderScript)
+@Route(path = RouterPath.Animation.RenderScript)
 class RenderScriptActivity : BasicImageActivity() {
 
     private var renderScript: RenderScript? = null
@@ -25,7 +26,7 @@ class RenderScriptActivity : BasicImageActivity() {
 
         val drawable = ResourcesCompat.getDrawable(
             resources,
-            com.example.william.my.basic.basic_module.R.drawable.ic_launcher,
+            R.drawable.ic_launcher,
             null
         )!!
         mBinding.basicsImage.setImageBitmap(buildRenderScript(drawable.toBitmap(), 10f))

@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.animation
+package com.example.william.my.module.animation.activity
 
 import android.graphics.Bitmap
 import android.graphics.HardwareRenderer
@@ -25,7 +25,7 @@ import kotlin.math.min
 /**
  * https://developer.android.com/guide/topics/renderscript
  */
-@Route(path = RouterPath.Sample.Animation.RenderEffect)
+@Route(path = RouterPath.Animation.RenderEffect)
 class RenderEffectActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.animation
+package com.example.william.my.module.animation.activity
 
 import android.animation.Animator
 import android.animation.AnimatorSet
@@ -19,7 +19,7 @@ import com.example.william.my.basic.basic_module.R
 import com.example.william.my.basic.basic_module.activity.BasicImageActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 
-@Route(path = RouterPath.Sample.Animation.Animator)
+@Route(path = RouterPath.Animation.Animator)
 class AnimatorActivity : BasicImageActivity() {
 
     private var index = -1

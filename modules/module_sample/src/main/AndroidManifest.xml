@@ -23,13 +23,6 @@
         <activity android:name=".activity.ui.FragmentViewPagerActivity" />
         <activity android:name=".activity.ui.RecyclerViewNestedActivity" />
 
-        <!-- 动画效果 -->
-        <activity android:name=".activity.animation.AnimatorActivity" />
-        <activity android:name=".activity.animation.RenderEffectActivity" />
-        <activity android:name=".activity.animation.RenderScriptActivity" />
-        <activity android:name=".activity.animation.TransitionFirstActivity" />
-        <activity android:name=".activity.animation.TransitionSecondActivity" />
-
         <!-- 后台任务 -->
         <activity android:name=".activity.background.AsyncTaskActivity" />
         <activity android:name=".activity.background.HandlerThreadActivity" />

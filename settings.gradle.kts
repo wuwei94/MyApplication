@@ -119,6 +119,9 @@ include(":modules:module_kotlin")
 // Jetpack 组件库
 include(":modules:module_jetpack")
 
+// 动画
+include(":modules:module_animation")
+
 // Compoe
 include(":modules:module_compose")
 

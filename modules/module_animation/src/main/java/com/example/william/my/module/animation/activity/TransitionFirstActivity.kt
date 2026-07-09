@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.animation
+package com.example.william.my.module.animation.activity
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -10,18 +10,18 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
-import com.example.william.my.module.sample.R
-import com.example.william.my.module.sample.databinding.SampleActivityTransitionFirstBinding
+import com.example.william.my.module.animation.R
+import com.example.william.my.module.animation.databinding.AnimationActivityTransitionFirstBinding
 
 /**
  * 视图过度动画
  */
-@Route(path = RouterPath.Sample.Animation.TransitionFirst)
-class TransitionFirstActivity : BaseVBActivity<SampleActivityTransitionFirstBinding>(),
+@Route(path = RouterPath.Animation.Transition)
+class TransitionFirstActivity : BaseVBActivity<AnimationActivityTransitionFirstBinding>(),
     View.OnClickListener {
 
-    override fun getViewBinding(): SampleActivityTransitionFirstBinding {
-        return SampleActivityTransitionFirstBinding.inflate(layoutInflater)
+    override fun getViewBinding(): AnimationActivityTransitionFirstBinding {
+        return AnimationActivityTransitionFirstBinding.inflate(layoutInflater)
     }
 
     private var mIntent: Intent? = null
@@ -85,7 +85,7 @@ class TransitionFirstActivity : BaseVBActivity<SampleActivityTransitionFirstBind
                 //        .toBundle()
                 //)
                 ARouter.getInstance()
-                    .build(RouterPath.Sample.Animation.TransitionSecond)
+                    .build(RouterPath.Animation.Transition2)
                     .withString("transition", "share")
                     .withOptionsCompat(
                         ActivityOptionsCompat.makeSceneTransitionAnimation(

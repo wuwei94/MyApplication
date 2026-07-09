@@ -25,18 +25,6 @@ class SampleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("RecyclerViewNested", RouterPath.Sample.UI.RecyclerViewNested))
 
         routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("Animator", RouterPath.Sample.Animation.Animator))
-        routerItems.add(RouterItem("TransitionFirst", RouterPath.Sample.Animation.TransitionFirst))
-        routerItems.add(
-            RouterItem(
-                "TransitionSecond",
-                RouterPath.Sample.Animation.TransitionSecond
-            )
-        )
-        routerItems.add(RouterItem("RenderEffect", RouterPath.Sample.Animation.RenderEffect))
-        routerItems.add(RouterItem("RenderScript", RouterPath.Sample.Animation.RenderScript))
-
-        routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("AsyncTask", RouterPath.Sample.Background.AsyncTask))
         routerItems.add(RouterItem("HandlerThread", RouterPath.Sample.Background.HandlerThread))
         routerItems.add(RouterItem("JobScheduler", RouterPath.Sample.Background.JobScheduler))

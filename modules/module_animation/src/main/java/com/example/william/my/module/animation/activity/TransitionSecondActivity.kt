@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.animation
+package com.example.william.my.module.animation.activity
 
 import android.os.Bundle
 import android.transition.Explode
@@ -9,9 +9,9 @@ import android.view.Window
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseActivity
-import com.example.william.my.module.sample.R
+import com.example.william.my.module.animation.R
 
-@Route(path = RouterPath.Sample.Animation.TransitionSecond)
+@Route(path = RouterPath.Animation.Transition2)
 class TransitionSecondActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class TransitionSecondActivity : BaseActivity() {
             }
         }
         // 所有操作在设置内容视图之前
-        setContentView(R.layout.sample_activity_transition_second)
+        setContentView(R.layout.animation_activity_transition_second)
         findViewById<View>(R.id.transition_share).setOnClickListener {
             finishAfterTransition()
         }

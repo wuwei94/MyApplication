@@ -16,6 +16,8 @@ dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_module"))
 
+    implementation(project(":modules:module_animation"))
+
     //TODO
     implementation(project(":libs:lib_widget"))
 
