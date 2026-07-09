@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.system
+package com.example.william.my.module.sample.activity
 
 import android.Manifest
 import android.content.Context
@@ -16,7 +16,7 @@ import com.example.william.my.basic.basic_module.utils.Utils
 /**
  * ActivityResultContracts
  */
-@Route(path = RouterPath.Sample.System.ActivityResult)
+@Route(path = RouterPath.Sample.ActivityResult)
 class ActivityResultActivity : BasicResponseActivity() {
 
     override fun onResponseClick(view: View) {

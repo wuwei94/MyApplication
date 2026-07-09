@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.communication
+package com.example.william.my.module.sample.activity
 
 import android.content.ComponentName
 import android.content.Intent
@@ -16,7 +16,7 @@ import com.example.william.my.basic.basic_module.router.path.RouterPath
 import com.example.william.my.module.sample.service.MyMessageService
 import java.lang.ref.WeakReference
 
-@Route(path = RouterPath.Sample.Communication.Messenger)
+@Route(path = RouterPath.Sample.Messenger)
 class MessengerActivity : BasicResponseActivity() {
 
     //serviceMessenger表示的是Service端的Messenger，其内部指向了MyService的ServiceHandler实例

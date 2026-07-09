@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.communication
+package com.example.william.my.module.sample.activity
 
 import android.content.ComponentName
 import android.content.Intent
@@ -16,7 +16,7 @@ import com.example.william.my.module.sample.service.MyForegroundService
 /**
  * Service
  */
-@Route(path = RouterPath.Sample.Communication.Service)
+@Route(path = RouterPath.Sample.Service)
 class ServiceActivity : BasicResponseActivity() {
 
     private var mServiceConnection: ServiceConnection? = null

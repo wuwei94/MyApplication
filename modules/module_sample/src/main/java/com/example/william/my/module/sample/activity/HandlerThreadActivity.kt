@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.background
+package com.example.william.my.module.sample.activity
 
 import android.os.Bundle
 import android.os.Handler
@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 
-@Route(path = RouterPath.Sample.Background.HandlerThread)
+@Route(path = RouterPath.Sample.HandlerThread)
 class HandlerThreadActivity : BasicResponseActivity() {
 
     private var mHandler: Handler? = null

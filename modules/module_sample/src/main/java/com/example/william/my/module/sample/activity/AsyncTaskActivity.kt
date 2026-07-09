@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.background
+package com.example.william.my.module.sample.activity
 
 import android.os.AsyncTask
 import android.os.Bundle
@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference
 /**
  * AsyncTask
  */
-@Route(path = RouterPath.Sample.Background.AsyncTask)
+@Route(path = RouterPath.Sample.AsyncTask)
 class AsyncTaskActivity : BasicResponseActivity() {
 
     private var mAsyncTask: MyAsyncTask? = null

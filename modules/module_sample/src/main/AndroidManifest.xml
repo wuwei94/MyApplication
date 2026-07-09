@@ -4,24 +4,20 @@
     <application>
         <activity android:name=".SampleActivity" />
 
-        <activity android:name=".activity.system.ActivityResultActivity" />
-        <activity android:name=".activity.system.ActivityResultActivity2" />
-        <activity android:name=".activity.system.OnBackPressedActivity" />
+        <activity android:name=".activity.AsyncTaskActivity" />
+        <activity android:name=".activity.HandlerThreadActivity" />
+        <activity android:name=".activity.JobSchedulerActivity" />
 
-        <!-- 后台任务 -->
-        <activity android:name=".activity.background.AsyncTaskActivity" />
-        <activity android:name=".activity.background.HandlerThreadActivity" />
-        <activity android:name=".activity.background.JobSchedulerActivity" />
+        <activity android:name=".activity.BroadcastActivity" />
+        <activity android:name=".activity.MessengerActivity" />
+        <activity android:name=".activity.ServiceActivity" />
 
-        <!-- 组件通信 -->
-        <activity android:name=".activity.communication.BroadcastActivity" />
-        <activity android:name=".activity.communication.MessengerActivity" />
-        <activity android:name=".activity.communication.ServiceActivity" />
-
-        <!-- 系统功能 -->
-        <activity android:name=".activity.system.NotificationActivity" />
-        <activity android:name=".activity.system.PermissionActivity" />
-        <activity android:name=".activity.system.TypefaceActivity" />
+        <activity android:name=".activity.ActivityResultActivity" />
+        <activity android:name=".activity.ActivityResultActivity2" />
+        <activity android:name=".activity.OnBackPressedActivity" />
+        <activity android:name=".activity.NotificationActivity" />
+        <activity android:name=".activity.PermissionActivity" />
+        <activity android:name=".activity.TypefaceActivity" />
 
         <service android:name=".service.MyAIDLService" />
         <service android:name=".service.MyForegroundService" />

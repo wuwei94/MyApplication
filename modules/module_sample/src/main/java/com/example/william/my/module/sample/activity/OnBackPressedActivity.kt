@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.system
+package com.example.william.my.module.sample.activity
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -13,7 +13,7 @@ import com.example.william.my.lib.fragment.BaseVBFragment
 /**
  * onBackPressedDispatcher
  */
-@Route(path = RouterPath.Sample.System.OnBackPressed)
+@Route(path = RouterPath.Sample.OnBackPressed)
 class OnBackPressedActivity : BaseFragmentActivity() {
 
     override fun setFragment(): Fragment {

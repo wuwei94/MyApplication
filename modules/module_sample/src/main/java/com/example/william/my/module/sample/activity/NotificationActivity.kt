@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.system
+package com.example.william.my.module.sample.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
@@ -12,7 +12,7 @@ import com.example.william.my.basic.basic_module.R
 import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 
-@Route(path = RouterPath.Sample.System.Notification)
+@Route(path = RouterPath.Sample.Notification)
 class NotificationActivity : BasicResponseActivity() {
 
     private var mNotificationManager: NotificationManager? = null

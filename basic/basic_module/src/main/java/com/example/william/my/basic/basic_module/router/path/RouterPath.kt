@@ -33,31 +33,19 @@ object RouterPath {
 
         const val Main = "${Sample}/Main"
 
-        object Background {
-            private const val Background = "${Sample}/Background"
+        const val AsyncTask = "${Sample}/AsyncTask"
+        const val HandlerThread = "${Sample}/HandlerThread"
+        const val JobScheduler = "${Sample}/JobScheduler"
 
-            const val AsyncTask = "${Background}/AsyncTask"
-            const val HandlerThread = "${Background}/HandlerThread"
-            const val JobScheduler = "${Background}/JobScheduler"
-        }
+        const val Broadcast = "${Sample}/Broadcast"
+        const val Messenger = "${Sample}/Messenger"
+        const val Service = "${Sample}/Service"
 
-        object Communication {
-            private const val Communication = "${Sample}/Communication"
-
-            const val Broadcast = "${Communication}/Broadcast"
-            const val Messenger = "${Communication}/Messenger"
-            const val Service = "${Communication}/Service"
-        }
-
-        object System {
-            private const val System = "${Sample}/System"
-
-            const val ActivityResult = "${System}/ActivityResult"
-            const val OnBackPressed = "${System}/OnBackPressed"
-            const val Notification = "${System}/Notification"
-            const val Permission = "${System}/Permission"
-            const val Typeface = "${System}/Typeface"
-        }
+        const val ActivityResult = "${Sample}/ActivityResult"
+        const val OnBackPressed = "${Sample}/OnBackPressed"
+        const val Notification = "${Sample}/Notification"
+        const val Permission = "${Sample}/Permission"
+        const val Typeface = "${Sample}/Typeface"
     }
 
     // 动画

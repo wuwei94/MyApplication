@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.system
+package com.example.william.my.module.sample.activity
 
 import android.content.Intent
 import android.os.Bundle

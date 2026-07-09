@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.background
+package com.example.william.my.module.sample.activity
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -17,7 +17,7 @@ import com.example.william.my.basic.basic_module.utils.Utils
 import com.example.william.my.module.sample.service.MyJobSchedulerService
 import java.lang.ref.WeakReference
 
-@Route(path = RouterPath.Sample.Background.JobScheduler)
+@Route(path = RouterPath.Sample.JobScheduler)
 class JobSchedulerActivity : BasicResponseActivity() {
 
     private var mServiceComponent: ComponentName? = null

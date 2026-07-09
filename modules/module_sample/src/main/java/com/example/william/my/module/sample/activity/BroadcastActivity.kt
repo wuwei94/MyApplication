@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity.communication
+package com.example.william.my.module.sample.activity
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference
 /**
  * BroadcastReceiver
  */
-@Route(path = RouterPath.Sample.Communication.Broadcast)
+@Route(path = RouterPath.Sample.Broadcast)
 class BroadcastActivity : BasicResponseActivity() {
 
     private var mMessageReceiver: MessageReceiver? = null
