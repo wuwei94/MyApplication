@@ -1,6 +1,6 @@
 package com.example.william.my.module.arch.intent
 
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
 
 sealed class ArticleIntent {
     class LoadArticleIntent(val page: Int) : ArticleIntent()

@@ -15,7 +15,7 @@
  */
 package com.example.william.my.module.arch.contract
 
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
 import com.example.william.my.lib.presenter.IBasePresenter
 import com.example.william.my.lib.view.IBaseView
 

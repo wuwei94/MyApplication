@@ -11,11 +11,11 @@ import androidx.paging.cachedIn
 import androidx.paging.liveData
 import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.flowable
-import com.example.william.my.basic.basic_repo.api.ArticleApi
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
-import com.example.william.my.basic.basic_repo.database.ArticleDatabase
+import com.example.william.my.basic.basic_repository.api.ArticleApi
+import com.example.william.my.basic.basic_repository.bean.ArticleData
+import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repository.database.ArticleDatabase
 import com.example.william.my.module.jetpack.paging.mediator.ArticleRemoteMediator
 import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
 import com.example.william.my.module.jetpack.paging.source.ArticlePagingSource

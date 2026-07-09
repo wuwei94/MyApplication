@@ -17,9 +17,9 @@ package com.example.william.my.module.arch.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repository.bean.ArticleData
+import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
 import com.example.william.my.module.arch.intent.ArticleIntent
 import com.example.william.my.module.arch.intent.ArticleViewState
 import kotlinx.coroutines.channels.Channel

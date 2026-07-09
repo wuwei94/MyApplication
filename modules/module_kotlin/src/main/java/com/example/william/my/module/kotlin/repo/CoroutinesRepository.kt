@@ -1,7 +1,7 @@
 package com.example.william.my.module.kotlin.repo
 
-import com.example.william.my.basic.basic_data.api.NetworkApi
-import com.example.william.my.basic.basic_data.bean.LoginData
+import com.example.william.my.basic.basic_repository.api.NetworkApi
+import com.example.william.my.basic.basic_repository.bean.LoginData
 import com.example.william.my.core.retrofit.helper.RetrofitHelper
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult

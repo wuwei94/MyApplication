@@ -1,8 +1,8 @@
 package com.example.william.my.module.network.activity.retrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_data.api.NetworkApi
-import com.example.william.my.basic.basic_data.bean.UserData
+import com.example.william.my.basic.basic_repository.api.NetworkApi
+import com.example.william.my.basic.basic_repository.bean.UserData
 import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_module.base.Constants
 import com.example.william.my.basic.basic_module.router.path.RouterPath

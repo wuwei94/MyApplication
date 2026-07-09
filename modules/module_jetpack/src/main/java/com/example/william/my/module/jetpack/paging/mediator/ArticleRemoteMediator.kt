@@ -6,11 +6,11 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.william.my.basic.basic_module.utils.Utils
-import com.example.william.my.basic.basic_repo.api.ArticleApi
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
-import com.example.william.my.basic.basic_repo.database.ArticleDatabase
+import com.example.william.my.basic.basic_repository.api.ArticleApi
+import com.example.william.my.basic.basic_repository.bean.ArticleData
+import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repository.database.ArticleDatabase
 import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
 import com.example.william.my.module.jetpack.paging.remotekey.data.RemoteKeyData
 import retrofit2.HttpException

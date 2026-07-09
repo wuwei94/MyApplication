@@ -15,9 +15,9 @@
  */
 package com.example.william.my.module.arch.presenter
 
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repository.bean.ArticleData
+import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
 import com.example.william.my.module.arch.contract.ArticleContract
 import com.example.william.my.module.arch.fragment.MvpFragment
 

@@ -50,8 +50,7 @@ MyApplication/
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_module            # 通用 Bus、Router、UI 脚手架
-│   ├── basic_data              # 通用数据源 / OkHttp / Retrofit 基础封装
-│   ├── basic_repo              # Repository 基类、Room、依赖装配
+│   ├── basic_repository        # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 │   └── basic_flutter           # Flutter 基础设施（FVM / 资源 / 平台桥接）
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket / lib_download

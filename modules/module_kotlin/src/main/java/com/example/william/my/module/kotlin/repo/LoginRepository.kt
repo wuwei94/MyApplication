@@ -1,6 +1,6 @@
 package com.example.william.my.module.kotlin.repo
 
-import com.example.william.my.basic.basic_data.bean.LoginData
+import com.example.william.my.basic.basic_repository.bean.LoginData
 import com.example.william.my.basic.basic_module.base.Constants
 import com.example.william.my.module.kotlin.data.NetworkResult
 import com.example.william.my.module.kotlin.utils.ThreadUtils

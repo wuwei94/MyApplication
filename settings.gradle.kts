@@ -78,8 +78,7 @@ include(":app")
 include(":basic:basic_lib")
 include(":basic:basic_module")
 
-include(":basic:basic_data")
-include(":basic:basic_repo")
+include(":basic:basic_repository")
 
 include(":libs:lib_ktor")
 include(":libs:lib_okhttp")

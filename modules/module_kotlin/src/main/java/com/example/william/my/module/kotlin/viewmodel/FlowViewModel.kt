@@ -3,7 +3,7 @@ package com.example.william.my.module.kotlin.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.william.my.basic.basic_data.bean.LoginData
+import com.example.william.my.basic.basic_repository.bean.LoginData
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult
 import com.example.william.my.module.kotlin.repo.FlowRepository
