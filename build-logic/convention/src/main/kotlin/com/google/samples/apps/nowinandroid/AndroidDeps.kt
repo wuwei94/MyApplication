@@ -71,6 +71,8 @@ internal fun Project.configureFeatureAndroid(
 ) {
     commonExtension.apply {
         dependencies {
+            "implementation"(project(":modules:module_animation"))
+            "implementation"(project(":modules:module_ui"))
             "implementation"(project(":modules:module_sample"))
             "implementation"(project(":modules:module_widget"))
 

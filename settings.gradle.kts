@@ -122,6 +122,9 @@ include(":modules:module_jetpack")
 // 动画
 include(":modules:module_animation")
 
+// UI 控件
+include(":modules:module_ui")
+
 // Compoe
 include(":modules:module_compose")
 

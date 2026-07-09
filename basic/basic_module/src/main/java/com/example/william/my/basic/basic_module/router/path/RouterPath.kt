@@ -33,24 +33,6 @@ object RouterPath {
 
         const val Main = "${Sample}/Main"
 
-        object UI {
-            private const val UI = "${Sample}/UI"
-
-            const val Appbar = "${UI}/Appbar"
-            const val Dialog = "${UI}/Dialog"
-            const val FlexBox = "${UI}/FlexBox"
-            const val Fragment1 = "${UI}/Fragment1"
-            const val Fragment2 = "${UI}/Fragment2"
-            const val FragmentTabHost = "${UI}/FragmentTabHost"
-            const val RecyclerView = "${UI}/RecyclerView"
-            const val ViewFlipper = "${UI}/ViewFlipper"
-            const val ViewPager = "${UI}/ViewPager"
-            const val ViewPager2 = "${UI}/ViewPager2"
-            const val WebView = "${UI}/WebView"
-            const val FragmentViewPager = "${UI}/FragmentViewPager"
-            const val RecyclerViewNested = "${UI}/RecyclerViewNested"
-        }
-
         object Background {
             private const val Background = "${Sample}/Background"
 
@@ -90,6 +72,28 @@ object RouterPath {
         const val Transition2 = "${Animation}/Transition2"
         const val RenderEffect = "${Animation}/RenderEffect"
         const val RenderScript = "${Animation}/RenderScript"
+    }
+
+    // UI 控件
+    object UI {
+
+        private const val UI = "/UI"
+
+        const val Main = "${UI}/Main"
+
+        const val Appbar = "${UI}/Appbar"
+        const val Dialog = "${UI}/Dialog"
+        const val FlexBox = "${UI}/FlexBox"
+        const val Fragment1 = "${UI}/Fragment1"
+        const val Fragment2 = "${UI}/Fragment2"
+        const val FragmentTabHost = "${UI}/FragmentTabHost"
+        const val RecyclerView = "${UI}/RecyclerView"
+        const val ViewFlipper = "${UI}/ViewFlipper"
+        const val ViewPager = "${UI}/ViewPager"
+        const val ViewPager2 = "${UI}/ViewPager2"
+        const val WebView = "${UI}/WebView"
+        const val FragmentViewPager = "${UI}/FragmentViewPager"
+        const val RecyclerViewNested = "${UI}/RecyclerViewNested"
     }
 
     // 控件

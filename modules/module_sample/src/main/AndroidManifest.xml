@@ -8,21 +8,6 @@
         <activity android:name=".activity.system.ActivityResultActivity2" />
         <activity android:name=".activity.system.OnBackPressedActivity" />
 
-        <!-- UI组件 -->
-        <activity android:name=".activity.ui.AppBarActivity" />
-        <activity android:name=".activity.ui.DialogActivity" />
-        <activity android:name=".activity.ui.FlexBoxActivity" />
-        <activity android:name=".activity.ui.FragmentActivity1" />
-        <activity android:name=".activity.ui.FragmentActivity2" />
-        <activity android:name=".activity.ui.FragmentTabHostActivity" />
-        <activity android:name=".activity.ui.RecyclerViewActivity" />
-        <activity android:name=".activity.ui.ViewFlipperActivity" />
-        <activity android:name=".activity.ui.ViewPagerActivity" />
-        <activity android:name=".activity.ui.ViewPagerActivity2" />
-        <activity android:name=".activity.ui.WebViewActivity" />
-        <activity android:name=".activity.ui.FragmentViewPagerActivity" />
-        <activity android:name=".activity.ui.RecyclerViewNestedActivity" />
-
         <!-- 后台任务 -->
         <activity android:name=".activity.background.AsyncTaskActivity" />
         <activity android:name=".activity.background.HandlerThreadActivity" />
