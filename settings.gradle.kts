@@ -95,8 +95,14 @@ include(":libs:lib_widget")
 include(":libs:lib_eventbus")
 include(":libs:lib_ninepatch")
 
-// 示例
-include(":modules:module_sample")
+// 同步
+include(":modules:module_sync")
+// 服务
+include(":modules:module_service")
+// 组件交互
+include(":modules:module_component")
+// 系统能力
+include(":modules:module_system")
 // 控件
 include(":modules:module_widget")
 

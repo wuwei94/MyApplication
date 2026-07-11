@@ -12,6 +12,9 @@
         <activity android:name=".activity.media.CropActivity" />
         <activity android:name=".activity.media.FloatWindowActivity" />
         <activity android:name=".activity.media.HookActivity" />
+
+        <!-- 展示 -->
+        <activity android:name=".activity.display.TypefaceActivity" />
     </application>
 
 </manifest>

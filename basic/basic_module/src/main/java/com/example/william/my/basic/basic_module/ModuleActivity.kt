@@ -33,7 +33,10 @@ class ModuleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("UI", RouterPath.UI.Main))
 
         routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("SampleActivity", RouterPath.Sample.Main))
+        routerItems.add(RouterItem("SyncActivity", RouterPath.Sync.Main))
+        routerItems.add(RouterItem("ServiceActivity", RouterPath.ServiceDemo.Main))
+        routerItems.add(RouterItem("ComponentActivity", RouterPath.Component.Main))
+        routerItems.add(RouterItem("SystemActivity", RouterPath.System.Main))
         routerItems.add(RouterItem("WidgetActivity", RouterPath.Widget.Main))
 
         routerItems.add(RouterItem("", ""))

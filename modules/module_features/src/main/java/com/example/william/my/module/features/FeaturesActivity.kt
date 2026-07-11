@@ -19,6 +19,9 @@ class FeaturesActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Crop", RouterPath.Features.Media.Crop))
         routerItems.add(RouterItem("FloatWindow", RouterPath.Features.Media.FloatWindow))
         routerItems.add(RouterItem("Hook", RouterPath.Features.Media.Hook))
+
+        routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("Typeface", RouterPath.Features.Display.Typeface))
         return routerItems
     }
 }

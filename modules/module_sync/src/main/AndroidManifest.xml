@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".SyncActivity" />
+        <activity android:name=".activity.AsyncTaskActivity" />
+        <activity android:name=".activity.HandlerThreadActivity" />
+        <activity android:name=".activity.JobSchedulerActivity" />
+        <service
+            android:name=".service.MyJobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+    </application>
+</manifest>

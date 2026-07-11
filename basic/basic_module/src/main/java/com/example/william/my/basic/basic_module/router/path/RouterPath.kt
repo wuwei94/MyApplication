@@ -27,25 +27,46 @@ object RouterPath {
         const val FragmentBasicRecycler = "${Fragment}/fragment/basic_recycler"
     }
 
-    // 示例
-    object Sample {
-        private const val Sample = "/Sample"
+    // 同步
+    object Sync {
+        private const val Sync = "/Sync"
 
-        const val Main = "${Sample}/Main"
+        const val Main = "${Sync}/Main"
 
-        const val AsyncTask = "${Sample}/AsyncTask"
-        const val HandlerThread = "${Sample}/HandlerThread"
-        const val JobScheduler = "${Sample}/JobScheduler"
+        const val AsyncTask = "${Sync}/AsyncTask"
+        const val HandlerThread = "${Sync}/HandlerThread"
+        const val JobScheduler = "${Sync}/JobScheduler"
+    }
 
-        const val Broadcast = "${Sample}/Broadcast"
-        const val Messenger = "${Sample}/Messenger"
-        const val Service = "${Sample}/Service"
+    // 服务
+    object ServiceDemo {
+        private const val ServiceDemo = "/ServiceDemo"
 
-        const val ActivityResult = "${Sample}/ActivityResult"
-        const val OnBackPressed = "${Sample}/OnBackPressed"
-        const val Notification = "${Sample}/Notification"
-        const val Permission = "${Sample}/Permission"
-        const val Typeface = "${Sample}/Typeface"
+        const val Main = "${ServiceDemo}/Main"
+
+        const val Service = "${ServiceDemo}/Service"
+        const val Messenger = "${ServiceDemo}/Messenger"
+    }
+
+    // 组件交互
+    object Component {
+        private const val Component = "/Component"
+
+        const val Main = "${Component}/Main"
+
+        const val Broadcast = "${Component}/Broadcast"
+        const val ActivityResult = "${Component}/ActivityResult"
+        const val OnBackPressed = "${Component}/OnBackPressed"
+    }
+
+    // 系统能力
+    object System {
+        private const val System = "/System"
+
+        const val Main = "${System}/Main"
+
+        const val Notification = "${System}/Notification"
+        const val Permission = "${System}/Permission"
     }
 
     // 动画
@@ -292,6 +313,12 @@ object RouterPath {
             const val Crop = "${Media}/Crop"
             const val FloatWindow = "${Media}/FloatWindow"
             const val Hook = "${Media}/Hook"
+        }
+
+        object Display {
+            private const val Display = "${Features}/Display"
+
+            const val Typeface = "${Display}/Typeface"
         }
     }
 
