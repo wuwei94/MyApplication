@@ -27,7 +27,71 @@ object RouterPath {
         const val FragmentBasicRecycler = "${Fragment}/fragment/basic_recycler"
     }
 
-    // 同步
+    // ═══════════════════════════════════════════
+    // UI 三件套
+    // ═══════════════════════════════════════════
+
+    // UI 组件
+    object UI {
+
+        private const val UI = "/UI"
+
+        const val Main = "${UI}/Main"
+
+        const val Appbar = "${UI}/Appbar"
+        const val Dialog = "${UI}/Dialog"
+        const val FlexBox = "${UI}/FlexBox"
+        const val Fragment1 = "${UI}/Fragment1"
+        const val Fragment2 = "${UI}/Fragment2"
+        const val FragmentTabHost = "${UI}/FragmentTabHost"
+        const val RecyclerView = "${UI}/RecyclerView"
+        const val ViewFlipper = "${UI}/ViewFlipper"
+        const val ViewPager = "${UI}/ViewPager"
+        const val ViewPager2 = "${UI}/ViewPager2"
+        const val WebView = "${UI}/WebView"
+        const val FragmentViewPager = "${UI}/FragmentViewPager"
+        const val RecyclerViewNested = "${UI}/RecyclerViewNested"
+    }
+
+    // 动画
+    object Anim {
+
+        private const val Anim = "/Anim"
+
+        const val Main = "${Anim}/Main"
+
+        const val ObjectAnimator = "${Anim}/ObjectAnimator"
+        const val AnimatorSet = "${Anim}/AnimatorSet"
+        const val ValueAnimator = "${Anim}/ValueAnimator"
+        const val Keyframe = "${Anim}/Keyframe"
+        const val Transition = "${Anim}/Transition"
+        const val Transition2 = "${Anim}/Transition2"
+        const val RenderEffect = "${Anim}/RenderEffect"
+        const val RenderScript = "${Anim}/RenderScript"
+    }
+
+    // 自定义控件
+    object Widget {
+        private const val Widget = "/Widget"
+
+        const val Main = "${Widget}/Main"
+
+        const val AlertDialog = "${Widget}/AlertDialog"
+        const val BlurView = "${Widget}/BlurView"
+        const val InfiniteImage = "${Widget}/InfiniteImage"
+        const val MarqueeView = "${Widget}/MarqueeView"
+        const val Sensor3DView = "${Widget}/Sensor3DView"
+        const val Spinner = "${Widget}/Spinner"
+        const val TitleBar = "${Widget}/TitleBar"
+        const val VerifyCode = "${Widget}/VerifyCode"
+        const val NinePatch = "${Widget}/NinePatch"
+    }
+
+    // ═══════════════════════════════════════════
+    // 平台能力
+    // ═══════════════════════════════════════════
+
+    // 异步处理
     object Sync {
         private const val Sync = "/Sync"
 
@@ -36,17 +100,6 @@ object RouterPath {
         const val AsyncTask = "${Sync}/AsyncTask"
         const val HandlerThread = "${Sync}/HandlerThread"
         const val JobScheduler = "${Sync}/JobScheduler"
-    }
-
-    // 示例
-    object Sample {
-        private const val Sample = "/Sample"
-
-        const val Main = "${Sample}/Main"
-
-        const val Hook = "${Sample}/Hook"
-        const val Typeface = "${Sample}/Typeface"
-        const val FloatWindow = "${Sample}/FloatWindow"
     }
 
     // 组件交互
@@ -73,63 +126,43 @@ object RouterPath {
         const val SecureKey = "${System}/SecureKey"
     }
 
-    // 动画
-    object Anim {
+    // 技术示例
+    object Sample {
+        private const val Sample = "/Sample"
 
-        private const val Anim = "/Anim"
+        const val Main = "${Sample}/Main"
 
-        const val Main = "${Anim}/Main"
-
-        const val ObjectAnimator = "${Anim}/ObjectAnimator"
-        const val AnimatorSet = "${Anim}/AnimatorSet"
-        const val ValueAnimator = "${Anim}/ValueAnimator"
-        const val Keyframe = "${Anim}/Keyframe"
-        const val Transition = "${Anim}/Transition"
-        const val Transition2 = "${Anim}/Transition2"
-        const val RenderEffect = "${Anim}/RenderEffect"
-        const val RenderScript = "${Anim}/RenderScript"
+        const val Hook = "${Sample}/Hook"
+        const val Typeface = "${Sample}/Typeface"
+        const val FloatWindow = "${Sample}/FloatWindow"
     }
 
-    // UI 控件
-    object UI {
+    // 业务功能
+    object Features {
+        private const val Features = "/Features"
 
-        private const val UI = "/UI"
+        const val Main = "${Features}/Main"
 
-        const val Main = "${UI}/Main"
+        object Business {
+            private const val Business = "${Features}/Business"
 
-        const val Appbar = "${UI}/Appbar"
-        const val Dialog = "${UI}/Dialog"
-        const val FlexBox = "${UI}/FlexBox"
-        const val Fragment1 = "${UI}/Fragment1"
-        const val Fragment2 = "${UI}/Fragment2"
-        const val FragmentTabHost = "${UI}/FragmentTabHost"
-        const val RecyclerView = "${UI}/RecyclerView"
-        const val ViewFlipper = "${UI}/ViewFlipper"
-        const val ViewPager = "${UI}/ViewPager"
-        const val ViewPager2 = "${UI}/ViewPager2"
-        const val WebView = "${UI}/WebView"
-        const val FragmentViewPager = "${UI}/FragmentViewPager"
-        const val RecyclerViewNested = "${UI}/RecyclerViewNested"
+            const val Turntable = "${Business}/Turntable"
+            const val MicAnimation = "${Business}/MicAnimation"
+        }
+
+        object Media {
+            private const val Media = "${Features}/Media"
+
+            const val Camera = "${Media}/Camera"
+            const val Crop = "${Media}/Crop"
+        }
     }
 
-    // 控件
-    object Widget {
-        private const val Widget = "/Widget"
+    // ═══════════════════════════════════════════
+    // 工具 / 网络 / 第三方库
+    // ═══════════════════════════════════════════
 
-        const val Main = "${Widget}/Main"
-
-        const val AlertDialog = "${Widget}/AlertDialog"
-        const val BlurView = "${Widget}/BlurView"
-        const val InfiniteImage = "${Widget}/InfiniteImage"
-        const val MarqueeView = "${Widget}/MarqueeView"
-        const val Sensor3DView = "${Widget}/Sensor3DView"
-        const val Spinner = "${Widget}/Spinner"
-        const val TitleBar = "${Widget}/TitleBar"
-        const val VerifyCode = "${Widget}/VerifyCode"
-        const val NinePatch = "${Widget}/NinePatch"
-    }
-
-    // 工具库
+    // 工具类
     object Utils {
         private const val Utils = "/Utils"
 
@@ -274,6 +307,10 @@ object RouterPath {
         }
     }
 
+    // ═══════════════════════════════════════════
+    // 架构 / 语言 / 框架
+    // ═══════════════════════════════════════════
+
     // 架构模式
     object Arch {
         private const val Arch = "/Arch"
@@ -299,27 +336,6 @@ object RouterPath {
         const val FlowEventBus = "${Event}/flow_event_bus"
     }
 
-    // 业务功能
-    object Features {
-        private const val Features = "/Features"
-
-        const val Main = "${Features}/Main"
-
-        object Business {
-            private const val Business = "${Features}/Business"
-
-            const val Turntable = "${Business}/Turntable"
-            const val MicAnimation = "${Business}/MicAnimation"
-        }
-
-        object Media {
-            private const val Media = "${Features}/Media"
-
-            const val Camera = "${Media}/Camera"
-            const val Crop = "${Media}/Crop"
-        }
-    }
-
     // Kotlin 特性
     object Kotlin {
         private const val Kotlin = "/Kotlin"
@@ -330,7 +346,7 @@ object RouterPath {
         const val Flow = "${Kotlin}/Flow"
     }
 
-    // Jetpack 组件库
+    // Jetpack 组件
     object JetPack {
         private const val JetPack = "/JetPack"
 
@@ -342,6 +358,10 @@ object RouterPath {
         const val Paging = "${JetPack}/Paging"
         const val Hilt = "${JetPack}/Hilt"
     }
+
+    // ═══════════════════════════════════════════
+    // 新范式
+    // ═══════════════════════════════════════════
 
     // Compose
     object Compose {
