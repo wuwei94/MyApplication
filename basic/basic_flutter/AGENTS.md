@@ -27,6 +27,13 @@ lib/
 | docs/demos.md | 示例分组详情（10 个分组，93 个叶子页面） |
 | docs/dependencies.md | 依赖清单（按分类列出所有三方包） |
 | docs/conventions.md | 开发约定（Catalog 设计、路由模式、编码规范） |
+| SKILLS.md | Skills 参考（23 个 Flutter 相关 Skill） |
+
+## Skills
+
+- Skill 文件存放位置：`.agents/skills/`
+- 项目自定义 Skill：`flutter-example`
+- 完整 Skill 列表见 `SKILLS.md`
 
 ## 不变量
 
