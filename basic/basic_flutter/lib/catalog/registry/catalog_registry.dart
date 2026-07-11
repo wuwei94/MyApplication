@@ -1,15 +1,15 @@
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
+import 'package:basic_flutter/demos/animation/catalog.dart';
 import 'package:basic_flutter/demos/basics/catalog.dart';
 import 'package:basic_flutter/demos/image/catalog.dart';
-import 'package:basic_flutter/demos/network/catalog.dart';
-import 'package:basic_flutter/demos/storage/catalog.dart';
-import 'package:basic_flutter/demos/animation/catalog.dart';
-import 'package:basic_flutter/demos/packages/catalog.dart';
-import 'package:basic_flutter/demos/video/catalog.dart';
-import 'package:basic_flutter/demos/state_management/catalog.dart';
 import 'package:basic_flutter/demos/layout/catalog.dart';
+import 'package:basic_flutter/demos/network/catalog.dart';
+import 'package:basic_flutter/demos/packages/catalog.dart';
 import 'package:basic_flutter/demos/showcase/catalog.dart';
-import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/demos/state_management/catalog.dart';
+import 'package:basic_flutter/demos/storage/catalog.dart';
+import 'package:basic_flutter/demos/video/catalog.dart';
 
 /// App catalog 注册表。
 ///

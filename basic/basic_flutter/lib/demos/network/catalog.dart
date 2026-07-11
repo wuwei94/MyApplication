@@ -1,7 +1,7 @@
-import 'package:basic_flutter/demos/network/dio_example.dart';
-import 'package:basic_flutter/demos/network/http_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
+import 'package:basic_flutter/demos/network/dio_example.dart';
+import 'package:basic_flutter/demos/network/http_example.dart';
 import 'package:flutter/widgets.dart';
 
 /// Network 模块

@@ -1,7 +1,7 @@
-import 'package:basic_flutter/demos/basics/counter/counter_example.dart';
-import 'package:basic_flutter/demos/basics/getx_app/getx_app.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
+import 'package:basic_flutter/demos/basics/counter/counter_example.dart';
+import 'package:basic_flutter/demos/basics/getx_app/getx_app.dart';
 import 'package:flutter/widgets.dart';
 
 /// Basics 模块

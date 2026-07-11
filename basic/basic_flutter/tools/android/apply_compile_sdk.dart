@@ -15,7 +15,7 @@ void main() {
     err('未找到 .android/build.gradle,请先 flutter pub get');
     return;
   }
-  String content = file.readAsStringSync();
+  final String content = file.readAsStringSync();
 
   if (content.contains(_header)) {
     out('钩子已存在,跳过');
@@ -39,7 +39,7 @@ subprojects {
 }
 ''';
   final String updated =
-      content.substring(0, at) + '\n' + hook + '\n' + content.substring(at);
+      '${content.substring(0, at)}\n$hook\n${content.substring(at)}';
   file.writeAsStringSync(updated);
   out('已添加 \$_plugin compileSdkVersion 对齐钩子');
 }

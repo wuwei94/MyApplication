@@ -1,7 +1,7 @@
-import 'package:basic_flutter/demos/video/chewie_video_player_example.dart';
-import 'package:basic_flutter/demos/video/video_player_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
+import 'package:basic_flutter/demos/video/chewie_video_player_example.dart';
+import 'package:basic_flutter/demos/video/video_player_example.dart';
 import 'package:flutter/widgets.dart';
 
 /// Video 模块

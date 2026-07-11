@@ -1,6 +1,6 @@
-import 'package:basic_flutter/demos/showcase/custom_local_font_example.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
 import 'package:basic_flutter/catalog/models/catalog_section.dart';
+import 'package:basic_flutter/demos/showcase/custom_local_font_example.dart';
 import 'package:flutter/widgets.dart';
 
 /// Showcase 模块

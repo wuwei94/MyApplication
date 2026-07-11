@@ -1,9 +1,9 @@
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/animation/lottie_example.dart';
 import 'package:basic_flutter/demos/animation/pag_example.dart';
 import 'package:basic_flutter/demos/animation/svg_example.dart';
 import 'package:basic_flutter/demos/animation/svga_example.dart';
-import 'package:basic_flutter/catalog/models/catalog_entry.dart';
-import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Animation 模块

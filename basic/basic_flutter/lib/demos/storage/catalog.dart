@@ -1,3 +1,5 @@
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/storage/drift_example.dart';
 import 'package:basic_flutter/demos/storage/hive_example.dart';
 import 'package:basic_flutter/demos/storage/isar_example.dart';
@@ -5,8 +7,6 @@ import 'package:basic_flutter/demos/storage/objectbox_example.dart';
 import 'package:basic_flutter/demos/storage/path_provider_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
 import 'package:basic_flutter/demos/storage/shared_preferences_example.dart';
-import 'package:basic_flutter/catalog/models/catalog_entry.dart';
-import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// Storage 模块

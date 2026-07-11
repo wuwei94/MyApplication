@@ -1,9 +1,9 @@
+import 'package:basic_flutter/catalog/models/catalog_entry.dart';
+import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/state_management/bloc/bloc_example.dart';
 import 'package:basic_flutter/demos/state_management/cubit/cubit_example.dart';
 import 'package:basic_flutter/demos/state_management/provider/provider_example.dart';
 import 'package:basic_flutter/demos/state_management/riverpod/riverpod_example.dart';
-import 'package:basic_flutter/catalog/models/catalog_entry.dart';
-import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:flutter/widgets.dart';
 
 /// State Management 模块

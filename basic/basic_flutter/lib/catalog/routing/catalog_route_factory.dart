@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
-import 'package:basic_flutter/catalog/services/catalog_tree_resolver.dart';
 import 'package:basic_flutter/catalog/models/catalog_entry.dart';
-import 'package:basic_flutter/catalog/pages/catalog_page.dart';
 import 'package:basic_flutter/catalog/models/resolved_catalog_entry.dart';
+import 'package:basic_flutter/catalog/pages/catalog_page.dart';
+import 'package:basic_flutter/catalog/services/catalog_tree_resolver.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart' as go_router;
 

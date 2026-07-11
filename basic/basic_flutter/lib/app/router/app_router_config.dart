@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart' as auto_route;
-import 'package:basic_flutter/catalog/registry/catalog_registry.dart';
 import 'package:basic_flutter/app/home/app_home.dart';
 import 'package:basic_flutter/app/router/app_router_type.dart';
+import 'package:basic_flutter/catalog/registry/catalog_registry.dart';
 import 'package:basic_flutter/catalog/routing/catalog_route_factory.dart';
 import 'package:basic_flutter/core/utils/ui/smart_dialog.dart';
 import 'package:flutter/widgets.dart';

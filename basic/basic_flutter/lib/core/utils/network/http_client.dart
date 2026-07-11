@@ -201,7 +201,7 @@ class HttpClient {
     required RequestBodyType bodyType,
   }) {
     final Map<String, String> requestHeaders = <String, String>{
-      if (headers != null) ...headers,
+      ...?headers,
     };
 
     if (body == null || _containsContentType(headers)) {
