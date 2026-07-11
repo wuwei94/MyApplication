@@ -12,16 +12,10 @@ class FeaturesActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Turntable", RouterPath.Features.Business.Turntable))
         routerItems.add(RouterItem("MicAnimation", RouterPath.Features.Business.MicAnimation))
-        routerItems.add(RouterItem("SecureKey", RouterPath.Features.Business.SecureKey))
 
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("Camera", RouterPath.Features.Media.Camera))
         routerItems.add(RouterItem("Crop", RouterPath.Features.Media.Crop))
-        routerItems.add(RouterItem("FloatWindow", RouterPath.Features.Media.FloatWindow))
-        routerItems.add(RouterItem("Hook", RouterPath.Features.Media.Hook))
-
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("Typeface", RouterPath.Features.Display.Typeface))
         return routerItems
     }
 }

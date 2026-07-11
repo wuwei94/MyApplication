@@ -1,23 +1,23 @@
-package com.example.william.my.module.features.activity
+package com.example.william.my.module.system.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
-import com.example.william.my.module.features.databinding.FeaturesActivitySecureKeyBinding
-import com.example.william.my.module.features.utils.SecureKeyDemoUtils
-import com.example.william.my.module.features.utils.SecureKeyInfo
-import com.example.william.my.module.features.utils.SecureSignatureResult
+import com.example.william.my.module.system.databinding.SystemActivitySecureKeyBinding
+import com.example.william.my.module.system.utils.SecureKeyDemoUtils
+import com.example.william.my.module.system.utils.SecureKeyInfo
+import com.example.william.my.module.system.utils.SecureSignatureResult
 
-@Route(path = RouterPath.Features.Business.SecureKey)
-class SecureKeyActivity : BaseVBActivity<FeaturesActivitySecureKeyBinding>() {
+@Route(path = RouterPath.System.SecureKey)
+class SecureKeyActivity : BaseVBActivity<SystemActivitySecureKeyBinding>() {
 
     companion object {
         private const val EMPTY_LOGS_TEXT = "暂无日志"
     }
 
-    override fun getViewBinding(): FeaturesActivitySecureKeyBinding {
-        return FeaturesActivitySecureKeyBinding.inflate(layoutInflater)
+    override fun getViewBinding(): SystemActivitySecureKeyBinding {
+        return SystemActivitySecureKeyBinding.inflate(layoutInflater)
     }
 
     private var currentKeyInfo: SecureKeyInfo? = null

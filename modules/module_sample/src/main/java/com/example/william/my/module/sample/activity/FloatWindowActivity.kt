@@ -1,4 +1,4 @@
-package com.example.william.my.module.features.activity.media
+package com.example.william.my.module.sample.activity
 
 import android.animation.ValueAnimator
 import android.content.Intent
@@ -19,13 +19,13 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
 import com.example.william.my.basic.basic_module.utils.Utils
-import com.example.william.my.module.features.R
+import com.example.william.my.module.sample.R
 import kotlin.math.abs
 
 /**
  * 悬浮窗
  */
-@Route(path = RouterPath.Features.Media.FloatWindow)
+@Route(path = RouterPath.Sample.FloatWindow)
 class FloatWindowActivity : BasicResponseActivity() {
 
     private var mFloatWindow: View? = null
@@ -70,7 +70,7 @@ class FloatWindowActivity : BasicResponseActivity() {
 
     private fun initFloatWindow() {
         mFloatWindow = LayoutInflater.from(this)
-            .inflate(R.layout.features_layout_float_window, window.decorView as ViewGroup, false)
+            .inflate(R.layout.sample_layout_float_window, window.decorView as ViewGroup, false)
 
         mFloatWindow?.let { float ->
             float.setOnTouchListener(object : View.OnTouchListener {

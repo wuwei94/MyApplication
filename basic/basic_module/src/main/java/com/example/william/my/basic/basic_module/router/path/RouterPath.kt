@@ -38,6 +38,17 @@ object RouterPath {
         const val JobScheduler = "${Sync}/JobScheduler"
     }
 
+    // 示例
+    object Sample {
+        private const val Sample = "/Sample"
+
+        const val Main = "${Sample}/Main"
+
+        const val Hook = "${Sample}/Hook"
+        const val Typeface = "${Sample}/Typeface"
+        const val FloatWindow = "${Sample}/FloatWindow"
+    }
+
     // 组件交互
     object Component {
         private const val Component = "/Component"
@@ -59,6 +70,7 @@ object RouterPath {
 
         const val Notification = "${System}/Notification"
         const val Permission = "${System}/Permission"
+        const val SecureKey = "${System}/SecureKey"
     }
 
     // 动画
@@ -295,7 +307,6 @@ object RouterPath {
 
             const val Turntable = "${Business}/Turntable"
             const val MicAnimation = "${Business}/MicAnimation"
-            const val SecureKey = "${Business}/SecureKey"
         }
 
         object Media {
@@ -303,14 +314,6 @@ object RouterPath {
 
             const val Camera = "${Media}/Camera"
             const val Crop = "${Media}/Crop"
-            const val FloatWindow = "${Media}/FloatWindow"
-            const val Hook = "${Media}/Hook"
-        }
-
-        object Display {
-            private const val Display = "${Features}/Display"
-
-            const val Typeface = "${Display}/Typeface"
         }
     }
 
