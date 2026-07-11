@@ -5,8 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.animation"
-    resourcePrefix("animation_")
+    namespace = "com.example.william.my.module.anim"
+    resourcePrefix("anim_")
 }
 
 dependencies {

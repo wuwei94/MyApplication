@@ -29,8 +29,8 @@ class ModuleActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("Animation", RouterPath.Animation.Main))
         routerItems.add(RouterItem("UI", RouterPath.UI.Main))
+        routerItems.add(RouterItem("Anim", RouterPath.Anim.Main))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("SyncActivity", RouterPath.Sync.Main))
@@ -38,18 +38,12 @@ class ModuleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ComponentActivity", RouterPath.Component.Main))
         routerItems.add(RouterItem("SystemActivity", RouterPath.System.Main))
         routerItems.add(RouterItem("WidgetActivity", RouterPath.Widget.Main))
-
-        routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("UtilsActivity", RouterPath.Utils.Main))
         routerItems.add(RouterItem("NetworkActivity", RouterPath.Network.Main))
         routerItems.add(RouterItem("OpensourceActivity", RouterPath.OpenSource.Main))
-
-        routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("ArchActivity", RouterPath.Arch.Main))
         routerItems.add(RouterItem("EventBusActivity", RouterPath.Event.Main))
         routerItems.add(RouterItem("FeaturesActivity", RouterPath.Features.Main))
-
-        routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("KotlinActivity", RouterPath.Kotlin.Main))
         routerItems.add(RouterItem("JetPackActivity", RouterPath.JetPack.Main))
 

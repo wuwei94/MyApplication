@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.animation.TransitionFirstActivity">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/transition_explode"
         android:layout_width="@dimen/basics_dimen_width_320"
         android:layout_height="@dimen/basics_dimen_48"
+        android:text="Explode（分解）"
         app:layout_constraintBottom_toTopOf="@+id/transition_slide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +19,7 @@
         android:id="@+id/transition_slide"
         android:layout_width="@dimen/basics_dimen_width_320"
         android:layout_height="@dimen/basics_dimen_48"
+        android:text="Slide（滑动）"
         app:layout_constraintBottom_toTopOf="@+id/transition_fade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +29,7 @@
         android:id="@+id/transition_fade"
         android:layout_width="@dimen/basics_dimen_width_320"
         android:layout_height="@dimen/basics_dimen_48"
+        android:text="Fade（淡入）"
         app:layout_constraintBottom_toTopOf="@+id/transition_share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
         android:id="@+id/transition_share"
         android:layout_width="@dimen/basics_dimen_width_320"
         android:layout_height="@dimen/basics_dimen_48"
+        android:text="Shared Element（共享元素）"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

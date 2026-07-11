@@ -74,17 +74,20 @@ object RouterPath {
     }
 
     // 动画
-    object Animation {
+    object Anim {
 
-        private const val Animation = "/Animation"
+        private const val Anim = "/Anim"
 
-        const val Main = "${Animation}/Main"
+        const val Main = "${Anim}/Main"
 
-        const val Animator = "${Animation}/Animator"
-        const val Transition = "${Animation}/Transition"
-        const val Transition2 = "${Animation}/Transition2"
-        const val RenderEffect = "${Animation}/RenderEffect"
-        const val RenderScript = "${Animation}/RenderScript"
+        const val ObjectAnimator = "${Anim}/ObjectAnimator"
+        const val AnimatorSet = "${Anim}/AnimatorSet"
+        const val ValueAnimator = "${Anim}/ValueAnimator"
+        const val Keyframe = "${Anim}/Keyframe"
+        const val Transition = "${Anim}/Transition"
+        const val Transition2 = "${Anim}/Transition2"
+        const val RenderEffect = "${Anim}/RenderEffect"
+        const val RenderScript = "${Anim}/RenderScript"
     }
 
     // UI 控件

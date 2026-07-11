@@ -71,7 +71,7 @@ MyApplication/
     ├── module_features         # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
     ├── module_jetpack          # Jetpack 组件（Room / DataStore / WorkManager / Paging / Hilt）
-    ├── module_animation        # 动画（Animator / RenderEffect / RenderScript / Transition）
+    ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
     ├── module_compose          # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     └── module_flutter          # Flutter 子工程
 ```
@@ -218,11 +218,15 @@ Jetpack 组件库 Demo。
 - **DataStore**：Preferences / Proto 两种存储
 - **WorkManager**：后台任务（普通 + expedited）
 
-### module_animation（动画）
+### module_anim（动画）
 
 演示 Android 原生动画机制。
 
-- ObjectAnimator / ValueAnimator / AnimatorSet 属性动画
+- ObjectAnimator 属性动画（透明度/旋转/缩放/平移）
+- AnimatorSet 动画组合（顺序/同时/Builder 编排）
+- ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator
+- Keyframe 关键帧动画 + PropertyValuesHolder
+- 视图过渡动画（ChangeBounds / Fade / Slide / AutoTransition）
 - RenderEffect 渲染效果（Android 12+）
 - RenderScript 图像处理（已废弃）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）

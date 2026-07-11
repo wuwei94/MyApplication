@@ -126,7 +126,7 @@ include(":modules:module_kotlin")
 include(":modules:module_jetpack")
 
 // 动画
-include(":modules:module_animation")
+include(":modules:module_anim")
 
 // UI 控件
 include(":modules:module_ui")

@@ -20,7 +20,7 @@
 | module_features | 业务功能 | FeaturesActivity | /Features |
 | module_kotlin | Kotlin 特性 | KotlinActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetPackActivity | /JetPack |
-| module_animation | 动画 | AnimationActivity | /Animation |
+| module_anim | 动画 | AnimActivity | /Animation |
 | module_compose | Compose UI | ComposeActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
 
@@ -257,17 +257,19 @@
 
 ---
 
-### module_animation（动画）
+### module_anim（动画）
 
 演示 Android 原生动画机制。
 
 | Activity | 功能 |
 |----------|------|
-| AnimatorActivity | ObjectAnimator/ValueAnimator 属性动画 |
+| ObjectAnimatorActivity | ObjectAnimator 属性动画（透明度/旋转/缩放/平移） |
+| AnimatorSetActivity | AnimatorSet 动画组合（顺序/同时/Builder 编排） |
+| ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
+| KeyframeActivity | Keyframe 关键帧动画 + PropertyValuesHolder |
+| TransitionActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
 | RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
 | RenderScriptActivity | RenderScript 图像处理（已废弃） |
-| TransitionFirstActivity | Activity 过渡动画（分解/滑动/淡入/共享元素） |
-| TransitionSecondActivity | 过渡动画目标页 |
 
 ---
 
