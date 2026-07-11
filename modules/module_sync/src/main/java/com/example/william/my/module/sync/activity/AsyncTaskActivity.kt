@@ -9,7 +9,7 @@ import com.example.william.my.basic.basic_module.router.path.RouterPath
 import java.lang.ref.WeakReference
 
 /**
- * AsyncTask
+ * AsyncTask（已废弃）— 异步任务演示
  */
 @Route(path = RouterPath.Sync.AsyncTask)
 class AsyncTaskActivity : BasicResponseActivity() {
@@ -44,16 +44,20 @@ class AsyncTaskActivity : BasicResponseActivity() {
 
     private fun cancelAsyncTask() {
         mAsyncTask?.let { task ->
-            if (task.isCancelled && task.status == AsyncTask.Status.RUNNING) {
-                mAsyncTask?.cancel(true)
+            if (!task.isCancelled && task.status == AsyncTask.Status.RUNNING) {
+                task.cancel(true)
             }
         }
     }
 
     /**
-     * 第一个参数是doInBackground回调中传入的参数
-     * 第二个参数是进度，onProgressUpdate的参数类型
-     * 第三个参数是doInBackground返回值类型，onPostExecute传入的参数类型
+     * AsyncTask（已废弃于 API 30）— 异步任务演示
+     * 泛型参数：<Params, Progress, Result>
+     *   - Params: doInBackground 入参类型
+     *   - Progress: onProgressUpdate 入参类型（publishProgress 发送）
+     *   - Result: doInBackground 返回值类型，onPostExecute 入参
+     *
+     * 注意：生产代码应使用 Kotlin Coroutines 替代
      */
     @Suppress("deprecation")
     private open class MyAsyncTask(activity: AsyncTaskActivity?) : AsyncTask<Int?, Int?, Void?>() {
@@ -65,7 +69,7 @@ class AsyncTaskActivity : BasicResponseActivity() {
          * 一般用来执行后台操作前对UI做一些标记
          */
         override fun onPreExecute() {
-            weakReference.get()?.showResponse("onPreExecute")
+            weakReference.get()?.showResponse("onPreExecute — 任务开始前")
         }
 
         /**
@@ -92,7 +96,7 @@ class AsyncTaskActivity : BasicResponseActivity() {
          * 将进度信息更新到UI组件
          */
         override fun onProgressUpdate(vararg values: Int?) {
-            weakReference.get()?.showResponse("Progress : " + values[0])
+            weakReference.get()?.showResponse("进度：${values[0]}%")
         }
 
         /**
@@ -100,7 +104,7 @@ class AsyncTaskActivity : BasicResponseActivity() {
          * 将计算结果传递到此方法中，直接将结果显示到UI组件。
          */
         override fun onPostExecute(aVoid: Void?) {
-            weakReference.get()?.showResponse("onPostExecute")
+            weakReference.get()?.showResponse("onPostExecute — 任务完成后")
         }
     }
 }

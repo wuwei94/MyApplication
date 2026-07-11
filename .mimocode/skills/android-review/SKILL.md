@@ -1,5 +1,5 @@
 ---
-name: android-demo-review
+name: android-review
 description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。用于评审、审计或改进 demo/showcase 项目中的 Activity 示例。覆盖：交互设计、代码质量、教学注释、API 兼容性和资源管理。
 ---
 

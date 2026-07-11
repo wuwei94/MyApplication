@@ -20,8 +20,6 @@ import java.lang.ref.WeakReference
 @Route(path = RouterPath.Sync.JobScheduler)
 class JobSchedulerActivity : BasicResponseActivity() {
 
-    private var mServiceComponent: ComponentName? = null
-
     private var mJobId = 0
 
     private class JobSchedulerHandler(activity: JobSchedulerActivity) :
@@ -34,12 +32,12 @@ class JobSchedulerActivity : BasicResponseActivity() {
             when (msg.what) {
                 MSG_COLOR_START -> {
                     // Start received, turn on the indicator and show text.
-                    mActivity.showResponse(String.format("Job ID %s %s", msg.obj, "started"))
+                    mActivity.showResponse("JobScheduler — Job ID ${msg.obj} 开始执行")
                 }
 
                 MSG_COLOR_STOP -> {
                     // Stop received, turn on the indicator and show text.
-                    mActivity.showResponse(String.format("Job ID %s %s", msg.obj, "stopped"))
+                    mActivity.showResponse("JobScheduler — Job ID ${msg.obj} 已停止")
                 }
             }
         }
@@ -57,6 +55,7 @@ class JobSchedulerActivity : BasicResponseActivity() {
 
         val intent = Intent(this, MyJobSchedulerService::class.java)
         intent.putExtra(KEY_MESSENGER, jobMessenger)
+        // 前台 Activity 启动 Service，无后台限制问题
         startService(intent)
     }
 
@@ -86,46 +85,42 @@ class JobSchedulerActivity : BasicResponseActivity() {
      * 执行 JobScheduler
      */
     private fun scheduleJob() {
-        mServiceComponent = ComponentName(this, MyJobSchedulerService::class.java)
+        val jobService = ComponentName(this, MyJobSchedulerService::class.java)
 
-        mServiceComponent?.let { jobService ->
+        /*
+         * Builder构造方法接收两个参数
+         * 第一个参数是jobId，每个app或者说uid下不同的Job,它的jobId必须是不同的
+         * 第二个参数是我们自定义的JobService,系统会回调我们自定义的JobService中的onStartJob和onStopJob方法
+         */
+        val builder = JobInfo.Builder(mJobId++, jobService)
 
-            /*
-             * Builder构造方法接收两个参数
-             * 第一个参数是jobId，每个app或者说uid下不同的Job,它的jobId必须是不同的
-             * 第二个参数是我们自定义的JobService,系统会回调我们自定义的JobService中的onStartJob和onStopJob方法
-             */
-            val builder = JobInfo.Builder(mJobId++, jobService)
+        //设置至少延迟多久后执行，单位毫秒.
+        builder.setMinimumLatency((3 * 1000).toLong())
 
-            //设置至少延迟多久后执行，单位毫秒.
-            builder.setMinimumLatency((3 * 1000).toLong())
+        //设置最多延迟多久后执行，单位毫秒。
+        builder.setOverrideDeadline((5 * 1000).toLong())
 
-            //设置最多延迟多久后执行，单位毫秒。
-            builder.setOverrideDeadline((5 * 1000).toLong())
+        //设置需要的网络条件，有三个取值：
+        //JobInfo.NETWORK_TYPE_NONE（无网络时执行，默认）、
+        //JobInfo.NETWORK_TYPE_ANY（有网络时执行）、
+        //JobInfo.NETWORK_TYPE_UNMETERED（网络无需付费时执行）
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
 
-            //设置需要的网络条件，有三个取值：
-            //JobInfo.NETWORK_TYPE_NONE（无网络时执行，默认）、
-            //JobInfo.NETWORK_TYPE_ANY（有网络时执行）、
-            //JobInfo.NETWORK_TYPE_UNMETERED（网络无需付费时执行）
-            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+        //是否在空闲时执行
+        builder.setRequiresDeviceIdle(true)
+        //是否在充电时执行
+        builder.setRequiresCharging(true)
 
-            //是否在空闲时执行
-            builder.setRequiresDeviceIdle(true)
-            //是否在充电时执行
-            builder.setRequiresCharging(true)
+        // Extras, work duration.
+        val extras = PersistableBundle()
+        extras.putLong(KEY_WORK_DURATION, 1000)
+        builder.setExtras(extras)
 
-            // Extras, work duration.
-            val extras = PersistableBundle()
-            extras.putLong(KEY_WORK_DURATION, 1000)
-            builder.setExtras(extras)
+        // Schedule job
+        showResponse("JobScheduler — 任务已调度")
 
-            // Schedule job
-            showResponse("Scheduling job")
-
-            // 1.获取jobScheduler对象
-            val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-            jobScheduler.schedule(builder.build())
-        }
+        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+        jobScheduler.schedule(builder.build())
     }
 
     /**
@@ -134,28 +129,13 @@ class JobSchedulerActivity : BasicResponseActivity() {
     private fun cancelAllJobs() {
         val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
         jobScheduler.cancelAll()
-        Utils.toast("All jobs cancelled")
-    }
-
-    /**
-     * 完成 JobScheduler
-     */
-    fun finishJob() {
-        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-        val jobs = jobScheduler.allPendingJobs
-        if (jobs.size > 0) {
-            val jobId = jobs[0].id
-            jobScheduler.cancel(jobId)
-            Utils.toast("取消 : ")
-        } else {
-            Utils.toast("No jobs to cancel")
-        }
+        Utils.toast("JobScheduler — 所有任务已取消")
     }
 
     companion object {
         const val MSG_COLOR_START = 0
         const val MSG_COLOR_STOP = 1
-        const val KEY_MESSENGER = ".MESSENGER_INTENT_KEY"
-        const val KEY_WORK_DURATION = ".WORK_DURATION_KEY"
+        const val KEY_MESSENGER = "com.example.sync.MESSENGER_INTENT_KEY"
+        const val KEY_WORK_DURATION = "com.example.sync.WORK_DURATION_KEY"
     }
 }
