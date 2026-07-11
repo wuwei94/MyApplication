@@ -7,6 +7,9 @@ plugins {
 android {
     namespace = "com.example.william.my.module.component"
     resourcePrefix("component_")
+    buildFeatures {
+        aidl = true
+    }
 }
 
 dependencies {

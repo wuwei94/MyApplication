@@ -1,4 +1,4 @@
-package com.example.william.my.module.service.activity
+package com.example.william.my.module.component.activity
 
 import android.content.ComponentName
 import android.content.Intent
@@ -9,14 +9,14 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.module.service.service.MyAIDLService
-import com.example.william.my.module.service.service.MyAIDLService.XBinder
-import com.example.william.my.module.service.service.MyForegroundService
+import com.example.william.my.module.component.service.MyAIDLService
+import com.example.william.my.module.component.service.MyAIDLService.XBinder
+import com.example.william.my.module.component.service.MyForegroundService
 
 /**
  * Service
  */
-@Route(path = RouterPath.ServiceDemo.Service)
+@Route(path = RouterPath.Component.Service)
 class ServiceActivity : BasicResponseActivity() {
 
     private var mServiceConnection: ServiceConnection? = null

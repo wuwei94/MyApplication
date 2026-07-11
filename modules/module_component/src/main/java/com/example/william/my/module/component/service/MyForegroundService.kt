@@ -1,4 +1,4 @@
-package com.example.william.my.module.service.service
+package com.example.william.my.module.component.service
 
 import android.app.NotificationManager
 import android.app.Service

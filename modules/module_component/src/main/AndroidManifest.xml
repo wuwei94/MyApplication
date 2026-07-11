@@ -7,5 +7,13 @@
         <activity android:name=".activity.ActivityResultActivity" />
         <activity android:name=".activity.ActivityResultActivity2" />
         <activity android:name=".activity.OnBackPressedActivity" />
+        <activity android:name=".activity.ServiceActivity" />
+        <activity android:name=".activity.MessengerActivity" />
+        <service android:name=".service.MyAIDLService" />
+        <service android:name=".service.MyForegroundService" />
+        <service android:name=".service.MyMessageService" />
+        <service
+            android:name=".service.MyJobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 </manifest>

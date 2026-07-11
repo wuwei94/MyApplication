@@ -97,8 +97,6 @@ include(":libs:lib_ninepatch")
 
 // 同步
 include(":modules:module_sync")
-// 服务
-include(":modules:module_service")
 // 组件交互
 include(":modules:module_component")
 // 系统能力

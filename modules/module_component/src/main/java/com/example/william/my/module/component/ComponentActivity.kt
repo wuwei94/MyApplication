@@ -13,6 +13,10 @@ class ComponentActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Broadcast", RouterPath.Component.Broadcast))
         routerItems.add(RouterItem("ActivityResult", RouterPath.Component.ActivityResult))
         routerItems.add(RouterItem("OnBackPressed", RouterPath.Component.OnBackPressed))
+
+        routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("Service", RouterPath.Component.Service))
+        routerItems.add(RouterItem("Messenger", RouterPath.Component.Messenger))
         return routerItems
     }
 }

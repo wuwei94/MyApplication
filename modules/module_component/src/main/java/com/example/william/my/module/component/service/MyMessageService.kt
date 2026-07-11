@@ -1,4 +1,4 @@
-package com.example.william.my.module.service.service
+package com.example.william.my.module.component.service
 
 import android.app.Service
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
-import com.example.william.my.module.service.activity.MessengerActivity
+import com.example.william.my.module.component.activity.MessengerActivity
 import java.lang.ref.WeakReference
 
 class MyMessageService : Service() {

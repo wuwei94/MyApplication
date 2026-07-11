@@ -1,4 +1,4 @@
-package com.example.william.my.module.service.activity
+package com.example.william.my.module.component.activity
 
 import android.content.ComponentName
 import android.content.Intent
@@ -13,10 +13,10 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.module.service.service.MyMessageService
+import com.example.william.my.module.component.service.MyMessageService
 import java.lang.ref.WeakReference
 
-@Route(path = RouterPath.ServiceDemo.Messenger)
+@Route(path = RouterPath.Component.Messenger)
 class MessengerActivity : BasicResponseActivity() {
 
     //serviceMessenger表示的是Service端的Messenger，其内部指向了MyService的ServiceHandler实例

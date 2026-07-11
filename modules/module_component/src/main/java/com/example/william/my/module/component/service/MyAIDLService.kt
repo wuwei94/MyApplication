@@ -1,11 +1,11 @@
-package com.example.william.my.module.service.service
+package com.example.william.my.module.component.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import com.example.william.my.basic.basic_module.utils.Utils
-import com.example.william.my.module.service.IMyAidlInterface
+import com.example.william.my.module.component.IMyAidlInterface
 
 class MyAIDLService : Service() {
 

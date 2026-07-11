@@ -1,5 +1,5 @@
 // IMyAidlInterface.aidl
-package com.example.william.my.module.service;
+package com.example.william.my.module.component;
 
 // Declare any non-default types here with import statements
 

@@ -38,16 +38,6 @@ object RouterPath {
         const val JobScheduler = "${Sync}/JobScheduler"
     }
 
-    // 服务
-    object ServiceDemo {
-        private const val ServiceDemo = "/ServiceDemo"
-
-        const val Main = "${ServiceDemo}/Main"
-
-        const val Service = "${ServiceDemo}/Service"
-        const val Messenger = "${ServiceDemo}/Messenger"
-    }
-
     // 组件交互
     object Component {
         private const val Component = "/Component"
@@ -57,6 +47,8 @@ object RouterPath {
         const val Broadcast = "${Component}/Broadcast"
         const val ActivityResult = "${Component}/ActivityResult"
         const val OnBackPressed = "${Component}/OnBackPressed"
+        const val Service = "${Component}/Service"
+        const val Messenger = "${Component}/Messenger"
     }
 
     // 系统能力
