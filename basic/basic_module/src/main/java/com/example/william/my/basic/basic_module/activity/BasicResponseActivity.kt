@@ -4,28 +4,22 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.databinding.BasicsLayoutResponseBinding
-import com.example.william.my.lib.activity.BaseActivity
+import com.example.william.my.basic.basic_module.databinding.BasicsLayoutResponseRecyclerBinding
 
-abstract class BasicResponseActivity : BaseActivity(), View.OnClickListener {
+abstract class BasicResponseActivity : BasicRecyclerActivity() {
 
-    protected lateinit var mBinding: BasicsLayoutResponseBinding
+    protected lateinit var mBinding: BasicsLayoutResponseRecyclerBinding
 
     override fun initViewBinding() {
-        super.initViewBinding()
-        mBinding = BasicsLayoutResponseBinding.inflate(layoutInflater)
+        mBinding = BasicsLayoutResponseRecyclerBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        mRecycler = mBinding.basicsRecycler
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        mBinding.basicsResponse.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View) {
-        if (v.id == R.id.basics_response) {
-            onResponseClick(v)
+        mBinding.basicsResponse.setOnClickListener {
+            onResponseClick(it)
         }
     }
 
@@ -33,7 +27,7 @@ abstract class BasicResponseActivity : BaseActivity(), View.OnClickListener {
 
     }
 
-    protected fun showResponse(response: String?) {
+    override fun showResponse(response: String?) {
         runOnUiThread {
             response?.let {
                 if (!it.startsWith("onResponse: ")) {
@@ -44,31 +38,6 @@ abstract class BasicResponseActivity : BaseActivity(), View.OnClickListener {
                     mBinding.basicsResponse.gravity = Gravity.NO_GRAVITY
                 }
             }
-        }
-    }
-
-    private fun String.formatString(): String {
-        this.let {
-            val json = StringBuilder()
-            val indentString = StringBuilder()
-            for (element in it) {
-                when (element) {
-                    '{', '[' -> {
-                        json.append("\n").append(indentString).append(element).append("\n")
-                        indentString.append("\t")
-                        json.append(indentString)
-                    }
-
-                    '}', ']' -> {
-                        indentString.deleteCharAt(indentString.length - 1)
-                        json.append("\n").append(indentString).append(element)
-                    }
-
-                    ',' -> json.append(element).append("\n").append(indentString)
-                    else -> json.append(element)
-                }
-            }
-            return json.toString()
         }
     }
 }

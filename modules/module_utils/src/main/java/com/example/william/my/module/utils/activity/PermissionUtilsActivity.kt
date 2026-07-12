@@ -120,7 +120,7 @@ class PermissionUtilsActivity : BasicRecyclerActivity() {
     }
 
     private fun showSnackBar(isSuccess: Boolean, msg: String) {
-        SnackbarUtils.with(mBinding.root).setDuration(SnackbarUtils.LENGTH_LONG).setMessage(msg)
+        SnackbarUtils.with(binding.root).setDuration(SnackbarUtils.LENGTH_LONG).setMessage(msg)
             .apply {
                 if (isSuccess) {
                     showSuccess()

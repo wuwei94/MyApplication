@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.QuickAdapterHelper
 import com.chad.library.adapter4.viewholder.QuickViewHolder
@@ -27,12 +28,14 @@ abstract class BasicRecyclerActivity : BaseActivity(),
         BasicDialogFragment()
     }
 
-    protected lateinit var mBinding: BasicsLayoutRecyclerBinding
+    protected lateinit var binding: BasicsLayoutRecyclerBinding
+    protected lateinit var mRecycler: RecyclerView
 
     override fun initViewBinding() {
         super.initViewBinding()
-        mBinding = BasicsLayoutRecyclerBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        binding = BasicsLayoutRecyclerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        mRecycler = binding.basicsRecycler
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -44,8 +47,8 @@ abstract class BasicRecyclerActivity : BaseActivity(),
     private fun initRecycler() {
         mAdapter.submitList(buildList())
         mAdapter.setOnItemClickListener(this)
-        mBinding.basicsRecycler.layoutManager = LinearLayoutManager(this)
-        mBinding.basicsRecycler.adapter = mAdapterHelper.adapter
+        mRecycler.layoutManager = LinearLayoutManager(this)
+        mRecycler.adapter = mAdapterHelper.adapter
     }
 
     protected open fun buildList(): ArrayList<String> {
@@ -60,7 +63,7 @@ abstract class BasicRecyclerActivity : BaseActivity(),
 
     }
 
-    private fun String.formatString(): String {
+    protected fun String.formatString(): String {
         this.let {
             val json = StringBuilder()
             val indentString = StringBuilder()
@@ -93,7 +96,7 @@ abstract class BasicRecyclerActivity : BaseActivity(),
         }
     }
 
-    protected fun showResponse(response: String?) {
+    protected open fun showResponse(response: String?) {
         runOnUiThread {
             mBasicDialogFragment.show(supportFragmentManager, mBasicDialogFragment.tag)
             mBasicDialogFragment.showMessage(response?.formatString())

@@ -1,34 +1,40 @@
 package com.example.william.my.basic.basic_module.activity
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.databinding.BasicsLayoutImageBinding
-import com.example.william.my.lib.activity.BaseActivity
+import com.example.william.my.basic.basic_module.databinding.BasicsLayoutImageRecyclerBinding
 
-abstract class BasicImageActivity : BaseActivity(), View.OnClickListener {
+abstract class BasicImageActivity : BasicRecyclerActivity() {
 
-    protected lateinit var mBinding: BasicsLayoutImageBinding
+    protected lateinit var mBinding: BasicsLayoutImageRecyclerBinding
 
     override fun initViewBinding() {
-        super.initViewBinding()
-        mBinding = BasicsLayoutImageBinding.inflate(layoutInflater)
+        mBinding = BasicsLayoutImageRecyclerBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        mRecycler = mBinding.basicsRecycler
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        mBinding.basicsImage.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View) {
-        if (v.id == R.id.basics_image) {
-            onImageClick(v)
+        mBinding.basicsImage.setOnClickListener {
+            onImageClick(it)
         }
     }
 
     protected open fun onImageClick(view: View) {
 
+    }
+
+    protected fun showImage(bitmap: Bitmap?) {
+        runOnUiThread {
+            mBinding.basicsImage.setImageBitmap(bitmap)
+        }
+    }
+
+    protected fun showImage(resId: Int) {
+        runOnUiThread {
+            mBinding.basicsImage.setImageResource(resId)
+        }
     }
 }
