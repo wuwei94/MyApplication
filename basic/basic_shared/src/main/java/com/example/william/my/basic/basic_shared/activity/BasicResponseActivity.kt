@@ -3,12 +3,13 @@ package com.example.william.my.basic.basic_shared.activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutResponseRecyclerBinding
 
 abstract class BasicResponseActivity : BasicRecyclerActivity() {
 
     protected lateinit var mBinding: BasicsLayoutResponseRecyclerBinding
+
+    private val mLog = StringBuilder()
 
     override fun initViewBinding() {
         mBinding = BasicsLayoutResponseRecyclerBinding.inflate(layoutInflater)
@@ -27,17 +28,36 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
 
     }
 
+    /**
+     * 显示响应内容，居中显示（用于初始化说明）
+     */
     override fun showResponse(response: String?) {
         runOnUiThread {
             response?.let {
-                if (!it.startsWith("onResponse: ")) {
-                    mBinding.basicsResponse.text = it
-                    mBinding.basicsResponse.gravity = Gravity.CENTER
-                } else {
-                    mBinding.basicsResponse.text = it.formatString()
-                    mBinding.basicsResponse.gravity = Gravity.NO_GRAVITY
-                }
+                mBinding.basicsResponse.text = it
+                mBinding.basicsResponse.gravity = Gravity.CENTER
             }
+        }
+    }
+
+    /**
+     * 追加日志到 TextView，日志从左上角显示，保留历史记录
+     */
+    protected fun appendLog(message: String) {
+        mLog.appendLine(message)
+        runOnUiThread {
+            mBinding.basicsResponse.text = mLog.toString()
+            mBinding.basicsResponse.gravity = Gravity.TOP
+        }
+    }
+
+    /**
+     * 清空日志
+     */
+    protected fun clearLog() {
+        mLog.clear()
+        runOnUiThread {
+            mBinding.basicsResponse.text = ""
         }
     }
 }

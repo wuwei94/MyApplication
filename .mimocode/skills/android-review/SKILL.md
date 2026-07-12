@@ -7,6 +7,29 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 
 审查技术栈沉淀项目中的 Android 示例 Activity，输出结构化审查报告和优先级排序的问题列表。
 
+## 交互设计规范
+
+### 基类与布局模式
+
+| 基类 | 用途 | 上方展示 | 下方列表 |
+|------|------|----------|----------|
+| `BasicImageActivity` | 动画/图片类 | ImageView | 操作按钮 |
+| `BasicResponseActivity` | 通信/调度类 | TextView 日志 | 操作按钮 |
+| `BasicRecyclerActivity` | 纯列表类 | 无 | 列表项 |
+
+### 日志显示规范
+
+- **初始化**：使用 `showResponse()` 设置说明文字，`gravity = Gravity.CENTER`
+- **追加日志**：使用 `appendLog()` 追加日志，`gravity = Gravity.TOP`
+- **日志累积**：使用 `StringBuilder` 累积日志，不覆盖历史记录
+- **不要直接操作**：禁止直接设置 `mBinding.basicsResponse.text`，必须通过基类方法
+
+### 操作触发规范
+
+- 操作项放在下方 RecyclerView 列表中
+- 上方作为结果展示区域
+- 不要覆盖上一次的结果，日志要累积显示
+
 ## 审查维度
 
 对每个 Activity 评估以下 3 个维度：

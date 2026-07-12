@@ -4,12 +4,12 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.os.PersistableBundle
-import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -17,6 +17,17 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.sync.service.MyJobSchedulerService
 import java.lang.ref.WeakReference
 
+/**
+ * JobScheduler — 系统任务调度演示
+ *
+ * JobScheduler 是 Android 提供的任务调度 API，可以根据条件（网络、充电等）执行任务
+ *
+ * 核心步骤：
+ * 1. 创建 JobInfo.Builder，配置 jobId 和 JobService
+ * 2. 设置约束条件（延迟、网络、空闲、充电等）
+ * 3. 调用 JobScheduler.schedule() 提交任务
+ * 4. 系统满足条件时回调 JobService 的 onStartJob()
+ */
 @Route(path = RouterPath.Sync.JobScheduler)
 class JobSchedulerActivity : BasicResponseActivity() {
 
@@ -28,108 +39,73 @@ class JobSchedulerActivity : BasicResponseActivity() {
         private val weakReference: WeakReference<JobSchedulerActivity?> = WeakReference(activity)
 
         override fun handleMessage(msg: Message) {
-            val mActivity = weakReference.get() ?: return
+            val activity = weakReference.get() ?: return
             when (msg.what) {
-                MSG_COLOR_START -> {
-                    // Start received, turn on the indicator and show text.
-                    mActivity.showResponse("JobScheduler — Job ID ${msg.obj} 开始执行")
-                }
-
-                MSG_COLOR_STOP -> {
-                    // Stop received, turn on the indicator and show text.
-                    mActivity.showResponse("JobScheduler — Job ID ${msg.obj} 已停止")
-                }
+                MSG_COLOR_START -> activity.appendLog("onStartJob — Job ID ${msg.obj}")
+                MSG_COLOR_STOP -> activity.appendLog("onStopJob — Job ID ${msg.obj}")
             }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
 
         startService()
+        showResponse("JobScheduler — 系统任务调度")
     }
 
     private fun startService() {
-        val jobHandler = JobSchedulerHandler(this)
-        val jobMessenger = Messenger(jobHandler)
-
-        val intent = Intent(this, MyJobSchedulerService::class.java)
-        intent.putExtra(KEY_MESSENGER, jobMessenger)
-        // 前台 Activity 启动 Service，无后台限制问题
+        val messenger = Messenger(JobSchedulerHandler(this))
+        val intent = Intent(this, MyJobSchedulerService::class.java).apply {
+            putExtra(KEY_MESSENGER, messenger)
+        }
         startService(intent)
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        stopService()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "schedule() — 调度任务",
+            "cancelAll() — 取消所有任务"
+        )
     }
 
-    private fun stopService() {
-        stopService(Intent(this, MyJobSchedulerService::class.java))
+    override fun onRecyclerClick(position: Int, string: String) {
+        when (position) {
+            0 -> scheduleJob()
+            1 -> cancelAllJobs()
+        }
+    }
+
+    private fun scheduleJob() {
+        val jobService = ComponentName(this, MyJobSchedulerService::class.java)
+
+        val builder = JobInfo.Builder(mJobId++, jobService).apply {
+            setMinimumLatency(3 * 1000L)
+            setOverrideDeadline(5 * 1000L)
+            setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            setRequiresDeviceIdle(true)
+            setRequiresCharging(true)
+            setExtras(PersistableBundle().apply {
+                putLong(KEY_WORK_DURATION, 1000)
+            })
+        }
+
+        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+        jobScheduler.schedule(builder.build())
+        appendLog("schedule — 任务已调度，Job ID: ${mJobId - 1}")
+    }
+
+    private fun cancelAllJobs() {
+        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+        jobScheduler.cancelAll()
+        Utils.toast("所有任务已取消")
+        appendLog("cancelAll — 所有任务已取消")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         cancelAllJobs()
-    }
-
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        scheduleJob()
-    }
-
-    /**
-     * 执行 JobScheduler
-     */
-    private fun scheduleJob() {
-        val jobService = ComponentName(this, MyJobSchedulerService::class.java)
-
-        /*
-         * Builder构造方法接收两个参数
-         * 第一个参数是jobId，每个app或者说uid下不同的Job,它的jobId必须是不同的
-         * 第二个参数是我们自定义的JobService,系统会回调我们自定义的JobService中的onStartJob和onStopJob方法
-         */
-        val builder = JobInfo.Builder(mJobId++, jobService)
-
-        //设置至少延迟多久后执行，单位毫秒.
-        builder.setMinimumLatency((3 * 1000).toLong())
-
-        //设置最多延迟多久后执行，单位毫秒。
-        builder.setOverrideDeadline((5 * 1000).toLong())
-
-        //设置需要的网络条件，有三个取值：
-        //JobInfo.NETWORK_TYPE_NONE（无网络时执行，默认）、
-        //JobInfo.NETWORK_TYPE_ANY（有网络时执行）、
-        //JobInfo.NETWORK_TYPE_UNMETERED（网络无需付费时执行）
-        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-
-        //是否在空闲时执行
-        builder.setRequiresDeviceIdle(true)
-        //是否在充电时执行
-        builder.setRequiresCharging(true)
-
-        // Extras, work duration.
-        val extras = PersistableBundle()
-        extras.putLong(KEY_WORK_DURATION, 1000)
-        builder.setExtras(extras)
-
-        // Schedule job
-        showResponse("JobScheduler — 任务已调度")
-
-        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.schedule(builder.build())
-    }
-
-    /**
-     * 取消 JobScheduler
-     */
-    private fun cancelAllJobs() {
-        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.cancelAll()
-        Utils.toast("JobScheduler — 所有任务已取消")
+        stopService(Intent(this, MyJobSchedulerService::class.java))
     }
 
     companion object {
