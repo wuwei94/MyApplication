@@ -43,7 +43,8 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 
 ### 操作触发规范
 
-- 操作项放在下方 RecyclerView 列表中
+- **所有**使用 `BasicResponseActivity` 的 Activity（包括目标页）必须使用下方 RecyclerView 列表（`buildList` + `onRecyclerClick`）
+- 禁止使用 `onResponseClick` 点击上方区域触发操作
 - 上方作为结果展示区域
 - 不要覆盖上一次的结果，日志要累积显示
 
@@ -52,6 +53,7 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 对每个 Activity 评估以下 3 个维度：
 
 ### 1. 交互性
+- **操作触发方式**：操作项必须放在下方 RecyclerView 列表（`buildList` + `onRecyclerClick`），禁止使用 `onResponseClick` 点击上方区域
 - 用户能否触发/切换演示行为？
 - 操作 → 结果 的反馈循环是否清晰？
 - 反面：打开就显示静态结果，无法操作
@@ -90,9 +92,10 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 
 ## 常见反面模式
 
-1. **静态展示**：Activity 打开就显示结果，无法交互（如模糊直接显示，无开关）
-2. **无状态提示（动画）**：动画 demo 没有文字显示当前播放的是哪种动画
-3. **提示文字无中文说明**：Toast 或状态文字只有英文 API 名称，没有中文解释（应为「Alpha（透明度）」格式）
-4. **Animator 复用崩溃**：`by lazy` 或 AnimatorSet 中共享 Animator 实例
-5. **API 版本崩溃**：生命周期方法上加 `@RequiresApi` 但没有运行时判断
-6. **资源泄漏**：Allocation / RenderScript 未在 onDestroy 中销毁
+1. **点击上方区域触发操作**：使用 `onResponseClick` 点击上方 TextView 触发操作，应改为下方 RecyclerView 列表
+2. **静态展示**：Activity 打开就显示结果，无法交互（如模糊直接显示，无开关）
+3. **无状态提示（动画）**：动画 demo 没有文字显示当前播放的是哪种动画
+4. **提示文字无中文说明**：Toast 或状态文字只有英文 API 名称，没有中文解释（应为「Alpha（透明度）」格式）
+5. **Animator 复用崩溃**：`by lazy` 或 AnimatorSet 中共享 Animator 实例
+6. **API 版本崩溃**：生命周期方法上加 `@RequiresApi` 但没有运行时判断
+7. **资源泄漏**：Allocation / RenderScript 未在 onDestroy 中销毁

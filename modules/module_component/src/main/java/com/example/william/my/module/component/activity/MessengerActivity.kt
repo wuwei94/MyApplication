@@ -9,25 +9,23 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
-import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.component.service.MyMessageService
 import java.lang.ref.WeakReference
 
+/**
+ * Messenger 跨进程通信（IPC）
+ *
+ * 演示使用 Messenger 在 Activity 和 Service 之间进行跨进程通信。
+ * Service 通过 Message.replyTo 将客户端 Messenger 返回，实现双向通信。
+ */
 @Route(path = RouterPath.Component.Messenger)
 class MessengerActivity : BasicResponseActivity() {
 
-    //serviceMessenger表示的是Service端的Messenger，其内部指向了MyService的ServiceHandler实例
-    //可以用serviceMessenger向MyService发送消息
     private var mServiceMessenger: Messenger? = null
-
-    //clientMessenger是客户端自身的Messenger，内部指向了ClientHandler的实例
-    //MyService可以通过Message的replyTo得到clientMessenger，从而MyService可以向客户端发送消息，
-    //并由ClientHandler接收并处理来自于Service的消息
     private var mClientMessenger: Messenger? = null
-
     private var mServiceConnection: ServiceConnection? = null
 
     private class ClientHandler(activity: MessengerActivity) : Handler(Looper.getMainLooper()) {
@@ -39,15 +37,23 @@ class MessengerActivity : BasicResponseActivity() {
             val mActivity = weakReference.get() ?: return
             if (msg.what == MSG_CODE_SEND_TO_ACTIVITY) {
                 val value = msg.data.getString(MSG_SEND_KEY)
-                mActivity.showResponse(value)
+                mActivity.appendLog("收到回复：$value")
             }
         }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showResponse("Messenger 跨进程通信\n\n点击下方按钮向 Service 发送消息")
         initMessenger()
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("发送消息给 Service")
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        sendMessage()
     }
 
     private fun initMessenger() {
@@ -55,71 +61,36 @@ class MessengerActivity : BasicResponseActivity() {
         mClientMessenger = Messenger(clientHandler)
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        sendMessage()
-    }
-
     private fun sendMessage() {
-        sendMessage(
-            mServiceMessenger,
-            MSG_CODE_SEND_TO_SERVICE,
-            MSG_SEND_KEY,
-            MSG_SEND_MESSAGE,
-            mClientMessenger
-        )
-    }
-
-    private fun sendMessage(
-        serviceMessenger: Messenger?,
-        id: Int,
-        key: String,
-        params: String,
-        clientMessenger: Messenger?
-    ) {
-        serviceMessenger?.let { service ->
-
-            val message = Message.obtain()
-            message.what = id
-
-            //此处跨进程Message通信不能将msg.obj设置为non-Parcelable的对象，应该使用Bundle
-            //message.obj = params;
-            val bundle = Bundle()
-            bundle.putString(key, params)
-            message.data = bundle
-
-            //需要将Message的replyTo设置为客户端的clientMessenger，
-            //以便Service可以通过它向客户端发送消息
-            message.replyTo = clientMessenger
-
+        mServiceMessenger?.let { service ->
+            val message = Message.obtain().apply {
+                what = MSG_CODE_SEND_TO_SERVICE
+                data = Bundle().apply {
+                    putString(MSG_SEND_KEY, MSG_SEND_MESSAGE)
+                }
+                replyTo = mClientMessenger
+            }
             service.send(message)
-        }
+            appendLog("发送消息给 Service")
+        } ?: appendLog("Service 未连接，请稍候")
     }
 
     override fun onStart() {
         super.onStart()
-
         bindService()
     }
 
     private fun bindService() {
         mServiceConnection = object : ServiceConnection {
             override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
-                //我们可以通过从Service的onBind方法中返回的IBinder初始化一个指向Service端的Messenger
                 mServiceMessenger = Messenger(iBinder)
-                sendMessage(
-                    mServiceMessenger,
-                    MSG_CODE_SEND_TO_SERVICE,
-                    MSG_SEND_KEY,
-                    "你好，MyService，我是client",
-                    mClientMessenger
-                )
+                appendLog("Service 已连接")
+                sendMessage()
             }
 
             override fun onServiceDisconnected(componentName: ComponentName) {
-                //客户端与Service失去连接
                 mServiceMessenger = null
+                appendLog("Service 连接断开")
             }
         }
 
@@ -134,7 +105,6 @@ class MessengerActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         unbindService()
     }
 
@@ -148,6 +118,6 @@ class MessengerActivity : BasicResponseActivity() {
         const val MSG_CODE_SEND_TO_SERVICE = 1
         const val MSG_CODE_SEND_TO_ACTIVITY = 2
         const val MSG_SEND_KEY = "MSG_SEND_KEY"
-        const val MSG_SEND_MESSAGE = "MSG_SEND_MESSAGE"
+        const val MSG_SEND_MESSAGE = "Hello from client"
     }
 }

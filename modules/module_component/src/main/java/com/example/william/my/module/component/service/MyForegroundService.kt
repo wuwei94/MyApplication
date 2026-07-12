@@ -1,54 +1,58 @@
 package com.example.william.my.module.component.service
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.utils.Utils
 
 /**
- * 前台服务
+ * 前台 Service
+ *
+ * 必须在 5 秒内调用 startForeground() 显示通知，否则会 ANR。
+ * 通知消失前服务一直运行，适合需要用户感知的长时间任务。
  */
 class MyForegroundService : Service() {
 
-    private val mNotificationManager: NotificationManager? = null
+    override fun onBind(intent: Intent): IBinder? = null
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
-
-    /**
-     * 首次创建服务时调用，如果服务已在运行，则不会调用此方法。该方法只被调用一次。
-     * 在调用 onStartCommand() 或 onBind() 之前
-     */
     override fun onCreate() {
         super.onCreate()
-
-        // 非Activity场景启动Activity
-        // Intent intent = new Intent(this, NotificationActivity.class);
-        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //不加 FLAG_ACTIVITY_NEW_TASK 将抛出异常
-        // startActivity(intent);
-
-        val notification = NotificationCompat.Builder(this, "channelId")
+        createNotificationChannel()
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle("通知标题") //通知标题
-            .setContentText("通知内容") //通知内容
+            .setContentTitle("前台服务")
+            .setContentText("服务正在运行")
             .build()
-        startForeground(1000, notification) //将服务置于启动状态
+        startForeground(NOTIFICATION_ID, notification)
     }
 
-    /**
-     * 每次通过startService()方法启动Service时都会被调用
-     */
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Utils.toast("前台服务已启动")
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        stopForeground(true) //停止前台服务，true：移除通知
+        stopForeground(STOP_FOREGROUND_REMOVE)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID, "前台服务", NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "foreground_service"
+        private const val NOTIFICATION_ID = 1001
     }
 }

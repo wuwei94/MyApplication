@@ -2,31 +2,29 @@ package com.example.william.my.module.component.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 
 /**
- * ActivityResultContracts
+ * ActivityResultContracts 目标页
+ *
+ * 接收来自上游 Activity 的数据，点击按钮回传结果。
  */
 class ActivityResultActivity2 : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        showResponse(intent?.getStringExtra("input"))
+        showResponse("收到数据：${intent?.getStringExtra("input")}")
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        setActivityResult()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("返回数据给上游")
     }
 
-    private fun setActivityResult() {
-        val intent = Intent().apply {
-            putExtra("result", "Hello，我是回传的数据！")
+    override fun onRecyclerClick(position: Int, string: String) {
+        val result = Intent().apply {
+            putExtra("result", intent?.getStringExtra("input").orEmpty())
         }
-        setResult(RESULT_OK, intent)
+        setResult(RESULT_OK, result)
         finish()
     }
 }
