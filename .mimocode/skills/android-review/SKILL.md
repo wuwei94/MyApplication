@@ -21,8 +21,25 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 
 - **初始化**：使用 `showResponse()` 设置说明文字，`gravity = Gravity.CENTER`
 - **追加日志**：使用 `appendLog()` 追加日志，`gravity = Gravity.TOP`
+- **日志格式**：每条日志必须是一行，不要换行或多行输出
 - **日志累积**：使用 `StringBuilder` 累积日志，不覆盖历史记录
 - **不要直接操作**：禁止直接设置 `mBinding.basicsResponse.text`，必须通过基类方法
+
+### 日志格式示例
+
+```
+✅ 正确：一行一条日志
+【存储】已授权：存储、存储
+【相机】已拒绝：相机（永久拒绝）
+创建渠道成功：demo_channel（IMPORTANCE_HIGH）
+发送高优先级通知（ID: 2）— 会弹出悬浮横幅
+
+❌ 错误：一条日志占多行
+【存储】权限请求结果：
+
+  存储: ✅ 已授权
+  存储: ❌ 已拒绝
+```
 
 ### 操作触发规范
 

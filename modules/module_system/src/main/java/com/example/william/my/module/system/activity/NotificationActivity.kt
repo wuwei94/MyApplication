@@ -1,88 +1,69 @@
 package com.example.william.my.module.system.activity
 
 import android.app.NotificationChannel
-import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.core.app.NotificationCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * NotificationChannel 通知渠道创建与通知发送
+ *
+ * Android 8.0 (API 26) 起，所有通知必须绑定到 NotificationChannel。
+ * 本示例演示：自动创建渠道并发送通知。
+ */
 @Route(path = RouterPath.System.Notification)
 class NotificationActivity : BasicResponseActivity() {
 
     private var mNotificationManager: NotificationManager? = null
+    private var notificationId = 0
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        initNotification()
-    }
-
-    private fun initNotification() {
         mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            //groupId要唯一
-            val groupId = "groupId"
-            val groupName = "groupName"
-            val group = NotificationChannelGroup(groupId, groupName)
-
-            //创建group
-            mNotificationManager?.createNotificationChannelGroup(group)
-
-            //channelId要唯一
-            val channelId = "channelId"
-            val channelName = "channelName"
-            val channelDescription = "channelDescription"
-            val channel =
-                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
-            channel.setShowBadge(true) //显示角标
-            channel.description = channelDescription
-
-            //将渠道添加进组（先创建组才能添加）
-            channel.group = groupId
-
-            //创建channel
-            mNotificationManager?.createNotificationChannel(channel)
-        }
+        createChannel()
+        showResponse("NotificationChannel 通知渠道\n\n点击下方按钮发送通知")
     }
 
-
-    public override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        notifyNotification()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("发送通知")
     }
 
-    private fun notifyNotification() {
-        val notification = NotificationCompat.Builder(
-            this@NotificationActivity,
-            "channelId"
+    override fun onRecyclerClick(position: Int, string: String) {
+        sendNotification()
+    }
+
+    private fun createChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+
+        // IMPORTANCE_HIGH: 弹出悬浮通知 + 提示音，适合即时消息
+        val channel = NotificationChannel(
+            CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH
         )
-            //.setPriority(NotificationManager.IMPORTANCE_HIGH)//设置优先级//@RequiresApi(api = Build.VERSION_CODES.N)
-            //.setWhen(System.currentTimeMillis())//设置通知时间，默认为系统发出通知的时间，通常不用设置
+        channel.setShowBadge(true)
+        channel.description = CHANNEL_DESCRIPTION
+        mNotificationManager?.createNotificationChannel(channel)
+    }
+
+    private fun sendNotification() {
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle("通知标题") //通知标题
-            .setContentText("通知内容") //通知内容
+            .setContentTitle("测试通知")
+            .setContentText("这是一条测试通知")
             .setAutoCancel(true)
             .build()
-        mNotificationManager?.notify(1, notification) //发送通知,id=1
+
+        mNotificationManager?.notify(++notificationId, notification)
+        appendLog("发送通知成功（ID: $notificationId）")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        deleteNotification()
-    }
-
-    private fun deleteNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mNotificationManager?.deleteNotificationChannel("channelId")
-        }
+    companion object {
+        private const val CHANNEL_ID = "demo_channel"
+        private const val CHANNEL_NAME = "示例渠道"
+        private const val CHANNEL_DESCRIPTION = "用于演示通知发送"
     }
 }

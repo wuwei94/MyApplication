@@ -140,7 +140,7 @@ object SecureKeyDemoUtils {
     /**
      * 根据安全级别映射业务可读的信任等级。
      */
-    fun resolveTrustLevel(secureLevel: String): String {
+    private fun resolveTrustLevel(secureLevel: String): String {
         return when (secureLevel) {
             "strongbox" -> "高信任"
             "tee", "tee_or_strongbox" -> "中高信任"
