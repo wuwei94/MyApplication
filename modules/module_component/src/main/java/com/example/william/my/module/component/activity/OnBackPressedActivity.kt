@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.databinding.BasicsLayoutResponseBinding
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutResponseBinding
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.lib.activity.BaseFragmentActivity
 import com.example.william.my.lib.fragment.BaseVBFragment
 

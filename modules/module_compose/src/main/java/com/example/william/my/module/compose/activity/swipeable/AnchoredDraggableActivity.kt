@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.Compose.AnchoredDraggable)
 class AnchoredDraggableActivity : ComponentActivity() {

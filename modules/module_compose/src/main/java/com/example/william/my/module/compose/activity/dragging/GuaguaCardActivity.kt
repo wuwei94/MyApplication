@@ -31,8 +31,8 @@ import androidx.compose.ui.input.pointer.PointerEventType.Companion.Press
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * https://juejin.cn/post/7303075105390133259

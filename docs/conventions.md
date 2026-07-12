@@ -4,7 +4,7 @@
 
 ## 路由
 
-- 所有路由定义在 `basic/basic_module/.../RouterPath.kt`
+- 所有路由定义在 `basic/basic_shared/.../RouterPath.kt`
 - 格式：`/<模块名>/<Activity名>`
 - 每个模块有一个 `Main` 路由作为入口 Activity
 - 每个 Activity 必须添加 `@Route` 注解
@@ -14,7 +14,7 @@
 - 每个模块：`build.gradle.kts` + `AndroidManifest.xml` + 包路径在 `modules/` 下
 - 命名空间：`com.example.william.my.module.<模块名>`
 - 资源前缀：`<模块名>_`
-- 依赖：必须依赖 `basic_lib` 和 `basic_module`
+- 依赖：必须依赖 `basic_lib` 和 `basic_shared`
 
 ## 全局依赖（build-logic/convention）
 
@@ -42,8 +42,8 @@
 
 - **新增 Activity**：复制目标模块中已有的 Activity，更新 `@Route`，在 `AndroidManifest.xml` 注册，在入口 Activity 的 `buildRouter()` 中添加路由项
 - **新增模块**：复制已有模块结构，在 `settings.gradle.kts` 注册，在 `RouterPath.kt` 添加路由，在 `ModuleActivity.kt` 添加入口
-- **路由路径**：`basic/basic_module/.../RouterPath.kt`
-- **主入口列表**：`basic/basic_module/.../ModuleActivity.kt`
+- **路由路径**：`basic/basic_shared/.../RouterPath.kt`
+- **主入口列表**：`basic/basic_shared/.../ModuleActivity.kt`
 - **基类**：`basic/basic_lib/.../activity/`
 
 ## 文档同步

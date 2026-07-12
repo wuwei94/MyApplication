@@ -76,7 +76,7 @@ rootProject.name = "My Application"
 
 include(":app")
 include(":basic:basic_lib")
-include(":basic:basic_module")
+include(":basic:basic_shared")
 
 include(":basic:basic_repository")
 

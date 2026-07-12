@@ -3,8 +3,8 @@ package com.example.william.my.module.widget.activity
 import android.view.Gravity
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.widget.alertdialog.IosAlertDialog
 import com.example.william.my.core.widget.alertdialog.IosAlertItemDialog
 import com.example.william.my.module.widget.dialog.MyBottomSheetDialog
@@ -43,7 +43,7 @@ class AlertDialogActivity : BasicRecyclerActivity() {
                     .addAlertItem("ITEM 2") { }
                     .addAlertItem(
                         "ITEM 3",
-                        com.example.william.my.basic.basic_module.R.color.colorPrimary
+                        com.example.william.my.basic.basic_shared.R.color.colorPrimary
                     ) {
 
                     }

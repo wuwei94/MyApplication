@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.basic.basic_repository.api.ArticleApi
 import com.example.william.my.basic.basic_repository.bean.ArticleData
 import com.example.william.my.basic.basic_repository.bean.ArticleDetailData

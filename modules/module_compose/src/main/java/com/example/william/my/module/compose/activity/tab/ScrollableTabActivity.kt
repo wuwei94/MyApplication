@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.launch
 
 @Route(path = RouterPath.Compose.ScrollableTab)

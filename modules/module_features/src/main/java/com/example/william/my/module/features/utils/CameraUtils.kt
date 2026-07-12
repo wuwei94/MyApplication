@@ -20,7 +20,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.lib.utils.AppExecutorsHelper
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import java.io.File

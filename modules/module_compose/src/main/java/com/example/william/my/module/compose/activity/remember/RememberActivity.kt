@@ -19,7 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.ImeAction
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * 1.重组和持久化:

@@ -11,9 +11,9 @@ import com.android.volley.toolbox.DiskBasedCache
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.base.Constants
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import org.json.JSONObject
 
 

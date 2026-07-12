@@ -1,7 +1,7 @@
 package com.example.william.my.module.kotlin.utils
 
 import android.os.Looper
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 
 object ThreadUtils {
 

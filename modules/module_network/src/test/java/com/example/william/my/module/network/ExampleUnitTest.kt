@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_module.network
+package com.example.william.my.basic.basic_shared.network
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -3,7 +3,7 @@ package com.example.william.my.module.utils.activity
 import android.content.res.Resources
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.AdaptScreenUtils
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
 import com.example.william.my.module.utils.databinding.UtilsActivityAdaptscreenBinding
 

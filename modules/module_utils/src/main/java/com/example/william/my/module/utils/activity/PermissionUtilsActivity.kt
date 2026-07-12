@@ -5,8 +5,8 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.SnackbarUtils
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * 当 targetSdkVersion >= 30时，

@@ -3,7 +3,7 @@ package com.example.william.my.module.opensource.loadsir
 import android.content.Context
 import android.view.View
 import android.widget.TextView
-import com.example.william.my.basic.basic_module.R
+import com.example.william.my.basic.basic_shared.R
 import com.kingja.loadsir.callback.Callback
 
 class DefaultCallback : Callback() {

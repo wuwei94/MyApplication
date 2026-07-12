@@ -2,10 +2,10 @@ package com.example.william.my.module.network.activity.ktor
 
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.base.Constants
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.utils.Utils
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.logging.LogLevel

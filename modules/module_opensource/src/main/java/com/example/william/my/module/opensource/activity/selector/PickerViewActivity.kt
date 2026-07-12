@@ -10,10 +10,10 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.router.service.ResourceUtilsService
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.service.ResourceUtilsService
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.opensource.R
 import com.example.william.my.module.opensource.data.ProvinceData
 import com.google.gson.Gson

@@ -15,7 +15,7 @@ android {
 
 dependencies {
     implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_module"))
+    implementation(project(":basic:basic_shared"))
 
     implementation(project(":basic:basic_repository"))
 

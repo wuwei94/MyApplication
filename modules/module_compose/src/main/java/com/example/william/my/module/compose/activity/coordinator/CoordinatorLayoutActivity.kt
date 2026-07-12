@@ -8,7 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.Compose.CoordinatorLayout)
 class CoordinatorLayoutActivity : ComponentActivity() {

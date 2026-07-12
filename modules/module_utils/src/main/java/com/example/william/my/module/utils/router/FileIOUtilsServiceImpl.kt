@@ -3,8 +3,8 @@ package com.example.william.my.module.utils.router
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.FileIOUtils
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.router.service.FileIOUtilsService
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.service.FileIOUtilsService
 import java.io.File
 import java.io.InputStream
 

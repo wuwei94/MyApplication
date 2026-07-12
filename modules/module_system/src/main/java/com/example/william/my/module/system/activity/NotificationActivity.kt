@@ -8,9 +8,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.app.NotificationCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.System.Notification)
 class NotificationActivity : BasicResponseActivity() {

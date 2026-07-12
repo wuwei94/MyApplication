@@ -10,9 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.example.william.my.basic.basic_module.activity.BasicImageActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.router.service.ImageUtilsService
+import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.service.ImageUtilsService
 import java.io.File
 
 @Suppress("deprecation")

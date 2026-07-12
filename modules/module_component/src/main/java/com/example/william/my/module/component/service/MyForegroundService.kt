@@ -5,8 +5,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.utils.Utils
 
 /**
  * 前台服务

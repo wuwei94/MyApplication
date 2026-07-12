@@ -3,9 +3,9 @@ package com.example.william.my.module.kotlin.activity
 import android.view.View
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.base.Constants
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.kotlin.viewmodel.CoroutinesVMFactory
 import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
 

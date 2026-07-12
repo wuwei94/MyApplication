@@ -2,7 +2,7 @@ package com.example.william.my.basic.basic_repository.api
 
 import com.example.william.my.basic.basic_repository.bean.LoginData
 import com.example.william.my.basic.basic_repository.bean.UserData
-import com.example.william.my.basic.basic_module.base.Constants
+import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import okhttp3.MultipartBody

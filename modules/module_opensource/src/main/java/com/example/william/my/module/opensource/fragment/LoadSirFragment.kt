@@ -19,7 +19,7 @@ class LoadSirFragment : Fragment() {
         //第一步：获取布局View
         val rootView = View.inflate(
             activity,
-            com.example.william.my.basic.basic_module.R.layout.basics_layout_response,
+            com.example.william.my.basic.basic_shared.R.layout.basics_layout_response,
             null
         )
         //第二步：注册布局View

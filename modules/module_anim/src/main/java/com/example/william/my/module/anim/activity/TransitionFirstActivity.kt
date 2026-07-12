@@ -8,7 +8,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
 import com.example.william.my.module.anim.R
 import com.example.william.my.module.anim.databinding.AnimActivityTransitionFirstBinding

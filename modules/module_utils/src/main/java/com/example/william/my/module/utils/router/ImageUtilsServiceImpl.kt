@@ -5,8 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ImageUtils
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.router.service.ImageUtilsService
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.service.ImageUtilsService
 import java.io.File
 
 @Route(path = RouterPath.Service.ImageUtilsService)

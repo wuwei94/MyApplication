@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
 import com.example.william.my.module.features.databinding.FeaturesActivityMicAnimationBinding
 import com.example.william.my.module.features.layoutmanager.MicLayoutManager

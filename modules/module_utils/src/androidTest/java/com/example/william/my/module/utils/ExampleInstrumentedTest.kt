@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_module.utils
+package com.example.william.my.basic.basic_shared.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

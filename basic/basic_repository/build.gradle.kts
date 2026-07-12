@@ -11,7 +11,7 @@ android {
 
 dependencies {
     implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_module"))
+    implementation(project(":basic:basic_shared"))
 
     api(project(":libs:lib_okhttp"))
     api(project(":libs:lib_retrofit"))

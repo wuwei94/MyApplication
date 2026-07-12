@@ -2,7 +2,7 @@ package com.example.william.my.module.opensource.objectbox
 
 import android.content.Context
 import android.util.Log
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.opensource.BuildConfig
 import io.objectbox.BoxStore
 import io.objectbox.android.Admin

@@ -3,7 +3,7 @@ package com.example.william.my.module.component.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 
 /**
  * ActivityResultContracts

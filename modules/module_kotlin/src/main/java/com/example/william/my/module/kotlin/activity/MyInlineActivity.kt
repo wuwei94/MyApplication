@@ -3,8 +3,8 @@ package com.example.william.my.module.kotlin.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.google.gson.Gson
 
 /**

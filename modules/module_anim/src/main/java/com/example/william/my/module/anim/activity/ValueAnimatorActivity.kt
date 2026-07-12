@@ -15,9 +15,9 @@ import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.activity.BasicImageActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * ValueAnimator — 差值动画 + ViewPropertyAnimator

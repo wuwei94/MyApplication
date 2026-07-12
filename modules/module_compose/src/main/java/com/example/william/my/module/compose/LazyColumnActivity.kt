@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.alibaba.android.arouter.exception.HandlerException
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.example.william.my.basic.basic_module.router.item.RouterItem
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.item.RouterItem
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.Compose.Main)
 class LazyColumnActivity : ComponentActivity() {

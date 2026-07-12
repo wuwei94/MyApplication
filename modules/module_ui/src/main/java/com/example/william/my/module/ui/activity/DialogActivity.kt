@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.R
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.ui.dialog.MyCreateDialogDialog
 import com.example.william.my.module.ui.dialog.MyCreateViewDialog
 import java.util.Calendar

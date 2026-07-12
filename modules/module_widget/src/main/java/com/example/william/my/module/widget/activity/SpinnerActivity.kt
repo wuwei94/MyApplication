@@ -2,8 +2,8 @@ package com.example.william.my.module.widget.activity
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.widget.spinner.Spinner
 
 @Route(path = RouterPath.Widget.Spinner)

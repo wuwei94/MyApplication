@@ -3,7 +3,7 @@ package com.example.william.my.application.initializer
 import android.content.Context
 import androidx.startup.AppInitializer
 import androidx.startup.Initializer
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 
 object Sync {
     // This method is a workaround to manually initialize the sync process instead of relying on

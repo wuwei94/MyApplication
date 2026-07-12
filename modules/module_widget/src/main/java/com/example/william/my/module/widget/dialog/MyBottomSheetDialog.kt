@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
-import com.example.william.my.basic.basic_module.adapter.ViewPagerFragmentAdapter
-import com.example.william.my.basic.basic_module.fragment.PrimaryDarkFragment
-import com.example.william.my.basic.basic_module.fragment.PrimaryFragment
+import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter
+import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
+import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.core.widget.bottomsheet.ViewPagerBottomSheetDialogFragment
 import com.example.william.my.module.widget.R
 import com.example.william.my.module.widget.databinding.DemoDialogBottomSheetBinding

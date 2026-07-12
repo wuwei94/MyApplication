@@ -1,6 +1,6 @@
 package com.example.william.my.module.kotlin.activity
 
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

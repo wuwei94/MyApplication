@@ -22,7 +22,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.sync.activity.JobSchedulerActivity
 
 class MyJobSchedulerService : JobService() {

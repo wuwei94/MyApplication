@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.adapter.ViewPagerFragmentAdapter
-import com.example.william.my.basic.basic_module.fragment.PrimaryDarkFragment
-import com.example.william.my.basic.basic_module.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter
+import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
+import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
 import com.example.william.my.module.ui.databinding.UiActivityAppBarBinding
 import com.google.android.material.tabs.TabLayout
@@ -64,18 +64,18 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
         mBinding.tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_module.R.color.colorPrimaryDark
+                com.example.william.my.basic.basic_shared.R.color.colorPrimaryDark
             )
         )
         //两个参数分别对应Tab未选中的文字颜色和选中的文字颜色
         mBinding.tabLayout.setTabTextColors(
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_module.R.color.colorPrimary
+                com.example.william.my.basic.basic_shared.R.color.colorPrimary
             ),
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_module.R.color.colorPrimaryDark
+                com.example.william.my.basic.basic_shared.R.color.colorPrimaryDark
             )
         )
         //绑定ViewPager

@@ -6,10 +6,10 @@ import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.adapter.ViewPagerFragmentAdapter
-import com.example.william.my.basic.basic_module.fragment.PrimaryDarkFragment
-import com.example.william.my.basic.basic_module.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter
+import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
+import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
 import com.example.william.my.module.ui.R
 import com.example.william.my.module.ui.databinding.UiActivityFragmentViewPagerBinding

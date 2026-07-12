@@ -30,7 +30,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.loren.component.view.composesmartrefresh.MyRefreshFooter
 import com.loren.component.view.composesmartrefresh.MyRefreshHeader
 import com.loren.component.view.composesmartrefresh.SmartSwipeRefresh

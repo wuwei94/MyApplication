@@ -1,7 +1,7 @@
 package com.example.william.my.application.app
 
 import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.lib.app.BaseApp
 import com.example.william.my.lib.eventbus.EventBusHelper
 import com.example.william.my.lib.utils.CrashUtils

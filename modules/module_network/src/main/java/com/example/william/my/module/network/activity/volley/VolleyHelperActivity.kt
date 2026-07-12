@@ -3,9 +3,9 @@ package com.example.william.my.module.network.activity.volley
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.android.volley.VolleyError
 import com.example.william.my.basic.basic_repository.bean.LoginData
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.base.Constants
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.volley.VolleyHelper
 import com.example.william.my.core.volley.listener.VolleyListener
 import org.json.JSONObject

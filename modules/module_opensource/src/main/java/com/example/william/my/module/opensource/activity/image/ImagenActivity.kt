@@ -3,8 +3,8 @@ package com.example.william.my.module.opensource.activity.image
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicImageActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ImagenModel
 import com.google.firebase.ai.ai

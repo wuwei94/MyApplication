@@ -50,7 +50,7 @@ MyApplication/
 ├── docs                        # 文档（modules / libs / build-logic / conventions）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
-│   ├── basic_module            # 通用 Bus、Router、UI 脚手架
+│   ├── basic_shared            # 通用 Bus、Router、UI 脚手架
 │   └── basic_repository        # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket / lib_download

@@ -1,6 +1,6 @@
 package com.example.william.my.module.network.utils
 
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader

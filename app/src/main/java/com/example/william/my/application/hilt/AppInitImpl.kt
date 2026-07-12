@@ -2,7 +2,7 @@ package com.example.william.my.application.hilt
 
 import android.app.Application
 import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.lib.eventbus.EventBusHelper
 import com.example.william.my.lib.hilt.interfaces.IAppInit
 import com.example.william.my.lib.utils.CrashUtils

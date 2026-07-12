@@ -11,9 +11,9 @@ import android.os.Messenger
 import android.os.PersistableBundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.sync.service.MyJobSchedulerService
 import java.lang.ref.WeakReference
 

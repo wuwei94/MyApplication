@@ -1,8 +1,8 @@
 package com.example.william.my.module.eventbus.activity
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.eventbus.rxjava.RxEventBus
 import com.example.william.my.module.eventbus.event.GlobalEvent
 import com.example.william.my.module.eventbus.event.StickyEvent

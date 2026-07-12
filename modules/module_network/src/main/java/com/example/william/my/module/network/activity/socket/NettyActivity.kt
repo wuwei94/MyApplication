@@ -3,8 +3,8 @@ package com.example.william.my.module.network.activity.socket
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.network.netty.NettyService
 import com.example.william.my.module.network.netty.client.NettyClient
 import com.example.william.my.module.network.netty.server.NettyServer

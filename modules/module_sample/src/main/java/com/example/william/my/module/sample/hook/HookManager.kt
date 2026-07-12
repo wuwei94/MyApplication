@@ -3,7 +3,7 @@ package com.example.william.my.module.sample.hook
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
-import com.example.william.my.basic.basic_module.utils.Utils
+import com.example.william.my.basic.basic_shared.utils.Utils
 import java.lang.reflect.Proxy
 
 object HookManager {

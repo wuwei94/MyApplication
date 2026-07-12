@@ -2,8 +2,8 @@ package com.example.william.my.module.network.activity.socket
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.network.nano.NanoServer
 import com.example.william.my.module.network.socket.SocketService
 import com.example.william.my.module.network.utils.NetworkUtils

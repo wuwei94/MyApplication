@@ -1,9 +1,9 @@
 package com.example.william.my.module.features
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_module.router.activity.RouterRecyclerActivity
-import com.example.william.my.basic.basic_module.router.item.RouterItem
-import com.example.william.my.basic.basic_module.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
+import com.example.william.my.basic.basic_shared.router.item.RouterItem
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.Features.Main)
 class FeaturesActivity : RouterRecyclerActivity() {
