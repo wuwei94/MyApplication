@@ -3,8 +3,6 @@ package com.example.william.my.module.anim.activity
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
@@ -25,22 +23,25 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 @Route(path = RouterPath.Anim.AnimatorSet)
 class AnimatorSetActivity : BasicImageActivity() {
 
-    private var index = -1
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
-    override fun onImageClick(view: View) {
-        super.onImageClick(view)
-        index++
-        val name = when (index % 3) {
-            0 -> { playSequentially(); "playSequentially（顺序播放）" }
-            1 -> { playTogether(); "playTogether（同时播放）" }
-            else -> { playWithBuilder(); "Builder（精细编排）" }
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "playSequentially（顺序播放）",
+            "playTogether（同时播放）",
+            "Builder（精细编排）"
+        )
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        when (position) {
+            0 -> playSequentially()
+            1 -> playTogether()
+            2 -> playWithBuilder()
         }
-        Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
     }
 
     /**

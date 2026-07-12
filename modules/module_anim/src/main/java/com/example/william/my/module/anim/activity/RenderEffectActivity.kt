@@ -10,15 +10,15 @@ import android.hardware.HardwareBuffer
 import android.media.ImageReader
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.activity.BaseVBActivity
-import com.example.william.my.module.anim.databinding.AnimActivityRenderEffectBinding
 import kotlin.math.max
 import kotlin.math.min
 
@@ -34,45 +34,47 @@ import kotlin.math.min
  * - TileMode: CLAMP（边缘自然过渡，推荐）/ REPEAT / MIRROR
  */
 @Route(path = RouterPath.Anim.RenderEffect)
-class RenderEffectActivity : BaseVBActivity<AnimActivityRenderEffectBinding>() {
+class RenderEffectActivity : BasicImageActivity() {
 
     private lateinit var originalBitmap: Bitmap
     private var isBlurred = false
     private var currentMethod = ""
-
-    override fun getViewBinding(): AnimActivityRenderEffectBinding {
-        return AnimActivityRenderEffectBinding.inflate(layoutInflater)
-    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher, null)!!
         originalBitmap = drawable.toBitmap()
+        showImage(originalBitmap)
+    }
 
-        mBinding.renderEffectOriginal.setImageBitmap(originalBitmap)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "View.setRenderEffect（推荐）",
+            "HardwareRenderer 离屏渲染"
+        )
+    }
 
-        mBinding.renderEffectViewBlur.setOnClickListener {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                Toast.makeText(this, "需要 Android 12+（API 31）", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (isBlurred && currentMethod == "view") {
-                clearBlur()
-            } else {
-                applyViewBlur()
-            }
+    override fun onRecyclerClick(position: Int, string: String) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            Toast.makeText(this, "需要 Android 12+（API 31）", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        mBinding.renderEffectBitmapBlur.setOnClickListener {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                Toast.makeText(this, "需要 Android 12+（API 31）", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+        when (position) {
+            0 -> {
+                if (isBlurred && currentMethod == "view") {
+                    clearBlur()
+                } else {
+                    applyViewBlur()
+                }
             }
-            if (isBlurred && currentMethod == "bitmap") {
-                clearBlur()
-            } else {
-                applyBitmapBlur()
+            1 -> {
+                if (isBlurred && currentMethod == "bitmap") {
+                    clearBlur()
+                } else {
+                    applyBitmapBlur()
+                }
             }
         }
     }
@@ -83,13 +85,11 @@ class RenderEffectActivity : BaseVBActivity<AnimActivityRenderEffectBinding>() {
      */
     @RequiresApi(Build.VERSION_CODES.S)
     private fun applyViewBlur() {
-        mBinding.renderEffectBlur.setImageBitmap(originalBitmap)
-        mBinding.renderEffectBlur.setRenderEffect(
+        mBinding.basicsImage.setRenderEffect(
             RenderEffect.createBlurEffect(20f, 20f, Shader.TileMode.CLAMP)
         )
         isBlurred = true
         currentMethod = "view"
-        mBinding.renderEffectStatus.text = "View.setRenderEffect 模糊已开启"
     }
 
     /**
@@ -100,53 +100,59 @@ class RenderEffectActivity : BaseVBActivity<AnimActivityRenderEffectBinding>() {
     @RequiresApi(Build.VERSION_CODES.S)
     private fun applyBitmapBlur() {
         val blurred = blurWithHardwareRenderer(originalBitmap, 20f)
-        mBinding.renderEffectBlur.setImageBitmap(blurred)
+        showImage(blurred)
         isBlurred = true
         currentMethod = "bitmap"
-        mBinding.renderEffectStatus.text = "HardwareRenderer 模糊已开启"
     }
 
     private fun clearBlur() {
-        mBinding.renderEffectBlur.setRenderEffect(null)
-        mBinding.renderEffectBlur.setImageBitmap(null)
+        mBinding.basicsImage.setRenderEffect(null)
+        showImage(originalBitmap)
         isBlurred = false
         currentMethod = ""
-        mBinding.renderEffectStatus.text = "模糊已关闭"
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
     private fun blurWithHardwareRenderer(bitmap: Bitmap, radius: Float): Bitmap {
         val clampedRadius = max(0.1f, min(25.0f, radius))
 
-        val imageReader = ImageReader.newInstance(
-            bitmap.width, bitmap.height,
-            PixelFormat.RGBA_8888, 1,
-            HardwareBuffer.USAGE_GPU_SAMPLED_IMAGE or HardwareBuffer.USAGE_GPU_COLOR_OUTPUT
-        )
+        var imageReader: ImageReader? = null
+        var hardwareRenderer: HardwareRenderer? = null
 
-        val renderNode = RenderNode("BlurEffect").apply {
-            setPosition(0, 0, imageReader.width, imageReader.height)
-            setRenderEffect(
-                RenderEffect.createBlurEffect(clampedRadius, clampedRadius, Shader.TileMode.CLAMP)
+        try {
+            imageReader = ImageReader.newInstance(
+                bitmap.width, bitmap.height,
+                PixelFormat.RGBA_8888, 1,
+                HardwareBuffer.USAGE_GPU_SAMPLED_IMAGE or HardwareBuffer.USAGE_GPU_COLOR_OUTPUT
             )
+
+            val renderNode = RenderNode("BlurEffect").apply {
+                setPosition(0, 0, imageReader.width, imageReader.height)
+                setRenderEffect(
+                    RenderEffect.createBlurEffect(clampedRadius, clampedRadius, Shader.TileMode.CLAMP)
+                )
+            }
+
+            hardwareRenderer = HardwareRenderer().apply {
+                setSurface(imageReader.surface)
+                setContentRoot(renderNode)
+            }
+
+            val canvas = renderNode.beginRecording()
+            canvas.drawBitmap(bitmap, 0f, 0f, null)
+            renderNode.endRecording()
+
+            hardwareRenderer.createRenderRequest().setWaitForPresent(true).syncAndDraw()
+
+            val image = imageReader.acquireNextImage() ?: throw RuntimeException("No Image")
+            val hwBuffer = image.hardwareBuffer ?: throw RuntimeException("No HardwareBuffer")
+            val result = Bitmap.wrapHardwareBuffer(hwBuffer, null) ?: throw RuntimeException("Failed")
+            image.close()
+
+            return result
+        } finally {
+            hardwareRenderer?.destroy()
+            imageReader?.close()
         }
-
-        val hardwareRenderer = HardwareRenderer().apply {
-            setSurface(imageReader.surface)
-            setContentRoot(renderNode)
-        }
-
-        val canvas = renderNode.beginRecording()
-        canvas.drawBitmap(bitmap, 0f, 0f, null)
-        renderNode.endRecording()
-
-        hardwareRenderer.createRenderRequest().setWaitForPresent(true).syncAndDraw()
-
-        val image = imageReader.acquireNextImage() ?: throw RuntimeException("No Image")
-        val hwBuffer = image.hardwareBuffer ?: throw RuntimeException("No HardwareBuffer")
-        val result = Bitmap.wrapHardwareBuffer(hwBuffer, null) ?: throw RuntimeException("Failed")
-        image.close()
-
-        return result
     }
 }

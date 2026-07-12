@@ -11,9 +11,8 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.activity.BaseVBActivity
-import com.example.william.my.module.anim.databinding.AnimActivityRenderScriptBinding
 import kotlin.math.max
 import kotlin.math.min
 
@@ -31,44 +30,43 @@ import kotlin.math.min
  * 5. outputAlloc.copyTo() — 取出结果
  */
 @Route(path = RouterPath.Anim.RenderScript)
-class RenderScriptActivity : BaseVBActivity<AnimActivityRenderScriptBinding>() {
+class RenderScriptActivity : BasicImageActivity() {
 
     private var renderScript: RenderScript? = null
     private lateinit var originalBitmap: Bitmap
     private var isBlurred = false
-
-    override fun getViewBinding(): AnimActivityRenderScriptBinding {
-        return AnimActivityRenderScriptBinding.inflate(layoutInflater)
-    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher, null)!!
         originalBitmap = drawable.toBitmap()
+        showImage(originalBitmap)
+    }
 
-        mBinding.renderScriptOriginal.setImageBitmap(originalBitmap)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "RenderScript 高斯模糊（已废弃）"
+        )
+    }
 
-        mBinding.renderScriptToggle.setOnClickListener {
-            if (isBlurred) {
-                clearBlur()
-            } else {
-                applyBlur()
-            }
+    override fun onRecyclerClick(position: Int, string: String) {
+        if (isBlurred) {
+            clearBlur()
+        } else {
+            applyBlur()
         }
     }
 
     private fun applyBlur() {
         val blurred = blurWithRenderScript(originalBitmap, 20f)
-        mBinding.renderScriptBlur.setImageBitmap(blurred)
+        showImage(blurred)
         isBlurred = true
-        mBinding.renderScriptStatus.text = "RenderScript 模糊已开启"
     }
 
     private fun clearBlur() {
-        mBinding.renderScriptBlur.setImageBitmap(null)
+        showImage(originalBitmap)
         isBlurred = false
-        mBinding.renderScriptStatus.text = "模糊已关闭"
     }
 
     private fun blurWithRenderScript(bitmap: Bitmap, radius: Float): Bitmap {

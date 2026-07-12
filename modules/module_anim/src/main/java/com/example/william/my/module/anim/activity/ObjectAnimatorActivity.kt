@@ -2,8 +2,6 @@ package com.example.william.my.module.anim.activity
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
@@ -21,23 +19,27 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 @Route(path = RouterPath.Anim.ObjectAnimator)
 class ObjectAnimatorActivity : BasicImageActivity() {
 
-    private var index = -1
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
-    override fun onImageClick(view: View) {
-        super.onImageClick(view)
-        index++
-        val name = when (index % 4) {
-            0 -> { startAlpha(); "Alpha（透明度）" }
-            1 -> { startRotation(); "Rotation（旋转）" }
-            2 -> { startScale(); "ScaleX（缩放）" }
-            else -> { startTranslation(); "TranslationX（平移）" }
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "Alpha（透明度）",
+            "Rotation（旋转）",
+            "ScaleX（缩放）",
+            "TranslationX（平移）"
+        )
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        when (position) {
+            0 -> startAlpha()
+            1 -> startRotation()
+            2 -> startScale()
+            3 -> startTranslation()
         }
-        Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
     }
 
     /**

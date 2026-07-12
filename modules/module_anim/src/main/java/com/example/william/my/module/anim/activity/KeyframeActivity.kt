@@ -4,9 +4,7 @@ import android.animation.Keyframe
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.os.Bundle
-import android.view.View
 import android.view.animation.LinearInterpolator
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
@@ -27,22 +25,25 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 @Route(path = RouterPath.Anim.Keyframe)
 class KeyframeActivity : BasicImageActivity() {
 
-    private var index = -1
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
-    override fun onImageClick(view: View) {
-        super.onImageClick(view)
-        index++
-        val name = when (index % 3) {
-            0 -> { startPropertyValuesHolder(); "PropertyValuesHolder（多属性）" }
-            1 -> { startKeyframe(); "Keyframe（关键帧）" }
-            else -> { startCombined(); "组合（旋转+缩放）" }
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "PropertyValuesHolder（多属性）",
+            "Keyframe（关键帧）",
+            "组合（旋转+缩放）"
+        )
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        when (position) {
+            0 -> startPropertyValuesHolder()
+            1 -> startKeyframe()
+            2 -> startCombined()
         }
-        Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
     }
 
     /**
