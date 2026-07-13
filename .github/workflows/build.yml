@@ -23,10 +23,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Lint Debug
-        run: ./gradlew lintDebug -PenableFlutter=false --no-daemon
+        run: ./gradlew lintProdDebug -PenableFlutter=false --no-daemon
 
       - name: Assemble Debug
-        run: ./gradlew assembleDebug -PenableFlutter=false --no-daemon
+        run: ./gradlew assembleProdDebug -PenableFlutter=false --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

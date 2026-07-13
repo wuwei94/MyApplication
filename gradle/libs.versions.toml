@@ -105,7 +105,7 @@ gradlePluginProtobuf = "0.9.6"
 gradlePluginArouter = "1.0.2"
 gradlePluginGreenDao = "3.3.1"
 gradlePluginObjectBox = "5.1.0"
-gradlePluginKsp = "2.3.4"
+gradlePluginKsp = "2.2.20-2.0.4"
 
 # https://mvnrepository.com/artifact/com.dropbox.dependency-guard/dependency-guard
 dependencyGuard = "0.5.0"
