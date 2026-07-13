@@ -13,7 +13,7 @@ object NetworkUtils {
         return info != null && info.isConnected
     }
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION", "MissingPermission")
     private fun getActiveNetworkInfo(context: Context): NetworkInfo? {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo

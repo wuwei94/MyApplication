@@ -38,7 +38,7 @@ public class SpinnerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         });
 
-        ((ViewHolder) holder).textView.setText(data.get(position));
+        ((ViewHolder) holder).textView.setText(data.get(holder.getBindingAdapterPosition()));
     }
 
     @Override
