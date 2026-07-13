@@ -1,6 +1,15 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         maven {
             url = uri("https://maven.aliyun.com/repository/google")
             name = "Aliyun Google"
@@ -12,15 +21,6 @@ pluginManagement {
             url = uri("https://maven.aliyun.com/repository/public")
             name = "Aliyun Central"
         }
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
-        mavenCentral()
-        gradlePluginPortal()
         maven {
             url = uri("https://jitpack.io")
             name = "JitPack"
@@ -45,6 +45,8 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     @Suppress("UnstableApiUsage")
     repositories {
+        google()
+        mavenCentral()
         maven {
             url = uri("https://maven.aliyun.com/repository/google")
             name = "Aliyun Google"
@@ -56,8 +58,6 @@ dependencyResolutionManagement {
             url = uri("https://maven.aliyun.com/repository/public")
             name = "Aliyun Central"
         }
-        google()
-        mavenCentral()
         maven {
             url = uri("https://jitpack.io")
             name = "JitPack"
