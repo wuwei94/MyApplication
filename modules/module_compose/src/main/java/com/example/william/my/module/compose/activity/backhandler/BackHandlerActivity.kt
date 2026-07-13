@@ -1,5 +1,6 @@
 package com.example.william.my.module.compose.activity.backhandler
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,6 +29,7 @@ class BackHandlerActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("ContextCastToActivity")
     @Composable
     fun BackHandlerExample() {
 

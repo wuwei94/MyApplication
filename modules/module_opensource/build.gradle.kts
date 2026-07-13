@@ -9,7 +9,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.opensource"
-    resourcePrefix("opensource_")
     buildFeatures {
         buildConfig = true
     }

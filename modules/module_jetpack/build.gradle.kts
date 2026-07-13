@@ -9,7 +9,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.jetpack"
-    resourcePrefix("jetpack_")
 }
 
 dependencies {

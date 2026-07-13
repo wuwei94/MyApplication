@@ -6,7 +6,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.basic.basic_shared"
-    resourcePrefix("shared_")
 }
 
 dependencies {

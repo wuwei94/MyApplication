@@ -105,6 +105,7 @@ class RenderEffectActivity : BasicImageActivity() {
         currentMethod = "bitmap"
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun clearBlur() {
         mBinding.basicsImage.setRenderEffect(null)
         showImage(originalBitmap)

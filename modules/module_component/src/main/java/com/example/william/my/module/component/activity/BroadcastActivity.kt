@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -38,6 +39,7 @@ class BroadcastActivity : BasicResponseActivity() {
 
     private fun sendBroadcast() {
         val intent = Intent(MessageReceiver.ACTION_UPDATE).apply {
+            setPackage(packageName)
             putExtra("message", MessageReceiver.ACTION_UPDATE)
         }
         sendBroadcast(intent)
@@ -54,9 +56,9 @@ class BroadcastActivity : BasicResponseActivity() {
 
         val intentFilter = IntentFilter(MessageReceiver.ACTION_UPDATE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(mMessageReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED)
+            ContextCompat.registerReceiver(this, mMessageReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED)
         } else {
-            registerReceiver(mMessageReceiver, intentFilter)
+            ContextCompat.registerReceiver(this, mMessageReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
         }
     }
 

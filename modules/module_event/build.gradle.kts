@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.eventbus"
-    resourcePrefix("eventbus_")
 }
 
 dependencies {

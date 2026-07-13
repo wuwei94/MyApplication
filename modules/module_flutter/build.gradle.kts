@@ -12,7 +12,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.flutter"
-    resourcePrefix("flutter_")
 
     sourceSets {
         getByName("main") {

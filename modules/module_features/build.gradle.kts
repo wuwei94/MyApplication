@@ -6,7 +6,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.features"
-    resourcePrefix("features_")
 }
 
 dependencies {

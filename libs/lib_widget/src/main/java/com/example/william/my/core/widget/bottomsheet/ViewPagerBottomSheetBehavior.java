@@ -3,6 +3,7 @@ package com.example.william.my.core.widget.bottomsheet;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import android.annotation.SuppressLint;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -54,6 +55,7 @@ import java.util.Map;
  * @see #findScrollingChild
  * @see #updateScrollingChild
  */
+@SuppressLint("RestrictedApi")
 public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
 
     /**
@@ -307,6 +309,7 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
     public ViewPagerBottomSheetBehavior() {
     }
 
+    @SuppressLint("RestrictedApi")
     public ViewPagerBottomSheetBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
 

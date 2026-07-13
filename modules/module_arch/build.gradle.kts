@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.arch"
-    resourcePrefix("arch_")
     buildFeatures {
         buildConfig = true
     }

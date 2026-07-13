@@ -6,7 +6,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.ui"
-    resourcePrefix("ui_")
 }
 
 dependencies {

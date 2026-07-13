@@ -129,10 +129,10 @@ public class ViewPagerBottomSheetDialog extends AppCompatDialog {
     public void cancel() {
         ViewPagerBottomSheetBehavior<FrameLayout> behavior = getBehavior();
 
-        if (!dismissWithAnimation || behavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
+        if (!dismissWithAnimation || behavior.getState() == ViewPagerBottomSheetBehavior.STATE_HIDDEN) {
             super.cancel();
         } else {
-            behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
         }
     }
 

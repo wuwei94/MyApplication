@@ -6,7 +6,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.network"
-    resourcePrefix("network_")
     //Netty
     //packaging {
     //    resources.excludes.add("META-INF/INDEX.LIST")

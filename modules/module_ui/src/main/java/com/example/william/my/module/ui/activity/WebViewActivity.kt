@@ -9,6 +9,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.activity.BaseVBActivity
@@ -25,6 +26,17 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
         super.initView(savedInstanceState)
 
         initWebView()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (mBinding.webView.canGoBack()) {
+                    mBinding.webView.goBack()
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
     }
 
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
@@ -111,13 +123,5 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
 
     abstract class WebViewJsCallback {
         abstract fun closeWebViewPage()
-    }
-
-    override fun onBackPressed() {
-        if (mBinding.webView.canGoBack()) {
-            mBinding.webView.goBack()
-        } else {
-            super.onBackPressed()
-        }
     }
 }

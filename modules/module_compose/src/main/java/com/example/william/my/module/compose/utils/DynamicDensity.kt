@@ -2,6 +2,7 @@ package com.example.william.my.module.compose.utils
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 
 /**
@@ -13,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 fun dynamicDensity(designWidth: Float, designHeight: Float): Float {
 
     val isPortrait =
-        LocalContext.current.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT  //判断横竖屏
+        LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT  //判断横竖屏
     val displayMetrics =
         LocalContext.current.resources.displayMetrics
 

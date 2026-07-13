@@ -36,6 +36,7 @@
     <!--GROUP_CAMERA-->
     <!-- 允许应用程序访问相机设备。 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <!--GROUP_CONTACTS-->
     <!-- 允许应用程序读取用户联系人数据。 -->
@@ -67,6 +68,7 @@
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
 
     <!--GROUP_SENSORS-->
     <!-- 允许应用程序使用传感器 -->
