@@ -116,7 +116,7 @@
 
     <application
         android:allowBackup="false"
-        android:networkSecurityConfig="@xml/network_security_config"
+        android:networkSecurityConfig="@xml/base_network_security"
         android:supportsRtl="true"
         tools:ignore="UnusedAttribute">
         <!--FileProvider-->
@@ -127,7 +127,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/base_file_paths" />
         </provider>
         <provider
             android:name=".provider.InitProvider"
