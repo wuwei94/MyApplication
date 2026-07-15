@@ -7,6 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.william.my.basic.basic_repository"
+    resourcePrefix("repo_")
 }
 
 dependencies {
