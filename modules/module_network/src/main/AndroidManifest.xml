@@ -3,7 +3,6 @@
 
     <application>
         <activity android:name=".NetWorkActivity" />
-        <activity android:name=".activity.coil.CoilActivity" />
         <activity android:name=".activity.ktor.KtorActivity" />
         <activity android:name=".activity.ktor.KtorUtilsActivity" />
 

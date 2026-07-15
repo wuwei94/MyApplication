@@ -32,6 +32,8 @@ dependencies {
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
 
+    implementation(libs.coil)
+    implementation(libs.glide)
     implementation(libs.pag)
     implementation(libs.lottie)
     implementation(libs.svgaPlayer)
@@ -43,9 +45,6 @@ dependencies {
     implementation(libs.rxandroid)
 
     implementation(libs.blurview)
-
-    //extra
-    implementation(libs.glide)//pictureselector
 }
 
 //https://github.com/greenrobot/greenDAO/issues/1110

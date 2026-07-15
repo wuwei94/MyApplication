@@ -1,18 +1,17 @@
-package com.example.william.my.module.network.activity.coil
+package com.example.william.my.module.opensource.activity.imageloader
 
 import android.os.Bundle
-import coil.load
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.bumptech.glide.Glide
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * https://github.com/coil-kt/coil
- * 圆形变换（CircleCropTransformation）和圆角变换（RoundedCornersTransformation）
+ * https://github.com/bumptech/glide
  */
-@Route(path = RouterPath.Network.Coil.Coil)
-class CoilActivity : BasicImageActivity() {
+@Route(path = RouterPath.OpenSource.ImageLoader.Glide)
+class GlideActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -21,6 +20,6 @@ class CoilActivity : BasicImageActivity() {
     }
 
     private fun load() {
-        mBinding.basicsImage.load(Constants.Url_Image1)
+        Glide.with(this).load(Constants.Url_Image1).into(mBinding.basicsImage)
     }
 }

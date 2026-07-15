@@ -180,12 +180,6 @@ object RouterPath {
 
         const val Main = "${PATH}/Main"
 
-        object Coil {
-            private const val COIL_PATH = "${PATH}/Coil"
-
-            const val Coil = "${COIL_PATH}/Coil"
-        }
-
         object Ktor {
             private const val KTOR_PATH = "${PATH}/Ktor"
 
@@ -298,6 +292,13 @@ object RouterPath {
             private const val Image = "${Opensource}/Image"
 
             const val Imagen = "${Image}/Imagen"
+        }
+
+        object ImageLoader {
+            private const val ImageLoader = "${Opensource}/ImageLoader"
+
+            const val Coil = "${ImageLoader}/Coil"
+            const val Glide = "${ImageLoader}/Glide"
         }
 
         object Database {

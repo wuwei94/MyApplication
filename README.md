@@ -157,7 +157,6 @@ MyApplication/
 - WebSocket（OkHttp 实现）
 - Ktor 客户端
 - 服务端：NanoHTTPD / Netty Socket
-- 图片加载：Coil
 
 ### module_opensource（第三方库）
 
@@ -168,6 +167,7 @@ MyApplication/
 - UI：FlycoTabLayout / SwipeLayout / PhotoView / Banner / EasyFloat / RealtimeBlurView / ShadowLayout
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / LoadSir / MMKV / PermissionX
+- 图片加载：Coil / Glide
 - AI：Firebase Imagen
 
 ### module_arch（架构模式）

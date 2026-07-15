@@ -50,6 +50,10 @@ class OpenSourceActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Imagen", RouterPath.OpenSource.Image.Imagen))
 
         routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("Coil", RouterPath.OpenSource.ImageLoader.Coil))
+        routerItems.add(RouterItem("Glide", RouterPath.OpenSource.ImageLoader.Glide))
+
+        routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("ObjectBox", RouterPath.OpenSource.Database.ObjectBox))
         return routerItems
     }
