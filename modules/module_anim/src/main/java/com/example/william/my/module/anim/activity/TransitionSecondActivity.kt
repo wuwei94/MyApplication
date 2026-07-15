@@ -6,7 +6,7 @@ import android.transition.Fade
 import android.transition.Slide
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.activity.BaseVBActivity
+import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.anim.databinding.AnimActivityTransitionSecondBinding
 
 /**

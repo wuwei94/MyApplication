@@ -2,10 +2,10 @@ package com.example.william.my.application.app
 
 import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.lib.app.BaseApp
-import com.example.william.my.lib.eventbus.EventBusHelper
-import com.example.william.my.lib.utils.CrashUtils
-import com.example.william.my.lib.utils.FileSDCardUtil
+import com.example.william.my.core.base.app.BaseApp
+import com.example.william.my.core.base.eventbus.EventBusHelper
+import com.example.william.my.core.base.utils.CrashUtils
+import com.example.william.my.core.base.utils.FileSDCardUtil
 import com.example.william.my.module.arch.app.ArchApp
 import com.example.william.my.module.eventbus.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp

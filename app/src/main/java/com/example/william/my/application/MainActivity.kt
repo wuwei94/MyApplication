@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity() {
                 ARouter.getInstance()
                     .build(RouterPath.Module_Main)
                     .withTransition(
-                        R.anim.basic_anim_slide_in_left,
-                        R.anim.basic_anim_slide_out_right
+                        R.anim.base_anim_slide_in_left,
+                        R.anim.base_anim_slide_out_right
                     )
                     .withString("param_key", "param_value")
                     .navigation()
@@ -94,8 +94,8 @@ class MainActivity : AppCompatActivity() {
             ARouter.getInstance()
                 .build(RouterPath.Module_Main)
                 .withTransition(
-                    R.anim.basic_anim_slide_in_left,
-                    R.anim.basic_anim_slide_out_right
+                    R.anim.base_anim_slide_in_left,
+                    R.anim.base_anim_slide_out_right
                 )
                 .withString("param_key", "param_value")
                 .navigation()

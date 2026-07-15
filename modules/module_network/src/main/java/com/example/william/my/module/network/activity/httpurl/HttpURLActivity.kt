@@ -4,7 +4,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.utils.AppExecutorsHelper
+import com.example.william.my.core.base.utils.AppExecutorsHelper
 import com.example.william.my.module.network.utils.HttpURLUtils
 import org.json.JSONObject
 

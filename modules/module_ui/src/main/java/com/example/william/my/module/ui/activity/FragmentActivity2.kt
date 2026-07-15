@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.activity.BaseVBActivity
+import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.ui.R
 import com.example.william.my.module.ui.databinding.UiActivityFragment2Binding
 import com.example.william.my.module.ui.utils.FragmentUtils

@@ -2,7 +2,7 @@ package com.example.william.my.module.arch.hilt
 
 import android.app.Application
 import com.airbnb.mvrx.Mavericks
-import com.example.william.my.lib.hilt.interfaces.IAppInit
+import com.example.william.my.core.base.hilt.interfaces.IAppInit
 import javax.inject.Inject
 
 class ArchInitImpl @Inject constructor() : IAppInit {

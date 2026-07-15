@@ -6,7 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.lib"
+    namespace = "com.example.william.my.core.base"
+    resourcePrefix("base_")
     defaultConfig {
         consumerProguardFiles("consumer-rules.pro")
     }

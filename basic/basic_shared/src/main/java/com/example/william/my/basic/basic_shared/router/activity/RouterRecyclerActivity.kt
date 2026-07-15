@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.william.my.basic.basic_shared.router.fragment.RouterRecyclerFragment
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
-import com.example.william.my.lib.activity.BaseFragmentActivity
+import com.example.william.my.core.base.activity.BaseFragmentActivity
 
 abstract class RouterRecyclerActivity : BaseFragmentActivity() {
 

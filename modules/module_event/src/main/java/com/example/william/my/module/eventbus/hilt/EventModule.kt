@@ -1,7 +1,7 @@
 package com.example.william.my.module.eventbus.hilt
 
-import com.example.william.my.lib.hilt.interfaces.IAppInit
-import com.example.william.my.lib.hilt.qualifier.EventInit
+import com.example.william.my.core.base.hilt.interfaces.IAppInit
+import com.example.william.my.core.base.hilt.qualifier.EventInit
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

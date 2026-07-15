@@ -3,10 +3,10 @@ package com.example.william.my.application.hilt
 import android.app.Application
 import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.lib.eventbus.EventBusHelper
-import com.example.william.my.lib.hilt.interfaces.IAppInit
-import com.example.william.my.lib.utils.CrashUtils
-import com.example.william.my.lib.utils.FileSDCardUtil
+import com.example.william.my.core.base.eventbus.EventBusHelper
+import com.example.william.my.core.base.hilt.interfaces.IAppInit
+import com.example.william.my.core.base.utils.CrashUtils
+import com.example.william.my.core.base.utils.FileSDCardUtil
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 import javax.inject.Inject
 

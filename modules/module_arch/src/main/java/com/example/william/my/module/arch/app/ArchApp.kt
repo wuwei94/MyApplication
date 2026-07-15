@@ -1,7 +1,7 @@
 package com.example.william.my.module.arch.app
 
 import com.airbnb.mvrx.Mavericks
-import com.example.william.my.lib.app.BaseAppInit
+import com.example.william.my.core.base.app.BaseAppInit
 
 class ArchApp : BaseAppInit() {
 

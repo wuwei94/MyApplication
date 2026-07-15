@@ -1,7 +1,7 @@
 package com.example.william.my.module.opensource.hilt
 
 import android.app.Application
-import com.example.william.my.lib.hilt.interfaces.IAppInit
+import com.example.william.my.core.base.hilt.interfaces.IAppInit
 import com.example.william.my.module.opensource.loadsir.DefaultCallback
 import com.example.william.my.module.opensource.loadsir.ErrorCallback
 import com.kingja.loadsir.core.LoadSir

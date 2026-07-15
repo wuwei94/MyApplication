@@ -12,7 +12,7 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerBinding
 import com.example.william.my.basic.basic_shared.dialog.BasicDialogFragment
-import com.example.william.my.lib.activity.BaseActivity
+import com.example.william.my.core.base.activity.BaseActivity
 
 abstract class BasicRecyclerActivity : BaseActivity(),
     BaseQuickAdapter.OnItemClickListener<String> {

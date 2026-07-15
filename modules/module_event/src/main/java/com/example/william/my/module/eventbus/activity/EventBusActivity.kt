@@ -3,7 +3,7 @@ package com.example.william.my.module.eventbus.activity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.eventbus.EventBusHelper
+import com.example.william.my.core.base.eventbus.EventBusHelper
 import com.example.william.my.module.eventbus.event.GlobalEvent
 import com.example.william.my.module.eventbus.event.StickyEvent
 import org.greenrobot.eventbus.Subscribe

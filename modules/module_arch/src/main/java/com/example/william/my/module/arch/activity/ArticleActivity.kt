@@ -2,8 +2,8 @@ package com.example.william.my.module.arch.activity
 
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
-import com.example.william.my.lib.activity.BaseActivity
-import com.example.william.my.lib.fragment.BaseFragment
+import com.example.william.my.core.base.activity.BaseActivity
+import com.example.william.my.core.base.fragment.BaseFragment
 import com.example.william.my.module.arch.utils.obtainViewModel
 import com.example.william.my.module.arch.viewmodel.ArticleViewModel
 

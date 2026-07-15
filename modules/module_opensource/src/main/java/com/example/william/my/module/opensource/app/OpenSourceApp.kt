@@ -1,6 +1,6 @@
 package com.example.william.my.module.opensource.app
 
-import com.example.william.my.lib.app.BaseAppInit
+import com.example.william.my.core.base.app.BaseAppInit
 import com.example.william.my.module.opensource.loadsir.DefaultCallback
 import com.example.william.my.module.opensource.loadsir.ErrorCallback
 import com.google.firebase.FirebaseApp

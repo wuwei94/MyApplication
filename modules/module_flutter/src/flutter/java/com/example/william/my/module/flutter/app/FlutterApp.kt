@@ -1,6 +1,6 @@
 package com.example.william.my.module.flutter.app
 
-import com.example.william.my.lib.app.BaseAppInit
+import com.example.william.my.core.base.app.BaseAppInit
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor

@@ -5,7 +5,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.helper.OkHttpHelper
-import com.example.william.my.lib.utils.AppExecutorsHelper
+import com.example.william.my.core.base.utils.AppExecutorsHelper
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient

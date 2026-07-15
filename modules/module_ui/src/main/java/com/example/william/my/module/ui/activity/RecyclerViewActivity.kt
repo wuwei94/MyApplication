@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.activity.BaseVBActivity
-import com.example.william.my.lib.recyclerview.itemdecoration.RItemDecorationItemSpacing
+import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.recyclerview.itemdecoration.RItemDecorationItemSpacing
 import com.example.william.my.module.ui.R
 import com.example.william.my.module.ui.adapter.RecyclerAdapter
 import com.example.william.my.module.ui.databinding.UiActivityRecyclerViewBinding

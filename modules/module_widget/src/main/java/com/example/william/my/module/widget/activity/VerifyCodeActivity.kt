@@ -3,7 +3,7 @@ package com.example.william.my.module.widget.activity
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.lib.activity.BaseVBActivity
+import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.widget.databinding.DemoActivityVerifyCodeBinding
 
 @Route(path = RouterPath.Widget.VerifyCode)
