@@ -185,7 +185,6 @@
 | MMKVActivity | MMKV 键值存储 |
 | PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |
-| ImagenActivity | Firebase Imagen AI 图像生成 |
 | CoilActivity | Coil 图片加载库 |
 | GlideActivity | Glide 图片加载库 |
 | RealtimeBlurViewActivity | RealtimeBlurView 实时模糊 |

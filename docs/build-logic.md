@@ -21,7 +21,6 @@ build-logic/convention/src/main/kotlin/
 ├── AndroidEventBusConventionPlugin.kt          # EventBus 事件总线插件
 ├── AndroidHiltConventionPlugin.kt              # Hilt 依赖注入插件
 ├── AndroidLintConventionPlugin.kt              # Lint 静态分析插件
-├── AndroidFirebaseConventionPlugin.kt          # Firebase 平台插件
 ├── AndroidRoomConventionPlugin.kt              # Room 数据库插件
 ├── AndroidGreenDaoConventionPlugin.kt          # GreenDao ORM 插件（已禁用）
 ├── AndroidProtobufConventionPlugin.kt          # Protocol Buffers 插件
@@ -134,12 +133,6 @@ build-logic/convention/src/main/kotlin/
 添加 ObjectBox 数据库支持：
 - 插件：`io.objectbox`
 - Kapt 参数：`objectbox.debug = true`、`objectbox.modelPath` = 模型文件路径
-
-### AndroidFirebaseConventionPlugin.kt
-
-添加 Firebase 平台支持：
-- 使用 Firebase BoM 统一版本管理
-- 依赖：`google.firebase.ai`（Firebase AI Logic 库）
 
 ### AndroidLintConventionPlugin.kt
 

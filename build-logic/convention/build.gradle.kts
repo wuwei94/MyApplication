@@ -100,10 +100,6 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.protobuf.get().pluginId
             implementationClass = "AndroidProtobufConventionPlugin"
         }
-        register("androidFirebase") {
-            id = libs.plugins.nowinandroid.android.firebase.get().pluginId
-            implementationClass = "AndroidFirebaseConventionPlugin"
-        }
 
         //
         register("androidHilt") {

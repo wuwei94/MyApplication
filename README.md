@@ -168,7 +168,6 @@ MyApplication/
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / LoadSir / MMKV / PermissionX
 - 图片加载：Coil / Glide
-- AI：Firebase Imagen
 
 ### module_arch（架构模式）
 

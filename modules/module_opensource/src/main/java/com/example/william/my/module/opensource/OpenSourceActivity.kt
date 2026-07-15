@@ -47,9 +47,6 @@ class OpenSourceActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("RxJava", RouterPath.OpenSource.Utils.RxJava))
 
         routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("Imagen", RouterPath.OpenSource.Image.Imagen))
-
-        routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("Coil", RouterPath.OpenSource.ImageLoader.Coil))
         routerItems.add(RouterItem("Glide", RouterPath.OpenSource.ImageLoader.Glide))
 

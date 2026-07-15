@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
-    alias(libs.plugins.nowinandroid.android.firebase)
     alias(libs.plugins.nowinandroid.android.objectbox)
 }
 

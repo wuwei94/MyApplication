@@ -288,12 +288,6 @@ object RouterPath {
             const val RxJava = "${Utils}/RxJava"
         }
 
-        object Image {
-            private const val Image = "${Opensource}/Image"
-
-            const val Imagen = "${Image}/Imagen"
-        }
-
         object ImageLoader {
             private const val ImageLoader = "${Opensource}/ImageLoader"
 

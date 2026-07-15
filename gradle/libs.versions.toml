@@ -10,7 +10,7 @@ kotlinxCoroutines = "1.10.2"
 googleGson = "2.13.1"
 googleGuava = "33.5.0-android"
 googleProtobuf = "4.33.4"
-googleFirebase = "34.8.0"
+# https://github.com/firebase/snippets-android
 googleFlexbox = "3.0.0"
 googleMaterial = "1.13.0"
 # ##################################################################################################
@@ -122,9 +122,6 @@ google-guava = { group = "com.google.guava", name = "guava", version.ref = "goog
 # https://github.com/protocolbuffers/protobuf
 google-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "googleProtobuf" }
 google-protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "googleProtobuf" }
-# https://github.com/firebase/snippets-android
-google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "googleFirebase" }
-google-firebase-ai = { group = "com.google.firebase", name = "firebase-ai" }
 # https://github.com/google/flexbox-layout
 google-flexBox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "googleFlexbox" }
 # https://github.com/material-components/material-components-android
@@ -373,7 +370,6 @@ nowinandroid-android-test = { id = "nowinandroid.android.test" }
 nowinandroid-android-arouter = { id = "nowinandroid.android.arouter" }
 nowinandroid-android-eventbus = { id = "nowinandroid.android.eventbus" }
 nowinandroid-android-protobuf = { id = "nowinandroid.android.protobuf" }
-nowinandroid-android-firebase = { id = "nowinandroid.android.firebase" }
 nowinandroid-android-hilt = { id = "nowinandroid.android.hilt" }
 nowinandroid-android-room = { id = "nowinandroid.android.room" }
 nowinandroid-android-greendao = { id = "nowinandroid.android.greendao" }
