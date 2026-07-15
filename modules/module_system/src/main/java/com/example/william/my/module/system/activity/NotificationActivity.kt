@@ -51,7 +51,7 @@ class NotificationActivity : BasicResponseActivity() {
 
     private fun sendNotification() {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher)
+            .setSmallIcon(R.drawable.shared_ic_launcher)
             .setContentTitle("测试通知")
             .setContentText("这是一条测试通知")
             .setAutoCancel(true)

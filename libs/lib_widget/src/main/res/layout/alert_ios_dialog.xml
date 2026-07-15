@@ -70,7 +70,7 @@
         android:layout_height="48dp"
         android:background="@drawable/alert_selector_btn_right"
         android:gravity="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/shared_color_primary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ios_dialog_line_horizontal"

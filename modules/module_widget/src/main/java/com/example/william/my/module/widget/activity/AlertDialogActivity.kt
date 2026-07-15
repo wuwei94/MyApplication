@@ -43,7 +43,7 @@ class AlertDialogActivity : BasicRecyclerActivity() {
                     .addAlertItem("ITEM 2") { }
                     .addAlertItem(
                         "ITEM 3",
-                        com.example.william.my.basic.basic_shared.R.color.colorPrimary
+                        com.example.william.my.basic.basic_shared.R.color.shared_color_primary
                     ) {
 
                     }

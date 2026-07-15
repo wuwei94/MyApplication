@@ -6,4 +6,4 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.lib.fragment.BaseFragment
 
 @Route(path = RouterPath.Fragment.FragmentPrimaryDark)
-class PrimaryDarkFragment : BaseFragment(R.layout.basics_fragment_primary_dark)
+class PrimaryDarkFragment : BaseFragment(R.layout.shared_fragment_primary_dark)

@@ -39,7 +39,7 @@ class RenderScriptActivity : BasicImageActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher, null)!!
+        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.shared_ic_launcher, null)!!
         originalBitmap = drawable.toBitmap()
         showImage(originalBitmap)
     }

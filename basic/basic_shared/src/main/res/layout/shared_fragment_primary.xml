@@ -12,7 +12,7 @@
             android:id="@+id/primary_textView"
             android:layout_width="match_parent"
             android:layout_height="1080dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/shared_color_primary"
             android:gravity="center"
             android:text="Hello World!"
             app:layout_constraintBottom_toBottomOf="parent"

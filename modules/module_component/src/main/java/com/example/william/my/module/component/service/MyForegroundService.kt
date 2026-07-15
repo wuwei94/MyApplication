@@ -24,7 +24,7 @@ class MyForegroundService : Service() {
         super.onCreate()
         createNotificationChannel()
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher)
+            .setSmallIcon(R.drawable.shared_ic_launcher)
             .setContentTitle("前台服务")
             .setContentText("服务正在运行")
             .build()

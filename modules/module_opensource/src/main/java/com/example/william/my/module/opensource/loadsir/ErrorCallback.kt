@@ -10,7 +10,7 @@ class ErrorCallback : Callback() {
 
     //填充布局
     override fun onCreateView(): Int {
-        return R.layout.basics_layout_response
+        return R.layout.shared_layout_response
     }
 
     //当前Callback的点击事件，如果返回true则覆盖注册时的onReload()，如果返回false则两者都执行，先执行onReloadEvent()。

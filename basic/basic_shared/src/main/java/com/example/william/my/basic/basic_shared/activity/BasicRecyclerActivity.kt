@@ -10,7 +10,7 @@ import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.QuickAdapterHelper
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_shared.R
-import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutRecyclerBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerBinding
 import com.example.william.my.basic.basic_shared.dialog.BasicDialogFragment
 import com.example.william.my.lib.activity.BaseActivity
 
@@ -28,12 +28,12 @@ abstract class BasicRecyclerActivity : BaseActivity(),
         BasicDialogFragment()
     }
 
-    protected lateinit var binding: BasicsLayoutRecyclerBinding
+    protected lateinit var binding: SharedLayoutRecyclerBinding
     protected lateinit var mRecycler: RecyclerView
 
     override fun initViewBinding() {
         super.initViewBinding()
-        binding = BasicsLayoutRecyclerBinding.inflate(layoutInflater)
+        binding = SharedLayoutRecyclerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mRecycler = binding.basicsRecycler
     }
@@ -122,7 +122,7 @@ abstract class BasicRecyclerActivity : BaseActivity(),
             parent: ViewGroup,
             viewType: Int
         ): QuickViewHolder {
-            return QuickViewHolder(R.layout.basics_item_recycler, parent)
+            return QuickViewHolder(R.layout.shared_item_recycler, parent)
         }
     }
 }

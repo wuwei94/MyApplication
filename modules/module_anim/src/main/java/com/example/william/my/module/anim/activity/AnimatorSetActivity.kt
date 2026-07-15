@@ -25,7 +25,7 @@ class AnimatorSetActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.shared_color_primary))
     }
 
     override fun buildList(): ArrayList<String> {

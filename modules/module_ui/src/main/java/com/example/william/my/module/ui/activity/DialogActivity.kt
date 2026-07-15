@@ -34,7 +34,7 @@ class DialogActivity : BasicRecyclerActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> AlertDialog.Builder(this@DialogActivity)
-                .setIcon(R.drawable.ic_launcher)
+                .setIcon(R.drawable.shared_ic_launcher)
                 .setTitle("标题")
                 .setMessage("内容")
                 .setPositiveButton("确定") { _, _ -> }
@@ -45,7 +45,7 @@ class DialogActivity : BasicRecyclerActivity() {
             1 -> {
                 val items = arrayOf("item1", "item2")
                 AlertDialog.Builder(this@DialogActivity)
-                    .setIcon(R.drawable.ic_launcher)
+                    .setIcon(R.drawable.shared_ic_launcher)
                     .setTitle("标题")
                     .setItems(items) { _, _ -> }.show()
             }
@@ -79,7 +79,7 @@ class DialogActivity : BasicRecyclerActivity() {
                  * setView 是 AlertDialog 的方法 ，对应的是 CustomView 的部分而不是整个窗体 ，在dialog.show之前使用
                  */
                 val view1 = layoutInflater.inflate(
-                    R.layout.basics_layout_response,
+                    R.layout.shared_layout_response,
                     window.decorView as ViewGroup,
                     false
                 )
@@ -87,7 +87,7 @@ class DialogActivity : BasicRecyclerActivity() {
                 text1.setBackgroundColor(
                     ContextCompat.getColor(
                         this@DialogActivity,
-                        R.color.colorPrimary
+                        R.color.shared_color_primary
                     )
                 )
                 val dialog1 = AlertDialog.Builder(this@DialogActivity)
@@ -98,7 +98,7 @@ class DialogActivity : BasicRecyclerActivity() {
 
             5 -> {
                 val view2 = layoutInflater.inflate(
-                    R.layout.basics_layout_response,
+                    R.layout.shared_layout_response,
                     window.decorView as ViewGroup,
                     false
                 )
@@ -106,7 +106,7 @@ class DialogActivity : BasicRecyclerActivity() {
                 text2.setBackgroundColor(
                     ContextCompat.getColor(
                         this@DialogActivity,
-                        R.color.colorPrimary
+                        R.color.shared_color_primary
                     )
                 )
                 val dialog2 = AlertDialog.Builder(this@DialogActivity)

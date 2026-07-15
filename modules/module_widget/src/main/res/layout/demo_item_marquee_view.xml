@@ -7,8 +7,8 @@
     <TextView
         android:id="@+id/item_marquee_primary"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/basics_dimen_48"
-        android:background="@color/colorPrimary"
+        android:layout_height="@dimen/shared_dimen_48"
+        android:background="@color/shared_color_primary"
         android:gravity="center_vertical"
         android:paddingEnd="16dp"
         android:paddingStart="16dp" />
@@ -16,8 +16,8 @@
     <TextView
         android:id="@+id/item_marquee_accent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/basics_dimen_48"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="@dimen/shared_dimen_48"
+        android:background="@color/shared_color_primary_dark"
         android:gravity="center_vertical"
         android:paddingEnd="16dp"
         android:paddingStart="16dp" />

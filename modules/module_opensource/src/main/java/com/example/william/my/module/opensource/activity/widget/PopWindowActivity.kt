@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutResponseBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseBinding
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 
@@ -23,7 +23,7 @@ class PopWindowActivity : BasicResponseActivity() {
 
     private fun initPopWindow() {
 
-        val binding = BasicsLayoutResponseBinding.inflate(layoutInflater)
+        val binding = SharedLayoutResponseBinding.inflate(layoutInflater)
 
         //处理popWindow 显示内容
         handleLogic(binding)
@@ -32,8 +32,8 @@ class PopWindowActivity : BasicResponseActivity() {
         //CustomPopWindow.PopupWindowBuilder(this)
         //    .setView(binding.root)
         //    .size(
-        //        resources.getDimensionPixelOffset(R.dimen.basics_dimen_width_320),
-        //        resources.getDimensionPixelOffset(R.dimen.basics_dimen_height_200)
+        //        resources.getDimensionPixelOffset(R.dimen.shared_dimen_width_320),
+        //        resources.getDimensionPixelOffset(R.dimen.shared_dimen_height_200)
         //    ) //设置显示的大小，不设置就默认包裹内容
         //    .setFocusable(true) //是否获取焦点，默认为ture
         //    .setOutsideTouchable(true) //是否PopupWindow以外触摸dismiss
@@ -41,11 +41,11 @@ class PopWindowActivity : BasicResponseActivity() {
         //    .showAsDropDown(mBinding.basicsResponse, 0, 0) //显示PopupWindow
     }
 
-    private fun handleLogic(binding: BasicsLayoutResponseBinding) {
+    private fun handleLogic(binding: SharedLayoutResponseBinding) {
         binding.basicsResponse.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.colorPrimary
+                R.color.shared_color_primary
             )
         )
         binding.basicsResponse.setOnClickListener {

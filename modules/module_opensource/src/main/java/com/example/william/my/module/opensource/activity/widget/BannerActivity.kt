@@ -33,7 +33,7 @@ class BannerActivity : BaseVBActivity<OpenActivityBannerBinding>() {
             override fun onBindView(
                 holder: BannerImageHolder, data: String, position: Int, size: Int
             ) {
-                holder.imageView?.setImageResource(R.drawable.ic_launcher)
+                holder.imageView?.setImageResource(R.drawable.shared_ic_launcher)
             }
         })
             .setIndicator(CircleIndicator(this))

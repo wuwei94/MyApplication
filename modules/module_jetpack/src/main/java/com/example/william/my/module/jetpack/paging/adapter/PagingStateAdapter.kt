@@ -21,7 +21,7 @@ class PagingStateAdapter(private val retry: () -> Unit) :
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.colorPrimary
+                        R.color.shared_color_primary
                     )
                 )
 
@@ -29,7 +29,7 @@ class PagingStateAdapter(private val retry: () -> Unit) :
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.colorPrimaryDark
+                        R.color.shared_color_primary_dark
                     )
                 )
 
@@ -38,7 +38,7 @@ class PagingStateAdapter(private val retry: () -> Unit) :
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.colorPrimaryDark
+                        R.color.shared_color_primary_dark
                     )
                 )
             }

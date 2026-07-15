@@ -1,14 +1,14 @@
 package com.example.william.my.basic.basic_shared.dialog
 
-import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutDiallogBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutDialogBinding
 import com.example.william.my.lib.R
 import com.example.william.my.lib.dialog.BaseVBDialogFragment
 
 class BasicDialogFragment :
-    BaseVBDialogFragment<BasicsLayoutDiallogBinding>(R.style.Basics_Dialog_Translate_Slide_Alpha) {
+    BaseVBDialogFragment<SharedLayoutDialogBinding>(R.style.Basics_Dialog_Translate_Slide_Alpha) {
 
-    override fun getViewBinding(): BasicsLayoutDiallogBinding {
-        return BasicsLayoutDiallogBinding.inflate(layoutInflater)
+    override fun getViewBinding(): SharedLayoutDialogBinding {
+        return SharedLayoutDialogBinding.inflate(layoutInflater)
     }
 
     fun showMessage(message: String?) {

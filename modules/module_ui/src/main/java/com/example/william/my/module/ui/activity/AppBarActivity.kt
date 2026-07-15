@@ -64,18 +64,18 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
         mBinding.tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_shared.R.color.colorPrimaryDark
+                com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark
             )
         )
         //两个参数分别对应Tab未选中的文字颜色和选中的文字颜色
         mBinding.tabLayout.setTabTextColors(
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_shared.R.color.colorPrimary
+                com.example.william.my.basic.basic_shared.R.color.shared_color_primary
             ),
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_shared.R.color.colorPrimaryDark
+                com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark
             )
         )
         //绑定ViewPager

@@ -26,7 +26,7 @@ class BlurViewActivity : BaseVBActivity<DemoActivityBlurViewBinding>() {
 
     private fun initBlurView() {
         mBinding.blurSeekBar.max = 100
-        mBinding.blurBlurView.setImageView(R.drawable.ic_launcher)
+        mBinding.blurBlurView.setImageView(R.drawable.shared_ic_launcher)
         mBinding.blurSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 mBinding.blurBlurView.setImageBlur(progress)

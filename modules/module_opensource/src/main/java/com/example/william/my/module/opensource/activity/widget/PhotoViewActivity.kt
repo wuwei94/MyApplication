@@ -24,6 +24,6 @@ class PhotoViewActivity : BaseVBActivity<OpenActivityPhotoViewBinding>() {
     }
 
     private fun showPhotoView() {
-        mBinding.photoView.setImageResource(R.drawable.ic_launcher)
+        mBinding.photoView.setImageResource(R.drawable.shared_ic_launcher)
     }
 }

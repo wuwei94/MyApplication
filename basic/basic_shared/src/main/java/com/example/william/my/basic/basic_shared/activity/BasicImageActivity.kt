@@ -3,14 +3,14 @@ package com.example.william.my.basic.basic_shared.activity
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutImageRecyclerBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutImageRecyclerBinding
 
 abstract class BasicImageActivity : BasicRecyclerActivity() {
 
-    protected lateinit var mBinding: BasicsLayoutImageRecyclerBinding
+    protected lateinit var mBinding: SharedLayoutImageRecyclerBinding
 
     override fun initViewBinding() {
-        mBinding = BasicsLayoutImageRecyclerBinding.inflate(layoutInflater)
+        mBinding = SharedLayoutImageRecyclerBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mRecycler = mBinding.basicsRecycler
     }

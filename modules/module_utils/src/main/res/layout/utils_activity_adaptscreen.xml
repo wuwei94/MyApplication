@@ -20,7 +20,7 @@
                 android:layout_width="540pt"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:background="@color/colorAccent"
+                android:background="@color/shared_color_accent"
                 android:gravity="center"
                 android:text="Width: 540pt\nFont: 30pt"
                 android:textColor="@android:color/black"
@@ -30,7 +30,7 @@
                 android:layout_width="540pt"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:background="@color/colorPrimary"
+                android:background="@color/shared_color_primary"
                 android:gravity="center"
                 android:text="Width: 540pt\nFont: 30sp"
                 android:textColor="@android:color/black"
@@ -71,13 +71,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/shared_ic_launcher" />
 
             <TextView
                 android:layout_width="540pt"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|end"
-                android:background="@color/colorAccent"
+                android:background="@color/shared_color_accent"
                 android:gravity="center"
                 android:text="Left ImageView\nWidth: 540pt"
                 android:textColor="@android:color/black"
@@ -96,13 +96,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/shared_ic_launcher" />
 
             <TextView
                 android:layout_width="540pt"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|end"
-                android:background="@color/colorAccent"
+                android:background="@color/shared_color_accent"
                 android:gravity="center"
                 android:text="Left ImageView\nWidth: wrap_content"
                 android:textColor="@android:color/black"
@@ -118,7 +118,7 @@
             <TextView
                 android:layout_width="180pt"
                 android:layout_height="270pt"
-                android:background="@color/colorAccent"
+                android:background="@color/shared_color_accent"
                 android:gravity="center"
                 android:text="1\nWidth: 180pt"
                 android:textColor="@android:color/black"
@@ -128,7 +128,7 @@
                 android:id="@+id/width2Tv"
                 android:layout_width="360pt"
                 android:layout_height="270pt"
-                android:background="@color/colorPrimary"
+                android:background="@color/shared_color_primary"
                 android:gravity="center"
                 android:text="2\nWidth: 360pt"
                 android:textColor="@android:color/black"
@@ -138,7 +138,7 @@
                 android:id="@+id/width3Tv"
                 android:layout_width="540pt"
                 android:layout_height="270pt"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/shared_color_primary_dark"
                 android:gravity="center"
                 android:text="3\nWidth: 540pt"
                 android:textColor="@android:color/black"

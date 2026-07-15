@@ -57,7 +57,7 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
             parent: ViewGroup,
             viewType: Int
         ): QuickViewHolder {
-            return QuickViewHolder(R.layout.basics_item_recycler, parent)
+            return QuickViewHolder(R.layout.shared_item_recycler, parent)
         }
     }
 }

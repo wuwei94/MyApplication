@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/basics_dimen_48"
+        android:minHeight="@dimen/shared_dimen_48"
         android:paddingStart="8dp"
         android:paddingEnd="8dp" />
 

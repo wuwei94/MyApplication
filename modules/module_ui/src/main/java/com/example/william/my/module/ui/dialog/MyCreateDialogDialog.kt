@@ -12,7 +12,7 @@ class MyCreateDialogDialog : DialogFragment() {
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireActivity())
-            .setIcon(R.drawable.ic_launcher)
+            .setIcon(R.drawable.shared_ic_launcher)
             .setTitle("标题")
             .setMessage("内容")
             .setPositiveButton("确定") { _, _ -> }

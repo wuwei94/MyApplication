@@ -23,7 +23,7 @@ class ImageActivity : ComponentActivity() {
     @Composable
     fun ImageExample() {
         Image(
-            painter = painterResource(R.drawable.ic_launcher),
+            painter = painterResource(R.drawable.shared_ic_launcher),
             contentDescription = "",
         )
     }

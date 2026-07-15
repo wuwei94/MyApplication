@@ -80,7 +80,7 @@ fun ScrapeLayerPage() {
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.ic_launcher),
+            painter = painterResource(id = R.drawable.shared_ic_launcher),
             contentDescription = ""
         )
     }

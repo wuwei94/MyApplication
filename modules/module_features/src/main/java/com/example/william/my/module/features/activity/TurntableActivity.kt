@@ -28,7 +28,7 @@ class TurntableActivity : BasicImageActivity() {
         mBinding.basicsImage.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.ic_launcher
+                R.drawable.shared_ic_launcher
             )
         )
         mBinding.basicsImage.setOnClickListener {

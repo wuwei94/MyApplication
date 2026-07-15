@@ -3,16 +3,16 @@ package com.example.william.my.basic.basic_shared.activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import com.example.william.my.basic.basic_shared.databinding.BasicsLayoutResponseRecyclerBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseRecyclerBinding
 
 abstract class BasicResponseActivity : BasicRecyclerActivity() {
 
-    protected lateinit var mBinding: BasicsLayoutResponseRecyclerBinding
+    protected lateinit var mBinding: SharedLayoutResponseRecyclerBinding
 
     private val mLog = StringBuilder()
 
     override fun initViewBinding() {
-        mBinding = BasicsLayoutResponseRecyclerBinding.inflate(layoutInflater)
+        mBinding = SharedLayoutResponseRecyclerBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mRecycler = mBinding.basicsRecycler
     }

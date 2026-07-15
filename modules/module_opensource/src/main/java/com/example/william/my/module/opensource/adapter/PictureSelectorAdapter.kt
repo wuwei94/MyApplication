@@ -29,7 +29,7 @@ class PictureSelectorAdapter(
         val binding = (holder as ViewHolder).binding
         if (getItemViewType(position) == TYPE_CAMERA) {
             binding.itemIvDel.visibility = View.INVISIBLE
-            binding.itemIvPic.setImageResource(R.drawable.ic_launcher)
+            binding.itemIvPic.setImageResource(R.drawable.shared_ic_launcher)
             binding.itemIvPic.setOnClickListener {
                 mItemClickListener?.openPicture()
             }
