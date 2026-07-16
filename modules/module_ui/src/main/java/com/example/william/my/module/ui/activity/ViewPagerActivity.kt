@@ -9,7 +9,7 @@ import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.ui.adapter.ViewPagerAdapter
+import com.example.william.my.basic.basic_shared.adapter.ViewPagerAdapter
 import com.example.william.my.module.ui.databinding.UiActivityViewPagerBinding
 
 @Route(path = RouterPath.UI.ViewPager)
@@ -33,15 +33,6 @@ class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {
         PrimaryDarkFragment()
     )
 
-    private val mARouterFragments = arrayOf(
-        ARouter.getInstance().build(RouterPath.Fragment.FragmentPrimary)
-            .navigation() as Fragment,
-        ARouter.getInstance().build(RouterPath.Fragment.FragmentPrimaryDark)
-            .navigation() as Fragment,
-        ARouter.getInstance().build(RouterPath.Fragment.FragmentPrimaryDark)
-            .navigation() as Fragment
-    )
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
@@ -52,7 +43,7 @@ class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {
         mBinding.viewpagerView.adapter = ViewPagerAdapter(mTitles)
 
         mBinding.viewpagerFragment.adapter = ViewPagerFragmentAdapter(
-            supportFragmentManager, mFragments, false
+            supportFragmentManager, mFragments
         )
     }
 }

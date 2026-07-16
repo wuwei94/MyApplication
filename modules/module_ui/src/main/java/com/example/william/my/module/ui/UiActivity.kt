@@ -14,11 +14,11 @@ class UiActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Dialog", RouterPath.UI.Dialog))
         routerItems.add(RouterItem("FlexBox", RouterPath.UI.FlexBox))
         routerItems.add(RouterItem("RecyclerView", RouterPath.UI.RecyclerView))
-        routerItems.add(RouterItem("ViewFlipper", RouterPath.UI.ViewFlipper))
+        routerItems.add(RouterItem("RecyclerViewNested", RouterPath.UI.RecyclerViewNested))
         routerItems.add(RouterItem("ViewPager", RouterPath.UI.ViewPager))
         routerItems.add(RouterItem("ViewPager2", RouterPath.UI.ViewPager2))
+        routerItems.add(RouterItem("ViewFlipper", RouterPath.UI.ViewFlipper))
         routerItems.add(RouterItem("WebView", RouterPath.UI.WebView))
-        routerItems.add(RouterItem("RecyclerViewNested", RouterPath.UI.RecyclerViewNested))
         return routerItems
     }
 }

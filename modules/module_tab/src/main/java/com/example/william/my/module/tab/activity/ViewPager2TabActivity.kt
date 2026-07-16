@@ -14,7 +14,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBinding
-import com.example.william.my.module.tab.widget.ViewPagerFragmentAdapter2
+import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter2
 
 @Route(path = RouterPath.Tab.ViewPager2Tab)
 class ViewPager2TabActivity : BaseVBActivity<TabActivityViewPager2TabBinding>(),

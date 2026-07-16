@@ -10,7 +10,7 @@
         <activity android:name=".activity.RecyclerViewNestedActivity" />
         <activity android:name=".activity.ViewFlipperActivity" />
         <activity android:name=".activity.ViewPagerActivity" />
-        <activity android:name=".activity.ViewPagerActivity2" />
+        <activity android:name=".activity.ViewPager2Activity" />
         <activity android:name=".activity.WebViewActivity" />
     </application>
 </manifest>

@@ -23,6 +23,10 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
  * layout_collapseMode (折叠模式)
  * pin - 设置为这个模式时，当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。
  * parallax - 设置为这个模式时，在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，实现视差滚动效果，通常和layout_collapseParallaxMultiplier(设置视差因子)搭配使用。
+ *
+ * tabMode (Tab布局模式)
+ * MODE_FIXED - 固定均分，所有Tab等宽排列，适合少量固定Tab（3-5个），配合 tabGravity = GRAVITY_FILL
+ * MODE_SCROLLABLE - 可滚动，Tab按内容宽度排列，数量多时可左右滑动，适合动态或大量Tab
  */
 @Route(path = RouterPath.UI.Appbar)
 class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
@@ -56,7 +60,7 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
         mBinding.toolbarLayout.title = title
 
         mBinding.viewPager.adapter =
-            ViewPagerFragmentAdapter(supportFragmentManager, mFragments, mTitles, true)
+            ViewPagerFragmentAdapter(supportFragmentManager, mFragments, mTitles)
 
         //设置TabLayout可滚动，保证Tab数量过多时也可正常显示
         mBinding.tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
@@ -80,9 +84,6 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
         )
         //绑定ViewPager
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
-
-        mBinding.tabLayout.tabMode = TabLayout.MODE_FIXED
-        mBinding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
         //设置TabLayout的选择监听
         mBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {

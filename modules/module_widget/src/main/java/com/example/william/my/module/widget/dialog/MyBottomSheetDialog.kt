@@ -46,7 +46,7 @@ class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
     private fun initViewPager() {
         mBinding.viewPager.offscreenPageLimit = mFragments.size
         mBinding.viewPager.adapter =
-            ViewPagerFragmentAdapter(childFragmentManager, mFragments, false)
+            ViewPagerFragmentAdapter(childFragmentManager, mFragments)
         mBinding.viewPager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

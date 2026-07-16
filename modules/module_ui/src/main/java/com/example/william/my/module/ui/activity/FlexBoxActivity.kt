@@ -10,8 +10,15 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 
+/**
+ * FlexboxLayoutManager 是 Google 出品的弹性布局管理器，可用于 RecyclerView
+ * 核心属性：
+ * - FlexDirection: 主轴方向（ROW 水平 / COLUMN 垂直 / ROW_REVERSE / COLUMN_REVERSE）
+ * - FlexWrap: 是否换行（WRAP 换行 / NOWRAP 不换行 / WRAP_REVERSE 反向换行）
+ * - justifyContent: 主轴对齐方式（FLEX_START / CENTER / FLEX_END / SPACE_BETWEEN 等）
+ * - alignItems: 交叉轴对齐方式（FLEX_START / CENTER / FLEX_END / STRETCH 等）
+ */
 @Route(path = RouterPath.UI.FlexBox)
-
 class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
 
     override fun getViewBinding(): UiActivityFlexBoxBinding {

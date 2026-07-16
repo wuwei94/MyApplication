@@ -39,6 +39,14 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
         })
     }
 
+    override fun onDestroy() {
+        mBinding.webView.apply {
+            stopLoading()
+            destroy()
+        }
+        super.onDestroy()
+    }
+
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     private fun initWebView() {
         //隐藏滚动条
@@ -60,7 +68,7 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
         // 关闭file域访问，禁止file域对http域进行访问
         // setAllowFileAccessFromFileURLs&setAllowUniversalAccessFromFileURLs
         // Android 4.1版本之前这两个API默认是true，需要显式设置为false
-        val headers: Map<String, String> = HashMap()
+        val headers = mapOf<String, String>()
         //添加HTTP头信息
         mBinding.webView.loadUrl("https://www.baidu.com/", headers)
         mBinding.webView.webViewClient = object : WebViewClient() {
@@ -85,15 +93,14 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
             }
 
             /**
-             * 忽略SSL验证
+             * SSL证书错误处理：直接取消加载，不忽略证书错误
              */
-            @SuppressLint("WebViewClientOnReceivedSslError")
             override fun onReceivedSslError(
                 view: WebView,
                 handler: SslErrorHandler,
                 error: SslError
             ) {
-                handler.proceed()
+                handler.cancel()
             }
 
             override fun onPageFinished(view: WebView, url: String) {

@@ -14,9 +14,9 @@
     <!-- 通用尺寸（dp） -->
     <dimen name="shared_dp_image_size">200dp</dimen>
     <dimen name="shared_dp_response_size">300dp</dimen>
-
-    <dimen name="shared_dp_dialog_width">280dp</dimen>
-    <dimen name="shared_dp_dialog_height">168dp</dimen>
+    
+    <dimen name="shared_dp_dialog_width">380dp</dimen>
+    <dimen name="shared_dp_dialog_height">200dp</dimen>
 
     <dimen name="shared_dp_button_width">328dp</dimen>
     <dimen name="shared_dp_button_height">48dp</dimen>

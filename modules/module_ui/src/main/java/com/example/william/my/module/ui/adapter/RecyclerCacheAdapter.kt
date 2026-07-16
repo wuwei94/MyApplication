@@ -3,10 +3,13 @@ package com.example.william.my.module.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.william.my.module.ui.cache.RecyclerCacheExtension
 import com.example.william.my.module.ui.databinding.UiItemRecyclerViewBinding
 
-class RecyclerAdapter(private val data: List<String>?) :
+class RecyclerCacheAdapter(private val data: List<String>?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val mCaches: RecyclerCacheExtension = RecyclerCacheExtension()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = UiItemRecyclerViewBinding.inflate(
@@ -16,22 +19,10 @@ class RecyclerAdapter(private val data: List<String>?) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        mCaches.addCache(position, holder.itemView)
+
         val binding = (holder as ViewHolder).binding
         binding.itemTextView.text = data?.getOrNull(position) ?: ""
-    }
-
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-        payloads: List<Any>
-    ) {
-        if (payloads.isEmpty()) {
-            //会执行不带payloads参数的onBindViewHolder
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            val payload = payloads[0] as String
-            (holder as ViewHolder).binding.itemTextView.text = payload
-        }
     }
 
     override fun getItemCount(): Int {

@@ -1,8 +1,6 @@
 package com.example.william.my.module.ui.activity
 
-import android.content.res.Resources
 import android.os.Bundle
-import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import androidx.core.content.ContextCompat
@@ -10,22 +8,39 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.core.base.recyclerview.itemdecoration.RItemDecorationItemSpacing
+import com.example.william.my.core.base.utils.DisplayUtils
 import com.example.william.my.module.ui.R
 import com.example.william.my.module.ui.adapter.RecyclerAdapter
 import com.example.william.my.module.ui.databinding.UiActivityRecyclerViewBinding
 
 /**
- * LayoutManager -> Adapter -> ItemDecoration -> OnScrollListener
+ * RecyclerView 示例
+ *
+ * LayoutManager -> ItemDecoration -> ItemAnimator -> Adapter -> LayoutAnimation -> SnapHelper
+ *
+ * 布局管理器（LayoutManager）：
+ * - LinearLayoutManager: 线性布局，单列
+ * - GridLayoutManager: 网格布局，多列
+ * - StaggeredGridLayoutManager: 瀑布流布局，列宽/行高不等
+ *
+ * 装饰器（ItemDecoration）：
+ * - RItemDecorationItemSpacing: Item 间距
+ * - DividerItemDecoration: 分割线
+ *
+ * SnapHelper：
+ * - LinearSnapHelper: 支持快速滑动，像 ViewPager 一样每次滑动一页
+ * - PagerSnapHelper: 限制一次只能滑动一页，不能快速滑动
  */
 @Route(path = RouterPath.UI.RecyclerView)
-class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>(),
-    RecyclerAdapter.OnItemClickListener {
+class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
 
     override fun getViewBinding(): UiActivityRecyclerViewBinding {
         return UiActivityRecyclerViewBinding.inflate(layoutInflater)
@@ -38,111 +53,101 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>(),
     }
 
     private fun initRecyclerView() {
-        //保持固定的大小，提高性能
+        //固定大小，item 尺寸不变时跳过重新测量
         mBinding.recycleView.setHasFixedSize(true)
+        //布局管理器（必须最先设置）
+        initLayoutManager(LayoutManagerType.LINEAR)
+        //装饰器（影响测量，应在 Adapter 之前）
+        initItemDecoration()
+        //项动画（add/remove/move/change）
+        initItemAnimator()
+        //适配器（数据绑定）
+        initAdapter()
+        //入场动画（需要 Adapter 已设置）
+        initLayoutAnimation()
+        //SnapHelper（对齐方式，依赖 LayoutManager）
+        initSnapHelper(SnapHelperType.LINEAR)
+    }
 
-        //线性布局管理器
-        val mLinearLayoutManager = LinearLayoutManager(this)
-        mLinearLayoutManager.orientation = RecyclerView.VERTICAL
+    private enum class LayoutManagerType { LINEAR, GRID, STAGGERED }
 
-        //网格布局管理器
-        val mGridLayoutManager = GridLayoutManager(this, 4)
-        mGridLayoutManager.orientation = RecyclerView.VERTICAL
+    /**
+     * 布局管理器设置
+     * - LINEAR: LinearLayoutManager，线性布局，单列
+     * - GRID: GridLayoutManager，网格布局，多列
+     * - STAGGERED: StaggeredGridLayoutManager，瀑布流布局，列宽/行高不等
+     */
+    private fun initLayoutManager(type: LayoutManagerType) {
+        val manager = when (type) {
+            LayoutManagerType.LINEAR -> LinearLayoutManager(this)
+            LayoutManagerType.GRID -> GridLayoutManager(this, 4)
+            LayoutManagerType.STAGGERED -> StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+            }
+        }
+        mBinding.recycleView.layoutManager = manager
+    }
 
-        //瀑布流布局管理
-        val mStaggeredGridLayoutManager =
-            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        mStaggeredGridLayoutManager.gapStrategy =
-            StaggeredGridLayoutManager.GAP_HANDLING_NONE
-
-        //充满屏幕的网格布局
-        //val mFullyGridLayoutManager = FullyGridLayoutManager(this, 4)
-        //mFullyGridLayoutManager.orientation = RecyclerView.VERTICAL
-
-        //设置布局管理器
-        mBinding.recycleView.layoutManager = mGridLayoutManager
-        //设置item添加和移除的动画
-        mBinding.recycleView.itemAnimator = DefaultItemAnimator()
-
-        //设置分割线
-        //mBinding.recycleView.addItemDecoration(
-        //    RItemDecorationDivider(this, dp2px(8f))
-        //)
-
-        //mBinding.recycleView.addItemDecoration(
-        //    RItemDecorationTop(dp2px(8f))
-        //)
-
-        //mBinding.recycleView.addItemDecoration(
-        //    RItemDecorationStartEnd(dp2px(8f))
-        //)
-
-        //mBinding.recycleView.addItemDecoration(
-        //    RItemDecorationBottom(dp2px(8f), true)
-        //)
-
-        //mBinding.recycleView.addItemDecoration(
-        //    RItemDecorationBottom(dp2px(8f), false)
-        //)
-
-        mBinding.recycleView.addItemDecoration(
-            RItemDecorationItemSpacing(spacing = dp2px(20f), bottom = dp2px(48f))
-        )
-
+    /**
+     * 装饰器设置
+     * - DividerItemDecoration: 分割线
+     */
+    private fun initItemDecoration() {
         mBinding.recycleView.addItemDecoration(
             DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
-                this.setDrawable(
-                    ContextCompat.getDrawable(this@RecyclerViewActivity, R.drawable.ui_divider)!!
-                )
+                setDrawable(ContextCompat.getDrawable(this@RecyclerViewActivity, R.drawable.ui_divider)!!)
             }
         )
+    }
 
-        /*
-         * LinearSnapHelper,PagerSnapHelper 使RecyclerView 像ViewPager一样的效果，每次只能滑动一页
-         * LinearSnapHelper 支持快速滑动
-         * PagerSnapHelper 限制一次只能滑动一页，不能快速滑动
-         */
-        //LinearSnapHelper linearSnapHelper = new LinearSnapHelper()
-        //linearSnapHelper.attachToRecyclerView(mBinding.recycleView)
+    /**
+     * 项动画
+     * - DefaultItemAnimator: 默认动画，处理 add/remove/move/change
+     */
+    private fun initItemAnimator() {
+        mBinding.recycleView.itemAnimator = DefaultItemAnimator()
+    }
 
-        //PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
-        //pagerSnapHelper.attachToRecyclerView(mBinding.recycleView);
+    /**
+     * 适配器设置
+     * - setHasStableIds(true): 启用稳定 ID，配合 notifyItemChanged 的 payload 使用
+     */
+    private fun initAdapter() {
+        val data = (1..59).map { "POSITION $it" }.toMutableList()
+        val adapter = RecyclerAdapter(data)
+        adapter.setHasStableIds(true)
+        mBinding.recycleView.adapter = adapter
+    }
 
-        val mController = LayoutAnimationController(
+    /**
+     * 列表项入场动画
+     * - ORDER_NORMAL: 顺序显示
+     * - ORDER_REVERSE: 倒序显示
+     * - ORDER_RANDOM: 随机显示
+     * - delay: 每个 item 动画间隔（0.2 表示间隔 0.2 倍动画时长）
+     */
+    private fun initLayoutAnimation() {
+        val controller = LayoutAnimationController(
             AnimationUtils.loadAnimation(this, R.anim.ui_anim_recycler_item_left)
         )
+        controller.order = LayoutAnimationController.ORDER_NORMAL
+        controller.delay = 0.2f
+        mBinding.recycleView.layoutAnimation = controller
+    }
 
-        //显示顺序：ORDER_NORMAL 顺序，ORDER_REVERSE 倒序，ORDER_RANDOM 随机
-        mController.order = LayoutAnimationController.ORDER_NORMAL
-        //显示间隔
-        mController.delay = 0.2f
+    private enum class SnapHelperType { NONE, LINEAR, PAGER }
 
-        mBinding.recycleView.layoutAnimation = mController
-
-        val mData: MutableList<String> = ArrayList()
-        for (i in 1..59) {
-            mData.add("POSITION $i")
+    /**
+     * SnapHelper 设置
+     * - NONE: 不使用 SnapHelper
+     * - LINEAR: LinearSnapHelper，支持快速滑动，像吸附效果
+     * - PAGER: PagerSnapHelper，一次只能滑动一页，像翻页效果
+     */
+    private fun initSnapHelper(type: SnapHelperType) {
+        when (type) {
+            SnapHelperType.LINEAR -> LinearSnapHelper().attachToRecyclerView(mBinding.recycleView)
+            SnapHelperType.PAGER -> PagerSnapHelper().attachToRecyclerView(mBinding.recycleView)
+            SnapHelperType.NONE -> { }
         }
-
-        val mRecyclerAdapter = RecyclerAdapter(mData)
-
-        //设置唯一标识符，需要在setAdapter之前调用
-        mRecyclerAdapter.setHasStableIds(true)
-        mBinding.recycleView.adapter = mRecyclerAdapter
-
-        //设置点击事件
-        mRecyclerAdapter.setOnItemClickListener(this)
-
-        //设置ViewCacheExtension缓存
-        //mBinding.recycleView.setViewCacheExtension(new RecyclerCacheExtension())
-    }
-
-    override fun onItemClick(adapter: RecyclerAdapter, view: View, position: Int) {
-        adapter.notifyItemChanged(position, "Payload")
-    }
-
-    private fun dp2px(dpValue: Float): Int {
-        val scale = Resources.getSystem().displayMetrics.density
-        return (dpValue * scale + 0.5f).toInt()
     }
 }

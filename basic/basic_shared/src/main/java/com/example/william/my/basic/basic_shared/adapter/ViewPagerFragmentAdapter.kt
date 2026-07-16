@@ -5,72 +5,28 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
 /**
- * FragmentPagerAdapter通过setAdapter做不到整体刷新。
- * FragmentPagerAdapter在调用destroy的时候，采用的是detach的方式，并未真正的销毁Fragment，仅仅是销毁了View，导致FragmentManager中仍旧保留正Fragment的缓存
- * FragmentStatePagerAdapter可以通过setAdapter做到整体刷新。
- * FragmentStatePagerAdapter在destroyItem的时候调用的是remove，这种对于没有添加到回退栈的Fragment操作来说，不仅会销毁view，还会销毁Fragment
+ * ViewPager 的 Fragment 适配器
  *
+ * FragmentStatePagerAdapter: destroy 时销毁 Fragment 和 View，适合大量页面，节省内存
+ * 使用 BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT：只有当前 Fragment 执行 onResume()，其他限制在 onStart()
+ * 使用 BEHAVIOR_SET_USER_VISIBLE_HINT：通过 setUserVisibleHint() 控制懒加载
  *
- * Fragment no longer exists for key f0: index 0
- * https://blog.csdn.net/eydwyz/article/details/78624907
+ * @param fm FragmentManager
+ * @param mFragments Fragment 列表
+ * @param mTitles 可选的标题列表，用于 TabLayout 显示
  */
 @Suppress("deprecation")
-class ViewPagerFragmentAdapter : FragmentStatePagerAdapter {
+class ViewPagerFragmentAdapter(
+    fm: FragmentManager,
+    private val mFragments: List<Fragment>?,
+    private val mTitles: List<String>? = null
+) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private var mTitles: List<String>? = null
-    private var mFragments: List<Fragment>? = null
+    override fun getCount(): Int = mFragments?.size ?: 0
 
-    /**
-     * 如果 behavior 的值为 BEHAVIOR_SET_USER_VISIBLE_HINT，
-     * 那么当 Fragment 对用户的可见状态发生改变时，setUserVisibleHint 方法会被调用。
-     * 如果 behavior 的值为 BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT ，
-     * 那么只有当前选中的 Fragment 在 [Lifecycle.State.RESUMED] 状态 ，其他不可见的 Fragment 会被限制在 [Lifecycle.State.STARTED] 状态。
-     */
-    constructor(
-        fm: FragmentManager,
-        mFragments: List<Fragment>?,
-        isNew: Boolean
-    ) : super(
-        fm, if (isNew) BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT else BEHAVIOR_SET_USER_VISIBLE_HINT
-    ) {
-        // 兼容旧方式懒加载
-        // 限制Fragment声明周期
-        // 只有当前Fragment执行onResume()，其他Fragment声明周期限制在onStart()
-        //super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.mFragments = mFragments
-    }
-
-    constructor(
-        fm: FragmentManager,
-        fragments: List<Fragment>?,
-        titles: List<String>?,
-        isNew: Boolean
-    ) : super(
-        fm, if (isNew) BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT else BEHAVIOR_SET_USER_VISIBLE_HINT
-    ) {
-        // 兼容旧方式懒加载
-        // 限制Fragment声明周期
-        // 只有当前Fragment执行onResume()，其他Fragment声明周期限制在onStart()
-        //super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.mTitles = titles
-        this.mFragments = fragments
-    }
-
-    override fun getCount(): Int {
-        return mFragments?.size ?: 0
-    }
-
-    override fun getItem(position: Int): Fragment {
-        return mFragments!![position]
-    }
+    override fun getItem(position: Int): Fragment = mFragments!![position]
 
     override fun getPageTitle(position: Int): CharSequence {
-        return mTitles?.let {
-            if (it.size >= position) {
-                it[position]
-            } else {
-                ""
-            }
-        } ?: ""
+        return mTitles?.getOrNull(position) ?: ""
     }
 }

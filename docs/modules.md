@@ -111,7 +111,7 @@
 | RecyclerViewNestedActivity | RecyclerView 嵌套滚动 |
 | ViewFlipperActivity | ViewFlipper 翻转切换 |
 | ViewPagerActivity | ViewPager 翻页 |
-| ViewPagerActivity2 | ViewPager2 + TabLayoutMediator |
+| ViewPager2Activity | ViewPager2 + TabLayoutMediator |
 | WebViewActivity | WebView 配置、JS 交互、SSL 处理 |
 
 ---
