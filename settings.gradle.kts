@@ -130,6 +130,8 @@ include(":modules:module_anim")
 
 // UI 控件
 include(":modules:module_ui")
+// Tab 导航
+include(":modules:module_tab")
 
 // Compoe
 include(":modules:module_compose")

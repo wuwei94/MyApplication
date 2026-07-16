@@ -28,8 +28,8 @@
 
     <ImageView
         android:id="@+id/btn_capture"
-        android:layout_width="@dimen/shared_dimen_48"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_48"
+        android:layout_height="@dimen/shared_dp_48"
         android:src="@drawable/shared_ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_record_start"
@@ -37,8 +37,8 @@
 
     <ImageView
         android:id="@+id/btn_record_start"
-        android:layout_width="@dimen/shared_dimen_48"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_48"
+        android:layout_height="@dimen/shared_dp_48"
         android:src="@android:drawable/ic_media_play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_record_stop"
@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/btn_record_stop"
-        android:layout_width="@dimen/shared_dimen_48"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_48"
+        android:layout_height="@dimen/shared_dp_48"
         android:src="@android:drawable/ic_media_play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

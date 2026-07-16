@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_title_home">首页</string>
+    <string name="tab_title_discover">发现</string>
+    <string name="tab_title_message">消息</string>
+    <string name="tab_title_profile">我的</string>
+</resources>

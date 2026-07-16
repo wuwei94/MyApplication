@@ -6,8 +6,8 @@
 
     <Button
         android:id="@+id/transition_explode"
-        android:layout_width="@dimen/shared_dimen_width_320"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_button_width"
+        android:layout_height="@dimen/shared_dp_button_height"
         android:text="Explode（分解）"
         app:layout_constraintBottom_toTopOf="@+id/transition_slide"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,8 +17,8 @@
 
     <Button
         android:id="@+id/transition_slide"
-        android:layout_width="@dimen/shared_dimen_width_320"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_button_width"
+        android:layout_height="@dimen/shared_dp_button_height"
         android:text="Slide（滑动）"
         app:layout_constraintBottom_toTopOf="@+id/transition_fade"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +27,8 @@
 
     <Button
         android:id="@+id/transition_fade"
-        android:layout_width="@dimen/shared_dimen_width_320"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_button_width"
+        android:layout_height="@dimen/shared_dp_button_height"
         android:text="Fade（淡入）"
         app:layout_constraintBottom_toTopOf="@+id/transition_share"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +37,8 @@
 
     <Button
         android:id="@+id/transition_share"
-        android:layout_width="@dimen/shared_dimen_width_320"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_width="@dimen/shared_dp_button_width"
+        android:layout_height="@dimen/shared_dp_button_height"
         android:text="Shared Element（共享元素）"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

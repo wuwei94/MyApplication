@@ -1,33 +1,42 @@
-package com.example.william.my.module.ui.activity
+package com.example.william.my.module.tab.activity
 
 import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.module.tab.widget.ViewPagerFragmentAdapter
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.ui.R
-import com.example.william.my.module.ui.databinding.UiActivityFragment2Binding
-import com.example.william.my.module.ui.utils.FragmentUtils
+import com.example.william.my.module.tab.R
+import com.example.william.my.module.tab.databinding.TabActivityViewPagerTabBinding
 
-@Route(path = RouterPath.UI.Fragment2)
-class FragmentActivity2 : BaseVBActivity<UiActivityFragment2Binding>(),
+@Route(path = RouterPath.Tab.ViewPagerTab)
+class ViewPagerTabActivity : BaseVBActivity<TabActivityViewPagerTabBinding>(),
     RadioGroup.OnCheckedChangeListener {
 
-    override fun getViewBinding(): UiActivityFragment2Binding {
-        return UiActivityFragment2Binding.inflate(layoutInflater)
+    override fun getViewBinding(): TabActivityViewPagerTabBinding {
+        return TabActivityViewPagerTabBinding.inflate(layoutInflater)
     }
 
+    private val mTitles: ArrayList<String> by lazy {
+        arrayListOf(
+            getString(R.string.tab_title_home),
+            getString(R.string.tab_title_discover),
+            getString(R.string.tab_title_message),
+            getString(R.string.tab_title_profile),
+        )
+    }
 
-    private val mTitles: ArrayList<String> = arrayListOf(
-        "primary1",
-        "primaryDark1",
-        "primary2",
-        "primaryDark2",
+    private val mIcons: ArrayList<Int> = arrayListOf(
+        R.drawable.tab_ic_tab1,
+        R.drawable.tab_ic_tab2,
+        R.drawable.tab_ic_tab4,
+        R.drawable.tab_ic_tab3,
     )
 
     private val mTabs: ArrayList<RadioButton> = arrayListOf()
@@ -39,15 +48,18 @@ class FragmentActivity2 : BaseVBActivity<UiActivityFragment2Binding>(),
         PrimaryDarkFragment(),
     )
 
-    private val isNewWay = false // 是否使用新的适配方式：setMaxLifecycle
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
+        initFragment()
         initTab()
-        initFragment(savedInstanceState)
         switchTab(0)
-        switchFragment(0)
+    }
+
+    private fun initFragment() {
+        mBinding.viewPager.offscreenPageLimit = 4
+        mBinding.viewPager.adapter =
+            ViewPagerFragmentAdapter(supportFragmentManager, mFragments)
     }
 
     private fun initTab() {
@@ -58,20 +70,20 @@ class FragmentActivity2 : BaseVBActivity<UiActivityFragment2Binding>(),
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
-                    R.color.ui_selector_check_primary_dark
+                    R.color.tab_selector_check_primary_dark
                 )
             )
+            val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
+            drawable?.let {
+                DrawableCompat.setTintList(
+                    it,
+                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark)
+                )
+                radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
+            }
             mTabs.add(radioButton)
         }
     }
-
-    private fun initFragment(savedInstanceState: Bundle?) {
-        FragmentUtils.initFragment(
-            savedInstanceState, supportFragmentManager,
-            R.id.frameLayout, mFragments, mTitles
-        )
-    }
-
 
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
         for (i in 0 until mBinding.navigate.childCount) {
@@ -83,13 +95,10 @@ class FragmentActivity2 : BaseVBActivity<UiActivityFragment2Binding>(),
     }
 
     private fun switchTab(position: Int) {
-        //for (i in 0 until mTabs.size) {
-        //    mTabs[i].isSelected = i == position
-        //}
         mBinding.navigate.check(mTabs[position].id)
     }
 
     private fun switchFragment(position: Int) {
-        FragmentUtils.switchFragment(supportFragmentManager, mFragments, position)
+        mBinding.viewPager.currentItem = position
     }
 }

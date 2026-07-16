@@ -7,10 +7,9 @@
     <TextView
         android:id="@+id/basics_response"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="0dp"
+        android:background="@color/base_white"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/shared_dimen_height_200"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

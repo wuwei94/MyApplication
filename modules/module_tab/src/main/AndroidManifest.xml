@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".TabActivity" />
+        <activity android:name=".activity.TabHostActivity" />
+        <activity android:name=".activity.FrameLayoutTabActivity" />
+        <activity android:name=".activity.ViewPagerTabActivity" />
+        <activity android:name=".activity.ViewPager2TabActivity" />
+        <activity android:name=".activity.BottomNavActivity" />
+    </application>
+</manifest>

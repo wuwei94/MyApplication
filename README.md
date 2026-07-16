@@ -62,7 +62,8 @@ MyApplication/
     ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
     ├── module_system           # 系统能力（Notification / Permission / SecureKey）
     ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    ├── module_ui               # 系统 UI 组件（AppBar / RecyclerView / ViewPager / Fragment / WebView）
+    ├── module_ui               # 系统 UI 组件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
+    ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
     ├── module_opensource       # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
@@ -132,10 +133,18 @@ MyApplication/
 演示 Android 标准 UI 组件。
 
 - AppBar / Dialog / FlexBox
-- Fragment（基础 / 进阶 / TabHost / ViewPager）
 - RecyclerView（基础 / 嵌套滚动）
 - ViewPager / ViewPager2
 - ViewFlipper / WebView
+
+### module_tab（Tab 导航）
+
+演示 Fragment + Tab 导航的多种实现方式。
+
+- FragmentTabHost + TabWidget
+- RadioGroup + FrameLayout Tab
+- ViewPager + RadioGroup 联动
+- BottomNavigationView + Fragment（底部导航栏）
 
 ### module_utils（工具库示例）
 

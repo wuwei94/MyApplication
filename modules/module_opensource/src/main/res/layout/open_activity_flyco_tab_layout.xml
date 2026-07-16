@@ -9,7 +9,7 @@
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/sliding_tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +18,7 @@
     <com.flyco.tablayout.CommonTabLayout
         android:id="@+id/common_tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_primary_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
     <com.flyco.tablayout.SegmentTabLayout
         android:id="@+id/segment_Tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dimen_48"
+        android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_accent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

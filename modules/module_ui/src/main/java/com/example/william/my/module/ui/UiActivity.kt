@@ -13,15 +13,11 @@ class UiActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Appbar", RouterPath.UI.Appbar))
         routerItems.add(RouterItem("Dialog", RouterPath.UI.Dialog))
         routerItems.add(RouterItem("FlexBox", RouterPath.UI.FlexBox))
-        routerItems.add(RouterItem("Fragment1", RouterPath.UI.Fragment1))
-        routerItems.add(RouterItem("Fragment2", RouterPath.UI.Fragment2))
-        routerItems.add(RouterItem("FragmentTabHost", RouterPath.UI.FragmentTabHost))
         routerItems.add(RouterItem("RecyclerView", RouterPath.UI.RecyclerView))
         routerItems.add(RouterItem("ViewFlipper", RouterPath.UI.ViewFlipper))
         routerItems.add(RouterItem("ViewPager", RouterPath.UI.ViewPager))
         routerItems.add(RouterItem("ViewPager2", RouterPath.UI.ViewPager2))
         routerItems.add(RouterItem("WebView", RouterPath.UI.WebView))
-        routerItems.add(RouterItem("FragmentViewPager", RouterPath.UI.FragmentViewPager))
         routerItems.add(RouterItem("RecyclerViewNested", RouterPath.UI.RecyclerViewNested))
         return routerItems
     }

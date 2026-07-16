@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.FragmentActivity1">
+    android:orientation="vertical"
+    tools:context=".activity.FrameLayoutTabActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_weight="1" />
 
     <RadioGroup
         android:id="@+id/navigate"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dimen_48"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        android:layout_height="@dimen/shared_dp_64"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radio1"
@@ -32,7 +25,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:textSize="@dimen/shared_sp_12" />
 
         <RadioButton
             android:id="@+id/radio2"
@@ -41,7 +36,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:textSize="@dimen/shared_sp_12" />
 
         <RadioButton
             android:id="@+id/radio3"
@@ -50,7 +47,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:textSize="@dimen/shared_sp_12" />
 
         <RadioButton
             android:id="@+id/radio4"
@@ -59,8 +58,10 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:textSize="@dimen/shared_sp_12" />
 
     </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

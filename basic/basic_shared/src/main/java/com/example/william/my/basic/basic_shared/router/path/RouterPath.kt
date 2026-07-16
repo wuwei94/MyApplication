@@ -41,16 +41,26 @@ object RouterPath {
         const val Appbar = "${UI}/Appbar"
         const val Dialog = "${UI}/Dialog"
         const val FlexBox = "${UI}/FlexBox"
-        const val Fragment1 = "${UI}/Fragment1"
-        const val Fragment2 = "${UI}/Fragment2"
-        const val FragmentTabHost = "${UI}/FragmentTabHost"
         const val RecyclerView = "${UI}/RecyclerView"
         const val ViewFlipper = "${UI}/ViewFlipper"
         const val ViewPager = "${UI}/ViewPager"
         const val ViewPager2 = "${UI}/ViewPager2"
         const val WebView = "${UI}/WebView"
-        const val FragmentViewPager = "${UI}/FragmentViewPager"
         const val RecyclerViewNested = "${UI}/RecyclerViewNested"
+    }
+
+    // Tab 导航
+    object Tab {
+
+        private const val Tab = "/Tab"
+
+        const val Main = "${Tab}/Main"
+
+        const val TabHost = "${Tab}/TabHost"
+        const val FrameLayoutTab = "${Tab}/FrameLayoutTab"
+        const val ViewPagerTab = "${Tab}/ViewPagerTab"
+        const val ViewPager2Tab = "${Tab}/ViewPager2Tab"
+        const val BottomNav = "${Tab}/BottomNav"
     }
 
     // 动画

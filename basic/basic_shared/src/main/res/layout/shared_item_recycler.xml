@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/shared_dimen_48"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp" />
+        android:minHeight="@dimen/shared_dp_48"
+        android:paddingStart="@dimen/shared_dp_8"
+        android:paddingEnd="@dimen/shared_dp_8" />
 
 </LinearLayout>

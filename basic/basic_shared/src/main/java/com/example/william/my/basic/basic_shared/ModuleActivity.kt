@@ -30,6 +30,7 @@ class ModuleActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("UI", RouterPath.UI.Main))
+        routerItems.add(RouterItem("Tab", RouterPath.Tab.Main))
         routerItems.add(RouterItem("Anim", RouterPath.Anim.Main))
         routerItems.add(RouterItem("Widget", RouterPath.Widget.Main))
 

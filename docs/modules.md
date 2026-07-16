@@ -12,6 +12,7 @@
 | module_system | 系统能力 | SystemActivity | /System |
 | module_widget | 自定义控件 | WidgetActivity | /Widget |
 | module_ui | 系统 UI 组件 | UiActivity | /UI |
+| module_tab | Tab 导航 | TabActivity | /Tab |
 | module_utils | 工具类 | AndroidUtilsActivity | /Utils |
 | module_network | 网络库 | NetWorkActivity | /Network |
 | module_opensource | 第三方库 | OpenSourceActivity | /Opensource |
@@ -106,16 +107,26 @@
 | AppBarActivity | AppBarLayout + CollapsingToolbarLayout + TabLayout |
 | DialogActivity | AlertDialog、DatePickerDialog、DialogFragment |
 | FlexBoxActivity | FlexboxLayoutManager 弹性布局 |
-| FragmentActivity1 | Fragment 基础用法（show/hide 切换） |
-| FragmentActivity2 | Fragment 进阶用法 |
-| FragmentTabHostActivity | FragmentTabHost 选项卡 |
-| FragmentViewPagerActivity | Fragment + ViewPager 联动 |
 | RecyclerViewActivity | RecyclerView 多种 LayoutManager |
 | RecyclerViewNestedActivity | RecyclerView 嵌套滚动 |
 | ViewFlipperActivity | ViewFlipper 翻转切换 |
 | ViewPagerActivity | ViewPager 翻页 |
 | ViewPagerActivity2 | ViewPager2 + TabLayoutMediator |
 | WebViewActivity | WebView 配置、JS 交互、SSL 处理 |
+
+---
+
+### module_tab（Tab 导航）
+
+演示 Fragment + Tab 导航的多种实现方式。
+
+| Activity | 功能 |
+|----------|------|
+| TabHostActivity | FragmentTabHost 选项卡 |
+| FrameLayoutTabActivity | FrameLayout + RadioGroup Tab |
+| ViewPagerTabActivity | ViewPager + NoScrollViewPager + RadioGroup 联动 |
+| ViewPager2TabActivity | ViewPager2 + RadioGroup 联动 |
+| BottomNavActivity | BottomNavigationView + Fragment（底部导航栏） |
 
 ---
 

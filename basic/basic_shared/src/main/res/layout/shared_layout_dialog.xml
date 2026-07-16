@@ -7,9 +7,9 @@
     <include
         android:id="@+id/dialog"
         layout="@layout/shared_layout_response"
-        android:layout_width="@dimen/shared_dimen_width_320"
+        android:layout_width="@dimen/shared_dp_dialog_width"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/shared_dimen_height_200"
+        android:minHeight="@dimen/shared_dp_dialog_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

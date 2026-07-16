@@ -7,15 +7,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/basics_image_container"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/shared_dp_response_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/basics_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/shared_dp_image_size"
+            android:layout_height="@dimen/shared_dp_image_size"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

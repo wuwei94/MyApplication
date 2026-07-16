@@ -6,10 +6,6 @@
         <activity android:name=".activity.AppBarActivity" />
         <activity android:name=".activity.DialogActivity" />
         <activity android:name=".activity.FlexBoxActivity" />
-        <activity android:name=".activity.FragmentActivity1" />
-        <activity android:name=".activity.FragmentActivity2" />
-        <activity android:name=".activity.FragmentTabHostActivity" />
-        <activity android:name=".activity.FragmentViewPagerActivity" />
         <activity android:name=".activity.RecyclerViewActivity" />
         <activity android:name=".activity.RecyclerViewNestedActivity" />
         <activity android:name=".activity.ViewFlipperActivity" />
