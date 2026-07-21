@@ -19,8 +19,9 @@ object Constants {
         "https://web.hycdn.cn/arknights/official/pic/20210329/7dcfb48a8b98d7fb6966728e19b782d9.png"
     const val Url_Image2 =
         "https://web.hycdn.cn/arknights/official/pic/20210401/8b683b7c01ebf0eb570370a48b655504.png"
-    const val Url_NinePatch =
-        "http://wlkk-img.weilitoutiao.net/4205c8fa3e550f4f376160f9887916b9.png"
+    const val Url_NinePatchAsset = "file:///android_asset/ninepatch_toggle.9.png"
+    const val Url_NinePatchNetwork =
+        "https://raw.githubusercontent.com/Anatolii/NinePatchChunk/master/NinePatchChunk/Library/src/androidTest/assets/lib_bg.9.png"
     const val Url_PAG = "assets://pag/diamond.pag"
     const val Url_SVGA = "svga/diamond.svga"
     const val Url_Audio = "https://video.fanqievv.com/user_sound/2021/01/10/1610291672209.mp3"

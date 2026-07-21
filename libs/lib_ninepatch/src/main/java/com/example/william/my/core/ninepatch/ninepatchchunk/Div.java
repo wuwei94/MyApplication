@@ -34,13 +34,13 @@ public final class Div implements Externalizable {
 
     @Override
     public void readExternal(ObjectInput input) throws IOException, ClassNotFoundException {
-        start = input.readByte();
-        stop = input.readByte();
+        start = input.readInt();
+        stop = input.readInt();
     }
 
     @Override
     public void writeExternal(ObjectOutput output) throws IOException {
-        output.writeByte(start);
-        output.writeByte(stop);
+        output.writeInt(start);
+        output.writeInt(stop);
     }
 }
