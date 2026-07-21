@@ -1,7 +1,5 @@
 package com.example.william.my.core.websocket
 
-import android.os.SystemClock
-import com.google.gson.Gson
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import okhttp3.OkHttpClient
@@ -16,61 +14,50 @@ class WebSocketOnSubscribe(
     private val request: Request,
     private val okHttpClient: OkHttpClient
 ) : ObservableOnSubscribe<WebSocketInfo> {
-    private var webSocket: WebSocket? = null
 
     override fun subscribe(emitter: ObservableEmitter<WebSocketInfo>) {
-        if (webSocket != null) {
-            //降低重连频率
-            if ("main" != Thread.currentThread().name) {
-                SystemClock.sleep(3000)
-                emitter.onNext(WebSocketInfo(true))
-            }
-        }
-        webSocket = okHttpClient.newWebSocket(request, object : WebSocketListener() {
+        val webSocket = okHttpClient.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 WebSocketUtils.setWebSocket(url, webSocket)
                 if (!emitter.isDisposed) {
-                    emitter.onNext(WebSocketInfo(webSocket, null, true))
+                    emitter.onNext(WebSocketInfo.Open(webSocket))
                 }
-                WebSocketLogger.debug("onOpen：$url")
+                WebSocketLogger.debug("onOpen: $url")
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                super.onMessage(webSocket, text)
                 if (!emitter.isDisposed) {
-                    emitter.onNext(WebSocketInfo(webSocket, text))
+                    emitter.onNext(WebSocketInfo.TextMessage(webSocket, text))
                 }
-                WebSocketLogger.debug("onMessageString：$text")
+                WebSocketLogger.debug("onMessageString: $text")
             }
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                super.onMessage(webSocket, bytes)
                 if (!emitter.isDisposed) {
-                    emitter.onNext(WebSocketInfo(webSocket, bytes))
+                    emitter.onNext(WebSocketInfo.BytesMessage(webSocket, bytes))
                 }
-                WebSocketLogger.debug("onMessageByteString：$bytes")
+                WebSocketLogger.debug("onMessageByteString: $bytes")
             }
 
             override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                super.onClosing(webSocket, code, reason)
-                WebSocketLogger.debug("onClosing:" + "code:" + code + "reason:" + reason)
+                WebSocketLogger.debug("onClosing: code=$code reason=$reason")
             }
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                super.onClosed(webSocket, code, reason)
-                emitter.onNext(WebSocketInfo(false, onClosed = true))
-                WebSocketLogger.debug("onClosed:" + "code:" + code + "reason:" + reason)
+                if (!emitter.isDisposed) {
+                    emitter.onNext(WebSocketInfo.Closed(code, reason))
+                }
+                WebSocketLogger.debug("onClosed: code=$code reason=$reason")
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                super.onFailure(webSocket, t, response)
+                WebSocketLogger.debug("onFailure: ${t.message}")
+                response?.let {
+                    WebSocketLogger.debug("onFailure code: ${it.code}")
+                    WebSocketLogger.debug("onFailure body: ${it.body?.string()}")
+                }
                 if (!emitter.isDisposed) {
                     emitter.onError(t)
-                }
-                WebSocketLogger.debug("Throwable:$t")
-                if (response != null) {
-                    WebSocketLogger.debug("onFailure：" + response.code)
-                    WebSocketLogger.debug("onFailure：" + Gson().toJson(response.body))
                 }
             }
         })

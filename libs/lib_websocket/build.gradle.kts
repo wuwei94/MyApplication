@@ -4,16 +4,11 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.websocket"
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
-    api(libs.google.gson)
-    //okhttp
+    // okhttp — WebSocket 类型属于公开 API
     api(libs.okhttp)
-    api(libs.okhttp.logging)
-    //rxandroid
+    // rxjava — Observable/Disposable 属于公开 API 类型
     api(libs.rxandroid)
 }

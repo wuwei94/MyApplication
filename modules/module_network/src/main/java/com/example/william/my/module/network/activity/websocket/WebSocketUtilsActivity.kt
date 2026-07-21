@@ -7,7 +7,6 @@ import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.websocket.WebSocketObserver
 import com.example.william.my.core.websocket.WebSocketUtils
-import okhttp3.Response
 import okhttp3.WebSocket
 import okio.ByteString
 
@@ -24,36 +23,30 @@ class WebSocketUtilsActivity : BasicResponseActivity() {
         WebSocketUtils
             .createWebSocket(Constants.Url_WebSocket)
             .subscribe(object : WebSocketObserver() {
-                override fun onOpen(webSocket: WebSocket?, response: Response?) {
-                    super.onOpen(webSocket, response)
-                    response?.let {
-                        showResponse("onOpen：" + response.code)
-                    }
+                override fun onOpen(webSocket: WebSocket) {
+                    super.onOpen(webSocket)
+                    showResponse("onOpen")
                 }
 
-                override fun onMessage(webSocket: WebSocket?, text: String?) {
+                override fun onMessage(webSocket: WebSocket, text: String) {
                     super.onMessage(webSocket, text)
-                    webSocket?.send("heart")
-                    text?.let {
-                        showResponse("onMessageString：$text")
-                    }
+                    webSocket.send("heart")
+                    showResponse("onMessageString: $text")
                 }
 
-                override fun onMessage(webSocket: WebSocket?, bytes: ByteString?) {
+                override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                     super.onMessage(webSocket, bytes)
-                    bytes?.let {
-                        showResponse("onMessageByteString：$bytes")
-                    }
+                    showResponse("onMessageByteString: $bytes")
                 }
 
                 override fun onReconnect() {
                     super.onReconnect()
-                    showResponse("onReconnect：")
+                    showResponse("onReconnect")
                 }
 
-                override fun onClosed() {
-                    super.onClosed()
-                    showResponse("onClosed：")
+                override fun onClosed(code: Int, reason: String) {
+                    super.onClosed(code, reason)
+                    showResponse("onClosed: code=$code reason=$reason")
                 }
             })
     }

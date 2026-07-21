@@ -4,9 +4,21 @@ import android.util.Log
 
 object WebSocketLogger {
 
-    private val TAG = this.javaClass.simpleName
+    private const val TAG = "WebSocket"
+
+    private var isDebug = false
+
+    fun setDebug(enable: Boolean) {
+        isDebug = enable
+    }
 
     fun debug(msg: String) {
-        Log.d(TAG, msg)
+        if (isDebug) {
+            Log.d(TAG, msg)
+        }
+    }
+
+    fun error(msg: String, t: Throwable? = null) {
+        Log.e(TAG, msg, t)
     }
 }

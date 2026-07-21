@@ -13,8 +13,9 @@ import java.util.concurrent.TimeoutException
 
 object WebSocketUtils {
 
+    private val defaultClient = OkHttpClient()
     private val webSocketMap = ConcurrentHashMap<String, WebSocket>()
-    private val webSocketObservableMap = ConcurrentHashMap<String, Observable<WebSocketInfo>>()
+    private val disposableMap = ConcurrentHashMap<String, Disposable>()
 
     fun setWebSocket(url: String, webSocket: WebSocket) {
         webSocketMap[url] = webSocket
@@ -25,11 +26,11 @@ object WebSocketUtils {
     }
 
     fun createWebSocket(url: String): Observable<WebSocketInfo> {
-        return createWebSocket(url, Request.Builder().get().url(url).build(), OkHttpClient())
+        return createWebSocket(url, Request.Builder().get().url(url).build(), defaultClient)
     }
 
     fun createWebSocket(request: Request): Observable<WebSocketInfo> {
-        return createWebSocket(request.url.toString(), request, OkHttpClient())
+        return createWebSocket(request.url.toString(), request, defaultClient)
     }
 
     fun createWebSocket(url: String, okHttpClient: OkHttpClient): Observable<WebSocketInfo> {
@@ -43,73 +44,86 @@ object WebSocketUtils {
     private fun createWebSocket(
         url: String,
         request: Request,
-        okHttpClient: OkHttpClient = OkHttpClient()
+        okHttpClient: OkHttpClient
     ): Observable<WebSocketInfo> {
-        return webSocketObservableMap[url]?.let { observable ->
-            val webSocket = webSocketMap[request.url.toString()]
-            webSocket?.let {
-                observable.startWithItem(WebSocketInfo(webSocket, null, true))
-            } ?: observable
-        } ?: Observable.create(WebSocketOnSubscribe(url, request, okHttpClient))
+        // 如果已有缓存的订阅，直接返回当前连接状态
+        disposableMap[url]?.let { existing ->
+            if (!existing.isDisposed) {
+                val webSocket = webSocketMap[url]
+                return if (webSocket != null) {
+                    Observable.just(WebSocketInfo.Open(webSocket))
+                } else {
+                    Observable.empty()
+                }
+            }
+        }
+
+        return Observable.create(WebSocketOnSubscribe(url, request, okHttpClient))
             .retry { throwable ->
                 throwable is EOFException || throwable is TimeoutException
             }
             .doOnDispose {
                 webSocketMap.remove(url)
-                webSocketObservableMap.remove(url)
+                disposableMap.remove(url)
             }
-            .doOnNext { webSocketInfo ->
-                if (webSocketInfo.isOnOpen) {
-                    webSocketMap[url] = webSocketInfo.webSocket
+            .doOnNext { info ->
+                when (info) {
+                    is WebSocketInfo.Open -> webSocketMap[url] = info.webSocket
+                    is WebSocketInfo.Closed -> {
+                        webSocketMap.remove(url)
+                        disposableMap.remove(url)
+                    }
+                    else -> { /* no-op */ }
                 }
-            }.share()
+            }
+            .share()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .also { observable ->
-                webSocketObservableMap[request.url.toString()] = observable
-            }
-            .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun send(url: String, message: String) {
-        send(url, Request.Builder().get().url(url).build(), message)
+    fun send(url: String, message: String): Boolean {
+        val webSocket = getWebSocket(url) ?: return false
+        return try {
+            webSocket.send(message)
+        } catch (e: Exception) {
+            WebSocketLogger.error("send failed: $url", e)
+            false
+        }
     }
 
-    fun send(request: Request, message: String) {
-        send(request.url.toString(), request, message)
-    }
-
-    private fun send(url: String, request: Request, message: String) {
-        createWebSocket(url, request).subscribe(object : WebSocketObserver() {
-            override fun onMessage(webSocket: WebSocket?, text: String?) {
-                super.onMessage(webSocket, text)
-                webSocket!!.send(message)
-            }
-        })
+    fun send(request: Request, message: String): Boolean {
+        return send(request.url.toString(), message)
     }
 
     fun cancel(url: String) {
-        cancel(url, Request.Builder().get().url(url).build())
+        getWebSocket(url)?.let { webSocket ->
+            try {
+                webSocket.cancel()
+            } catch (e: Exception) {
+                WebSocketLogger.error("cancel failed: $url", e)
+            }
+        }
+        webSocketMap.remove(url)
+        disposableMap[url]?.dispose()
+        disposableMap.remove(url)
     }
 
     fun cancel(request: Request) {
-        cancel(request.url.toString(), request)
+        cancel(request.url.toString())
     }
 
-    private fun cancel(url: String, request: Request) {
-        getWebSocket(url)?.cancel()
-        getDisposable(url, request).dispose()
+    fun subscribe(url: String): Disposable {
+        disposableMap[url]?.dispose()
+        val disposable = createWebSocket(url).subscribe()
+        disposableMap[url] = disposable
+        return disposable
     }
 
-    fun getDisposable(url: String): Disposable {
-        return createWebSocket(url).subscribe()
-    }
-
-    fun getDisposable(request: Request): Disposable {
-        return createWebSocket(request).subscribe()
-    }
-
-    private fun getDisposable(url: String, request: Request): Disposable {
-        return createWebSocket(url, request).subscribe()
+    fun subscribe(request: Request): Disposable {
+        val url = request.url.toString()
+        disposableMap[url]?.dispose()
+        val disposable = createWebSocket(request).subscribe()
+        disposableMap[url] = disposable
+        return disposable
     }
 }

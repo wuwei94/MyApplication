@@ -1,44 +1,34 @@
 package com.example.william.my.core.websocket
 
 import io.reactivex.rxjava3.observers.DisposableObserver
-import okhttp3.Response
 import okhttp3.WebSocket
 import okio.ByteString
 
 abstract class WebSocketObserver : DisposableObserver<WebSocketInfo>() {
 
-    private var hasOpened = false
-
-    override fun onNext(webSocketInfo: WebSocketInfo) {
-        if (webSocketInfo.isOnOpen) {
-            hasOpened = true
-            onOpen(webSocketInfo.webSocket, webSocketInfo.response)
-        } else if (webSocketInfo.string != null) {
-            onMessage(webSocketInfo.webSocket, webSocketInfo.string)
-        } else if (webSocketInfo.bytes != null) {
-            onMessage(webSocketInfo.webSocket, webSocketInfo.bytes)
-        } else if (webSocketInfo.isOnReconnect) {
-            onReconnect()
-        } else if (webSocketInfo.isOnClosed) {
-            onClosed()
+    override fun onNext(info: WebSocketInfo) {
+        when (info) {
+            is WebSocketInfo.Open -> onOpen(info.webSocket)
+            is WebSocketInfo.TextMessage -> onMessage(info.webSocket, info.text)
+            is WebSocketInfo.BytesMessage -> onMessage(info.webSocket, info.bytes)
+            is WebSocketInfo.Reconnect -> onReconnect()
+            is WebSocketInfo.Closed -> onClosed(info.code, info.reason)
         }
     }
 
     override fun onError(e: Throwable) {
-        e.printStackTrace()
+        WebSocketLogger.error("WebSocket error", e)
     }
 
     override fun onComplete() {
-        if (hasOpened) {
-            if (!isDisposed) {
-                dispose()
-            }
-        }
+        // 空实现 — 不在此处自动 dispose。
+        // share() 上游在所有 subscriber dispose 后会触发 onComplete，
+        // 如果此处也 dispose 会打断重连逻辑。
     }
 
-    protected open fun onOpen(webSocket: WebSocket?, response: Response?) {}
-    protected open fun onMessage(webSocket: WebSocket?, text: String?) {}
-    protected open fun onMessage(webSocket: WebSocket?, bytes: ByteString?) {}
+    protected open fun onOpen(webSocket: WebSocket) {}
+    protected open fun onMessage(webSocket: WebSocket, text: String) {}
+    protected open fun onMessage(webSocket: WebSocket, bytes: ByteString) {}
     protected open fun onReconnect() {}
-    protected open fun onClosed() {}
+    protected open fun onClosed(code: Int, reason: String) {}
 }
