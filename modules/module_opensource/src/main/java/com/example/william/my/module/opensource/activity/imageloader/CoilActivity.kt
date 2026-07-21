@@ -1,7 +1,7 @@
 package com.example.william.my.module.opensource.activity.imageloader
 
 import android.os.Bundle
-import coil.load
+import coil3.load
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.base.Constants

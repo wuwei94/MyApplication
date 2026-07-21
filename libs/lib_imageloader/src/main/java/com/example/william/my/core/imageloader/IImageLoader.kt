@@ -7,7 +7,6 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
-import com.bumptech.glide.request.RequestOptions
 import java.io.File
 
 interface IImageLoader {
@@ -39,7 +38,7 @@ interface IImageLoader {
     fun ImageView.loadImage(
         context: Context?,
         url: String?,
-        options: RequestOptions? = null,
+        options: ImageOptions? = null,
         onComplete: (() -> Unit)? = null,
     )
 
@@ -90,10 +89,6 @@ interface IImageLoader {
     fun ImageView.loadGif(
         context: Context?, url: String?,
     )
-
-    fun getImageDrawable(context: Context?, url: String?): Drawable?
-
-    fun getImageBitmap(context: Context?, url: String?): Bitmap?
 
     fun getImageDrawable(context: Context?, url: String?, onResourceReady: (Drawable) -> Unit)
 

@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -18,9 +17,9 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.example.william.my.core.imageloader.IImageLoader
+import com.example.william.my.core.imageloader.ImageOptions
 import com.example.william.my.core.imageloader.glide.module.GlideApp
 import java.io.File
-import java.util.concurrent.ExecutionException
 
 object ImageLoader : IImageLoader {
 
@@ -49,11 +48,6 @@ object ImageLoader : IImageLoader {
         context?.let {
             GlideApp.with(it)
                 .load(resourceId)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE) //禁用缓存功能
-                    //.skipMemoryCache(true) //禁用内存缓存)
-                )
                 .into(this)
         }
     }
@@ -65,11 +59,6 @@ object ImageLoader : IImageLoader {
         context?.let {
             GlideApp.with(it)
                 .load(bitmap)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE) //禁用缓存功能
-                    //.skipMemoryCache(true) //禁用内存缓存)
-                )
                 .into(this)
         }
     }
@@ -93,64 +82,41 @@ object ImageLoader : IImageLoader {
     override fun ImageView.loadImage(
         context: Context?,
         url: String?,
-        options: RequestOptions?,
+        options: ImageOptions?,
         onComplete: (() -> Unit)?
     ) {
         context?.let {
-            options?.let { options ->
-                GlideApp.with(it)
-                    .load(url)
-                    .apply(options)
-                    .addListener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable?>,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            onComplete?.invoke()
-                            return false
-                        }
+            val request = GlideApp.with(it)
+                .load(url)
 
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any,
-                            target: Target<Drawable?>?,
-                            dataSource: DataSource,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            onComplete?.invoke()
-                            return false
-                        }
-                    })
-                    .into(this)
-            } ?: run {
-                GlideApp.with(it)
-                    .load(url)
-                    .addListener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable?>,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            onComplete?.invoke()
-                            return false
-                        }
+            options?.toGlideRequestOptions()?.let { request.apply(it) }
 
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any,
-                            target: Target<Drawable?>?,
-                            dataSource: DataSource,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            onComplete?.invoke()
-                            return false
-                        }
-                    })
-                    .into(this)
+            if (onComplete != null) {
+                request.addListener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable?>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        onComplete.invoke()
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: Target<Drawable?>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        onComplete.invoke()
+                        return false
+                    }
+                })
             }
+
+            request.into(this)
         }
     }
 
@@ -160,11 +126,6 @@ object ImageLoader : IImageLoader {
         context?.let {
             GlideApp.with(it)
                 .load(resourceId)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE) //禁用缓存功能
-                    //.skipMemoryCache(true) //禁用内存缓存)
-                )
                 .transform(CircleCrop())
                 .into(this)
         }
@@ -217,11 +178,6 @@ object ImageLoader : IImageLoader {
         context?.let {
             GlideApp.with(it)
                 .load(resourceId)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE) //禁用缓存功能
-                    //.skipMemoryCache(true) //禁用内存缓存)
-                )
                 .transform(CenterCrop(), RoundedCorners(radius))
                 .into(this)
         }
@@ -287,45 +243,6 @@ object ImageLoader : IImageLoader {
         }
     }
 
-    override fun getImageDrawable(context: Context?, url: String?): Drawable? {
-        if (url.isNullOrEmpty()) {
-            return null
-        }
-        context?.let {
-            try {
-                return GlideApp.with(it)
-                    .load(url)
-                    .submit()
-                    .get()
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-        }
-        return null
-    }
-
-    override fun getImageBitmap(context: Context?, url: String?): Bitmap? {
-        if (url.isNullOrEmpty()) {
-            return null
-        }
-        context?.let {
-            try {
-                return GlideApp.with(it)
-                    .asBitmap()
-                    .load(url)
-                    .submit()
-                    .get()
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-        }
-        return null
-    }
-
     override fun getImageDrawable(
         context: Context?,
         url: String?,
@@ -335,7 +252,7 @@ object ImageLoader : IImageLoader {
             return
         }
         context?.let {
-            Glide.with(it)
+            GlideApp.with(it)
                 .load(url)
                 .into(object : CustomTarget<Drawable>() {
                     override fun onResourceReady(
@@ -346,7 +263,6 @@ object ImageLoader : IImageLoader {
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) {
-
                     }
                 })
         }
@@ -361,21 +277,33 @@ object ImageLoader : IImageLoader {
             return
         }
         context?.let {
-            Glide.with(it)
+            GlideApp.with(it)
                 .asBitmap()
                 .load(url)
-                .into(object : CustomTarget<Bitmap?>() {
+                .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
                         resource: Bitmap,
-                        transition: Transition<in Bitmap?>?
+                        transition: Transition<in Bitmap>?
                     ) {
                         onResourceReady(resource)
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) {
-
                     }
                 })
+        }
+    }
+
+    private fun ImageOptions?.toGlideRequestOptions(): RequestOptions {
+        val options = this ?: return RequestOptions()
+        return RequestOptions().apply {
+            when (options.cacheStrategy) {
+                ImageOptions.CacheStrategy.ALL -> diskCacheStrategy(DiskCacheStrategy.ALL)
+                ImageOptions.CacheStrategy.NONE -> diskCacheStrategy(DiskCacheStrategy.NONE)
+                ImageOptions.CacheStrategy.DATA -> diskCacheStrategy(DiskCacheStrategy.DATA)
+                ImageOptions.CacheStrategy.RESOURCE -> diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            }
+            skipMemoryCache(options.skipMemoryCache)
         }
     }
 }

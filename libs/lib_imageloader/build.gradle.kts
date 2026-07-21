@@ -9,4 +9,6 @@ android {
 dependencies {
     implementation(libs.glide)
     kapt(libs.glide.compiler)
+    implementation(libs.coil)
+    implementation(libs.coil.gif)
 }
