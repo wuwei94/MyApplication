@@ -53,7 +53,7 @@ MyApplication/
 │   ├── basic_shared            # 通用 Bus、Router、UI 脚手架
 │   └── basic_repository        # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 ├── libs                        # 可复用的业务能力库
-│   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket / lib_download
+│   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket_okhttp / lib_websocket_java / lib_download
 │   ├── lib_eventbus / lib_ninepatch / lib_imageloader / lib_widget
 │   └── ...
 └── modules                     # Feature 模块

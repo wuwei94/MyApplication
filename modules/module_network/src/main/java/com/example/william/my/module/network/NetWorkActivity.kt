@@ -91,23 +91,10 @@ class NetWorkActivity : RouterRecyclerActivity() {
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("WebSocketActivity", RouterPath.Network.WebSocket.WebSocket)
-        )
-        routerItems.add(
-            RouterItem("WebSocketUtilsActivity", RouterPath.Network.WebSocket.WebSocketUtils)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
             RouterItem("NanoActivity", RouterPath.Network.Socket.Nano)
         )
         routerItems.add(
             RouterItem("NettyActivity", RouterPath.Network.Socket.Netty)
-        )
-        routerItems.add(
-            RouterItem("SocketActivity", RouterPath.Network.Socket.Socket)
         )
         return routerItems
     }

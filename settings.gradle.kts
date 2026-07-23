@@ -85,7 +85,8 @@ include(":libs:lib_okhttp")
 include(":libs:lib_retrofit")
 
 include(":libs:lib_volley")
-include(":libs:lib_websocket")
+include(":libs:lib_websocket_okhttp")
+include(":libs:lib_websocket_java")
 
 include(":libs:lib_download")
 include(":libs:lib_imageloader")
@@ -110,6 +111,8 @@ include(":modules:module_widget")
 include(":modules:module_utils")
 // 网络库
 include(":modules:module_network")
+// WebSocket
+include(":modules:module_websocket")
 // 第三方库
 include(":modules:module_opensource")
 

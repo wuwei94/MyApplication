@@ -237,19 +237,33 @@ object RouterPath {
             const val RxDownload = "${DOWNLOAD_PATH}/RxDownload"
         }
 
-        object WebSocket {
-            private const val WS_PATH = "${PATH}/WebSocket"
-
-            const val WebSocket = "${WS_PATH}/WebSocket"
-            const val WebSocketUtils = "${WS_PATH}/WebSocketUtils"
-        }
-
         object Socket {
             private const val SOCKET_PATH = "${PATH}/Socket"
 
             const val Nano = "${SOCKET_PATH}/Nano"
             const val Netty = "${SOCKET_PATH}/Netty"
-            const val Socket = "${SOCKET_PATH}/Socket"
+        }
+    }
+
+    // Socket 模块
+    object WebSocket {
+        private const val PATH = "/WebSocket"
+
+        const val Main = "${PATH}/Main"
+
+        object OkHttpWebSocket {
+            private const val WS_PATH = "${PATH}/OkHttpWebSocket"
+
+            const val OkHttpWebSocketClient = "${WS_PATH}/OkHttpWebSocketClient"
+            const val OkHttpWebSocketClientRx = "${WS_PATH}/OkHttpWebSocketClientRx"
+        }
+
+        object JavaWebSocket {
+            private const val SOCKET_PATH = "${PATH}/JavaWebSocket"
+            const val JavaWebSocketClient = "${SOCKET_PATH}/JavaWebSocketClient"
+            const val JavaWebSocketClientRx = "${SOCKET_PATH}/JavaWebSocketClientRx"
+
+            const val JavaWebSocketServerService = "${SOCKET_PATH}/JavaWebSocketService"
         }
     }
 

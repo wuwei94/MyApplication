@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application>
+        <activity android:name=".WebSocketActivity"/>
+        <activity android:name=".activity.okhttpws.OkHttpWebSocketClientActivity"/>
+        <activity android:name=".activity.okhttpws.OkHttpWebSocketClientRxActivity"/>
+        <activity android:name=".activity.javaws.JavaWebSocketClientActivity"/>
+        <activity android:name=".activity.javaws.JavaWebSocketClientRxActivity"/>
+        <activity android:name=".activity.javaws.JavaWebSocketServiceActivity"/>
+        <service
+            android:name=".service.JavaWebSocketServerService"
+            android:exported="false" />
+    </application>
+
+</manifest>

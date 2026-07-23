@@ -22,11 +22,9 @@ dependencies {
     implementation(libs.slf4j)
     implementation(libs.netty)
     implementation(libs.nanohttpd)
-    implementation(libs.websocket)
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))
     implementation(project(":libs:lib_okhttp"))
     implementation(project(":libs:lib_retrofit"))
     implementation(project(":libs:lib_download"))
-    implementation(project(":libs:lib_websocket"))
 }
