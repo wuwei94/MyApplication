@@ -1,34 +1,33 @@
-package com.example.william.my.module.websocket.activity.javaws
+package com.example.william.my.module.websocket.activity.netty
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.javaws.client.JavaWebSocketClient
-import com.example.william.my.core.javaws.client.JavaWebSocketClientListener
-import com.example.william.my.core.javaws.server.JavaWebSocketServer
-import com.example.william.my.module.websocket.service.JavaWebSocketServerService
+import com.example.william.my.core.netty.client.NettyClientRx
+import com.example.william.my.core.netty.client.NettyClientRxObserver
+import com.example.william.my.core.netty.server.NettyServer
+import com.example.william.my.module.websocket.service.NettyWebSocketServerService
 import com.example.william.my.module.websocket.utils.NetworkUtils
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.handshake.ServerHandshake
 
 /**
- * Java-WebSocket 原始 API 示例
+ * Netty RxJava 封装示例
  *
- * 演示使用 JavaWebSocketClient + JavaWebSocketClientListener 回调
+ * 演示使用 NettyClientRx + NettyClientRxObserver 进行 TCP 通信
+ * 使用 RxJava Observable 方式处理事件
  * 需要先启动本地服务端
  */
-@Route(path = RouterPath.WebSocket.JavaWebSocket.JavaWebSocketClient)
-class JavaWebSocketClientActivity : BasicResponseActivity() {
+@Route(path = RouterPath.WebSocket.NettyWebSocket.NettyWebSocketClientRx)
+class NettyWebSocketClientRxActivity : BasicResponseActivity() {
 
     private val host: String get() = NetworkUtils.getIPAddress(true)
-    private val port: Int = 5566
-    private val serverUrl: String get() = "ws://$host:$port"
+    private val port: Int = 5567
+    private val serverUrl: String get() = "$host:$port"
     private var serverStarted = false
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【Java-WebSocket】原始 API\n地址：$serverUrl\n需要先启动本地服务端")
+        showResponse("【Netty TCP】RxJava 封装\n地址：$serverUrl\n需要先启动本地服务端")
     }
 
     override fun buildList(): ArrayList<String> {
@@ -56,26 +55,26 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        JavaWebSocketClient.close(serverUrl)
+        NettyClientRx.close(host, port)
         if (serverStarted) {
-            JavaWebSocketServerService.stopService(this)
+            NettyWebSocketServerService.stopService(this)
         }
     }
 
     private fun startServer() {
-        JavaWebSocketServerService.startService(this)
+        NettyWebSocketServerService.startService(this)
         serverStarted = true
         appendLog("【服务端】已启动，地址：$serverUrl")
     }
 
     private fun broadcastMessage() {
-        if (!JavaWebSocketServer.isRunning()) {
+        if (!NettyServer.isRunning()) {
             appendLog("【状态】服务端未运行，无法广播")
             return
         }
 
         val message = "Hello from Server!"
-        JavaWebSocketServer.broadcast(message)
+        NettyServer.broadcast(message)
         appendLog("【广播】已发送：$message")
     }
 
@@ -84,54 +83,57 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
             appendLog("【状态】服务端未启动")
             return
         }
-        JavaWebSocketServerService.stopService(this)
+        NettyWebSocketServerService.stopService(this)
         serverStarted = false
         appendLog("【服务端】已停止")
     }
 
     private fun connect() {
-        if (!JavaWebSocketServer.isRunning()) {
+        if (!NettyServer.isRunning()) {
             appendLog("【状态】服务端未启动，请先启动服务端")
             return
         }
 
         appendLog("【连接】正在连接 $serverUrl ...")
-        JavaWebSocketClient.connect(
-            url = serverUrl,
-            autoReconnect = true,
-            reconnectInterval = 3000,
-            listener = object : JavaWebSocketClientListener() {
-                override fun onOpen(webSocket: WebSocketClient, handshakedata: ServerHandshake) {
+        NettyClientRx
+            .createConnection(host, port)
+            .subscribe(object : NettyClientRxObserver() {
+                override fun onConnected(host: String, port: Int) {
                     runOnUiThread {
-                        appendLog("【连接】已连接")
-                        webSocket.send("heart")
+                        appendLog("【连接】已连接到 $host:$port")
+                        NettyClientRx.send(host, port, "heart")
                     }
                 }
 
-                override fun onMessage(webSocket: WebSocketClient, message: String) {
+                override fun onMessage(message: String) {
                     runOnUiThread {
                         appendLog("【消息】收到：$message")
                     }
                 }
 
-                override fun onClose(webSocket: WebSocketClient, code: Int, reason: String?, remote: Boolean) {
+                override fun onClosed(reason: String) {
                     runOnUiThread {
-                        appendLog("【关闭】已关闭：code=$code reason=$reason")
+                        appendLog("【关闭】已关闭：$reason")
                     }
                 }
 
-                override fun onError(webSocket: WebSocketClient, ex: Exception) {
+                override fun onError(exception: Exception) {
                     runOnUiThread {
-                        appendLog("【错误】${ex.message}")
+                        appendLog("【错误】${exception.message}")
                     }
                 }
-            }
-        )
+            })
     }
 
     private fun sendMessage() {
+        val channel = NettyClientRx.getChannel(host, port)
+        if (channel == null || !channel.isActive) {
+            appendLog("【状态】未连接，无法发送消息")
+            return
+        }
+
         val message = "Hello from Client!"
-        val success = JavaWebSocketClient.send(serverUrl, message)
+        val success = NettyClientRx.send(host, port, message)
         if (success) {
             appendLog("【发送】$message")
         } else {
@@ -140,7 +142,7 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
     }
 
     private fun disconnect() {
-        JavaWebSocketClient.close(serverUrl)
+        NettyClientRx.close(host, port)
         appendLog("【断开】已断开连接")
     }
 }

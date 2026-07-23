@@ -26,16 +26,9 @@
         <activity android:name=".activity.download.RetrofitDownloadActivity" />
         <activity android:name=".activity.download.RxDownloadActivity" />
 
-        <activity android:name=".activity.websocket.WebSocketActivity" />
-        <activity android:name=".activity.websocket.WebSocketUtilsActivity" />
-
         <activity android:name=".activity.socket.NanoActivity" />
-        <activity android:name=".activity.socket.NettyActivity" />
-        <activity android:name=".activity.socket.SocketActivity" />
 
         <service android:name=".nano.NanoService" />
-        <service android:name=".netty.NettyService" />
-        <service android:name=".socket.SocketService" />
     </application>
 
 </manifest>

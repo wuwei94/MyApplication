@@ -241,7 +241,6 @@ object RouterPath {
             private const val SOCKET_PATH = "${PATH}/Socket"
 
             const val Nano = "${SOCKET_PATH}/Nano"
-            const val Netty = "${SOCKET_PATH}/Netty"
         }
     }
 
@@ -262,8 +261,12 @@ object RouterPath {
             private const val SOCKET_PATH = "${PATH}/JavaWebSocket"
             const val JavaWebSocketClient = "${SOCKET_PATH}/JavaWebSocketClient"
             const val JavaWebSocketClientRx = "${SOCKET_PATH}/JavaWebSocketClientRx"
+        }
 
-            const val JavaWebSocketServerService = "${SOCKET_PATH}/JavaWebSocketService"
+        object NettyWebSocket {
+            private const val NETTY_PATH = "${PATH}/NettyWebSocket"
+            const val NettyWebSocketClient = "${NETTY_PATH}/NettyWebSocketClient"
+            const val NettyWebSocketClientRx = "${NETTY_PATH}/NettyWebSocketClientRx"
         }
     }
 

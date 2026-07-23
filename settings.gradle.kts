@@ -81,12 +81,13 @@ include(":basic:basic_shared")
 include(":basic:basic_repository")
 
 include(":libs:lib_ktor")
+include(":libs:lib_volley")
 include(":libs:lib_okhttp")
 include(":libs:lib_retrofit")
 
-include(":libs:lib_volley")
 include(":libs:lib_websocket_okhttp")
 include(":libs:lib_websocket_java")
+include(":libs:lib_netty")
 
 include(":libs:lib_download")
 include(":libs:lib_imageloader")

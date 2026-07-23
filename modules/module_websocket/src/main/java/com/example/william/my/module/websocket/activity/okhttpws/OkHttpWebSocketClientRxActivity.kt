@@ -5,67 +5,92 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.okhttpws.client.OkHttpWebSocketObserver
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketClientRx
+import com.example.william.my.core.okhttpws.client.OkHttpWebSocketObserver
 import okhttp3.WebSocket
 import okio.ByteString
 
 /**
  * OkHttp WebSocket RxJava 封装示例
- * 通过 OkHttpWebSocketClientRx + OkHttpWebSocketObserver 使用
+ *
+ * 演示使用 OkHttpWebSocketClientRx + OkHttpWebSocketObserver 进行 WebSocket 通信
+ * 连接到 echo.websocket.org 服务器
  */
 @Route(path = RouterPath.WebSocket.OkHttpWebSocket.OkHttpWebSocketClientRx)
 class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
 
+    private val serverUrl: String = Constants.Url_WebSocket
+
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("OkHttp WebSocket RxJava 封装\n\n点击下方按钮连接 WebSocket 服务器")
+        showResponse("【OkHttp WebSocket】RxJava 封装\n地址：$serverUrl")
     }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "连接 WebSocket",
-            "断开 WebSocket"
+            "连接服务器（Connect）",
+            "发送消息（Send Message）",
+            "断开连接（Disconnect）",
         )
     }
 
     override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> connect()
-            1 -> disconnect()
+            1 -> sendMessage()
+            2 -> disconnect()
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        OkHttpWebSocketClientRx.cancel(serverUrl)
+    }
+
     private fun connect() {
-        appendLog("正在连接 ${Constants.Url_WebSocket} ...")
+        appendLog("【连接】正在连接 $serverUrl ...")
         OkHttpWebSocketClientRx
-            .createWebSocket(Constants.Url_WebSocket)
+            .createWebSocket(serverUrl)
             .subscribe(object : OkHttpWebSocketObserver() {
                 override fun onOpen(webSocket: WebSocket) {
-                    super.onOpen(webSocket)
-                    appendLog("onOpen")
+                    runOnUiThread {
+                        appendLog("【连接】已连接")
+                    }
                 }
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
-                    super.onMessage(webSocket, text)
-                    webSocket.send("heart")  // 发送心跳保活
-                    appendLog("onMessageString: $text")
+                    runOnUiThread {
+                        appendLog("【消息】收到：$text")
+                    }
                 }
 
                 override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                    super.onMessage(webSocket, bytes)
-                    appendLog("onMessageByteString: $bytes")
+                    runOnUiThread {
+                        appendLog("【消息】收到字节：$bytes")
+                    }
                 }
 
                 override fun onClosed(code: Int, reason: String) {
-                    super.onClosed(code, reason)
-                    appendLog("onClosed: code=$code reason=$reason")
+                    runOnUiThread {
+                        appendLog("【关闭】已关闭：code=$code reason=$reason")
+                    }
                 }
             })
     }
 
+    private fun sendMessage() {
+        val message = "Hello from Client!"
+        val success = OkHttpWebSocketClientRx.send(serverUrl, message)
+        if (success) {
+            appendLog("【发送】$message")
+        } else {
+            appendLog("【错误】发送失败")
+        }
+    }
+
     private fun disconnect() {
-        OkHttpWebSocketClientRx.cancel(Constants.Url_WebSocket)
-        appendLog("已断开连接")
+        OkHttpWebSocketClientRx.cancel(serverUrl)
+        appendLog("【断开】已断开连接")
     }
 }

@@ -6,11 +6,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.module.network"
-    //Netty
-    //packaging {
-    //    resources.excludes.add("META-INF/INDEX.LIST")
-    //    resources.excludes.add("META-INF/io.netty.versions.properties")
-    //}
 }
 
 dependencies {
@@ -20,7 +15,6 @@ dependencies {
     implementation(project(":basic:basic_repository"))
 
     implementation(libs.slf4j)
-    implementation(libs.netty)
     implementation(libs.nanohttpd)
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))

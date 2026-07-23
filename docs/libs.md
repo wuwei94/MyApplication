@@ -15,6 +15,7 @@
 | lib_download | 下载功能封装 | 自定义下载管理器 |
 | lib_websocket_okhttp | OkHttp WebSocket 封装 | OkHttp WebSocket |
 | lib_websocket_java | Java-WebSocket 封装 | Java-WebSocket |
+| lib_netty | Netty TCP 封装 | Netty |
 | lib_widget | 自定义 Widget 库 | 自定义控件集合 |
 | lib_ninepatch | NinePatch 图片处理 | NinePatch 工具 |
 
@@ -83,6 +84,14 @@
 - 权限：`ACCESS_NETWORK_STATE`、`INTERNET`
 - 依赖：Java-WebSocket
 - 包名：`com.example.william.my.core.javaws`
+
+### lib_netty（Netty TCP 封装）
+
+对 Netty 网络框架的封装，提供 TCP 客户端和服务端通信接口。
+
+- 权限：`ACCESS_NETWORK_STATE`、`INTERNET`
+- 依赖：Netty
+- 包名：`com.example.william.my.core.netty`
 
 ### lib_widget（自定义 Widget 库）
 

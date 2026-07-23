@@ -1,4 +1,4 @@
-package com.example.william.my.module.network.netty.client
+package com.example.william.my.core.netty.client
 
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
@@ -7,7 +7,9 @@ import io.netty.handler.codec.Delimiters
 import io.netty.handler.codec.string.StringDecoder
 import io.netty.handler.codec.string.StringEncoder
 
-class NettyClientInitializer : ChannelInitializer<SocketChannel>() {
+class NettyClientRxInitializer(
+    private val handler: NettyClientRxHandler
+) : ChannelInitializer<SocketChannel>() {
 
     override fun initChannel(ch: SocketChannel) {
         val pipeline = ch.pipeline()
@@ -20,7 +22,7 @@ class NettyClientInitializer : ChannelInitializer<SocketChannel>() {
         pipeline.addLast("decoder", StringDecoder())
         pipeline.addLast("encoder", StringEncoder())
 
-        // 自定义解码器
-        pipeline.addLast("handler", NettyClientHandler())
+        // 自定义处理器
+        pipeline.addLast("handler", handler)
     }
 }

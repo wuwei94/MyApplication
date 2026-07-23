@@ -15,6 +15,7 @@
 | module_tab | Tab 导航 | TabActivity | /Tab |
 | module_utils | 工具类 | AndroidUtilsActivity | /Utils |
 | module_network | 网络库 | NetWorkActivity | /Network |
+| module_websocket | WebSocket 示例 | WebSocketActivity | /WebSocket |
 | module_opensource | 第三方库 | OpenSourceActivity | /Opensource |
 | module_arch | 架构模式 | ArchActivity | /Arch |
 | module_event | 事件总线 | EventActivity | /Event |
@@ -164,11 +165,29 @@
 | OkhttpDownloadActivity | OkHttp 文件下载 |
 | RetrofitDownloadActivity | Retrofit 文件下载 |
 | RxDownloadActivity | RxDownload 响应式下载 |
-| WebSocketActivity | OkHttp WebSocket 长连接 |
-| WebSocketUtilsActivity | WebSocket 封装工具 |
 | NanoActivity | NanoHTTPD 内嵌 HTTP 服务器 |
-| NettyActivity | Netty TCP 网络框架 |
-| SocketActivity | Java Socket TCP 通信 |
+
+---
+
+### module_websocket（WebSocket 示例）
+
+演示 WebSocket/TCP 通信库的使用，包含 OkHttp WebSocket、Java-WebSocket 和 Netty TCP 三种方案。
+
+| Activity | 功能 |
+|----------|------|
+| OkHttpWebSocketClientActivity | OkHttp WebSocket 普通版本（连接外部服务器） |
+| OkHttpWebSocketClientRxActivity | OkHttp WebSocket RxJava 封装版本 |
+| JavaWebSocketClientActivity | Java-WebSocket 普通版本（启动本地服务端 + 连接） |
+| JavaWebSocketClientRxActivity | Java-WebSocket RxJava 封装版本 |
+| NettyWebSocketClientActivity | Netty TCP 普通版本（启动本地服务端 + 连接） |
+| NettyWebSocketClientRxActivity | Netty TCP RxJava 封装版本 |
+
+服务端 Service：
+
+| Service | 功能 | 默认端口 |
+|---------|------|----------|
+| JavaWebSocketServerService | Java-WebSocket 服务端 | 5566 |
+| NettyWebSocketServerService | Netty TCP 服务端 | 5567 |
 
 ---
 

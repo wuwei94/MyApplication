@@ -93,9 +93,6 @@ class NetWorkActivity : RouterRecyclerActivity() {
         routerItems.add(
             RouterItem("NanoActivity", RouterPath.Network.Socket.Nano)
         )
-        routerItems.add(
-            RouterItem("NettyActivity", RouterPath.Network.Socket.Netty)
-        )
         return routerItems
     }
 }
