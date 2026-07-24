@@ -62,7 +62,7 @@ class _SizeTransitionDemoViewState extends State<SizeTransitionDemoView>
             SizeTransition(
               sizeFactor: _animation,
               axis: Axis.vertical,
-              axisAlignment: -1,
+              alignment: -1,
               child: Center(
                 child: Container(
                   width: 200,

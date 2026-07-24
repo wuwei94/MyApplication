@@ -58,10 +58,8 @@ int _afterBlock(String source, String name) {
   return -1;
 }
 
-void out(String s) => // ignore: avoid_print
-    print('[apply_compile_sdk] $s');
+void out(String s) => print('[apply_compile_sdk] $s');
 void err(String s) {
-  // ignore: avoid_print
   print('[apply_compile_sdk] $s');
   exit(1);
 }
