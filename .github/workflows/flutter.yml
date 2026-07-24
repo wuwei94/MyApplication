@@ -52,6 +52,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Patch flutter_keyboard_visibility compileSdkVersion
+        run: dart tools/android/apply_compile_sdk.dart
+
       - name: Build Flutter Android module
         run: flutter build aar --no-pub
 
