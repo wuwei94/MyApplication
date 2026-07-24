@@ -1,19 +1,12 @@
 package com.example.william.my.core.volley.request
 
-import com.android.volley.NetworkResponse
-import com.android.volley.ParseError
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyLog
-import com.android.volley.toolbox.HttpHeaderParser
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
-import java.nio.charset.Charset
 
 /**
- * Make a request with JSON body and return a parsed object from JSON.
+ * JSON body 请求，将 [jsonObject] 序列化后作为请求体发送。
  *
  * @param url URL of the request to make
  * @param clazz Relevant class object, for Gson's reflection
@@ -23,14 +16,12 @@ import java.nio.charset.Charset
 class JsonRequest<T>(
     method: Int,
     url: String,
-    private val clazz: Class<T>,
-    private val headers: MutableMap<String, String>?,
+    clazz: Class<T>,
+    headers: MutableMap<String, String>?,
     private val jsonObject: JSONObject?,
-    private val listener: Response.Listener<T>,
+    listener: Response.Listener<T>,
     errorListener: Response.ErrorListener
-) : Request<T>(method, url, errorListener) {
-
-    override fun getHeaders(): MutableMap<String, String> = headers ?: super.getHeaders()
+) : BaseGsonRequest<T>(method, url, clazz, headers, listener, errorListener) {
 
     override fun getBody(): ByteArray? {
         try {
@@ -42,28 +33,5 @@ class JsonRequest<T>(
             )
             return null
         }
-    }
-
-    override fun deliverResponse(response: T) = listener.onResponse(response)
-
-    override fun parseNetworkResponse(response: NetworkResponse): Response<T> {
-        return try {
-            val json = String(
-                response.data,
-                Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-            )
-            Response.success(
-                gson.fromJson(json, clazz),
-                HttpHeaderParser.parseCacheHeaders(response)
-            )
-        } catch (e: UnsupportedEncodingException) {
-            Response.error(ParseError(e))
-        } catch (e: JsonSyntaxException) {
-            Response.error(ParseError(e))
-        }
-    }
-
-    companion object {
-        private val gson = Gson()
     }
 }

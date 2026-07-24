@@ -5,7 +5,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.toolbox.BaseHttpStack
 import com.android.volley.toolbox.HttpResponse
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -41,55 +41,55 @@ class OkHttp3Stack(
         request: Request<*>,
         additionalHeaders: Map<String, String>
     ): HttpResponse {
-        val okRequestBuilder = okhttp3.Request.Builder()
-
-        // ── URL + Query 参数 ──
-        val urlBuilder = HttpUrl.parse(request.url)?.newBuilder()
-            ?: throw IOException("Invalid URL: ${request.url}")
-
-        if (request.method == Request.Method.GET || request.method == Request.Method.DELETE) {
-            request.params?.forEach { (key, value) ->
-                urlBuilder.addQueryParameter(key, value)
-            }
+        // ── URL ──
+        val httpUrl = try {
+            request.url.toHttpUrl()
+        } catch (e: IllegalArgumentException) {
+            throw IOException("Invalid URL: ${request.url}", e)
         }
-        okRequestBuilder.url(urlBuilder.build())
+        val requestBuilder = okhttp3.Request.Builder().url(httpUrl)
 
-        // ── Headers（framework 传入的附加 headers + request 自身 headers）──
+        // ── Headers（framework 附加 headers + request 自身 headers）──
         additionalHeaders.forEach { (key, value) ->
-            okRequestBuilder.header(key, value)
+            requestBuilder.addHeader(key, value)
         }
         request.headers?.forEach { (key, value) ->
-            okRequestBuilder.header(key, value)
+            requestBuilder.addHeader(key, value)
         }
 
-        // ── Body ──
+        // ── Method + Body ──
+        val method = methodToString(request.method)
         val body = request.body
         if (body != null) {
-            val content = body.body ?: byteArrayOf()
-            val mediaType = body.contentType?.toMediaTypeOrNull()
-            okRequestBuilder.method(request.methodName, content.toRequestBody(mediaType))
+            val mediaType = request.bodyContentType?.toMediaTypeOrNull()
+            requestBuilder.method(method, body.toRequestBody(mediaType))
         } else {
-            okRequestBuilder.method(request.methodName, null)
+            requestBuilder.method(method, null)
         }
 
         // ── 执行请求 ──
-        val response = client.newCall(okRequestBuilder.build()).execute()
+        val response = client.newCall(requestBuilder.build()).execute()
 
         // ── 转换为 Volley HttpResponse ──
-        val responseHeaders = mutableListOf<com.android.volley.Header>()
-        for ((name, value) in response.headers) {
-            responseHeaders.add(com.android.volley.Header(name, value))
+        val responseHeaders = response.headers.map { (name, value) ->
+            com.android.volley.Header(name, value)
         }
-
         val responseBody = response.body
         val inputStream = responseBody?.byteStream() ?: ByteArrayInputStream(byteArrayOf())
-        val contentLength = responseBody?.contentLength() ?: 0L
+        val contentLength = responseBody?.contentLength()?.toInt() ?: 0
 
-        return HttpResponse(
-            response.code,
-            responseHeaders,
-            contentLength,
-            inputStream
-        )
+        return HttpResponse(response.code, responseHeaders, contentLength, inputStream)
+    }
+
+    private fun methodToString(method: Int): String = when (method) {
+        Request.Method.GET -> "GET"
+        Request.Method.POST -> "POST"
+        Request.Method.PUT -> "PUT"
+        Request.Method.DELETE -> "DELETE"
+        Request.Method.HEAD -> "HEAD"
+        Request.Method.PATCH -> "PATCH"
+        Request.Method.OPTIONS -> "OPTIONS"
+        Request.Method.TRACE -> "TRACE"
+        else -> "GET"
     }
 }

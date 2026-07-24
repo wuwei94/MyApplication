@@ -7,10 +7,12 @@ android {
 }
 
 dependencies {
+    // Gson
     api(libs.google.gson)
-    //volley
+    // Volley
     api(libs.volley)
-    //okhttp
+    // OkHttp3
     api(libs.okhttp)
+    // OkHttp3 Logging
     api(libs.okhttp.logging)
 }
