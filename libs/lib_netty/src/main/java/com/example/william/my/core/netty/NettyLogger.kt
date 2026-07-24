@@ -1,24 +1,16 @@
 package com.example.william.my.core.netty
 
-import android.util.Log
+import org.slf4j.LoggerFactory
 
 object NettyLogger {
 
-    private const val TAG = "Netty"
-
-    private var isDebug = false
-
-    fun setDebug(enable: Boolean) {
-        isDebug = enable
-    }
+    private val logger = LoggerFactory.getLogger("Netty")
 
     fun debug(msg: String) {
-        if (isDebug) {
-            Log.d(TAG, msg)
-        }
+        logger.debug(msg)
     }
 
     fun error(msg: String, t: Throwable? = null) {
-        Log.e(TAG, msg, t)
+        logger.error(msg, t)
     }
 }

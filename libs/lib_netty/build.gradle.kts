@@ -14,6 +14,8 @@ android {
 dependencies {
     // Netty
     api(libs.netty)
+    // SLF4J (Netty logging)
+    implementation(libs.slf4j)
     // RxJava
     api(libs.rxandroid)
 }
