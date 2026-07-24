@@ -1,4 +1,4 @@
-package com.example.william.my.module.network.activity.download
+package com.example.william.my.module.okhttp.download
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -22,7 +22,7 @@ import java.io.File
  * https://square.github.io/okhttp
  * https://github.com/square/okhttp
  */
-@Route(path = RouterPath.Network.Download.OkHttpDownload)
+@Route(path = RouterPath.OkHttp.Download.OkHttpDownload)
 class OkhttpDownloadActivity : BasicResponseActivity() {
 
     override fun onResponseClick(view: View) {

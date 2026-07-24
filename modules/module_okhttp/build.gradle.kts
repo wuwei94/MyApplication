@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.network"
+    namespace = "com.example.william.my.module.okhttp"
 }
 
 dependencies {
@@ -14,7 +14,7 @@ dependencies {
 
     implementation(project(":basic:basic_repository"))
 
-    implementation(project(":libs:lib_nanohttpd"))
-    implementation(project(":libs:lib_ktor"))
-    implementation(project(":libs:lib_volley"))
+    implementation(project(":libs:lib_okhttp"))
+    implementation(project(":libs:lib_retrofit"))
+    implementation(project(":libs:lib_download"))
 }

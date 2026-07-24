@@ -38,59 +38,6 @@ class NetWorkActivity : RouterRecyclerActivity() {
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("OkHttpActivity", RouterPath.Network.OkHttp.OkHttp)
-        )
-        routerItems.add(
-            RouterItem("OkHttpHelperActivity", RouterPath.Network.OkHttp.OkHttpHelper)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitActivity", RouterPath.Network.Retrofit.Retrofit)
-        )
-        routerItems.add(
-            RouterItem("RetrofitHelperActivity", RouterPath.Network.Retrofit.RetrofitHelper)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitRxJavaActivity", RouterPath.Network.Retrofit.RetrofitRxJava)
-        )
-        routerItems.add(
-            RouterItem(
-                "RetrofitRxJavaHelperActivity",
-                RouterPath.Network.Retrofit.RetrofitRxJavaHelper
-            )
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RxRetrofitActivity", RouterPath.Network.Retrofit.RxRetrofit)
-        )
-
-        //routerItems.add(
-        //    RouterItem("", "")
-        //)
-        //routerItems.add(
-        //    RouterItem("OkHttpDownloadActivity", RouterPath.Network.Download.OkHttpDownload)
-        //)
-        //routerItems.add(
-        //    RouterItem("RetrofitDownloadActivity", RouterPath.Network.Download.RetrofitDownload)
-        //)
-        //routerItems.add(
-        //    RouterItem("RxDownloadActivity", RouterPath.Network.Download.RxDownload)
-        //)
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
             RouterItem("NanoActivity", RouterPath.Network.Socket.Nano)
         )
         return routerItems

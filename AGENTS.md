@@ -27,7 +27,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 
 | 文档 | 内容 |
 |------|------|
-| docs/modules.md | 功能模块详情（19 个模块，每个模块的 Activity 列表） |
+| docs/modules.md | 功能模块详情（20 个模块，每个模块的 Activity 列表） |
 | docs/libs.md | 库封装详情（12 个库封装的说明） |
 | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
 | docs/conventions.md | 关键约定（路由、模块结构、全局依赖、Activity 基类、构建命令） |

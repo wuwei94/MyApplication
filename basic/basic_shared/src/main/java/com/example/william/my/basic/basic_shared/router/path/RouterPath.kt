@@ -172,6 +172,40 @@ object RouterPath {
     // 工具 / 网络 / 第三方库
     // ═══════════════════════════════════════════
 
+    // OkHttp / Retrofit / Download
+    object OkHttp {
+        private const val PATH = "/OkHttp"
+
+        const val Main = "${PATH}/Main"
+
+        object OkHttpLib {
+            private const val OKHTTP_PATH = "${PATH}/OkHttpLib"
+
+            const val OkHttp = "${OKHTTP_PATH}/OkHttp"
+            const val OkHttpHelper = "${OKHTTP_PATH}/OkHttpHelper"
+        }
+
+        object Retrofit {
+            private const val RETROFIT_PATH = "${PATH}/Retrofit"
+
+            const val Retrofit = "${RETROFIT_PATH}/Retrofit"
+            const val RetrofitHelper = "${RETROFIT_PATH}/RetrofitHelper"
+
+            const val RetrofitRxJava = "${RETROFIT_PATH}/RetrofitRxJava"
+            const val RetrofitRxJavaHelper = "${RETROFIT_PATH}/RetrofitRxJavaHelper"
+
+            const val RxRetrofit = "${RETROFIT_PATH}/RxRetrofit"
+        }
+
+        object Download {
+            private const val DOWNLOAD_PATH = "${PATH}/Download"
+
+            const val OkHttpDownload = "${DOWNLOAD_PATH}/OkHttpDownload"
+            const val RetrofitDownload = "${DOWNLOAD_PATH}/RetrofitDownload"
+            const val RxDownload = "${DOWNLOAD_PATH}/RxDownload"
+        }
+    }
+
     // 工具类
     object Utils {
         private const val Utils = "/Utils"
@@ -208,33 +242,6 @@ object RouterPath {
 
             const val Volley = "${VOLLEY_PATH}/Volley"
             const val VolleyHelper = "${VOLLEY_PATH}/VolleyHelper"
-        }
-
-        object OkHttp {
-            private const val OKHTTP_PATH = "${PATH}/OkHttp"
-
-            const val OkHttp = "${OKHTTP_PATH}/OkHttp"
-            const val OkHttpHelper = "${OKHTTP_PATH}/OkHttpHelper"
-        }
-
-        object Retrofit {
-            private const val RETROFIT_PATH = "${PATH}/Retrofit"
-
-            const val Retrofit = "${RETROFIT_PATH}/Retrofit"
-            const val RetrofitHelper = "${RETROFIT_PATH}/RetrofitHelper"
-
-            const val RetrofitRxJava = "${RETROFIT_PATH}/RetrofitRxJava"
-            const val RetrofitRxJavaHelper = "${RETROFIT_PATH}/RetrofitRxJavaHelper"
-
-            const val RxRetrofit = "${RETROFIT_PATH}/RxRetrofit"
-        }
-
-        object Download {
-            private const val DOWNLOAD_PATH = "${PATH}/Download"
-
-            const val OkHttpDownload = "${DOWNLOAD_PATH}/OkHttpDownload"
-            const val RetrofitDownload = "${DOWNLOAD_PATH}/RetrofitDownload"
-            const val RxDownload = "${DOWNLOAD_PATH}/RxDownload"
         }
 
         object Socket {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".HttpClientActivity" />
+
+        <activity android:name=".okhttp.OkHttpActivity" />
+        <activity android:name=".okhttp.OkHttpHelperActivity" />
+
+        <activity android:name=".retrofit.RetrofitActivity" />
+        <activity android:name=".retrofit.RetrofitHelperActivity" />
+
+        <activity android:name=".retrofit.RetrofitRxJavaActivity" />
+        <activity android:name=".retrofit.RetrofitRxJavaHelperActivity" />
+
+        <activity android:name=".retrofit.RxRetrofitActivity" />
+
+        <activity android:name=".download.OkhttpDownloadActivity" />
+        <activity android:name=".download.RetrofitDownloadActivity" />
+        <activity android:name=".download.RxDownloadActivity" />
+    </application>
+
+</manifest>

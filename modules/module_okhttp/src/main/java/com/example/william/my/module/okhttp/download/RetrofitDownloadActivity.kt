@@ -1,4 +1,4 @@
-package com.example.william.my.module.network.activity.download
+package com.example.william.my.module.okhttp.download
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -25,7 +25,7 @@ import java.io.File
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.Network.Download.RetrofitDownload)
+@Route(path = RouterPath.OkHttp.Download.RetrofitDownload)
 class RetrofitDownloadActivity : BasicResponseActivity() {
 
     override fun onResponseClick(view: View) {

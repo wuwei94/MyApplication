@@ -113,6 +113,8 @@ include(":modules:module_widget")
 include(":modules:module_utils")
 // 网络库
 include(":modules:module_network")
+// OkHttp
+include(":modules:module_okhttp")
 // WebSocket
 include(":modules:module_websocket")
 // 第三方库

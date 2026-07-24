@@ -15,6 +15,7 @@
 | module_tab | Tab 导航 | TabActivity | /Tab |
 | module_utils | 工具类 | AndroidUtilsActivity | /Utils |
 | module_network | 网络库 | NetWorkActivity | /Network |
+| module_okhttp | OkHttp / Retrofit / Download | HttpClientActivity | /OkHttp |
 | module_websocket | WebSocket 示例 | WebSocketActivity | /WebSocket |
 | module_opensource | 第三方库 | OpenSourceActivity | /Opensource |
 | module_arch | 架构模式 | ArchActivity | /Arch |
@@ -155,6 +156,16 @@
 | HttpURLActivity | HttpURLConnection 原生网络请求 |
 | VolleyActivity | Volley HTTP 库 |
 | VolleyHelperActivity | Volley 封装工具 |
+| NanoActivity | NanoHTTPD 内嵌 HTTP 服务器 |
+
+---
+
+### module_okhttp（OkHttp / Retrofit / Download）
+
+演示 OkHttp、Retrofit 网络库和文件下载功能。
+
+| Activity | 功能 |
+|----------|------|
 | OkHttpActivity | OkHttp HTTP 库 |
 | OkHttpHelperActivity | OkHttp 封装工具 |
 | RetrofitActivity | Retrofit HTTP 库 |
@@ -165,7 +176,6 @@
 | OkhttpDownloadActivity | OkHttp 文件下载 |
 | RetrofitDownloadActivity | Retrofit 文件下载 |
 | RxDownloadActivity | RxDownload 响应式下载 |
-| NanoActivity | NanoHTTPD 内嵌 HTTP 服务器 |
 
 ---
 

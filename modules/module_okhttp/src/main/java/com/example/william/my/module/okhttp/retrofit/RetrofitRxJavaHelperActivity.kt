@@ -1,4 +1,4 @@
-package com.example.william.my.module.network.activity.retrofit
+package com.example.william.my.module.okhttp.retrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repository.api.NetworkApi
@@ -17,7 +17,7 @@ import retrofit2.Retrofit
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.Network.Retrofit.RetrofitRxJavaHelper)
+@Route(path = RouterPath.OkHttp.Retrofit.RetrofitRxJavaHelper)
 class RetrofitRxJavaHelperActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {

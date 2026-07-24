@@ -84,6 +84,7 @@ internal fun Project.configureFeatureAndroid(
 
             "implementation"(project(":modules:module_utils"))
             "implementation"(project(":modules:module_network"))
+            "implementation"(project(":modules:module_okhttp"))
             "implementation"(project(":modules:module_websocket"))
             "implementation"(project(":modules:module_opensource"))
 
