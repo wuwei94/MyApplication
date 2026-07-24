@@ -54,27 +54,19 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
             .createWebSocket(serverUrl)
             .subscribe(object : OkHttpWebSocketObserver() {
                 override fun onOpen(webSocket: WebSocket) {
-                    runOnUiThread {
-                        appendLog("【连接】已连接")
-                    }
+                    appendLogAccent("【连接】已连接")
                 }
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
-                    runOnUiThread {
-                        appendLog("【消息】收到：$text")
-                    }
-                }
-
-                override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                    runOnUiThread {
-                        appendLog("【消息】收到字节：$bytes")
-                    }
+                    appendLogAccent("【消息】收到：$text")
                 }
 
                 override fun onClosed(code: Int, reason: String) {
-                    runOnUiThread {
-                        appendLog("【关闭】已关闭：code=$code reason=$reason")
-                    }
+                    appendLogAccent("【关闭】已关闭：code=$code reason=$reason")
+                }
+
+                override fun onError(exception: Exception) {
+                    appendLogAccent("【错误】${exception.message}")
                 }
             })
     }
@@ -90,7 +82,7 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
     }
 
     private fun disconnect() {
-        OkHttpWebSocketClientRx.cancel(serverUrl)
+        OkHttpWebSocketClientRx.close(serverUrl)
         appendLog("【断开】已断开连接")
     }
 }

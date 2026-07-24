@@ -104,11 +104,6 @@ object OkHttpWebSocketClient {
                 OkHttpWebSocketLogger.debug("Client onMessage: $bytes")
             }
 
-            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                mainHandler.post { listener?.onClosing(webSocket, code, reason) }
-                OkHttpWebSocketLogger.debug("Client onClosing: code=$code reason=$reason")
-            }
-
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 webSocketMap.remove(url)
                 mainHandler.post { listener?.onClosed(webSocket, code, reason) }

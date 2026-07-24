@@ -108,6 +108,22 @@ object JavaWebSocketClientRx {
         disposableMap.remove(url)
     }
 
+    fun cancel(url: String) {
+        getWebSocket(url)?.let { client ->
+            try {
+                client.closeConnection(
+                    org.java_websocket.framing.CloseFrame.ABNORMAL_CLOSE,
+                    "Client cancel"
+                )
+            } catch (e: Exception) {
+                JavaWebSocketLogger.error("cancel failed: $url", e)
+            }
+        }
+        webSocketMap.remove(url)
+        disposableMap[url]?.dispose()
+        disposableMap.remove(url)
+    }
+
     fun subscribe(url: String): Disposable {
         disposableMap[url]?.dispose()
         val disposable = createWebSocket(url).subscribe()

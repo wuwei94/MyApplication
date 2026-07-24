@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".nano.NanoActivity" />
-
-        <service android:name=".nano.NanoService" />
+        <service android:name=".nano.NanoServerService" />
+        <service android:name=".javaws.JavaWebSocketServerService" />
+        <service android:name=".netty.NettyWebSocketServerService" />
     </application>
 
 </manifest>

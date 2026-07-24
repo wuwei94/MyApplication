@@ -50,48 +50,31 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
     }
 
     private fun connect() {
-        if (OkHttpWebSocketClient.isConnected(serverUrl)) {
-            appendLog("【状态】已连接到服务器")
-            return
-        }
-
         appendLog("【连接】正在连接 $serverUrl ...")
         OkHttpWebSocketClient.connect(
             url = serverUrl,
             listener = object : OkHttpWebSocketClientListener() {
                 override fun onOpen(webSocket: WebSocket, response: Response) {
                     runOnUiThread {
-                        appendLog("【连接】已连接，状态码：${response.code}")
+                        appendLogAccent("【连接】已连接")
                     }
                 }
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
                     runOnUiThread {
-                        appendLog("【消息】收到：$text")
-                    }
-                }
-
-                override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                    runOnUiThread {
-                        appendLog("【消息】收到字节：$bytes")
-                    }
-                }
-
-                override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                    runOnUiThread {
-                        appendLog("【关闭】正在关闭：code=$code reason=$reason")
+                        appendLogAccent("【消息】收到：$text")
                     }
                 }
 
                 override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                     runOnUiThread {
-                        appendLog("【关闭】已关闭：code=$code reason=$reason")
+                        appendLogAccent("【关闭】已关闭：code=$code reason=$reason")
                     }
                 }
 
                 override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                     runOnUiThread {
-                        appendLog("【错误】${t.message}")
+                        appendLogAccent("【错误】${t.message}")
                     }
                 }
             }
@@ -99,11 +82,6 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
     }
 
     private fun sendMessage() {
-        if (!OkHttpWebSocketClient.isConnected(serverUrl)) {
-            appendLog("【状态】未连接，无法发送消息")
-            return
-        }
-
         val message = "Hello from Client!"
         val success = OkHttpWebSocketClient.send(serverUrl, message)
         if (success) {
@@ -114,11 +92,6 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
     }
 
     private fun disconnect() {
-        if (!OkHttpWebSocketClient.isConnected(serverUrl)) {
-            appendLog("【状态】未连接")
-            return
-        }
-
         OkHttpWebSocketClient.close(serverUrl)
         appendLog("【断开】已断开连接")
     }

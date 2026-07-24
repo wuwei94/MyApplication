@@ -41,10 +41,6 @@ class OkHttpWebSocketOnSubscribe(
                 OkHttpWebSocketLogger.debug("onMessageByteString: $bytes")
             }
 
-            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                OkHttpWebSocketLogger.debug("onClosing: code=$code reason=$reason")
-            }
-
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 if (!emitter.isDisposed) {
                     emitter.onNext(OkHttpWebSocketInfo.Closed(code, reason))
@@ -59,7 +55,7 @@ class OkHttpWebSocketOnSubscribe(
                     OkHttpWebSocketLogger.debug("onFailure body: ${it.body?.string()}")
                 }
                 if (!emitter.isDisposed) {
-                    emitter.onError(t)
+                    emitter.onNext(OkHttpWebSocketInfo.Error(t as Exception))
                 }
             }
         })

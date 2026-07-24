@@ -114,6 +114,20 @@ object OkHttpWebSocketClientRx {
         cancel(request.url.toString())
     }
 
+    fun close(url: String, code: Int = 1000, reason: String = "") {
+        getWebSocket(url)?.let { webSocket ->
+            try {
+                webSocket.close(code, reason)
+            } catch (e: Exception) {
+                OkHttpWebSocketLogger.error("close failed: $url", e)
+            }
+        }
+    }
+
+    fun close(request: Request, code: Int = 1000, reason: String = "") {
+        close(request.url.toString(), code, reason)
+    }
+
     fun subscribe(url: String): Disposable {
         disposableMap[url]?.dispose()
         val disposable = createWebSocket(url).subscribe()

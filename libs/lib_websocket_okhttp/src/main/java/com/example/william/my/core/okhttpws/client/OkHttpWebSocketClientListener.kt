@@ -34,13 +34,6 @@ abstract class OkHttpWebSocketClientListener {
     }
 
     /**
-     * 连接正在关闭时回调
-     */
-    open fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-        OkHttpWebSocketLogger.debug("Client onClosing: code=$code reason=$reason")
-    }
-
-    /**
      * 连接已关闭时回调
      */
     open fun onClosed(webSocket: WebSocket, code: Int, reason: String) {

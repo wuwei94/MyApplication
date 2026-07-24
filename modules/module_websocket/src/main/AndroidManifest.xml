@@ -13,12 +13,6 @@
         <activity android:name=".activity.javaws.JavaWebSocketClientRxActivity"/>
         <activity android:name=".activity.netty.NettyWebSocketClientActivity"/>
         <activity android:name=".activity.netty.NettyWebSocketClientRxActivity"/>
-        <service
-            android:name=".service.JavaWebSocketServerService"
-            android:exported="false" />
-        <service
-            android:name=".service.NettyWebSocketServerService"
-            android:exported="false" />
     </application>
 
 </manifest>

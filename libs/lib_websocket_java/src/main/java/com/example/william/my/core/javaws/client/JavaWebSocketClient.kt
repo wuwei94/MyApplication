@@ -116,6 +116,21 @@ object JavaWebSocketClient {
         clients.remove(url)
     }
 
+    fun cancel(url: String) {
+        cancelReconnect(url)
+        clients[url]?.let { client ->
+            try {
+                client.closeConnection(
+                    org.java_websocket.framing.CloseFrame.ABNORMAL_CLOSE,
+                    "Client cancel"
+                )
+            } catch (e: Exception) {
+                JavaWebSocketLogger.error("cancel failed: $url", e)
+            }
+        }
+        clients.remove(url)
+    }
+
     fun closeAll() {
         reconnectRunnables.keys.forEach { cancelReconnect(it) }
         reconnectRunnables.clear()

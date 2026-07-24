@@ -13,4 +13,8 @@ dependencies {
 
     // NanoHTTPD
     implementation(project(":libs:lib_nanohttpd"))
+
+    // WebSocket
+    implementation(project(":libs:lib_websocket_java"))
+    implementation(project(":libs:lib_netty"))
 }

@@ -8,4 +8,5 @@ sealed class OkHttpWebSocketInfo {
     data class TextMessage(val webSocket: WebSocket, val text: String) : OkHttpWebSocketInfo()
     data class BytesMessage(val webSocket: WebSocket, val bytes: ByteString) : OkHttpWebSocketInfo()
     data class Closed(val code: Int, val reason: String) : OkHttpWebSocketInfo()
+    data class Error(val exception: Exception) : OkHttpWebSocketInfo()
 }

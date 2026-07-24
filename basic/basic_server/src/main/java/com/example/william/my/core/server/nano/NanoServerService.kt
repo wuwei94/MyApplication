@@ -7,7 +7,7 @@ import android.os.IBinder
 import com.example.william.my.basic.basic_shared.utils.Utils
 import java.io.IOException
 
-class NanoService : Service() {
+class NanoServerService : Service() {
 
     private var nanoServer: NanoServer? = null
 
@@ -48,15 +48,15 @@ class NanoService : Service() {
 
     companion object {
 
-        private val TAG = NanoService::class.java.simpleName
+        private val TAG = NanoServerService::class.java.simpleName
 
         fun startService(context: Context) {
-            val intent = Intent(context, NanoService::class.java)
+            val intent = Intent(context, NanoServerService::class.java)
             context.startService(intent)
         }
 
         fun stopService(context: Context) {
-            val intent = Intent(context, NanoService::class.java)
+            val intent = Intent(context, NanoServerService::class.java)
             context.stopService(intent)
         }
     }

@@ -7,7 +7,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.netty.client.NettyClient
 import com.example.william.my.core.netty.client.NettyClientHandler
 import com.example.william.my.core.netty.server.NettyServer
-import com.example.william.my.module.websocket.service.NettyWebSocketServerService
+import com.example.william.my.core.server.ServerManager
 import com.example.william.my.module.websocket.utils.NetworkUtils
 
 /**
@@ -23,7 +23,6 @@ class NettyWebSocketClientActivity : BasicResponseActivity() {
     private val host: String get() = NetworkUtils.getIPAddress(true)
     private val port: Int = 5567
     private val serverUrl: String get() = "$host:$port"
-    private var serverStarted = false
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -33,7 +32,6 @@ class NettyWebSocketClientActivity : BasicResponseActivity() {
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
             "启动服务端（Start Server）",
-            "广播消息（Broadcast Message）",
             "停止服务端（Stop Server）",
             "连接服务器（Connect）",
             "发送消息（Send Message）",
@@ -45,46 +43,26 @@ class NettyWebSocketClientActivity : BasicResponseActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> startServer()
-            1 -> broadcastMessage()
-            2 -> stopServer()
-            3 -> connect()
-            4 -> sendMessage()
-            5 -> disconnect()
+            1 -> stopServer()
+            2 -> connect()
+            3 -> sendMessage()
+            4 -> disconnect()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         NettyClient.disconnect()
-        if (serverStarted) {
-            NettyWebSocketServerService.stopService(this)
-        }
+        ServerManager.stopNettyServer(this)
     }
 
     private fun startServer() {
-        NettyWebSocketServerService.startService(this)
-        serverStarted = true
+        ServerManager.startNettyServer(this)
         appendLog("【服务端】已启动，地址：$serverUrl")
     }
 
-    private fun broadcastMessage() {
-        if (!NettyServer.isRunning()) {
-            appendLog("【状态】服务端未运行，无法广播")
-            return
-        }
-
-        val message = "Hello from Server!"
-        NettyServer.broadcast(message)
-        appendLog("【广播】已发送：$message")
-    }
-
     private fun stopServer() {
-        if (!serverStarted) {
-            appendLog("【状态】服务端未启动")
-            return
-        }
-        NettyWebSocketServerService.stopService(this)
-        serverStarted = false
+        ServerManager.stopNettyServer(this)
         appendLog("【服务端】已停止")
     }
 

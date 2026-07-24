@@ -14,6 +14,7 @@ abstract class OkHttpWebSocketObserver : DisposableObserver<OkHttpWebSocketInfo>
             is OkHttpWebSocketInfo.TextMessage -> onMessage(info.webSocket, info.text)
             is OkHttpWebSocketInfo.BytesMessage -> onMessage(info.webSocket, info.bytes)
             is OkHttpWebSocketInfo.Closed -> onClosed(info.code, info.reason)
+            is OkHttpWebSocketInfo.Error -> onError(info.exception)
         }
     }
 
@@ -31,4 +32,5 @@ abstract class OkHttpWebSocketObserver : DisposableObserver<OkHttpWebSocketInfo>
     protected open fun onMessage(webSocket: WebSocket, text: String) {}
     protected open fun onMessage(webSocket: WebSocket, bytes: ByteString) {}
     protected open fun onClosed(code: Int, reason: String) {}
+    protected open fun onError(exception: Exception) {}
 }
