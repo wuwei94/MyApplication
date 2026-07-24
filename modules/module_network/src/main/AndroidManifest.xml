@@ -3,13 +3,11 @@
 
     <application>
         <activity android:name=".NetWorkActivity" />
+        <activity android:name=".activity.httpurl.HttpURLActivity" />
+        <activity android:name=".activity.volley.VolleyActivity" />
+
         <activity android:name=".activity.ktor.KtorActivity" />
         <activity android:name=".activity.ktor.KtorUtilsActivity" />
-
-        <activity android:name=".activity.httpurl.HttpURLActivity" />
-
-        <activity android:name=".activity.volley.VolleyActivity" />
-        <activity android:name=".activity.volley.VolleyHelperActivity" />
     </application>
 
 </manifest>

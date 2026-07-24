@@ -1,38 +1,36 @@
 package com.example.william.my.module.network.activity.httpurl
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.utils.AppExecutorsHelper
-import com.example.william.my.module.network.utils.HttpURLUtils
+import com.example.william.my.core.httpurl.HttpURLUtils
 import org.json.JSONObject
 
 /**
- * setDoOutput() 和 setDoInput()：
- * 设置是否向 HttpURLConnection 输出与读取。
- * setDoOutput()默认是false，setDoInput()默认是true
- * setUseCaches()设置缓存，POST请求不能使用缓存
+ * HttpURLConnection 示例。
  *
- *
- * InputStream & OutputStream 输入流与输出流
- * 转换流
- * InputStreamReader & OutputStreamWriter 字符与节流转换
- * 缓冲流
- * 关闭了缓冲区对象实际也关闭了与缓冲区关联的流对象
- * BufferedReader & BufferedWriter 字符缓冲流
- * BufferedInputStream & BufferedOutputStream 字节缓冲流
- * 文件流
- * FileReader & FileWriter 字符文件流
- * FileInputStream & FileOutputStream 字节文件流
+ * 核心特性：
+ * - setDoOutput() 默认 false，POST 请求必须设为 true
+ * - setDoInput() 默认 true，用于读取响应
+ * - setUseCaches() 设置缓存，POST 请求不能使用缓存
+ * - connectTimeout / readTimeout 控制连接和读取超时
+ * - disconnect() 释放连接资源
  */
 @Route(path = RouterPath.Network.HttpURL.HttpURL)
-class HttpURLActivity : BasicRecyclerActivity() {
+class HttpURLActivity : BasicResponseActivity() {
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showResponse("HttpURLConnection 示例\n\n支持 POST Form（表单提交）和 POST Json（JSON 提交）\n\n点击下方按钮发起请求，日志会累积显示在上方")
+    }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "HttpURL postForm",
-            "HttpURL postJson",
+            "HttpURL postForm（表单提交）",
+            "HttpURL postJson（JSON 提交）",
         )
     }
 
@@ -62,10 +60,10 @@ class HttpURLActivity : BasicRecyclerActivity() {
         HttpURLUtils.postForm(
             Constants.Url_Login, params,
             listener = {
-                showResponse(it)
+                appendLog("【postForm】成功：$it")
             },
             errorListener = {
-                showFailure(it?.message)
+                appendLog("【postForm】失败：${it?.message}")
             })
     }
 
@@ -77,10 +75,10 @@ class HttpURLActivity : BasicRecyclerActivity() {
         HttpURLUtils.postJson(
             Constants.Url_Login, jsonObject,
             listener = {
-                showResponse(it)
+                appendLog("【postJson】成功：$it")
             },
             errorListener = {
-                showFailure(it?.message)
+                appendLog("【postJson】失败：${it?.message}")
             })
     }
 }

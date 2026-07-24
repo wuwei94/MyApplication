@@ -40,13 +40,11 @@ class KtorUtilsActivity : BasicRecyclerActivity() {
                 when {
                     result.isSuccess -> {
                         val data = result.getOrNull()
-                        // 更新UI或处理数据
                         showResponse(data?.string() ?: "")
                     }
 
                     result.isFailure -> {
                         val error = result.exceptionOrNull()
-                        // 处理错误（如提示用户）
                         showFailure(error?.message ?: "Unknown error")
                     }
                 }

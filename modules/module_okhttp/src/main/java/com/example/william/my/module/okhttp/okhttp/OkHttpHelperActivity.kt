@@ -18,7 +18,7 @@ import okio.IOException
  * https://square.github.io/okhttp
  * https://github.com/square/okhttp
  */
-@Route(path = RouterPath.OkHttp.OkHttp.OkHttpHelper)
+@Route(path = RouterPath.OkHttp.OkHttpLib.OkHttpHelper)
 class OkHttpHelperActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {

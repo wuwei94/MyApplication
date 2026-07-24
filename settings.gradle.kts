@@ -82,9 +82,13 @@ include(":basic:basic_repository")
 include(":basic:basic_server")
 
 include(":libs:lib_ktor")
+
+include(":libs:lib_httpurl")
 include(":libs:lib_volley")
+
 include(":libs:lib_okhttp")
 include(":libs:lib_retrofit")
+
 
 include(":libs:lib_websocket_okhttp")
 include(":libs:lib_websocket_java")

@@ -11,34 +11,19 @@ class NetWorkActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(
-            RouterItem("KtorActivity", RouterPath.Network.Ktor.Ktor)
-        )
-        routerItems.add(
-            RouterItem("KtorUtilsActivity", RouterPath.Network.Ktor.KtorUtils)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
             RouterItem("HttpURLActivity", RouterPath.Network.HttpURL.HttpURL)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
         )
         routerItems.add(
             RouterItem("VolleyActivity", RouterPath.Network.Volley.Volley)
         )
         routerItems.add(
-            RouterItem("VolleyHelperActivity", RouterPath.Network.Volley.VolleyHelper)
-        )
-
-        routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("NanoActivity", RouterPath.Server.Nano)
+            RouterItem("KtorActivity", RouterPath.Network.Ktor.Ktor)
+        )
+        routerItems.add(
+            RouterItem("KtorUtilsActivity", RouterPath.Network.Ktor.KtorUtils)
         )
         return routerItems
     }

@@ -2,44 +2,37 @@ package com.example.william.my.module.network.activity.volley
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.android.volley.Cache
-import com.android.volley.Network
-import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.BasicNetwork
-import com.android.volley.toolbox.DiskBasedCache
-import com.android.volley.toolbox.HurlStack
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.android.volley.VolleyError
+import com.example.william.my.basic.basic_repository.bean.LoginData
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.core.volley.builder.VolleyBuilder
+import com.example.william.my.core.volley.listener.VolleyListener
 import org.json.JSONObject
 
-
 /**
- * https://github.com/google/volley
- * https://developer.android.google.cn/training/volley
+ * Volley 示例。
+ *
+ * 核心特性：
+ * - RequestQueue 请求队列，自动管理线程和缓存
+ * - VolleyBuilder 链式构建请求：url() → clazz() → post() → build()
+ * - 自动线程管理，回调在主线程执行
+ * - 支持 GET/POST/PUT/DELETE，支持 Form 和 JSON 请求体
  */
 @Route(path = RouterPath.Network.Volley.Volley)
-class VolleyActivity : BasicRecyclerActivity() {
-
-    private var stringRequest: StringRequest? = null // Assume this exists.
-    private var jsonObjectRequest: JsonObjectRequest? = null // Assume this exists.
-
-    private var requestQueue: RequestQueue? = null // Assume this exists.
-
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Volley postForm",
-            "Volley postJson",
-        )
-    }
+class VolleyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        showResponse("Volley 示例\n\n基于 RequestQueue 的网络请求，自动管理线程\n\n支持 POST Form（表单提交）和 POST Json（JSON 提交）\n\n点击下方按钮发起请求，日志会累积显示在上方")
+    }
 
-        initRequest()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "Volley postForm（表单提交）",
+            "Volley postJson（JSON 提交）",
+        )
     }
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -50,26 +43,9 @@ class VolleyActivity : BasicRecyclerActivity() {
             }
 
             1 -> {
-                postJsonObject(Constants.Value_Username, Constants.Value_Password)
+                postJson(Constants.Value_Username, Constants.Value_Password)
             }
         }
-    }
-
-    private fun initRequest() {
-        // Instantiate the cache
-        val cache: Cache = DiskBasedCache(cacheDir, 1024 * 1024) // 1MB cap
-
-        // Set up the network to use HttpURLConnection as the HTTP client.
-        val network: Network = BasicNetwork(HurlStack())
-
-        // Instantiate the RequestQueue.
-        // requestQueue = Volley.newRequestQueue(this);
-
-        // Instantiate the RequestQueue with the cache and network.
-        requestQueue = RequestQueue(cache, network)
-
-        // Start the queue
-        requestQueue?.start()
     }
 
     private fun postForm(username: String, password: String) {
@@ -78,58 +54,40 @@ class VolleyActivity : BasicRecyclerActivity() {
             Constants.Key_Password to password
         )
 
-        // Request a string response from the provided URL.
-        stringRequest =
-            object : StringRequest(
-                Method.POST, Constants.Url_Login,
-                Response.Listener { response ->
-                    showResponse(response.toString())
-                },
-                Response.ErrorListener {
-                    showFailure(it.message)
+        VolleyBuilder<LoginData>()
+            .url(Constants.Url_Login)
+            .clazz(LoginData::class.java)
+            .addParams(params)
+            .post()
+            .build(this, object : VolleyListener<LoginData>() {
+                override fun onResponse(response: LoginData?) {
+                    appendLog("【postForm】成功：${response?.string()}")
                 }
-            ) {
-                override fun getParams(): Map<String, String> {
-                    return params
+
+                override fun onErrorResponse(error: VolleyError?) {
+                    appendLog("【postForm】失败：${error?.message}")
                 }
-            }
-
-        // Set the tag on the request.
-        stringRequest?.tag = TAG
-
-        // Add the request to the RequestQueue.
-        requestQueue?.add(stringRequest)
+            })
     }
 
-    private fun postJsonObject(username: String, password: String) {
+    private fun postJson(username: String, password: String) {
         val jsonObject = JSONObject()
             .put(Constants.Key_Username, username)
             .put(Constants.Key_Password, password)
 
-        // Request a string response from the provided URL.
-        jsonObjectRequest =
-            object : JsonObjectRequest(
-                Method.POST, Constants.Url_Login, jsonObject,
-                Response.Listener { response ->
-                    // Display the first 500 characters of the response string.
-                    showResponse(response.toString())
-                },
-                Response.ErrorListener {
-                    showFailure(it.message)
+        VolleyBuilder<LoginData>()
+            .url(Constants.Url_Login)
+            .clazz(LoginData::class.java)
+            .addJsonObject(jsonObject)
+            .post()
+            .build(this, object : VolleyListener<LoginData>() {
+                override fun onResponse(response: LoginData?) {
+                    appendLog("【postJson】成功：${response?.string()}")
                 }
-            ) {
 
-            }
-
-        // Set the tag on the request.
-        jsonObjectRequest?.tag = TAG
-
-        // Add the request to the RequestQueue.
-        requestQueue?.add(jsonObjectRequest)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        requestQueue?.cancelAll(TAG)
+                override fun onErrorResponse(error: VolleyError?) {
+                    appendLog("【postJson】失败：${error?.message}")
+                }
+            })
     }
 }

@@ -17,4 +17,5 @@ dependencies {
 
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))
+    implementation(project(":libs:lib_httpurl"))
 }

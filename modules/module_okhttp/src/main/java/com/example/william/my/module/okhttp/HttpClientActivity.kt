@@ -11,10 +11,10 @@ class HttpClientActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(
-            RouterItem("OkHttpActivity", RouterPath.OkHttp.OkHttp.OkHttp)
+            RouterItem("OkHttpActivity", RouterPath.OkHttp.OkHttpLib.OkHttp)
         )
         routerItems.add(
-            RouterItem("OkHttpHelperActivity", RouterPath.OkHttp.OkHttp.OkHttpHelper)
+            RouterItem("OkHttpHelperActivity", RouterPath.OkHttp.OkHttpLib.OkHttpHelper)
         )
 
         routerItems.add(
