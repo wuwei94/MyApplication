@@ -96,6 +96,7 @@ include(":libs:lib_widget")
 
 include(":libs:lib_eventbus")
 include(":libs:lib_ninepatch")
+include(":libs:lib_nanohttpd")
 
 // 同步
 include(":modules:module_sync")

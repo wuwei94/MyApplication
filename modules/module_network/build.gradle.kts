@@ -15,7 +15,7 @@ dependencies {
     implementation(project(":basic:basic_repository"))
 
     implementation(libs.slf4j)
-    implementation(libs.nanohttpd)
+    implementation(project(":libs:lib_nanohttpd"))
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))
     implementation(project(":libs:lib_okhttp"))

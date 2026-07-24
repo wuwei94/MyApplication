@@ -54,7 +54,7 @@ MyApplication/
 │   └── basic_repository        # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket_okhttp / lib_websocket_java / lib_download
-│   ├── lib_eventbus / lib_ninepatch / lib_imageloader / lib_widget
+│   ├── lib_netty / lib_nanohttpd / lib_eventbus / lib_ninepatch / lib_imageloader / lib_widget
 │   └── ...
 └── modules                     # Feature 模块
     ├── module_sync             # 异步处理（AsyncTask / HandlerThread / JobScheduler）

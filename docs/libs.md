@@ -18,6 +18,7 @@
 | lib_netty | Netty TCP 封装 | Netty |
 | lib_widget | 自定义 Widget 库 | 自定义控件集合 |
 | lib_ninepatch | NinePatch 图片处理 | NinePatch 工具 |
+| lib_nanohttpd | HTTP 服务器封装 | NanoHTTPD |
 
 ---
 
@@ -104,3 +105,16 @@
 NinePatch 图片处理工具库。
 
 - 依赖：无
+
+### lib_nanohttpd（HTTP 服务器封装）
+
+对 NanoHTTPD 轻量级 HTTP 服务器的封装，提供统一的服务启动、停止和配置接口。不包含业务逻辑，业务处理由调用方重写 `serve()` 方法实现。
+
+- 权限：`INTERNET`、`ACCESS_NETWORK_STATE`
+- 依赖：NanoHTTPD
+- 包名：`com.example.william.my.core.nanohttpd`
+- 核心类：
+  - `NanoHttpServer` — 服务端基类（启动/停止/静态文件服务/MIME 类型检测/标准 HTTP 响应）
+  - `NanoHttpLogger` — 日志工具（支持 debug 开关控制）
+  - `ServerConfig` — 服务配置（端口、超时）
+  - `ServerLifecycle` — 生命周期回调接口
