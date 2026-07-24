@@ -1,17 +1,15 @@
-package com.example.william.my.module.network.activity.socket
+package com.example.william.my.core.server.nano
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.network.nano.NanoServer
-import com.example.william.my.module.network.nano.NanoService
-import com.example.william.my.module.network.utils.NetworkUtils
+import com.example.william.my.core.server.utils.NetworkUtils
 
 /**
  * https://github.com/NanoHttpd/nanohttpd
  */
-@Route(path = RouterPath.Network.Socket.Nano)
+@Route(path = RouterPath.Server.Nano)
 class NanoActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -38,7 +38,7 @@ class NetWorkActivity : RouterRecyclerActivity() {
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("NanoActivity", RouterPath.Network.Socket.Nano)
+            RouterItem("NanoActivity", RouterPath.Server.Nano)
         )
         return routerItems
     }

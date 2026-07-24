@@ -79,6 +79,7 @@ include(":basic:basic_lib")
 include(":basic:basic_shared")
 
 include(":basic:basic_repository")
+include(":basic:basic_server")
 
 include(":libs:lib_ktor")
 include(":libs:lib_volley")

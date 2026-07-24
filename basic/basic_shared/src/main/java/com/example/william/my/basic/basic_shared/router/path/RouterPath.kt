@@ -28,6 +28,16 @@ object RouterPath {
     }
 
     // ═══════════════════════════════════════════
+    // 基础服务
+    // ═══════════════════════════════════════════
+
+    object Server {
+        private const val Server = "/Server"
+
+        const val Nano = "${Server}/Nano"
+    }
+
+    // ═══════════════════════════════════════════
     // UI 三件套
     // ═══════════════════════════════════════════
 
@@ -242,12 +252,6 @@ object RouterPath {
 
             const val Volley = "${VOLLEY_PATH}/Volley"
             const val VolleyHelper = "${VOLLEY_PATH}/VolleyHelper"
-        }
-
-        object Socket {
-            private const val SOCKET_PATH = "${PATH}/Socket"
-
-            const val Nano = "${SOCKET_PATH}/Nano"
         }
     }
 

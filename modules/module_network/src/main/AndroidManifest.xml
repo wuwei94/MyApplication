@@ -10,10 +10,6 @@
 
         <activity android:name=".activity.volley.VolleyActivity" />
         <activity android:name=".activity.volley.VolleyHelperActivity" />
-
-        <activity android:name=".activity.socket.NanoActivity" />
-
-        <service android:name=".nano.NanoService" />
     </application>
 
 </manifest>

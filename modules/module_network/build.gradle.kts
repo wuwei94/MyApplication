@@ -11,10 +11,10 @@ android {
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
+    implementation(project(":basic:basic_server"))
 
     implementation(project(":basic:basic_repository"))
 
-    implementation(project(":libs:lib_nanohttpd"))
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))
 }
