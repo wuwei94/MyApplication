@@ -4,9 +4,6 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.volley"
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {

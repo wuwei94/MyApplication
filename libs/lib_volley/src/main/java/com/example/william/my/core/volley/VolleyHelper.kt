@@ -9,8 +9,8 @@ import com.example.william.my.core.volley.request.JsonRequest
 class VolleyHelper<T>(private val builder: VolleyBuilder<T>) {
 
     fun enqueue(content: Context, responseListener: VolleyListener<T>) {
-        builder.getJsonObject()?.let {
-            val request = JsonRequest(
+        val request = if (builder.getJsonObject() != null) {
+            JsonRequest(
                 builder.getMethod(),
                 builder.getUrl(),
                 builder.getClazz(),
@@ -19,10 +19,8 @@ class VolleyHelper<T>(private val builder: VolleyBuilder<T>) {
                 responseListener.mListener,
                 responseListener.mErrorListener
             )
-            request.tag = builder.getUrl()
-            VolleySingleton.getInstance(content).addToRequestQueue(request)
-        } ?: run {
-            val request = FromRequest(
+        } else {
+            FromRequest(
                 builder.getMethod(),
                 builder.getUrl(),
                 builder.getClazz(),
@@ -31,9 +29,9 @@ class VolleyHelper<T>(private val builder: VolleyBuilder<T>) {
                 responseListener.mListener,
                 responseListener.mErrorListener
             )
-            request.tag = builder.getUrl()
-            VolleySingleton.getInstance(content).addToRequestQueue(request)
         }
+        request.tag = builder.getTag()
+        VolleySingleton.getInstance(content).addToRequestQueue(request)
     }
 
     fun cancel(content: Context, tag: String) {

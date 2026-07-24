@@ -2,7 +2,6 @@ package com.example.william.my.core.volley
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import android.util.LruCache
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -10,13 +9,9 @@ import com.android.volley.VolleyLog
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level
+import com.example.william.my.core.volley.stack.OkHttp3Stack
 
 class VolleySingleton(context: Context) {
-
-    private val TAG = this.javaClass.simpleName
 
     companion object {
         @Volatile
@@ -27,17 +22,23 @@ class VolleySingleton(context: Context) {
                     INSTANCE = it
                 }
             }
+
+        // ImageLoader 内存缓存大小
+        private const val IMAGE_CACHE_SIZE = 20
     }
 
     init {
-        VolleyLog.DEBUG = true
+        VolleyLog.DEBUG = false
     }
+
+    // true = OkHttp3Stack（OkHttp 通道），false = HurlStack（HttpURLConnection）
+    private val useOkHttp = true
 
     val imageLoader: ImageLoader by lazy {
         ImageLoader(
             requestQueue,
             object : ImageLoader.ImageCache {
-                private val cache = LruCache<String, Bitmap>(20)
+                private val cache = LruCache<String, Bitmap>(IMAGE_CACHE_SIZE)
                 override fun getBitmap(url: String): Bitmap? {
                     return cache.get(url)
                 }
@@ -48,20 +49,14 @@ class VolleySingleton(context: Context) {
             })
     }
 
-    private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor { message ->
-            Log.e(TAG, message)
-        }.setLevel(Level.BODY))
-        .build()
-
-    private val httpStack: HurlStack by lazy {
-        HurlStack()
-    }
-
     private val requestQueue: RequestQueue by lazy {
         // applicationContext is key, it keeps you from leaking the
         // Activity or BroadcastReceiver if someone passes one in.
-        Volley.newRequestQueue(context.applicationContext)
+        if (useOkHttp) {
+            Volley.newRequestQueue(context.applicationContext, OkHttp3Stack())
+        } else {
+            Volley.newRequestQueue(context.applicationContext, HurlStack())
+        }
     }
 
     fun <T> addToRequestQueue(req: Request<T>) {

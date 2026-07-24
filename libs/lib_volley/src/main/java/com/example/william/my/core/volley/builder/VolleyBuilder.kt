@@ -3,6 +3,7 @@ package com.example.william.my.core.volley.builder
 import com.android.volley.Request.Method
 import com.example.william.my.core.volley.VolleyHelper
 import org.json.JSONObject
+import java.util.concurrent.atomic.AtomicInteger
 
 class VolleyBuilder<T> {
 
@@ -11,32 +12,16 @@ class VolleyBuilder<T> {
     private var method: Int = Method.GET
     private var header: MutableMap<String, String> = mutableMapOf()
     private var parameter: MutableMap<String, String> = mutableMapOf()
-
     private var jsonObject: JSONObject? = null
+    private var tag: String = TAG_GENERATOR.getAndIncrement().toString()
 
-    fun getUrl(): String {
-        return url
-    }
-
-    fun getClazz(): Class<T> {
-        return clazz
-    }
-
-    fun getMethod(): Int {
-        return method
-    }
-
-    fun getHeader(): MutableMap<String, String> {
-        return header
-    }
-
-    fun getParameter(): MutableMap<String, String> {
-        return parameter
-    }
-
-    fun getJsonObject(): JSONObject? {
-        return jsonObject
-    }
+    fun getUrl(): String = url
+    fun getClazz(): Class<T> = clazz
+    fun getMethod(): Int = method
+    fun getHeader(): MutableMap<String, String> = header
+    fun getParameter(): MutableMap<String, String> = parameter
+    fun getJsonObject(): JSONObject? = jsonObject
+    fun getTag(): String = tag
 
     fun url(api: String): VolleyBuilder<T> {
         this.url = api
@@ -93,7 +78,16 @@ class VolleyBuilder<T> {
         return this
     }
 
+    fun tag(tag: String): VolleyBuilder<T> {
+        this.tag = tag
+        return this
+    }
+
     fun build(): VolleyHelper<T> {
         return VolleyHelper(this)
+    }
+
+    companion object {
+        private val TAG_GENERATOR = AtomicInteger(0)
     }
 }

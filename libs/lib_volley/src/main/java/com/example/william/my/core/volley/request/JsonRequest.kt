@@ -13,12 +13,12 @@ import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 
 /**
- * Make a GET request and return a parsed object from JSON.
+ * Make a request with JSON body and return a parsed object from JSON.
  *
  * @param url URL of the request to make
  * @param clazz Relevant class object, for Gson's reflection
  * @param headers Map of request headers
- * @param params Map of request parameters
+ * @param jsonObject JSON body to send
  */
 class JsonRequest<T>(
     method: Int,
@@ -29,7 +29,6 @@ class JsonRequest<T>(
     private val listener: Response.Listener<T>,
     errorListener: Response.ErrorListener
 ) : Request<T>(method, url, errorListener) {
-    private val gson = Gson()
 
     override fun getHeaders(): MutableMap<String, String> = headers ?: super.getHeaders()
 
@@ -47,11 +46,11 @@ class JsonRequest<T>(
 
     override fun deliverResponse(response: T) = listener.onResponse(response)
 
-    override fun parseNetworkResponse(response: NetworkResponse?): Response<T> {
+    override fun parseNetworkResponse(response: NetworkResponse): Response<T> {
         return try {
             val json = String(
-                response?.data ?: ByteArray(0),
-                Charset.forName(HttpHeaderParser.parseCharset(response?.headers))
+                response.data,
+                Charset.forName(HttpHeaderParser.parseCharset(response.headers))
             )
             Response.success(
                 gson.fromJson(json, clazz),
@@ -62,5 +61,9 @@ class JsonRequest<T>(
         } catch (e: JsonSyntaxException) {
             Response.error(ParseError(e))
         }
+    }
+
+    companion object {
+        private val gson = Gson()
     }
 }
