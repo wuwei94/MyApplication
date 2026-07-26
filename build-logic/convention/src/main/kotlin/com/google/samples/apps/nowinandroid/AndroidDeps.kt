@@ -88,9 +88,9 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_websocket"))
             "implementation"(project(":modules:module_opensource"))
 
-            "implementation"(project(":modules:module_arch"))
+//            "implementation"(project(":modules:module_arch"))
             "implementation"(project(":modules:module_event"))
-            "implementation"(project(":modules:module_kotlin"))
+//            "implementation"(project(":modules:module_kotlin"))
             "implementation"(project(":modules:module_jetpack"))
 
             "implementation"(project(":modules:module_compose"))

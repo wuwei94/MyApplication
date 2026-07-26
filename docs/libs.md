@@ -128,10 +128,56 @@ val multipartBody = MultipartBody.Builder()
 
 ### lib_retrofit（Retrofit 封装）
 
-对 Retrofit 网络库的封装，提供 RESTful API 接口定义和调用。
+对 Retrofit 网络库的封装，提供 Kotlin DSL 风格的配置 API，支持多实例、命名缓存、RxJava 集成。
 
 - 权限：`INTERNET`
-- 依赖：Retrofit
+- 依赖：Retrofit、Retrofit Gson Converter、Retrofit Scalars Converter、Retrofit RxJava3 Adapter、RxAndroid、RxLifecycle
+- 包名：`com.example.william.my.core.retrofit`
+
+#### Kotlin DSL 快速上手
+
+```kotlin
+import com.example.william.my.core.retrofit.retrofit
+import com.example.william.my.core.retrofit.cachedRetrofit
+
+// 每次创建独立的 Retrofit 实例
+val r = retrofit {
+    baseUrl("https://api.example.com/")
+    client(okHttpClient { timeout(30); logging() })
+}
+
+// 按名称缓存，同名只创建一次，后续复用
+val apiRetrofit = cachedRetrofit("api") {
+    baseUrl("https://api.example.com/")
+    client(okHttpClient { timeout(30); logging() })
+}
+```
+
+#### 创建 API 实例
+
+```kotlin
+// 使用 RetrofitHelper 便捷方法
+val api = RetrofitHelper.buildApi(NetworkApi::class.java)
+
+// 使用 DSL 创建的 Retrofit 实例
+val api = r.create(NetworkApi::class.java)
+```
+
+#### RxJava 请求示例
+
+```kotlin
+RxRetrofit.builder<JsonElement>()
+    .api("user/login")
+    .addParam("username", "admin")
+    .addParam("password", "123456")
+    .post()
+    .setProvider(lifecycleOwner)
+    .buildSingle()
+    .subscribe(object : RetrofitResponseCallback<JsonElement>() {
+        override fun onResponse(response: JsonElement?) { /* handle success */ }
+        override fun onFailure(e: ApiException) { /* handle error */ }
+    })
+```
 
 ### lib_volley（Volley 封装）
 

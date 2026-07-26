@@ -127,14 +127,14 @@ include(":modules:module_websocket")
 include(":modules:module_opensource")
 
 // 架构模式
-include(":modules:module_arch")
+//include(":modules:module_arch")
 // 事件总线
 include(":modules:module_event")
 // 业务功能
 include(":modules:module_features")
 
 // Kotlin 特性
-include(":modules:module_kotlin")
+//include(":modules:module_kotlin")
 // Jetpack 组件库
 include(":modules:module_jetpack")
 

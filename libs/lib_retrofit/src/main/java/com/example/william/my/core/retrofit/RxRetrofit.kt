@@ -2,7 +2,7 @@ package com.example.william.my.core.retrofit
 
 import com.example.william.my.core.okhttp.media.MediaType
 import com.example.william.my.core.retrofit.api.Api
-import com.example.william.my.core.retrofit.builder.RetrofitBuilder
+import com.example.william.my.core.retrofit.builder.RequestBuilder
 import com.example.william.my.core.retrofit.function.HttpResultFunction
 import com.example.william.my.core.retrofit.function.RxRetrofitFunction
 import com.example.william.my.core.retrofit.helper.RetrofitHelper
@@ -16,7 +16,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 /**
  * Http请求类
  */
-class RxRetrofit<T>(private val builder: RetrofitBuilder<T>) {
+class RxRetrofit<T>(private val builder: RequestBuilder<T>) {
 
     private fun buildApi(): Api {
         return RetrofitHelper.retrofit().create(Api::class.java)
@@ -66,8 +66,8 @@ class RxRetrofit<T>(private val builder: RetrofitBuilder<T>) {
     }
 
     companion object {
-        fun <T> builder(): RetrofitBuilder<T> {
-            return RetrofitBuilder()
+        fun <T> builder(): RequestBuilder<T> {
+            return RequestBuilder()
         }
     }
 }

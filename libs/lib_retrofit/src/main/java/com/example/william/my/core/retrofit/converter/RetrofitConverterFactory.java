@@ -2,7 +2,6 @@ package com.example.william.my.core.retrofit.converter;
 
 import androidx.annotation.NonNull;
 
-import com.example.william.my.core.retrofit.config.RetrofitConfig;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -24,26 +23,28 @@ import retrofit2.Retrofit;
 public class RetrofitConverterFactory extends Converter.Factory {
 
     /**
-     * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
-     * decoding from JSON (when no charset is specified by a header) will use UTF-8.
+     * 使用默认 {@link Gson} 实例创建转换器。
+     *
+     * @deprecated 使用 {@link #create(String, String)} 直接指定 code/message 字段名。
      */
-
+    @Deprecated
     public static RetrofitConverterFactory create() {
-        return create(new Gson());
+        return create(new Gson(), "errorCode", "errorMsg");
     }
 
     /**
-     * Create an instance using {@code gson} for conversion. Encoding to JSON and
-     * decoding from JSON (when no charset is specified by a header) will use UTF-8.
+     * 使用指定 {@code gson} 实例创建转换器。
+     *
+     * @deprecated 使用 {@link #create(Gson, String, String)} 直接指定 code/message 字段名。
      */
-    //@SuppressWarnings("ConstantConditions") // Guarding public API nullability.
+    @Deprecated
     public static RetrofitConverterFactory create(Gson gson) {
         if (gson == null) throw new NullPointerException("gson == null");
-        return new RetrofitConverterFactory(gson, RetrofitConfig.INSTANCE.getCode(), RetrofitConfig.INSTANCE.getMessage());
+        return new RetrofitConverterFactory(gson, "errorCode", "errorMsg");
     }
 
-    public static RetrofitConverterFactory create(String code, String msg) {
-        return create(new Gson(), code, msg);
+    public static RetrofitConverterFactory create(String code, String message) {
+        return create(new Gson(), code, message);
     }
 
     public static RetrofitConverterFactory create(Gson gson, String code, String message) {

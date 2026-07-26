@@ -7,6 +7,10 @@ import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
+@Deprecated(
+    "使用 RetrofitDsl（retrofit { } / cachedRetrofit { }）替代",
+    ReplaceWith("retrofit { }", "com.example.william.my.core.retrofit.retrofit")
+)
 object RetrofitConfig {
 
     private var mBaseUrl = "http://host/"

@@ -5,11 +5,11 @@ import com.example.william.my.basic.basic_repository.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.core.retrofit.retrofit
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 /**
  * https://square.github.io/retrofit
@@ -34,12 +34,12 @@ class RetrofitActivity : BasicRecyclerActivity() {
     }
 
     private fun loginCall(username: String, password: String) {
-        // （2）创建 Retrofit 实例
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(Constants.Url_Base) // baseUlr必须以 /（斜线）结束，不然会抛出一个IllegalArgumentException
-            .build()
+        // 使用 DSL 创建 Retrofit 实例
+        val retrofit = retrofit {
+            baseUrl(Constants.Url_Base)
+        }
 
-        // （3）创建网络请求接口实例
+        // 创建网络请求接口实例
         val api: NetworkApi = retrofit.create(NetworkApi::class.java)
 
         // （4）调用网络接口中的方法获取 Call 对象

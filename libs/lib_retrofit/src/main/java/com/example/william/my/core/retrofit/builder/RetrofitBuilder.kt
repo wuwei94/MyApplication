@@ -1,147 +1,83 @@
 package com.example.william.my.core.retrofit.builder
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import com.example.william.my.core.okhttp.body.RequestProgressBody
-import com.example.william.my.core.okhttp.listener.RequestProgressListener
-import com.example.william.my.core.okhttp.media.MediaType
-import com.example.william.my.core.retrofit.RxRetrofit
-import com.example.william.my.core.retrofit.method.Method
-import com.example.william.my.core.retrofit.response.RetrofitResponse
-import com.trello.lifecycle4.android.lifecycle.AndroidLifecycle
-import com.trello.rxlifecycle4.LifecycleProvider
-import io.reactivex.rxjava3.core.Single
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONObject
-import java.io.File
+import com.example.william.my.core.okhttp.okHttpClient
+import com.example.william.my.core.retrofit.converter.RetrofitConverterFactory
+import okhttp3.OkHttpClient
+import retrofit2.CallAdapter
+import retrofit2.Converter
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
-class RetrofitBuilder<T> {
+@DslMarker
+annotation class RetrofitDslMarker
 
-    private lateinit var api: String
-    private var method: Method = Method.GET
-    private var header: MutableMap<String, String> = mutableMapOf()
-    private var parameter: MutableMap<String, String> = mutableMapOf()
+@RetrofitDslMarker
+class RetrofitBuilder {
 
-    private var jsonObject: JSONObject? = null
-    private var multipartBody: MultipartBody.Builder? = null
+    private val builder = Retrofit.Builder()
+    private var code: String = "errorCode"
+    private var message: String = "errorMsg"
+    private var converterFactory: Converter.Factory? = null
 
-    private var lifecycle: LifecycleProvider<Lifecycle.Event>? = null
-
-    fun getApi(): String {
-        return api
+    init {
+        // 默认使用全局兼容配置
+        builder.baseUrl("http://host/")
+        builder.client(okHttpClient { logging() })
+        builder.addCallAdapterFactory(RxJava3CallAdapterFactory.create())
     }
 
-    fun getMethod(): Method {
-        return method
+    // region 基础配置
+
+    /** 设置 BaseUrl */
+    fun baseUrl(url: String) {
+        builder.baseUrl(url)
     }
 
-    fun getHeader(): MutableMap<String, String> {
-        return header
+    /** 设置 OkHttpClient */
+    fun client(okHttpClient: OkHttpClient) {
+        builder.client(okHttpClient)
     }
 
-    fun getParam(): MutableMap<String, String> {
-        return parameter
+    // endregion
+
+    // region 转换器与适配器
+
+    /** 设置 Converter.Factory（覆盖默认的 RetrofitConverterFactory） */
+    fun converter(factory: Converter.Factory) {
+        converterFactory = factory
+        builder.addConverterFactory(factory)
     }
 
-    fun getJsonObject(): JSONObject? {
-        return jsonObject
+    /** 设置 CallAdapter.Factory（覆盖默认的 RxJava3CallAdapterFactory） */
+    fun callAdapter(factory: CallAdapter.Factory) {
+        builder.addCallAdapterFactory(factory)
     }
 
-    fun getMultipartBody(): MultipartBody.Builder? {
-        return multipartBody
+    /** 设置响应码字段名（用于 RetrofitConverterFactory） */
+    fun code(key: String) {
+        code = key
     }
 
-    fun getLifecycle(): LifecycleProvider<Lifecycle.Event>? {
-        return lifecycle
+    /** 设置响应消息字段名（用于 RetrofitConverterFactory） */
+    fun message(key: String) {
+        message = key
     }
 
-    fun api(api: String): RetrofitBuilder<T> {
-        this.api = api
-        return this
+    // endregion
+
+    // region 高级配置
+
+    /** 直接操作底层 Retrofit.Builder */
+    fun raw(block: Retrofit.Builder.() -> Unit) {
+        builder.block()
     }
 
-    fun get(): RetrofitBuilder<T> {
-        method = Method.GET
-        return this
-    }
+    // endregion
 
-    fun post(): RetrofitBuilder<T> {
-        method = Method.POST
-        return this
-    }
-
-    fun delete(): RetrofitBuilder<T> {
-        method = Method.DELETE
-        return this
-    }
-
-    fun put(): RetrofitBuilder<T> {
-        method = Method.PUT
-        return this
-    }
-
-    fun addHeader(key: String, value: String): RetrofitBuilder<T> {
-        header[key] = value
-        return this
-    }
-
-    fun addHeader(header: MutableMap<String, String>): RetrofitBuilder<T> {
-        this.header = header
-        return this
-    }
-
-    fun addParam(key: String, value: String): RetrofitBuilder<T> {
-        parameter[key] = value
-        return this
-    }
-
-    fun addParams(params: MutableMap<String, String>): RetrofitBuilder<T> {
-        this.parameter = params
-        return this
-    }
-
-    fun addJsonObject(jsonObject: JSONObject): RetrofitBuilder<T> {
-        this.jsonObject = jsonObject
-        return this
-    }
-
-    fun addMultipart(key: String, value: String): RetrofitBuilder<T> {
-        if (this.multipartBody == null) {
-            this.multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+    internal fun build(): Retrofit {
+        if (converterFactory == null) {
+            builder.addConverterFactory(RetrofitConverterFactory.create(code, message))
         }
-        this.multipartBody?.addFormDataPart(key, value)
-        return this
-    }
-
-    fun addFile(key: String, file: File): RetrofitBuilder<T> {
-        if (this.multipartBody == null) {
-            this.multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-        }
-        this.multipartBody?.addFormDataPart(
-            key, file.name, file.asRequestBody(MediaType.MEDIA_TYPE_MULTIPART)
-        )
-        return this
-    }
-
-    fun addFile(key: String, file: File, listener: RequestProgressListener?): RetrofitBuilder<T> {
-        if (this.multipartBody == null) {
-            this.multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-        }
-        this.multipartBody?.addFormDataPart(
-            key,
-            file.name,
-            RequestProgressBody(file.asRequestBody(MediaType.MEDIA_TYPE_MULTIPART), listener)
-        )
-        return this
-    }
-
-    fun setProvider(owner: LifecycleOwner): RetrofitBuilder<T> {
-        lifecycle = AndroidLifecycle.createLifecycleProvider(owner)
-        return this
-    }
-
-    fun buildSingle(): Single<RetrofitResponse<T>> {
-        return RxRetrofit(this).createResponse()
+        return builder.build()
     }
 }

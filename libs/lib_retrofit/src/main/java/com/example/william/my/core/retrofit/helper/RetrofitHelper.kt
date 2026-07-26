@@ -1,60 +1,37 @@
 package com.example.william.my.core.retrofit.helper
 
-import com.example.william.my.core.retrofit.config.RetrofitConfig
+import com.example.william.my.core.retrofit.cachedRetrofit
 import com.example.william.my.core.retrofit.function.HttpResultFunction
 import com.example.william.my.core.retrofit.function.ServerResultFunction
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import okhttp3.OkHttpClient
-import retrofit2.CallAdapter
-import retrofit2.Converter
 import retrofit2.Retrofit
 
+@Deprecated(
+    "使用 RetrofitDsl（retrofit { } / cachedRetrofit { }）替代",
+    ReplaceWith("retrofit { }", "com.example.william.my.core.retrofit.retrofit")
+)
 object RetrofitHelper {
 
-    private var mRetrofit: Retrofit? = null
-
+    /**
+     * 获取默认 Retrofit 实例（缓存在 "default" 名称下）。
+     */
     fun retrofit(): Retrofit {
-        return mRetrofit ?: createRetrofit()
+        return cachedRetrofit("default") {}
     }
 
-    fun baseUrl(url: String): RetrofitHelper {
-        RetrofitConfig.Builder().setBaseUrl(url)
-        return this@RetrofitHelper
-    }
-
-    fun client(client: OkHttpClient): RetrofitHelper {
-        RetrofitConfig.Builder().setOkHttpClient(client)
-        return this@RetrofitHelper
-    }
-
-    fun converter(factory: Converter.Factory): RetrofitHelper {
-        RetrofitConfig.Builder().setConverterFactory(factory)
-        return this@RetrofitHelper
-    }
-
-    fun callAdapter(factory: CallAdapter.Factory): RetrofitHelper {
-        RetrofitConfig.Builder().setCallAdapterFactory(factory)
-        return this@RetrofitHelper
-    }
-
-    private fun createRetrofit(): Retrofit {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(RetrofitConfig.getBaseUrl())
-            .client(RetrofitConfig.getOkHttpClient())
-            .addConverterFactory(RetrofitConfig.getConverterFactory())
-            .addCallAdapterFactory(RetrofitConfig.getCallAdapterFactory())
-            .build()
-        mRetrofit = retrofit
-        return retrofit
-    }
-
+    /**
+     * 创建 API 接口实例。
+     */
     fun <T> buildApi(api: Class<T>, retrofit: Retrofit = retrofit()): T {
         return retrofit.create(api)
     }
 
+    /**
+     * 包装 Single：业务异常转换 + 线程切换。
+     */
     fun <T : Any> buildSingle(single: Single<RetrofitResponse<T?>>): Single<RetrofitResponse<T?>> {
         return single
             .map(ServerResultFunction())

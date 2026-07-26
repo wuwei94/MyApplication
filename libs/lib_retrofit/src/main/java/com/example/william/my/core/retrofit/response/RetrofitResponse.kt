@@ -49,14 +49,16 @@ class RetrofitResponse<T> : BaseBean {
         get() = code == State.SUCCESS
 
     fun string(): String? {
-        return Gson().toJson(this)
+        return gson.toJson(this)
     }
 
     fun T.string(): String? {
-        return Gson().toJson(this)
+        return gson.toJson(this)
     }
 
     companion object {
+        private val gson = Gson()
+
         fun <T> loading(): RetrofitResponse<T> {
             return RetrofitResponse(State.LOADING)
         }
