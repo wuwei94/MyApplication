@@ -29,7 +29,7 @@ import kotlinx.coroutines.Dispatchers
  */
 class DefaultArticleRepository(
     private val articlesRemoteDataSource: ArticleDataSource<ArticleData, ArticleDetailData>,
-    private val articlesLocalDataSource: ArticleDataSource<ArticleData, ArticleDetailData>?,
+    private val articlesLocalDataSource: ArticleDataSource<ArticleData, ArticleDetailData>,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ArticleRepository<ArticleData, ArticleDetailData> {
 
@@ -94,19 +94,17 @@ class DefaultArticleRepository(
                 return NetworkResult.Error(ex)
             }
         }
-        return articlesLocalDataSource?.getArticleResult(page)!!
+        return articlesLocalDataSource.getArticleResult(page)
     }
 
     private suspend fun updateArticlesFromRemoteDataSource(page: Int) {
         val remoteArticles = articlesRemoteDataSource.getArticleResult(page)
         if (remoteArticles is NetworkResult.Success) {
             // Real apps might want to do a proper sync, deleting, modifying or adding each task.
-            articlesLocalDataSource?.deleteAllArticles()
-            val articles = remoteArticles as NetworkResult.Success<List<ArticleDetailData>>
-            articlesLocalDataSource?.saveArticles(articles.data)
+            articlesLocalDataSource.deleteAllArticles()
+            articlesLocalDataSource.saveArticles(remoteArticles.data)
         } else if (remoteArticles is NetworkResult.Error) {
-            val articles = remoteArticles as NetworkResult.Error
-            throw articles.exception
+            throw remoteArticles.exception
         }
     }
 }

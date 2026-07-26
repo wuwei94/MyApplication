@@ -15,48 +15,19 @@
  */
 package com.example.william.my.basic.basic_repo.data.source.local
 
-import androidx.lifecycle.LiveData
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.NetworkResult
 import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.basic.basic_repo.database.dao.ArticleDao
-import com.example.william.my.core.retrofit.response.RetrofitResponse
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ArticleLocalDataSource(
+class ArticleLocalDataSourceImpl(
     private val articleDao: ArticleDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ArticleDataSource<ArticleData, ArticleDetailData> {
-
-    override fun getArticleCallback(
-        page: Int,
-        callback: ArticleDataSource.LoadArticleCallback<ArticleDetailData>
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getArticleLiveData(
-        page: Int,
-        postValue: (RetrofitResponse<ArticleData>) -> Unit
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> {
         return withContext(ioDispatcher) {

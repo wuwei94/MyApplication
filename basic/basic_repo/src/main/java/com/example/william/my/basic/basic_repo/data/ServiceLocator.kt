@@ -23,11 +23,10 @@ import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 import com.example.william.my.basic.basic_repo.data.source.DefaultArticleRepository
-import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDataSource
-import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSource
+import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDataSourceImpl
+import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSourceImpl
 import com.example.william.my.basic.basic_repo.database.ArticleDatabase
-import com.example.william.my.core.retrofit.helper.RetrofitHelper
-import kotlinx.coroutines.runBlocking
+import com.example.william.my.core.retrofit.cachedRetrofit
 
 object ServiceLocator {
 
@@ -43,25 +42,27 @@ object ServiceLocator {
     private var articleRepository: ArticleRepository<ArticleData, ArticleDetailData>? = null
 
     fun provideArticleApi(): ArticleApi {
-        synchronized(this) {
+        synchronized(lock) {
             return articleApi ?: createApi()
         }
     }
 
     fun provideArticleDatabase(context: Context): ArticleDatabase {
-        synchronized(this) {
+        synchronized(lock) {
             return articleDatabase ?: createDataBase(context)
         }
     }
 
     fun provideArticleRepository(context: Context): ArticleRepository<ArticleData, ArticleDetailData> {
-        synchronized(this) {
+        synchronized(lock) {
             return articleRepository ?: createArticleRepository(context)
         }
     }
 
     private fun createApi(): ArticleApi {
-        return RetrofitHelper.buildApi(ArticleApi::class.java)
+        return cachedRetrofit("default") { }.create(ArticleApi::class.java).also {
+            articleApi = it
+        }
     }
 
     private fun createDataBase(
@@ -89,29 +90,26 @@ object ServiceLocator {
 
     private fun createArticleLocalDataSource(context: Context): ArticleDataSource<ArticleData, ArticleDetailData> {
         val database = articleDatabase ?: createDataBase(context)
-        return ArticleLocalDataSource(database.articleDao())
+        return ArticleLocalDataSourceImpl(database.articleDao())
     }
 
     private fun createArticleRepository(context: Context): ArticleRepository<ArticleData, ArticleDetailData> {
         val newRepo =
-            DefaultArticleRepository(ArticleRemoteDataSource, createArticleLocalDataSource(context))
+            DefaultArticleRepository(ArticleRemoteDataSourceImpl, createArticleLocalDataSource(context))
         articleRepository = newRepo
         return newRepo
     }
 
     fun resetRepository() {
         synchronized(lock) {
-            runBlocking {
-                ArticleRemoteDataSource.deleteAllArticles()
-            }
+            articleRepository = null
+            articleApi = null
             // Clear all data to avoid test pollution.
             articleDatabase?.apply {
                 clearAllTables()
                 close()
             }
             articleDatabase = null
-            articleRepository = null
         }
     }
 }
-

@@ -32,24 +32,42 @@ interface ArticleDataSource<ArticleList, ArticleDetail> {
 
     fun getArticleCallback(
         page: Int, callback: LoadArticleCallback<ArticleDetail>
-    )
+    ) {
+        throw UnsupportedOperationException()
+    }
 
     fun getArticleLiveData(
         page: Int,
         postValue: (RetrofitResponse<ArticleList>) -> Unit
-    )
+    ) {
+        throw UnsupportedOperationException()
+    }
 
-    fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleList>>
+    fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleList>> {
+        throw UnsupportedOperationException()
+    }
 
-    fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleList>>
+    fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleList>> {
+        throw UnsupportedOperationException()
+    }
 
-    suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleList>
+    suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleList> {
+        throw UnsupportedOperationException()
+    }
 
-    suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetail>>
+    suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetail>> {
+        throw UnsupportedOperationException()
+    }
 
-    suspend fun saveArticle(article: ArticleDetail)
+    suspend fun saveArticle(article: ArticleDetail) {
+        throw UnsupportedOperationException()
+    }
 
-    suspend fun saveArticles(articles: List<ArticleDetail>)
+    suspend fun saveArticles(articles: List<ArticleDetail>) {
+        throw UnsupportedOperationException()
+    }
 
-    suspend fun deleteAllArticles()
+    suspend fun deleteAllArticles() {
+        throw UnsupportedOperationException()
+    }
 }

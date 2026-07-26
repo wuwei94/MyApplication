@@ -25,17 +25,18 @@ import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.core.retrofit.callback.RetrofitLiveDataCallback
 import com.example.william.my.core.retrofit.callback.RetrofitResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.cachedRetrofit
 import com.example.william.my.core.retrofit.function.HttpResultFunction
 import com.example.william.my.core.retrofit.function.ServerResultFunction
-import com.example.william.my.core.retrofit.helper.RetrofitHelper
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-object ArticleRemoteDataSource : ArticleDataSource<ArticleData, ArticleDetailData> {
+object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetailData> {
 
-    private var articleApi = RetrofitHelper.buildApi(ArticleApi::class.java)
+    private val articleApi = cachedRetrofit("default") { }
+        .create(ArticleApi::class.java)
 
     override fun getArticleCallback(
         page: Int,
@@ -115,22 +116,12 @@ object ArticleRemoteDataSource : ArticleDataSource<ArticleData, ArticleDetailDat
     override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> {
         return try {
             val response = articleApi.getArticleSuspend(page)
-            NetworkResult.Success(response.data!!.datas)
+            val data = response.data
+                ?: return NetworkResult.Error(IllegalStateException("Response data is null"))
+            NetworkResult.Success(data.datas)
         } catch (e: Exception) {
             NetworkResult.Error(e)
         }
     }
 
-    override suspend fun saveArticle(article: ArticleDetailData) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun saveArticles(articles: List<ArticleDetailData>) {
-        TODO("Not yet implemented")
-    }
-
-
-    override suspend fun deleteAllArticles() {
-        TODO("Not yet implemented")
-    }
 }
