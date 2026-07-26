@@ -1,6 +1,5 @@
 package com.example.william.my.core.okhttp.format
 
-import android.text.TextUtils
 import android.util.Log
 import okhttp3.MediaType
 import okhttp3.Request
@@ -13,40 +12,7 @@ import okhttp3.Response
  *
  * @Modified by Jim: 增加每行最多字符数(换行)定义：LINE_CHAR_COUNT, from 110 changed to 180
  */
-object FormatPrinterImpl : FormatPrinter {
-
-    private const val TAG = "HttpLogger"
-
-    private const val LINE_CHAR_COUNT = 180
-
-    private const val REQUEST_UP_LINE =
-        "┌────── Request ────────────────────────────────────────────────────────────────────────"
-    private const val END_LINE =
-        "└───────────────────────────────────────────────────────────────────────────────────────"
-    private const val RESPONSE_UP_LINE =
-        "┌────── Response ───────────────────────────────────────────────────────────────────────"
-
-    private const val LINE_SEPARATOR = "\n"
-    private const val DOUBLE_SEPARATOR = "\n\n"
-
-    private val OMITTED_REQUEST = arrayOf(LINE_SEPARATOR, "Omitted request body")
-    private val OMITTED_RESPONSE = arrayOf(LINE_SEPARATOR, "Omitted response body")
-
-    private const val URL_TAG = "URL:"
-    private const val METHOD_TAG = "Method: "
-    private const val CONTENT_TYPE_TAG = "Content-Type"
-    private const val CONTENT_LENGTH_TAG = "Content-Length"
-    private const val HEADERS_TAG = "Headers:"
-    private const val STATUS_CODE_TAG = "Status Code: "
-    private const val BODY_TAG = "Body:"
-    private const val CORNER_UP = "┌ "
-    private const val CORNER_BOTTOM = "└ "
-    private const val CENTER_LINE = "├ "
-    private const val DEFAULT_LINE = "│ "
-
-    private val ARMS = arrayOf("-A-", "-R-", "-M-", "-S-")
-
-    private var mFilters: List<String> = arrayListOf()
+class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
 
     private val last: ThreadLocal<Int> = object : ThreadLocal<Int>() {
         override fun initialValue(): Int {
@@ -55,14 +21,7 @@ object FormatPrinterImpl : FormatPrinter {
     }
 
     private fun isEmpty(line: String): Boolean {
-        return TextUtils.isEmpty(line) || "\n" == line || "\t" == line || TextUtils.isEmpty(line.trim { it <= ' ' })
-    }
-
-    /**
-     * 设置过滤
-     */
-    fun setFilters(filters: List<String>) {
-        this.mFilters = filters
+        return line.isEmpty() || "\n" == line || "\t" == line || line.trim().isEmpty()
     }
 
     /**
@@ -176,12 +135,13 @@ object FormatPrinterImpl : FormatPrinter {
     }
 
     private fun computeKey(): String {
-        if (last.get()!! >= ARMS.size) {
+        val index = last.get() ?: 0
+        if (index >= ARMS.size) {
             last.set(0)
+            return ARMS[0].also { last.set(1) }
         }
-        val s = ARMS[last.get()!!]
-        last.set(last.get()!! + 1)
-        return s
+        last.set(index + 1)
+        return ARMS[index]
     }
 
     private fun getUrl(request: Request): Array<String> {
@@ -281,5 +241,36 @@ object FormatPrinterImpl : FormatPrinter {
 
     fun println(tag: String, message: String) {
         Log.d(tag, message)
+    }
+
+    companion object {
+        private const val TAG = "HttpLogger"
+
+        private const val LINE_CHAR_COUNT = 180
+
+        private const val REQUEST_UP_LINE =
+            "┌────── Request ────────────────────────────────────────────────────────────────────────"
+        private const val END_LINE =
+            "└───────────────────────────────────────────────────────────────────────────────────────"
+        private const val RESPONSE_UP_LINE =
+            "┌────── Response ───────────────────────────────────────────────────────────────────────"
+
+        private const val LINE_SEPARATOR = "\n"
+        private const val DOUBLE_SEPARATOR = "\n\n"
+
+        private val OMITTED_REQUEST = arrayOf(LINE_SEPARATOR, "Omitted request body")
+        private val OMITTED_RESPONSE = arrayOf(LINE_SEPARATOR, "Omitted response body")
+
+        private const val URL_TAG = "URL:"
+        private const val METHOD_TAG = "Method: "
+        private const val HEADERS_TAG = "Headers:"
+        private const val STATUS_CODE_TAG = "Status Code: "
+        private const val BODY_TAG = "Body:"
+        private const val CORNER_UP = "┌ "
+        private const val CORNER_BOTTOM = "└ "
+        private const val CENTER_LINE = "├ "
+        private const val DEFAULT_LINE = "│ "
+
+        private val ARMS = arrayOf("-A-", "-R-", "-M-", "-S-")
     }
 }

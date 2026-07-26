@@ -16,5 +16,4 @@ dependencies {
 
     implementation(project(":libs:lib_okhttp"))
     implementation(project(":libs:lib_retrofit"))
-    implementation(project(":libs:lib_download"))
 }

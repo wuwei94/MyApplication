@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit
+package com.example.william.my.module.okhttp.rxretrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity

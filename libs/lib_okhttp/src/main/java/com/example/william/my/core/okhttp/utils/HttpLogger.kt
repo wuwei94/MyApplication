@@ -1,11 +1,13 @@
 package com.example.william.my.core.okhttp.utils
 
 import android.util.Log
-import com.example.william.my.core.okhttp.config.OkHttpConfig
 
+/**
+ * HTTP 日志工具
+ */
 object HttpLogger {
 
-    private val TAG: String = OkHttpConfig.getLogTag()
+    private const val TAG = "OkHttp"
 
     fun debug(msg: String) {
         Log.d(TAG, msg)

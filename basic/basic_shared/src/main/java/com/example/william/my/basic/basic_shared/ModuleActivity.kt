@@ -43,6 +43,7 @@ class ModuleActivity : RouterRecyclerActivity() {
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Utils", RouterPath.Utils.Main))
+        routerItems.add(RouterItem("OkHttp", RouterPath.OkHttp.Main))
         routerItems.add(RouterItem("Network", RouterPath.Network.Main))
         routerItems.add(RouterItem("WebSocket", RouterPath.WebSocket.Main))
         routerItems.add(RouterItem("OpenSource", RouterPath.OpenSource.Main))

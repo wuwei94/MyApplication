@@ -13,7 +13,7 @@
         <activity android:name=".retrofit.RetrofitRxJavaActivity" />
         <activity android:name=".retrofit.RetrofitRxJavaHelperActivity" />
 
-        <activity android:name=".retrofit.RxRetrofitActivity" />
+        <activity android:name=".rxretrofit.RxRetrofitActivity" />
 
         <activity android:name=".download.OkhttpDownloadActivity" />
         <activity android:name=".download.RetrofitDownloadActivity" />

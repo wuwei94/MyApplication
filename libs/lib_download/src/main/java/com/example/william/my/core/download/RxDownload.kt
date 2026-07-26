@@ -7,7 +7,7 @@ import com.example.william.my.core.download.observer.DownloadObserver
 import com.example.william.my.core.download.state.DownloadState
 import com.example.william.my.core.download.task.DownloadTask
 import com.example.william.my.core.download.utils.FileUtils
-import com.example.william.my.core.okhttp.helper.OkHttpHelper
+import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.okhttp.interceptor.InterceptorProgress
 import com.example.william.my.core.okhttp.utils.HttpLogger
 import com.example.william.my.core.retrofit.api.Api
@@ -52,7 +52,9 @@ object RxDownload {
         mDownloadObserverMap[downloadTask.downloadUrl] = observer
 
         val interceptor = InterceptorProgress(observer)
-        val client = OkHttpHelper.setInterceptor(interceptor).client()
+        val client = okHttpClient {
+            addInterceptor(interceptor)
+        }
         val retrofit = RetrofitHelper.client(client).retrofit()
         val api: Api = retrofit.create(Api::class.java)
         api

@@ -5,18 +5,18 @@ import com.example.william.my.core.okhttp.format.ParseUtils
 import com.example.william.my.core.okhttp.format.ParseUtils.isParseAble
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+/**
+ * 自定义格式化日志拦截器（边框、对齐、耗时）。
+ *
+ * 可解析的请求/响应体（JSON、XML 等）会格式化输出，
+ * 不可解析的（文件等）只输出 URL 和 Header。
+ */
 class InterceptorLogging(filters: List<String>) : Interceptor {
 
-    private val mPrinter = FormatPrinterImpl
+    private val mPrinter = FormatPrinterImpl(filters)
 
-    init {
-        mPrinter.setFilters(filters)
-    }
-
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain.request()
@@ -28,21 +28,16 @@ class InterceptorLogging(filters: List<String>) : Interceptor {
         }
 
         val startNs = System.nanoTime()
-        val response: Response
-
-        try {
-            response = chain.proceed(request)
-        } catch (e: Exception) {
-            throw e
-        }
+        val response: Response = chain.proceed(request)
 
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
 
-        if (response.body?.contentType().isParseAble()) {
+        val responseContentType = response.body?.contentType()
+        if (responseContentType.isParseAble()) {
             mPrinter.printJsonResponse(
                 tookMs,
                 response,
-                response.body?.contentType(),
+                responseContentType,
                 ParseUtils.parseResponse(response)
             )
         } else {

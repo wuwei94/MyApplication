@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_repository.bean.UserData
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.okhttp.helper.OkHttpHelper
+import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.retrofit.converter.RetrofitConverterFactory
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -39,10 +39,15 @@ class RetrofitRxJavaActivity : BasicRecyclerActivity() {
     }
 
     private fun loginSingle(username: String, password: String) {
+        // （1）使用 DSL 创建 OkHttpClient
+        val client = okHttpClient {
+            logging()
+        }
+
         // （2）创建 Retrofit 实例
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Constants.Url_Base)
-            .client(OkHttpHelper.client())
+            .client(client)
             .addConverterFactory(RetrofitConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()

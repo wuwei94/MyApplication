@@ -1,30 +1,50 @@
 package com.example.william.my.module.okhttp.okhttp
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.okhttp.helper.OkHttpHelper
 import com.example.william.my.core.base.utils.AppExecutorsHelper
+import com.example.william.my.core.okhttp.okHttpClient
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.Response
 import okio.IOException
 
 /**
- * https://square.github.io/okhttp
- * https://github.com/square/okhttp
+ * OkHttp DSL 示例
+ *
+ * 演示 Kotlin DSL 方式创建 OkHttpClient，以及原生 API 构建请求。
+ * - okHttpClient {}：DSL 创建客户端
+ * - FormBody.Builder：构建表单请求体
+ * - MultipartBody.Builder：构建多部分请求体
+ * - Request.Builder：构建请求
+ * - client.newCall().enqueue()：发送异步请求
+ *
+ * @see <a href="https://square.github.io/okhttp">OkHttp 官方文档</a>
  */
 @Route(path = RouterPath.OkHttp.OkHttpLib.OkHttpHelper)
-class OkHttpHelperActivity : BasicRecyclerActivity() {
+class OkHttpHelperActivity : BasicResponseActivity() {
+
+    /**
+     * 使用 DSL 创建 OkHttpClient（无额外配置，使用默认值）。
+     */
+    private val client: OkHttpClient = okHttpClient {}
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showResponse("OkHttp DSL 示例\n\n使用 okHttpClient {} 创建客户端\n\n点击下方按钮发起请求，日志会累积显示在上方")
+    }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "OkHttpHelper Posting a FormBody",
-            "OkHttpHelper Posting a MultipartBody",
+            "DSL Posting a FormBody",
+            "DSL Posting a MultipartBody",
         )
     }
 
@@ -46,82 +66,75 @@ class OkHttpHelperActivity : BasicRecyclerActivity() {
     }
 
     /**
-     * FormBody
+     * 使用 OkHttp 原生 FormBody.Builder 构建表单请求。
+     *
+     * 适用于 application/x-www-form-urlencoded 格式的 POST 请求。
+     * 构建流程：FormBody.Builder → Request.Builder → client.newCall().enqueue()
      */
     private fun postingForm(username: String, password: String) {
-        // 创建 OkHttpClient 对象
-        val client: OkHttpClient = OkHttpHelper.client()
+        // 1. 构建请求体（表单格式）
+        val requestBody = FormBody.Builder()
+            .add(Constants.Key_Username, username)
+            .add(Constants.Key_Password, password)
+            .build()
 
-        // 创建 RequestBody 对象
-        val requestBody: RequestBody = OkHttpHelper.requestBodyBuilder()
-            .addForm(Constants.Key_Username, username)
-            .addForm(Constants.Key_Password, password)
-            .buildForm()
-
-        // 创建 Request 对象
-        val request = OkHttpHelper.requestBuilder()
+        // 2. 构建请求
+        val request = Request.Builder()
             .url(Constants.Url_Login)
             .post(requestBody)
             .build()
 
-        // 创建 Call 对象，并发送请求并获取服务器返回的数据
+        // 3. 发送异步请求
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                showFailure(e.message)
+                appendLog("【FormBody】失败：${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.use {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    //for ((name, value) in response.headers) {
-                    //    println("$name: $value")
-                    //}
-
-                    response.body?.let {
-                        showResponse(it.string())
+                    if (!response.isSuccessful) {
+                        appendLog("【FormBody】失败：$response")
+                        return
                     }
+                    appendFormatLog("【FormBody】成功：", response.body.string())
                 }
             }
         })
     }
 
     /**
-     * MultipartBody
+     * 使用 OkHttp 原生 MultipartBody.Builder 构建多部分请求。
+     *
+     * 适用于 multipart/form-data 格式的 POST 请求（文件上传等场景）。
+     * 构建流程：MultipartBody.Builder → Request.Builder → client.newCall().enqueue()
      */
     private fun postingMultipart(username: String, password: String) {
-        // 创建 OkHttpClient 对象
-        val client: OkHttpClient = OkHttpHelper.client()
+        // 1. 构建请求体（多部分格式）
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(Constants.Key_Username, username)
+            .addFormDataPart(Constants.Key_Password, password)
+            .build()
 
-        // 创建 RequestBody 对象
-        val requestBody: RequestBody = OkHttpHelper.requestBodyBuilder()
-            .addMultipart(Constants.Key_Username, username)
-            .addMultipart(Constants.Key_Password, password)
-            .buildMultipart()
-
-        // 创建 Request 对象
-        val request: Request = OkHttpHelper.requestBuilder()
+        // 2. 构建请求
+        val request = Request.Builder()
             .url(Constants.Url_Login)
             .post(requestBody)
             .build()
 
-        // 创建 Call 对象，并发送请求并获取服务器返回的数据
+        // 3. 发送异步请求
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                showFailure(e.message)
+                appendLog("【MultipartBody】失败：${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.use {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    //for ((name, value) in response.headers) {
-                    //    println("$name: $value")
-                    //}
-
-                    response.body?.let {
-                        showResponse(it.string())
+                    if (!response.isSuccessful) {
+                        appendLog("【MultipartBody】失败：$response")
+                        return
                     }
+                    appendFormatLog("【MultipartBody】成功：", response.body.string())
                 }
             }
         })

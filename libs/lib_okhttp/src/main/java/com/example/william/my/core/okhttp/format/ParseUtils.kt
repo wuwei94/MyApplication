@@ -1,7 +1,5 @@
 package com.example.william.my.core.okhttp.format
 
-import android.text.TextUtils
-import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
@@ -10,7 +8,6 @@ import okio.GzipSource
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.EOFException
 import java.io.IOException
 import java.io.StringReader
 import java.io.StringWriter
@@ -68,8 +65,8 @@ object ParseUtils {
     }
 
     fun parseRequest(request: Request): String {
+        val requestBody = request.body ?: return ""
         return try {
-            val requestBody = request.body!!
             val buffer = Buffer()
             requestBody.writeTo(buffer)
             val contentType = requestBody.contentType()
@@ -84,8 +81,8 @@ object ParseUtils {
 
 
     fun parseResponse(response: Response): String {
+        val responseBody = response.body ?: return ""
         return try {
-            val responseBody = response.body!!
             val headers = response.headers
             val source = responseBody.source()
             source.request(Long.MAX_VALUE) // Buffer the entire body.
@@ -113,7 +110,7 @@ object ParseUtils {
      * @return
      */
     fun jsonFormat(json: String): String {
-        if (TextUtils.isEmpty(json)) {
+        if (json.isEmpty()) {
             return "Empty/Null json content"
         }
         val message: String = try {
@@ -141,7 +138,7 @@ object ParseUtils {
      * @return
      */
     fun xmlFormat(xml: String): String {
-        if (TextUtils.isEmpty(xml)) {
+        if (xml.isEmpty()) {
             return "Empty/Null xml content"
         }
         val message: String = try {
@@ -156,33 +153,5 @@ object ParseUtils {
             xml
         }
         return message
-    }
-
-    private fun bodyHasUnknownEncoding(headers: Headers): Boolean {
-        val contentEncoding = headers["Content-Encoding"] ?: return false
-        return !contentEncoding.equals(
-            "identity",
-            ignoreCase = true
-        ) && !contentEncoding.equals("gzip", ignoreCase = true)
-    }
-
-    private fun Buffer.isProbablyUtf8(): Boolean {
-        try {
-            val prefix = Buffer()
-            val byteCount = size.coerceAtMost(64)
-            copyTo(prefix, 0, byteCount)
-            for (i in 0 until 16) {
-                if (prefix.exhausted()) {
-                    break
-                }
-                val codePoint = prefix.readUtf8CodePoint()
-                if (Character.isISOControl(codePoint) && !Character.isWhitespace(codePoint)) {
-                    return false
-                }
-            }
-            return true
-        } catch (_: EOFException) {
-            return false // Truncated UTF-8 sequence.
-        }
     }
 }

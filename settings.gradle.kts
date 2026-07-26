@@ -94,7 +94,8 @@ include(":libs:lib_websocket_okhttp")
 include(":libs:lib_websocket_java")
 include(":libs:lib_netty")
 
-include(":libs:lib_download")
+//include(":libs:lib_download")
+
 include(":libs:lib_imageloader")
 
 include(":libs:lib_widget")

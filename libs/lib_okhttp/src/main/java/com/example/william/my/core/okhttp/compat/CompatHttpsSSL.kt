@@ -4,22 +4,20 @@ import android.annotation.SuppressLint
 import okhttp3.OkHttpClient
 import java.security.cert.X509Certificate
 import javax.net.ssl.HostnameVerifier
-import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
+/**
+ * HTTPS SSL 证书校验配置
+ */
 object CompatHttpsSSL {
 
+    /** 忽略 SSL 证书校验（仅调试用） */
     fun ignoreSSLForOkHttp(builder: OkHttpClient.Builder) {
         builder.hostnameVerifier(ignoreHostnameVerifier)
         builder.sslSocketFactory(ignoreSSLSocketFactory, ignoreTrustManager)
-    }
-
-    fun ignoreSSLForHttpsURLConnection() {
-        HttpsURLConnection.setDefaultHostnameVerifier(ignoreHostnameVerifier)
-        HttpsURLConnection.setDefaultSSLSocketFactory(ignoreSSLSocketFactory)
     }
 
     /**

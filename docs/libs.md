@@ -26,10 +26,105 @@
 
 ### lib_okhttp（OkHttp 封装）
 
-对 OkHttp 网络库的封装，提供统一的 HTTP 请求接口。
+对 OkHttp 网络库的封装，提供 Kotlin DSL 风格的配置 API，支持多实例、可插拔日志、进度监听等。
 
-- 权限：`INTERNET`
-- 依赖：OkHttp
+- 权限：`INTERNET`、`ACCESS_NETWORK_STATE`
+- 依赖：OkHttp、OkHttp Logging Interceptor
+- 包名：`com.example.william.my.core.okhttp`
+
+#### Kotlin DSL 快速上手
+
+```kotlin
+import com.example.william.my.core.okhttp.okHttpClient
+import com.example.william.my.core.okhttp.cachedClient
+
+// 每次创建独立的 client 实例
+val apiClient = okHttpClient {
+    timeout(30)                                    // 统一超时 30 秒
+    retryOnConnectionFailure(true)                 // 失败重试
+    logging()                                      // 官方日志
+    loggingFormat()                                // 自定义格式化日志
+}
+
+// 按名称缓存，同名只创建一次，后续复用
+val cachedApiClient = cachedClient("api") {
+    timeout(30)
+    logging()
+    loggingFormat(filters = listOf("/health"))     // 过滤指定 URL 后缀
+}
+// 再次调用返回同一个实例
+val same = cachedClient("api") { timeout(30) }
+assert(cachedApiClient === same) // true
+```
+
+#### 日志配置
+
+```kotlin
+// OkHttp 官方日志（默认 BASIC 级别）
+logging()
+logging(Level.BODY)                               // 自定义级别
+
+// 自定义格式化日志（边框、对齐、耗时）
+loggingFormat()                                    // 无过滤
+loggingFormat(filters = listOf("/api/ping"))       // 过滤指定 URL 后缀
+```
+
+#### 其他配置
+
+```kotlin
+val client = okHttpClient {
+    ignoreSSL()                                              // 忽略 SSL 证书校验（仅调试用）
+    noProxy()                                                // 禁用代理
+    cookieJar()                                              // 启用 Cookie 管理
+    cache(app, dirName = "http_cache", dirSize = 50L * 1024L * 1024L)  // 启用缓存
+    addInterceptor(CustomInterceptor())                      // 添加自定义拦截器
+    addNetworkInterceptor(InterceptorDownloadProgress { url, cur, total ->
+        Log.d("Download", "$url: $cur/$total")               // 下载进度监听
+    })
+    addNetworkInterceptor(InterceptorUploadProgress { cur, total ->
+        Log.d("Upload", "$cur/$total")                       // 上传进度监听
+    })
+    raw {                                                    // 高级：直接操作 OkHttpClient.Builder
+        dns(CustomDns())
+    }
+}
+```
+
+#### 请求示例
+
+```kotlin
+// FormBody
+val formBody = FormBody.Builder()
+    .add("username", "admin")
+    .add("password", "123456")
+    .build()
+
+val request = Request.Builder()
+    .url("https://api.example.com/login")
+    .post(formBody)
+    .build()
+
+client.newCall(request).enqueue(callback)
+
+// JSON Body
+val json = JSONObject()
+    .put("username", "admin")
+    .put("password", "123456")
+
+val jsonBody = json.toString()
+    .toRequestBody("application/json; charset=utf-8".toMediaType())
+
+val jsonRequest = Request.Builder()
+    .url("https://api.example.com/login")
+    .post(jsonBody)
+    .build()
+
+// MultipartBody（文件上传）
+val multipartBody = MultipartBody.Builder()
+    .setType(MultipartBody.FORM)
+    .addFormDataPart("file", "photo.jpg", file.asRequestBody("image/jpeg".toMediaType()))
+    .build()
+```
 
 ### lib_retrofit（Retrofit 封装）
 

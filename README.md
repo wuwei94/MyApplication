@@ -8,7 +8,7 @@
 
 - **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
-- **网络层**：Volley / OkHttp / Retrofit / Ktor / WebSocket / Netty / NanoHTTPD，含拦截器、下载库、点九图解析。
+- **网络层**：Volley / OkHttp / Retrofit / Ktor / WebSocket / Netty / NanoHTTPD，含 Kotlin DSL 封装、拦截器、下载库、点九图解析。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
 - **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / Provider / GetX / BloC。
@@ -166,6 +166,20 @@ MyApplication/
 - WebSocket（OkHttp 实现）
 - Ktor 客户端
 - 服务端：NanoHTTPD / Netty Socket
+
+### libs/lib_okhttp（OkHttp Kotlin DSL 封装）
+
+基于 OkHttp 的 Kotlin DSL 封装，支持多实例配置。所有 builder 操作统一通过 compat 层管理。
+
+- `okHttpClient {}` 每次创建独立 client
+- `cachedClient("name") {}` 按名称缓存复用
+- `logging()` / `loggingFormat()` 日志配置
+- `InterceptorDownloadProgress` / `InterceptorUploadProgress` 进度监听
+- `InterceptorBaseUrl` 动态 BaseUrl 重定向
+- `CookieStore` 接口化 Cookie 存储
+- `NetworkCheck` 接口化网络检测
+- Java 兼容：`OkHttpDsl.createClient(b -> { ... })`
+- 详见 [docs/libs.md](docs/libs.md)
 
 ### module_opensource（第三方库）
 

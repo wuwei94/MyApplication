@@ -10,6 +10,10 @@ import okhttp3.Response
 /**
  * 下载进度
  */
+@Deprecated(
+    message = "请使用 InterceptorDownloadProgress 配合 lambda 替代",
+    replaceWith = ReplaceWith("InterceptorDownloadProgress")
+)
 class InterceptorProgress(
     private val listener: ResponseProgressListener = object : ResponseProgressListener {
         override fun onProgress(url: String, currentSize: Long, totalSize: Long) {

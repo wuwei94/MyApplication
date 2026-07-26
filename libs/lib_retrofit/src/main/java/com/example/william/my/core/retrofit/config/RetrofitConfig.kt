@@ -1,6 +1,6 @@
 package com.example.william.my.core.retrofit.config
 
-import com.example.william.my.core.okhttp.helper.OkHttpHelper
+import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.retrofit.converter.RetrofitConverterFactory
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
@@ -11,7 +11,7 @@ object RetrofitConfig {
 
     private var mBaseUrl = "http://host/"
 
-    private var mOkHttpClient: OkHttpClient = OkHttpHelper.client()
+    private var mOkHttpClient: OkHttpClient = okHttpClient { logging() }
 
     private var mConverterFactory: Converter.Factory = RetrofitConverterFactory.create()
 

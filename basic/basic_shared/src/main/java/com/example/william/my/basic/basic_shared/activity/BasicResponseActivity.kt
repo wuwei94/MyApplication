@@ -57,6 +57,13 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
     }
 
     /**
+     * 追加格式化日志到 TextView（JSON 格式化）
+     */
+    protected fun appendFormatLog(prefix: String, message: String) {
+        appendLog("$prefix${message.formatString()}")
+    }
+
+    /**
      * 追加带颜色的日志到 TextView
      */
     protected fun appendLog(message: String, color: Int) {

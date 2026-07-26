@@ -2,9 +2,8 @@ package com.example.william.my.core.okhttp.compat
 
 import android.app.Application
 import android.os.Environment
-import com.example.william.my.core.okhttp.config.OkHttpConfig
 import com.example.william.my.core.okhttp.interceptor.InterceptorCache
-import com.example.william.my.core.okhttp.utils.HttpLogger
+import com.example.william.my.core.okhttp.utils.NetworkCheck
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import java.io.File
@@ -12,16 +11,24 @@ import java.io.File
 object CompatCache {
 
     fun setCache(
-        builder: OkHttpClient.Builder
+        builder: OkHttpClient.Builder,
+        app: Application,
+        dirName: String = "cache",
+        dirSize: Long = 10L * 1024L * 1024L
     ) {
-        OkHttpConfig.getApp()?.let { app ->
-            val cacheFile: File =
-                OkHttpConfig.getCacheDir() ?: File(getCacheDir(app), OkHttpConfig.getCacheDirName())
-            builder.cache(Cache(cacheFile, OkHttpConfig.getCacheDirSize()))
-            builder.addNetworkInterceptor(InterceptorCache(app))
-        } ?: run {
-            HttpLogger.error("context == null. 缓存未启用.")
-        }
+        val cacheFile = File(getCacheDir(app), dirName)
+        builder.cache(Cache(cacheFile, dirSize))
+        builder.addNetworkInterceptor(InterceptorCache(NetworkCheck(app)))
+    }
+
+    fun setCache(
+        builder: OkHttpClient.Builder,
+        app: Application,
+        dir: File,
+        dirSize: Long = 10L * 1024L * 1024L
+    ) {
+        builder.cache(Cache(dir, dirSize))
+        builder.addNetworkInterceptor(InterceptorCache(NetworkCheck(app)))
     }
 
     private fun getCacheDir(context: Application): File {

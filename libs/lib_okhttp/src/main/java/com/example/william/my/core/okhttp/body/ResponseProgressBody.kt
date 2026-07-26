@@ -12,6 +12,10 @@ import okio.buffer
 /**
  * 下载进度
  */
+@Deprecated(
+    message = "请使用 InterceptorDownloadProgress 配合 lambda 替代",
+    replaceWith = ReplaceWith("InterceptorDownloadProgress")
+)
 class ResponseProgressBody(
     private val mUrl: String,
     private val mResponseBody: ResponseBody,

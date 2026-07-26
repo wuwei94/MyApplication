@@ -11,6 +11,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 open class BaseData : Parcelable {
     fun string(): String {
-        return Gson().toJson(this)
+        return gson.toJson(this)
+    }
+
+    companion object {
+        private val gson = Gson()
     }
 }

@@ -1,9 +1,7 @@
 package com.example.william.my.core.okhttp.interceptor
 
-import android.content.Context
-import android.text.TextUtils
 import com.example.william.my.core.okhttp.base.Header
-import com.example.william.my.core.okhttp.utils.NetworkUtils
+import com.example.william.my.core.okhttp.utils.NetworkCheck
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -13,11 +11,11 @@ import java.util.concurrent.TimeUnit
 /**
  * 缓存拦截器
  */
-class InterceptorCache(private val mContext: Context) : Interceptor {
+class InterceptorCache(private val networkCheck: NetworkCheck) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
-        if (!TextUtils.equals(request.method, "GET")) {
+        if (request.method != "GET") {
             return chain.proceed(request)
         }
 
@@ -34,20 +32,16 @@ class InterceptorCache(private val mContext: Context) : Interceptor {
      */
     private fun buildRequest(request: Request, age: Int): Request {
         val builder: Request.Builder = request.newBuilder()
-        return if (NetworkUtils.isConnected(mContext)) {
+        return if (networkCheck.isConnected()) {
             if (age <= 0) {
-                builder
-                    .cacheControl(CacheControl.FORCE_NETWORK)
-                    .build()
+                builder.cacheControl(CacheControl.FORCE_NETWORK).build()
             } else {
                 builder
                     .cacheControl(CacheControl.Builder().maxAge(age, TimeUnit.SECONDS).build())
                     .build()
             }
         } else {
-            builder
-                .cacheControl(CacheControl.FORCE_CACHE)
-                .build()
+            builder.cacheControl(CacheControl.FORCE_CACHE).build()
         }
     }
 
@@ -59,12 +53,9 @@ class InterceptorCache(private val mContext: Context) : Interceptor {
      */
     private fun buildResponse(response: Response, age: Int): Response {
         val builder: Response.Builder = response.newBuilder()
-        return if (NetworkUtils.isConnected(mContext)) {
+        return if (networkCheck.isConnected()) {
             if (age <= 0) {
-                builder
-                    .removeHeader("Pragma")
-                    .removeHeader("Cache-Control")
-                    .build()
+                builder.removeHeader("Pragma").removeHeader("Cache-Control").build()
             } else {
                 builder
                     .removeHeader("Pragma")
@@ -76,10 +67,7 @@ class InterceptorCache(private val mContext: Context) : Interceptor {
             builder
                 .removeHeader("Pragma")
                 .removeHeader("Cache-Control")
-                .header(
-                    "Cache-Control",
-                    "public, only-if-cached, max-stale=" + Int.MAX_VALUE
-                )
+                .header("Cache-Control", "public, only-if-cached, max-stale=${Int.MAX_VALUE}")
                 .build()
         }
     }

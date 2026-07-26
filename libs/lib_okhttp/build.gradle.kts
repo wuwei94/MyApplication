@@ -4,15 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.okhttp"
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
-    // SharedPreferences.edit
+    // core-ktx extension
     implementation(libs.androidx.core.ktx)
-    api(libs.google.gson)
+    implementation(libs.google.gson)
     api(libs.okhttp)
-    api(libs.okhttp.logging)
+    implementation(libs.okhttp.logging)
 }
