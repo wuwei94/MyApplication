@@ -74,79 +74,94 @@ dependencyResolutionManagement {
 }
 rootProject.name = "My Application"
 
+// 壳工程入口
 include(":app")
+
+// 基础层
 include(":basic:basic_lib")
 include(":basic:basic_shared")
 
-include(":basic:basic_repository")
+// 数据仓库层
+include(":basic:basic_repo")
 include(":basic:basic_server")
 
-include(":libs:lib_ktor")
-
+// HTTP 客户端（基础）
 include(":libs:lib_httpurl")
 include(":libs:lib_volley")
 
+// HTTP 客户端（封装层）
 include(":libs:lib_okhttp")
 include(":libs:lib_retrofit")
 
+// HTTP 客户端（Kotlin 原生）
+include(":libs:lib_ktor")
 
+// 下载 / 上传
+//include(":libs:lib_download")
+//include(":libs:lib_upload")
+
+// 长连接 / WebSocket
 include(":libs:lib_websocket_okhttp")
 include(":libs:lib_websocket_java")
 include(":libs:lib_netty")
 
-//include(":libs:lib_download")
+// 服务端
+include(":libs:lib_nanohttpd")
 
+// 图片加载
 include(":libs:lib_imageloader")
 
-include(":libs:lib_widget")
-
+// 消息总线
 include(":libs:lib_eventbus")
+
+// UI 控件
+include(":libs:lib_widget")
 include(":libs:lib_ninepatch")
-include(":libs:lib_nanohttpd")
+
+
+// UI 控件
+include(":modules:module_ui")
+// Tab 导航
+include(":modules:module_tab")
+// 动画
+include(":modules:module_anim")
+// 自定义控件
+include(":modules:module_widget")
 
 // 同步
 include(":modules:module_sync")
-// 示例
-include(":modules:module_sample")
 // 组件交互
 include(":modules:module_component")
 // 系统能力
 include(":modules:module_system")
-// 控件
-include(":modules:module_widget")
 
-// 工具库
-include(":modules:module_utils")
+// 示例
+include(":modules:module_sample")
+// 业务功能
+include(":modules:module_features")
+
 // 网络库
 include(":modules:module_network")
 // OkHttp
 include(":modules:module_okhttp")
 // WebSocket
 include(":modules:module_websocket")
-// 第三方库
-include(":modules:module_opensource")
 
-// 架构模式
-//include(":modules:module_arch")
+// 工具库
+include(":modules:module_utils")
 // 事件总线
 include(":modules:module_event")
-// 业务功能
-include(":modules:module_features")
+// 第三方库
+include(":modules:module_opensource")
 
 // Kotlin 特性
 //include(":modules:module_kotlin")
 // Jetpack 组件库
-include(":modules:module_jetpack")
+//include(":modules:module_jetpack")
+// 架构模式
+//include(":modules:module_arch")
 
-// 动画
-include(":modules:module_anim")
-
-// UI 控件
-include(":modules:module_ui")
-// Tab 导航
-include(":modules:module_tab")
-
-// Compoe
+// Compose
 include(":modules:module_compose")
 
 val enableFlutter = providers.gradleProperty("enableFlutter")

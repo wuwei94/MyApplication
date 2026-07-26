@@ -12,7 +12,7 @@ dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
 
-    implementation(project(":basic:basic_repository"))
+    implementation(project(":basic:basic_repo"))
 
     implementation(project(":libs:lib_okhttp"))
     implementation(project(":libs:lib_retrofit"))

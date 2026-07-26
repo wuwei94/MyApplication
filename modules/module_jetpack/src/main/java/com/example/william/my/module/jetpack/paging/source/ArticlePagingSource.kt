@@ -2,10 +2,10 @@ package com.example.william.my.module.jetpack.paging.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.william.my.basic.basic_repository.api.ArticleApi
-import com.example.william.my.basic.basic_repository.bean.ArticleData
-import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.api.ArticleApi
+import com.example.william.my.basic.basic_repo.bean.ArticleData
+import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 
 class ArticlePagingSource(
     private val networkApi: ArticleApi,

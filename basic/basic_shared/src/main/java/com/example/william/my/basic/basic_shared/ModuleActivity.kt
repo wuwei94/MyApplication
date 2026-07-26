@@ -38,21 +38,25 @@ class ModuleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Sync", RouterPath.Sync.Main))
         routerItems.add(RouterItem("Component", RouterPath.Component.Main))
         routerItems.add(RouterItem("System", RouterPath.System.Main))
+
+        routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Sample", RouterPath.Sample.Main))
         routerItems.add(RouterItem("Features", RouterPath.Features.Main))
 
         routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("Utils", RouterPath.Utils.Main))
-        routerItems.add(RouterItem("OkHttp", RouterPath.OkHttp.Main))
         routerItems.add(RouterItem("Network", RouterPath.Network.Main))
+        routerItems.add(RouterItem("OkHttp", RouterPath.OkHttp.Main))
         routerItems.add(RouterItem("WebSocket", RouterPath.WebSocket.Main))
+
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("Utils", RouterPath.Utils.Main))
+        routerItems.add(RouterItem("Event", RouterPath.Event.Main))
         routerItems.add(RouterItem("OpenSource", RouterPath.OpenSource.Main))
 
         routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("Arch", RouterPath.Arch.Main))
-        routerItems.add(RouterItem("Event", RouterPath.Event.Main))
         routerItems.add(RouterItem("Kotlin", RouterPath.Kotlin.Main))
         routerItems.add(RouterItem("JetPack", RouterPath.JetPack.Main))
+        routerItems.add(RouterItem("Arch", RouterPath.Arch.Main))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Compose", RouterPath.Compose.Main))

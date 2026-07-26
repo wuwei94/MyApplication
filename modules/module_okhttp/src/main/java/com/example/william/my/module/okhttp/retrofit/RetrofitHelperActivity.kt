@@ -1,7 +1,7 @@
 package com.example.william.my.module.okhttp.retrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_repository.api.NetworkApi
+import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath

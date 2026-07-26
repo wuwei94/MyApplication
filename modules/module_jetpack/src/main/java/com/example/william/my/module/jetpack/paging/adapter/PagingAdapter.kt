@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.module.jetpack.databinding.JetpackItemRecyclerBinding
 
 /**

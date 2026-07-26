@@ -13,7 +13,7 @@ dependencies {
     implementation(project(":basic:basic_shared"))
     implementation(project(":basic:basic_server"))
 
-    implementation(project(":basic:basic_repository"))
+    implementation(project(":basic:basic_repo"))
 
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))

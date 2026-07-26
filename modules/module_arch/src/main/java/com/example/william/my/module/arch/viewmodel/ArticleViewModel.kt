@@ -10,10 +10,10 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.william.my.basic.basic_repository.bean.ArticleData
-import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repository.data.ServiceLocator
-import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.bean.ArticleData
+import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repo.data.ServiceLocator
+import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.base.app.BaseApp
 

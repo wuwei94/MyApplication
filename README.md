@@ -51,28 +51,31 @@ MyApplication/
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_shared            # 通用 Bus、Router、UI 脚手架
-│   └── basic_repository        # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
+│   ├── basic_repo              # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
+│   └── basic_server            # 服务端基础模块
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket_okhttp / lib_websocket_java / lib_download
 │   ├── lib_netty / lib_nanohttpd / lib_eventbus / lib_ninepatch / lib_imageloader / lib_widget
 │   └── ...
 └── modules                     # Feature 模块
-    ├── module_sync             # 异步处理（AsyncTask / HandlerThread / JobScheduler）
-    ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
-    ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
-    ├── module_system           # 系统能力（Notification / Permission / SecureKey）
-    ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
     ├── module_ui               # 系统 UI 组件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
-    ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
-    ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
-    ├── module_opensource       # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
-    ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
-    ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
+    ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
+    ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
+    ├── module_sync             # 异步处理（AsyncTask / HandlerThread / JobScheduler）
+    ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
+    ├── module_system           # 系统能力（Notification / Permission / SecureKey）
+    ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
     ├── module_features         # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
+    ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
+    ├── module_okhttp           # OkHttp 专项示例
+    ├── module_websocket        # WebSocket 专项示例
+    ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
+    ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
+    ├── module_opensource       # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
     ├── module_jetpack          # Jetpack 组件（Room / DataStore / WorkManager / Paging / Hilt）
-    ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
+    ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
     ├── module_compose          # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     └── module_flutter          # Flutter 子工程
 ```
@@ -80,53 +83,6 @@ MyApplication/
 ---
 
 ## Modules Detail
-
-### module_sync（异步处理）
-
-演示 Android 异步/后台处理机制。
-
-- AsyncTask 异步任务
-- HandlerThread 线程间通信
-- JobScheduler 定时任务调度
-
-### module_sample（技术示例）
-
-演示零散的技术技巧，不属于完整业务场景。
-
-- View Hook 反射技术
-- 自定义字体加载（Typeface.createFromAsset）
-- 悬浮窗（WindowManager + 拖拽 + 贴边动画）
-
-### module_component（组件交互）
-
-演示 Android 四大组件间的交互机制。
-
-- BroadcastReceiver 广播注册与发送
-- ActivityResultContracts 新版结果回调 API
-- OnBackPressedDispatcher 返回键拦截
-- Service 绑定（bindService）与前台服务
-- Messenger 跨进程通信（IPC）
-
-### module_system（系统能力）
-
-演示 Android 系统级能力。
-
-- NotificationChannel 通知渠道创建与通知发送
-- 运行时权限批量申请
-- Android Keystore 安全密钥创建与签名
-
-### module_widget（自定义控件）
-
-演示项目自定义实现的 UI 控件。
-
-- 高斯模糊（BlurView）
-- 裸眼 3D 效果（Sensor3D）
-- 跑马灯（MarqueeView）
-- 无限滚动 ImageView
-- 验证码控件
-- BottomSheetDialog / AlertDialog
-- Spinner / TitleBar
-- 九宫格拉伸图片（NinePatch）
 
 ### module_ui（系统 UI 组件）
 
@@ -146,14 +102,74 @@ MyApplication/
 - ViewPager + RadioGroup 联动
 - BottomNavigationView + Fragment（底部导航栏）
 
-### module_utils（工具库示例）
+### module_anim（动画）
 
-演示 BlankJ utilcode 工具库的各种工具类。
+演示 Android 原生动画机制。
 
-- 屏幕适配（AdaptScreenUtils）
-- 文件 IO（FileIOUtils）
-- 权限申请（PermissionUtils）
-- 线程工具（ThreadUtils）
+- ObjectAnimator 属性动画（透明度/旋转/缩放/平移）
+- AnimatorSet 动画组合（顺序/同时/Builder 编排）
+- ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator
+- Keyframe 关键帧动画 + PropertyValuesHolder
+- 视图过渡动画（ChangeBounds / Fade / Slide / AutoTransition）
+- RenderEffect 渲染效果（Android 12+）
+- RenderScript 图像处理（已废弃）
+- Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
+
+### module_widget（自定义控件）
+
+演示项目自定义实现的 UI 控件。
+
+- 高斯模糊（BlurView）
+- 裸眼 3D 效果（Sensor3D）
+- 跑马灯（MarqueeView）
+- 无限滚动 ImageView
+- 验证码控件
+- BottomSheetDialog / AlertDialog
+- Spinner / TitleBar
+- 九宫格拉伸图片（NinePatch）
+
+### module_sync（异步处理）
+
+演示 Android 异步/后台处理机制。
+
+- AsyncTask 异步任务
+- HandlerThread 线程间通信
+- JobScheduler 定时任务调度
+
+### module_component（组件交互）
+
+演示 Android 四大组件间的交互机制。
+
+- BroadcastReceiver 广播注册与发送
+- ActivityResultContracts 新版结果回调 API
+- OnBackPressedDispatcher 返回键拦截
+- Service 绑定（bindService）与前台服务
+- Messenger 跨进程通信（IPC）
+
+### module_system（系统能力）
+
+演示 Android 系统级能力。
+
+- NotificationChannel 通知渠道创建与通知发送
+- 运行时权限批量申请
+- Android Keystore 安全密钥创建与签名
+
+### module_sample（技术示例）
+
+演示零散的技术技巧，不属于完整业务场景。
+
+- View Hook 反射技术
+- 自定义字体加载（Typeface.createFromAsset）
+- 悬浮窗（WindowManager + 拖拽 + 贴边动画）
+
+### module_features（业务功能）
+
+业务功能 Demo。
+
+- 转盘抽奖（旋转动画）
+- 麦位动画（自定义 LayoutManager）
+- CameraX 相机拍照/录像
+- 图片裁剪（Intent 调用系统裁剪）
 
 ### module_network（网络库全栈对比）
 
@@ -167,41 +183,31 @@ MyApplication/
 - Ktor 客户端
 - 服务端：NanoHTTPD / Netty Socket
 
-### libs/lib_okhttp（OkHttp Kotlin DSL 封装）
+### module_okhttp（OkHttp 专项示例）
 
-基于 OkHttp 的 Kotlin DSL 封装，支持多实例配置。所有 builder 操作统一通过 compat 层管理。
+OkHttp 专项功能演示。
 
-- `okHttpClient {}` 每次创建独立 client
-- `cachedClient("name") {}` 按名称缓存复用
-- `logging()` / `loggingFormat()` 日志配置
-- `InterceptorDownloadProgress` / `InterceptorUploadProgress` 进度监听
-- `InterceptorBaseUrl` 动态 BaseUrl 重定向
-- `CookieStore` 接口化 Cookie 存储
-- `NetworkCheck` 接口化网络检测
-- Java 兼容：`OkHttpDsl.createClient(b -> { ... })`
-- 详见 [docs/libs.md](docs/libs.md)
+- 自定义 Interceptor 实现
+- 进度监听（下载/上传）
+- 动态 BaseUrl 切换
+- Cookie 管理
 
-### module_opensource（第三方库）
+### module_websocket（WebSocket 专项示例）
 
-第三方开源框架集成 Demo。
+WebSocket 专项功能演示。
 
-- 动画：PAG / Lottie / SVGAPlayer
-- 数据库：ObjectBox
-- UI：FlycoTabLayout / SwipeLayout / PhotoView / Banner / EasyFloat / RealtimeBlurView / ShadowLayout
-- 选择器：PictureSelector / CityPicker / PickerView
-- 工具：RxJava / LoadSir / MMKV / PermissionX
-- 图片加载：Coil / Glide
+- OkHttp WebSocket 实现
+- Java WebSocket 实现
+- Netty WebSocket 实现
 
-### module_arch（架构模式）
+### module_utils（工具库示例）
 
-架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。
+演示 BlankJ utilcode 工具库的各种工具类。
 
-| 模式 | 说明 |
-|------|------|
-| MVP | Presenter 持有 View 引用，手动桥接 |
-| MVVM | LiveData + ViewModel，UseCase 封装单一业务逻辑 |
-| MVI | 单向数据流：State → UI → Intent → ViewModel → State |
-| Mavericks | 基于 Mavericks 框架的 MVI 实现，含 Counter 示例 |
+- 屏幕适配（AdaptScreenUtils）
+- 文件 IO（FileIOUtils）
+- 权限申请（PermissionUtils）
+- 线程工具（ThreadUtils）
 
 ### module_event（事件总线）
 
@@ -214,14 +220,16 @@ MyApplication/
 | LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
 | FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
 
-### module_features（业务功能）
+### module_opensource（第三方库）
 
-业务功能 Demo。
+第三方开源框架集成 Demo。
 
-- 转盘抽奖（旋转动画）
-- 麦位动画（自定义 LayoutManager）
-- CameraX 相机拍照/录像
-- 图片裁剪（Intent 调用系统裁剪）
+- 动画：PAG / Lottie / SVGAPlayer
+- 数据库：ObjectBox
+- UI：FlycoTabLayout / SwipeLayout / PhotoView / Banner / EasyFloat / RealtimeBlurView / ShadowLayout
+- 选择器：PictureSelector / CityPicker / PickerView
+- 工具：RxJava / LoadSir / MMKV / PermissionX
+- 图片加载：Coil / Glide
 
 ### module_kotlin（Kotlin 语言特性）
 
@@ -240,18 +248,16 @@ Jetpack 组件库 Demo。
 - **DataStore**：Preferences / Proto 两种存储
 - **WorkManager**：后台任务（普通 + expedited）
 
-### module_anim（动画）
+### module_arch（架构模式）
 
-演示 Android 原生动画机制。
+架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。
 
-- ObjectAnimator 属性动画（透明度/旋转/缩放/平移）
-- AnimatorSet 动画组合（顺序/同时/Builder 编排）
-- ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator
-- Keyframe 关键帧动画 + PropertyValuesHolder
-- 视图过渡动画（ChangeBounds / Fade / Slide / AutoTransition）
-- RenderEffect 渲染效果（Android 12+）
-- RenderScript 图像处理（已废弃）
-- Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
+| 模式 | 说明 |
+|------|------|
+| MVP | Presenter 持有 View 引用，手动桥接 |
+| MVVM | LiveData + ViewModel，UseCase 封装单一业务逻辑 |
+| MVI | 单向数据流：State → UI → Intent → ViewModel → State |
+| Mavericks | 基于 Mavericks 框架的 MVI 实现，含 Counter 示例 |
 
 ### module_compose（Compose 示例）
 

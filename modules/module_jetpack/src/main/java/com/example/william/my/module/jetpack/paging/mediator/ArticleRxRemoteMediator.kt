@@ -4,11 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxRemoteMediator
-import com.example.william.my.basic.basic_repository.api.ArticleApi
-import com.example.william.my.basic.basic_repository.bean.ArticleData
-import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
-import com.example.william.my.basic.basic_repository.database.ArticleDatabase
+import com.example.william.my.basic.basic_repo.api.ArticleApi
+import com.example.william.my.basic.basic_repo.bean.ArticleData
+import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.database.ArticleDatabase
 import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
 import com.example.william.my.module.jetpack.paging.remotekey.data.RemoteKeyData
 import io.reactivex.rxjava3.core.Single

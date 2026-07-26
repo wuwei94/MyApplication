@@ -16,7 +16,7 @@ app/                          # 入口（SplashScreen → ModuleActivity）
 basic/                        # 基础层
 ├── basic_lib/                # 基类（BaseActivity、BaseVBActivity、权限管理）
 ├── basic_shared/             # 路由（RouterPath）、共享 Layout、Utils
-└── basic_repository/         # 数据仓库层
+└── basic_repo/               # 数据仓库层
 libs/                         # 库封装层（无 Activity，仅提供 API 封装）
 modules/                      # 功能模块层（每个模块有独立入口 Activity）
 build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配置）

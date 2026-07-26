@@ -3,7 +3,7 @@ package com.example.william.my.module.network.activity.volley
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.android.volley.VolleyError
-import com.example.william.my.basic.basic_repository.bean.LoginData
+import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath

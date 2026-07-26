@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.william.my.basic.basic_repository.bean.LoginData
+import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult
 import com.example.william.my.module.kotlin.repo.CoroutinesRepository

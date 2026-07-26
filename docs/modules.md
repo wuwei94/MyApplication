@@ -6,99 +6,30 @@
 
 | 模块 | 职责 | 入口 Activity | 路由前缀 |
 |------|------|--------------|---------|
-| module_sync | 异步处理 | SyncActivity | /Sync |
-| module_sample | 技术示例 | SampleActivity | /Sample |
-| module_component | 组件交互 | ComponentActivity | /Component |
-| module_system | 系统能力 | SystemActivity | /System |
-| module_widget | 自定义控件 | WidgetActivity | /Widget |
 | module_ui | 系统 UI 组件 | UiActivity | /UI |
 | module_tab | Tab 导航 | TabActivity | /Tab |
-| module_utils | 工具类 | AndroidUtilsActivity | /Utils |
+| module_anim | 动画 | AnimActivity | /Animation |
+| module_widget | 自定义控件 | WidgetActivity | /Widget |
+| module_sync | 异步处理 | SyncActivity | /Sync |
+| module_component | 组件交互 | ComponentActivity | /Component |
+| module_system | 系统能力 | SystemActivity | /System |
+| module_sample | 技术示例 | SampleActivity | /Sample |
+| module_features | 业务功能 | FeaturesActivity | /Features |
 | module_network | 网络库 | NetWorkActivity | /Network |
 | module_okhttp | OkHttp / Retrofit / Download | HttpClientActivity | /OkHttp |
 | module_websocket | WebSocket 示例 | WebSocketActivity | /WebSocket |
-| module_opensource | 第三方库 | OpenSourceActivity | /Opensource |
-| module_arch | 架构模式 | ArchActivity | /Arch |
+| module_utils | 工具类 | AndroidUtilsActivity | /Utils |
 | module_event | 事件总线 | EventActivity | /Event |
-| module_features | 业务功能 | FeaturesActivity | /Features |
+| module_opensource | 第三方库 | OpenSourceActivity | /Opensource |
 | module_kotlin | Kotlin 特性 | KotlinActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetPackActivity | /JetPack |
-| module_anim | 动画 | AnimActivity | /Animation |
+| module_arch | 架构模式 | ArchActivity | /Arch |
 | module_compose | Compose UI | ComposeActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
 
 ---
 
 ## 模块详情
-
-### module_sync（异步处理）
-
-演示 Android 异步/后台处理机制。
-
-| Activity | 功能 |
-|----------|------|
-| AsyncTaskActivity | AsyncTask 异步任务 |
-| HandlerThreadActivity | HandlerThread 线程间通信 |
-| JobSchedulerActivity | JobScheduler 定时任务调度 |
-
----
-
-### module_sample（技术示例）
-
-演示零散的技术技巧，不属于完整业务场景。
-
-| Activity | 功能 |
-|----------|------|
-| HookActivity | View Hook 反射技术 |
-| TypefaceActivity | 自定义字体加载（Typeface.createFromAsset） |
-| FloatWindowActivity | 悬浮窗（WindowManager + 拖拽 + 贴边动画） |
-
----
-
-### module_component（组件交互）
-
-演示 Android 四大组件间的交互机制。
-
-| Activity | 功能 |
-|----------|------|
-| BroadcastActivity | BroadcastReceiver 广播注册与发送 |
-| ActivityResultActivity | ActivityResultContracts 新版结果回调 API |
-| ActivityResultActivity2 | ActivityResultActivity 的目标页 |
-| OnBackPressedActivity | OnBackPressedDispatcher 返回键拦截 |
-| ServiceActivity | Service 绑定（bindService）与前台服务 |
-| MessengerActivity | Messenger 跨进程通信（IPC） |
-
----
-
-### module_system（系统能力）
-
-演示 Android 系统级能力。
-
-| Activity | 功能 |
-|----------|------|
-| NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
-| PermissionActivity | 运行时权限批量申请 |
-| SecureKeyActivity | Android Keystore 安全密钥创建与签名 |
-
----
-
-### module_widget（自定义控件）
-
-演示项目自定义实现的 UI 控件。
-
-| Activity | 功能 |
-|----------|------|
-| AlertDialogActivity | 自定义 IosAlertDialog/BottomSheetDialog |
-| BlurViewActivity | 自定义高斯模糊控件 |
-| InfiniteImageActivity | 无限循环图片控件 |
-| MarqueeViewActivity | 自定义跑马灯滚动控件 |
-| Sensor3DActivity | 3D 传感器倾斜控件 |
-| SpinnerActivity | 自定义下拉选择器控件 |
-| TitleBarActivity | 自定义标题栏控件 |
-| VerifyCodeActivity | 自定义验证码输入控件 |
-| NinePatchActivity | 九宫格拉伸图片控件 |
-
----
 
 ### module_ui（系统 UI 组件）
 
@@ -132,16 +63,101 @@
 
 ---
 
-### module_utils（工具类）
+### module_anim（动画）
 
-演示 BlankJ utilcode 工具库的各种工具类。
+演示 Android 原生动画机制。
 
 | Activity | 功能 |
 |----------|------|
-| AdaptScreenUtilsActivity | 屏幕适配工具 |
-| FileIOUtilsActivity | 文件读写工具 |
-| PermissionUtilsActivity | 权限请求工具 |
-| ThreadUtilsActivity | 线程池工具 |
+| ObjectAnimatorActivity | ObjectAnimator 属性动画（透明度/旋转/缩放/平移） |
+| AnimatorSetActivity | AnimatorSet 动画组合（顺序/同时/Builder 编排） |
+| ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
+| KeyframeActivity | Keyframe 关键帧动画 + PropertyValuesHolder |
+| TransitionActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
+| RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
+| RenderScriptActivity | RenderScript 图像处理（已废弃） |
+
+---
+
+### module_widget（自定义控件）
+
+演示项目自定义实现的 UI 控件。
+
+| Activity | 功能 |
+|----------|------|
+| AlertDialogActivity | 自定义 IosAlertDialog/BottomSheetDialog |
+| BlurViewActivity | 自定义高斯模糊控件 |
+| InfiniteImageActivity | 无限循环图片控件 |
+| MarqueeViewActivity | 自定义跑马灯滚动控件 |
+| Sensor3DActivity | 3D 传感器倾斜控件 |
+| SpinnerActivity | 自定义下拉选择器控件 |
+| TitleBarActivity | 自定义标题栏控件 |
+| VerifyCodeActivity | 自定义验证码输入控件 |
+| NinePatchActivity | 九宫格拉伸图片控件 |
+
+---
+
+### module_sync（异步处理）
+
+演示 Android 异步/后台处理机制。
+
+| Activity | 功能 |
+|----------|------|
+| AsyncTaskActivity | AsyncTask 异步任务 |
+| HandlerThreadActivity | HandlerThread 线程间通信 |
+| JobSchedulerActivity | JobScheduler 定时任务调度 |
+
+---
+
+### module_component（组件交互）
+
+演示 Android 四大组件间的交互机制。
+
+| Activity | 功能 |
+|----------|------|
+| BroadcastActivity | BroadcastReceiver 广播注册与发送 |
+| ActivityResultActivity | ActivityResultContracts 新版结果回调 API |
+| ActivityResultActivity2 | ActivityResultActivity 的目标页 |
+| OnBackPressedActivity | OnBackPressedDispatcher 返回键拦截 |
+| ServiceActivity | Service 绑定（bindService）与前台服务 |
+| MessengerActivity | Messenger 跨进程通信（IPC） |
+
+---
+
+### module_system（系统能力）
+
+演示 Android 系统级能力。
+
+| Activity | 功能 |
+|----------|------|
+| NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
+| PermissionActivity | 运行时权限批量申请 |
+| SecureKeyActivity | Android Keystore 安全密钥创建与签名 |
+
+---
+
+### module_sample（技术示例）
+
+演示零散的技术技巧，不属于完整业务场景。
+
+| Activity | 功能 |
+|----------|------|
+| HookActivity | View Hook 反射技术 |
+| TypefaceActivity | 自定义字体加载（Typeface.createFromAsset） |
+| FloatWindowActivity | 悬浮窗（WindowManager + 拖拽 + 贴边动画） |
+
+---
+
+### module_features（业务功能）
+
+演示完整的业务场景。
+
+| Activity | 功能 |
+|----------|------|
+| TurntableActivity | 转盘抽奖（旋转动画） |
+| MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
+| CameraActivity | CameraX 相机拍照/录像 |
+| CropActivity | 图片裁剪（Intent 调用系统裁剪） |
 
 ---
 
@@ -201,6 +217,32 @@
 
 ---
 
+### module_utils（工具类）
+
+演示 BlankJ utilcode 工具库的各种工具类。
+
+| Activity | 功能 |
+|----------|------|
+| AdaptScreenUtilsActivity | 屏幕适配工具 |
+| FileIOUtilsActivity | 文件读写工具 |
+| PermissionUtilsActivity | 权限请求工具 |
+| ThreadUtilsActivity | 线程池工具 |
+
+---
+
+### module_event（事件总线）
+
+演示各种事件总线实现。
+
+| Activity | 功能 |
+|----------|------|
+| EventBusActivity | EventBus（GreenRobot） |
+| RxEventBusActivity | RxEventBus（基于 RxJava） |
+| LiveEventBusActivity | LiveEventBus（基于 LiveData） |
+| FlowEventBusActivity | FlowEventBus（基于 Kotlin Flow） |
+
+---
+
 ### module_opensource（第三方库）
 
 演示第三方开源库的使用。
@@ -232,46 +274,6 @@
 
 ---
 
-### module_arch（架构模式）
-
-演示 Android 架构模式。
-
-| Activity | 功能 |
-|----------|------|
-| MvpActivity | MVP 架构模式 |
-| MvvmActivity | MVVM 架构模式 |
-| MviActivity | MVI 架构模式 |
-| CounterActivity | Mavericks 计数器示例 |
-| MavericksActivity | Mavericks 文章列表示例 |
-
----
-
-### module_event（事件总线）
-
-演示各种事件总线实现。
-
-| Activity | 功能 |
-|----------|------|
-| EventBusActivity | EventBus（GreenRobot） |
-| RxEventBusActivity | RxEventBus（基于 RxJava） |
-| LiveEventBusActivity | LiveEventBus（基于 LiveData） |
-| FlowEventBusActivity | FlowEventBus（基于 Kotlin Flow） |
-
----
-
-### module_features（业务功能）
-
-演示完整的业务场景。
-
-| Activity | 功能 |
-|----------|------|
-| TurntableActivity | 转盘抽奖（旋转动画） |
-| MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
-| CameraActivity | CameraX 相机拍照/录像 |
-| CropActivity | 图片裁剪（Intent 调用系统裁剪） |
-
----
-
 ### module_kotlin（Kotlin 特性）
 
 演示 Kotlin 语言核心特性。
@@ -297,19 +299,17 @@
 
 ---
 
-### module_anim（动画）
+### module_arch（架构模式）
 
-演示 Android 原生动画机制。
+演示 Android 架构模式。
 
 | Activity | 功能 |
 |----------|------|
-| ObjectAnimatorActivity | ObjectAnimator 属性动画（透明度/旋转/缩放/平移） |
-| AnimatorSetActivity | AnimatorSet 动画组合（顺序/同时/Builder 编排） |
-| ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
-| KeyframeActivity | Keyframe 关键帧动画 + PropertyValuesHolder |
-| TransitionActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
-| RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
-| RenderScriptActivity | RenderScript 图像处理（已废弃） |
+| MvpActivity | MVP 架构模式 |
+| MvvmActivity | MVVM 架构模式 |
+| MviActivity | MVI 架构模式 |
+| CounterActivity | Mavericks 计数器示例 |
+| MavericksActivity | Mavericks 文章列表示例 |
 
 ---
 

@@ -20,10 +20,10 @@ import android.app.Application
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.william.my.basic.basic_repository.bean.ArticleData
-import com.example.william.my.basic.basic_repository.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repository.data.ServiceLocator
-import com.example.william.my.basic.basic_repository.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.bean.ArticleData
+import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import com.example.william.my.basic.basic_repo.data.ServiceLocator
+import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 import com.example.william.my.module.arch.viewmodel.ArticleLiveDataViewModel
 import com.example.william.my.module.arch.viewmodel.ArticleStateFlowViewModel
 
