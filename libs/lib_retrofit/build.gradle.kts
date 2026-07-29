@@ -11,9 +11,4 @@ dependencies {
     api(libs.retrofit)
     api(libs.retrofit.converter.gson)
     api(libs.retrofit.converter.scalars)
-    api(libs.retrofit.adapter.rxjava3)
-    //AndroidSchedulers
-    api(libs.rxandroid)
-    //LifecycleProvider
-    implementation(libs.rxlifecycle)
 }

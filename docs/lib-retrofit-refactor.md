@@ -18,6 +18,49 @@
 
 ---
 
+## RxJava 拆分（lib_rx_retrofit）
+
+将 RxJava3 相关代码从 lib_retrofit 拆分到独立的 `lib_rx_retrofit` 模块，使核心 Retrofit 模块不再依赖 RxJava。
+
+### 拆分到 lib_rx_retrofit 的文件（10 个）
+
+| 文件 | 说明 |
+|------|------|
+| `RxRetrofit.kt` | Rx 请求类 |
+| `api/Api.java` | Retrofit API 接口（返回 Single） |
+| `builder/RequestBuilder.kt` | Rx 请求构建器 |
+| `callback/RetrofitLiveDataCallback.kt` | DisposableSingleObserver 回调 |
+| `callback/RetrofitFileCallback.kt` | 文件下载回调 |
+| `callback/RetrofitResponseCallback.kt` | 响应回调 |
+| `function/HttpResultFunction.kt` | Rx 异常转换 |
+| `function/RxRetrofitFunction.kt` | Rx 泛型转换 |
+| `function/ServerResultFunction.kt` | 服务端结果校验 |
+| `helper/RetrofitHelper.kt` | Retrofit 辅助类（deprecated） |
+
+### 解耦改动
+
+- `RetrofitBuilder.kt`：移除 `RxJava3CallAdapterFactory.create()` 硬编码，CallAdapter 改为按需配置
+- `RetrofitConfig.kt`：`mCallAdapterFactory` 改为可空，默认 null
+
+### 依赖关系
+
+```
+lib_rx_retrofit  ──api──>  lib_retrofit  ──api──>  lib_okhttp
+     │
+     ├── retrofit-adapter-rxjava3
+     ├── rxandroid
+     └── rxlifecycle
+```
+
+### 下游模块
+
+需要 Rx 支持的模块同时依赖 `lib_retrofit` 和 `lib_rx_retrofit`：
+- `modules/module_okhttp`
+- `libs/lib_download`
+- `basic/basic_repo`
+
+---
+
 ## 新增文件
 
 ### 1. `RetrofitDsl.kt` — Kotlin DSL 入口
@@ -70,10 +113,10 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 **原因**：封装 `Retrofit.Builder`，提供 `baseUrl()`、`client()`、`converter()`、`callAdapter()`、`code()`、`message()`、`raw {}` 等 DSL 方法。
 
 **核心设计**：
-- 默认使用全局兼容配置（baseUrl、OkHttpClient、RxJava3CallAdapterFactory）
+- 默认使用全局兼容配置（baseUrl、OkHttpClient）
 - 默认使用 `RetrofitConverterFactory`，支持自定义 code/message 字段名
 - `converter(factory)` — 覆盖默认 Converter
-- `callAdapter(factory)` — 覆盖默认 CallAdapter
+- `callAdapter(factory)` — 按需配置 CallAdapter（如需 RxJava 支持，通过 lib_rx_retrofit 配置）
 - `raw { }` — 逃生口，可直接操作底层 `Retrofit.Builder`
 
 ---
@@ -150,32 +193,41 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 ## 架构变化对比
 
 ```
-重构前                              重构后
-┌─────────────────────┐           ┌──────────────────────────┐
-│ RetrofitConfig      │           │ RetrofitDsl.kt            │
-│ (全局单例, Builder)  │           │ retrofit { } 每次新建      │
-│ mBaseUrl            │           │ cachedRetrofit("n") { }   │
-│ mOkHttpClient       │           │ getCachedRetrofit("n")    │
-│ mConverterFactory   │           │ removeCachedRetrofit("n") │
-│ mCallAdapterFactory │           ├──────────────────────────┤
-├─────────────────────┤           │ RetrofitBuilder (DSL)     │
-│ RetrofitHelper      │           │ baseUrl() / client()      │
-│ (全局单例, lazy)     │           │ converter() / callAdapter │
-│ mRetrofit           │           │ code() / message()        │
-│ 链式方法             │           │ raw { } 逃生口            │
-├─────────────────────┤           ├──────────────────────────┤
-│ RetrofitBuilder     │           │ RequestBuilder (请求参数)  │
-│ (请求参数, 链式API)  │           │ api() / get() / post()    │
-│ Method 枚举          │           │ Method 枚举（不变）        │
-├─────────────────────┤           ├──────────────────────────┤
-│ RetrofitConverterFactory│        │ RetrofitHelper (便捷方法)  │
-└─────────────────────┘           │ buildApi() / buildSingle()│
-                                  │ 委托 DSL 创建 Retrofit     │
-                                  ├──────────────────────────┤
-                                  │ RetrofitConverterFactory  │
-                                  │ create(code, message)     │
-                                  │ 不再依赖全局配置            │
-                                  ├──────────────────────────┤
-                                  │ 废弃: RetrofitConfig      │
-                                  └──────────────────────────┘
+重构前                              重构后（DSL 重构 + Rx 拆分）
+┌─────────────────────┐
+│ RetrofitConfig      │           ┌─── lib_retrofit ────────────────┐
+│ (全局单例, Builder)  │           │ RetrofitDsl.kt                  │
+│ mBaseUrl            │           │ retrofit { } 每次新建            │
+│ mOkHttpClient       │           │ cachedRetrofit("n") { }         │
+│ mConverterFactory   │           │ getCachedRetrofit("n")          │
+│ mCallAdapterFactory │           │ removeCachedRetrofit("n")       │
+├─────────────────────┤           ├─────────────────────────────────┤
+│ RetrofitHelper      │           │ RetrofitBuilder (DSL)           │
+│ (全局单例, lazy)     │           │ baseUrl() / client()            │
+│ mRetrofit           │           │ converter() / callAdapter()     │
+│ 链式方法             │           │ code() / message() / raw { }    │
+├─────────────────────┤           ├─────────────────────────────────┤
+│ RetrofitBuilder     │           │ RetrofitConverterFactory        │
+│ (请求参数, 链式API)  │           │ create(code, message)           │
+│ Method 枚举          │           │ 不再依赖全局配置                  │
+├─────────────────────┤           ├─────────────────────────────────┤
+│ RetrofitConverterFactory│        │ 基础类：BaseBean / RetrofitCallback │
+└─────────────────────┘           │ 异常：ApiException / ExceptionHandler│
+                                  │ 响应：RetrofitResponse / State   │
+                                  │ 工具：Method / LoadingTip / FileIO │
+                                  │ 废弃：RetrofitConfig             │
+                                  └─────────────────────────────────┘
+
+                                  ┌─── lib_rx_retrofit ─────────────┐
+                                  │ RxRetrofit.kt                   │
+                                  │ api/Api.java（Single 返回值）    │
+                                  │ builder/RequestBuilder.kt       │
+                                  │ callback/RetrofitResponseCallback│
+                                  │ callback/RetrofitLiveDataCallback│
+                                  │ callback/RetrofitFileCallback    │
+                                  │ function/HttpResultFunction      │
+                                  │ function/ServerResultFunction    │
+                                  │ function/RxRetrofitFunction      │
+                                  │ helper/RetrofitHelper（废弃）     │
+                                  └─────────────────────────────────┘
 ```

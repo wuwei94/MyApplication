@@ -8,6 +8,7 @@
 |------|------|---------|
 | lib_okhttp | 网络库封装 | OkHttp |
 | lib_retrofit | 网络库封装 | Retrofit |
+| lib_rx_retrofit | RxJava3 网络封装 | Retrofit + RxJava3 |
 | lib_volley | 网络库封装 | Volley |
 | lib_ktor | 网络库封装 | Ktor |
 | lib_imageloader | 图片加载库封装 | Glide |
@@ -128,10 +129,10 @@ val multipartBody = MultipartBody.Builder()
 
 ### lib_retrofit（Retrofit 封装）
 
-对 Retrofit 网络库的封装，提供 Kotlin DSL 风格的配置 API，支持多实例、命名缓存、RxJava 集成。
+对 Retrofit 网络库的封装，提供 Kotlin DSL 风格的配置 API，支持多实例、命名缓存。
 
 - 权限：`INTERNET`
-- 依赖：Retrofit、Retrofit Gson Converter、Retrofit Scalars Converter、Retrofit RxJava3 Adapter、RxAndroid、RxLifecycle
+- 依赖：Retrofit、Retrofit Gson Converter、Retrofit Scalars Converter
 - 包名：`com.example.william.my.core.retrofit`
 
 #### Kotlin DSL 快速上手
@@ -153,15 +154,12 @@ val apiRetrofit = cachedRetrofit("api") {
 }
 ```
 
-#### 创建 API 实例
+### lib_rx_retrofit（RxJava3 + Retrofit 封装）
 
-```kotlin
-// 使用 RetrofitHelper 便捷方法
-val api = RetrofitHelper.buildApi(NetworkApi::class.java)
+对 Retrofit 的 RxJava3 扩展封装，提供 Rx 风格的请求构建、回调和异常处理。依赖 `lib_retrofit`。
 
-// 使用 DSL 创建的 Retrofit 实例
-val api = r.create(NetworkApi::class.java)
-```
+- 依赖：lib_retrofit、Retrofit RxJava3 Adapter、RxAndroid、RxLifecycle
+- 包名：`com.example.william.my.core.retrofit`
 
 #### RxJava 请求示例
 

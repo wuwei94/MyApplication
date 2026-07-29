@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
 @DslMarker
 annotation class RetrofitDslMarker
@@ -23,7 +22,6 @@ class RetrofitBuilder {
         // 默认使用全局兼容配置
         builder.baseUrl("http://host/")
         builder.client(okHttpClient { logging() })
-        builder.addCallAdapterFactory(RxJava3CallAdapterFactory.create())
     }
 
     // region 基础配置
@@ -48,7 +46,7 @@ class RetrofitBuilder {
         builder.addConverterFactory(factory)
     }
 
-    /** 设置 CallAdapter.Factory（覆盖默认的 RxJava3CallAdapterFactory） */
+    /** 设置 CallAdapter.Factory */
     fun callAdapter(factory: CallAdapter.Factory) {
         builder.addCallAdapterFactory(factory)
     }

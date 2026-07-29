@@ -5,7 +5,6 @@ import com.example.william.my.core.retrofit.converter.RetrofitConverterFactory
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
 @Deprecated(
     "使用 RetrofitDsl（retrofit { } / cachedRetrofit { }）替代",
@@ -19,7 +18,7 @@ object RetrofitConfig {
 
     private var mConverterFactory: Converter.Factory = RetrofitConverterFactory.create()
 
-    private var mCallAdapterFactory: CallAdapter.Factory = RxJava3CallAdapterFactory.create()
+    private var mCallAdapterFactory: CallAdapter.Factory? = null
 
     private const val mCode: String =
         "errorCode" // SerializedName, An annotation argument must be a compile-time constant
@@ -38,7 +37,7 @@ object RetrofitConfig {
         return mConverterFactory
     }
 
-    fun getCallAdapterFactory(): CallAdapter.Factory {
+    fun getCallAdapterFactory(): CallAdapter.Factory? {
         return mCallAdapterFactory
     }
 

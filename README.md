@@ -54,9 +54,20 @@ MyApplication/
 │   ├── basic_repo              # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 │   └── basic_server            # 服务端基础模块
 ├── libs                        # 可复用的业务能力库
-│   ├── lib_okhttp / lib_retrofit / lib_ktor / lib_volley / lib_websocket_okhttp / lib_websocket_java / lib_download
-│   ├── lib_netty / lib_nanohttpd / lib_eventbus / lib_ninepatch / lib_imageloader / lib_widget
-│   └── ...
+│   ├── lib_okhttp              # OkHttp 封装（DSL 配置、多实例、日志、进度监听）
+│   ├── lib_retrofit            # Retrofit 封装（DSL 配置、命名缓存、Converter）
+│   ├── lib_rx_retrofit         # RxJava3 + Retrofit 封装（Rx 请求、回调、异常处理）
+│   ├── lib_ktor                # Ktor 客户端封装（协程友好）
+│   ├── lib_volley              # Volley 封装（轻量级 HTTP）
+│   ├── lib_websocket_okhttp    # OkHttp WebSocket 封装
+│   ├── lib_websocket_java      # Java-WebSocket 封装
+│   ├── lib_download            # 下载功能封装（断点续传、进度监听）
+│   ├── lib_netty               # Netty TCP 封装
+│   ├── lib_nanohttpd           # NanoHTTPD 服务器封装
+│   ├── lib_eventbus            # EventBus 事件总线封装
+│   ├── lib_imageloader         # Glide 图片加载封装
+│   ├── lib_ninepatch           # NinePatch 图片处理工具
+│   └── lib_widget              # 自定义 Widget 控件集合
 └── modules                     # Feature 模块
     ├── module_ui               # 系统 UI 组件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）

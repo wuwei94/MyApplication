@@ -16,4 +16,5 @@ dependencies {
 
     api(project(":libs:lib_okhttp"))
     api(project(":libs:lib_retrofit"))
+    api(project(":libs:lib_rx_retrofit"))
 }
