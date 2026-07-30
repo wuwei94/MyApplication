@@ -8,7 +8,7 @@
 |------|------|---------|
 | lib_okhttp | 网络库封装 | OkHttp |
 | lib_retrofit | 网络库封装 | Retrofit |
-| lib_rx_retrofit | RxJava3 网络封装 | Retrofit + RxJava3 |
+| lib_retrofit_rx | RxJava3 网络封装 | Retrofit + RxJava3 |
 | lib_volley | 网络库封装 | Volley |
 | lib_ktor | 网络库封装 | Ktor |
 | lib_imageloader | 图片加载库封装 | Glide |
@@ -154,7 +154,7 @@ val apiRetrofit = cachedRetrofit("api") {
 }
 ```
 
-### lib_rx_retrofit（RxJava3 + Retrofit 封装）
+### lib_retrofit_rx（RxJava3 + Retrofit 封装）
 
 对 Retrofit 的 RxJava3 扩展封装，提供 Rx 风格的请求构建、回调和异常处理。依赖 `lib_retrofit`。
 

@@ -56,7 +56,7 @@ MyApplication/
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp              # OkHttp 封装（DSL 配置、多实例、日志、进度监听）
 │   ├── lib_retrofit            # Retrofit 封装（DSL 配置、命名缓存、Converter）
-│   ├── lib_rx_retrofit         # RxJava3 + Retrofit 封装（Rx 请求、回调、异常处理）
+│   ├── lib_retrofit_rx         # RxJava3 + Retrofit 封装（Rx 请求、回调、异常处理）
 │   ├── lib_ktor                # Ktor 客户端封装（协程友好）
 │   ├── lib_volley              # Volley 封装（轻量级 HTTP）
 │   ├── lib_websocket_okhttp    # OkHttp WebSocket 封装

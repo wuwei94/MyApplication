@@ -92,7 +92,7 @@ include(":libs:lib_volley")
 // HTTP 客户端（封装层）
 include(":libs:lib_okhttp")
 include(":libs:lib_retrofit")
-include(":libs:lib_rx_retrofit")
+include(":libs:lib_retrofit_rx")
 
 // HTTP 客户端（Kotlin 原生）
 include(":libs:lib_ktor")

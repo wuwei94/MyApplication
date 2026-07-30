@@ -18,11 +18,11 @@
 
 ---
 
-## RxJava 拆分（lib_rx_retrofit）
+## RxJava 拆分（lib_retrofit_rx）
 
-将 RxJava3 相关代码从 lib_retrofit 拆分到独立的 `lib_rx_retrofit` 模块，使核心 Retrofit 模块不再依赖 RxJava。
+将 RxJava3 相关代码从 lib_retrofit 拆分到独立的 `lib_retrofit_rx` 模块，使核心 Retrofit 模块不再依赖 RxJava。
 
-### 拆分到 lib_rx_retrofit 的文件（10 个）
+### 拆分到 lib_retrofit_rx 的文件（10 个）
 
 | 文件 | 说明 |
 |------|------|
@@ -45,7 +45,7 @@
 ### 依赖关系
 
 ```
-lib_rx_retrofit  ──api──>  lib_retrofit  ──api──>  lib_okhttp
+lib_retrofit_rx  ──api──>  lib_retrofit  ──api──>  lib_okhttp
      │
      ├── retrofit-adapter-rxjava3
      ├── rxandroid
@@ -54,7 +54,7 @@ lib_rx_retrofit  ──api──>  lib_retrofit  ──api──>  lib_okhttp
 
 ### 下游模块
 
-需要 Rx 支持的模块同时依赖 `lib_retrofit` 和 `lib_rx_retrofit`：
+需要 Rx 支持的模块同时依赖 `lib_retrofit` 和 `lib_retrofit_rx`：
 - `modules/module_okhttp`
 - `libs/lib_download`
 - `basic/basic_repo`
@@ -116,7 +116,7 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 - 默认使用全局兼容配置（baseUrl、OkHttpClient）
 - 默认使用 `RetrofitConverterFactory`，支持自定义 code/message 字段名
 - `converter(factory)` — 覆盖默认 Converter
-- `callAdapter(factory)` — 按需配置 CallAdapter（如需 RxJava 支持，通过 lib_rx_retrofit 配置）
+- `callAdapter(factory)` — 按需配置 CallAdapter（如需 RxJava 支持，通过 lib_retrofit_rx 配置）
 - `raw { }` — 逃生口，可直接操作底层 `Retrofit.Builder`
 
 ---
@@ -218,7 +218,7 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
                                   │ 废弃：RetrofitConfig             │
                                   └─────────────────────────────────┘
 
-                                  ┌─── lib_rx_retrofit ─────────────┐
+                                  ┌─── lib_retrofit_rx ─────────────┐
                                   │ RxRetrofit.kt                   │
                                   │ api/Api.java（Single 返回值）    │
                                   │ builder/RequestBuilder.kt       │
