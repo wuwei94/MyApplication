@@ -2,6 +2,7 @@ package com.example.william.my.core.retrofit.converter;
 
 import androidx.annotation.NonNull;
 
+import com.example.william.my.core.retrofit.response.RetrofitResponse;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -66,6 +67,13 @@ public class RetrofitConverterFactory extends Converter.Factory {
      */
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(@NonNull Type type, @NonNull Annotation[] annotations, @NonNull Retrofit retrofit) {
+        // 校验 RetrofitResponse 是否声明 data 的泛型类型。
+        if (type == RetrofitResponse.class ||
+                (type instanceof Class<?> && RetrofitResponse.class.isAssignableFrom((Class<?>) type))) {
+            throw new IllegalArgumentException(
+                    "RetrofitResponse must declare its data type, for example RetrofitResponse<User>"
+            );
+        }
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
         return new RetrofitResponseBodyConverter<>(gson, adapter, code, message);
     }

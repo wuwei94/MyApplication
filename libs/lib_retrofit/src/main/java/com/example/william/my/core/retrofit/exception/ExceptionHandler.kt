@@ -1,13 +1,14 @@
 package com.example.william.my.core.retrofit.exception
 
-import android.net.ParseException
-import com.google.gson.Gson
+import com.google.gson.JsonParser
 import com.google.gson.JsonParseException
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
-import javax.net.ssl.SSLHandshakeException
+import java.net.UnknownHostException
+import java.util.concurrent.CancellationException
+import javax.net.ssl.SSLException
 
 /**
  * ApiException
@@ -17,35 +18,32 @@ import javax.net.ssl.SSLHandshakeException
  * 2. 网络连接异常
  * ConnectException：无网络或DNS解析失败。
  * SocketTimeoutException：请求超时。
- * SSLHandshakeException：证书验证失败。
+ * SSLException：证书验证失败。
  * 3. 数据解析错误
  * JsonParseException或JSONException：JSON格式与数据模型不匹配。
  * 服务器返回非约定格式（如错误时返回字符串而非对象）。
- * 4. 其他异常
  * UnknownHostException：域名解析失败。
- * IOException：网络请求过程中断（如用户取消请求）。
+ * 4. 其他异常
+ * CancellationException：协程取消，继续向上传播。
  */
 object ExceptionHandler {
 
     fun handleException(e: Throwable): ApiException {
+        if (e is CancellationException) throw e
         val exception: ApiException
         return when (e) {
             is HttpException -> {
-                exception = ApiException(e, ApiException.Error.HTTP_ERROR)
-                exception.code = e.code()
+                exception = ApiException(e, e.code())
                 try {
                     e.response()?.errorBody()?.let { errorBody ->
-                        val error = Gson().fromJson(errorBody.string(), HttpException::class.java)
-                        error.message?.let { message ->
-                            exception.message = message
-                        } ?: run {
-                            exception.message = "请求网络失败，请检查您的网络设置或稍后重试！"
-                        }
+                        val bodyString = errorBody.string()
+                        exception.message = extractErrorMessage(bodyString)
+                            ?: "请求错误(${e.code()})"
                     } ?: run {
-                        exception.message = "请求网络失败，请检查您的网络设置或稍后重试！"
+                        exception.message = "请求错误(${e.code()})"
                     }
                 } catch (e1: Exception) {
-                    exception.message = "请求网络失败，请检查您的网络设置或稍后重试！"
+                    exception.message = "请求错误(${e.code()})"
                 }
                 exception
             }
@@ -56,25 +54,25 @@ object ExceptionHandler {
                 exception
             }
 
-            is ConnectException -> {
+            is ConnectException, is UnknownHostException -> {
                 exception = ApiException(e, ApiException.Error.CONNECT_ERROR)
-                exception.message = "连接失败，请稍后再试"
+                exception.message = "连接失败，请检查网络设置"
                 exception
             }
 
             is SocketTimeoutException -> {
                 exception = ApiException(e, ApiException.Error.TIMEOUT_ERROR)
-                exception.message = "连接超时，请稍后再试"
+                exception.message = "请求超时，请稍后再试"
                 exception
             }
 
-            is SSLHandshakeException -> {
+            is SSLException -> {
                 exception = ApiException(e, ApiException.Error.SSL_ERROR)
                 exception.message = "证书校验失败，请稍后再试"
                 exception
             }
 
-            is JsonParseException, is JSONException, is ParseException -> {
+            is JsonParseException, is JSONException -> {
                 exception = ApiException(e, ApiException.Error.PARSE_ERROR)
                 exception.message = "解析错误，请稍后再试"
                 exception
@@ -82,9 +80,27 @@ object ExceptionHandler {
 
             else -> {
                 exception = ApiException(e, ApiException.Error.UNKNOWN)
-                exception.message = "：未知错误，请稍后再试"
+                exception.message = e.message ?: "未知错误，请稍后再试"
                 exception
             }
+        }
+    }
+
+    /**
+     * 从 HTTP 错误响应体中提取服务端错误消息。
+     *
+     * JSON 响应依次读取 `message`、`msg`、`errorMsg`；空响应或没有这些字段时返回 null，
+     * 非 JSON 响应则保留原始文本。
+     */
+    private fun extractErrorMessage(body: String): String? {
+        if (body.isBlank()) return null
+        return try {
+            val jsonObj = JsonParser.parseString(body).asJsonObject
+            jsonObj.get("message")?.asString
+                ?: jsonObj.get("msg")?.asString
+                ?: jsonObj.get("errorMsg")?.asString
+        } catch (_: Exception) {
+            body
         }
     }
 }

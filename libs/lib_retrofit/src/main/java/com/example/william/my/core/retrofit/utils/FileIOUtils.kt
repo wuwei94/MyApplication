@@ -12,12 +12,16 @@ object FileIOUtils {
     private const val sBufferSize = 1024 * 512
 
     /**
-     * 将输入流写入文件
+     * 将输入流写入文件（带进度回调，需要已知总大小）。
+     *
+     * @param contentLength 文件总大小（字节），可从 ResponseBody.contentLength() 获取。
+     *        传 -1 表示未知大小，进度回调将不会被调用。
      */
     fun writeFileFromIS(
         file: File,
         inputStream: InputStream?,
         append: Boolean,
+        contentLength: Long,
         listener: OnProgressUpdateListener?
     ): Boolean {
         if (inputStream == null || !createOrExistsFile(file)) {
@@ -26,15 +30,15 @@ object FileIOUtils {
         var os: OutputStream? = null
         return try {
             os = BufferedOutputStream(FileOutputStream(file, append), sBufferSize)
-            if (listener == null) {
+            if (listener == null || contentLength <= 0) {
                 val data = ByteArray(sBufferSize)
                 var len: Int
                 while (inputStream.read(data).also { len = it } != -1) {
                     os.write(data, 0, len)
                 }
             } else {
-                val totalSize = inputStream.available().toDouble()
-                var curSize = 0
+                val totalSize = contentLength.toDouble()
+                var curSize = 0L
                 listener.onProgressUpdate(0.0)
                 val data = ByteArray(sBufferSize)
                 var len: Int
@@ -60,6 +64,19 @@ object FileIOUtils {
                 e.printStackTrace()
             }
         }
+    }
+
+    @Deprecated(
+        message = "使用 contentLength 参数的重载方法，available() 不返回总大小",
+        replaceWith = ReplaceWith("writeFileFromIS(file, inputStream, append, contentLength, listener)")
+    )
+    fun writeFileFromIS(
+        file: File,
+        inputStream: InputStream?,
+        append: Boolean,
+        listener: OnProgressUpdateListener?
+    ): Boolean {
+        return writeFileFromIS(file, inputStream, append, -1L, listener)
     }
 
     /**

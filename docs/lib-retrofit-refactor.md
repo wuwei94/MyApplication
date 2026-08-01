@@ -4,16 +4,15 @@
 
 ## 重构目标
 
-将 lib_retrofit 从「全局单例 + Builder 链式修改全局状态」的旧架构，重构为「Kotlin DSL + 多实例 + 命名缓存」的新架构，与 lib_okhttp 保持一致的风格。
+将 lib_retrofit 从「全局单例 + Builder 链式修改全局状态」的旧架构，重构为「Kotlin DSL + 多实例 + 调用方管理生命周期」的新架构，与 lib_okhttp 保持一致的风格。
 
 ## 改动总览
 
 ```
-新增文件：RetrofitDsl、RetrofitBuilder（DSL）、RequestBuilder
-修改文件：RetrofitHelper、RetrofitResponse、RetrofitConverterFactory、
+新增文件：RetrofitDsl、RetrofitBuilder（DSL）、RxRetrofitDsl、RequestBuilder
+修改文件：RetrofitResponse、RetrofitConverterFactory、
          build.gradle.kts（注释）、RetrofitActivity、RetrofitRxJavaActivity
-标记废弃：RetrofitConfig
-删除文件：无（旧文件保留并标记废弃）
+标记废弃：无
 ```
 
 ---
@@ -22,7 +21,7 @@
 
 将 RxJava3 相关代码从 lib_retrofit 拆分到独立的 `lib_retrofit_rx` 模块，使核心 Retrofit 模块不再依赖 RxJava。
 
-### 拆分到 lib_retrofit_rx 的文件（10 个）
+### 拆分到 lib_retrofit_rx 的文件
 
 | 文件 | 说明 |
 |------|------|
@@ -34,13 +33,23 @@
 | `callback/RetrofitResponseCallback.kt` | 响应回调 |
 | `function/HttpResultFunction.kt` | Rx 异常转换 |
 | `function/RxRetrofitFunction.kt` | Rx 泛型转换 |
-| `function/ServerResultFunction.kt` | 服务端结果校验 |
-| `helper/RetrofitHelper.kt` | Retrofit 辅助类（deprecated） |
 
 ### 解耦改动
 
 - `RetrofitBuilder.kt`：移除 `RxJava3CallAdapterFactory.create()` 硬编码，CallAdapter 改为按需配置
-- `RetrofitConfig.kt`：`mCallAdapterFactory` 改为可空，默认 null
+- CallAdapter 改为由 `RetrofitBuilder.callAdapter()` 按实例配置
+- `RxRetrofitDsl.kt`：新增 `rxRetrofit {}`，由 Rx 专用入口自动安装 `RxJava3CallAdapterFactory`
+
+### 网络契约验证
+
+`lib_retrofit` 与 `lib_retrofit_rx` 均通过 MockWebServer 进行真实请求验证：
+
+- Retrofit 验证强类型响应、直接对象与集合转换，以及非 2xx 原始错误体保留。
+- Retrofit Rx 验证 `Single` 的真实强类型转换，以及 `ApiException` 对 HTTP 状态码和服务端错误消息的保留。
+- `RequestBuilder.observeOn(scheduler)` 允许后台任务和 JVM 测试覆盖默认 Android 主线程观察器，不依赖全局 `RxAndroidPlugins` 状态。
+- `RequestBuilder` 仅由带显式类型的 `RxRetrofit.builder` 创建，`buildSingle()` 会校验 `api(...)` 已配置；`ServerResultFunction` 继续用于现有 Article 数据源的业务结果校验。
+- Converter 仅对 `RetrofitResponse<T>` 处理业务信封；直接 `Call<User>`、`Call<List<User>>` 等声明按原类型反序列化。
+- 未显式注入 Client 时，每个 Retrofit 创建独立的默认 OkHttpClient；需要复用时由应用层显式注入并管理 Client。
 
 ### 依赖关系
 
@@ -67,16 +76,14 @@ lib_retrofit_rx  ──api──>  lib_retrofit  ──api──>  lib_okhttp
 
 **改动**：新建
 
-**原因**：提供 `retrofit {}` DSL 函数，每次调用创建独立的 Retrofit 实例。同时提供 `cachedRetrofit {}` 按名称缓存复用。
+**原因**：提供 `retrofit {}` DSL 函数，每次调用创建独立的 Retrofit 实例；默认 API 工厂复用一个内部 Retrofit。正式业务实例交给 Hilt/ServiceLocator 管理，同时为无 DI 场景保留可选的按名称缓存。
 
 **核心设计**：
 - `retrofit { }` — 每次创建新实例
-- `cachedRetrofit("name") { }` — 按名称缓存，同名只创建一次，后续复用
-- `getCachedRetrofit("name")` — 获取已缓存的 Retrofit，不存在抛异常
-- `removeCachedRetrofit("name")` — 移除指定缓存
-- `clearCachedRetrofits()` — 清空所有缓存
+- `cachedRetrofit("name") { }` — 无 DI 场景按名称缓存，同名原子初始化
+- `getCachedRetrofit()` / `removeCachedRetrofit()` / `clearCachedRetrofits()` — 查询和清理命名缓存
 - `createRetrofit(Consumer)` — Java 兼容 API（每次新建）
-- `cachedRetrofit(name, Consumer)` — Java 兼容 API（缓存复用）
+- `cachedRetrofit(name, Consumer)` — Java 兼容 API（按名称缓存）
 - `@DslMarker` — 防止嵌套作用域误用
 
 **使用示例**：
@@ -87,22 +94,25 @@ val r = retrofit {
     client(okHttpClient { logging() })
 }
 
-// 缓存复用，同名返回同一个实例
-val api = cachedRetrofit("api") {
+// 无 DI 的简单场景
+val cached = cachedRetrofit("api") {
     baseUrl("https://api.example.com/")
-    client(okHttpClient { timeout(30); logging() })
 }
-val same = cachedRetrofit("api") { baseUrl("...") }
-assert(api === same) // true
 ```
 
 **Java 使用**：
 ```java
-Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
+Retrofit r = RetrofitDsl.createRetrofit(b -> {
     b.baseUrl("https://api.example.com/");
     b.client(client);
 });
+
+Retrofit cached = RetrofitDsl.cachedRetrofit("api", b -> {
+    b.baseUrl("https://api.example.com/");
+});
 ```
+
+正式业务应由 Hilt 或 ServiceLocator 同时持有 OkHttpClient、Retrofit 和 API Service。命名缓存只作为无 DI/简单 Demo 的便捷能力，不用于重复注册已由应用层容器管理的同一组实例。
 
 ---
 
@@ -113,11 +123,13 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 **原因**：封装 `Retrofit.Builder`，提供 `baseUrl()`、`client()`、`converter()`、`callAdapter()`、`code()`、`message()`、`raw {}` 等 DSL 方法。
 
 **核心设计**：
-- 默认使用全局兼容配置（baseUrl、OkHttpClient）
+- 未配置 Client 时创建独立的默认 OkHttpClient；`client(...)` 注入的外部实例不会被覆盖或关闭
 - 默认使用 `RetrofitConverterFactory`，支持自定义 code/message 字段名
-- `converter(factory)` — 覆盖默认 Converter
-- `callAdapter(factory)` — 按需配置 CallAdapter（如需 RxJava 支持，通过 lib_retrofit_rx 配置）
-- `raw { }` — 逃生口，可直接操作底层 `Retrofit.Builder`
+- Factory 校验 `RetrofitResponse` 的 data 泛型类型，并把完整 `Type` 交给响应 Converter 识别 `RetrofitResponse<T>`；Converter 只整理标准信封 JSON，具体类型转换与字段校验交给 Gson `TypeAdapter`
+- `converter(factory)` — 设置自定义 Converter 并替换默认 `RetrofitConverterFactory`，避免两个全类型 Converter 相互遮挡
+- `callAdapter(factory)` — 设置单个 CallAdapter，重复配置时最后一次生效（如需 RxJava 支持，通过 lib_retrofit_rx 配置）
+- `build()` 不修改内部 Builder，重复构建不会累积 ConverterFactory 或 CallAdapterFactory
+- `raw { }` — 逃生口，可直接操作底层 `Retrofit.Builder`；Client 必须通过 `client(...)` 配置，以保留所有权跟踪
 
 ---
 
@@ -129,29 +141,12 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 
 **改动内容**：
 - 类名 `RetrofitBuilder<T>` → `RequestBuilder<T>`
-- 其余逻辑不变
+- 构造入口收口到 `RxRetrofit.builder<T>()` / `builder(Type)`，移除默认 `JsonElement` 响应类型
+- `buildSingle()` 前必须通过 `api(...)` 配置请求路径
 
 ---
 
 ## 修改文件
-
-### 5. `RetrofitHelper.kt` — 重构为 DSL 委托
-
-**改动**：
-- 移除 `mRetrofit` 全局缓存和 `createRetrofit()` 私有方法
-- `retrofit()` 委托给 `cachedRetrofit("default") {}`
-- 移除 `baseUrl()` / `client()` / `converter()` / `callAdapter()` 链式方法
-- 保留 `buildApi()` 和 `buildSingle()` 便捷方法
-
-**原因**：消除全局单例，Retrofit 实例创建委托给 DSL。
-
----
-
-### 6. `RetrofitConfig.kt` — 标记废弃
-
-**改动**：整个 `object RetrofitConfig` 标记 `@Deprecated`，指向 `RetrofitDsl`。
-
----
 
 ### 4. `RetrofitResponse.kt` — 修复 Gson 单例
 
@@ -167,12 +162,12 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 
 ---
 
-### 6. `RetrofitConverterFactory.java` — 解耦 RetrofitConfig
+### 6. `RetrofitConverterFactory.java` — 显式响应字段配置
 
 **改动**：
 - `create()` 和 `create(Gson)` 标记 `@Deprecated`
 - 新增 `create(String code, String message)` 和 `create(Gson, String, String)` 作为推荐用法
-- 不再依赖 `RetrofitConfig` 获取 code/message
+- code/message 由 Factory 构造参数显式传入
 
 **原因**：DSL Builder 需要直接传入 code/message，而非从全局配置读取。
 
@@ -190,33 +185,18 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
 
 ---
 
-## 架构变化对比
+## 当前架构
 
 ```
-重构前                              重构后（DSL 重构 + Rx 拆分）
-┌─────────────────────┐
-│ RetrofitConfig      │           ┌─── lib_retrofit ────────────────┐
-│ (全局单例, Builder)  │           │ RetrofitDsl.kt                  │
-│ mBaseUrl            │           │ retrofit { } 每次新建            │
-│ mOkHttpClient       │           │ cachedRetrofit("n") { }         │
-│ mConverterFactory   │           │ getCachedRetrofit("n")          │
-│ mCallAdapterFactory │           │ removeCachedRetrofit("n")       │
-├─────────────────────┤           ├─────────────────────────────────┤
-│ RetrofitHelper      │           │ RetrofitBuilder (DSL)           │
-│ (全局单例, lazy)     │           │ baseUrl() / client()            │
-│ mRetrofit           │           │ converter() / callAdapter()     │
-│ 链式方法             │           │ code() / message() / raw { }    │
-├─────────────────────┤           ├─────────────────────────────────┤
-│ RetrofitBuilder     │           │ RetrofitConverterFactory        │
-│ (请求参数, 链式API)  │           │ create(code, message)           │
-│ Method 枚举          │           │ 不再依赖全局配置                  │
-├─────────────────────┤           ├─────────────────────────────────┤
-│ RetrofitConverterFactory│        │ 基础类：BaseBean / RetrofitCallback │
-└─────────────────────┘           │ 异常：ApiException / ExceptionHandler│
-                                  │ 响应：RetrofitResponse / State   │
-                                  │ 工具：Method / LoadingTip / FileIO │
-                                  │ 废弃：RetrofitConfig             │
-                                  └─────────────────────────────────┘
+┌─── lib_retrofit ────────────────┐
+│ RetrofitDsl.kt                  │
+│ retrofit { } / cachedRetrofit() │
+│ createApi()                     │
+│ RetrofitBuilder (DSL)           │
+│ RetrofitConverterFactory        │
+│ ApiException / ExceptionHandler │
+│ RetrofitResponse / State        │
+└───────────────────────────────────┘
 
                                   ┌─── lib_retrofit_rx ─────────────┐
                                   │ RxRetrofit.kt                   │
@@ -226,8 +206,6 @@ Retrofit r = RetrofitDsl.cachedRetrofit("api", b -> {
                                   │ callback/RetrofitLiveDataCallback│
                                   │ callback/RetrofitFileCallback    │
                                   │ function/HttpResultFunction      │
-                                  │ function/ServerResultFunction    │
                                   │ function/RxRetrofitFunction      │
-                                  │ helper/RetrofitHelper（废弃）     │
                                   └─────────────────────────────────┘
 ```

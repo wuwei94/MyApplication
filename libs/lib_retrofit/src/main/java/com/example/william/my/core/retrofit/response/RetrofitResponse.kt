@@ -71,5 +71,16 @@ class RetrofitResponse<T> : BaseBean {
         fun <T> error(message: String): RetrofitResponse<T> {
             return RetrofitResponse(State.ERROR, message)
         }
+
+        /**
+         * 使用指定的状态码、消息和数据构建 RetrofitResponse。
+         */
+        @JvmStatic
+        fun <T> of(code: Int, message: String, data: T?): RetrofitResponse<T> {
+            val response = RetrofitResponse<T>(code)
+            response.message = message
+            response.data = data
+            return response
+        }
     }
 }

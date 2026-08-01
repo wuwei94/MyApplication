@@ -17,9 +17,9 @@ class RetrofitBuilder {
     private var code: String = "errorCode"
     private var message: String = "errorMsg"
     private var converterFactory: Converter.Factory? = null
+    private var callAdapterFactory: CallAdapter.Factory? = null
 
     init {
-        // 默认使用全局兼容配置
         builder.baseUrl("http://host/")
         builder.client(okHttpClient { logging() })
     }
@@ -40,15 +40,14 @@ class RetrofitBuilder {
 
     // region 转换器与适配器
 
-    /** 设置 Converter.Factory（覆盖默认的 RetrofitConverterFactory） */
+    /** 设置 Converter.Factory */
     fun converter(factory: Converter.Factory) {
         converterFactory = factory
-        builder.addConverterFactory(factory)
     }
 
     /** 设置 CallAdapter.Factory */
     fun callAdapter(factory: CallAdapter.Factory) {
-        builder.addCallAdapterFactory(factory)
+        callAdapterFactory = factory
     }
 
     /** 设置响应码字段名（用于 RetrofitConverterFactory） */
@@ -73,9 +72,17 @@ class RetrofitBuilder {
     // endregion
 
     internal fun build(): Retrofit {
-        if (converterFactory == null) {
-            builder.addConverterFactory(RetrofitConverterFactory.create(code, message))
+        val finalBuilder = builder.build().newBuilder()
+        converterFactory?.let {
+            finalBuilder.addConverterFactory(it)
+        } ?: run {
+            finalBuilder.addConverterFactory(
+                RetrofitConverterFactory.create(code, message)
+            )
         }
-        return builder.build()
+        callAdapterFactory?.let {
+            finalBuilder.addCallAdapterFactory(it)
+        }
+        return finalBuilder.build()
     }
 }

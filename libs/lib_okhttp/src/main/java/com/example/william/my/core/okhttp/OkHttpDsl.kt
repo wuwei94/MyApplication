@@ -8,7 +8,10 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 
 /**
- * 按名称缓存的 Client 存储，线程安全。
+ * 无依赖注入场景使用的按名称 OkHttpClient 缓存，线程安全。
+ *
+ * 正式业务应优先由 Hilt 或 ServiceLocator 同时管理 OkHttpClient、Retrofit 和 API Service，
+ * 避免同一组实例混用两套生命周期管理方式。
  */
 private val clientCache = ConcurrentHashMap<String, OkHttpClient>()
 
@@ -29,6 +32,9 @@ fun okHttpClient(init: OkHttpClientBuilder.() -> Unit): OkHttpClient {
 
 /**
  * 按名称缓存的 OkHttpClient，同名只创建一次，后续复用。
+ *
+ * 该入口适用于未使用 Hilt 或 ServiceLocator 的简单场景。若实例已由应用层容器管理，
+ * 请使用 [okHttpClient] 创建并由容器持有，不要再注册到此缓存。
  *
  * ```kotlin
  * // 首次创建并缓存
@@ -97,6 +103,8 @@ fun createClient(init: Consumer<OkHttpClientBuilder>): OkHttpClient {
 
 /**
  * Java 兼容：按名称缓存的 OkHttpClient。
+ *
+ * 该入口仅用于未使用 Hilt 或 ServiceLocator 的简单场景。
  *
  * ```java
  * OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
