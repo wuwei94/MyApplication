@@ -1,0 +1,38 @@
+﻿name: Auto Update Agent Skills
+
+on:
+  schedule:
+    # 每周一 UTC 00:00 (北京时间 08:00) 自动检查上游更新
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 支持在 GitHub 网页 Actions 面板中手动触发
+
+jobs:
+  update-skills:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check and Update Skills
+        run: |
+          npx skills update -y
+
+      - name: Create Pull Request if changes detected
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update flutter agent skills from upstream"
+          title: "🤖 chore: update flutter agent skills"
+          body: |
+            Automated update for agent skills from [flutter/agent-plugins](https://github.com/flutter/agent-plugins).
+          branch: auto-update-skills
+          delete-branch: true
