@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModel
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
-import com.example.william.my.core.retrofit.callback.RetrofitLiveDataCallback
+import com.example.william.my.core.retrofit.rx.callback.RetrofitLiveDataCallback
 import com.example.william.my.core.retrofit.exception.ExceptionHandler
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.usecase.ArticleUseCase

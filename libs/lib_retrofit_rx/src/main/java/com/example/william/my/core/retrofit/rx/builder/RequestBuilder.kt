@@ -1,9 +1,9 @@
-package com.example.william.my.core.retrofit.builder
+package com.example.william.my.core.retrofit.rx.builder
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.example.william.my.core.okhttp.media.MediaType
-import com.example.william.my.core.retrofit.RxRetrofit
+import com.example.william.my.core.retrofit.rx.core.RxRetrofit
 import com.example.william.my.core.retrofit.method.Method
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.trello.lifecycle4.android.lifecycle.AndroidLifecycle
@@ -16,43 +16,22 @@ import java.io.File
 
 class RequestBuilder<T> {
 
-    private lateinit var api: String
-    private var method: Method = Method.GET
-    private var header: MutableMap<String, String> = mutableMapOf()
-    private var parameter: MutableMap<String, String> = mutableMapOf()
+    internal lateinit var api: String
+        private set
+    internal var method: Method = Method.GET
+        private set
+    internal var header: MutableMap<String, String> = mutableMapOf()
+        private set
+    internal var parameter: MutableMap<String, String> = mutableMapOf()
+        private set
 
-    private var jsonObject: JSONObject? = null
-    private var multipartBody: MultipartBody.Builder? = null
+    internal var jsonObject: JSONObject? = null
+        private set
+    internal var multipartBody: MultipartBody.Builder? = null
+        private set
 
-    private var lifecycle: LifecycleProvider<Lifecycle.Event>? = null
-
-    fun getApi(): String {
-        return api
-    }
-
-    fun getMethod(): Method {
-        return method
-    }
-
-    fun getHeader(): MutableMap<String, String> {
-        return header
-    }
-
-    fun getParam(): MutableMap<String, String> {
-        return parameter
-    }
-
-    fun getJsonObject(): JSONObject? {
-        return jsonObject
-    }
-
-    fun getMultipartBody(): MultipartBody.Builder? {
-        return multipartBody
-    }
-
-    fun getLifecycle(): LifecycleProvider<Lifecycle.Event>? {
-        return lifecycle
-    }
+    internal var lifecycle: LifecycleProvider<Lifecycle.Event>? = null
+        private set
 
     fun api(api: String): RequestBuilder<T> {
         this.api = api

@@ -1,23 +1,25 @@
-package com.example.william.my.module.okhttp.retrofit
+package com.example.william.my.module.okhttp.retrofit_helper
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.retrofit.helper.RetrofitHelper
+import com.example.william.my.core.retrofit.createApi
+import com.example.william.my.core.retrofit.retrofit
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 /**
+ * 封装后 Retrofit + Call 回调方式
+ *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.RetrofitHelper)
-class RetrofitHelperActivity : BasicRecyclerActivity() {
+@Route(path = RouterPath.OkHttp.Retrofit.RetrofitCallHelper)
+class RetrofitCallHelperActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
@@ -34,18 +36,17 @@ class RetrofitHelperActivity : BasicRecyclerActivity() {
         }
     }
 
-
     private fun loginCall(username: String, password: String) {
-        // （2）创建 Retrofit 实例
-        val retrofit: Retrofit = RetrofitHelper.retrofit()
+        // 创建 Retrofit 实例
+        val retrofit = retrofit { }
 
-        // （3）创建网络请求接口实例
-        val api: NetworkApi = RetrofitHelper.buildApi(NetworkApi::class.java, retrofit)
+        // 创建网络请求接口实例
+        val api = createApi(NetworkApi::class.java, retrofit)
 
-        // （4）调用网络接口中的方法获取 Call 对象
+        // 调用网络接口中的方法获取 Call 对象
         val call: Call<ResponseBody> = api.loginCall(username, password)
 
-        // （5）进行网络请求
+        // 进行网络请求
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 showResponse(response.body()?.string())

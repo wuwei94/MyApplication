@@ -1,4 +1,4 @@
-package com.example.william.my.core.retrofit.function
+package com.example.william.my.core.retrofit.rx.function
 
 import com.example.william.my.core.retrofit.exception.ServerResultException
 import com.example.william.my.core.retrofit.response.RetrofitResponse

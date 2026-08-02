@@ -1,11 +1,11 @@
-package com.example.william.my.core.retrofit
+package com.example.william.my.core.retrofit.rx.core
 
 import com.example.william.my.core.okhttp.media.MediaType
-import com.example.william.my.core.retrofit.api.Api
-import com.example.william.my.core.retrofit.builder.RequestBuilder
-import com.example.william.my.core.retrofit.function.HttpResultFunction
-import com.example.william.my.core.retrofit.function.RxRetrofitFunction
-import com.example.william.my.core.retrofit.helper.RetrofitHelper
+import com.example.william.my.core.retrofit.createApi
+import com.example.william.my.core.retrofit.rx.api.Api
+import com.example.william.my.core.retrofit.rx.builder.RequestBuilder
+import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
+import com.example.william.my.core.retrofit.rx.function.RxRetrofitFunction
 import com.example.william.my.core.retrofit.method.Method
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -19,43 +19,43 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class RxRetrofit<T>(private val builder: RequestBuilder<T>) {
 
     private fun buildApi(): Api {
-        return RetrofitHelper.retrofit().create(Api::class.java)
+        return createApi(Api::class.java)
     }
 
     fun createResponse(): Single<RetrofitResponse<T>> {
         val source =
-            when (builder.getMethod()) {
+            when (builder.method) {
                 Method.GET -> {
-                    buildApi().get(builder.getApi(), builder.getHeader(), builder.getParam())
+                    buildApi().get(builder.api, builder.header, builder.parameter)
                 }
 
                 Method.POST -> {
-                    if (builder.getMultipartBody() != null) {
-                        val requestBody = builder.getMultipartBody()?.build()
-                        buildApi().post(builder.getApi(), builder.getHeader(), requestBody)
-                    } else if (builder.getJsonObject() != null) {
+                    if (builder.multipartBody != null) {
+                        val requestBody = builder.multipartBody?.build()
+                        buildApi().post(builder.api, builder.header, requestBody)
+                    } else if (builder.jsonObject != null) {
                         val requestBody =
-                            builder.getJsonObject().toString()
+                            builder.jsonObject.toString()
                                 .toRequestBody(MediaType.MEDIA_TYPE_JSON)
-                        buildApi().post(builder.getApi(), builder.getHeader(), requestBody)
+                        buildApi().post(builder.api, builder.header, requestBody)
                     } else {
-                        buildApi().post(builder.getApi(), builder.getHeader(), builder.getParam())
+                        buildApi().post(builder.api, builder.header, builder.parameter)
                     }
                 }
 
                 Method.PUT -> {
-                    buildApi().put(builder.getApi(), builder.getHeader(), builder.getParam())
+                    buildApi().put(builder.api, builder.header, builder.parameter)
                 }
 
                 Method.DELETE -> {
-                    buildApi().delete(builder.getApi(), builder.getHeader(), builder.getParam())
+                    buildApi().delete(builder.api, builder.header, builder.parameter)
                 }
             }
 
         var response =
             source.map(RxRetrofitFunction<T>()).onErrorResumeNext(HttpResultFunction())
 
-        builder.getLifecycle()?.let { lifecycle ->
+        builder.lifecycle?.let { lifecycle ->
             response = response.compose(lifecycle.bindToLifecycle())
         }
 

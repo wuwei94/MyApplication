@@ -1,19 +1,19 @@
-package com.example.william.my.core.retrofit.callback
+package com.example.william.my.core.retrofit.rx.callback
 
 import com.example.william.my.core.retrofit.base.RetrofitCallback
 import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
-import okhttp3.ResponseBody
-import java.io.InputStream
 
 /**
  * 处理基本逻辑
  */
-abstract class RetrofitFileCallback :
-    DisposableSingleObserver<ResponseBody>(), RetrofitCallback<InputStream> {
+abstract class RetrofitResponseCallback<T> :
+    DisposableSingleObserver<RetrofitResponse<T>>(), RetrofitCallback<T> {
 
-    override fun onSuccess(t: ResponseBody) {
-        onResponse(t.byteStream())
+    override fun onSuccess(t: RetrofitResponse<T>) {
+        onToast(t.message)
+        onResponse(t.data)
     }
 
     override fun onError(e: Throwable) {
@@ -28,7 +28,11 @@ abstract class RetrofitFileCallback :
 
     }
 
-    override fun onResponse(response: InputStream?) {
+    override fun onToast(message: String?) {
+
+    }
+
+    override fun onResponse(response: T?) {
 
     }
 

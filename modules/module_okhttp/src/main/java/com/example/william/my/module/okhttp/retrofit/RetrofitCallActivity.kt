@@ -5,18 +5,20 @@ import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.retrofit.retrofit
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 
 /**
+ * 原生 Retrofit + Call 回调方式
+ *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.Retrofit)
-class RetrofitActivity : BasicRecyclerActivity() {
+@Route(path = RouterPath.OkHttp.Retrofit.RetrofitCall)
+class RetrofitCallActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
@@ -34,18 +36,16 @@ class RetrofitActivity : BasicRecyclerActivity() {
     }
 
     private fun loginCall(username: String, password: String) {
-        // 使用 DSL 创建 Retrofit 实例
-        val retrofit = retrofit {
-            baseUrl(Constants.Url_Base)
-        }
+        // 创建 Retrofit 实例
+        val retrofit: Retrofit = Retrofit.Builder().build()
 
         // 创建网络请求接口实例
         val api: NetworkApi = retrofit.create(NetworkApi::class.java)
 
-        // （4）调用网络接口中的方法获取 Call 对象
+        // 调用网络接口中的方法获取 Call 对象
         val call: Call<ResponseBody> = api.loginCall(username, password)
 
-        // （5）进行网络请求
+        // 进行网络请求
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 showResponse(response.body()?.string())

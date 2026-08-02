@@ -192,27 +192,22 @@ object RouterPath {
             private const val OKHTTP_PATH = "${PATH}/OkHttpLib"
 
             const val OkHttp = "${OKHTTP_PATH}/OkHttp"
-            const val OkHttpHelper = "${OKHTTP_PATH}/OkHttpHelper"
         }
 
         object Retrofit {
             private const val RETROFIT_PATH = "${PATH}/Retrofit"
 
-            const val Retrofit = "${RETROFIT_PATH}/Retrofit"
-            const val RetrofitHelper = "${RETROFIT_PATH}/RetrofitHelper"
+            const val RetrofitCall = "${RETROFIT_PATH}/RetrofitCall"
+            const val RetrofitCallHelper = "${RETROFIT_PATH}/RetrofitCallHelper"
 
-            const val RetrofitRxJava = "${RETROFIT_PATH}/RetrofitRxJava"
-            const val RetrofitRxJavaHelper = "${RETROFIT_PATH}/RetrofitRxJavaHelper"
+            const val RetrofitRx = "${RETROFIT_PATH}/RetrofitRx"
+            const val RetrofitRxHelper = "${RETROFIT_PATH}/RetrofitRxHelper"
 
             const val RxRetrofit = "${RETROFIT_PATH}/RxRetrofit"
         }
 
         object Download {
             private const val DOWNLOAD_PATH = "${PATH}/Download"
-
-            const val OkHttpDownload = "${DOWNLOAD_PATH}/OkHttpDownload"
-            const val RetrofitDownload = "${DOWNLOAD_PATH}/RetrofitDownload"
-            const val RxDownload = "${DOWNLOAD_PATH}/RxDownload"
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.william.my.core.retrofit.function
+package com.example.william.my.core.retrofit.rx.function
 
 import com.example.william.my.core.retrofit.exception.ExceptionHandler
 import io.reactivex.rxjava3.core.Single

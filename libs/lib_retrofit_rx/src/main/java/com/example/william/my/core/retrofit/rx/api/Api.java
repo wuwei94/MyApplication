@@ -1,4 +1,4 @@
-package com.example.william.my.core.retrofit.api;
+package com.example.william.my.core.retrofit.rx.api;
 
 import com.example.william.my.core.retrofit.response.RetrofitResponse;
 import com.google.gson.JsonElement;

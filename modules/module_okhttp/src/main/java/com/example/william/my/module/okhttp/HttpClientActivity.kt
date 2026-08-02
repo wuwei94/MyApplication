@@ -13,30 +13,27 @@ class HttpClientActivity : RouterRecyclerActivity() {
         routerItems.add(
             RouterItem("OkHttpActivity", RouterPath.OkHttp.OkHttpLib.OkHttp)
         )
+
         routerItems.add(
-            RouterItem("OkHttpHelperActivity", RouterPath.OkHttp.OkHttpLib.OkHttpHelper)
+            RouterItem("", "")
+        )
+        routerItems.add(
+            RouterItem("RetrofitCall", RouterPath.OkHttp.Retrofit.RetrofitCall)
+        )
+        routerItems.add(
+            RouterItem("RetrofitCallHelper", RouterPath.OkHttp.Retrofit.RetrofitCallHelper)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("RetrofitActivity", RouterPath.OkHttp.Retrofit.Retrofit)
-        )
-        routerItems.add(
-            RouterItem("RetrofitHelperActivity", RouterPath.OkHttp.Retrofit.RetrofitHelper)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitRxJavaActivity", RouterPath.OkHttp.Retrofit.RetrofitRxJava)
+            RouterItem("RetrofitRx", RouterPath.OkHttp.Retrofit.RetrofitRx)
         )
         routerItems.add(
             RouterItem(
-                "RetrofitRxJavaHelperActivity",
-                RouterPath.OkHttp.Retrofit.RetrofitRxJavaHelper
+                "RetrofitRxHelper",
+                RouterPath.OkHttp.Retrofit.RetrofitRxHelper
             )
         )
 
@@ -45,19 +42,6 @@ class HttpClientActivity : RouterRecyclerActivity() {
         )
         routerItems.add(
             RouterItem("RxRetrofitActivity", RouterPath.OkHttp.Retrofit.RxRetrofit)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("OkHttpDownloadActivity", RouterPath.OkHttp.Download.OkHttpDownload)
-        )
-        routerItems.add(
-            RouterItem("RetrofitDownloadActivity", RouterPath.OkHttp.Download.RetrofitDownload)
-        )
-        routerItems.add(
-            RouterItem("RxDownloadActivity", RouterPath.OkHttp.Download.RxDownload)
         )
         return routerItems
     }

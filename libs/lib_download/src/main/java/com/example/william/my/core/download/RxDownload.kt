@@ -10,8 +10,8 @@ import com.example.william.my.core.download.utils.FileUtils
 import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.okhttp.interceptor.InterceptorProgress
 import com.example.william.my.core.okhttp.utils.HttpLogger
-import com.example.william.my.core.retrofit.api.Api
-import com.example.william.my.core.retrofit.helper.RetrofitHelper
+import com.example.william.my.core.retrofit.rx.api.Api
+import com.example.william.my.core.retrofit.retrofit
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -55,8 +55,7 @@ object RxDownload {
         val client = okHttpClient {
             addInterceptor(interceptor)
         }
-        val retrofit = RetrofitHelper.client(client).retrofit()
-        val api: Api = retrofit.create(Api::class.java)
+        val api = retrofit { client(client) }.create(Api::class.java)
         api
             .downloadFile("bytes=" + downloadTask.currentSize, downloadTask.downloadUrl)
 

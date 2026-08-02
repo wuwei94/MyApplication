@@ -1,11 +1,11 @@
-package com.example.william.my.module.okhttp.rxretrofit
+package com.example.william.my.module.okhttp.retrofit_rx
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.retrofit.RxRetrofit
-import com.example.william.my.core.retrofit.callback.RetrofitResponseCallback
+import com.example.william.my.core.retrofit.rx.core.RxRetrofit
+import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.google.gson.JsonElement
 import org.json.JSONObject

@@ -67,6 +67,18 @@ fun clearCachedRetrofits() {
 }
 
 /**
+ * 创建 API 接口实例，默认使用 "default" 缓存的 Retrofit。
+ *
+ * ```kotlin
+ * val api = createApi(NetworkApi::class.java)
+ * val api2 = createApi(NetworkApi::class.java, myRetrofit)
+ * ```
+ */
+fun <T> createApi(api: Class<T>, retrofit: Retrofit = cachedRetrofit("default") {}): T {
+    return retrofit.create(api)
+}
+
+/**
  * Java 兼容：创建 Retrofit 实例。
  *
  * ```java

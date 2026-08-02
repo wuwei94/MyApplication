@@ -12,17 +12,20 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.Retrofit
 
 /**
+ * 原生 Retrofit + RxJava 方式
+ *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.RetrofitRxJava)
-class RetrofitRxJavaActivity : BasicRecyclerActivity() {
+@Route(path = RouterPath.OkHttp.Retrofit.RetrofitRx)
+class RetrofitRxActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "RetrofitRxJava login",
+            "RetrofitRx login",
         )
     }
 
@@ -36,18 +39,16 @@ class RetrofitRxJavaActivity : BasicRecyclerActivity() {
     }
 
     private fun loginSingle(username: String, password: String) {
-        // 使用 DSL 创建 Retrofit 实例
-        val retrofit = retrofit {
-            baseUrl(Constants.Url_Base)
-        }
+        // 创建 Retrofit 实例
+        val retrofit: Retrofit = Retrofit.Builder().build()
 
         // 创建网络请求接口实例
         val api: NetworkApi = retrofit.create(NetworkApi::class.java)
 
-        // （4）调用网络接口中的方法获取 Observable 对象
+        // 调用网络接口中的方法获取 Single 对象
         val single: Single<RetrofitResponse<UserData?>> = api.loginSingle(username, password)
 
-        // （5）进行网络请求
+        // 进行网络请求
         single
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

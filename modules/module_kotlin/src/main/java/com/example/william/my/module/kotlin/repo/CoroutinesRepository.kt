@@ -2,7 +2,7 @@ package com.example.william.my.module.kotlin.repo
 
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.LoginData
-import com.example.william.my.core.retrofit.helper.RetrofitHelper
+import com.example.william.my.core.retrofit.createApi
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult
 import com.example.william.my.module.kotlin.utils.ThreadUtils
@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
  */
 class CoroutinesRepository(private val defaultDispatcher: CoroutineDispatcher) {
 
-    private val api = RetrofitHelper.buildApi(NetworkApi::class.java)
+    private val api = createApi(NetworkApi::class.java)
 
     suspend fun login(
         username: String,
