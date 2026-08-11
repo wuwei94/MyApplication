@@ -9,9 +9,9 @@ import okio.Sink
 import okio.buffer
 
 /**
- * 上传进度包装，包装 [RequestBody] 实现写入进度监听。
+ * 上传进度 RequestBody
  */
-class ProgressRequestBody(
+class RequestBodyProgressUpload(
     private val delegate: RequestBody,
     private val listener: (Long, Long) -> Unit
 ) : RequestBody() {
@@ -19,6 +19,10 @@ class ProgressRequestBody(
     override fun contentType(): MediaType? = delegate.contentType()
 
     override fun contentLength(): Long = delegate.contentLength()
+
+    override fun isOneShot(): Boolean = delegate.isOneShot()
+
+    override fun isDuplex(): Boolean = delegate.isDuplex()
 
     override fun writeTo(sink: BufferedSink) {
         val totalBytes = contentLength()
@@ -28,6 +32,9 @@ class ProgressRequestBody(
         bufferedSink.flush()
     }
 
+    /**
+     * 上传进度 Sink
+     */
     private class ProgressSink(
         delegate: Sink,
         private val totalBytes: Long,

@@ -54,7 +54,7 @@ MyApplication/
 │   ├── basic_repo              # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 │   └── basic_server            # 服务端基础模块
 ├── libs                        # 可复用的业务能力库
-│   ├── lib_okhttp              # OkHttp 封装（DSL 配置、多实例、日志、进度监听）
+│   ├── lib_okhttp              # OkHttp 封装（DSL、多实例、命名缓存、安全日志、Cookie/缓存、进度监听）
 │   ├── lib_retrofit            # Retrofit 封装（DSL 配置、命名缓存、Converter）
 │   ├── lib_retrofit_rx         # RxJava3 + Retrofit 封装（Rx 请求、回调、异常处理）
 │   ├── lib_ktor                # Ktor 客户端封装（协程友好）

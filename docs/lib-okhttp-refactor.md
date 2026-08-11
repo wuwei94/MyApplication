@@ -10,11 +10,13 @@
 
 ```
 新增文件：OkHttpDsl、OkHttpClientBuilder、LoggingConfig、CookieStore、MemoryCookieStore、NetworkCheck、
-         InterceptorBaseUrl、InterceptorDownloadProgress、InterceptorUploadProgress、
-         ProgressRequestBody、ProgressResponseBody、CompatTimeout、CompatRetry、CompatConnectionPool、CompatInterceptor
+         InterceptorBaseUrl、InterceptorProgressDownload、InterceptorProgressUpload、
+         RequestBodyProgressUpload、ResponseBodyProgressDownload、CompatTimeout、CompatRetry、CompatConnectionPool、CompatInterceptor、
+         InterceptorCacheResponse、InterceptorCookieCapture、InterceptorCookieMerge、
+         cookie/internal/CallerCookieContext、cookie/internal/OkHttpCookieJarAdapter
 修改文件：CompatLogging、CompatCookieJar、CompatCache、CompatHttpsSSL、
-         InterceptorCache、InterceptorLogging、InterceptorCookie、
-         FormatPrinterImpl、ParseUtils、BaseData、MediaType、Header、
+         InterceptorCacheRequest、InterceptorLogging、InterceptorCookie、
+         FormatPrinterImpl、FormatParser、BaseData、MediaType、Header、
          HttpLogger、NetworkUtils、RequestBody、build.gradle.kts、OkHttpHelperActivity
 删除文件：OkHttpHelper、OkHttpConfig
 ```
@@ -35,7 +37,7 @@
 - `getCachedClient("name")` — 获取已缓存的 Client，不存在抛异常
 - `removeCachedClient("name")` — 移除指定缓存
 - `clearCachedClients()` — 清空所有缓存
-- `OkHttpClientBuilder` — 封装 `OkHttpClient.Builder`，提供 `timeout()`、`logging()`、`cookieJar()` 等 DSL 方法
+- `builder/OkHttpClientBuilder.kt` — 封装 `OkHttpClient.Builder`，提供 `timeout()`、`logging()`、`cookieJar()` 等 DSL 方法
 - `raw { }` — 逃生口，可直接操作底层 `OkHttpClient.Builder`
 - `createClient(Consumer)` — Java 兼容 API（每次新建）
 - `cachedClient(name, Consumer)` — Java 兼容 API（缓存复用）
@@ -89,24 +91,23 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 **原因**：Cookie 存储硬编码为内存或 SharedPreferences，无法替换。接口化后用户可自定义存储策略（MMKV、DataStore 等）。
 
 **内容**：
-- `CookieStore` 接口 — `save(url, cookies)` / `load(url)`
+- `CookieStore` 接口 — `save(url, cookies)` / `load(url)` / `clear()`
 - `MemoryCookieStore` — 仅内存存储，应用重启后丢失
+- `cookie/internal` — CookieJar 适配器与拦截器间共享的内部上下文
 
 ---
 
-### 4. `NetworkCheck.kt` — 网络检测接口
+### 4. `NetworkCheck.kt` — 网络检测
 
 **改动**：新建
 
-**原因**：`InterceptorCache` 直接调用 `NetworkUtils.isConnected(context)`，硬编码 Android API，不可测试。接口化后可注入测试实现。
+**原因**：集中封装 Android 网络状态检测，缓存拦截器通过可替换函数注入进行测试。
 
-**内容**：
-- `NetworkCheck` — `fun interface`，`isConnected(): Boolean`
-- `AndroidNetworkCheck` — 基于 `ConnectivityManager` 的默认实现，兼容 API 23+
+**内容**：`NetworkCheck` 基于 `ConnectivityManager` 提供默认实现，兼容 API 23+。
 
 ---
 
-### 5. `InterceptorDownloadProgress.kt` — 下载进度拦截器
+### 5. `InterceptorProgressDownload.kt` — 下载进度拦截器
 
 **改动**：新建
 
@@ -116,16 +117,19 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 - Lambda 接口：`(url, currentBytes, totalBytes) -> Unit`
 - 内部用 `ForwardingSource` 包装响应体，监听 `read()` 进度
 - 当 `contentLength()` 返回 -1 时，`totalBytes` 为 -1，调用方需处理
+- 包装体始终返回同一个 `BufferedSource`，日志预览后业务层仍可完整读取
 
 ---
 
-### 6. `InterceptorUploadProgress.kt` — 上传进度拦截器
+### 6. `InterceptorProgressUpload.kt` — 上传进度拦截器
 
 **改动**：新建
 
 **原因**：提供与下载进度对称的上传进度监听，基于 Interceptor 实现。
 
 **关键适配**：OkHttp 5.x 中 `Request.Builder.body` 变为 `internal` property，无法直接设置。通过 `request.newBuilder().method(request.method, wrappedBody)` 绕过。
+
+包装体继续转发 `isOneShot()` / `isDuplex()`，不改变 OkHttp 的重试和双工传输判断。
 
 ---
 
@@ -135,7 +139,7 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 **原因**：实现 `Header.RETROFIT_URL_REDIRECT` 常量描述的功能——通过 Request Header 动态切换 BaseUrl。
 
-**工作原理**：拦截请求 → 读取 `Retrofit-Url-Redirect` Header → 替换请求 URL → 移除 Header → 发送。
+**工作原理**：拦截请求 → 读取 `Retrofit-Url-Redirect` Header → 替换 scheme/host/port 并保留原路径及查询参数 → 移除 Header → 发送。
 
 ---
 
@@ -171,19 +175,19 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 ---
 
-### 12. `ProgressRequestBody.kt` — 上传进度包装
+### 12. `RequestBodyProgressUpload.kt` — 上传进度包装
 
 **改动**：新建
 
-**原因**：从 `InterceptorUploadProgress` 中提取，包装请求体实现上传进度监听。
+**原因**：从 `InterceptorProgressUpload` 中提取，包装请求体实现上传进度监听。
 
 ---
 
-### 13. `ProgressResponseBody.kt` — 下载进度包装
+### 13. `ResponseBodyProgressDownload.kt` — 下载进度包装
 
 **改动**：新建
 
-**原因**：从 `InterceptorDownloadProgress` 中提取，包装响应体实现下载进度监听。
+**原因**：从 `InterceptorProgressDownload` 中提取，包装响应体实现下载进度监听。
 
 ---
 
@@ -218,17 +222,19 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 - `cookieJar(builder)` 内部改为 `cookieJar(builder, MemoryCookieStore())`
 - 新增 `cookieJar(builder, store: CookieStore)` 重载
 - 用 `OkHttpCookieJarAdapter` 适配 OkHttp `CookieJar` 接口
+- 原 host 的调用方 Cookie 与存储 Cookie 合并，同名项由调用方优先；跨 host 重定向不转发调用方 Cookie
+- adapter 与 Cookie tag 位于 `cookie/`，调用方 Cookie 拦截器位于 `interceptor/`，`CompatCookieJar.kt` 仅保留配置入口
 
 **原因**：Cookie 存储从硬编码改为可插拔 `CookieStore` 接口。
 
 ---
 
-### 18. `InterceptorCache.kt` — 缓存拦截器
+### 18. `InterceptorCacheRequest.kt` — 请求缓存拦截器
 
 **改动**：
-- 构造参数从 `Context` 改为 `NetworkCheck`
-- `NetworkUtils.isConnected(mContext)` 改为 `networkCheck.isConnected()`
-- 恢复 `buildRequest()` 和 `buildResponse()` 方法的中文注释
+- 构造参数改为网络状态函数 `() -> Boolean`，Android 检测由 `CompatCache` 适配
+- 请求缓存策略注册为 application interceptor，在 OkHttp 缓存决策前执行
+- 新增 `InterceptorCacheResponse` network interceptor，在缓存写入前设置响应缓存时长并移除内部 Header
 
 ---
 
@@ -237,6 +243,8 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 **改动**：
 - `FormatPrinterImpl` 改为构造注入：`FormatPrinterImpl(filters)` 替代 `FormatPrinterImpl` 单例 + `setFilters()`
 - 移除多余 try-catch（catch 后直接 throw）
+- URL 过滤在解析 Body 前执行；请求与响应日志 Body 上限为 1 MiB
+- `isSafeToLog()` 作为 `InterceptorLogging` 的 `internal` 成员保留测试入口，不增加额外顶层声明
 
 **原因**：消除共享可变状态竞态，每个拦截器实例持有独立的 FormatPrinter。
 
@@ -249,6 +257,7 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 - 移除 `setFilters()` 方法
 - `const val` 移入 `companion object`
 - 移除未使用的 `CONTENT_TYPE_TAG` / `CONTENT_LENGTH_TAG`
+- 过滤规则忽略 URL 查询参数，并覆盖不可解析 Body 的打印分支
 
 ---
 
@@ -263,13 +272,13 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 ### 23. `InterceptorProgress.kt` — 下载进度拦截器
 
-**改动**：标记 `@Deprecated`，指向 `InterceptorDownloadProgress`
+**改动**：标记 `@Deprecated`，指向 `InterceptorProgressDownload`
 
 ---
 
-### 24. `ResponseProgressBody.kt` / `RequestProgressBody.kt` — 进度 Body
+### 24. `ResponseBodyProgress.kt` / `RequestBodyProgress.kt` — 进度 Body
 
-**改动**：均标记 `@Deprecated`，分别指向 `InterceptorDownloadProgress` / `InterceptorUploadProgress`
+**改动**：均标记 `@Deprecated`，分别指向 `InterceptorProgressDownload` / `InterceptorProgressUpload`
 
 > 注：`body/` 包保留供学习参考，展示 OkHttp 装饰器模式的实现方式。
 
@@ -283,7 +292,7 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 ### 26. `CompatHttpsSSL.kt` — SSL 适配
 
-**改动**：移除 `ignoreSSLForHttpsURLConnection()` 方法
+**改动**：移除 `ignoreSSLForHttpsURLConnection()` 方法；Debug guard 作为 `CompatHttpsSSL` 的 `internal` 成员保留测试入口
 
 **原因**：该方法设置 `HttpsURLConnection` 全局默认值，影响整个进程内所有 HTTPS 连接（包括其他库）。仅保留 per-client 的 `ignoreSSLForOkHttp()`。
 
@@ -309,7 +318,7 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 ---
 
-### 30. `ParseUtils.kt` — 解析工具
+### 30. `FormatParser.kt` — 日志格式解析器
 
 **改动**：移除未使用的 `bodyHasUnknownEncoding()` 和 `Buffer.isProbablyUtf8()` 私有方法
 
@@ -341,7 +350,7 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 ---
 
-### 34. `RequestBody.kt`（builder） — 请求体构建器
+### 34. `builder/RequestBodyBuilder.kt` — 请求体构建器
 
 **改动**：整个类标记 `@Deprecated`，`addListener()` / `buildForm()` / `buildMultipart()` / `buildJson()` 均标记 `@Deprecated`
 
@@ -354,7 +363,7 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 **改动**：
 - 移除未使用的 `dataBinding = true`
 - 修正注释 `SharedPreferences.edit` → `core-ktx extension`
-- `google.gson` 和 `okhttp.logging` 从 `api` 改为 `implementation`
+- `google.gson` 使用 `implementation`；`okhttp.logging` 使用 `api`，因为 `logging(level: HttpLoggingInterceptor.Level)` 在公共 DSL 中暴露其类型
 
 ---
 
@@ -370,6 +379,8 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 
 ## 架构变化对比
 
+当前日志契约补充：格式化日志跳过 one-shot/duplex 请求体，文件与文本分支统一应用 URL 后缀过滤且忽略查询参数。Token 刷新与 401 重放依赖具体业务，不纳入通用 OkHttp DSL。
+
 ```
 重构前                              重构后
 ┌─────────────────────┐           ┌──────────────────────────┐
@@ -382,8 +393,8 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
 │ mShowFormatLog      │           │ OkHttpClientBuilder       │
 ├─────────────────────┤           │ 所有操作委托 Compat 层     │
 │ 进度: 装饰器模式     │           ├──────────────────────────┤
-│ RequestProgressBody │           │ compat/                   │
-│ ResponseProgressBody│           │ CompatTimeout             │
+│ RequestBodyProgress │           │ compat/                   │
+│ ResponseBodyProgress│           │ CompatTimeout             │
 │ 需手动构建请求       │           │ CompatRetry               │
 ├─────────────────────┤           │ CompatConnectionPool      │
 │ Cookie: 硬编码       │           │ CompatInterceptor         │
@@ -402,6 +413,6 @@ OkHttpClient client = OkHttpDsl.cachedClient("api", b -> {
                                   │ CookieStore / NetworkCheck │
                                   ├──────────────────────────┤
                                   │ logging() / loggingFormat()│
-                                  │ Java 兼容: createClient() │
+                                  │ Java 兼容: create/cached  │
                                   └──────────────────────────┘
 ```

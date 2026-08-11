@@ -1,5 +1,8 @@
 package com.example.william.my.core.okhttp.base
 
+/**
+ * HTTP 请求头常量
+ */
 object Header {
     /**
      * 添加以这个为名的Header可以让这个Request使用另一个BaseUrl

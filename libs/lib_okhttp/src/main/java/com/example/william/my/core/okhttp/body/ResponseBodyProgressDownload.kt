@@ -7,20 +7,26 @@ import okio.Source
 import okio.buffer
 
 /**
- * 下载进度包装，包装 [ResponseBody] 实现读取进度监听。
+ * 下载进度 ResponseBody
  */
-class ProgressResponseBody(
+class ResponseBodyProgressDownload(
     private val url: String,
     private val delegate: ResponseBody,
     private val listener: (url: String, Long, Long) -> Unit
 ) : ResponseBody() {
 
+    private val progressSource =
+        ProgressSource(delegate.source(), url, contentLength(), listener).buffer()
+
     override fun contentType() = delegate.contentType()
 
     override fun contentLength() = delegate.contentLength()
 
-    override fun source() = ProgressSource(delegate.source(), url, contentLength(), listener).buffer()
+    override fun source() = progressSource
 
+    /**
+     * 下载进度 Source
+     */
     private class ProgressSource(
         delegate: Source,
         private val url: String,
@@ -32,9 +38,7 @@ class ProgressResponseBody(
 
         override fun read(sink: Buffer, byteCount: Long): Long {
             val count = super.read(sink, byteCount)
-            if (count == -1L) {
-                bytesRead = totalBytes
-            } else {
+            if (count != -1L) {
                 bytesRead += count
             }
             listener(url, bytesRead, totalBytes)

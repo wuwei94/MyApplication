@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 
 /**
- * 网络检测，基于 Android ConnectivityManager。
+ * 网络状态检测工具，基于 Android ConnectivityManager。
  */
 class NetworkCheck(context: Context) {
 

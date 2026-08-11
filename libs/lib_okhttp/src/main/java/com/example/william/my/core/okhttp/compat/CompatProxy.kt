@@ -3,6 +3,9 @@ package com.example.william.my.core.okhttp.compat
 import okhttp3.OkHttpClient
 import java.net.Proxy
 
+/**
+ * 代理配置
+ */
 object CompatProxy {
 
     /**

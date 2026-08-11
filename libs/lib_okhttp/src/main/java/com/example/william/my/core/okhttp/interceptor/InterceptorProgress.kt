@@ -1,6 +1,6 @@
 package com.example.william.my.core.okhttp.interceptor
 
-import com.example.william.my.core.okhttp.body.ResponseProgressBody
+import com.example.william.my.core.okhttp.body.ResponseBodyProgress
 import com.example.william.my.core.okhttp.listener.ResponseProgressListener
 import com.example.william.my.core.okhttp.utils.HttpLogger
 import okhttp3.Interceptor
@@ -8,11 +8,11 @@ import okhttp3.Request
 import okhttp3.Response
 
 /**
- * 下载进度
+ * 下载进度拦截器
  */
 @Deprecated(
-    message = "请使用 InterceptorDownloadProgress 配合 lambda 替代",
-    replaceWith = ReplaceWith("InterceptorDownloadProgress")
+    message = "请使用 InterceptorProgressDownload 配合 lambda 替代",
+    replaceWith = ReplaceWith("InterceptorProgressDownload")
 )
 class InterceptorProgress(
     private val listener: ResponseProgressListener = object : ResponseProgressListener {
@@ -27,7 +27,7 @@ class InterceptorProgress(
         val response: Response = chain.proceed(request)
         val body = response.body ?: return response
         return response.newBuilder()
-            .body(ResponseProgressBody(request.url.toString(), body, listener))
+            .body(ResponseBodyProgress(request.url.toString(), body, listener))
             .build()
     }
 }

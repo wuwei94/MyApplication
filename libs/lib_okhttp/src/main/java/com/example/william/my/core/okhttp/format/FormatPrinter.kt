@@ -4,6 +4,9 @@ import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
 
+/**
+ * 格式化日志打印接口
+ */
 interface FormatPrinter {
     /**
      * 打印网络请求信息, 当网络请求时 {[okhttp3.RequestBody]} 可以解析的情况

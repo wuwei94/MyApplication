@@ -2,6 +2,7 @@
 
 package com.example.william.my.core.okhttp
 
+import com.example.william.my.core.okhttp.builder.OkHttpClientBuilder
 import okhttp3.OkHttpClient
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
@@ -71,6 +72,13 @@ fun removeCachedClient(name: String): OkHttpClient? {
  */
 fun clearCachedClients() {
     clientCache.clear()
+}
+
+/** 关闭由调用方拥有的 Client 资源。关闭后该 Client 不应继续使用。 */
+fun OkHttpClient.closeResources() {
+    runCatching { cache?.close() }
+    dispatcher.executorService.shutdown()
+    connectionPool.evictAll()
 }
 
 /**

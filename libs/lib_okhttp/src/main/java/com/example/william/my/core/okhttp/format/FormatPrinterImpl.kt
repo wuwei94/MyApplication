@@ -1,16 +1,19 @@
 package com.example.william.my.core.okhttp.format
 
 import android.util.Log
+import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
 
 /**
+ * 格式化日志打印器实现
+ *
  * 作者　: zzyu
  * 时间　: 2020/3/26
  * 描述　:
  *
- * @Modified by Jim: 增加每行最多字符数(换行)定义：LINE_CHAR_COUNT, from 110 changed to 180
+ * 由 Jim 修改：增加每行最多字符数(换行)定义：LINE_CHAR_COUNT，从 110 改为 180
  */
 class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
 
@@ -31,7 +34,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
      * @param bodyString String
      */
     override fun printJsonRequest(request: Request, bodyString: String) {
-        if (shouldPrint(getUrl(request))) {
+        if (shouldPrint(request.url)) {
             val tag = "$TAG-Request"
             println(tag, REQUEST_UP_LINE)
             logLines(tag, getUrl(request), false)
@@ -47,12 +50,14 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
      * @param request Request
      */
     override fun printFileRequest(request: Request) {
-        val tag = "$TAG-Request"
-        println(tag, REQUEST_UP_LINE)
-        logLines(tag, getUrl(request), false)
-        logLines(tag, getHeaders(request), true)
-        logLines(tag, OMITTED_REQUEST, true)
-        println(tag, END_LINE)
+        if (shouldPrint(request.url)) {
+            val tag = "$TAG-Request"
+            println(tag, REQUEST_UP_LINE)
+            logLines(tag, getUrl(request), false)
+            logLines(tag, getHeaders(request), true)
+            logLines(tag, OMITTED_REQUEST, true)
+            println(tag, END_LINE)
+        }
     }
 
     /**
@@ -64,7 +69,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
         mediaType: MediaType?,
         bodyString: String
     ) {
-        if (shouldPrint(getUrl(response))) {
+        if (shouldPrint(response.request.url)) {
             val tag = "$TAG-Response"
             println(tag, RESPONSE_UP_LINE)
             logLines(tag, getUrl(response), false)
@@ -78,17 +83,20 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
      * 打印网络响应信息, 当网络响应时 {[okhttp3.ResponseBody]} 不可解析的情况
      */
     override fun printFileResponse(tookMs: Long, response: Response) {
-        val tag = "$TAG-Response"
-        println(tag, RESPONSE_UP_LINE)
-        logLines(tag, getUrl(response), false)
-        logLines(tag, getHeaders(response, tookMs), true)
-        logLines(tag, OMITTED_RESPONSE, true)
-        println(tag, END_LINE)
+        if (shouldPrint(response.request.url)) {
+            val tag = "$TAG-Response"
+            println(tag, RESPONSE_UP_LINE)
+            logLines(tag, getUrl(response), false)
+            logLines(tag, getHeaders(response, tookMs), true)
+            logLines(tag, OMITTED_RESPONSE, true)
+            println(tag, END_LINE)
+        }
     }
 
-    private fun shouldPrint(url: Array<String>): Boolean {
+    internal fun shouldPrint(url: HttpUrl): Boolean {
+        val urlWithoutQuery = url.toString().substringBefore('?')
         for (filter in mFilters) {
-            if (url[0].endsWith(filter)) {
+            if (urlWithoutQuery.endsWith(filter)) {
                 return false
             }
         }
@@ -192,10 +200,10 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
 
     private fun getResponseBody(mediaType: MediaType?, bodyString: String): Array<String> {
         val log = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + (
-                if (ParseUtils.isJson(mediaType)) {
-                    ParseUtils.jsonFormat(bodyString)
-                } else if (ParseUtils.isXml(mediaType)) {
-                    ParseUtils.xmlFormat(bodyString)
+                if (FormatParser.isJson(mediaType)) {
+                    FormatParser.jsonFormat(bodyString)
+                } else if (FormatParser.isXml(mediaType)) {
+                    FormatParser.xmlFormat(bodyString)
                 } else {
                     bodyString
                 })

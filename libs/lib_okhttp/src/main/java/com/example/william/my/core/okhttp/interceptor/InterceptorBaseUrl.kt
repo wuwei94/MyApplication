@@ -6,10 +6,10 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
- * 动态 BaseUrl 重定向拦截器。
+ * 动态 BaseUrl 拦截器
  *
  * 通过在 Request Header 中添加 [Header.RETROFIT_URL_REDIRECT] 指定新的 BaseUrl，
- * 拦截器会替换请求 URL 并移除该 Header（不会发送到服务器）。
+ * 拦截器会替换请求 URL 的 scheme、host、port，并移除该 Header（不会发送到服务器）。
  *
  * ```kotlin
  * val client = okHttpClient {
@@ -35,8 +35,13 @@ class InterceptorBaseUrl : Interceptor {
         val redirectUrl = request.header(Header.RETROFIT_URL_REDIRECT)
             ?: return chain.proceed(request)
 
-        val newHttpUrl = redirectUrl.toHttpUrlOrNull()
+        val baseUrl = redirectUrl.toHttpUrlOrNull()
             ?: throw IllegalArgumentException("Invalid redirect URL: $redirectUrl")
+        val newHttpUrl = request.url.newBuilder()
+            .scheme(baseUrl.scheme)
+            .host(baseUrl.host)
+            .port(baseUrl.port)
+            .build()
 
         val newRequest = request.newBuilder()
             .url(newHttpUrl)

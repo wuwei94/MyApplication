@@ -51,12 +51,14 @@ val apiClient = okHttpClient {
 val cachedApiClient = cachedClient("api") {
     timeout(30)
     logging()
-    loggingFormat(filters = listOf("/health"))     // 过滤指定 URL 后缀
+    loggingFormat(filters = listOf("/health"))
 }
-// 再次调用返回同一个实例
 val same = cachedClient("api") { timeout(30) }
 assert(cachedApiClient === same) // true
+
 ```
+
+`okHttpClient()` 创建的实例由调用方或 Hilt/ServiceLocator 管理；`cachedClient()` 则由库内按名称保存。认证可通过应用拦截器或 OkHttp 原生 `Authenticator` 按业务需要组合，库内不维护 Token 状态或刷新流程。`cookie` 根包仅保留公开存储 API，适配器与拦截器共享上下文位于 `cookie.internal`。CookieStore 注入 Cookie 时会与原 host 的调用方 `Cookie` Header 合并，同名 Cookie 由调用方值优先。格式化日志会在读取 Body 前执行 URL 过滤，只预读可重复、长度已知且不超过 1 MiB 的请求体，响应体最多预览 1 MiB。进度包装保留 one-shot/duplex 语义及唯一响应数据源。`ignoreSSL()` 仅允许 Debug 构建，Release 调用会直接失败。
 
 #### 日志配置
 
@@ -70,6 +72,8 @@ loggingFormat()                                    // 无过滤
 loggingFormat(filters = listOf("/api/ping"))       // 过滤指定 URL 后缀
 ```
 
+HTTP 缓存会在应用拦截器阶段选择网络或本地缓存，并在网络拦截器阶段写入响应缓存时长；离线请求可读取已过期缓存，内部缓存控制 Header 不会发送到服务器。
+
 #### 其他配置
 
 ```kotlin
@@ -79,10 +83,10 @@ val client = okHttpClient {
     cookieJar()                                              // 启用 Cookie 管理
     cache(app, dirName = "http_cache", dirSize = 50L * 1024L * 1024L)  // 启用缓存
     addInterceptor(CustomInterceptor())                      // 添加自定义拦截器
-    addNetworkInterceptor(InterceptorDownloadProgress { url, cur, total ->
+    addNetworkInterceptor(InterceptorProgressDownload { url, cur, total ->
         Log.d("Download", "$url: $cur/$total")               // 下载进度监听
     })
-    addNetworkInterceptor(InterceptorUploadProgress { cur, total ->
+    addNetworkInterceptor(InterceptorProgressUpload { cur, total ->
         Log.d("Upload", "$cur/$total")                       // 上传进度监听
     })
     raw {                                                    // 高级：直接操作 OkHttpClient.Builder

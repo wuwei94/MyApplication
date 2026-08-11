@@ -10,13 +10,13 @@ import okio.Source
 import okio.buffer
 
 /**
- * 下载进度
+ * 下载进度 ResponseBody
  */
 @Deprecated(
-    message = "请使用 InterceptorDownloadProgress 配合 lambda 替代",
-    replaceWith = ReplaceWith("InterceptorDownloadProgress")
+    message = "请使用 InterceptorProgressDownload 配合 lambda 替代",
+    replaceWith = ReplaceWith("InterceptorProgressDownload")
 )
-class ResponseProgressBody(
+class ResponseBodyProgress(
     private val mUrl: String,
     private val mResponseBody: ResponseBody,
     private val mResponseProgressListener: ResponseProgressListener
@@ -52,7 +52,7 @@ class ResponseProgressBody(
             if (totalBytesCount == 0L) {
                 totalBytesCount = contentLength()
             }
-            if (count == -1L) { // this source is exhausted
+            if (count == -1L) { // 该数据源已读取完毕
                 bytesRead = totalBytesCount
             } else {
                 bytesRead += count

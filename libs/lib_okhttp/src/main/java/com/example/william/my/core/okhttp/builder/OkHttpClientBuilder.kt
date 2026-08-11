@@ -1,4 +1,4 @@
-package com.example.william.my.core.okhttp
+package com.example.william.my.core.okhttp.builder
 
 import android.app.Application
 import com.example.william.my.core.okhttp.compat.CompatCache
@@ -17,9 +17,15 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 import java.util.concurrent.TimeUnit
 
+/**
+ * OkHttp DSL 作用域标记
+ */
 @DslMarker
 annotation class OkHttpDslMarker
 
+/**
+ * OkHttpClient DSL 构建器
+ */
 @OkHttpDslMarker
 class OkHttpClientBuilder {
 
@@ -140,7 +146,12 @@ class OkHttpClientBuilder {
 
     // region 高级配置
 
-    /** 直接操作底层 OkHttpClient.Builder */
+    /**
+     * 直接操作底层 OkHttpClient.Builder。
+     *
+     * **安全提示**：调用方在 [block] 中自行配置 SSL 时需确保
+     * 不会在 Release 构建中意外禁用证书校验。
+     */
     fun raw(block: OkHttpClient.Builder.() -> Unit) {
         builder.block()
     }

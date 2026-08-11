@@ -2,12 +2,15 @@ package com.example.william.my.core.okhttp.compat
 
 import com.example.william.my.core.okhttp.cookie.CookieStore
 import com.example.william.my.core.okhttp.cookie.MemoryCookieStore
+import com.example.william.my.core.okhttp.cookie.internal.OkHttpCookieJarAdapter
 import com.example.william.my.core.okhttp.interceptor.InterceptorCookie
-import okhttp3.Cookie
-import okhttp3.CookieJar
-import okhttp3.HttpUrl
+import com.example.william.my.core.okhttp.interceptor.InterceptorCookieCapture
+import com.example.william.my.core.okhttp.interceptor.InterceptorCookieMerge
 import okhttp3.OkHttpClient
 
+/**
+ * Cookie 配置
+ */
 object CompatCookieJar {
 
     /**
@@ -22,6 +25,8 @@ object CompatCookieJar {
      */
     fun cookieJar(builder: OkHttpClient.Builder, store: CookieStore) {
         builder.cookieJar(OkHttpCookieJarAdapter(store))
+        builder.addInterceptor(InterceptorCookieCapture())
+        builder.addNetworkInterceptor(InterceptorCookieMerge())
     }
 
     /**
@@ -32,7 +37,7 @@ object CompatCookieJar {
         replaceWith = ReplaceWith("cookieJar()")
     )
     fun cookieJarByInterceptor(builder: OkHttpClient.Builder) {
-        cookieJarByInterceptor(builder, MemoryCookieStore())
+        builder.addInterceptor(InterceptorCookie(MemoryCookieStore()))
     }
 
     /**
@@ -44,18 +49,5 @@ object CompatCookieJar {
     )
     fun cookieJarByInterceptor(builder: OkHttpClient.Builder, store: CookieStore) {
         builder.addInterceptor(InterceptorCookie(store))
-    }
-}
-
-private class OkHttpCookieJarAdapter(
-    private val store: CookieStore
-) : CookieJar {
-
-    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-        store.save(url, cookies)
-    }
-
-    override fun loadForRequest(url: HttpUrl): List<Cookie> {
-        return store.load(url)
     }
 }

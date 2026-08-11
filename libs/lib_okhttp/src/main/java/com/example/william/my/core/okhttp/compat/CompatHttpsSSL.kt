@@ -1,6 +1,7 @@
 package com.example.william.my.core.okhttp.compat
 
 import android.annotation.SuppressLint
+import com.example.william.my.core.okhttp.BuildConfig
 import okhttp3.OkHttpClient
 import java.security.cert.X509Certificate
 import javax.net.ssl.HostnameVerifier
@@ -16,8 +17,16 @@ object CompatHttpsSSL {
 
     /** 忽略 SSL 证书校验（仅调试用） */
     fun ignoreSSLForOkHttp(builder: OkHttpClient.Builder) {
+        requireDebugSslBypass(BuildConfig.DEBUG)
         builder.hostnameVerifier(ignoreHostnameVerifier)
         builder.sslSocketFactory(ignoreSSLSocketFactory, ignoreTrustManager)
+    }
+
+    /** 校验仅在 Debug 构建中绕过 SSL 安全检查 */
+    internal fun requireDebugSslBypass(debuggable: Boolean) {
+        check(debuggable) {
+            "ignoreSSL() is only available in debug builds"
+        }
     }
 
     /**

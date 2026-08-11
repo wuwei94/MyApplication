@@ -5,6 +5,8 @@ import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
 
 /**
+ * 基础响应数据
+ *
  * @author json.cn (i@json.cn)
  * @website http://www.json.cn/java2pojo/
  */

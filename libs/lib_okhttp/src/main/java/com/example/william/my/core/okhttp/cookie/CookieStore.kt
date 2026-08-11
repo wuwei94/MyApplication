@@ -9,4 +9,5 @@ import okhttp3.HttpUrl
 interface CookieStore {
     fun save(url: HttpUrl, cookies: List<Cookie>)
     fun load(url: HttpUrl): List<Cookie>
+    fun clear()
 }

@@ -20,7 +20,7 @@ object CompatLogging {
     fun applyLogging(builder: OkHttpClient.Builder, config: LoggingConfig) {
         when (config) {
             is LoggingConfig.Basic -> applyBasicLog(builder, config.level)
-            is LoggingConfig.None -> { /* no-op */ }
+            is LoggingConfig.None -> { /* 空操作 */ }
         }
     }
 

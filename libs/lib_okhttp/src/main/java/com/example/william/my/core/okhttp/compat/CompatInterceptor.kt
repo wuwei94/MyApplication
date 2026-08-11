@@ -3,6 +3,9 @@ package com.example.william.my.core.okhttp.compat
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 
+/**
+ * 拦截器配置
+ */
 object CompatInterceptor {
 
     /**

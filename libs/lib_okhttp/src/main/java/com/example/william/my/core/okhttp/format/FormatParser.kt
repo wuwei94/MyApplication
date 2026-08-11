@@ -4,7 +4,6 @@ import okhttp3.MediaType
 import okhttp3.Request
 import okhttp3.Response
 import okio.Buffer
-import okio.GzipSource
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -21,7 +20,13 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
-object ParseUtils {
+/**
+ * 日志格式解析器
+ */
+object FormatParser {
+
+    internal const val MAX_LOG_BODY_BYTES = 1024L * 1024L
+    private const val OMITTED_BODY = "Body omitted because its size is unknown or exceeds 1 MiB"
 
     /**
      * 是否可以解析
@@ -67,6 +72,10 @@ object ParseUtils {
     fun parseRequest(request: Request): String {
         val requestBody = request.body ?: return ""
         return try {
+            val contentLength = requestBody.contentLength()
+            if (contentLength !in 0..MAX_LOG_BODY_BYTES) {
+                return OMITTED_BODY
+            }
             val buffer = Buffer()
             requestBody.writeTo(buffer)
             val contentType = requestBody.contentType()
@@ -83,20 +92,14 @@ object ParseUtils {
     fun parseResponse(response: Response): String {
         val responseBody = response.body ?: return ""
         return try {
-            val headers = response.headers
-            val source = responseBody.source()
-            source.request(Long.MAX_VALUE) // Buffer the entire body.
-            var buffer = source.buffer
-            if ("gzip".equals(headers["Content-Encoding"], ignoreCase = true)) {
-                GzipSource(buffer.clone()).use { gzippedResponseBody ->
-                    buffer = Buffer()
-                    buffer.writeAll(gzippedResponseBody)
-                }
-            }
+            val preview = response.peekBody(MAX_LOG_BODY_BYTES + 1L)
+            val bytes = preview.bytes()
             val contentType = responseBody.contentType()
-            val charset: Charset =
-                contentType?.charset(StandardCharsets.UTF_8) ?: StandardCharsets.UTF_8
-            return buffer.clone().readString(charset)
+            val charset = contentType?.charset(StandardCharsets.UTF_8) ?: StandardCharsets.UTF_8
+            val bodyString = bytes
+                .copyOf(bytes.size.coerceAtMost(MAX_LOG_BODY_BYTES.toInt()))
+                .toString(charset)
+            if (bytes.size > MAX_LOG_BODY_BYTES) "$bodyString\n$OMITTED_BODY" else bodyString
         } catch (e: IOException) {
             e.printStackTrace()
             "{\"error\": \"" + e.message + "\"}"

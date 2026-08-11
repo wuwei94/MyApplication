@@ -4,6 +4,10 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.okhttp"
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -11,5 +15,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.gson)
     api(libs.okhttp)
-    implementation(libs.okhttp.logging)
+    api(libs.okhttp.logging)
+
+    testImplementation(libs.okhttp.mockwebserver)
 }

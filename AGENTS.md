@@ -32,6 +32,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
 | docs/conventions.md | 关键约定（路由、模块结构、全局依赖、Activity 基类、构建命令） |
 | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
+| docs/comments.md | 代码注释规范（语言、KDoc 格式、内容层次） |
 
 ## 不变量
 
