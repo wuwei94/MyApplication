@@ -25,8 +25,8 @@ import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.core.retrofit.rx.callback.RetrofitLiveDataCallback
 import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
-import com.example.william.my.core.retrofit.createApi
-import com.example.william.my.core.retrofit.rx.asNetwork
+import com.example.william.my.core.retrofit.rx.api.createRxApi
+import com.example.william.my.core.retrofit.rx.api.withNetworkDefaults
 import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
 import com.example.william.my.core.retrofit.rx.function.ServerResultFunction
 import com.example.william.my.core.retrofit.response.RetrofitResponse
@@ -36,14 +36,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetailData> {
 
-    private val articleApi = createApi(ArticleApi::class.java)
+    private val articleApi = createRxApi(ArticleApi::class.java)
 
     override fun getArticleCallback(
         page: Int,
         callback: ArticleDataSource.LoadArticleCallback<ArticleDetailData>
     ) {
         articleApi.getArticleSingle(page)
-            .asNetwork()
+            .withNetworkDefaults()
             .subscribe(object : RetrofitResponseCallback<ArticleData>() {
                 override fun onResponse(response: ArticleData?) {
                     super.onResponse(response)
@@ -84,7 +84,7 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
 
     override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> {
         return articleApi.getArticleSingle(page)
-            .asNetwork()
+            .withNetworkDefaults()
     }
 
     override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {

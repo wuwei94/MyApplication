@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit_helper
+package com.example.william.my.module.okhttp.retrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
@@ -18,12 +18,12 @@ import retrofit2.Response
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.RetrofitCallHelper)
-class RetrofitCallHelperActivity : BasicRecyclerActivity() {
+@Route(path = RouterPath.OkHttp.Retrofit.RetrofitCallDsl)
+class RetrofitCallDslActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "RetrofitHelper loginCall",
+            "Retrofit DSL loginCall",
         )
     }
 

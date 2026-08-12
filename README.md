@@ -79,7 +79,7 @@ MyApplication/
     ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
     ├── module_features         # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
-    ├── module_okhttp           # OkHttp 专项示例
+    ├── module_okhttp           # OkHttp / Retrofit / Retrofit Rx 对照示例
     ├── module_websocket        # WebSocket 专项示例
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
@@ -194,14 +194,14 @@ MyApplication/
 - Ktor 客户端
 - 服务端：NanoHTTPD / Netty Socket
 
-### module_okhttp（OkHttp 专项示例）
+### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
 
-OkHttp 专项功能演示。
+按封装库组织网络请求示例。
 
-- 自定义 Interceptor 实现
-- 进度监听（下载/上传）
-- 动态 BaseUrl 切换
-- Cookie 管理
+- `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
+- `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
+- `retrofit_rx`：RxJava 原生订阅与默认网络策略
+- `dynamic`：运行时动态请求
 
 ### module_websocket（WebSocket 专项示例）
 

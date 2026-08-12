@@ -7,12 +7,12 @@
         <activity android:name=".okhttp.OkHttpActivity" />
 
         <activity android:name=".retrofit.RetrofitCallActivity" />
-        <activity android:name=".retrofit.RetrofitRxActivity" />
+        <activity android:name=".retrofit.RetrofitCallDslActivity" />
 
-        <activity android:name=".retrofit_helper.RetrofitCallHelperActivity" />
-        <activity android:name=".retrofit_helper.RetrofitRxHelperActivity" />
+        <activity android:name=".retrofit_rx.RetrofitRxActivity" />
+        <activity android:name=".retrofit_rx.RetrofitRxDslActivity" />
 
-        <activity android:name=".retrofit_rx.RxRetrofitActivity" />
+        <activity android:name=".dynamic.RxDynamicRequestActivity" />
     </application>
 
 </manifest>

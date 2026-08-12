@@ -16,7 +16,7 @@
 | module_sample | 技术示例 | SampleActivity | /Sample |
 | module_features | 业务功能 | FeaturesActivity | /Features |
 | module_network | 网络库 | NetWorkActivity | /Network |
-| module_okhttp | OkHttp / Retrofit / Download | HttpClientActivity | /OkHttp |
+| module_okhttp | OkHttp / Retrofit / Retrofit Rx | HttpClientActivity | /OkHttp |
 | module_websocket | WebSocket 示例 | WebSocketActivity | /WebSocket |
 | module_utils | 工具类 | AndroidUtilsActivity | /Utils |
 | module_event | 事件总线 | EventActivity | /Event |
@@ -176,22 +176,18 @@
 
 ---
 
-### module_okhttp（OkHttp / Retrofit / Download）
+### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
 
-演示 OkHttp、Retrofit 网络库和文件下载功能。
+按封装库分类演示 OkHttp、Retrofit 和 Retrofit RxJava 的请求方式。
 
 | Activity | 功能 |
 |----------|------|
-| OkHttpActivity | OkHttp HTTP 库 |
-| OkHttpHelperActivity | OkHttp 封装工具 |
-| RetrofitActivity | Retrofit HTTP 库 |
-| RetrofitHelperActivity | Retrofit 封装工具 |
-| RetrofitRxJavaActivity | Retrofit + RxJava 网络请求 |
-| RetrofitRxJavaHelperActivity | Retrofit + RxJava 封装工具 |
-| RxRetrofitActivity | RxRetrofit 封装工具 |
-| OkhttpDownloadActivity | OkHttp 文件下载 |
-| RetrofitDownloadActivity | Retrofit 文件下载 |
-| RxDownloadActivity | RxDownload 响应式下载 |
+| OkHttpActivity | `lib_okhttp` DSL 与 OkHttp 原生请求示例 |
+| RetrofitCallActivity | Retrofit 原生 `Call` 请求示例 |
+| RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
+| RetrofitRxActivity | Retrofit RxJava 原生订阅示例 |
+| RetrofitRxDslActivity | `lib_retrofit_rx` 标准接口与默认策略示例 |
+| RxDynamicRequestActivity | `lib_retrofit_rx` 动态请求示例 |
 
 ---
 

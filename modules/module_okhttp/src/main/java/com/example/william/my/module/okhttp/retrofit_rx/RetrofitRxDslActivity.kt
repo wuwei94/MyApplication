@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit_helper
+package com.example.william.my.module.okhttp.retrofit_rx
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
@@ -6,9 +6,10 @@ import com.example.william.my.basic.basic_repo.bean.UserData
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.retrofit.createApi
+import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.exception.ApiException
-import com.example.william.my.core.retrofit.rx.asNetwork
+import com.example.william.my.core.retrofit.retrofit
+import com.example.william.my.core.retrofit.rx.api.withNetworkDefaults
 import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
 
 /**
@@ -17,12 +18,12 @@ import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.RetrofitRxHelper)
-class RetrofitRxHelperActivity : BasicRecyclerActivity() {
+@Route(path = RouterPath.OkHttp.RetrofitRx.RetrofitRxDsl)
+class RetrofitRxDslActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "RetrofitHelperRx login",
+            "Retrofit Rx DSL login",
         )
     }
 
@@ -36,13 +37,16 @@ class RetrofitRxHelperActivity : BasicRecyclerActivity() {
     }
 
     private fun loginSingle(username: String, password: String) {
-        // 创建 API 接口实例
-        val api = createApi(NetworkApi::class.java)
+        // 创建 Retrofit 实例
+        val retrofit = retrofit { }
 
-        // 调用接口方法，通过 asNetwork(owner) 统一异常处理 + 线程切换 + 生命周期绑定
+        // 创建 API 接口实例
+        val api = createRxApi(NetworkApi::class.java, retrofit)
+
+        // 调用接口方法，通过 withNetworkDefaults(owner) 统一异常处理、线程切换和生命周期绑定
         api.loginSingle(username, password)
-            .asNetwork(this)
-            .subscribe(object : RetrofitResponseCallback<UserData?>() {
+            .withNetworkDefaults(this)
+            .subscribe(object : RetrofitResponseCallback<UserData>() {
                 override fun onResponse(response: UserData?) {
                     super.onResponse(response)
                     showResponse(response?.string())

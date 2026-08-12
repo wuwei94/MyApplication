@@ -21,27 +21,24 @@ class HttpClientActivity : RouterRecyclerActivity() {
             RouterItem("RetrofitCall", RouterPath.OkHttp.Retrofit.RetrofitCall)
         )
         routerItems.add(
-            RouterItem("RetrofitCallHelper", RouterPath.OkHttp.Retrofit.RetrofitCallHelper)
+            RouterItem("RetrofitCallDsl", RouterPath.OkHttp.Retrofit.RetrofitCallDsl)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("RetrofitRx", RouterPath.OkHttp.Retrofit.RetrofitRx)
+            RouterItem("RetrofitRx", RouterPath.OkHttp.RetrofitRx.RetrofitRx)
         )
         routerItems.add(
-            RouterItem(
-                "RetrofitRxHelper",
-                RouterPath.OkHttp.Retrofit.RetrofitRxHelper
-            )
+            RouterItem("RetrofitRxDsl", RouterPath.OkHttp.RetrofitRx.RetrofitRxDsl)
         )
 
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("RxRetrofitActivity", RouterPath.OkHttp.Retrofit.RxRetrofit)
+            RouterItem("RxDynamicRequest", RouterPath.OkHttp.Dynamic.RxDynamicRequest)
         )
         return routerItems
     }

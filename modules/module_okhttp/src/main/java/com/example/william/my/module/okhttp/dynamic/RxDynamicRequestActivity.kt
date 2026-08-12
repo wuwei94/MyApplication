@@ -1,10 +1,10 @@
-package com.example.william.my.module.okhttp.retrofit_rx
+package com.example.william.my.module.okhttp.dynamic
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.retrofit.rx.core.RxRetrofit
+import com.example.william.my.core.retrofit.rx.dynamic.RxDynamicRequest
 import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.google.gson.JsonElement
@@ -14,13 +14,13 @@ import org.json.JSONObject
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.RxRetrofit)
-class RxRetrofitActivity : BasicRecyclerActivity() {
+@Route(path = RouterPath.OkHttp.Dynamic.RxDynamicRequest)
+class RxDynamicRequestActivity : BasicRecyclerActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "RxRetrofit Post postForm",
-            "RxRetrofit Post postJson",
+            "RxDynamicRequest Post postForm",
+            "RxDynamicRequest Post postJson",
         )
     }
 
@@ -43,7 +43,7 @@ class RxRetrofitActivity : BasicRecyclerActivity() {
             Constants.Key_Password to password
         )
 
-        RxRetrofit.builder<JsonElement>()
+        RxDynamicRequest.builder<JsonElement>()
             .api(Constants.Url_Login)
             .addParams(params)
             .post()
@@ -67,7 +67,7 @@ class RxRetrofitActivity : BasicRecyclerActivity() {
             .put(Constants.Key_Username, username)
             .put(Constants.Key_Password, password)
 
-        RxRetrofit.builder<JsonElement>()
+        RxDynamicRequest.builder<JsonElement>()
             .api(Constants.Url_Login)
             .addJsonObject(jsonObject)
             .post()

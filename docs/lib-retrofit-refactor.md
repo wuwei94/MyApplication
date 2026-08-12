@@ -9,7 +9,7 @@
 ## 改动总览
 
 ```
-新增文件：RetrofitDsl、RetrofitBuilder（DSL）、RxRetrofitDsl、RequestBuilder
+新增文件：RetrofitDsl、RetrofitBuilder（DSL）、RxApiFactory、RxDynamicRequest
 修改文件：RetrofitResponse、RetrofitConverterFactory、
          build.gradle.kts（注释）、RetrofitActivity、RetrofitRxJavaActivity
 标记废弃：无
@@ -25,20 +25,24 @@
 
 | 文件 | 说明 |
 |------|------|
-| `RxRetrofit.kt` | Rx 请求类 |
-| `api/Api.java` | Retrofit API 接口（返回 Single） |
-| `builder/RequestBuilder.kt` | Rx 请求构建器 |
+| `api/RxApiFactory.kt` | 标准 Rx Retrofit 实例与 API Service 创建入口 |
+| `api/RxSingleExtensions.kt` | 标准接口返回的 Single 默认处理 |
+| `dynamic/RxDynamicRequest.kt` | 动态请求执行器 |
+| `dynamic/RxDynamicRequestApi.java` | 动态 Retrofit 接口（返回 Single） |
+| `dynamic/RxDynamicRequestBuilder.kt` | 动态请求构建器 |
+| `dynamic/RxDynamicRequestConfig.kt` | 动态请求只读配置快照 |
 | `callback/RetrofitLiveDataCallback.kt` | DisposableSingleObserver 回调 |
 | `callback/RetrofitFileCallback.kt` | 文件下载回调 |
 | `callback/RetrofitResponseCallback.kt` | 响应回调 |
 | `function/HttpResultFunction.kt` | Rx 异常转换 |
-| `function/RxRetrofitFunction.kt` | Rx 泛型转换 |
+| `dynamic/RxDynamicResponseFunction.kt` | 动态响应泛型转换 |
 
 ### 解耦改动
 
 - `RetrofitBuilder.kt`：移除 `RxJava3CallAdapterFactory.create()` 硬编码，CallAdapter 改为按需配置
 - CallAdapter 改为由 `RetrofitBuilder.callAdapter()` 按实例配置
-- `RxRetrofitDsl.kt`：新增 `rxRetrofit {}`，由 Rx 专用入口自动安装 `RxJava3CallAdapterFactory`
+- `api/RxApiFactory.kt`：`rxRetrofit {}` 自动安装 `RxJava3CallAdapterFactory`；提供 `createRxApi()`、`cachedRxRetrofit()` 及缓存查询、移除、清空 API
+- 标准 Retrofit 注解接口与动态请求实现分别收口到 `rx.api` 和 `rx.dynamic` 包，避免两种用法混淆
 
 ### 网络契约验证
 
@@ -46,9 +50,9 @@
 
 - Retrofit 验证强类型响应、直接对象与集合转换，以及非 2xx 原始错误体保留。
 - Retrofit Rx 验证 `Single` 的真实强类型转换，以及 `ApiException` 对 HTTP 状态码和服务端错误消息的保留。
-- `RequestBuilder.observeOn(scheduler)` 允许后台任务和 JVM 测试覆盖默认 Android 主线程观察器，不依赖全局 `RxAndroidPlugins` 状态。
-- `RequestBuilder` 仅由带显式类型的 `RxRetrofit.builder` 创建，`buildSingle()` 会校验 `api(...)` 已配置；`ServerResultFunction` 继续用于现有 Article 数据源的业务结果校验。
-- Converter 仅对 `RetrofitResponse<T>` 处理业务信封；直接 `Call<User>`、`Call<List<User>>` 等声明按原类型反序列化。
+- `RxDynamicRequestBuilder.observeOn(scheduler)` 允许后台任务和 JVM 测试覆盖默认 Android 主线程观察器，不依赖全局 `RxAndroidPlugins` 状态。
+- `RxDynamicRequestBuilder` 仅由带显式类型的 `RxDynamicRequest.builder` 创建，`buildSingle()` 会校验 `api(...)` 已配置；`ServerResultFunction` 继续用于现有 Article 数据源的业务结果校验。
+- Converter 仅对 `RetrofitResponse<T>` 处理业务信封；`T` 使用非空模型类型，响应数据缺失由 `data: T?` 表达。直接 `Call<User>`、`Call<List<User>>` 等声明按原类型反序列化。
 - 未显式注入 Client 时，每个 Retrofit 创建独立的默认 OkHttpClient；需要复用时由应用层显式注入并管理 Client。
 
 ### 依赖关系
@@ -133,15 +137,16 @@ Retrofit cached = RetrofitDsl.cachedRetrofit("api", b -> {
 
 ---
 
-### 3. `RequestBuilder.kt` — 请求参数 Builder
+### 3. `RxDynamicRequestBuilder.kt` — 动态请求 Builder
 
 **改动**：从原 `RetrofitBuilder<T>` 重命名而来
 
-**原因**：原 `RetrofitBuilder<T>` 与新的 DSL `RetrofitBuilder` 类名冲突。重命名为 `RequestBuilder<T>` 更准确地表达其职责（构建请求参数）。
+**原因**：原 `RetrofitBuilder<T>` 与新的 DSL `RetrofitBuilder` 类名冲突。最终重命名为 `RxDynamicRequestBuilder<T>`，明确表达其运行时动态构建请求的职责，并与标准 Retrofit 注解接口模式区分。
 
 **改动内容**：
-- 类名 `RetrofitBuilder<T>` → `RequestBuilder<T>`
-- 构造入口收口到 `RxRetrofit.builder<T>()` / `builder(Type)`，移除默认 `JsonElement` 响应类型
+- 类名 `RetrofitBuilder<T>` → `RxDynamicRequestBuilder<T>`
+- Builder 私有状态在执行前固化为只读的 `RxDynamicRequestConfig`
+- 构造入口收口到 `RxDynamicRequest.builder<T>()` / `builder(Type)`，移除默认 `JsonElement` 响应类型
 - `buildSingle()` 前必须通过 `api(...)` 配置请求路径
 
 ---
@@ -156,9 +161,9 @@ Retrofit cached = RetrofitDsl.cachedRetrofit("api", b -> {
 
 ---
 
-### 5. `RxRetrofit.kt` — 使用 RequestBuilder
+### 5. `RxDynamicRequest.kt` — 使用 RxDynamicRequestBuilder
 
-**改动**：`RetrofitBuilder<T>` → `RequestBuilder<T>`
+**改动**：`RetrofitBuilder<T>` → `RxDynamicRequestBuilder<T>`
 
 ---
 
@@ -199,13 +204,16 @@ Retrofit cached = RetrofitDsl.cachedRetrofit("api", b -> {
 └───────────────────────────────────┘
 
                                   ┌─── lib_retrofit_rx ─────────────┐
-                                  │ RxRetrofit.kt                   │
-                                  │ api/Api.java（Single 返回值）    │
-                                  │ builder/RequestBuilder.kt       │
+                                  │ api/RxApiFactory.kt             │
+                                  │ api/RxSingleExtensions.kt       │
+                                  │ dynamic/RxDynamicRequest.kt     │
+                                  │ dynamic/RxDynamicRequestApi.java │
+                                  │ dynamic/RxDynamicRequestBuilder.kt│
+                                  │ dynamic/RxDynamicRequestConfig.kt│
                                   │ callback/RetrofitResponseCallback│
                                   │ callback/RetrofitLiveDataCallback│
                                   │ callback/RetrofitFileCallback    │
                                   │ function/HttpResultFunction      │
-                                  │ function/RxRetrofitFunction      │
+                                  │ dynamic/RxDynamicResponseFunction│
                                   └─────────────────────────────────┘
 ```

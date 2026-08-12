@@ -26,7 +26,7 @@ import com.example.william.my.basic.basic_repo.data.source.DefaultArticleReposit
 import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDataSourceImpl
 import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSourceImpl
 import com.example.william.my.basic.basic_repo.database.ArticleDatabase
-import com.example.william.my.core.retrofit.createApi
+import com.example.william.my.core.retrofit.rx.api.createRxApi
 
 object ServiceLocator {
 
@@ -60,7 +60,7 @@ object ServiceLocator {
     }
 
     private fun createApi(): ArticleApi {
-        return createApi(ArticleApi::class.java).also {
+        return createRxApi(ArticleApi::class.java).also {
             articleApi = it
         }
     }

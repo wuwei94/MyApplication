@@ -198,12 +198,20 @@ object RouterPath {
             private const val RETROFIT_PATH = "${PATH}/Retrofit"
 
             const val RetrofitCall = "${RETROFIT_PATH}/RetrofitCall"
-            const val RetrofitCallHelper = "${RETROFIT_PATH}/RetrofitCallHelper"
+            const val RetrofitCallDsl = "${RETROFIT_PATH}/RetrofitCallDsl"
+        }
 
-            const val RetrofitRx = "${RETROFIT_PATH}/RetrofitRx"
-            const val RetrofitRxHelper = "${RETROFIT_PATH}/RetrofitRxHelper"
+        object RetrofitRx {
+            private const val RETROFIT_RX_PATH = "${PATH}/RetrofitRx"
 
-            const val RxRetrofit = "${RETROFIT_PATH}/RxRetrofit"
+            const val RetrofitRx = "${RETROFIT_RX_PATH}/RetrofitRx"
+            const val RetrofitRxDsl = "${RETROFIT_RX_PATH}/RetrofitRxDsl"
+        }
+
+        object Dynamic {
+            private const val DYNAMIC_PATH = "${PATH}/Dynamic"
+
+            const val RxDynamicRequest = "${DYNAMIC_PATH}/RxDynamicRequest"
         }
 
         object Download {

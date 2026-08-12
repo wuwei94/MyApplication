@@ -160,26 +160,52 @@ val apiRetrofit = cachedRetrofit("api") {
 
 ### lib_retrofit_rx（RxJava3 + Retrofit 封装）
 
-对 Retrofit 的 RxJava3 扩展封装，提供 Rx 风格的请求构建、回调和异常处理。依赖 `lib_retrofit`。
+对 Retrofit 的 RxJava3 扩展封装，在同一模块内按包区分标准 Retrofit 接口模式与动态请求模式。依赖 `lib_retrofit`。
 
 - 依赖：lib_retrofit、Retrofit RxJava3 Adapter、RxAndroid、RxLifecycle
-- 包名：`com.example.william.my.core.retrofit`
+- 标准接口包：`com.example.william.my.core.retrofit.rx.api`
+- 动态请求包：`com.example.william.my.core.retrofit.rx.dynamic`
 
-#### RxJava 请求示例
+#### 标准 Retrofit 接口模式（推荐）
+
+固定业务接口优先使用 Retrofit 注解定义，通过 `createRxApi()` 创建 API Service，再用 `withNetworkDefaults()` 统一异常转换、IO/Main 线程切换和可选生命周期绑定。接口统一声明为 `RetrofitResponse<Model>`；`RetrofitResponse.data` 已是 `T?`，不再使用 `RetrofitResponse<Model?>` 重复表达可空性。
 
 ```kotlin
-RxRetrofit.builder<JsonElement>()
+val api = createRxApi(LoginApi::class.java)
+
+api.login(username, password)
+    .withNetworkDefaults(lifecycleOwner)
+    .subscribe(object : RetrofitResponseCallback<LoginData>() {
+        override fun onResponse(response: LoginData?) { /* handle success */ }
+        override fun onFailure(e: ApiException) { /* handle error */ }
+    })
+```
+
+`rxRetrofit {}` 会自动安装 `RxJava3CallAdapterFactory`。无 DI 的简单场景可使用 `cachedRxRetrofit(name) {}` 按名称缓存，配套的 `getCachedRxRetrofit()`、`removeCachedRxRetrofit()` 和 `clearCachedRxRetrofits()` 用于查询与清理；命名缓存独立于普通 Retrofit 缓存和内部默认实例。
+
+#### 动态请求模式（特殊场景）
+
+仅当 URL、HTTP 方法或请求结构需要在运行时决定时使用 `RxDynamicRequest`，无需定义业务 Retrofit 接口。
+
+```kotlin
+RxDynamicRequest.builder<LoginData>()
     .api("user/login")
     .addParam("username", "admin")
     .addParam("password", "123456")
     .post()
     .setProvider(lifecycleOwner)
     .buildSingle()
-    .subscribe(object : RetrofitResponseCallback<JsonElement>() {
-        override fun onResponse(response: JsonElement?) { /* handle success */ }
+    .subscribe(object : RetrofitResponseCallback<LoginData>() {
+        override fun onResponse(response: LoginData?) { /* handle success */ }
         override fun onFailure(e: ApiException) { /* handle error */ }
     })
 ```
+
+`RxDynamicRequestBuilder` 只能由 `RxDynamicRequest.builder<T>()` / `builder(Type)` 创建，并要求在 `buildSingle()` 前调用 `api(...)`。Builder 的可变状态保持私有，执行前生成只读的 `RxDynamicRequestConfig` 快照并复制 Header 与参数集合，避免调用方后续修改集合影响已构建请求。
+
+动态 Builder 支持 GET/POST/PUT/PATCH/DELETE、Form/JSON/Raw Body 和多文件 Multipart；可通过 `retrofit(instance)` 使用调用方管理的 Retrofit 实例。默认在 Android 主线程观察结果，后台任务或 JVM 测试可通过 `observeOn(scheduler)` 覆盖单次请求的观察调度器。
+
+两种模式共享回调与异常转换，但不要在同一业务接口中混用。固定业务 API 使用标准模式，动态模式只作为运行时请求工具。
 
 ### lib_volley（Volley 封装）
 
