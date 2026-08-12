@@ -1,7 +1,6 @@
 package com.example.william.my.core.retrofit.rx.dynamic
 
 import com.example.william.my.core.retrofit.response.RetrofitResponse
-import com.example.william.my.core.retrofit.method.Method
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
@@ -34,7 +33,7 @@ class RxDynamicRequestTest {
             .addJsonBody("""{"name":"William"}""")
             .buildConfig()
 
-        assertEquals(Method.PATCH, config.method)
+        assertEquals(HttpMethod.PATCH, config.method)
         assertNotNull(config.requestBody)
     }
 

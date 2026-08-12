@@ -9,7 +9,7 @@
 ## 改动总览
 
 ```
-新增文件：RetrofitDsl、RetrofitBuilder（DSL）、RxApiFactory、RxDynamicRequest
+新增文件：RetrofitDsl、RetrofitBuilder（DSL）、RxRetrofitDsl、RxDynamicRequest
 修改文件：RetrofitResponse、RetrofitConverterFactory、
          build.gradle.kts（注释）、RetrofitActivity、RetrofitRxJavaActivity
 标记废弃：无
@@ -25,7 +25,7 @@
 
 | 文件 | 说明 |
 |------|------|
-| `api/RxApiFactory.kt` | 标准 Rx Retrofit 实例与 API Service 创建入口 |
+| `api/RxRetrofitDsl.kt` | 标准 Rx Retrofit 实例与 API Service 创建入口 |
 | `api/RxSingleExtensions.kt` | 标准接口返回的 Single 默认处理 |
 | `dynamic/RxDynamicRequest.kt` | 动态请求执行器 |
 | `dynamic/RxDynamicRequestApi.java` | 动态 Retrofit 接口（返回 Single） |
@@ -41,8 +41,9 @@
 
 - `RetrofitBuilder.kt`：移除 `RxJava3CallAdapterFactory.create()` 硬编码，CallAdapter 改为按需配置
 - CallAdapter 改为由 `RetrofitBuilder.callAdapter()` 按实例配置
-- `api/RxApiFactory.kt`：`rxRetrofit {}` 自动安装 `RxJava3CallAdapterFactory`；提供 `createRxApi()`、`cachedRxRetrofit()` 及缓存查询、移除、清空 API
+- `api/RxRetrofitDsl.kt`：`rxRetrofit {}` 自动安装 `RxJava3CallAdapterFactory`；提供 `createRxApi()`、`cachedRxRetrofit()` 及缓存查询、移除、清空 API
 - 标准 Retrofit 注解接口与动态请求实现分别收口到 `rx.api` 和 `rx.dynamic` 包，避免两种用法混淆
+- 动态请求使用的 `HttpMethod` 收口到 `rx.dynamic` 包；OkHttp 媒体类型常量统一由 `MediaTypes` 提供；响应状态常量收口到 `RetrofitResponse`
 
 ### 网络契约验证
 
@@ -200,11 +201,11 @@ Retrofit cached = RetrofitDsl.cachedRetrofit("api", b -> {
 │ RetrofitBuilder (DSL)           │
 │ RetrofitConverterFactory        │
 │ ApiException / ExceptionHandler │
-│ RetrofitResponse / State        │
+│ RetrofitResponse                │
 └───────────────────────────────────┘
 
                                   ┌─── lib_retrofit_rx ─────────────┐
-                                  │ api/RxApiFactory.kt             │
+                                  │ api/RxRetrofitDsl.kt            │
                                   │ api/RxSingleExtensions.kt       │
                                   │ dynamic/RxDynamicRequest.kt     │
                                   │ dynamic/RxDynamicRequestApi.java │

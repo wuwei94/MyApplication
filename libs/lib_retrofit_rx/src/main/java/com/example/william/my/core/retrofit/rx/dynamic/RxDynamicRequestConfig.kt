@@ -1,7 +1,6 @@
 package com.example.william.my.core.retrofit.rx.dynamic
 
 import androidx.lifecycle.Lifecycle
-import com.example.william.my.core.retrofit.method.Method
 import com.trello.rxlifecycle4.LifecycleProvider
 import io.reactivex.rxjava3.core.Scheduler
 import okhttp3.RequestBody
@@ -14,7 +13,7 @@ import java.lang.reflect.Type
 internal class RxDynamicRequestConfig(
     val dataType: Type,
     val api: String,
-    val method: Method,
+    val method: HttpMethod,
     val header: Map<String, String>,
     val parameter: Map<String, String>,
     val requestBody: RequestBody?,

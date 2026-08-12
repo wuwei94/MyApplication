@@ -1,7 +1,6 @@
 package com.example.william.my.core.retrofit.response
 
 import com.example.william.my.core.retrofit.base.BaseBean
-import com.example.william.my.core.retrofit.status.State
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
@@ -46,7 +45,7 @@ class RetrofitResponse<T> : BaseBean {
      * 是否成功(这里约定0)
      */
     val isSuccess: Boolean
-        get() = code == State.SUCCESS
+        get() = code == SUCCESS
 
     fun string(): String? {
         return gson.toJson(this)
@@ -57,19 +56,23 @@ class RetrofitResponse<T> : BaseBean {
     }
 
     companion object {
+        const val LOADING = -1000
+        const val SUCCESS = 0
+        const val ERROR = -1
+
         private val gson = Gson()
 
         fun <T> loading(): RetrofitResponse<T> {
-            return RetrofitResponse(State.LOADING)
+            return RetrofitResponse(LOADING)
         }
 
         @JvmStatic
         fun <T> success(data: T): RetrofitResponse<T> {
-            return RetrofitResponse(State.SUCCESS, data)
+            return RetrofitResponse(SUCCESS, data)
         }
 
         fun <T> error(message: String): RetrofitResponse<T> {
-            return RetrofitResponse(State.ERROR, message)
+            return RetrofitResponse(ERROR, message)
         }
 
         /**

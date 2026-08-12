@@ -2,8 +2,7 @@ package com.example.william.my.core.retrofit.rx.dynamic
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.example.william.my.core.okhttp.media.MediaType
-import com.example.william.my.core.retrofit.method.Method
+import com.example.william.my.core.okhttp.media.MediaTypes
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.trello.lifecycle4.android.lifecycle.AndroidLifecycle
 import com.trello.rxlifecycle4.LifecycleProvider
@@ -23,7 +22,7 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
 ) {
 
     private var api: String? = null
-    private var method: Method = Method.GET
+    private var method: HttpMethod = HttpMethod.GET
     private val header = mutableMapOf<String, String>()
     private val parameter = mutableMapOf<String, String>()
 
@@ -41,27 +40,27 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
     }
 
     fun get(): RxDynamicRequestBuilder<T> {
-        method = Method.GET
+        method = HttpMethod.GET
         return this
     }
 
     fun post(): RxDynamicRequestBuilder<T> {
-        method = Method.POST
+        method = HttpMethod.POST
         return this
     }
 
     fun put(): RxDynamicRequestBuilder<T> {
-        method = Method.PUT
+        method = HttpMethod.PUT
         return this
     }
 
     fun patch(): RxDynamicRequestBuilder<T> {
-        method = Method.PATCH
+        method = HttpMethod.PATCH
         return this
     }
 
     fun delete(): RxDynamicRequestBuilder<T> {
-        method = Method.DELETE
+        method = HttpMethod.DELETE
         return this
     }
 
@@ -104,7 +103,7 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
     }
 
     fun addJsonBody(value: String): RxDynamicRequestBuilder<T> {
-        return addBody(value.toRequestBody(MediaType.MEDIA_TYPE_JSON))
+        return addBody(value.toRequestBody(MediaTypes.MEDIA_TYPE_JSON))
     }
 
     fun addJsonBody(value: JSONObject): RxDynamicRequestBuilder<T> {
@@ -124,7 +123,7 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
             this.multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
         }
         this.multipartBody?.addFormDataPart(
-            key, file.name, file.asRequestBody(MediaType.MEDIA_TYPE_MULTIPART)
+            key, file.name, file.asRequestBody(MediaTypes.MEDIA_TYPE_MULTIPART)
         )
         return this
     }
@@ -157,7 +156,7 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
         }
         val body = requestBody ?: jsonObject
             ?.toString()
-            ?.toRequestBody(MediaType.MEDIA_TYPE_JSON)
+            ?.toRequestBody(MediaTypes.MEDIA_TYPE_JSON)
         return RxDynamicRequestConfig(
             dataType = dataType,
             api = requestApi,

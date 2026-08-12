@@ -2,7 +2,7 @@ package com.example.william.my.core.okhttp.builder
 
 import com.example.william.my.core.okhttp.body.RequestBodyProgress
 import com.example.william.my.core.okhttp.listener.RequestProgressListener
-import com.example.william.my.core.okhttp.media.MediaType
+import com.example.william.my.core.okhttp.media.MediaTypes
 import okhttp3.FormBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -62,7 +62,7 @@ class RequestBodyBuilder {
         mMultipartBuilder.addFormDataPart(
             name,
             fileName,
-            file.asRequestBody(MediaType.MEDIA_TYPE_MULTIPART)
+            file.asRequestBody(MediaTypes.MEDIA_TYPE_MULTIPART)
         )
         return this
     }
@@ -87,7 +87,7 @@ class RequestBodyBuilder {
         replaceWith = ReplaceWith("InterceptorProgressUpload")
     )
     fun buildJson(): RequestBody {
-        val body = mJsonBuilder.toString().toRequestBody(MediaType.MEDIA_TYPE_JSON)
+        val body = mJsonBuilder.toString().toRequestBody(MediaTypes.MEDIA_TYPE_JSON)
         return RequestBodyProgress(body, mProgressListener)
     }
 }

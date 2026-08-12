@@ -4,7 +4,6 @@ import androidx.lifecycle.Observer;
 
 import com.example.william.my.core.retrofit.loading.LoadingTip;
 import com.example.william.my.core.retrofit.response.RetrofitResponse;
-import com.example.william.my.core.retrofit.status.State;
 
 import java.util.Collection;
 
@@ -34,12 +33,12 @@ public abstract class WithLoadingTipObserver<T> implements Observer<RetrofitResp
             return;
         }
         switch (tRetrofitResponse.getCode()) {
-            case State.LOADING:
+            case RetrofitResponse.LOADING:
                 if (mLoadingTip != null) {
                     mLoadingTip.setLoadingTip(LoadingTip.Status.loading);
                 }
                 break;
-            case State.SUCCESS:
+            case RetrofitResponse.SUCCESS:
                 if (mLoadingTip != null) {
                     mLoadingTip.setLoadingTip(isEmpty(tRetrofitResponse.getData()) ? LoadingTip.Status.empty : LoadingTip.Status.finish);
                 }
@@ -67,7 +66,7 @@ public abstract class WithLoadingTipObserver<T> implements Observer<RetrofitResp
     }
 
     /**
-     * State.SUCCESS 时，返回 response
+     * RetrofitResponse.SUCCESS 时，返回 response
      * <p>
      * RetrofitResponse<T> --> T
      *
@@ -76,7 +75,7 @@ public abstract class WithLoadingTipObserver<T> implements Observer<RetrofitResp
     protected abstract void onResponse(T response);
 
     /**
-     * State.ERROR 时，返回 错误信息
+     * RetrofitResponse.ERROR 时，返回错误信息
      *
      * @return false 显示默认提示
      */

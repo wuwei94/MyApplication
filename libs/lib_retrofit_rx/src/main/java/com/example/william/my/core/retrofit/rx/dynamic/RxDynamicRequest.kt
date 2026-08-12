@@ -2,7 +2,6 @@ package com.example.william.my.core.retrofit.rx.dynamic
 
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
-import com.example.william.my.core.retrofit.method.Method
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.google.gson.reflect.TypeToken
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -25,11 +24,11 @@ class RxDynamicRequest<T> private constructor(private val config: RxDynamicReque
     fun createResponse(): Single<RetrofitResponse<T>> {
         val source =
             when (config.method) {
-                Method.GET -> {
+                HttpMethod.GET -> {
                     buildApi().get(config.api, config.header, config.parameter)
                 }
 
-                Method.POST -> {
+                HttpMethod.POST -> {
                     if (config.multipartBody != null) {
                         buildApi().post(config.api, config.header, config.multipartBody)
                     } else if (config.requestBody != null) {
@@ -39,7 +38,7 @@ class RxDynamicRequest<T> private constructor(private val config: RxDynamicReque
                     }
                 }
 
-                Method.PUT -> {
+                HttpMethod.PUT -> {
                     if (config.requestBody != null) {
                         buildApi().put(config.api, config.header, config.requestBody)
                     } else {
@@ -47,7 +46,7 @@ class RxDynamicRequest<T> private constructor(private val config: RxDynamicReque
                     }
                 }
 
-                Method.PATCH -> {
+                HttpMethod.PATCH -> {
                     if (config.requestBody != null) {
                         buildApi().patch(config.api, config.header, config.requestBody)
                     } else {
@@ -55,7 +54,7 @@ class RxDynamicRequest<T> private constructor(private val config: RxDynamicReque
                     }
                 }
 
-                Method.DELETE -> {
+                HttpMethod.DELETE -> {
                     if (config.requestBody != null) {
                         buildApi().delete(config.api, config.header, config.requestBody)
                     } else {

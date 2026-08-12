@@ -1,4 +1,4 @@
-@file:JvmName("RxApiFactory")
+@file:JvmName("RxRetrofitDsl")
 
 package com.example.william.my.core.retrofit.rx.api
 
