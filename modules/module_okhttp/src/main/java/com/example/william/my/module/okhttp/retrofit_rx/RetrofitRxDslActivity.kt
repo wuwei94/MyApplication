@@ -6,11 +6,12 @@ import com.example.william.my.basic.basic_repo.bean.UserData
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.core.okhttp.utils.JsonUtils
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.retrofit
 import com.example.william.my.core.retrofit.rx.api.withNetworkDefaults
-import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
+import com.example.william.my.core.retrofit.rx.callback.RxResponseCallback
 
 /**
  * 封装后 Retrofit + RxJava 方式（含生命周期绑定）
@@ -46,10 +47,10 @@ class RetrofitRxDslActivity : BasicRecyclerActivity() {
         // 调用接口方法，通过 withNetworkDefaults(owner) 统一异常处理、线程切换和生命周期绑定
         api.loginSingle(username, password)
             .withNetworkDefaults(this)
-            .subscribe(object : RetrofitResponseCallback<UserData>() {
+            .subscribe(object : RxResponseCallback<UserData>() {
                 override fun onResponse(response: UserData?) {
                     super.onResponse(response)
-                    showResponse(response?.string())
+                    showResponse(response?.let(JsonUtils::toJson))
                 }
 
                 override fun onFailure(e: ApiException) {

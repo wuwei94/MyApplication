@@ -1,45 +1,27 @@
 package com.example.william.my.core.retrofit.response
 
-import com.example.william.my.core.retrofit.base.BaseBean
-import com.google.gson.Gson
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 /**
- * RetrofitResponse
+ * Retrofit 业务响应
+ *
+ * 可用于传递体积较小的响应数据。泛型数据在运行时仍须是 Parcel 支持的类型。
  */
-class RetrofitResponse<T> : BaseBean {
-    /**
-     * 状态码
-     */
+@Parcelize
+class RetrofitResponse<T> private constructor(
+    /** 状态码。 */
     @SerializedName("errorCode")
-    val code: Int
-
-    /**
-     * 描述信息
-     */
+    val code: Int,
+    /** 描述信息。 */
     @SerializedName("errorMsg")
-    var message: String = ""
-
-    /**
-     * 数据对象
-     */
+    val message: String = "",
+    /** 数据对象。 */
     @SerializedName("data")
-    var data: T? = null
-        private set
-
-    constructor(code: Int) {
-        this.code = code
-    }
-
-    private constructor(code: Int, message: String) {
-        this.code = code
-        this.message = message
-    }
-
-    private constructor(code: Int, data: T) {
-        this.code = code
-        this.data = data
-    }
+    val data: @RawValue T? = null,
+) : Parcelable {
 
     /**
      * 是否成功(这里约定0)
@@ -47,30 +29,23 @@ class RetrofitResponse<T> : BaseBean {
     val isSuccess: Boolean
         get() = code == SUCCESS
 
-    fun string(): String? {
-        return gson.toJson(this)
-    }
-
-    fun T.string(): String? {
-        return gson.toJson(this)
-    }
-
     companion object {
         const val LOADING = -1000
         const val SUCCESS = 0
         const val ERROR = -1
 
-        private val gson = Gson()
-
+        @JvmStatic
         fun <T> loading(): RetrofitResponse<T> {
             return RetrofitResponse(LOADING)
         }
 
         @JvmStatic
-        fun <T> success(data: T): RetrofitResponse<T> {
-            return RetrofitResponse(SUCCESS, data)
+        @JvmOverloads
+        fun <T> success(data: T? = null): RetrofitResponse<T> {
+            return RetrofitResponse(SUCCESS, data = data)
         }
 
+        @JvmStatic
         fun <T> error(message: String): RetrofitResponse<T> {
             return RetrofitResponse(ERROR, message)
         }
@@ -80,10 +55,7 @@ class RetrofitResponse<T> : BaseBean {
          */
         @JvmStatic
         fun <T> of(code: Int, message: String, data: T?): RetrofitResponse<T> {
-            val response = RetrofitResponse<T>(code)
-            response.message = message
-            response.data = data
-            return response
+            return RetrofitResponse(code, message, data)
         }
     }
 }

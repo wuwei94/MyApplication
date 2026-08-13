@@ -1,6 +1,6 @@
 package com.example.william.my.core.okhttp.builder
 
-import com.example.william.my.core.okhttp.body.RequestBodyProgress
+import com.example.william.my.core.okhttp.body.UploadProgressRequestBody
 import com.example.william.my.core.okhttp.listener.RequestProgressListener
 import com.example.william.my.core.okhttp.media.MediaTypes
 import okhttp3.FormBody
@@ -15,10 +15,10 @@ import java.io.File
  * 请求体构建器。
  *
  * 请直接使用 OkHttp 原生 [FormBody.Builder]、[MultipartBody.Builder]、[toRequestBody]，
- * 上传进度监听请使用 [com.example.william.my.core.okhttp.interceptor.InterceptorProgressUpload]。
+ * 上传进度监听请使用 [com.example.william.my.core.okhttp.interceptor.InterceptorUploadProgress]。
  */
 @Deprecated(
-    message = "请直接使用 OkHttp 原生 API，进度监听使用 InterceptorProgressUpload",
+    message = "请直接使用 OkHttp 原生 API，进度监听使用 InterceptorUploadProgress",
     replaceWith = ReplaceWith(
         "FormBody.Builder()",
         "okhttp3.FormBody"
@@ -29,8 +29,8 @@ class RequestBodyBuilder {
     private var mProgressListener: RequestProgressListener? = null
 
     @Deprecated(
-        message = "请使用 InterceptorProgressUpload 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorProgressUpload")
+        message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
+        replaceWith = ReplaceWith("InterceptorUploadProgress")
     )
     fun addListener(listener: RequestProgressListener) {
         mProgressListener = listener
@@ -44,11 +44,11 @@ class RequestBodyBuilder {
     }
 
     @Deprecated(
-        message = "请使用 InterceptorProgressUpload 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorProgressUpload")
+        message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
+        replaceWith = ReplaceWith("InterceptorUploadProgress")
     )
     fun buildForm(): RequestBody {
-        return RequestBodyProgress(mFormBuilder.build(), mProgressListener)
+        return wrapWithProgress(mFormBuilder.build())
     }
 
     private val mMultipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -68,11 +68,11 @@ class RequestBodyBuilder {
     }
 
     @Deprecated(
-        message = "请使用 InterceptorProgressUpload 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorProgressUpload")
+        message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
+        replaceWith = ReplaceWith("InterceptorUploadProgress")
     )
     fun buildMultipart(): RequestBody {
-        return RequestBodyProgress(mMultipartBuilder.build(), mProgressListener)
+        return wrapWithProgress(mMultipartBuilder.build())
     }
 
     private val mJsonBuilder = JSONObject()
@@ -83,11 +83,16 @@ class RequestBodyBuilder {
     }
 
     @Deprecated(
-        message = "请使用 InterceptorProgressUpload 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorProgressUpload")
+        message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
+        replaceWith = ReplaceWith("InterceptorUploadProgress")
     )
     fun buildJson(): RequestBody {
         val body = mJsonBuilder.toString().toRequestBody(MediaTypes.MEDIA_TYPE_JSON)
-        return RequestBodyProgress(body, mProgressListener)
+        return wrapWithProgress(body)
+    }
+
+    private fun wrapWithProgress(body: RequestBody): RequestBody {
+        val listener = mProgressListener ?: return body
+        return UploadProgressRequestBody(body, listener::onProgress)
     }
 }

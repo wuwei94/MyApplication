@@ -4,8 +4,8 @@ package com.example.william.my.core.okhttp.listener
  * 下载进度监听接口
  */
 @Deprecated(
-    message = "请使用 InterceptorProgressDownload 配合 lambda 替代",
-    replaceWith = ReplaceWith("InterceptorProgressDownload")
+    message = "请使用 InterceptorDownloadProgress 配合 lambda 替代",
+    replaceWith = ReplaceWith("InterceptorDownloadProgress")
 )
 interface ResponseProgressListener {
     /**

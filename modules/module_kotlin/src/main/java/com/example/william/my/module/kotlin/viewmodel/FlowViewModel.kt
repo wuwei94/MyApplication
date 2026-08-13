@@ -26,11 +26,11 @@ import kotlinx.coroutines.launch
 class FlowViewModel(private val repository: FlowRepository) : ViewModel() {
 
     // Backing property to avoid state updates from other classes
-    private val _uiState: MutableStateFlow<NetworkResult<RetrofitResponse<LoginData?>>> =
+    private val _uiState: MutableStateFlow<NetworkResult<RetrofitResponse<LoginData>>> =
         MutableStateFlow(NetworkResult.Loading)
 
     // The UI collects from this StateFlow to get its state updates
-    val uiState: StateFlow<NetworkResult<RetrofitResponse<LoginData?>>> =
+    val uiState: StateFlow<NetworkResult<RetrofitResponse<LoginData>>> =
         _uiState
 
     /**
@@ -44,7 +44,7 @@ class FlowViewModel(private val repository: FlowRepository) : ViewModel() {
             //打印线程
             ThreadUtils.isMainThread("FlowViewModel login")
 
-            val flow: Flow<RetrofitResponse<LoginData?>> =
+            val flow: Flow<RetrofitResponse<LoginData>> =
                 repository.login(username, password)
 
             // 使用 collect 触发流并消耗其元素

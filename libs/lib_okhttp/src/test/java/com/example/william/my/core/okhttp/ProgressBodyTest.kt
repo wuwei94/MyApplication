@@ -1,9 +1,13 @@
 package com.example.william.my.core.okhttp
 
-import com.example.william.my.core.okhttp.body.RequestBodyProgressUpload
-import com.example.william.my.core.okhttp.body.ResponseBodyProgressDownload
+import com.example.william.my.core.okhttp.body.DownloadProgressResponseBody
+import com.example.william.my.core.okhttp.body.RequestBodyProgress
+import com.example.william.my.core.okhttp.body.ResponseBodyProgress
+import com.example.william.my.core.okhttp.body.UploadProgressRequestBody
 import com.example.william.my.core.okhttp.format.FormatParser
 import com.example.william.my.core.okhttp.format.FormatParser.MAX_LOG_BODY_BYTES
+import com.example.william.my.core.okhttp.listener.RequestProgressListener
+import com.example.william.my.core.okhttp.listener.ResponseProgressListener
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Protocol
 import okhttp3.Request
@@ -28,7 +32,7 @@ class ProgressBodyTest {
             override fun isDuplex() = true
             override fun writeTo(sink: BufferedSink) = Unit
         }
-        val body = RequestBodyProgressUpload(delegate) { _, _ -> }
+        val body = UploadProgressRequestBody(delegate) { _, _ -> }
 
         assertTrue(body.isOneShot())
         assertTrue(body.isDuplex())
@@ -36,7 +40,7 @@ class ProgressBodyTest {
 
     @Test
     fun responseWrapperReturnsOneSourceAndSurvivesLoggingPreview() {
-        val body = ResponseBodyProgressDownload(
+        val body = DownloadProgressResponseBody(
             url = "https://example.com/data",
             delegate = "payload".toResponseBody("text/plain".toMediaType())
         ) { _, _, _ -> }
@@ -56,7 +60,7 @@ class ProgressBodyTest {
             override fun source() = source
         }
         var currentBytes = 0L
-        val body = ResponseBodyProgressDownload(
+        val body = DownloadProgressResponseBody(
             "https://example.com/data",
             delegate
         ) { _, current, _ ->
@@ -65,6 +69,53 @@ class ProgressBodyTest {
 
         body.string()
 
+        assertEquals(7L, currentBytes)
+    }
+
+    @Suppress("DEPRECATION")
+    @Test
+    fun deprecatedRequestBodyDelegatesToUploadProgressBody() {
+        val delegate = object : RequestBody() {
+            override fun contentType() = "text/plain".toMediaType()
+            override fun contentLength() = 7L
+            override fun isOneShot() = true
+            override fun isDuplex() = true
+            override fun writeTo(sink: BufferedSink) {
+                sink.writeUtf8("payload")
+            }
+        }
+        var currentBytes = 0L
+        val body = RequestBodyProgress(
+            mRequestBody = delegate,
+            mRequestProgressListener = object : RequestProgressListener {
+                override fun onProgress(currentSize: Long, totalSize: Long) {
+                    currentBytes = currentSize
+                }
+            }
+        )
+
+        body.writeTo(Buffer())
+
+        assertTrue(body.isOneShot())
+        assertTrue(body.isDuplex())
+        assertEquals(7L, currentBytes)
+    }
+
+    @Suppress("DEPRECATION")
+    @Test
+    fun deprecatedResponseBodyDelegatesToDownloadProgressBody() {
+        var currentBytes = 0L
+        val body = ResponseBodyProgress(
+            mUrl = "https://example.com/data",
+            mResponseBody = "payload".toResponseBody("text/plain".toMediaType()),
+            mResponseProgressListener = object : ResponseProgressListener {
+                override fun onProgress(url: String, currentSize: Long, totalSize: Long) {
+                    currentBytes = currentSize
+                }
+            }
+        )
+
+        assertEquals("payload", body.string())
         assertEquals(7L, currentBytes)
     }
 

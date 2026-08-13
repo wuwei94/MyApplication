@@ -1,289 +1,53 @@
-# 库封装层（libs/）
+# 库封装层
 
-> 对第三方库进行封装，提供统一的 API 接口，不包含 Activity。
+`libs/` 只提供可复用能力，不包含 Activity。使用方式、行为约束和选型建议应记录在对应专题文档中，避免在本文件维护重复的 API 手册。
 
 ## 库总览
 
-| 模块 | 职责 | 封装的库 |
-|------|------|---------|
-| lib_okhttp | 网络库封装 | OkHttp |
-| lib_retrofit | 网络库封装 | Retrofit |
-| lib_retrofit_rx | RxJava3 网络封装 | Retrofit + RxJava3 |
-| lib_volley | 网络库封装 | Volley |
-| lib_ktor | 网络库封装 | Ktor |
-| lib_imageloader | 图片加载库封装 | Glide |
-| lib_eventbus | 事件总线封装 | EventBus |
-| lib_download | 下载功能封装 | 自定义下载管理器 |
-| lib_websocket_okhttp | OkHttp WebSocket 封装 | OkHttp WebSocket |
-| lib_websocket_java | Java-WebSocket 封装 | Java-WebSocket |
-| lib_netty | Netty TCP 封装 | Netty |
-| lib_widget | 自定义 Widget 库 | 自定义控件集合 |
-| lib_ninepatch | NinePatch 图片处理 | NinePatch 工具 |
-| lib_nanohttpd | HTTP 服务器封装 | NanoHTTPD |
-
----
-
-## 库详情
-
-### lib_okhttp（OkHttp 封装）
-
-对 OkHttp 网络库的封装，提供 Kotlin DSL 风格的配置 API，支持多实例、可插拔日志、进度监听等。
-
-- 权限：`INTERNET`、`ACCESS_NETWORK_STATE`
-- 依赖：OkHttp、OkHttp Logging Interceptor
-- 包名：`com.example.william.my.core.okhttp`
-
-#### Kotlin DSL 快速上手
-
-```kotlin
-import com.example.william.my.core.okhttp.okHttpClient
-import com.example.william.my.core.okhttp.cachedClient
-
-// 每次创建独立的 client 实例
-val apiClient = okHttpClient {
-    timeout(30)                                    // 统一超时 30 秒
-    retryOnConnectionFailure(true)                 // 失败重试
-    logging()                                      // 官方日志
-    loggingFormat()                                // 自定义格式化日志
-}
-
-// 按名称缓存，同名只创建一次，后续复用
-val cachedApiClient = cachedClient("api") {
-    timeout(30)
-    logging()
-    loggingFormat(filters = listOf("/health"))
-}
-val same = cachedClient("api") { timeout(30) }
-assert(cachedApiClient === same) // true
-
-```
-
-`okHttpClient()` 创建的实例由调用方或 Hilt/ServiceLocator 管理；`cachedClient()` 则由库内按名称保存。认证可通过应用拦截器或 OkHttp 原生 `Authenticator` 按业务需要组合，库内不维护 Token 状态或刷新流程。`cookie` 根包仅保留公开存储 API，适配器与拦截器共享上下文位于 `cookie.internal`。CookieStore 注入 Cookie 时会与原 host 的调用方 `Cookie` Header 合并，同名 Cookie 由调用方值优先。格式化日志会在读取 Body 前执行 URL 过滤，只预读可重复、长度已知且不超过 1 MiB 的请求体，响应体最多预览 1 MiB。进度包装保留 one-shot/duplex 语义及唯一响应数据源。`ignoreSSL()` 仅允许 Debug 构建，Release 调用会直接失败。
-
-#### 日志配置
-
-```kotlin
-// OkHttp 官方日志（默认 BASIC 级别）
-logging()
-logging(Level.BODY)                               // 自定义级别
-
-// 自定义格式化日志（边框、对齐、耗时）
-loggingFormat()                                    // 无过滤
-loggingFormat(filters = listOf("/api/ping"))       // 过滤指定 URL 后缀
-```
-
-HTTP 缓存会在应用拦截器阶段选择网络或本地缓存，并在网络拦截器阶段写入响应缓存时长；离线请求可读取已过期缓存，内部缓存控制 Header 不会发送到服务器。
-
-#### 其他配置
-
-```kotlin
-val client = okHttpClient {
-    ignoreSSL()                                              // 忽略 SSL 证书校验（仅调试用）
-    noProxy()                                                // 禁用代理
-    cookieJar()                                              // 启用 Cookie 管理
-    cache(app, dirName = "http_cache", dirSize = 50L * 1024L * 1024L)  // 启用缓存
-    addInterceptor(CustomInterceptor())                      // 添加自定义拦截器
-    addNetworkInterceptor(InterceptorProgressDownload { url, cur, total ->
-        Log.d("Download", "$url: $cur/$total")               // 下载进度监听
-    })
-    addNetworkInterceptor(InterceptorProgressUpload { cur, total ->
-        Log.d("Upload", "$cur/$total")                       // 上传进度监听
-    })
-    raw {                                                    // 高级：直接操作 OkHttpClient.Builder
-        dns(CustomDns())
-    }
-}
-```
-
-#### 请求示例
-
-```kotlin
-// FormBody
-val formBody = FormBody.Builder()
-    .add("username", "admin")
-    .add("password", "123456")
-    .build()
-
-val request = Request.Builder()
-    .url("https://api.example.com/login")
-    .post(formBody)
-    .build()
-
-client.newCall(request).enqueue(callback)
-
-// JSON Body
-val json = JSONObject()
-    .put("username", "admin")
-    .put("password", "123456")
-
-val jsonBody = json.toString()
-    .toRequestBody("application/json; charset=utf-8".toMediaType())
-
-val jsonRequest = Request.Builder()
-    .url("https://api.example.com/login")
-    .post(jsonBody)
-    .build()
-
-// MultipartBody（文件上传）
-val multipartBody = MultipartBody.Builder()
-    .setType(MultipartBody.FORM)
-    .addFormDataPart("file", "photo.jpg", file.asRequestBody("image/jpeg".toMediaType()))
-    .build()
-```
-
-### lib_retrofit（Retrofit 封装）
-
-对 Retrofit 网络库的封装，提供 Kotlin DSL 风格的配置 API，支持多实例、命名缓存。
-
-- 权限：`INTERNET`
-- 依赖：Retrofit、Retrofit Gson Converter、Retrofit Scalars Converter
-- 包名：`com.example.william.my.core.retrofit`
-
-#### Kotlin DSL 快速上手
-
-```kotlin
-import com.example.william.my.core.retrofit.retrofit
-import com.example.william.my.core.retrofit.cachedRetrofit
-
-// 每次创建独立的 Retrofit 实例
-val r = retrofit {
-    baseUrl("https://api.example.com/")
-    client(okHttpClient { timeout(30); logging() })
-}
-
-// 按名称缓存，同名只创建一次，后续复用
-val apiRetrofit = cachedRetrofit("api") {
-    baseUrl("https://api.example.com/")
-    client(okHttpClient { timeout(30); logging() })
-}
-```
-
-### lib_retrofit_rx（RxJava3 + Retrofit 封装）
-
-对 Retrofit 的 RxJava3 扩展封装，在同一模块内按包区分标准 Retrofit 接口模式与动态请求模式。依赖 `lib_retrofit`。
-
-- 依赖：lib_retrofit、Retrofit RxJava3 Adapter、RxAndroid、RxLifecycle
-- 标准接口包：`com.example.william.my.core.retrofit.rx.api`
-- 动态请求包：`com.example.william.my.core.retrofit.rx.dynamic`
-
-#### 标准 Retrofit 接口模式（推荐）
-
-固定业务接口优先使用 Retrofit 注解定义，通过 `createRxApi()` 创建 API Service，再用 `withNetworkDefaults()` 统一异常转换、IO/Main 线程切换和可选生命周期绑定。接口统一声明为 `RetrofitResponse<Model>`；`RetrofitResponse.data` 已是 `T?`，不再使用 `RetrofitResponse<Model?>` 重复表达可空性。
-
-```kotlin
-val api = createRxApi(LoginApi::class.java)
-
-api.login(username, password)
-    .withNetworkDefaults(lifecycleOwner)
-    .subscribe(object : RetrofitResponseCallback<LoginData>() {
-        override fun onResponse(response: LoginData?) { /* handle success */ }
-        override fun onFailure(e: ApiException) { /* handle error */ }
-    })
-```
-
-`rxRetrofit {}` 会自动安装 `RxJava3CallAdapterFactory`。无 DI 的简单场景可使用 `cachedRxRetrofit(name) {}` 按名称缓存，配套的 `getCachedRxRetrofit()`、`removeCachedRxRetrofit()` 和 `clearCachedRxRetrofits()` 用于查询与清理；命名缓存独立于普通 Retrofit 缓存和内部默认实例。
-
-#### 动态请求模式（特殊场景）
-
-仅当 URL、HTTP 方法或请求结构需要在运行时决定时使用 `RxDynamicRequest`，无需定义业务 Retrofit 接口。
-
-```kotlin
-RxDynamicRequest.builder<LoginData>()
-    .api("user/login")
-    .addParam("username", "admin")
-    .addParam("password", "123456")
-    .post()
-    .setProvider(lifecycleOwner)
-    .buildSingle()
-    .subscribe(object : RetrofitResponseCallback<LoginData>() {
-        override fun onResponse(response: LoginData?) { /* handle success */ }
-        override fun onFailure(e: ApiException) { /* handle error */ }
-    })
-```
-
-`RxDynamicRequestBuilder` 只能由 `RxDynamicRequest.builder<T>()` / `builder(Type)` 创建，并要求在 `buildSingle()` 前调用 `api(...)`。Builder 的可变状态保持私有，执行前生成只读的 `RxDynamicRequestConfig` 快照并复制 Header 与参数集合，避免调用方后续修改集合影响已构建请求。
-
-动态 Builder 支持 GET/POST/PUT/PATCH/DELETE、Form/JSON/Raw Body 和多文件 Multipart；可通过 `retrofit(instance)` 使用调用方管理的 Retrofit 实例。默认在 Android 主线程观察结果，后台任务或 JVM 测试可通过 `observeOn(scheduler)` 覆盖单次请求的观察调度器。
-
-两种模式共享回调与异常转换，但不要在同一业务接口中混用。固定业务 API 使用标准模式，动态模式只作为运行时请求工具。
-
-### lib_volley（Volley 封装）
-
-对 Volley 网络库的封装，提供轻量级 HTTP 请求。
-
-- 依赖：Volley
-
-### lib_ktor（Ktor 封装）
-
-对 Ktor 客户端库的封装，提供 Kotlin 协程友好的网络请求。
-
-- 权限：`INTERNET`
-- 依赖：Ktor
-
-### lib_imageloader（图片加载库封装）
-
-对 Glide 图片加载库的封装，提供统一的图片加载接口。
-
-- 依赖：Glide
-
-### lib_eventbus（EventBus 封装）
-
-对 EventBus 事件总线库的封装，提供事件注册和发送接口。
-
-- 依赖：EventBus
-
-### lib_download（下载功能封装）
-
-自定义下载功能封装，支持断点续传和进度监听。
-
-- 权限：`ACCESS_NETWORK_STATE`
-- 依赖：无
-
-### lib_websocket_okhttp（OkHttp WebSocket 封装）
-
-对 OkHttp WebSocket 的封装，提供客户端长连接通信接口。
-
-- 权限：`ACCESS_NETWORK_STATE`
-- 依赖：OkHttp
-- 包名：`com.example.william.my.core.okhttpws`
-
-### lib_websocket_java（Java-WebSocket 封装）
-
-对 Java-WebSocket 库的封装，提供客户端和服务端 WebSocket 通信接口。
-
-- 权限：`ACCESS_NETWORK_STATE`、`INTERNET`
-- 依赖：Java-WebSocket
-- 包名：`com.example.william.my.core.javaws`
-
-### lib_netty（Netty TCP 封装）
-
-对 Netty 网络框架的封装，提供 TCP 客户端和服务端通信接口。
-
-- 权限：`ACCESS_NETWORK_STATE`、`INTERNET`
-- 依赖：Netty
-- 包名：`com.example.william.my.core.netty`
-
-### lib_widget（自定义 Widget 库）
-
-自定义 UI 控件集合，供其他模块复用。
-
-- 依赖：无
-
-### lib_ninepatch（NinePatch 图片处理）
-
-NinePatch 图片处理工具库。
-
-- 依赖：无
-
-### lib_nanohttpd（HTTP 服务器封装）
-
-对 NanoHTTPD 轻量级 HTTP 服务器的封装，提供统一的服务启动、停止和配置接口。不包含业务逻辑，业务处理由调用方重写 `serve()` 方法实现。
-
-- 权限：`INTERNET`、`ACCESS_NETWORK_STATE`
-- 依赖：NanoHTTPD
-- 包名：`com.example.william.my.core.nanohttpd`
-- 核心类：
-  - `NanoHttpServer` — 服务端基类（启动/停止/静态文件服务/MIME 类型检测/标准 HTTP 响应）
-  - `NanoHttpLogger` — 日志工具（支持 debug 开关控制）
-  - `ServerConfig` — 服务配置（端口、超时）
-  - `ServerLifecycle` — 生命周期回调接口
+| 模块 | 职责 | 主要依赖 | 详细文档 |
+|------|------|----------|----------|
+| `lib_okhttp` | OkHttp Client DSL、配置适配和 Interceptor | OkHttp | [Android 网络请求封装](network.md) |
+| `lib_retrofit` | Retrofit DSL、响应转换和统一异常 | Retrofit、`lib_okhttp` | [Android 网络请求封装](network.md) |
+| `lib_retrofit_rx` | Retrofit 的 RxJava3 调用与动态请求 | RxJava3、`lib_retrofit` | [Android 网络请求封装](network.md) |
+| `lib_ktor` | 固定使用 OkHttp Engine 的 Ktor 项目封装 | Ktor、OkHttp | [Android 网络请求封装](network.md) |
+| `lib_volley` | 轻量级 HTTP 请求封装 | Volley | - |
+| `lib_httpurl` | `HttpURLConnection` 基础请求工具 | Android SDK | - |
+| `lib_download` | 断点续传、下载进度和响应流写入 | - | - |
+| `lib_websocket_okhttp` | OkHttp WebSocket 客户端 | OkHttp WebSocket | - |
+| `lib_websocket_java` | Java-WebSocket 客户端与服务端 | Java-WebSocket | - |
+| `lib_netty` | Netty TCP 客户端与服务端 | Netty | - |
+| `lib_nanohttpd` | 嵌入式 HTTP Server | NanoHTTPD | - |
+| `lib_imageloader` | 图片加载封装 | Glide | - |
+| `lib_eventbus` | 事件总线封装 | EventBus | - |
+| `lib_widget` | 自定义 Widget 集合 | Android View | - |
+| `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
+| `network_dio` | Flutter Dio 请求封装 | Dio | [package README](../basic/basic_flutter_libs/network_dio/README.md) |
+| `network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../basic/basic_flutter_libs/network_http/README.md) |
+
+## 通用约定
+
+- 正式业务的 Client、Retrofit 和 API Service 由 Hilt 或 ServiceLocator 管理；库内命名缓存仅用于无 DI 的简单场景和 Demo。
+- 网络库负责传输、协议适配和错误转换，不持有业务 Token，也不固化 Token 刷新策略。
+- 上传下载文件的落盘、断点续传等业务归 `lib_download`；网络库只保留其自身已有的传输能力。
+- 新代码优先使用明确的公开类型；标记为 `@Deprecated` 的兼容类型不得继续扩展，也不能在没有迁移方案时直接删除。
+- Android 网络数据模型按实际组件传参需求直接实现 `Parcelable`。`lib_okhttp.base.BaseBean` 仅用于兼容旧 `Serializable` 模型。
+
+## 其他库说明
+
+### lib_download
+
+提供断点续传和进度监听，由 `DownloadFileWriter` 负责将响应流写入文件。文件系统职责不放入 Retrofit 或 Ktor。
+
+### WebSocket、TCP 与 HTTP Server
+
+- `lib_websocket_okhttp`：使用 OkHttp 实现 WebSocket 客户端。
+- `lib_websocket_java`：使用 Java-WebSocket 实现客户端和服务端。
+- `lib_netty`：提供 Netty TCP 通信示例。
+- `lib_nanohttpd`：提供 `NanoHttpServer`、`NanoHttpLogger`、`ServerConfig` 和 `ServerLifecycle`。
+
+### UI 与通用能力
+
+- `lib_imageloader`：Glide 图片加载。
+- `lib_eventbus`：EventBus 注册、注销和事件发送。
+- `lib_widget`：项目自定义 View。
+- `lib_ninepatch`：NinePatch 图片处理工具。

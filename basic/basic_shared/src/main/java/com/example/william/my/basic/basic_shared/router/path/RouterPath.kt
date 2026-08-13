@@ -241,7 +241,7 @@ object RouterPath {
             private const val KTOR_PATH = "${PATH}/Ktor"
 
             const val Ktor = "${KTOR_PATH}/Ktor"
-            const val KtorUtils = "${KTOR_PATH}/KtorUtils"
+            const val KtorClient = "${KTOR_PATH}/KtorClient"
         }
 
         object HttpURL {

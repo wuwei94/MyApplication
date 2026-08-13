@@ -168,7 +168,7 @@
 | Activity | 功能 |
 |----------|------|
 | KtorActivity | Ktor HTTP 客户端 |
-| KtorUtilsActivity | Ktor 封装工具 |
+| KtorClientActivity | 项目级 Ktor Client 封装示例 |
 | HttpURLActivity | HttpURLConnection 原生网络请求 |
 | VolleyActivity | Volley HTTP 库 |
 | VolleyHelperActivity | Volley 封装工具 |

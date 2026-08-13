@@ -13,7 +13,7 @@ import java.lang.reflect.Type
 internal class RxDynamicRequestConfig(
     val dataType: Type,
     val api: String,
-    val method: HttpMethod,
+    val method: RxDynamicHttpMethod,
     val header: Map<String, String>,
     val parameter: Map<String, String>,
     val requestBody: RequestBody?,

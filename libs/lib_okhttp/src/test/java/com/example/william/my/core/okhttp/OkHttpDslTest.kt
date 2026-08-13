@@ -7,6 +7,7 @@ import okhttp3.RequestBody
 import okio.BufferedSink
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotSame
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -73,7 +74,34 @@ class OkHttpDslTest {
             assertSame(first, second)
             assertSame(first, getCachedClient(name))
         } finally {
-            removeCachedClient(name)?.closeResources()
+            removeCachedClient(name)
         }
+    }
+
+    @Test
+    fun removingCachedClientClosesItsResources() {
+        val name = "okhttp-dsl-remove-test"
+        val client = cachedClient(name) { timeout(5) }
+
+        val removed = removeCachedClient(name)
+
+        assertSame(client, removed)
+        assertTrue(client.dispatcher.executorService.isShutdown)
+        assertNull(removeCachedClient(name))
+    }
+
+    @Test
+    fun clearingCachedClientsClosesAllResources() {
+        val firstName = "okhttp-dsl-clear-first-test"
+        val secondName = "okhttp-dsl-clear-second-test"
+        val first = cachedClient(firstName) { timeout(5) }
+        val second = cachedClient(secondName) { timeout(5) }
+
+        clearCachedClients()
+
+        assertTrue(first.dispatcher.executorService.isShutdown)
+        assertTrue(second.dispatcher.executorService.isShutdown)
+        assertNull(removeCachedClient(firstName))
+        assertNull(removeCachedClient(secondName))
     }
 }

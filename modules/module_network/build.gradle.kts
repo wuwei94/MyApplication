@@ -15,6 +15,7 @@ dependencies {
 
     implementation(project(":basic:basic_repo"))
 
+    implementation(project(":libs:lib_okhttp"))
     implementation(project(":libs:lib_ktor"))
     implementation(project(":libs:lib_volley"))
     implementation(project(":libs:lib_httpurl"))

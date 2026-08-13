@@ -3,63 +3,32 @@ package com.example.william.my.core.okhttp.body
 import com.example.william.my.core.okhttp.listener.ResponseProgressListener
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import okio.Buffer
 import okio.BufferedSource
-import okio.ForwardingSource
-import okio.Source
-import okio.buffer
 
 /**
- * 下载进度 ResponseBody
+ * 旧版下载进度响应体
+ *
+ * 新代码请使用 [DownloadProgressResponseBody]。
  */
 @Deprecated(
-    message = "请使用 InterceptorProgressDownload 配合 lambda 替代",
-    replaceWith = ReplaceWith("InterceptorProgressDownload")
+    message = "请使用 DownloadProgressResponseBody",
+    replaceWith = ReplaceWith("DownloadProgressResponseBody(url, responseBody, listener)")
 )
 class ResponseBodyProgress(
-    private val mUrl: String,
-    private val mResponseBody: ResponseBody,
-    private val mResponseProgressListener: ResponseProgressListener
+    mUrl: String,
+    mResponseBody: ResponseBody,
+    mResponseProgressListener: ResponseProgressListener
 ) : ResponseBody() {
 
-    override fun contentType(): MediaType? {
-        return mResponseBody.contentType()
-    }
+    private val delegate = DownloadProgressResponseBody(
+        mUrl,
+        mResponseBody,
+        mResponseProgressListener::onProgress
+    )
 
-    override fun contentLength(): Long {
-        return mResponseBody.contentLength()
-    }
+    override fun contentType(): MediaType? = delegate.contentType()
 
-    override fun source(): BufferedSource {
-        return source(mResponseBody.source()).buffer()
-    }
+    override fun contentLength(): Long = delegate.contentLength()
 
-    private fun source(source: Source): Source {
-        return ProgressSource(source)
-    }
-
-    private inner class ProgressSource(delegate: Source) : ForwardingSource(delegate) {
-
-        //当前读取字节数
-        var bytesRead = 0L
-
-        //总字节长度，避免多次调用contentLength()方法
-        var totalBytesCount = 0L
-
-        override fun read(sink: Buffer, byteCount: Long): Long {
-            val count = super.read(sink, byteCount)
-            //获得contentLength的值，后续不再调用
-            if (totalBytesCount == 0L) {
-                totalBytesCount = contentLength()
-            }
-            if (count == -1L) { // 该数据源已读取完毕
-                bytesRead = totalBytesCount
-            } else {
-                bytesRead += count
-            }
-
-            mResponseProgressListener.onProgress(mUrl, bytesRead, totalBytesCount)
-            return count
-        }
-    }
+    override fun source(): BufferedSource = delegate.source()
 }

@@ -1,6 +1,6 @@
 package com.example.william.my.core.okhttp.interceptor
 
-import com.example.william.my.core.okhttp.base.Header
+import com.example.william.my.core.okhttp.header.ControlHeaders
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 /**
  * 请求缓存拦截器
  *
- * 根据网络状态和 [Header.RETROFIT_CACHE_ALIVE_SECOND] 设置 GET 请求的缓存策略：
+ * 根据网络状态和 [ControlHeaders.CACHE_ALIVE_SECONDS] 设置 GET 请求的缓存策略：
  * 有网络时按指定秒数决定读取网络或缓存，无网络时仅读取缓存。
  */
 class InterceptorCacheRequest(
@@ -23,10 +23,10 @@ class InterceptorCacheRequest(
             return chain.proceed(request)
         }
 
-        if (request.headers(Header.RETROFIT_CACHE_ALIVE_SECOND).isEmpty()) {
+        if (request.headers(ControlHeaders.CACHE_ALIVE_SECONDS).isEmpty()) {
             return chain.proceed(request)
         }
-        val age = request.headers(Header.RETROFIT_CACHE_ALIVE_SECOND)[0].toIntOrNull()
+        val age = request.headers(ControlHeaders.CACHE_ALIVE_SECONDS)[0].toIntOrNull()
             ?: return chain.proceed(request)
         return chain.proceed(buildRequest(request, age))
     }

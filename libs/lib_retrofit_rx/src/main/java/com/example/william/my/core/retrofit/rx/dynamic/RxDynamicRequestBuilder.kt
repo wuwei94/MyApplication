@@ -22,7 +22,7 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
 ) {
 
     private var api: String? = null
-    private var method: HttpMethod = HttpMethod.GET
+    private var method: RxDynamicHttpMethod = RxDynamicHttpMethod.GET
     private val header = mutableMapOf<String, String>()
     private val parameter = mutableMapOf<String, String>()
 
@@ -40,27 +40,27 @@ class RxDynamicRequestBuilder<T> @PublishedApi internal constructor(
     }
 
     fun get(): RxDynamicRequestBuilder<T> {
-        method = HttpMethod.GET
+        method = RxDynamicHttpMethod.GET
         return this
     }
 
     fun post(): RxDynamicRequestBuilder<T> {
-        method = HttpMethod.POST
+        method = RxDynamicHttpMethod.POST
         return this
     }
 
     fun put(): RxDynamicRequestBuilder<T> {
-        method = HttpMethod.PUT
+        method = RxDynamicHttpMethod.PUT
         return this
     }
 
     fun patch(): RxDynamicRequestBuilder<T> {
-        method = HttpMethod.PATCH
+        method = RxDynamicHttpMethod.PATCH
         return this
     }
 
     fun delete(): RxDynamicRequestBuilder<T> {
-        method = HttpMethod.DELETE
+        method = RxDynamicHttpMethod.DELETE
         return this
     }
 

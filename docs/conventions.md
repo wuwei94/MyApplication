@@ -55,7 +55,8 @@
 | 新增/删除/移动 Activity | `docs/modules.md` + `README.md` |
 | 新增/删除模块 | `docs/modules.md` + `README.md` + `AGENTS.md` |
 | 修改模块职责 | `docs/modules.md` + `README.md` |
-| 修改库封装 | `docs/libs.md` + `README.md` |
+| 修改库封装 | `docs/libs.md` + 对应专题文档 + `README.md` |
+| 修改 OkHttp、Retrofit、Retrofit Rx 或 Ktor | `docs/network.md` + `docs/libs.md` + `README.md` |
 | 修改 Convention Plugin | `docs/build-logic.md` |
 | 修改关键约定 | `docs/conventions.md` |
 | 修改架构或技术栈 | `README.md` |

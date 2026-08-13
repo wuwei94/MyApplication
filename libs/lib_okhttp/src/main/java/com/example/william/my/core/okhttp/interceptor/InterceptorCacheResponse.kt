@@ -1,6 +1,6 @@
 package com.example.william.my.core.okhttp.interceptor
 
-import com.example.william.my.core.okhttp.base.Header
+import com.example.william.my.core.okhttp.header.ControlHeaders
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -13,10 +13,10 @@ internal class InterceptorCacheResponse : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val cacheAgeHeader = request.header(Header.RETROFIT_CACHE_ALIVE_SECOND)
+        val cacheAgeHeader = request.header(ControlHeaders.CACHE_ALIVE_SECONDS)
             ?: return chain.proceed(request)
         val networkRequest = request.newBuilder()
-            .removeHeader(Header.RETROFIT_CACHE_ALIVE_SECOND)
+            .removeHeader(ControlHeaders.CACHE_ALIVE_SECONDS)
             .build()
         val response = chain.proceed(networkRequest)
         val age = cacheAgeHeader.toIntOrNull()

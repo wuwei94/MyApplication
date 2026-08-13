@@ -1,6 +1,6 @@
 package com.example.william.my.core.okhttp
 
-import com.example.william.my.core.okhttp.base.Header
+import com.example.william.my.core.okhttp.header.ControlHeaders
 import com.example.william.my.core.okhttp.interceptor.InterceptorCacheRequest
 import com.example.william.my.core.okhttp.interceptor.InterceptorCacheResponse
 import okhttp3.Cache
@@ -34,7 +34,7 @@ class CacheContractTest {
         }
         val request = Request.Builder()
             .url(server.url("/cache"))
-            .header(Header.RETROFIT_CACHE_ALIVE_SECOND, "60")
+            .header(ControlHeaders.CACHE_ALIVE_SECONDS, "60")
             .build()
 
         try {
@@ -43,7 +43,7 @@ class CacheContractTest {
             }
             assertEquals(
                 null,
-                server.takeRequest().getHeader(Header.RETROFIT_CACHE_ALIVE_SECOND)
+                server.takeRequest().getHeader(ControlHeaders.CACHE_ALIVE_SECONDS)
             )
 
             connected = false

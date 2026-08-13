@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModel
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
-import com.example.william.my.core.retrofit.rx.callback.RetrofitLiveDataCallback
+import com.example.william.my.core.retrofit.rx.callback.RxLiveDataCallback
 import com.example.william.my.core.retrofit.exception.ExceptionHandler
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.usecase.ArticleUseCase
@@ -49,7 +49,7 @@ class ArticleLiveDataViewModel(
      */
     fun loadArticle2(page: Int) {
         repository.getArticleSingle(page)
-            .subscribe(object : RetrofitLiveDataCallback<ArticleData>() {
+            .subscribe(object : RxLiveDataCallback<ArticleData>() {
                 override fun onPostValue(value: RetrofitResponse<ArticleData>?) {
                     super.onPostValue(value)
                     value?.let {

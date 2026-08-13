@@ -67,17 +67,19 @@ fun getCachedClient(name: String): OkHttpClient {
 }
 
 /**
- * 移除指定名称的缓存 Client。
+ * 移除并关闭指定名称的缓存 Client。
+ *
+ * 返回的 Client 已关闭资源，仅用于确认或识别被移除的实例，不应继续发起请求。
  */
 fun removeCachedClient(name: String): OkHttpClient? {
-    return clientCache.remove(name)
+    return clientCache.remove(name)?.also(OkHttpClient::closeResources)
 }
 
 /**
- * 清空所有缓存的 Client。
+ * 清空并关闭所有缓存的 Client。
  */
 fun clearCachedClients() {
-    clientCache.clear()
+    clientCache.keys.toList().forEach(::removeCachedClient)
 }
 
 /** 关闭由调用方拥有的 Client 资源。关闭后该 Client 不应继续使用。 */

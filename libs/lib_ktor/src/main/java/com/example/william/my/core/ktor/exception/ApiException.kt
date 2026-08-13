@@ -1,11 +1,22 @@
 package com.example.william.my.core.ktor.exception
 
-sealed class ApiException(throwable: Throwable?) : Exception(throwable) {
-    class TimeoutError(cause: Throwable) : ApiException(cause)
-    class ConnectError(cause: Throwable) : ApiException(cause)
-    class UnknownHostError(cause: Throwable) : ApiException(cause)
-    class ClientRequestError(cause: Throwable) : ApiException(cause)
-    class ServerResponseError(cause: Throwable) : ApiException(cause)
-    class SSLHandshakeError(cause: Throwable) : ApiException(cause)
-    class UnknownException(cause: Throwable) : ApiException(cause)
+/**
+ * 统一网络异常
+ *
+ * 只保留错误码、消息与原始原因，供调用方按与其他网络库一致的契约处理失败。
+ */
+class ApiException(throwable: Throwable, var code: Int) : Exception(throwable) {
+
+    override var message: String = ""
+
+    /**
+     * 本地异常错误码
+     */
+    object Error {
+        const val UNKNOWN = 1000
+        const val CONNECT_ERROR = 1001
+        const val TIMEOUT_ERROR = 1002
+        const val SSL_ERROR = 1003
+        const val PARSE_ERROR = 1004
+    }
 }

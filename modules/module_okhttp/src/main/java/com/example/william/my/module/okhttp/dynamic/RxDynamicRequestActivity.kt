@@ -5,7 +5,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.retrofit.rx.dynamic.RxDynamicRequest
-import com.example.william.my.core.retrofit.rx.callback.RetrofitResponseCallback
+import com.example.william.my.core.retrofit.rx.callback.RxResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.google.gson.JsonElement
 import org.json.JSONObject
@@ -49,7 +49,7 @@ class RxDynamicRequestActivity : BasicRecyclerActivity() {
             .post()
             .setProvider(this)
             .buildSingle()
-            .subscribe(object : RetrofitResponseCallback<JsonElement>() {
+            .subscribe(object : RxResponseCallback<JsonElement>() {
                 override fun onResponse(response: JsonElement?) {
                     super.onResponse(response)
                     showResponse(response?.toString())
@@ -73,7 +73,7 @@ class RxDynamicRequestActivity : BasicRecyclerActivity() {
             .post()
             .setProvider(this)
             .buildSingle()
-            .subscribe(object : RetrofitResponseCallback<JsonElement>() {
+            .subscribe(object : RxResponseCallback<JsonElement>() {
                 override fun onResponse(response: JsonElement?) {
                     super.onResponse(response)
                     showResponse(response?.toString())

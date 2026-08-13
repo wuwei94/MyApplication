@@ -7,6 +7,7 @@ import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.core.okhttp.utils.JsonUtils
 import com.example.william.my.core.volley.builder.VolleyBuilder
 import com.example.william.my.core.volley.listener.VolleyListener
 import org.json.JSONObject
@@ -61,7 +62,7 @@ class VolleyActivity : BasicResponseActivity() {
             .post()
             .build(this, object : VolleyListener<LoginData>() {
                 override fun onResponse(response: LoginData?) {
-                    appendLog("【postForm】成功：${response?.string()}")
+                    appendLog("【postForm】成功：${response?.let(JsonUtils::toJson)}")
                 }
 
                 override fun onErrorResponse(error: VolleyError?) {
@@ -82,7 +83,7 @@ class VolleyActivity : BasicResponseActivity() {
             .post()
             .build(this, object : VolleyListener<LoginData>() {
                 override fun onResponse(response: LoginData?) {
-                    appendLog("【postJson】成功：${response?.string()}")
+                    appendLog("【postJson】成功：${response?.let(JsonUtils::toJson)}")
                 }
 
                 override fun onErrorResponse(error: VolleyError?) {

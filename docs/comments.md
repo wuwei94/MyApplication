@@ -44,7 +44,7 @@
  * 应注册为网络拦截器。
  *
  * ```kotlin
- * builder.addNetworkInterceptor(InterceptorProgressUpload(listener))
+ * builder.addNetworkInterceptor(InterceptorUploadProgress(listener))
  * ```
  */
 ````

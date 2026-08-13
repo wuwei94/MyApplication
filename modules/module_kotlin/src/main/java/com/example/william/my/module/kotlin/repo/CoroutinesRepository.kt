@@ -22,7 +22,7 @@ class CoroutinesRepository(private val defaultDispatcher: CoroutineDispatcher) {
     suspend fun login(
         username: String,
         password: String
-    ): NetworkResult<RetrofitResponse<LoginData?>> {
+    ): NetworkResult<RetrofitResponse<LoginData>> {
 
         return withContext(defaultDispatcher) {
             //打印线程

@@ -70,7 +70,7 @@ object ServiceLocator {
         inMemory: Boolean = false
     ): ArticleDatabase {
         val result = if (inMemory) {
-            // Use a faster in-memory database for tests
+            // 测试时使用更快的内存数据库
             Room.inMemoryDatabaseBuilder(
                 context.applicationContext,
                 ArticleDatabase::class.java
@@ -78,7 +78,7 @@ object ServiceLocator {
                 .allowMainThreadQueries()
                 .build()
         } else {
-            // Real database using SQLite
+            // 基于 SQLite 的真实数据库
             Room.databaseBuilder(
                 context.applicationContext,
                 ArticleDatabase::class.java, "Articles.db"
@@ -104,7 +104,7 @@ object ServiceLocator {
         synchronized(lock) {
             articleRepository = null
             articleApi = null
-            // Clear all data to avoid test pollution.
+            // 清空所有数据，避免测试相互污染
             articleDatabase?.apply {
                 clearAllTables()
                 close()

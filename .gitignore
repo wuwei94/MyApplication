@@ -198,3 +198,9 @@ fabric.properties
 .cxx/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,androidstudio
+
+# Local scheduler runtime state
+/.mimocode/.cron-lock
+
+# Dart / Flutter local tool state
+**/.dart_tool/

@@ -8,10 +8,10 @@
 
 - **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
-- **网络层**：Volley / OkHttp / Retrofit / Ktor / WebSocket / Netty / NanoHTTPD，含 Kotlin DSL 封装、拦截器、下载库、点九图解析。
+- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / NanoHTTPD。Ktor 固定使用 OkHttp Engine，业务响应字段约定与 Retrofit 保持一致，并覆盖项目常用的异常、超时、Cookie、缓存、安全日志与扩展插件配置。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
-- **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / Provider / GetX / BloC。
+- **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / Provider / GetX / BloC。
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
 - **自定义 View**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等。
 - **Compose**：Navigation、BackHandler、手势 / 拖拽 / `rememberSaveable`、SmartRefresh 等原生能力示例。
@@ -47,21 +47,22 @@ MyApplication/
 ├── app                         # 壳工程（Hilt + ARouter 入口）
 ├── build-logic                 # Convention Plugin，统一插件配置
 ├── gradle/libs.versions.toml   # 统一版本目录
-├── docs                        # 文档（modules / libs / build-logic / conventions）
+├── docs                        # 文档（modules / libs / network / build-logic / conventions）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_shared            # 通用 Bus、Router、UI 脚手架
 │   ├── basic_repo              # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
-│   └── basic_server            # 服务端基础模块
+│   ├── basic_server            # 服务端基础模块
+│   └── basic_flutter_libs      # Flutter 本地库（network_dio / network_http 独立封装）
 ├── libs                        # 可复用的业务能力库
-│   ├── lib_okhttp              # OkHttp 封装（DSL、多实例、命名缓存、安全日志、Cookie/缓存、进度监听）
-│   ├── lib_retrofit            # Retrofit 封装（DSL 配置、命名缓存、Converter）
-│   ├── lib_retrofit_rx         # RxJava3 + Retrofit 封装（Rx 请求、回调、异常处理）
-│   ├── lib_ktor                # Ktor 客户端封装（协程友好）
+│   ├── lib_okhttp              # OkHttp 封装（DSL、多实例及缓存生命周期、安全日志、OkHttp 控制 Header、上传下载进度）
+│   ├── lib_retrofit            # Retrofit 封装（DSL、Gson 响应转换、可空 Parcelable 响应、加载状态 View）
+│   ├── lib_retrofit_rx         # RxJava3 + Retrofit（Rx 回调 + RxDynamic 动态请求）
+│   ├── lib_ktor                # Ktor 项目级封装（固定 OkHttp Engine、Plugin 配置、可空 Parcelable 响应与常用请求）
 │   ├── lib_volley              # Volley 封装（轻量级 HTTP）
 │   ├── lib_websocket_okhttp    # OkHttp WebSocket 封装
 │   ├── lib_websocket_java      # Java-WebSocket 封装
-│   ├── lib_download            # 下载功能封装（断点续传、进度监听）
+│   ├── lib_download            # 下载功能封装（断点续传、进度监听、响应流写入）
 │   ├── lib_netty               # Netty TCP 封装
 │   ├── lib_nanohttpd           # NanoHTTPD 服务器封装
 │   ├── lib_eventbus            # EventBus 事件总线封装
@@ -184,7 +185,7 @@ MyApplication/
 
 ### module_network（网络库全栈对比）
 
-网络库全栈对比 Demo。
+网络库全栈对比 Demo。四个 Android 请求封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
 
 - HttpURL / Volley / OkHttp / Retrofit 基础用法
 - Retrofit + RxJava / Kotlin Coroutines 两种异步方案
@@ -290,7 +291,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **可滚动**：ListView / GridView / SingleChildScrollView / PageView / TabBarView / AnimatedList / CustomScrollView / NestedScrollView
 - **功能型**：LayoutBuilder / GestureDetector / PopScope / InheritedWidget / FutureBuilder / StreamBuilder
 - **其他**：Animation / Dialog / Isolate
-- **网络请求**：[Dio](https://pub.dev/packages/dio)
+- **网络请求**：`network_dio`（DioClient）与 `network_http`（HttpClient）两个独立本地 package，统一常用 HTTP 方法、请求体类型、强类型响应、异常、日志和请求取消；重定向等传输语义交给底层库处理
 - **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
 - **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
 

@@ -6,6 +6,7 @@ import com.example.william.my.basic.basic_repo.bean.UserData
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.core.okhttp.utils.JsonUtils
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -50,7 +51,7 @@ class RetrofitRxActivity : BasicRecyclerActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : DisposableSingleObserver<RetrofitResponse<UserData>>() {
                 override fun onSuccess(response: RetrofitResponse<UserData>) {
-                    showResponse(response.string())
+                    showResponse(JsonUtils.toJson(response))
                 }
 
                 override fun onError(e: Throwable) {

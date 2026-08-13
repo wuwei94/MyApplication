@@ -1,5 +1,6 @@
 package com.example.william.my.core.okhttp
 
+import com.example.william.my.core.okhttp.header.ControlHeaders
 import com.example.william.my.core.okhttp.cookie.MemoryCookieStore
 import com.example.william.my.core.okhttp.interceptor.InterceptorBaseUrl
 import com.example.william.my.core.okhttp.interceptor.InterceptorLogging
@@ -101,7 +102,7 @@ class OkHttpNetworkContractTest {
             client.newCall(
                 Request.Builder()
                     .url(server.url("/original/path?source=test"))
-                    .header("Retrofit-Url-Redirect", server.url("/ignored").toString())
+                    .header(ControlHeaders.BASE_URL_REDIRECT, server.url("/ignored").toString())
                     .build()
             ).execute().close()
 

@@ -33,7 +33,7 @@ class RxDynamicRequestTest {
             .addJsonBody("""{"name":"William"}""")
             .buildConfig()
 
-        assertEquals(HttpMethod.PATCH, config.method)
+        assertEquals(RxDynamicHttpMethod.PATCH, config.method)
         assertNotNull(config.requestBody)
     }
 

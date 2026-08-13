@@ -16,6 +16,8 @@ app/                          # 入口（SplashScreen → ModuleActivity）
 basic/                        # 基础层
 ├── basic_lib/                # 基类（BaseActivity、BaseVBActivity、权限管理）
 ├── basic_shared/             # 路由（RouterPath）、共享 Layout、Utils
+├── basic_flutter/            # Flutter Demo Catalog 子工程
+├── basic_flutter_libs/       # Flutter 本地库（network_dio / network_http 独立封装）
 └── basic_repo/               # 数据仓库层
 libs/                         # 库封装层（无 Activity，仅提供 API 封装）
 modules/                      # 功能模块层（每个模块有独立入口 Activity）
@@ -28,7 +30,8 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | 文档 | 内容 |
 |------|------|
 | docs/modules.md | 功能模块详情（20 个模块，每个模块的 Activity 列表） |
-| docs/libs.md | 库封装详情（13 个库封装的说明） |
+| docs/libs.md | 库封装层职责索引 |
+| docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
 | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
 | docs/conventions.md | 关键约定（路由、模块结构、全局依赖、Activity 基类、构建命令） |
 | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |

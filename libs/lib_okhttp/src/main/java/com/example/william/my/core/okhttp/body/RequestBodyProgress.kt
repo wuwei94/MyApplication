@@ -3,59 +3,33 @@ package com.example.william.my.core.okhttp.body
 import com.example.william.my.core.okhttp.listener.RequestProgressListener
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import okio.Buffer
 import okio.BufferedSink
-import okio.ForwardingSink
-import okio.Sink
-import okio.buffer
 
 /**
- * 上传进度 RequestBody
+ * 旧版上传进度请求体
+ *
+ * 新代码请使用 [UploadProgressRequestBody]。
  */
 @Deprecated(
-    message = "请使用 InterceptorProgressUpload 配合 lambda 替代",
-    replaceWith = ReplaceWith("InterceptorProgressUpload")
+    message = "请使用 UploadProgressRequestBody",
+    replaceWith = ReplaceWith("UploadProgressRequestBody(requestBody, listener)")
 )
 class RequestBodyProgress(
-    private val mRequestBody: RequestBody,
-    private val mRequestProgressListener: RequestProgressListener?
+    mRequestBody: RequestBody,
+    mRequestProgressListener: RequestProgressListener?
 ) : RequestBody() {
 
-    override fun contentType(): MediaType? {
-        return mRequestBody.contentType()
+    private val delegate = UploadProgressRequestBody(mRequestBody) { currentBytes, totalBytes ->
+        mRequestProgressListener?.onProgress(currentBytes, totalBytes)
     }
 
-    override fun contentLength(): Long {
-        return mRequestBody.contentLength()
-    }
+    override fun contentType(): MediaType? = delegate.contentType()
 
-    override fun writeTo(sink: BufferedSink) {
-        val bufferedSink = sink(sink).buffer()
-        mRequestBody.writeTo(bufferedSink)
-        //必须调用flush，否则最后一部分数据可能不会被写入
-        bufferedSink.flush()
-    }
+    override fun contentLength(): Long = delegate.contentLength()
 
-    private fun sink(sink: Sink): Sink {
+    override fun isOneShot(): Boolean = delegate.isOneShot()
 
-        return object : ForwardingSink(sink) {
-            //当前写入字节数
-            var bytesWritten = 0L
+    override fun isDuplex(): Boolean = delegate.isDuplex()
 
-            //总字节长度，避免多次调用contentLength()方法
-            var totalBytesCount = 0L
-
-            override fun write(source: Buffer, byteCount: Long) {
-                super.write(source, byteCount)
-                //获得contentLength的值，后续不再调用
-                if (totalBytesCount == 0L) {
-                    totalBytesCount = contentLength()
-                }
-                //增加当前写入的字节数
-                bytesWritten += byteCount
-
-                mRequestProgressListener?.onProgress(bytesWritten, totalBytesCount)
-            }
-        }
-    }
+    override fun writeTo(sink: BufferedSink) = delegate.writeTo(sink)
 }
