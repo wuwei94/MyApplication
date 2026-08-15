@@ -64,12 +64,12 @@
 
 ### network（网络请求）
 
-网络请求示例。
+网络请求示例。Dio 与 package:http 共享 `code/message/data` 业务响应、`errorCode/errorMsg/data` JSON 字段、`code/message/cause` 异常和请求体契约，支持 GET/POST/PUT/PATCH/DELETE，并分别使用各自的底层请求取消能力。
 
 | 示例 | 说明 |
 |------|------|
-| dio | Dio HTTP 客户端 |
-| http | HTTP 包 |
+| dio | 业务 data decoder、完整业务响应展示、原生 LogInterceptor 和 CancelToken；当前示例不输出 Header/Body |
+| http | 业务 data decoder、完整业务响应展示、AbortableRequest 与原样请求日志；日志不脱敏 |
 
 ### storage（本地存储）
 

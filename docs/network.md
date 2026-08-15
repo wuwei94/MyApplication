@@ -103,11 +103,12 @@ val api = createApi(NetworkApi::class.java, retrofit)
 
 ### 当前限制
 
-当前自定义 `RetrofitConverterFactory` 的普通对象/集合分支和自定义 code 字段校验仍有失败契约：
+当前自定义 `RetrofitConverterFactory` 的普通对象/集合分支和自定义 code 字段规范化仍有失败契约：
 
 - `Call<User>` 等无信封响应可能被错误包装后再按 `User` 解析。
 - `code("status")` 目前只参与字段检测，没有完整规范化为 `RetrofitResponse` 字段。
-- 非数字业务码没有按测试契约抛出解析错误。
+
+标准 `RetrofitResponse` 信封由 Gson `TypeAdapter` 按声明类型解析，不在自定义 Converter 中重复增加极少数异常输入的预校验。
 
 在修复相关契约测试前，生产调用应优先使用标准 `RetrofitResponse<T>` 信封和默认字段名，不应把直接对象、自定义业务码字段写成已保证能力。
 
@@ -128,7 +129,7 @@ api.login(username, password)
     })
 ```
 
-`rxRetrofit {}` 自动安装 `RxJava3CallAdapterFactory`。`withNetworkDefaults()` 负责上游异常转换、IO 订阅、主线程观察和可选生命周期绑定。
+`rxRetrofit {}` 自动安装 `RxJava3CallAdapterFactory`。`withNetworkDefaults()` 负责业务失败与上游异常转换、IO 订阅、主线程观察和可选生命周期绑定。
 
 该模块按 `api/callback/function` 分层。由于包路径已经明确为 `retrofit.rx`，回调和转换类型使用 `ResponseCallback`、`LiveDataCallback`、`HttpResultFunction`、`ServerResultFunction` 等名称，不再重复添加 `Rx` 前缀。
 

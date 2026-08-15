@@ -42,7 +42,7 @@ packages:
     source: hosted
     version: "2.7.0"
   async:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: async
       sha256: e2eb0491ba5ddb6177742d2da23904574082139b07c1e33b8503b9f46f3e1a37
@@ -1073,7 +1073,7 @@ packages:
     source: hosted
     version: "0.15.6"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       sha256: "87721a4a50b19c7f1d49001e51409bddc46303966ce89a65af4f4e6004896412"
@@ -1400,6 +1400,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
+  network_dio:
+    dependency: "direct main"
+    description:
+      path: "../basic_flutter_libs/network_dio"
+      relative: true
+    source: path
+    version: "0.1.0"
+  network_http:
+    dependency: "direct main"
+    description:
+      path: "../basic_flutter_libs/network_http"
+      relative: true
+    source: path
+    version: "0.1.0"
   nm:
     dependency: transitive
     description:

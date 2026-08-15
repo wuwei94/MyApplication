@@ -8,7 +8,7 @@
 
 - **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
-- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / NanoHTTPD。Ktor 固定使用 OkHttp Engine，业务响应字段约定与 Retrofit 保持一致，并覆盖项目常用的异常、超时、Cookie、缓存、安全日志与扩展插件配置；Retrofit `ApiException` 保证提供非空错误消息。
+- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
 - **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / Provider / GetX / BloC。
@@ -296,7 +296,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **可滚动**：ListView / GridView / SingleChildScrollView / PageView / TabBarView / AnimatedList / CustomScrollView / NestedScrollView
 - **功能型**：LayoutBuilder / GestureDetector / PopScope / InheritedWidget / FutureBuilder / StreamBuilder
 - **其他**：Animation / Dialog / Isolate
-- **网络请求**：`network_dio`（DioClient）与 `network_http`（HttpClient）两个独立本地 package，统一常用 HTTP 方法、请求体类型、强类型响应、异常、日志和请求取消；重定向等传输语义交给底层库处理
+- **网络请求**：`network_dio`（DioClient）与 `network_http`（HttpClient）两个独立本地 package，与 Retrofit 共享 `code/message/data` 业务响应和 `code/message/cause` 异常契约，并统一常用 HTTP 方法、请求体和请求取消；日志沿用各自实现且不做脱敏
 - **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
 - **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
 

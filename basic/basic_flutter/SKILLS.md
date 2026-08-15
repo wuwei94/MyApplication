@@ -5,10 +5,10 @@
 ## 使用说明
 
 - 这是一个 Flutter 示例 + 学习项目，入口在 `lib/main.dart`。
-- 路由使用 `GoRouter`，核心配置在 `lib/navigation/app_router.dart`。
+- 路由支持 `GoRouter` 与 `AutoRoute`，核心配置在 `lib/app/router/`。
 - 新示例优先放进已有分类目录，不要随意在 `lib/` 顶层新增无关文件。
 - 修改代码后，优先运行 `fvm flutter analyze` 和 `fvm flutter test`。
-- 项目固定 Flutter 版本为 `3.41.0`，命令优先使用 `fvm flutter ...`。
+- 项目固定 Flutter 版本为 `3.41.9`，命令优先使用 `fvm flutter ...`。
 
 ## 项目自定义 Skill
 

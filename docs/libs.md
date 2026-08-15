@@ -36,6 +36,24 @@
 - Android 网络数据模型按实际组件传参需求直接实现 `Parcelable`。`lib_okhttp.base.BaseBean` 仅用于兼容旧 `Serializable` 模型。
 - `lib_retrofit` 的 `ApiException.message` 始终提供非空展示文本；原始异常消息为空时使用统一的 `DEFAULT_MESSAGE`，示例页无需自行增加“未知错误”兜底方法。
 
+## Flutter 与 Retrofit 普通请求契约
+
+`network_dio` 与 `network_http` 只对齐 `lib_retrofit + Coroutines/Rx` 的普通请求，上传、下载、断点续传和任务队列不在该契约中。
+
+| 能力 | Flutter Dio/http | Android Retrofit |
+|------|------------------|------------------|
+| 业务响应 | `NetworkResponse<T>(code/message/data)` | `RetrofitResponse<T>(code/message/data)` |
+| JSON 字段 | `errorCode/errorMsg/data` | `errorCode/errorMsg/data` |
+| 信封解析 | 按底层库的 JSON 响应解析业务信封 | 识别业务信封后交给 Gson `TypeAdapter` |
+| 成功判断 | `code == 0` | `code == 0` |
+| 业务失败 | 调用方检查，或 `requireSuccess()` 先构造 `ServerResultException` 再转异常 | 协程调用方检查；Rx 默认链通过 `ServerResultFunction` 转异常 |
+| 统一异常 | `NetworkException(code/message/cause)` | `ApiException(code/message/cause)` |
+| 错误码 | HTTP 状态码；`1000–1004` 表示未知/连接/超时/SSL/解析 | 相同 |
+| 取消 | `CancelToken` / `CancelableOperation` 向上传播 | 协程取消 / Rx dispose 向上传播 |
+| 固定 API | 业务层使用类和强类型方法组织 | Retrofit 注解接口 |
+
+Flutter 的 `Future` 对应单次 suspend/`Single` 请求。线程调度、Parcelable、LiveData 回调和 Retrofit 命名缓存属于平台或框架差异，不在 Flutter package 中复制。认证、Cookie、缓存、重试、重定向和代理通过 Dio `Interceptor`/adapter 或注入的 `http.Client` 扩展，包装层不持有业务 Token。
+
 ## 其他库说明
 
 ### lib_retrofit_rx

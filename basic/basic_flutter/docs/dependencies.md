@@ -2,10 +2,14 @@
 
 > 按分类列出所有三方包，详见 `pubspec.yaml`。
 
-## 网络请求
+## 网络请求（本地 package）
 
-- [Dio](https://pub.dev/packages/dio) — HTTP 客户端
-- [Http](https://pub.dev/packages/http) — HTTP 包
+网络请求能力由 `../basic_flutter_libs/` 下的两个独立本地 package 提供：
+
+- [network_dio](https://pub.dev/packages/dio) — `package:network_dio/network_dio.dart`，DioClient；持有 Dio 依赖
+- [network_http](https://pub.dev/packages/http) — `package:network_http/network_http.dart`，HttpClient；持有 package:http、Async 与 Logger 依赖，启用日志后原样输出且不脱敏
+
+主 `basic_flutter` 仅保留示例直接使用的 [Dio](https://pub.dev/packages/dio) 与 [Async](https://pub.dev/packages/async)，并通过 path 依赖接入两个本地 package。两个 package 之间不存在共享的 `network_core`。
 
 ## 数据存储
 

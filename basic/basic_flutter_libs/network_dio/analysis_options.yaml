@@ -1,0 +1,76 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+include: package:flutter_lints/flutter.yaml
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+
+# 项目统一在 flutter_lints 基线上做少量增量配置。
+# 这里尽量只保留项目特有约束，避免重复声明 flutter_lints 已包含的规则。
+# 详细说明可参考: https://dart.dev/guides/language/analysis-options
+
+analyzer:
+  errors:
+    # 编译期错误升级
+    missing_required_param: error # 缺少必填参数时直接报错
+    missing_return: error # 应返回值的方法缺少 return 时报错
+    todo: ignore # 暂不把 TODO 注释作为问题
+  language:
+    # 类型系统收紧
+    strict-casts: true # 禁止宽松类型转换
+    strict-inference: true # 禁止过于宽松的类型推断
+    strict-raw-types: true # 禁止使用裸类型，如 List / Map
+  exclude:
+    # 生成代码不纳入人工 lint 约束
+    - "**/*.g.dart" # 排除生成代码
+    - "**/*.freezed.dart" # 排除 freezed 生成代码
+
+linter:
+  # The lint rules applied to this project can be customized in the
+  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
+  # included above or to enable additional rules. A list of all available lints
+  # and their documentation is published at https://dart.dev/lints.
+  #
+  # Instead of disabling a lint rule for the entire project in the
+  # section below, it can also be suppressed for a single line of code
+  # or a specific dart file by using the `// ignore: name_of_lint` and
+  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
+  # producing the lint.
+  rules:
+    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
+    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+
+    # 团队约定
+    file_names: false # 不强制文件名风格
+    library_names: false # 不强制 library 名称风格
+    library_prefixes: false # 不强制 import 前缀命名风格
+    always_use_package_imports: true # lib 下统一使用 package import
+    directives_ordering: true # 统一 import / export 排序
+
+    # 类型与异步安全
+    always_declare_return_types: true # 函数统一显式声明返回类型
+    avoid_dynamic_calls: true # 避免在 dynamic 上做不安全调用
+    avoid_null_checks_in_equality_operators: true # == 运算符里避免手写 null 判断
+    avoid_slow_async_io: true # 避免使用低效异步 IO API
+    avoid_type_to_string: true # 避免依赖类型名字符串
+    cancel_subscriptions: true # StreamSubscription 需显式取消
+    close_sinks: true # StreamController / Sink 使用后需关闭
+    discarded_futures: false # fire-and-forget 场景（dialog、toast、动画等）不强制处理 Future
+    throw_in_finally: true # 避免在 finally 中抛异常
+    unawaited_futures: true # 未 await 的 Future 需显式标记意图
+
+    # 可维护性与风格
+    prefer_const_constructors: true # 可 const 的构造优先 const
+    prefer_const_literals_to_create_immutables: true # 不可变对象优先用 const 字面量
+    prefer_final_locals: true # 局部变量默认优先 final
+    unnecessary_statements: true # 避免无意义语句残留
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options

@@ -68,8 +68,12 @@ dependencies:
   # lib/demos/network
   # https://pub.dev/packages/dio
   dio: ^5.9.0
-  # https://pub.dev/packages/http
-  http: ^1.5.0
+  # https://pub.dev/packages/async
+  async: ^2.13.0
+  network_dio:
+    path: ../basic_flutter_libs/network_dio
+  network_http:
+    path: ../basic_flutter_libs/network_http
 
   # lib/demos/storage
   # https://pub.dev/packages/shared_preferences

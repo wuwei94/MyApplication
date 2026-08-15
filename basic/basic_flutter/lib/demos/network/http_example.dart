@@ -1,9 +1,7 @@
+import 'package:async/async.dart';
 import 'package:basic_flutter/core/constants/urls.dart';
-import 'package:basic_flutter/core/utils/network/http_client.dart';
-import 'package:basic_flutter/core/utils/network/network_exception.dart';
-import 'package:basic_flutter/core/utils/network/network_response.dart';
-import 'package:basic_flutter/core/utils/network/request_body_type.dart';
 import 'package:flutter/material.dart';
+import 'package:network_http/network_http.dart';
 
 /// http
 /// https://pub.dev/packages/http
@@ -28,10 +26,18 @@ class HttpDemoView extends StatefulWidget {
 }
 
 class _HttpDemoViewState extends State<HttpDemoView> {
-  final HttpClient _httpClient = HttpClient();
+  final HttpClient _httpClient = HttpClient(enableLogging: true);
+  CancelableOperation<NetworkResponse<Map<String, dynamic>>>? _currentOperation;
 
   String _info = 'Tap the button to send a POST request.';
   bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _currentOperation?.cancel();
+    _httpClient.close();
+    super.dispose();
+  }
 
   Map<String, String> _buildLoginData() {
     return <String, String>{
@@ -41,18 +47,28 @@ class _HttpDemoViewState extends State<HttpDemoView> {
   }
 
   Future<void> _handlePost() async {
-    await _handleRequest(
-      request: () => _httpClient.post(
-        Urls.login,
-        body: _buildLoginData(),
-        bodyType: RequestBodyType.form,
-      ),
-      successPrefix: 'POST success',
-    );
+    final CancelableOperation<NetworkResponse<Map<String, dynamic>>> operation =
+        _httpClient.post<Map<String, dynamic>>(
+          Urls.login,
+          body: _buildLoginData(),
+          bodyType: RequestBodyType.form,
+          decoder: (dynamic data) => data as Map<String, dynamic>,
+        );
+    _currentOperation = operation;
+    await _handleRequest(operation: operation, successPrefix: 'POST success');
+  }
+
+  void _handleCancel() {
+    _currentOperation?.cancel();
+    _setStateIfMounted(() {
+      _isLoading = false;
+      _info = 'Request cancelled.';
+    });
   }
 
   Future<void> _handleRequest({
-    required Future<NetworkResponse<dynamic>> Function() request,
+    required CancelableOperation<NetworkResponse<Map<String, dynamic>>>
+    operation,
     required String successPrefix,
   }) async {
     _setStateIfMounted(() {
@@ -61,14 +77,17 @@ class _HttpDemoViewState extends State<HttpDemoView> {
     });
 
     try {
-      final NetworkResponse<dynamic> response = await request();
+      final NetworkResponse<Map<String, dynamic>>? response = await operation
+          .valueOrCancellation();
+      if (response == null) return;
       _setStateIfMounted(() {
         _info = _formatResponse(successPrefix, response);
       });
     } on NetworkException catch (error) {
       _setStateIfMounted(() {
         _info =
-            'Request failed\nType: ${error.type.name}\nMessage: ${error.message}';
+            'Request failed\nCode: ${error.code}\n'
+            'Message: ${error.message}';
       });
     } catch (error) {
       _setStateIfMounted(() {
@@ -91,7 +110,7 @@ class _HttpDemoViewState extends State<HttpDemoView> {
 
   String _formatResponse(
     String successPrefix,
-    NetworkResponse<dynamic> response,
+    NetworkResponse<Map<String, dynamic>> response,
   ) {
     final dynamic data = response.data;
     final String dataPreview;
@@ -99,12 +118,13 @@ class _HttpDemoViewState extends State<HttpDemoView> {
     if (data is List<dynamic>) {
       dataPreview = data.isEmpty ? '[]' : data.first.toString();
     } else {
-      dataPreview = data.toString();
+      dataPreview = data?.toString() ?? 'null';
     }
 
     return '$successPrefix\n'
-        'StatusCode: ${response.statusCode ?? '-'}\n'
-        'StatusMessage: ${response.statusMessage ?? '-'}\n'
+        'Code: ${response.code}\n'
+        'Message: ${response.message}\n'
+        'Success: ${response.isSuccess}\n'
         'Data: $dataPreview';
   }
 
@@ -125,19 +145,18 @@ class _HttpDemoViewState extends State<HttpDemoView> {
   }
 
   Widget getFAB() {
+    if (_isLoading) {
+      return FloatingActionButton(
+        onPressed: _handleCancel,
+        backgroundColor: Colors.red,
+        tooltip: 'Cancel Request',
+        child: const Icon(Icons.cancel),
+      );
+    }
     return FloatingActionButton(
-      onPressed: _isLoading ? null : _handlePost,
+      onPressed: _handlePost,
       tooltip: 'Send POST Request',
-      child: _isLoading
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 2,
-              ),
-            )
-          : const Icon(Icons.send),
+      child: const Icon(Icons.send),
     );
   }
 }

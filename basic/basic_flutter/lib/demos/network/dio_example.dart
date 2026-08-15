@@ -1,9 +1,8 @@
 import 'package:basic_flutter/core/constants/urls.dart';
-import 'package:basic_flutter/core/utils/network/dio_client.dart';
-import 'package:basic_flutter/core/utils/network/network_exception.dart';
-import 'package:basic_flutter/core/utils/network/network_response.dart';
-import 'package:basic_flutter/core/utils/network/request_body_type.dart';
+import 'package:basic_flutter/core/utils/logger/logger.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:network_dio/network_dio.dart';
 
 /// dio
 /// https://pub.dev/packages/dio
@@ -28,10 +27,36 @@ class DioDemoView extends StatefulWidget {
 }
 
 class _DioDemoViewState extends State<DioDemoView> {
-  final DioClient _dioClient = DioClient();
+  late final Dio _dio;
+  late final DioClient _dioClient;
+  CancelToken? _cancelToken;
 
   String _info = 'Tap the button to send a POST request.';
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _dio = Dio()
+      ..interceptors.add(
+        LogInterceptor(
+          requestHeader: false,
+          requestBody: false,
+          responseHeader: false,
+          responseBody: false,
+          logPrint: logDebug,
+        ),
+      );
+    _dioClient = DioClient(dio: _dio);
+  }
+
+  @override
+  void dispose() {
+    _cancelToken?.cancel('Widget disposed');
+    _dioClient.close();
+    _dio.close(force: true);
+    super.dispose();
+  }
 
   Map<String, String> _buildLoginData() {
     return <String, String>{
@@ -41,18 +66,21 @@ class _DioDemoViewState extends State<DioDemoView> {
   }
 
   Future<void> _handlePost() async {
+    _cancelToken = CancelToken();
     await _handleRequest(
-      request: () => _dioClient.post(
+      request: () => _dioClient.post<Map<String, dynamic>>(
         Urls.login,
         body: _buildLoginData(),
         bodyType: RequestBodyType.form,
+        cancelToken: _cancelToken,
+        decoder: (dynamic data) => data as Map<String, dynamic>,
       ),
       successPrefix: 'POST success',
     );
   }
 
-  Future<void> _handleRequest({
-    required Future<NetworkResponse<dynamic>> Function() request,
+  Future<void> _handleRequest<T>({
+    required Future<NetworkResponse<T>> Function() request,
     required String successPrefix,
   }) async {
     _setStateIfMounted(() {
@@ -61,14 +89,15 @@ class _DioDemoViewState extends State<DioDemoView> {
     });
 
     try {
-      final NetworkResponse<dynamic> response = await request();
+      final NetworkResponse<T> response = await request();
       _setStateIfMounted(() {
         _info = _formatResponse(successPrefix, response);
       });
     } on NetworkException catch (error) {
       _setStateIfMounted(() {
         _info =
-            'Request failed\nType: ${error.type.name}\nMessage: ${error.message}';
+            'Request failed\nCode: ${error.code}\n'
+            'Message: ${error.message}';
       });
     } catch (error) {
       _setStateIfMounted(() {
@@ -89,22 +118,20 @@ class _DioDemoViewState extends State<DioDemoView> {
     setState(fn);
   }
 
-  String _formatResponse(
-    String successPrefix,
-    NetworkResponse<dynamic> response,
-  ) {
+  String _formatResponse<T>(String successPrefix, NetworkResponse<T> response) {
     final dynamic data = response.data;
     final String dataPreview;
 
     if (data is List<dynamic>) {
       dataPreview = data.isEmpty ? '[]' : data.first.toString();
     } else {
-      dataPreview = data.toString();
+      dataPreview = data?.toString() ?? 'null';
     }
 
     return '$successPrefix\n'
-        'StatusCode: ${response.statusCode ?? '-'}\n'
-        'StatusMessage: ${response.statusMessage ?? '-'}\n'
+        'Code: ${response.code}\n'
+        'Message: ${response.message}\n'
+        'Success: ${response.isSuccess}\n'
         'Data: $dataPreview';
   }
 
