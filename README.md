@@ -188,19 +188,14 @@ MyApplication/
 
 ### module_network（网络库全栈对比）
 
-网络库全栈对比 Demo。四个 Android 请求封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
+HttpURLConnection、Volley 与 Ktor 对比 Demo。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加成功、HTTP/业务失败和传输异常；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
 
-- HttpURL / Volley / OkHttp / Retrofit 基础用法
-- Retrofit + RxJava / Kotlin Coroutines 两种异步方案
-- OkHttp 拦截器（自定义 Interceptor）
-- 下载库（OkHttp / Retrofit / RxDownload）
-- WebSocket（OkHttp 实现）
-- Ktor 客户端
-- 服务端：NanoHTTPD / Netty Socket
+- HttpURLConnection / Volley 基础请求
+- Ktor 原生客户端与项目级 Ktor Client 封装
 
 ### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
 
-按封装库组织网络请求示例。
+按封装库组织网络请求示例。所有实际请求页使用 `BasicResponseActivity` 累积展示响应与错误。
 
 - `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
 - `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
@@ -208,7 +203,7 @@ MyApplication/
 
 ### module_rx_retrofit（Rx 动态请求与文件传输）
 
-- `request`：`RxRequestActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
+- `request`：`RxRequestActivity` 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
 - `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，通过根包的 `RxDownload` / `RxDownloadManager` 展示条件断点续传与单/多文件并发下载
 - `upload`：`RxUploadActivity` 复用页面级 Rx Retrofit 和统一 `RxUploadCallback`，展示单/多文件 POST Multipart 上传
 

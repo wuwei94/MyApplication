@@ -3,7 +3,7 @@ package com.example.william.my.module.network.activity.ktor
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.LoginData
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.utils.JsonUtils
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 /** 演示固定使用 OkHttp Engine 的项目级 Ktor 客户端。 */
 @Route(path = RouterPath.Network.Ktor.KtorClient)
-class KtorClientActivity : BasicRecyclerActivity() {
+class KtorClientActivity : BasicResponseActivity() {
 
     private val clientDelegate = lazy {
         ktorClient {
@@ -43,9 +43,18 @@ class KtorClientActivity : BasicRecyclerActivity() {
         lifecycleScope.launch {
             val result = client.postFormResponse<LoginData>("user/login", params)
             result.onSuccess { response ->
-                showResponse(response.data?.let(JsonUtils::toJson))
+                if (response.isSuccess) {
+                    appendFormatLog("Ktor Client 响应：", JsonUtils.toJson(response))
+                } else {
+                    appendLog(
+                        "Ktor Client 业务失败（${response.code}）：" +
+                            response.message.ifBlank { "未知错误" }
+                    )
+                }
             }
-            result.onFailure { error -> showFailure(error.message ?: "Unknown error") }
+            result.onFailure { error ->
+                appendLog("Ktor Client 失败：${error.message ?: "未知错误"}")
+            }
         }
     }
 

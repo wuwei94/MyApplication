@@ -36,6 +36,18 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
     }
 
     /**
+     * 居中显示页面初始说明。
+     *
+     * 首次追加或更新日志后，说明会被运行日志替换。
+     */
+    protected fun showDescription(description: String) {
+        runOnUiThread {
+            mBinding.basicsResponse.text = description
+            mBinding.basicsResponse.gravity = Gravity.CENTER
+        }
+    }
+
+    /**
      * 显示响应内容，居中显示（用于初始化说明）
      */
     @Deprecated("响应替换展示已废弃，请使用 appendLog 或 appendFormatLog")

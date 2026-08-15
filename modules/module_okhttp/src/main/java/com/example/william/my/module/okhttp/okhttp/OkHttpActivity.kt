@@ -5,19 +5,15 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.utils.AppExecutorsHelper
 import com.example.william.my.core.okhttp.okHttpClient
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okio.IOException
-import org.json.JSONObject
 
 /**
  * OkHttp 基础示例
@@ -46,7 +42,7 @@ class OkHttpActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("OkHttp 基础示例\n\n支持三种请求体格式：\n- FormBody（表单提交）\n- JSON（application/json）\n- MultipartBody（文件上传）\n\n点击下方按钮发起请求，日志会累积显示在上方")
+        showDescription("OkHttp 基础示例：支持 FormBody 与 MultipartBody 请求体")
     }
 
     override fun buildList(): ArrayList<String> {
@@ -59,17 +55,8 @@ class OkHttpActivity : BasicResponseActivity() {
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
-            0 -> {
-                AppExecutorsHelper.networkIO().execute {
-                    postingForm(Constants.Value_Username, Constants.Value_Password)
-                }
-            }
-
-            1 -> {
-                AppExecutorsHelper.networkIO().execute {
-                    postingMultipart(Constants.Value_Username, Constants.Value_Password)
-                }
-            }
+            0 -> postingForm(Constants.Value_Username, Constants.Value_Password)
+            1 -> postingMultipart(Constants.Value_Username, Constants.Value_Password)
         }
     }
 

@@ -2,7 +2,7 @@ package com.example.william.my.module.okhttp.retrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import okhttp3.ResponseBody
@@ -18,7 +18,7 @@ import retrofit2.Retrofit
  * https://github.com/square/retrofit
  */
 @Route(path = RouterPath.OkHttp.Retrofit.RetrofitCall)
-class RetrofitCallActivity : BasicRecyclerActivity() {
+class RetrofitCallActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
@@ -48,11 +48,18 @@ class RetrofitCallActivity : BasicRecyclerActivity() {
         // 进行网络请求
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                showResponse(response.body()?.string())
+                if (response.isSuccessful) {
+                    appendFormatLog("Retrofit Call 响应：", response.body()?.string().orEmpty())
+                } else {
+                    appendFormatLog(
+                        "Retrofit Call 失败（HTTP ${response.code()}）：",
+                        response.errorBody()?.string().orEmpty()
+                    )
+                }
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                showFailure(t.message)
+                appendLog("Retrofit Call 失败：${t.message ?: "未知错误"}")
             }
         })
     }

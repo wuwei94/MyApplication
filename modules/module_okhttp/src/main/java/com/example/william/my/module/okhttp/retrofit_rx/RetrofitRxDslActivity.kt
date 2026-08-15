@@ -3,7 +3,7 @@ package com.example.william.my.module.okhttp.retrofit_rx
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.UserData
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.utils.JsonUtils
@@ -20,7 +20,7 @@ import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
  * https://github.com/square/retrofit
  */
 @Route(path = RouterPath.OkHttp.RetrofitRx.RetrofitRxDsl)
-class RetrofitRxDslActivity : BasicRecyclerActivity() {
+class RetrofitRxDslActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
@@ -50,12 +50,15 @@ class RetrofitRxDslActivity : BasicRecyclerActivity() {
             .subscribe(object : ResponseCallback<UserData>() {
                 override fun onResponse(response: UserData?) {
                     super.onResponse(response)
-                    showResponse(response?.let(JsonUtils::toJson))
+                    appendFormatLog(
+                        "Retrofit Rx DSL 响应：",
+                        response?.let(JsonUtils::toJson).orEmpty()
+                    )
                 }
 
                 override fun onFailure(e: ApiException) {
                     super.onFailure(e)
-                    showFailure(e.message)
+                    appendLog("Retrofit Rx DSL 失败：${e.message}")
                 }
             })
     }

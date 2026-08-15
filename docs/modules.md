@@ -164,41 +164,39 @@
 
 ### module_network（网络库）
 
-演示各种网络通信库。
+演示 HttpURLConnection、Volley、Ktor 原生客户端和项目级 Ktor 封装。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
 
 | Activity | 功能 |
 |----------|------|
-| KtorActivity | Ktor HTTP 客户端 |
-| KtorClientActivity | 项目级 Ktor Client 封装示例 |
+| KtorActivity | Ktor 原生 HTTP 客户端，区分成功与非 2xx 响应 |
+| KtorClientActivity | 项目级 Ktor Client 封装，区分业务失败与传输失败 |
 | HttpURLActivity | HttpURLConnection 原生网络请求 |
-| VolleyActivity | Volley HTTP 库 |
-| VolleyHelperActivity | Volley 封装工具 |
-| NanoActivity | NanoHTTPD 内嵌 HTTP 服务器 |
+| VolleyActivity | Volley HTTP 请求 |
 
 ---
 
 ### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
 
-按封装库分类演示 OkHttp、Retrofit 和标准 Retrofit RxJava 的调用方式。
+按封装库分类演示 OkHttp、Retrofit 和标准 Retrofit RxJava 的调用方式。实际请求页统一基于 `BasicResponseActivity` 累积展示响应与错误。
 
 | Activity | 功能 |
 |----------|------|
 | OkHttpActivity | `lib_okhttp` DSL 与 OkHttp 原生请求示例 |
 | RetrofitCallActivity | Retrofit 原生 `Call` 请求示例 |
 | RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
-| RetrofitRxActivity | Retrofit RxJava 原生订阅示例 |
+| RetrofitRxActivity | Retrofit RxJava 原生订阅与页面销毁释放示例 |
 | RetrofitRxDslActivity | `lib_retrofit_rx` 标准接口与默认策略示例 |
 
 ---
 
 ### module_rx_retrofit（Rx 动态请求与文件传输）
 
-集中展示 `lib_rx_request`、`lib_rx_download` 和 `lib_rx_upload` 三个 Rx 链式库。
+集中展示 `lib_rx_request`、`lib_rx_download` 和 `lib_rx_upload` 三个 Rx 链式库。三个实际请求页均基于 `BasicResponseActivity`，传输进度在日志区原位更新。
 
 | Activity | 功能 |
 |----------|------|
 | RxRetrofitActivity | 模块入口，导航到动态请求、下载和上传页面 |
-| RxRequestActivity | `lib_rx_request` Form、JSON 与 Multipart 动态请求示例 |
+| RxRequestActivity | 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求 |
 | RxDownloadActivity | 基于 `BasicResponseActivity` 直接展示单任务 Builder、并发队列 Builder、统一 `RxDownloadCallback`、原位更新进度和 `File` 目录清理 |
 | RxUploadActivity | 基于 `BasicResponseActivity` 直接展示 `addFile` / `addFiles` 单多文件 Multipart 上传、`RxUploadCallback`、同步创建少量示例文件和 `File` 目录清理 |
 

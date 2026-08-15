@@ -3,7 +3,7 @@ package com.example.william.my.module.okhttp.retrofit_rx
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.UserData
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.utils.JsonUtils
@@ -11,6 +11,7 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -21,7 +22,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * https://github.com/square/retrofit
  */
 @Route(path = RouterPath.OkHttp.RetrofitRx.RetrofitRx)
-class RetrofitRxActivity : BasicRecyclerActivity() {
+class RetrofitRxActivity : BasicResponseActivity() {
+
+    private val operations = CompositeDisposable()
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
@@ -46,17 +49,24 @@ class RetrofitRxActivity : BasicRecyclerActivity() {
         val single: Single<RetrofitResponse<UserData>> = api.loginSingle(username, password)
 
         // 进行网络请求
-        single
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DisposableSingleObserver<RetrofitResponse<UserData>>() {
-                override fun onSuccess(response: RetrofitResponse<UserData>) {
-                    showResponse(JsonUtils.toJson(response))
-                }
+        operations.add(
+            single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<RetrofitResponse<UserData>>() {
+                    override fun onSuccess(response: RetrofitResponse<UserData>) {
+                        appendFormatLog("Retrofit Rx 响应：", JsonUtils.toJson(response))
+                    }
 
-                override fun onError(e: Throwable) {
-                    showFailure(e.message)
-                }
-            })
+                    override fun onError(e: Throwable) {
+                        appendLog("Retrofit Rx 失败：${e.message ?: "未知错误"}")
+                    }
+                })
+        )
+    }
+
+    override fun onDestroy() {
+        operations.dispose()
+        super.onDestroy()
     }
 }

@@ -26,7 +26,7 @@ class VolleyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("Volley 示例\n\n基于 RequestQueue 的网络请求，自动管理线程\n\n支持 POST Form（表单提交）和 POST Json（JSON 提交）\n\n点击下方按钮发起请求，日志会累积显示在上方")
+        showDescription("Volley 示例：支持 POST Form 与 POST JSON")
     }
 
     override fun buildList(): ArrayList<String> {
