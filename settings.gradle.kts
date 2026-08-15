@@ -97,9 +97,10 @@ include(":libs:lib_retrofit_rx")
 // HTTP 客户端（Kotlin 原生）
 include(":libs:lib_ktor")
 
-// 下载 / 上传
-//include(":libs:lib_download")
-//include(":libs:lib_upload")
+// RxJava 动态请求 / 文件传输
+include(":libs:lib_rx_request")
+include(":libs:lib_rx_download")
+include(":libs:lib_rx_upload")
 
 // 长连接 / WebSocket
 include(":libs:lib_websocket_okhttp")
@@ -145,6 +146,8 @@ include(":modules:module_features")
 include(":modules:module_network")
 // OkHttp
 include(":modules:module_okhttp")
+// RxJava 动态请求 / 文件传输
+include(":modules:module_rx_retrofit")
 // WebSocket
 include(":modules:module_websocket")
 

@@ -182,7 +182,7 @@ object RouterPath {
     // 工具 / 网络 / 第三方库
     // ═══════════════════════════════════════════
 
-    // OkHttp / Retrofit / Download
+    // OkHttp / Retrofit
     object OkHttp {
         private const val PATH = "/OkHttp"
 
@@ -207,16 +207,16 @@ object RouterPath {
             const val RetrofitRx = "${RETROFIT_RX_PATH}/RetrofitRx"
             const val RetrofitRxDsl = "${RETROFIT_RX_PATH}/RetrofitRxDsl"
         }
+    }
 
-        object Dynamic {
-            private const val DYNAMIC_PATH = "${PATH}/Dynamic"
+    // Rx 动态请求 / 文件传输
+    object RxRetrofit {
+        private const val PATH = "/RxRetrofit"
 
-            const val RxDynamicRequest = "${DYNAMIC_PATH}/RxDynamicRequest"
-        }
-
-        object Download {
-            private const val DOWNLOAD_PATH = "${PATH}/Download"
-        }
+        const val Main = "${PATH}/Main"
+        const val Request = "${PATH}/RxRequest"
+        const val Download = "${PATH}/RxDownload"
+        const val Upload = "${PATH}/RxUpload"
     }
 
     // 工具类

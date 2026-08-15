@@ -153,6 +153,15 @@ class ExceptionHandlerTest {
         assertSame(cause, exception.cause)
     }
 
+    @Test
+    fun blankCauseMessageUsesApiExceptionDefaultMessage() {
+        val direct = ApiException(RuntimeException(""), ApiException.Error.UNKNOWN)
+        val handled = ExceptionHandler.handleException(RuntimeException(" "))
+
+        assertEquals(ApiException.DEFAULT_MESSAGE, direct.message)
+        assertEquals(ApiException.DEFAULT_MESSAGE, handled.message)
+    }
+
     private fun httpException(
         code: Int,
         body: String,

@@ -8,7 +8,7 @@
 
 - **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
-- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / NanoHTTPD。Ktor 固定使用 OkHttp Engine，业务响应字段约定与 Retrofit 保持一致，并覆盖项目常用的异常、超时、Cookie、缓存、安全日志与扩展插件配置。
+- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / NanoHTTPD。Ktor 固定使用 OkHttp Engine，业务响应字段约定与 Retrofit 保持一致，并覆盖项目常用的异常、超时、Cookie、缓存、安全日志与扩展插件配置；Retrofit `ApiException` 保证提供非空错误消息。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
 - **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / Provider / GetX / BloC。
@@ -47,22 +47,24 @@ MyApplication/
 ├── app                         # 壳工程（Hilt + ARouter 入口）
 ├── build-logic                 # Convention Plugin，统一插件配置
 ├── gradle/libs.versions.toml   # 统一版本目录
-├── docs                        # 文档（modules / libs / network / build-logic / conventions）
+├── docs                        # 文档（modules / libs / network / transfer / build-logic / conventions）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
-│   ├── basic_shared            # 通用 Bus、Router、UI 脚手架
+│   ├── basic_shared            # 通用 Bus、Router、内联日志 UI 脚手架与 JSON 格式化
 │   ├── basic_repo              # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 │   ├── basic_server            # 服务端基础模块
 │   └── basic_flutter_libs      # Flutter 本地库（network_dio / network_http 独立封装）
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp              # OkHttp 封装（DSL、多实例及缓存生命周期、安全日志、OkHttp 控制 Header、上传下载进度）
 │   ├── lib_retrofit            # Retrofit 封装（DSL、Gson 响应转换、可空 Parcelable 响应、加载状态 View）
-│   ├── lib_retrofit_rx         # RxJava3 + Retrofit（Rx 回调 + RxDynamic 动态请求）
+│   ├── lib_retrofit_rx         # RxJava3 + Retrofit（注解接口、默认调度与 Rx 回调）
+│   ├── lib_rx_request          # 分层的 RxRequest 动态 Retrofit 请求 Builder
 │   ├── lib_ktor                # Ktor 项目级封装（固定 OkHttp Engine、Plugin 配置、可空 Parcelable 响应与常用请求）
 │   ├── lib_volley              # Volley 封装（轻量级 HTTP）
 │   ├── lib_websocket_okhttp    # OkHttp WebSocket 封装
 │   ├── lib_websocket_java      # Java-WebSocket 封装
-│   ├── lib_download            # 下载功能封装（断点续传、进度监听、响应流写入）
+│   ├── lib_rx_download         # Retrofit + Rx 下载（统一回调、条件续传、物理终止并发屏障与聚合进度）
+│   ├── lib_rx_upload           # Retrofit + Rx 链式 POST Multipart 上传（单/多文件、UploadResult 与进度）
 │   ├── lib_netty               # Netty TCP 封装
 │   ├── lib_nanohttpd           # NanoHTTPD 服务器封装
 │   ├── lib_eventbus            # EventBus 事件总线封装
@@ -80,7 +82,8 @@ MyApplication/
     ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
     ├── module_features         # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
-    ├── module_okhttp           # OkHttp / Retrofit / Retrofit Rx 对照示例
+    ├── module_okhttp           # OkHttp / Retrofit / 标准 Retrofit Rx 示例
+    ├── module_rx_retrofit      # Rx 动态 Retrofit 请求与上传下载示例
     ├── module_websocket        # WebSocket 专项示例
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
@@ -202,7 +205,14 @@ MyApplication/
 - `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
 - `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
 - `retrofit_rx`：RxJava 原生订阅与默认网络策略
-- `dynamic`：运行时动态请求
+
+### module_rx_retrofit（Rx 动态请求与文件传输）
+
+- `request`：`RxRequestActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
+- `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，通过根包的 `RxDownload` / `RxDownloadManager` 展示条件断点续传与单/多文件并发下载
+- `upload`：`RxUploadActivity` 复用页面级 Rx Retrofit 和统一 `RxUploadCallback`，展示单/多文件 POST Multipart 上传
+
+上传、下载、断点续传和并发约定详见 [文件上传与下载](docs/transfer.md)。
 
 ### module_websocket（WebSocket 专项示例）
 

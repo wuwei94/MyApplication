@@ -34,12 +34,6 @@ class HttpClientActivity : RouterRecyclerActivity() {
             RouterItem("RetrofitRxDsl", RouterPath.OkHttp.RetrofitRx.RetrofitRxDsl)
         )
 
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RxDynamicRequest", RouterPath.OkHttp.Dynamic.RxDynamicRequest)
-        )
         return routerItems
     }
 }

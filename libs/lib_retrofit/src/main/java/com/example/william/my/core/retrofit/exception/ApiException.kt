@@ -5,7 +5,13 @@ package com.example.william.my.core.retrofit.exception
  */
 class ApiException(throwable: Throwable, var code: Int) : Exception(throwable) {
 
-    override var message: String = ""
+    override var message: String = throwable.message
+        ?.takeIf { it.isNotBlank() }
+        ?: DEFAULT_MESSAGE
+
+    companion object {
+        const val DEFAULT_MESSAGE = "未知错误"
+    }
 
     object Error {
         /**

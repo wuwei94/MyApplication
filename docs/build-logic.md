@@ -46,7 +46,7 @@ build-logic/convention/src/main/kotlin/
 - 测试：`junit`、`androidx-test-ext`、`androidx-test-espresso`
 
 **功能模块依赖**（通过 `configureFeatureAndroid`）：
-- App 模块自动依赖所有功能模块（module_ui、module_anim、module_widget 等 17 个）
+- App 模块自动依赖所有功能模块（module_ui、module_anim、module_widget、module_rx_retrofit 等 18 个）
 
 ### AndroidKotlin.kt
 

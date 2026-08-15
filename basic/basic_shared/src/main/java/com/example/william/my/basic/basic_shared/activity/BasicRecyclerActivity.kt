@@ -12,6 +12,7 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerBinding
 import com.example.william.my.basic.basic_shared.dialog.BasicDialogFragment
+import com.example.william.my.basic.basic_shared.utils.JsonFormatter
 import com.example.william.my.core.base.activity.BaseActivity
 
 abstract class BasicRecyclerActivity : BaseActivity(),
@@ -63,31 +64,6 @@ abstract class BasicRecyclerActivity : BaseActivity(),
 
     }
 
-    protected fun String.formatString(): String {
-        this.let {
-            val json = StringBuilder()
-            val indentString = StringBuilder()
-            for (element in it) {
-                when (element) {
-                    '{', '[' -> {
-                        json.append(indentString).append(element).append("\n")
-                        indentString.append("\t")
-                        json.append(indentString)
-                    }
-
-                    '}', ']' -> {
-                        indentString.deleteCharAt(indentString.length - 1)
-                        json.append("\n").append(indentString).append(element)
-                    }
-
-                    ',' -> json.append(element).append("\n").append(indentString)
-                    else -> json.append(element)
-                }
-            }
-            return json.toString()
-        }
-    }
-
     protected fun showEventMessage(msg: String?) {
         runOnUiThread {
             msg?.let {
@@ -96,13 +72,15 @@ abstract class BasicRecyclerActivity : BaseActivity(),
         }
     }
 
+    @Deprecated("弹窗响应展示已废弃，请使用页面内联响应或日志区域")
     protected open fun showResponse(response: String?) {
         runOnUiThread {
             mBasicDialogFragment.show(supportFragmentManager, mBasicDialogFragment.tag)
-            mBasicDialogFragment.showMessage(response?.formatString())
+            mBasicDialogFragment.showMessage(response?.let(JsonFormatter::format))
         }
     }
 
+    @Deprecated("弹窗错误展示已废弃，请使用页面内联错误或日志区域")
     protected fun showFailure(response: String?) {
         runOnUiThread {
             mBasicDialogFragment.show(supportFragmentManager, mBasicDialogFragment.tag)

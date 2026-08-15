@@ -11,7 +11,7 @@ import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.retrofit
 import com.example.william.my.core.retrofit.rx.api.withNetworkDefaults
-import com.example.william.my.core.retrofit.rx.callback.RxResponseCallback
+import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 
 /**
  * 封装后 Retrofit + RxJava 方式（含生命周期绑定）
@@ -47,7 +47,7 @@ class RetrofitRxDslActivity : BasicRecyclerActivity() {
         // 调用接口方法，通过 withNetworkDefaults(owner) 统一异常处理、线程切换和生命周期绑定
         api.loginSingle(username, password)
             .withNetworkDefaults(this)
-            .subscribe(object : RxResponseCallback<UserData>() {
+            .subscribe(object : ResponseCallback<UserData>() {
                 override fun onResponse(response: UserData?) {
                     super.onResponse(response)
                     showResponse(response?.let(JsonUtils::toJson))

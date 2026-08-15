@@ -11,6 +11,4 @@ dependencies {
     api(libs.retrofit.adapter.rxjava3)
     api(libs.rxandroid)
     implementation(libs.rxlifecycle)
-
-    testImplementation(libs.okhttp.mockwebserver)
 }

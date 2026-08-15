@@ -29,11 +29,12 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 
 | 文档 | 内容 |
 |------|------|
-| docs/modules.md | 功能模块详情（20 个模块，每个模块的 Activity 列表） |
+| docs/modules.md | 功能模块详情（21 个模块，每个模块的 Activity 列表） |
 | docs/libs.md | 库封装层职责索引 |
 | docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
+| docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |
 | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
-| docs/conventions.md | 关键约定（路由、模块结构、全局依赖、Activity 基类、构建命令） |
+| docs/conventions.md | 关键约定（路由、模块结构、示例页面、Activity 基类、构建命令） |
 | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
 | docs/comments.md | 代码注释规范（语言、KDoc 格式、内容层次） |
 
@@ -44,5 +45,6 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 3. 新模块必须在 `settings.gradle.kts` 中注册
 4. 资源文件必须使用模块前缀（`<模块名>_`）
 5. 每个 Activity 都应有实际内容，不能是空壳或纯模板代码
-6. 修改代码时必须同步更新 `README.md` 和相关文档，详见 `docs/conventions.md`
-7. 代码注释与文档默认使用中文（标识符、类型名与必要的专有术语除外）
+6. 示例页面优先直接展示库 API，不在页面实现与示例目标无关的任务编排器，详见 `docs/conventions.md`
+7. 修改代码时必须同步更新 `README.md` 和相关文档，详见 `docs/conventions.md`
+8. 代码注释与文档默认使用中文（标识符、类型名与必要的专有术语除外）

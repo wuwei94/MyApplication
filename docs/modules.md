@@ -17,6 +17,7 @@
 | module_features | 业务功能 | FeaturesActivity | /Features |
 | module_network | 网络库 | NetWorkActivity | /Network |
 | module_okhttp | OkHttp / Retrofit / Retrofit Rx | HttpClientActivity | /OkHttp |
+| module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitActivity | /RxRetrofit |
 | module_websocket | WebSocket 示例 | WebSocketActivity | /WebSocket |
 | module_utils | 工具类 | AndroidUtilsActivity | /Utils |
 | module_event | 事件总线 | EventActivity | /Event |
@@ -178,7 +179,7 @@
 
 ### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
 
-按封装库分类演示 OkHttp、Retrofit 和 Retrofit RxJava 的请求方式。
+按封装库分类演示 OkHttp、Retrofit 和标准 Retrofit RxJava 的调用方式。
 
 | Activity | 功能 |
 |----------|------|
@@ -187,7 +188,19 @@
 | RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
 | RetrofitRxActivity | Retrofit RxJava 原生订阅示例 |
 | RetrofitRxDslActivity | `lib_retrofit_rx` 标准接口与默认策略示例 |
-| RxDynamicRequestActivity | `lib_retrofit_rx` 动态请求示例 |
+
+---
+
+### module_rx_retrofit（Rx 动态请求与文件传输）
+
+集中展示 `lib_rx_request`、`lib_rx_download` 和 `lib_rx_upload` 三个 Rx 链式库。
+
+| Activity | 功能 |
+|----------|------|
+| RxRetrofitActivity | 模块入口，导航到动态请求、下载和上传页面 |
+| RxRequestActivity | `lib_rx_request` Form、JSON 与 Multipart 动态请求示例 |
+| RxDownloadActivity | 基于 `BasicResponseActivity` 直接展示单任务 Builder、并发队列 Builder、统一 `RxDownloadCallback`、原位更新进度和 `File` 目录清理 |
+| RxUploadActivity | 基于 `BasicResponseActivity` 直接展示 `addFile` / `addFiles` 单多文件 Multipart 上传、`RxUploadCallback`、同步创建少量示例文件和 `File` 目录清理 |
 
 ---
 

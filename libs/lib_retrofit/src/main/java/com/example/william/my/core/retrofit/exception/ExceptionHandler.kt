@@ -50,7 +50,8 @@ object ExceptionHandler {
 
             is ServerResultException -> {
                 exception = ApiException(e, e.code)
-                exception.message = e.message
+                exception.message = e.message.takeIf { it.isNotBlank() }
+                    ?: ApiException.DEFAULT_MESSAGE
                 exception
             }
 
@@ -80,7 +81,9 @@ object ExceptionHandler {
 
             else -> {
                 exception = ApiException(e, ApiException.Error.UNKNOWN)
-                exception.message = e.message ?: "未知错误，请稍后再试"
+                exception.message = e.message
+                    ?.takeIf { it.isNotBlank() }
+                    ?: ApiException.DEFAULT_MESSAGE
                 exception
             }
         }
@@ -96,9 +99,10 @@ object ExceptionHandler {
         if (body.isBlank()) return null
         return try {
             val jsonObj = JsonParser.parseString(body).asJsonObject
-            jsonObj.get("message")?.asString
+            (jsonObj.get("message")?.asString
                 ?: jsonObj.get("msg")?.asString
-                ?: jsonObj.get("errorMsg")?.asString
+                ?: jsonObj.get("errorMsg")?.asString)
+                ?.takeIf { it.isNotBlank() }
         } catch (_: Exception) {
             body
         }

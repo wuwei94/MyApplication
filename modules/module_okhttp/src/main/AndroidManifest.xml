@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application>
+    <application android:supportsRtl="true">
         <activity android:name=".HttpClientActivity" />
 
         <activity android:name=".okhttp.OkHttpActivity" />
@@ -12,7 +12,6 @@
         <activity android:name=".retrofit_rx.RetrofitRxActivity" />
         <activity android:name=".retrofit_rx.RetrofitRxDslActivity" />
 
-        <activity android:name=".dynamic.RxDynamicRequestActivity" />
     </application>
 
 </manifest>

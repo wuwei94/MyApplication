@@ -22,13 +22,13 @@ import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.NetworkResult
 import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
-import com.example.william.my.core.retrofit.rx.callback.RxLiveDataCallback
-import com.example.william.my.core.retrofit.rx.callback.RxResponseCallback
+import com.example.william.my.core.retrofit.rx.callback.LiveDataCallback
+import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.rx.api.withNetworkDefaults
-import com.example.william.my.core.retrofit.rx.function.RxHttpResultFunction
-import com.example.william.my.core.retrofit.rx.function.RxServerResultFunction
+import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
+import com.example.william.my.core.retrofit.rx.function.ServerResultFunction
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -44,7 +44,7 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
     ) {
         articleApi.getArticleSingle(page)
             .withNetworkDefaults()
-            .subscribe(object : RxResponseCallback<ArticleData>() {
+            .subscribe(object : ResponseCallback<ArticleData>() {
                 override fun onResponse(response: ArticleData?) {
                     super.onResponse(response)
                     response?.run {
@@ -68,11 +68,11 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
         postValue: (RetrofitResponse<ArticleData>) -> Unit
     ) {
         articleApi.getArticleSingle(page)
-            .map(RxServerResultFunction())
-            .onErrorResumeNext(RxHttpResultFunction())
+            .map(ServerResultFunction())
+            .onErrorResumeNext(HttpResultFunction())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : RxLiveDataCallback<ArticleData>() {
+            .subscribe(object : LiveDataCallback<ArticleData>() {
                 override fun onPostValue(value: RetrofitResponse<ArticleData>?) {
                     super.onPostValue(value)
                     value?.let {
@@ -90,11 +90,11 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
     override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {
         val liveData = MutableLiveData<RetrofitResponse<ArticleData>>()
         articleApi.getArticleSingle(page)
-            .map(RxServerResultFunction())
-            .onErrorResumeNext(RxHttpResultFunction())
+            .map(ServerResultFunction())
+            .onErrorResumeNext(HttpResultFunction())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : RxLiveDataCallback<ArticleData>() {
+            .subscribe(object : LiveDataCallback<ArticleData>() {
                 override fun onPostValue(value: RetrofitResponse<ArticleData>?) {
                     super.onPostValue(value)
                     value?.let {
