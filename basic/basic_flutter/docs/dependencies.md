@@ -13,15 +13,24 @@
 
 ## 数据存储
 
-- [Shared Preferences](https://pub.dev/packages/shared_preferences) — 键值存储
-- [Secure Storage](https://pub.dev/packages/flutter_secure_storage) — 安全存储
-- [Hive](https://pub.dev/packages/hive) — NoSQL 数据库
-- [Hive Flutter](https://pub.dev/packages/hive_flutter) — Hive Flutter 集成
-- [Path Provider](https://pub.dev/packages/path_provider) — 路径管理
+按用途分为 KV 键值存储与数据库两类：KV 键值类由本地 package 统一封装，数据库类仅作技术选型示例。
+
+### KV 键值存储（本地 package）
+
+键值存储由 `../basic_flutter_libs/lib_storage` 本地 package 提供：
+
+- [lib_storage](../basic_flutter_libs/lib_storage) — `package:lib_storage/lib_storage.dart`，`IStorage` 接口 + `Storage` 门面，默认内核 `HiveStorage`，可切换 `SharedPreferencesStorage`；敏感数据走固定实现的 `SecureStorage` 门面；持有 hive、shared_preferences 与 flutter_secure_storage 依赖
+
+主 `basic_flutter` 通过 path 依赖接入该 package，同时为 Hive / SharedPreferences / SecureStorage 原生示例保留三个三方包直接依赖。Get Storage 仅用于 GetX 示例：
+
 - [Get Storage](https://pub.dev/packages/get_storage) — GetX 存储
+
+### 数据库
+
 - [Drift](https://pub.dev/packages/drift) — SQLite 数据库
 - [Isar](https://pub.dev/packages/isar) — NoSQL 数据库
 - [ObjectBox](https://pub.dev/packages/objectbox) — ObjectBox 数据库
+- [Path Provider](https://pub.dev/packages/path_provider) — 数据库路径管理
 
 ## 状态管理
 
@@ -40,13 +49,13 @@
 
 网络图片加载由 `../basic_flutter_libs/lib_image_loader` 本地 package 提供，与 Android `lib_imageloader` 结构对齐：
 
-- [lib_image_loader](../basic_flutter_libs/lib_image_loader) — `package:lib_image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，默认内核 `CachedNetworkImageLoader`；持有 cached_network_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
+- [lib_image_loader](../basic_flutter_libs/lib_image_loader) — `package:lib_image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，默认内核 `CachedNetworkImageLoader`，可选内核 `ExtendedImageLoader`；持有 cached_network_image 与 extended_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
 
-主 `basic_flutter` 通过 path 依赖接入该 package，其余图片与资源加载类三方依赖见下。
+主 `basic_flutter` 通过 path 依赖接入该 package，同时为 CachedNetworkImage / ExtendedImage 原生示例保留两个三方包直接依赖。其余图片与资源加载类三方依赖见下。
 
 ## 图片与资源加载
 
-- [Cached Network Image](https://pub.dev/packages/cached_network_image) — 网络图片缓存（由 lib_image_loader 持有）
+- [Cached Network Image](https://pub.dev/packages/cached_network_image) — 网络图片缓存（由 lib_image_loader 持有，原生示例直接使用）
 - [Extended Image](https://pub.dev/packages/extended_image) — 增强图片组件
 - [PhotoView](https://pub.dev/packages/photo_view) — 图片缩放
 - [Image Picker](https://pub.dev/packages/image_picker) — 图片选择

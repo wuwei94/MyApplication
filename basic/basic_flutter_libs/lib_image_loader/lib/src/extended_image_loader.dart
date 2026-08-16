@@ -1,13 +1,15 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lib_image_loader/src/i_image_loader.dart';
 
-/// 扩展图片工具类
-/// 基于 extended_image 封装的常用图片加载方式
-class ExtendedImageLoader {
-  ExtendedImageLoader._();
+/// extended_image 内核实现。
+/// 覆盖基础、圆角、圆形与缓存清理场景；手势缩放等查看器能力属于
+/// extended_image 的扩展场景，由业务侧直接使用 extended_image 实现。
+class ExtendedImageLoader implements IImageLoader {
+  const ExtendedImageLoader();
 
-  /// 基础网络图片
-  static Widget load({
+  @override
+  Widget load({
     required String url,
     double? width,
     double? height,
@@ -35,8 +37,8 @@ class ExtendedImageLoader {
     );
   }
 
-  /// 圆角图片
-  static Widget radius({
+  @override
+  Widget radius({
     required String url,
     double? width,
     double? height,
@@ -66,8 +68,8 @@ class ExtendedImageLoader {
     );
   }
 
-  /// 圆形图片
-  static Widget round({
+  @override
+  Widget round({
     required String url,
     double size = 48,
     Widget? placeholder,
@@ -93,56 +95,22 @@ class ExtendedImageLoader {
     );
   }
 
-  /// 支持手势缩放和平移的网络图片
-  static Widget gesture({
-    required String url,
-    double? width,
-    double? height,
-    BoxFit fit = BoxFit.contain,
-    Widget? placeholder,
-    Widget? errorWidget,
-    Duration fadeInDuration = const Duration(milliseconds: 300),
+  @override
+  ImageProvider<Object> provider(
+    String url, {
     Map<String, String>? httpHeaders,
-    bool cache = true,
-    bool clearMemoryCacheWhenDispose = false,
     String? cacheKey,
-    double minScale = 0.9,
-    double maxScale = 4.0,
-    double animationMinScale = 0.7,
-    double animationMaxScale = 4.5,
   }) {
-    return _buildNetworkImage(
-      url: url,
-      width: width,
-      height: height,
-      fit: fit,
-      placeholder: placeholder,
-      errorWidget: errorWidget,
-      fadeInDuration: fadeInDuration,
-      httpHeaders: httpHeaders,
-      cache: cache,
-      mode: ExtendedImageMode.gesture,
-      initGestureConfigHandler: (ExtendedImageState state) {
-        return GestureConfig(
-          minScale: minScale,
-          animationMinScale: animationMinScale,
-          maxScale: maxScale,
-          animationMaxScale: animationMaxScale,
-          speed: 1.0,
-          inertialSpeed: 100.0,
-          initialScale: 1.0,
-          inPageView: false,
-          initialAlignment: InitialAlignment.center,
-          reverseMousePointerScrollDirection: true,
-        );
-      },
-      clearMemoryCacheWhenDispose: clearMemoryCacheWhenDispose,
+    return ExtendedNetworkImageProvider(
+      url,
+      headers: httpHeaders,
+      cache: true,
       cacheKey: cacheKey,
     );
   }
 
-  /// 清除指定 URL 的图片缓存
-  static Future<void> clear(
+  @override
+  Future<void> clear(
     String url, {
     Map<String, String>? httpHeaders,
     String? cacheKey,
@@ -168,8 +136,6 @@ class ExtendedImageLoader {
     bool cache = true,
     BoxShape? shape,
     BorderRadius? borderRadius,
-    ExtendedImageMode mode = ExtendedImageMode.none,
-    InitGestureConfigHandler? initGestureConfigHandler,
     bool clearMemoryCacheWhenDispose = false,
     String? cacheKey,
   }) {
@@ -182,8 +148,6 @@ class ExtendedImageLoader {
       headers: httpHeaders,
       shape: shape,
       borderRadius: borderRadius,
-      mode: mode,
-      initGestureConfigHandler: initGestureConfigHandler,
       clearMemoryCacheWhenDispose: clearMemoryCacheWhenDispose,
       cacheKey: cacheKey,
       loadStateChanged: (ExtendedImageState state) {

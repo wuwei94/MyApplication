@@ -6,13 +6,14 @@ import 'package:basic_flutter/demos/image/flutter_image_compress_example.dart';
 import 'package:basic_flutter/demos/image/flutter_luban_example.dart';
 import 'package:basic_flutter/demos/image/image_cropper_example.dart';
 import 'package:basic_flutter/demos/image/image_picker_example.dart';
+import 'package:basic_flutter/demos/image/lib_image_loader_example.dart';
 import 'package:basic_flutter/demos/image/photo_view_example.dart';
 import 'package:basic_flutter/demos/image/wechat_picker_example.dart';
 import 'package:flutter/widgets.dart';
 
 /// Image 模块
 ///
-/// 包含：图片加载、缓存、预览与图片选择示例
+/// 包含：图片加载、缓存、预览与图片选择示例，以及统一封装 lib_image_loader 的用法示例
 class ImageCatalog extends CatalogSection {
   const ImageCatalog._();
 
@@ -42,6 +43,13 @@ class ImageCatalog extends CatalogSection {
       subtitle: '网络加载结合手势缩放与缓存控制',
       pageBuilder: (BuildContext context) =>
           const ExtendedImageDemoPage(title: 'ExtendedImage'),
+    ),
+    CatalogEntry.page(
+      path: 'lib-image-loader',
+      title: 'lib_image_loader',
+      subtitle: '统一图片加载封装（内核可切换 + 缓存清理）',
+      pageBuilder: (BuildContext context) =>
+          const LibImageLoaderDemoPage(title: 'lib_image_loader'),
     ),
     CatalogEntry.page(
       path: 'photo-view',

@@ -1,5 +1,5 @@
-import 'package:basic_flutter/core/utils/storage/hive_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// Hive
 /// https://pub.dev/packages/hive
@@ -25,7 +25,21 @@ class HiveDemoView extends StatefulWidget {
 
 class _HiveDemoViewState extends State<HiveDemoView> {
   static const String _counterKey = 'counter';
+  static const String _boxName = 'hive_demo_box';
+  static Future<void>? _initFuture;
+  static Box<dynamic>? _box;
   int _counter = 0;
+
+  static Future<Box<dynamic>> _getBox() async {
+    await (_initFuture ??= _init());
+    return _box!;
+  }
+
+  static Future<void> _init() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Hive.initFlutter();
+    _box = await Hive.openBox<dynamic>(_boxName);
+  }
 
   @override
   void initState() {
@@ -34,7 +48,8 @@ class _HiveDemoViewState extends State<HiveDemoView> {
   }
 
   Future<void> _loadCounter() async {
-    final int counter = await HiveStorageUtils.getValue<int>(_counterKey, 0);
+    final Box<dynamic> box = await _getBox();
+    final int counter = box.get(_counterKey, defaultValue: 0) as int;
 
     if (!mounted) return;
     setState(() {
@@ -43,8 +58,9 @@ class _HiveDemoViewState extends State<HiveDemoView> {
   }
 
   Future<void> _incrementCounter() async {
-    final int counter = await HiveStorageUtils.getValue<int>(_counterKey, 0);
-    await HiveStorageUtils.setValue(_counterKey, counter + 1);
+    final Box<dynamic> box = await _getBox();
+    final int counter = box.get(_counterKey, defaultValue: 0) as int;
+    await box.put(_counterKey, counter + 1);
 
     if (!mounted) return;
     setState(() {

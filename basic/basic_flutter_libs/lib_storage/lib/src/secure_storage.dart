@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// SecureStorage 工具类
-/// 基于 FlutterSecureStorage，适合保存小型敏感数据。
-class SecureStorageUtils {
-  SecureStorageUtils._();
+/// 安全存储门面，固定 flutter_secure_storage 实现，不参与内核切换。
+/// 适合保存小型敏感数据（Token、密钥、密码等），值统一按字符串序列化。
+class SecureStorage {
+  SecureStorage._();
 
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
 
@@ -54,7 +54,7 @@ class SecureStorageUtils {
     return true;
   }
 
-  /// 清除所有数据
+  /// 清除全部数据
   static Future<bool> clearAll() async {
     await _storage.deleteAll();
     return true;

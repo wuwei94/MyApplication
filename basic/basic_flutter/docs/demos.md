@@ -10,8 +10,8 @@
 | layout | 布局与交互类示例 | 14 个子目录 |
 | state_management | 状态管理示例 | 4 |
 | network | 网络请求示例 | 2 |
-| storage | 本地存储示例 | 7 |
-| image | 图片加载与选择示例 | 8 |
+| storage | 本地存储示例 | 8 |
+| image | 图片加载与选择示例 | 9 |
 | animation | 动画资源和播放示例 | 4 |
 | video | 视频播放示例 | 2 |
 | packages | 常用三方包示例 | 大量 |
@@ -80,6 +80,7 @@
 | shared_preferences | SharedPreferences 键值存储 |
 | secure_storage | FlutterSecureStorage 安全存储 |
 | hive | Hive NoSQL 数据库 |
+| lib_storage | lib_storage 统一键值存储封装（内核可切换 + 安全存储） |
 | drift | Drift SQLite 数据库 |
 | isar | Isar NoSQL 数据库 |
 | objectbox | ObjectBox 数据库 |
@@ -91,8 +92,9 @@
 
 | 示例 | 说明 |
 |------|------|
-| cached_network_image | ImageLoader（cached_network_image 内核）网络图片缓存 |
+| cached_network_image | cached_network_image 网络图片缓存组件 |
 | extended_image | ExtendedImage 增强图片组件 |
+| lib_image_loader | lib_image_loader 统一图片加载封装（内核可切换 + 缓存清理） |
 | flutter_image_compress | 图片压缩 |
 | flutter_luban | 图片压缩（鲁班） |
 | image_cropper | 图片裁剪 |

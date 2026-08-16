@@ -25,6 +25,7 @@
 | `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
 | `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../basic/basic_flutter_libs/lib_network_dio/README.md) |
 | `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../basic/basic_flutter_libs/lib_network_http/README.md) |
+| `lib_storage` | Flutter 键值存储封装（内核可切换，默认 Hive；安全存储独立门面） | Hive、shared_preferences、flutter_secure_storage | [package README](../basic/basic_flutter_libs/lib_storage/README.md) |
 
 ## 通用约定
 

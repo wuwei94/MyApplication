@@ -1,10 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lib_image_loader/image_loader.dart';
 
 /// cached_network_image
 /// https://pub.dev/packages/cached_network_image
-/// 通过 lib_image_loader 的 ImageLoader 门面使用，当前内核为 CachedNetworkImageLoader，
-/// 适合普通网络图加载、缓存、占位图和错误图场景。
+/// 直接使用 cached_network_image 原生 API，适合普通网络图加载、缓存、占位图和错误图场景。
 class CachedNetworkImageDemoPage extends StatelessWidget {
   const CachedNetworkImageDemoPage({super.key, required this.title});
 
@@ -43,7 +42,7 @@ class _CachedNetworkImageDemoViewState
 
   bool _isClearing = false;
   String _statusMessage =
-      '当前 ImageLoader 内核为 CachedNetworkImageLoader（基于 cached_network_image），适合普通封面图、列表图和头像加载场景。';
+      '本示例直接使用 cached_network_image 原生 API，展示 CachedNetworkImage 组件与 evictFromCache 缓存清理。';
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class _CachedNetworkImageDemoViewState
       children: <Widget>[
         _ImageDemoHeroCard(
           packageName: 'cached_network_image',
-          description: '更偏向轻量、稳定的网络图加载封装，常见场景是列表封面、卡片缩略图和用户头像。',
+          description: '更偏向轻量、稳定的网络图加载组件，常见场景是列表封面、卡片缩略图和用户头像。',
           statusMessage: _statusMessage,
           capabilities: _capabilities,
           accentColor: _accentColor,
@@ -81,10 +80,11 @@ class _CachedNetworkImageDemoViewState
       title: '基础用法',
       subtitle: '基础加载方式适合常规封面图、列表图和详情头图，默认已经包含缓存、占位图和错误态。',
       child: _ImageDemoPreviewFrame(
-        child: ImageLoader.load(
-          url: _basicImageUrl,
+        child: CachedNetworkImage(
+          imageUrl: _basicImageUrl,
           width: double.infinity,
           height: 220,
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -93,13 +93,16 @@ class _CachedNetworkImageDemoViewState
   Widget _buildRoundedSection() {
     return _ImageDemoSectionCard(
       title: '圆角图片',
-      subtitle: '圆角场景也沿用同一套调用方式，更适合 Banner、卡片头图这类常见展示场景。',
+      subtitle: '圆角场景通过 ClipRRect 裁剪，更适合 Banner、卡片头图这类常见展示场景。',
       child: _ImageDemoPreviewFrame(
-        child: ImageLoader.radius(
-          url: _roundedImageUrl,
-          width: double.infinity,
-          height: 220,
-          borderRadius: 24,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: CachedNetworkImage(
+            imageUrl: _roundedImageUrl,
+            width: double.infinity,
+            height: 220,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -108,9 +111,16 @@ class _CachedNetworkImageDemoViewState
   Widget _buildAvatarSection() {
     return _ImageDemoSectionCard(
       title: '圆形头像',
-      subtitle: '头像、群组缩略图等固定尺寸小图可以继续复用统一的圆形方法。',
+      subtitle: '头像、群组缩略图等固定尺寸小图通过 ClipOval 裁剪为圆形。',
       child: Center(
-        child: ImageLoader.round(url: _avatarImageUrl, size: 120),
+        child: ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: _avatarImageUrl,
+            width: 120,
+            height: 120,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
@@ -147,9 +157,9 @@ class _CachedNetworkImageDemoViewState
     });
 
     try {
-      await ImageLoader.clear(_basicImageUrl);
-      await ImageLoader.clear(_roundedImageUrl);
-      await ImageLoader.clear(_avatarImageUrl);
+      await CachedNetworkImage.evictFromCache(_basicImageUrl);
+      await CachedNetworkImage.evictFromCache(_roundedImageUrl);
+      await CachedNetworkImage.evictFromCache(_avatarImageUrl);
       _setStateIfMounted(() {
         _statusMessage = '缓存已清理完成，重新进入页面后会重新下载图片资源。';
       });

@@ -11,6 +11,11 @@ void main() {
     expect(ImageLoader.kernel, isA<CachedNetworkImageLoader>());
   });
 
+  test('ExtendedImageLoader 实现 IImageLoader，可作为替换内核', () {
+    const ExtendedImageLoader loader = ExtendedImageLoader();
+    expect(loader, isA<IImageLoader>());
+  });
+
   test('切换内核后门面转发到新内核，调用方 API 不变', () async {
     final _FakeImageLoader fake = _FakeImageLoader();
     ImageLoader.kernel = fake;

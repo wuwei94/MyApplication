@@ -1,20 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lib_storage/src/i_storage.dart';
 
-/// Hive 工具类
+/// Hive 内核实现，默认内核。
 /// 适合保存本地结构化数据和轻量离线缓存。
-class HiveStorageUtils {
-  HiveStorageUtils._();
+class HiveStorage implements IStorage {
+  const HiveStorage();
 
   static const String _defaultBoxName = 'hive_default_box';
   static Future<void>? _initFuture;
   static Box<dynamic>? _box;
 
   static Future<void> _ensureInitialized() {
-    return _initFuture ??= _initHive();
+    return _initFuture ??= _init();
   }
 
-  static Future<void> _initHive() async {
+  static Future<void> _init() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Hive.initFlutter();
     _box = await Hive.openBox<dynamic>(_defaultBoxName);
@@ -25,15 +26,24 @@ class HiveStorageUtils {
     return _box!;
   }
 
-  /// 设置值
-  static Future<bool> setValue(String key, Object value) async {
+  /// 测试注入：指定 Hive 数据目录并直接打开默认 Box，跳过 initFlutter 的
+  /// path_provider 平台通道依赖。
+  @visibleForTesting
+  static Future<void> initForTesting(String path) async {
+    Hive.init(path);
+    _box = await Hive.openBox<dynamic>(_defaultBoxName);
+    _initFuture = Future<void>.value();
+  }
+
+  @override
+  Future<bool> setValue(String key, Object value) async {
     final Box<dynamic> box = await _getBox();
     await box.put(key, value);
     return true;
   }
 
-  /// 获取值（带默认值）
-  static Future<T> getValue<T>(String key, T defaultValue) async {
+  @override
+  Future<T> getValue<T>(String key, T defaultValue) async {
     final Box<dynamic> box = await _getBox();
     final dynamic value = box.get(key);
 
@@ -52,15 +62,15 @@ class HiveStorageUtils {
     return defaultValue;
   }
 
-  /// 移除指定 key
-  static Future<bool> remove(String key) async {
+  @override
+  Future<bool> remove(String key) async {
     final Box<dynamic> box = await _getBox();
     await box.delete(key);
     return true;
   }
 
-  /// 清除所有数据
-  static Future<bool> clearAll() async {
+  @override
+  Future<bool> clearAll() async {
     final Box<dynamic> box = await _getBox();
     await box.clear();
     return true;

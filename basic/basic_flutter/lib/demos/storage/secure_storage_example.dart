@@ -1,5 +1,5 @@
-import 'package:basic_flutter/core/utils/storage/secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Flutter Secure Storage
 /// https://pub.dev/packages/flutter_secure_storage
@@ -25,6 +25,7 @@ class SecureStorageDemoView extends StatefulWidget {
 
 class _SecureStorageDemoViewState extends State<SecureStorageDemoView> {
   static const String _counterKey = 'counter';
+  static const FlutterSecureStorage _storage = FlutterSecureStorage();
   int _counter = 0;
 
   @override
@@ -34,7 +35,8 @@ class _SecureStorageDemoViewState extends State<SecureStorageDemoView> {
   }
 
   Future<void> _loadCounter() async {
-    final int counter = await SecureStorageUtils.getValue<int>(_counterKey, 0);
+    final String? value = await _storage.read(key: _counterKey);
+    final int counter = int.tryParse(value ?? '') ?? 0;
 
     if (!mounted) return;
     setState(() {
@@ -43,8 +45,9 @@ class _SecureStorageDemoViewState extends State<SecureStorageDemoView> {
   }
 
   Future<void> _incrementCounter() async {
-    final int counter = await SecureStorageUtils.getValue<int>(_counterKey, 0);
-    await SecureStorageUtils.setValue(_counterKey, counter + 1);
+    final String? value = await _storage.read(key: _counterKey);
+    final int counter = int.tryParse(value ?? '') ?? 0;
+    await _storage.write(key: _counterKey, value: '${counter + 1}');
 
     if (!mounted) return;
     setState(() {

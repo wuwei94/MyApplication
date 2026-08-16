@@ -1,5 +1,5 @@
-import 'package:basic_flutter/core/utils/storage/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Shared Preferences
 /// https://pub.dev/packages/shared_preferences
@@ -26,6 +26,7 @@ class SharedPreferencesDemoView extends StatefulWidget {
 
 class _SharedPreferencesDemoViewState extends State<SharedPreferencesDemoView> {
   static const String _counterKey = 'counter';
+  static final SharedPreferencesAsync _prefs = SharedPreferencesAsync();
   int _counter = 0;
 
   @override
@@ -35,7 +36,7 @@ class _SharedPreferencesDemoViewState extends State<SharedPreferencesDemoView> {
   }
 
   Future<void> _loadCounter() async {
-    final counter = await SharedPreferencesUtils.getValue<int>(_counterKey, 0);
+    final int counter = await _prefs.getInt(_counterKey) ?? 0;
 
     if (!mounted) return;
     setState(() {
@@ -44,8 +45,8 @@ class _SharedPreferencesDemoViewState extends State<SharedPreferencesDemoView> {
   }
 
   Future<void> _incrementCounter() async {
-    final counter = await SharedPreferencesUtils.getValue<int>(_counterKey, 0);
-    await SharedPreferencesUtils.setValue(_counterKey, counter + 1);
+    final int counter = await _prefs.getInt(_counterKey) ?? 0;
+    await _prefs.setInt(_counterKey, counter + 1);
 
     if (!mounted) return;
     setState(() {

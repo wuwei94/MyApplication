@@ -1,9 +1,9 @@
-import 'package:basic_flutter/core/utils/image/extended_image_loader.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 /// extended_image
 /// https://pub.dev/packages/extended_image
-/// 在常规网络图加载能力之外，还额外提供更丰富的图片交互能力。
+/// 直接使用 extended_image 原生 API，在常规网络图加载能力之外，还额外提供更丰富的图片交互能力。
 class ExtendedImageDemoPage extends StatelessWidget {
   const ExtendedImageDemoPage({super.key, required this.title});
 
@@ -43,7 +43,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
 
   bool _isClearing = false;
   String _statusMessage =
-      '当前 ExtendedImageLoader 基于 extended_image，在统一加载 API 之外还提供了手势预览能力。';
+      '本示例直接使用 extended_image 原生 API，展示 ExtendedImage.network 组件、手势预览与缓存清理。';
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
       children: <Widget>[
         _ImageDemoHeroCard(
           packageName: 'extended_image',
-          description: '除了网络图缓存和错误态处理，这套封装还可以自然扩展到大图预览、缩放和平移等交互场景。',
+          description: '除了网络图缓存和错误态处理，extended_image 还可以自然扩展到大图预览、缩放和平移等交互场景。',
           statusMessage: _statusMessage,
           capabilities: _capabilities,
           accentColor: _accentColor,
@@ -83,10 +83,12 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
       title: '基础用法',
       subtitle: '基础加载方式适合常规封面图、列表图和详情头图，默认已经包含缓存、占位图和错误态。',
       child: _ImageDemoPreviewFrame(
-        child: ExtendedImageLoader.load(
-          url: _basicImageUrl,
+        child: ExtendedImage.network(
+          _basicImageUrl,
           width: double.infinity,
           height: 220,
+          fit: BoxFit.cover,
+          cache: true,
         ),
       ),
     );
@@ -95,13 +97,14 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildRoundedSection() {
     return _ImageDemoSectionCard(
       title: '圆角图片',
-      subtitle: '圆角场景也沿用同一套调用方式，更适合 Banner、卡片头图这类常见展示场景。',
+      subtitle: '圆角场景通过 borderRadius 参数直接裁剪，更适合 Banner、卡片头图这类常见展示场景。',
       child: _ImageDemoPreviewFrame(
-        child: ExtendedImageLoader.radius(
-          url: _roundedImageUrl,
+        child: ExtendedImage.network(
+          _roundedImageUrl,
           width: double.infinity,
           height: 220,
-          borderRadius: 24,
+          fit: BoxFit.cover,
+          borderRadius: BorderRadius.circular(24),
         ),
       ),
     );
@@ -110,9 +113,15 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildAvatarSection() {
     return _ImageDemoSectionCard(
       title: '圆形头像',
-      subtitle: '头像、群组缩略图等固定尺寸小图可以继续复用统一的圆形方法。',
+      subtitle: '头像、群组缩略图等固定尺寸小图通过 shape 参数裁剪为圆形。',
       child: Center(
-        child: ExtendedImageLoader.round(url: _avatarImageUrl, size: 120),
+        child: ExtendedImage.network(
+          _avatarImageUrl,
+          width: 120,
+          height: 120,
+          fit: BoxFit.cover,
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }
@@ -120,7 +129,7 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
   Widget _buildCapabilitySection() {
     return _ImageDemoSectionCard(
       title: '扩展能力',
-      subtitle: '在与 cached 版一致的公共 API 之外，这套封装还额外提供手势缩放和平移能力。',
+      subtitle: '在常规加载能力之外，extended_image 还提供手势缩放和平移能力。',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -131,7 +140,25 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
             child: SizedBox(
               width: double.infinity,
               height: 260,
-              child: ExtendedImageLoader.gesture(url: _gestureImageUrl),
+              child: ExtendedImage.network(
+                _gestureImageUrl,
+                fit: BoxFit.contain,
+                mode: ExtendedImageMode.gesture,
+                initGestureConfigHandler: (ExtendedImageState state) {
+                  return GestureConfig(
+                    minScale: 0.9,
+                    animationMinScale: 0.7,
+                    maxScale: 4.0,
+                    animationMaxScale: 4.5,
+                    speed: 1.0,
+                    inertialSpeed: 100.0,
+                    initialScale: 1.0,
+                    inPageView: false,
+                    initialAlignment: InitialAlignment.center,
+                    reverseMousePointerScrollDirection: true,
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -171,10 +198,10 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
     });
 
     try {
-      await ExtendedImageLoader.clear(_basicImageUrl);
-      await ExtendedImageLoader.clear(_roundedImageUrl);
-      await ExtendedImageLoader.clear(_avatarImageUrl);
-      await ExtendedImageLoader.clear(_gestureImageUrl);
+      await _clearImageCache(_basicImageUrl);
+      await _clearImageCache(_roundedImageUrl);
+      await _clearImageCache(_avatarImageUrl);
+      await _clearImageCache(_gestureImageUrl);
       _setStateIfMounted(() {
         _statusMessage = '缓存已清理完成，重新进入页面后会重新下载图片资源。';
       });
@@ -187,6 +214,11 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
         _isClearing = false;
       });
     }
+  }
+
+  Future<void> _clearImageCache(String url) async {
+    await ExtendedNetworkImageProvider(url, cache: true).evict();
+    await clearDiskCachedImage(url);
   }
 
   void _setStateIfMounted(VoidCallback fn) {

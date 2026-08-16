@@ -3,6 +3,7 @@ import 'package:basic_flutter/catalog/models/catalog_section.dart';
 import 'package:basic_flutter/demos/storage/drift_example.dart';
 import 'package:basic_flutter/demos/storage/hive_example.dart';
 import 'package:basic_flutter/demos/storage/isar_example.dart';
+import 'package:basic_flutter/demos/storage/lib_storage_example.dart';
 import 'package:basic_flutter/demos/storage/objectbox_example.dart';
 import 'package:basic_flutter/demos/storage/path_provider_example.dart';
 import 'package:basic_flutter/demos/storage/secure_storage_example.dart';
@@ -11,7 +12,8 @@ import 'package:flutter/widgets.dart';
 
 /// Storage 模块
 ///
-/// 包含：Hive、Drift、Isar、ObjectBox、SecureStorage、SharedPreferences、PathProvider 等本地存储示例
+/// 包含：Hive、Drift、Isar、ObjectBox、SecureStorage、SharedPreferences、
+/// PathProvider 等本地存储示例，以及统一封装 lib_storage 的用法示例
 class StorageCatalog extends CatalogSection {
   const StorageCatalog._();
 
@@ -47,6 +49,13 @@ class StorageCatalog extends CatalogSection {
       title: 'Hive',
       subtitle: '本地键值存储与计数器持久化',
       pageBuilder: (BuildContext context) => const HiveDemoPage(title: 'Hive'),
+    ),
+    CatalogEntry.page(
+      path: 'lib-storage',
+      title: 'lib_storage',
+      subtitle: '统一键值存储封装（内核可切换 + 安全存储）',
+      pageBuilder: (BuildContext context) =>
+          const LibStorageDemoPage(title: 'lib_storage'),
     ),
     CatalogEntry.page(
       path: 'drift',
