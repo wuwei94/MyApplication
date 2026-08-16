@@ -16,9 +16,10 @@ app/                          # 入口（SplashScreen → ModuleActivity）
 basic/                        # 基础层
 ├── basic_lib/                # 基类（BaseActivity、BaseVBActivity、权限管理）
 ├── basic_shared/             # 路由（RouterPath）、共享 Layout、Utils
-├── basic_flutter/            # Flutter Demo Catalog 子工程
-├── basic_flutter_libs/       # Flutter 本地库（lib_network_dio / lib_network_http / lib_image_loader / lib_event_bus / lib_storage 独立封装）
 └── basic_repo/               # 数据仓库层
+flutter/                      # Flutter 层
+├── flutter_demo/             # Flutter Demo Catalog 子工程（Flutter module，add-to-app 集成）
+└── flutter_libs/             # Flutter 本地库（lib_network_dio / lib_network_http / lib_image_loader / lib_event_bus / lib_storage 独立封装）
 libs/                         # 库封装层（无 Activity，仅提供 API 封装）
 modules/                      # 功能模块层（每个模块有独立入口 Activity）
 build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配置）

@@ -23,9 +23,9 @@
 | `lib_eventbus` | 事件总线封装 | EventBus | - |
 | `lib_widget` | 自定义 Widget 集合 | Android View | - |
 | `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
-| `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../basic/basic_flutter_libs/lib_network_dio/README.md) |
-| `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../basic/basic_flutter_libs/lib_network_http/README.md) |
-| `lib_storage` | Flutter 键值存储封装（内核可切换，默认 Hive） | Hive、shared_preferences | [package README](../basic/basic_flutter_libs/lib_storage/README.md) |
+| `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../flutter/flutter_libs/lib_network_dio/README.md) |
+| `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../flutter/flutter_libs/lib_network_http/README.md) |
+| `lib_storage` | Flutter 键值存储封装（内核可切换，默认 Hive） | Hive、shared_preferences | [package README](../flutter/flutter_libs/lib_storage/README.md) |
 
 ## 通用约定
 

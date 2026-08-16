@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: basic/basic_flutter
+        working-directory: flutter/flutter_demo
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
     needs: test
     defaults:
       run:
-        working-directory: basic/basic_flutter
+        working-directory: flutter/flutter_demo
 
     steps:
       - uses: actions/checkout@v4
@@ -55,6 +55,7 @@ jobs:
       - name: Apply Android patches
         run: |
           dart tools/android/apply_android_compile_sdk.dart
+          dart tools/android/apply_android_flutter_compile_sdk.dart
           dart tools/android/apply_android_camera_camerax.dart
 
       - name: Build Flutter Android module
@@ -64,4 +65,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: flutter-aar
-          path: basic/basic_flutter/build/host/outputs/aar/*.aar
+          path: flutter/flutter_demo/build/host/outputs/aar/*.aar

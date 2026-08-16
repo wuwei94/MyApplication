@@ -1,4 +1,4 @@
-val flutterModulePath = "basic/basic_flutter"
+val flutterModulePath = "flutter/flutter_demo"
 val flutterInclude = File(settingsDir, "$flutterModulePath/.android/include_flutter.groovy")
 
 check(flutterInclude.exists()) {
