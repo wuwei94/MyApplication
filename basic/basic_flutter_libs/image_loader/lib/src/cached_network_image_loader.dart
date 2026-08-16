@@ -2,14 +2,16 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_loader/src/i_image_loader.dart';
 
-/// 缓存图片工具类
-/// 基于 cached_network_image 封装的常用图片加载方式
-class CachedNetworkImageLoader {
-  CachedNetworkImageLoader._();
+/// cached_network_image 内核实现
+/// 基于 cached_network_image 封装的常用图片加载方式，
+/// 覆盖普通封面图、列表图与头像等常规场景。
+class CachedNetworkImageLoader implements IImageLoader {
+  const CachedNetworkImageLoader();
 
-  /// 基础网络图片
-  static Widget load({
+  @override
+  Widget load({
     required String url,
     double? width,
     double? height,
@@ -93,8 +95,8 @@ class CachedNetworkImageLoader {
     );
   }
 
-  /// 圆角图片
-  static Widget radius({
+  @override
+  Widget radius({
     required String url,
     double? width,
     double? height,
@@ -126,8 +128,8 @@ class CachedNetworkImageLoader {
     );
   }
 
-  /// 圆形图片
-  static Widget round({
+  @override
+  Widget round({
     required String url,
     double size = 48,
     Widget? placeholder,
@@ -154,8 +156,21 @@ class CachedNetworkImageLoader {
     );
   }
 
-  /// 清除指定 URL 的图片缓存
-  static Future<void> clear(
+  @override
+  ImageProvider<Object> provider(
+    String url, {
+    Map<String, String>? httpHeaders,
+    String? cacheKey,
+  }) {
+    return CachedNetworkImageProvider(
+      url,
+      headers: httpHeaders,
+      cacheKey: cacheKey,
+    );
+  }
+
+  @override
+  Future<void> clear(
     String url, {
     Map<String, String>? httpHeaders,
     String? cacheKey,
@@ -166,7 +181,7 @@ class CachedNetworkImageLoader {
     }
   }
 
-  static Widget _wrapWithMemoryCleanupIfNeeded({
+  Widget _wrapWithMemoryCleanupIfNeeded({
     required Widget child,
     required String url,
     required bool cache,
@@ -198,7 +213,7 @@ class CachedNetworkImageLoader {
   // ============== 默认组件 ==============
 
   /// 默认加载占位图 - 灰色背景 + 圆形进度指示器
-  static Widget _defaultPlaceholder(double? width, double? height) {
+  Widget _defaultPlaceholder(double? width, double? height) {
     return Container(
       width: width,
       height: height,
@@ -208,7 +223,7 @@ class CachedNetworkImageLoader {
   }
 
   /// 默认错误图 - 灰色背景 + 红色错误图标
-  static Widget _defaultErrorWidget(double? width, double? height) {
+  Widget _defaultErrorWidget(double? width, double? height) {
     return Container(
       width: width,
       height: height,

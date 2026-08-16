@@ -53,7 +53,7 @@ MyApplication/
 │   ├── basic_shared            # 通用 Bus、Router、内联日志 UI 脚手架与 JSON 格式化
 │   ├── basic_repo              # 通用数据源 / OkHttp / Retrofit 基础封装 / Repository 基类、Room、依赖装配
 │   ├── basic_server            # 服务端基础模块
-│   └── basic_flutter_libs      # Flutter 本地库（network_dio / network_http 独立封装）
+│   └── basic_flutter_libs      # Flutter 本地库（network_dio / network_http 独立封装、image_loader 内核可切换封装）
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp              # OkHttp 封装（DSL、多实例及缓存生命周期、安全日志、OkHttp 控制 Header、上传下载进度）
 │   ├── lib_retrofit            # Retrofit 封装（DSL、Gson 响应转换、可空 Parcelable 响应、加载状态 View）
@@ -68,7 +68,7 @@ MyApplication/
 │   ├── lib_netty               # Netty TCP 封装
 │   ├── lib_nanohttpd           # NanoHTTPD 服务器封装
 │   ├── lib_eventbus            # EventBus 事件总线封装
-│   ├── lib_imageloader         # Glide 图片加载封装
+│   ├── lib_imageloader         # Glide / Coil 图片加载封装（IImageLoader 接口 + 内核可切换）
 │   ├── lib_ninepatch           # NinePatch 图片处理工具
 │   └── lib_widget              # 自定义 Widget 控件集合
 └── modules                     # Feature 模块
@@ -297,6 +297,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **功能型**：LayoutBuilder / GestureDetector / PopScope / InheritedWidget / FutureBuilder / StreamBuilder
 - **其他**：Animation / Dialog / Isolate
 - **网络请求**：`network_dio`（DioClient）与 `network_http`（HttpClient）两个独立本地 package，与 Retrofit 共享 `code/message/data` 业务响应和 `code/message/cause` 异常契约，并统一常用 HTTP 方法、请求体和请求取消；日志沿用各自实现且不做脱敏
+- **图片加载**：`image_loader` 本地 package（`IImageLoader` 接口 + `ImageLoader` 门面），默认内核 cached_network_image，切换内核调用方零改动，与 Android `lib_imageloader` 结构对齐
 - **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
 - **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
 

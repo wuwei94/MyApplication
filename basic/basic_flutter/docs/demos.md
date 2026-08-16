@@ -91,7 +91,7 @@
 
 | 示例 | 说明 |
 |------|------|
-| cached_network_image | CachedNetworkImage 网络图片缓存 |
+| cached_network_image | ImageLoader（cached_network_image 内核）网络图片缓存 |
 | extended_image | ExtendedImage 增强图片组件 |
 | flutter_image_compress | 图片压缩 |
 | flutter_luban | 图片压缩（鲁班） |

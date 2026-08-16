@@ -1,9 +1,10 @@
-import 'package:basic_flutter/core/utils/image/cached_network_image_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:image_loader/image_loader.dart';
 
 /// cached_network_image
 /// https://pub.dev/packages/cached_network_image
-/// 更适合普通网络图加载、缓存、占位图和错误图场景。
+/// 通过 image_loader 的 ImageLoader 门面使用，当前内核为 CachedNetworkImageLoader，
+/// 适合普通网络图加载、缓存、占位图和错误图场景。
 class CachedNetworkImageDemoPage extends StatelessWidget {
   const CachedNetworkImageDemoPage({super.key, required this.title});
 
@@ -42,7 +43,7 @@ class _CachedNetworkImageDemoViewState
 
   bool _isClearing = false;
   String _statusMessage =
-      '当前 CachedNetworkImageLoader 基于 cached_network_image，适合普通封面图、列表图和头像加载场景。';
+      '当前 ImageLoader 内核为 CachedNetworkImageLoader（基于 cached_network_image），适合普通封面图、列表图和头像加载场景。';
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class _CachedNetworkImageDemoViewState
       title: '基础用法',
       subtitle: '基础加载方式适合常规封面图、列表图和详情头图，默认已经包含缓存、占位图和错误态。',
       child: _ImageDemoPreviewFrame(
-        child: CachedNetworkImageLoader.load(
+        child: ImageLoader.load(
           url: _basicImageUrl,
           width: double.infinity,
           height: 220,
@@ -94,7 +95,7 @@ class _CachedNetworkImageDemoViewState
       title: '圆角图片',
       subtitle: '圆角场景也沿用同一套调用方式，更适合 Banner、卡片头图这类常见展示场景。',
       child: _ImageDemoPreviewFrame(
-        child: CachedNetworkImageLoader.radius(
+        child: ImageLoader.radius(
           url: _roundedImageUrl,
           width: double.infinity,
           height: 220,
@@ -109,7 +110,7 @@ class _CachedNetworkImageDemoViewState
       title: '圆形头像',
       subtitle: '头像、群组缩略图等固定尺寸小图可以继续复用统一的圆形方法。',
       child: Center(
-        child: CachedNetworkImageLoader.round(url: _avatarImageUrl, size: 120),
+        child: ImageLoader.round(url: _avatarImageUrl, size: 120),
       ),
     );
   }
@@ -146,9 +147,9 @@ class _CachedNetworkImageDemoViewState
     });
 
     try {
-      await CachedNetworkImageLoader.clear(_basicImageUrl);
-      await CachedNetworkImageLoader.clear(_roundedImageUrl);
-      await CachedNetworkImageLoader.clear(_avatarImageUrl);
+      await ImageLoader.clear(_basicImageUrl);
+      await ImageLoader.clear(_roundedImageUrl);
+      await ImageLoader.clear(_avatarImageUrl);
       _setStateIfMounted(() {
         _statusMessage = '缓存已清理完成，重新进入页面后会重新下载图片资源。';
       });

@@ -36,9 +36,17 @@
 - [GoRouter](https://pub.dev/packages/go_router) — 声明式路由
 - [AutoRoute](https://pub.dev/packages/auto_route) — 代码生成路由
 
+## 图片加载（本地 package）
+
+网络图片加载由 `../basic_flutter_libs/image_loader` 本地 package 提供，与 Android `lib_imageloader` 结构对齐：
+
+- [image_loader](../basic_flutter_libs/image_loader) — `package:image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，默认内核 `CachedNetworkImageLoader`；持有 cached_network_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
+
+主 `basic_flutter` 通过 path 依赖接入该 package，其余图片与资源加载类三方依赖见下。
+
 ## 图片与资源加载
 
-- [Cached Network Image](https://pub.dev/packages/cached_network_image) — 网络图片缓存
+- [Cached Network Image](https://pub.dev/packages/cached_network_image) — 网络图片缓存（由 image_loader 持有）
 - [Extended Image](https://pub.dev/packages/extended_image) — 增强图片组件
 - [PhotoView](https://pub.dev/packages/photo_view) — 图片缩放
 - [Image Picker](https://pub.dev/packages/image_picker) — 图片选择

@@ -98,8 +98,8 @@ dependencies:
   path_provider: ^2.1.5
 
   # lib/demos/image
-  # https://pub.dev/packages/cached_network_image
-  cached_network_image: ^3.4.1
+  image_loader:
+    path: ../basic_flutter_libs/image_loader
   # https://pub.dev/packages/extended_image
   extended_image: ^10.0.1
   # https://pub.dev/packages/photo_view
