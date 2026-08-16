@@ -94,7 +94,7 @@
 |------|------|
 | cached_network_image | cached_network_image 网络图片缓存组件 |
 | extended_image | ExtendedImage 增强图片组件 |
-| lib_image_loader | lib_image_loader 统一图片加载封装（内核可切换 + 缓存清理） |
+| lib_image_loader | lib_image_loader 常规网络图加载封装（缓存 + 占位图 + 错误态） |
 | flutter_image_compress | 图片压缩 |
 | flutter_luban | 图片压缩（鲁班） |
 | image_cropper | 图片裁剪 |

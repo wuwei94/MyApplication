@@ -3,7 +3,7 @@ import 'package:lib_image_loader/image_loader.dart';
 
 /// lib_image_loader
 /// 本地 package：../basic_flutter_libs/lib_image_loader
-/// 演示 IImageLoader 统一接口、ImageLoader 门面内核切换与缓存清理。
+/// 演示 IImageLoader 统一接口与 ImageLoader 门面的常规网络图加载与缓存清理。
 class LibImageLoaderDemoPage extends StatelessWidget {
   const LibImageLoaderDemoPage({super.key, required this.title});
 
@@ -30,27 +30,6 @@ class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
   static const String _avatarUrl =
       'https://picsum.photos/seed/lib-image-loader-avatar/240/240';
 
-  String get _kernelName {
-    return ImageLoader.kernel is ExtendedImageLoader
-        ? 'ExtendedImageLoader'
-        : 'CachedNetworkImageLoader';
-  }
-
-  @override
-  void dispose() {
-    // 示例页退出后恢复默认内核，避免影响其它示例页面。
-    ImageLoader.kernel = const CachedNetworkImageLoader();
-    super.dispose();
-  }
-
-  void _switchKernel() {
-    setState(() {
-      ImageLoader.kernel = ImageLoader.kernel is ExtendedImageLoader
-          ? const CachedNetworkImageLoader()
-          : const ExtendedImageLoader();
-    });
-  }
-
   Future<void> _clearCache() async {
     await ImageLoader.clear(_imageUrl);
     await ImageLoader.clear(_avatarUrl);
@@ -70,7 +49,7 @@ class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: <Widget>[
-          _KernelCard(kernelName: _kernelName, onSwitch: _switchKernel),
+          const _KernelCard(),
           const SizedBox(height: 16),
           _PreviewCard(
             title: 'ImageLoader.load（基础图）',
@@ -139,10 +118,7 @@ class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
 }
 
 class _KernelCard extends StatelessWidget {
-  const _KernelCard({required this.kernelName, required this.onSwitch});
-
-  final String kernelName;
-  final VoidCallback onSwitch;
+  const _KernelCard();
 
   @override
   Widget build(BuildContext context) {
@@ -151,26 +127,22 @@ class _KernelCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: <Widget>[
-            const Icon(Icons.swap_horiz_rounded),
+            const Icon(Icons.image_outlined),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('当前内核：$kernelName'),
+                  const Text('当前内核：CachedNetworkImageLoader'),
                   const SizedBox(height: 4),
                   Text(
-                    'ImageLoader.kernel 可整体替换，调用方 API 不变；'
-                    'CachedNetworkImageLoader 与 ExtendedImageLoader 均实现 IImageLoader。',
+                    'ImageLoader 门面默认基于 cached_network_image，'
+                    '负责常规网络图加载、缓存、占位图与错误态；'
+                    '大图查看场景不属于本包范围。',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: 12),
-            FilledButton.tonal(
-              onPressed: onSwitch,
-              child: const Text('切换内核'),
             ),
           ],
         ),

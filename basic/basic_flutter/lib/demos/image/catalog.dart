@@ -47,7 +47,7 @@ class ImageCatalog extends CatalogSection {
     CatalogEntry.page(
       path: 'lib-image-loader',
       title: 'lib_image_loader',
-      subtitle: '统一图片加载封装（内核可切换 + 缓存清理）',
+      subtitle: '常规网络图加载封装（缓存 + 占位图 + 错误态）',
       pageBuilder: (BuildContext context) =>
           const LibImageLoaderDemoPage(title: 'lib_image_loader'),
     ),

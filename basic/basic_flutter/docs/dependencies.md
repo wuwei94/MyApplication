@@ -49,9 +49,9 @@
 
 网络图片加载由 `../basic_flutter_libs/lib_image_loader` 本地 package 提供，与 Android `lib_imageloader` 结构对齐：
 
-- [lib_image_loader](../basic_flutter_libs/lib_image_loader) — `package:lib_image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，默认内核 `CachedNetworkImageLoader`，可选内核 `ExtendedImageLoader`；持有 cached_network_image 与 extended_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
+- [lib_image_loader](../basic_flutter_libs/lib_image_loader) — `package:lib_image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，内核为 `CachedNetworkImageLoader`，负责常规网络图加载、缓存、占位图与错误态；持有 cached_network_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
 
-主 `basic_flutter` 通过 path 依赖接入该 package，同时为 CachedNetworkImage / ExtendedImage 原生示例保留两个三方包直接依赖。其余图片与资源加载类三方依赖见下。
+主 `basic_flutter` 通过 path 依赖接入该 package，同时为 CachedNetworkImage / ExtendedImage 原生示例保留两个三方包直接依赖；extended_image 的大图查看场景不属于本包范围。其余图片与资源加载类三方依赖见下。
 
 ## 图片与资源加载
 
