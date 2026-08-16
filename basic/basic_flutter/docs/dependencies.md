@@ -19,7 +19,7 @@
 
 键值存储由 `../basic_flutter_libs/lib_storage` 本地 package 提供：
 
-- [lib_storage](../basic_flutter_libs/lib_storage) — `package:lib_storage/lib_storage.dart`，`IStorage` 接口 + `Storage` 门面，默认内核 `HiveStorage`，可切换 `SharedPreferencesStorage`；敏感数据走固定实现的 `SecureStorage` 门面；持有 hive、shared_preferences 与 flutter_secure_storage 依赖
+- [lib_storage](../basic_flutter_libs/lib_storage) — `package:lib_storage/lib_storage.dart`，`IStorage` 接口 + `Storage` 门面，默认内核 `HiveStorage`，可切换 `SharedPreferencesStorage`；持有 hive 与 shared_preferences 依赖；敏感数据不在本包范围，由业务侧直接使用 flutter_secure_storage
 
 主 `basic_flutter` 通过 path 依赖接入该 package，同时为 Hive / SharedPreferences / SecureStorage 原生示例保留三个三方包直接依赖。Get Storage 仅用于 GetX 示例：
 

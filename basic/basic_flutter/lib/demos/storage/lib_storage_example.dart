@@ -3,7 +3,7 @@ import 'package:lib_storage/lib_storage.dart';
 
 /// lib_storage
 /// 本地 package：../basic_flutter_libs/lib_storage
-/// 演示 IStorage 统一接口、Storage 门面内核切换与 SecureStorage 安全存储。
+/// 演示 IStorage 统一接口与 Storage 门面内核切换。
 class LibStorageDemoPage extends StatelessWidget {
   const LibStorageDemoPage({super.key, required this.title});
 
@@ -26,9 +26,7 @@ class LibStorageDemoView extends StatefulWidget {
 
 class _LibStorageDemoViewState extends State<LibStorageDemoView> {
   static const String _counterKey = 'lib_storage_counter';
-  static const String _secretKey = 'lib_storage_secret';
   int _counter = 0;
-  String _secret = '未写入';
 
   String get _kernelName {
     return Storage.kernel is SharedPreferencesStorage
@@ -51,15 +49,10 @@ class _LibStorageDemoViewState extends State<LibStorageDemoView> {
 
   Future<void> _load() async {
     final int counter = await Storage.getValue<int>(_counterKey, 0);
-    final String secret = await SecureStorage.getValue<String>(
-      _secretKey,
-      '未写入',
-    );
 
     if (!mounted) return;
     setState(() {
       _counter = counter;
-      _secret = secret;
     });
   }
 
@@ -90,17 +83,6 @@ class _LibStorageDemoViewState extends State<LibStorageDemoView> {
     });
   }
 
-  Future<void> _writeSecret() async {
-    final String value =
-        'token_${DateTime.now().millisecondsSinceEpoch % 100000}';
-    await SecureStorage.setValue(_secretKey, value);
-
-    if (!mounted) return;
-    setState(() {
-      _secret = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -118,8 +100,6 @@ class _LibStorageDemoViewState extends State<LibStorageDemoView> {
             onIncrement: _increment,
             onClear: _clear,
           ),
-          const SizedBox(height: 16),
-          _SecureCard(secret: _secret, onWrite: _writeSecret),
         ],
       ),
     );
@@ -211,43 +191,6 @@ class _CounterCard extends StatelessWidget {
                   label: const Text('清空'),
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SecureCard extends StatelessWidget {
-  const _SecureCard({required this.secret, required this.onWrite});
-
-  final String secret;
-  final VoidCallback onWrite;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'SecureStorage 门面（独立实现，不参与内核切换）',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text('密文：$secret', style: theme.textTheme.titleLarge),
-            const SizedBox(height: 12),
-            FilledButton.tonalIcon(
-              onPressed: onWrite,
-              icon: const Icon(Icons.lock_outline_rounded),
-              label: const Text('写入 Token'),
             ),
           ],
         ),
