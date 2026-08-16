@@ -1,7 +1,7 @@
 #!/usr/bin/env dart
 // ignore_for_file: avoid_print
-// 自动为 Flutter 模块的 Android 项目添加常用权限和 Manifest 声明
-// 使用方法: dart tool/apply_permissions.dart
+// 为 Flutter 模块的 Android 项目添加常用权限和 Manifest 声明。
+// 运行: dart tools/android/apply_android_permissions.dart
 
 import 'dart:io';
 

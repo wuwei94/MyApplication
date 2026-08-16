@@ -53,6 +53,14 @@
 - [WeChat Assets Picker](https://pub.dev/packages/wechat_assets_picker) — 微信风格选择器
 - [WeChat Camera Picker](https://pub.dev/packages/wechat_camera_picker) — 微信相机选择器
 
+## 相机插件临时修复
+
+`camera` 传递依赖的 [camera_android_camerax](https://pub.dev/packages/camera_android_camerax) 0.7.4+5 固定使用 `camera-core 1.6.1`，该版本的 Gradle 元数据把 `androidx.concurrent:concurrent-futures` 声明为 runtime 依赖，AGP 9 编译期走 api jar 类路径时该依赖缺失，导致 `compileDebugJavaWithJavac` 失败（[flutter/flutter#190505](https://github.com/flutter/flutter/issues/190505)）。
+
+官方修复（[flutter/packages#12373](https://github.com/flutter/packages/pull/12373)：给插件显式添加 `androidx.concurrent:concurrent-futures:1.2.0`）尚未发版，由 `tools/android/apply_android_camera_camerax.dart` 在 `flutter pub get` 之后对 pub cache 中的插件应用同一行修复（已注册进 `dart tools/apply_android_fixes.dart`）。
+
+> 上游发布包含修复的新版本后，删除 `tools/android/apply_android_camera_camerax.dart` 及其在 `apply_android_fixes.dart` 中的注册即可。
+
 ## 动画与多媒体
 
 - [Flutter SVG](https://pub.dev/packages/flutter_svg) — SVG 渲染

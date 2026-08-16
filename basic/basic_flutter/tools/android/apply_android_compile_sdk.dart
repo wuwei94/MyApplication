@@ -1,17 +1,13 @@
 #!/usr/bin/env dart
 // ignore_for_file: avoid_print
-// 直接修改 flutter_keyboard_visibility 插件的 android/build.gradle，
-// 将 compileSdkVersion 对齐到项目使用的版本，避免 AAR metadata 不兼容。
-// 运行: dart tools/android/apply_compile_sdk.dart
-//
-// 旧方案在 .android/build.gradle 注入 afterEvaluate 钩子，
-// 但 CheckAarMetadataWorkAction 在配置阶段就执行，afterEvaluate 来不及生效。
-// 新方案直接改插件自身的 build.gradle，在配置阶段之前就生效。
+// 将 flutter_keyboard_visibility 插件的 compileSdkVersion 对齐到项目使用的版本，
+// 避免 AAR metadata 不兼容。
+// 运行: dart tools/android/apply_android_compile_sdk.dart
 
 import 'dart:io';
 
 const String _plugin = 'flutter_keyboard_visibility';
-const String _marker = '// compileSdk patched by apply_compile_sdk.dart';
+const String _marker = '// compileSdk patched by apply_android_compile_sdk.dart';
 
 /// 需要对齐的最低 compileSdkVersion
 const int _minCompileSdk = 34;
@@ -118,8 +114,8 @@ Directory? _findPubCache() {
   return null;
 }
 
-void out(String s) => print('[apply_compile_sdk] $s');
+void out(String s) => print('[apply_android_compile_sdk] $s');
 void err(String s) {
-  print('[apply_compile_sdk] $s');
+  print('[apply_android_compile_sdk] $s');
   exit(1);
 }

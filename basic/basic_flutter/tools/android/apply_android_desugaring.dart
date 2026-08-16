@@ -1,8 +1,8 @@
 #!/usr/bin/env dart
 // ignore_for_file: avoid_print
-// 自动为 Flutter 模块的 Android 项目添加 coreLibraryDesugaring 配置
-// 使用方法: dart tool/apply_desugaring.dart
-// 或在 pubspec.yaml 中添加 post-hooks 自动执行
+// 为 Flutter 模块的 Android 项目添加 coreLibraryDesugaring 配置，
+// 满足 flutter_local_notifications 等插件对 Java 8+ API 脱糖的要求。
+// 运行: dart tools/android/apply_android_desugaring.dart
 
 import 'dart:io';
 
