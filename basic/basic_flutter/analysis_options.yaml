@@ -31,6 +31,13 @@ analyzer:
     # 生成代码不纳入人工 lint 约束
     - "**/*.g.dart" # 排除生成代码
     - "**/*.freezed.dart" # 排除 freezed 生成代码
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 linter:
   # The lint rules applied to this project can be customized in the
