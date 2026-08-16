@@ -1,7 +1,7 @@
 import 'package:async/async.dart';
 import 'package:basic_flutter/core/constants/urls.dart';
 import 'package:flutter/material.dart';
-import 'package:network_http/network_http.dart';
+import 'package:lib_network_http/lib_network_http.dart';
 
 /// http
 /// https://pub.dev/packages/http

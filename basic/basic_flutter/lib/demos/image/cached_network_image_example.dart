@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_loader/image_loader.dart';
+import 'package:lib_image_loader/image_loader.dart';
 
 /// cached_network_image
 /// https://pub.dev/packages/cached_network_image
-/// 通过 image_loader 的 ImageLoader 门面使用，当前内核为 CachedNetworkImageLoader，
+/// 通过 lib_image_loader 的 ImageLoader 门面使用，当前内核为 CachedNetworkImageLoader，
 /// 适合普通网络图加载、缓存、占位图和错误图场景。
 class CachedNetworkImageDemoPage extends StatelessWidget {
   const CachedNetworkImageDemoPage({super.key, required this.title});

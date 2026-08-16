@@ -6,8 +6,8 @@
 
 网络请求能力由 `../basic_flutter_libs/` 下的两个独立本地 package 提供：
 
-- [network_dio](https://pub.dev/packages/dio) — `package:network_dio/network_dio.dart`，DioClient；持有 Dio 依赖
-- [network_http](https://pub.dev/packages/http) — `package:network_http/network_http.dart`，HttpClient；持有 package:http、Async 与 Logger 依赖，启用日志后原样输出且不脱敏
+- [lib_network_dio](https://pub.dev/packages/dio) — `package:lib_network_dio/lib_network_dio.dart`，DioClient；持有 Dio 依赖
+- [lib_network_http](https://pub.dev/packages/http) — `package:lib_network_http/lib_network_http.dart`，HttpClient；持有 package:http、Async 与 Logger 依赖，启用日志后原样输出且不脱敏
 
 主 `basic_flutter` 仅保留示例直接使用的 [Dio](https://pub.dev/packages/dio) 与 [Async](https://pub.dev/packages/async)，并通过 path 依赖接入两个本地 package。两个 package 之间不存在共享的 `network_core`。
 
@@ -38,15 +38,15 @@
 
 ## 图片加载（本地 package）
 
-网络图片加载由 `../basic_flutter_libs/image_loader` 本地 package 提供，与 Android `lib_imageloader` 结构对齐：
+网络图片加载由 `../basic_flutter_libs/lib_image_loader` 本地 package 提供，与 Android `lib_imageloader` 结构对齐：
 
-- [image_loader](../basic_flutter_libs/image_loader) — `package:image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，默认内核 `CachedNetworkImageLoader`；持有 cached_network_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
+- [lib_image_loader](../basic_flutter_libs/lib_image_loader) — `package:lib_image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，默认内核 `CachedNetworkImageLoader`；持有 cached_network_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
 
 主 `basic_flutter` 通过 path 依赖接入该 package，其余图片与资源加载类三方依赖见下。
 
 ## 图片与资源加载
 
-- [Cached Network Image](https://pub.dev/packages/cached_network_image) — 网络图片缓存（由 image_loader 持有）
+- [Cached Network Image](https://pub.dev/packages/cached_network_image) — 网络图片缓存（由 lib_image_loader 持有）
 - [Extended Image](https://pub.dev/packages/extended_image) — 增强图片组件
 - [PhotoView](https://pub.dev/packages/photo_view) — 图片缩放
 - [Image Picker](https://pub.dev/packages/image_picker) — 图片选择
@@ -90,11 +90,18 @@
 - [Webview Flutter](https://pub.dev/packages/webview_flutter) — WebView
 - [Geolocator](https://pub.dev/packages/geolocator) — 定位
 
+## 事件总线（本地 package）
+
+事件总线由 `../basic_flutter_libs/lib_event_bus` 本地 package 提供，与 Android `lib_eventbus` 结构对齐：
+
+- [lib_event_bus](../basic_flutter_libs/lib_event_bus) — `package:lib_event_bus/lib_event_bus.dart`，`FlutterEventBus` 单例封装；持有 event_bus 依赖，业务侧统一通过 `FlutterEventBus.instance` 收发事件
+
+主 `basic_flutter` 通过 path 依赖接入该 package，不再直接依赖 event_bus。
+
 ## 工具库
 
 - [Logger](https://pub.dev/packages/logger) — 日志工具
 - [Toast](https://pub.dev/packages/fluttertoast) — Toast 提示
-- [Event Bus](https://pub.dev/packages/event_bus) — 事件总线
 - [Uuid](https://pub.dev/packages/uuid) — UUID 生成
 - [Freezed](https://pub.dev/packages/freezed) — 不可变数据类
 - [Json Serializable](https://pub.dev/packages/json_serializable) — JSON 序列化

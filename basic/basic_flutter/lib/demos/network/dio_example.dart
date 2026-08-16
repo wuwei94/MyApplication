@@ -2,7 +2,7 @@ import 'package:basic_flutter/core/constants/urls.dart';
 import 'package:basic_flutter/core/utils/logger/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:network_dio/network_dio.dart';
+import 'package:lib_network_dio/lib_network_dio.dart';
 
 /// dio
 /// https://pub.dev/packages/dio

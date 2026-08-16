@@ -202,7 +202,7 @@ class _GeolocatorDemoViewState extends State<GeolocatorDemoView> {
     }
 
     try {
-      return Geolocator.getLastKnownPosition();
+      return await Geolocator.getLastKnownPosition();
     } on UnsupportedError catch (error, stackTrace) {
       logError(
         'Geolocator last known position is unsupported.',
@@ -215,7 +215,7 @@ class _GeolocatorDemoViewState extends State<GeolocatorDemoView> {
 
   Future<LocationAccuracyStatus?> _readAccuracyStatus() async {
     try {
-      return Geolocator.getLocationAccuracy();
+      return await Geolocator.getLocationAccuracy();
     } on UnsupportedError catch (error, stackTrace) {
       logError('Geolocator accuracy status is unsupported.', error, stackTrace);
       return null;

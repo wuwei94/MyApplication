@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:basic_flutter/core/utils/event_bus/flutter_event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:lib_event_bus/lib_event_bus.dart';
 
 /// EventBus
 /// https://pub.dev/packages/event_bus

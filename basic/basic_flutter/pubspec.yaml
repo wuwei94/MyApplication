@@ -70,10 +70,10 @@ dependencies:
   dio: ^5.9.0
   # https://pub.dev/packages/async
   async: ^2.13.0
-  network_dio:
-    path: ../basic_flutter_libs/network_dio
-  network_http:
-    path: ../basic_flutter_libs/network_http
+  lib_network_dio:
+    path: ../basic_flutter_libs/lib_network_dio
+  lib_network_http:
+    path: ../basic_flutter_libs/lib_network_http
 
   # lib/demos/storage
   # https://pub.dev/packages/shared_preferences
@@ -98,8 +98,8 @@ dependencies:
   path_provider: ^2.1.5
 
   # lib/demos/image
-  image_loader:
-    path: ../basic_flutter_libs/image_loader
+  lib_image_loader:
+    path: ../basic_flutter_libs/lib_image_loader
   # https://pub.dev/packages/extended_image
   extended_image: ^10.0.1
   # https://pub.dev/packages/photo_view
@@ -200,8 +200,9 @@ dependencies:
   flutter_smart_dialog: ^5.1.0
   # https://pub.dev/packages/fluttertoast
   fluttertoast: ^9.0.0
-  # https://pub.dev/packages/event_bus
-  event_bus: ^2.0.1
+  # lib/demos/packages/utils — 事件总线本地 package（持有 event_bus 依赖）
+  lib_event_bus:
+    path: ../basic_flutter_libs/lib_event_bus
   # https://pub.dev/packages/uuid
   uuid: ^4.5.3
 

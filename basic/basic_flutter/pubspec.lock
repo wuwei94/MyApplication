@@ -482,7 +482,7 @@ packages:
     source: hosted
     version: "4.0.0"
   event_bus:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: event_bus
       sha256: "1a55e97923769c286d295240048fc180e7b0768902c3c2e869fe059aafa15304"
@@ -1136,13 +1136,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "8.0.0"
-  image_loader:
-    dependency: "direct main"
-    description:
-      path: "../basic_flutter_libs/image_loader"
-      relative: true
-    source: path
-    version: "0.1.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -1327,6 +1320,34 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.2"
+  lib_event_bus:
+    dependency: "direct main"
+    description:
+      path: "../basic_flutter_libs/lib_event_bus"
+      relative: true
+    source: path
+    version: "0.1.0"
+  lib_image_loader:
+    dependency: "direct main"
+    description:
+      path: "../basic_flutter_libs/lib_image_loader"
+      relative: true
+    source: path
+    version: "0.1.0"
+  lib_network_dio:
+    dependency: "direct main"
+    description:
+      path: "../basic_flutter_libs/lib_network_dio"
+      relative: true
+    source: path
+    version: "0.1.0"
+  lib_network_http:
+    dependency: "direct main"
+    description:
+      path: "../basic_flutter_libs/lib_network_http"
+      relative: true
+    source: path
+    version: "0.1.0"
   linkify:
     dependency: transitive
     description:
@@ -1423,20 +1444,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
-  network_dio:
-    dependency: "direct main"
-    description:
-      path: "../basic_flutter_libs/network_dio"
-      relative: true
-    source: path
-    version: "0.1.0"
-  network_http:
-    dependency: "direct main"
-    description:
-      path: "../basic_flutter_libs/network_http"
-      relative: true
-    source: path
-    version: "0.1.0"
   nm:
     dependency: transitive
     description:

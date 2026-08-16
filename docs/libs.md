@@ -23,8 +23,8 @@
 | `lib_eventbus` | 事件总线封装 | EventBus | - |
 | `lib_widget` | 自定义 Widget 集合 | Android View | - |
 | `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
-| `network_dio` | Flutter Dio 请求封装 | Dio | [package README](../basic/basic_flutter_libs/network_dio/README.md) |
-| `network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../basic/basic_flutter_libs/network_http/README.md) |
+| `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../basic/basic_flutter_libs/lib_network_dio/README.md) |
+| `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../basic/basic_flutter_libs/lib_network_http/README.md) |
 
 ## 通用约定
 
@@ -38,7 +38,7 @@
 
 ## Flutter 与 Retrofit 普通请求契约
 
-`network_dio` 与 `network_http` 只对齐 `lib_retrofit + Coroutines/Rx` 的普通请求，上传、下载、断点续传和任务队列不在该契约中。
+`lib_network_dio` 与 `lib_network_http` 只对齐 `lib_retrofit + Coroutines/Rx` 的普通请求，上传、下载、断点续传和任务队列不在该契约中。
 
 | 能力 | Flutter Dio/http | Android Retrofit |
 |------|------------------|------------------|
