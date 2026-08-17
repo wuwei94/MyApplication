@@ -5,30 +5,25 @@ import com.alibaba.android.arouter.facade.callback.NavigationCallback
 import com.example.william.my.basic.basic_shared.utils.Utils
 
 /**
- * 跳转页面监听
- * Compiler An exception is encountered, [More than one interceptors use same priority [1], They are [LoginInterceptorImpl] and [LoginInterceptor].]
+ * 路由跳转监听实现
  */
 class LoginNavigationImpl : NavigationCallback {
 
     private val TAG = "LoginNavigation"
 
     override fun onFound(postcard: Postcard) {
-        println("找到了:" + postcard.path)
+        Utils.logcat(TAG, "找到了: " + postcard.path)
     }
 
     override fun onLost(postcard: Postcard) {
-        println("找不到了:" + postcard.path)
+        Utils.logcat(TAG, "找不到了: " + postcard.path)
     }
 
     override fun onArrival(postcard: Postcard) {
-        println("跳转完了:" + postcard.path)
+        Utils.logcat(TAG, "跳转完了: " + postcard.path)
     }
 
     override fun onInterrupt(postcard: Postcard) {
-        println("被拦截了:" + postcard.path)
-    }
-
-    private fun println(msg: String) {
-        Utils.logcat(TAG, msg)
+        Utils.logcat(TAG, "被拦截了: " + postcard.path)
     }
 }

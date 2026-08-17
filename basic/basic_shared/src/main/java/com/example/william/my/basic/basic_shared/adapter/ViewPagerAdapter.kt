@@ -14,9 +14,9 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRespons
  *
  * @param mData 页面数据列表
  */
-class ViewPagerAdapter(private val mData: List<String>?) : PagerAdapter() {
+class ViewPagerAdapter(private val mData: List<String> = emptyList()) : PagerAdapter() {
 
-    override fun getCount(): Int = mData?.size ?: 0
+    override fun getCount(): Int = mData.size
 
     override fun isViewFromObject(view: View, obj: Any): Boolean {
         return view === obj
@@ -26,7 +26,7 @@ class ViewPagerAdapter(private val mData: List<String>?) : PagerAdapter() {
         val binding = SharedLayoutResponseBinding.inflate(
             LayoutInflater.from(container.context), container, true
         )
-        binding.basicsResponse.text = mData?.getOrNull(position) ?: ""
+        binding.basicsResponse.text = mData.getOrNull(position) ?: ""
         return binding.root
     }
 

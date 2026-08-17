@@ -6,14 +6,13 @@ import com.example.william.my.core.base.app.BaseApp
 
 object Utils {
 
-    private val TAG = this.javaClass.simpleName
-
+    private const val TAG = "Utils"
 
     ///////////////////////////////////////////////////////////////////////////
     // Logcat
     ///////////////////////////////////////////////////////////////////////////
 
-    //规定每段显示的长度
+    // 规定每段显示的长度
     private const val MAX_LENGTH = 4000
 
     fun logcat(msg: String) {
@@ -21,15 +20,10 @@ object Utils {
     }
 
     fun logcat(tag: String, msg: String) {
-        var temp: String
         var index = 0
         while (index < msg.length) {
-            // java的字符不允许指定超过总的长度end
-            temp = if (msg.length <= index + MAX_LENGTH) {
-                msg.substring(index)
-            } else {
-                msg.substring(index, index + MAX_LENGTH)
-            }
+            val end = (index + MAX_LENGTH).coerceAtMost(msg.length)
+            val temp = msg.substring(index, end)
             index += MAX_LENGTH
             Log.e(tag, temp.trim { it <= ' ' })
         }

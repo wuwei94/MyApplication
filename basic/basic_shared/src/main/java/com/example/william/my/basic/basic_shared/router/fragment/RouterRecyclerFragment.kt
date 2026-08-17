@@ -1,6 +1,7 @@
 package com.example.william.my.basic.basic_shared.router.fragment
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -32,14 +33,24 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
     override fun initView(view: View?, state: Bundle?) {
         super.initView(view, state)
 
-        onDataSuccess(arguments?.getParcelableArrayList("router"))
+        val items = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelableArrayList("router", RouterItem::class.java)
+        } else {
+            @Suppress("deprecation")
+            arguments?.getParcelableArrayList("router")
+        }
+        onDataSuccess(items)
     }
 
     override fun onClick(adapter: BaseQuickAdapter<RouterItem, *>, view: View, position: Int) {
         super.onClick(adapter, view, position)
         val item = adapter.items[position]
+        val path = item.mRouterPath
+        if (path.isNullOrEmpty()) {
+            return
+        }
         try {
-            ARouter.getInstance().build(item.mRouterPath).navigation()
+            ARouter.getInstance().build(path).navigation()
         } catch (e: HandlerException) {
             e.printStackTrace()
         }

@@ -18,13 +18,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 @Suppress("deprecation")
 class ViewPagerFragmentAdapter(
     fm: FragmentManager,
-    private val mFragments: List<Fragment>?,
+    private val mFragments: List<Fragment> = emptyList(),
     private val mTitles: List<String>? = null
 ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    override fun getCount(): Int = mFragments?.size ?: 0
+    override fun getCount(): Int = mFragments.size
 
-    override fun getItem(position: Int): Fragment = mFragments!![position]
+    override fun getItem(position: Int): Fragment = mFragments[position]
 
     override fun getPageTitle(position: Int): CharSequence {
         return mTitles?.getOrNull(position) ?: ""

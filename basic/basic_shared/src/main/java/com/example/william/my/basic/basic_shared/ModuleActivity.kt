@@ -68,12 +68,8 @@ class ModuleActivity : RouterRecyclerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Looper.myQueue().addIdleHandler {
-            println("addIdleHandler: queueIdle " + Thread.currentThread().name)
+            Utils.logcat(TAG, "addIdleHandler: queueIdle " + Thread.currentThread().name)
             false
         }
-    }
-
-    fun println(msg: String) {
-        Utils.logcat(TAG, msg)
     }
 }

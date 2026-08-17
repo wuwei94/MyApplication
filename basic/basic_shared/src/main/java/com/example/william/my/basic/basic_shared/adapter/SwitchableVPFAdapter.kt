@@ -15,19 +15,19 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  *
  * FragmentStatePagerAdapter: destroy 时销毁 Fragment 和 View，适合大量页面，节省内存
  */
-@Suppress("deprecation")
+@Suppress("DEPRECATION")
 class SwitchableVPFAdapter(
     fm: FragmentManager,
-    private val mFragments: List<Fragment>?,
+    private val mFragments: List<Fragment> = emptyList(),
     private val mTitles: List<String>? = null,
     isNew: Boolean
 ) : FragmentStatePagerAdapter(
     fm, if (isNew) BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT else BEHAVIOR_SET_USER_VISIBLE_HINT
 ) {
 
-    override fun getCount(): Int = mFragments?.size ?: 0
+    override fun getCount(): Int = mFragments.size
 
-    override fun getItem(position: Int): Fragment = mFragments!![position]
+    override fun getItem(position: Int): Fragment = mFragments[position]
 
     override fun getPageTitle(position: Int): CharSequence {
         return mTitles?.getOrNull(position) ?: ""

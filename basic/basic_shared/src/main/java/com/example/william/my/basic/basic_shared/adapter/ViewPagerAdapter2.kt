@@ -13,7 +13,7 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRespons
  *
  * @param mData 页面数据列表
  */
-class ViewPagerAdapter2(private val mData: List<String>?) :
+class ViewPagerAdapter2(private val mData: List<String> = emptyList()) :
     RecyclerView.Adapter<ViewPagerAdapter2.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,10 +24,10 @@ class ViewPagerAdapter2(private val mData: List<String>?) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.basicsResponse.text = mData?.getOrNull(position) ?: ""
+        holder.binding.basicsResponse.text = mData.getOrNull(position) ?: ""
     }
 
-    override fun getItemCount(): Int = mData?.size ?: 0
+    override fun getItemCount(): Int = mData.size
 
     class ViewHolder(val binding: SharedLayoutResponseBinding) :
         RecyclerView.ViewHolder(binding.root)
