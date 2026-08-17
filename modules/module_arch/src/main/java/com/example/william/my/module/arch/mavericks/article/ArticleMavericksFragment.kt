@@ -14,6 +14,11 @@ import com.example.william.my.module.arch.adapter.ArticleAdapter
  */
 class ArticleMavericksFragment : BaseRecyclerFragment<ArticleDetailData>(), MavericksView {
 
+    /**
+     * Mavericks 架构专属的 ViewModel 委托方式（区别于标准 Jetpack 的 by viewModels）：
+     * 1. 自动处理 MavericksState 的持久化、跨进程恢复以及与 MavericksView 的生命周期绑定；
+     * 2. 底层通过反射查找 ArticleMavericksViewModel.Companion 中实现的 MavericksViewModelFactory 创建实例，因此此处无需显式传入 Factory。
+     */
     private val viewModel: ArticleMavericksViewModel by fragmentViewModel()
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {

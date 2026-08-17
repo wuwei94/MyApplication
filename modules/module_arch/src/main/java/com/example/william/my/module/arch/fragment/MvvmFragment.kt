@@ -6,6 +6,7 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.core.base.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
+import com.example.william.my.module.arch.factory.ViewModelFactory
 import com.example.william.my.module.arch.viewmodel.ArticleLiveDataViewModel
 
 /**
@@ -14,7 +15,9 @@ import com.example.william.my.module.arch.viewmodel.ArticleLiveDataViewModel
  */
 class MvvmFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
-    private val mViewModel: ArticleLiveDataViewModel by viewModels()
+    private val mViewModel: ArticleLiveDataViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {
         return ArticleAdapter(arrayListOf())

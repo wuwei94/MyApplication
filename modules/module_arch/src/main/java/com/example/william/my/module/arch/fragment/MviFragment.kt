@@ -9,6 +9,7 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.core.base.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
+import com.example.william.my.module.arch.factory.ViewModelFactory
 import com.example.william.my.module.arch.intent.ArticleIntent
 import com.example.william.my.module.arch.intent.ArticleViewState
 import com.example.william.my.module.arch.viewmodel.ArticleStateFlowViewModel
@@ -21,7 +22,9 @@ import kotlinx.coroutines.launch
  */
 class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
-    private val mViewModel: ArticleStateFlowViewModel by viewModels()
+    private val mViewModel: ArticleStateFlowViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {
         return ArticleAdapter(arrayListOf())
