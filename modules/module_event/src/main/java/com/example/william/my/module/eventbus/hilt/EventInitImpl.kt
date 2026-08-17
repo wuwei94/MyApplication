@@ -5,6 +5,9 @@ import com.example.william.my.core.eventbus.flow.FlowEventBus
 import com.example.william.my.core.base.hilt.interfaces.IAppInit
 import javax.inject.Inject
 
+/**
+ * Event 模块 Hilt 初始化实现
+ */
 class EventInitImpl @Inject constructor() : IAppInit {
 
     private lateinit var mApp: Application

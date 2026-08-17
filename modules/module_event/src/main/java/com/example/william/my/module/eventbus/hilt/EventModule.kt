@@ -7,6 +7,9 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+/**
+ * Event 模块 Hilt 依赖注入绑定模块
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class EventModule {
