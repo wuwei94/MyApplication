@@ -39,14 +39,11 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
                     RemoteKeyDatabase.getInstance(application)
                 val networkApi =
                     ServiceLocator.provideArticleApi()
-                val repository =
-                    ServiceLocator.provideArticleRepository(application)
                 @Suppress("UNCHECKED_CAST")
                 return PagingViewModel(
                     articleDatabase,
                     remoteKeyDatabase,
-                    networkApi,
-                    repository
+                    networkApi
                 ) as T
             }
         }

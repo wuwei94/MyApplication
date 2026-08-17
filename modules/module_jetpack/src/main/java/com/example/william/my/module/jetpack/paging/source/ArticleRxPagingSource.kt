@@ -5,14 +5,12 @@ import androidx.paging.rxjava3.RxPagingSource
 import com.example.william.my.basic.basic_repo.api.ArticleApi
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ArticleRxPagingSource(
-    private val networkApi: ArticleApi,
-    private val articleRepository: ArticleRepository<ArticleData, ArticleDetailData>
+    private val networkApi: ArticleApi
 ) :
     RxPagingSource<Int, ArticleDetailData>() {
 
@@ -35,13 +33,16 @@ class ArticleRxPagingSource(
     }
 
     private fun toLoadResult(response: RetrofitResponse<ArticleData>): LoadResult<Int, ArticleDetailData> {
-        return LoadResult.Page(
-            response.data!!.datas,
-            null,  // Only paging forward.
-            response.data!!.curPage,
-            LoadResult.Page.COUNT_UNDEFINED,
-            LoadResult.Page.COUNT_UNDEFINED
-        )
+        val data = response.data
+        return if (data != null) {
+            LoadResult.Page(
+                data = data.datas,
+                prevKey = null, // Only paging forward.
+                nextKey = data.curPage
+            )
+        } else {
+            LoadResult.Error(NullPointerException("Response data is null"))
+        }
     }
 
     override fun getRefreshKey(state: PagingState<Int, ArticleDetailData>): Int? {

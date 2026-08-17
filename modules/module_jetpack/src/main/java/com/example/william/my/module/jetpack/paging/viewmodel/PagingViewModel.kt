@@ -12,9 +12,7 @@ import androidx.paging.liveData
 import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.flowable
 import com.example.william.my.basic.basic_repo.api.ArticleApi
-import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 import com.example.william.my.basic.basic_repo.database.ArticleDatabase
 import com.example.william.my.module.jetpack.paging.mediator.ArticleRemoteMediator
 import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
@@ -25,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 class PagingViewModel(
     private val articleDatabase: ArticleDatabase,
     private val remoteKeyDatabase: RemoteKeyDatabase,
-    private val networkApi: ArticleApi,
-    private val articleRepository: ArticleRepository<ArticleData, ArticleDetailData>
+    private val networkApi: ArticleApi
 ) : ViewModel() {
 
     /**
@@ -45,8 +42,7 @@ class PagingViewModel(
             remoteMediator = ArticleRemoteMediator(
                 articleDatabase,
                 remoteKeyDatabase,
-                networkApi,
-                articleRepository
+                networkApi
             )
         ).flow.cachedIn(viewModelScope)
 
@@ -57,7 +53,7 @@ class PagingViewModel(
     val articleFlow: Flow<PagingData<ArticleDetailData>> = Pager(
         config = PagingConfig(pageSize = 20),
     ) {
-        ArticlePagingSource(networkApi, articleRepository)
+        ArticlePagingSource(networkApi)
     }.flow.cachedIn(viewModelScope)
 
     /**
@@ -67,7 +63,7 @@ class PagingViewModel(
     val articleFlowable: Flowable<PagingData<ArticleDetailData>> = Pager(
         config = PagingConfig(pageSize = 20)
     ) {
-        ArticlePagingSource(networkApi, articleRepository)
+        ArticlePagingSource(networkApi)
     }.flowable.cachedIn(viewModelScope)
 
     /**
@@ -77,6 +73,6 @@ class PagingViewModel(
     val articleLiveData: LiveData<PagingData<ArticleDetailData>> = Pager(
         config = PagingConfig(pageSize = 20)
     ) {
-        ArticlePagingSource(networkApi, articleRepository)
+        ArticlePagingSource(networkApi)
     }.liveData.cachedIn(viewModelScope)
 }
