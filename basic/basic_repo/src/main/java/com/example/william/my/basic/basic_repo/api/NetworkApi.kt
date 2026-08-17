@@ -67,8 +67,8 @@ interface NetworkApi {
     // =============================================================================================
 
     /**
-     * CoroutinesRepository
-     * FlowRepository
+     * CoroutinesUseCase
+     * FlowUseCase
      */
     @POST(Constants.Url_Login)
     suspend fun loginSuspend(

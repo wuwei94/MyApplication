@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult
-import com.example.william.my.module.kotlin.repo.FlowRepository
+import com.example.william.my.module.kotlin.usecase.FlowUseCase
 import com.example.william.my.module.kotlin.utils.ThreadUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
  * <p>
  * flow -> StateFlow
  */
-class FlowViewModel(private val repository: FlowRepository) : ViewModel() {
+class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
 
     // Backing property to avoid state updates from other classes
     private val _uiState: MutableStateFlow<NetworkResult<RetrofitResponse<LoginData>>> =
@@ -41,11 +41,11 @@ class FlowViewModel(private val repository: FlowRepository) : ViewModel() {
         // 在UI线程上创建一个新的协同程序
         // Create a new coroutine on the UI thread
         viewModelScope.launch {
-            //打印线程
+            // 打印线程
             ThreadUtils.isMainThread("FlowViewModel login")
 
             val flow: Flow<RetrofitResponse<LoginData>> =
-                repository.login(username, password)
+                useCase.login(username, password)
 
             // 使用 collect 触发流并消耗其元素
             // Trigger the flow and consume its elements using collect
@@ -72,10 +72,10 @@ class FlowViewModel(private val repository: FlowRepository) : ViewModel() {
 
 object FlowVMFactory : ViewModelProvider.Factory {
 
-    private val repository = FlowRepository(Dispatchers.IO)
+    private val useCase = FlowUseCase(Dispatchers.IO)
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return FlowViewModel(repository) as T
+        return FlowViewModel(useCase) as T
     }
 }

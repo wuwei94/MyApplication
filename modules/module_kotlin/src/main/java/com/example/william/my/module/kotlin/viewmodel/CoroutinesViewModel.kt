@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult
-import com.example.william.my.module.kotlin.repo.CoroutinesRepository
+import com.example.william.my.module.kotlin.usecase.CoroutinesUseCase
 import com.example.william.my.module.kotlin.utils.ThreadUtils
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
  * <p>
  * result -> LiveData
  */
-class CoroutinesViewModel(private val repository: CoroutinesRepository) : ViewModel() {
+class CoroutinesViewModel(private val useCase: CoroutinesUseCase) : ViewModel() {
 
     private val _login = MutableLiveData<String>()
 
@@ -35,14 +35,14 @@ class CoroutinesViewModel(private val repository: CoroutinesRepository) : ViewMo
         // 在UI线程上创建一个新的协同程序
         // Create a new coroutine on the UI thread
         viewModelScope.launch {
-            //打印线程
+            // 打印线程
             ThreadUtils.isMainThread("CoroutinesViewModel login")
 
             // 执行网络请求 并 挂起，直至请求完成
             // Make the network call and suspend execution until it finishes
             val result: NetworkResult<RetrofitResponse<LoginData>> =
                 try {
-                    repository.login(username, password)
+                    useCase.login(username, password)
                 } catch (e: Exception) {
                     NetworkResult.Error(Exception("Network request failed"))
                 }
@@ -68,10 +68,10 @@ class CoroutinesViewModel(private val repository: CoroutinesRepository) : ViewMo
 
 object CoroutinesVMFactory : ViewModelProvider.Factory {
 
-    private val repository = CoroutinesRepository(Dispatchers.IO)
+    private val useCase = CoroutinesUseCase(Dispatchers.IO)
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return CoroutinesViewModel(repository) as T
+        return CoroutinesViewModel(useCase) as T
     }
 }

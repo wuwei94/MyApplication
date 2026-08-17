@@ -1,4 +1,4 @@
-package com.example.william.my.module.kotlin.repo
+package com.example.william.my.module.kotlin.usecase
 
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.LoginData
@@ -10,12 +10,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 /**
- * Android 上的 Kotlin 协程
+ * Android 上的 Kotlin 协程用例
  * https://developer.android.google.cn/kotlin/coroutines
  * <p>
  * suspend -> Result
  */
-class CoroutinesRepository(private val defaultDispatcher: CoroutineDispatcher) {
+class CoroutinesUseCase(private val defaultDispatcher: CoroutineDispatcher) {
 
     private val api = createApi(NetworkApi::class.java)
 
@@ -25,8 +25,8 @@ class CoroutinesRepository(private val defaultDispatcher: CoroutineDispatcher) {
     ): NetworkResult<RetrofitResponse<LoginData>> {
 
         return withContext(defaultDispatcher) {
-            //打印线程
-            ThreadUtils.isMainThread("CoroutinesRepository login")
+            // 打印线程
+            ThreadUtils.isMainThread("CoroutinesUseCase login")
 
             // 阻塞网络请求
             // Blocking network request code
@@ -35,6 +35,6 @@ class CoroutinesRepository(private val defaultDispatcher: CoroutineDispatcher) {
     }
 
     companion object {
-        private val TAG = CoroutinesRepository::class.java.simpleName
+        private val TAG = CoroutinesUseCase::class.java.simpleName
     }
 }

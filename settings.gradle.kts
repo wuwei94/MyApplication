@@ -159,11 +159,11 @@ include(":modules:module_event")
 include(":modules:module_opensource")
 
 // Kotlin 特性
-//include(":modules:module_kotlin")
+include(":modules:module_kotlin")
 // Jetpack 组件库
-//include(":modules:module_jetpack")
+include(":modules:module_jetpack")
 // 架构模式
-//include(":modules:module_arch")
+include(":modules:module_arch")
 
 // Compose
 include(":modules:module_compose")

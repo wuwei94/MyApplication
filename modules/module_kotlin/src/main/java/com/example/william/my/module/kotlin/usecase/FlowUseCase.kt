@@ -1,4 +1,4 @@
-package com.example.william.my.module.kotlin.repo
+package com.example.william.my.module.kotlin.usecase
 
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.LoginData
@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 /**
- * Android 上的 Kotlin 数据流
+ * Android 上的 Kotlin 数据流用例
  * https://developer.android.google.cn/kotlin/flow
  * <p>
  * suspend -> Flow
  */
-class FlowRepository(private val defaultDispatcher: CoroutineDispatcher) {
+class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
 
     private val api = createApi(NetworkApi::class.java)
 
@@ -29,8 +29,8 @@ class FlowRepository(private val defaultDispatcher: CoroutineDispatcher) {
      */
     private fun createFlow(username: String, password: String): Flow<RetrofitResponse<LoginData>> {
         return flow {
-            //打印线程
-            ThreadUtils.isMainThread("FlowRepository login")
+            // 打印线程
+            ThreadUtils.isMainThread("FlowUseCase login")
 
             // Emits the result of the request to the flow
             emit(api.loginSuspend(username, password))
@@ -68,7 +68,6 @@ class FlowRepository(private val defaultDispatcher: CoroutineDispatcher) {
     }
 
     companion object {
-        private val TAG = FlowRepository::class.java.simpleName
+        private val TAG = FlowUseCase::class.java.simpleName
     }
-
 }
