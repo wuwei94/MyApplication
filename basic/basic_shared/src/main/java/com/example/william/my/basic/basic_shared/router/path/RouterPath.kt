@@ -228,7 +228,7 @@ object RouterPath {
         const val AdaptScreenUtils = "${Utils}/AdaptScreenUtils"
         const val FileIOUtils = "${Utils}/FileIOUtils"
         const val PermissionUtils = "${Utils}/PermissionUtils"
-        const val ThreadUtilsActivity = "${Utils}/ThreadUtilsActivity"
+        const val ThreadUtils = "${Utils}/ThreadUtils"
     }
 
     // 网络库

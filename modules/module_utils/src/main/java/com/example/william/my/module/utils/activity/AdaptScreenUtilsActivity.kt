@@ -7,6 +7,11 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.utils.databinding.UtilsActivityAdaptscreenBinding
 
+/**
+ * 屏幕适配工具类演示
+ *
+ * 基于 BlankJ AdaptScreenUtils 演示按照 1080 设计宽度进行等比适配。
+ */
 @Route(path = RouterPath.Utils.AdaptScreenUtils)
 class AdaptScreenUtilsActivity : BaseVBActivity<UtilsActivityAdaptscreenBinding>() {
     override fun getViewBinding(): UtilsActivityAdaptscreenBinding {

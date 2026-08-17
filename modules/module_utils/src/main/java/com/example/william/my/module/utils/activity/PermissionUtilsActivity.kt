@@ -1,66 +1,84 @@
 package com.example.william.my.module.utils.activity
 
 import android.os.Build
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.SnackbarUtils
-import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 当 targetSdkVersion >= 30时，
- * 如果要申请 ACCESS_BACKGROUND_LOCATION 权限，则需要先申请 ACCESS_FINE_LOCATION 权限或者 ACCESS_COARSE_LOCATION
- * 如果 ACCESS_BACKGROUND_LOCATION 权限跟 ACCESS_FINE_LOCATION 权限或者 ACCESS_COARSE_LOCATION 权限一起申请，则不会弹出权限申请对话框，如果还有其他权限一起申请，则会导致所有权限申请都不会弹窗。
+ * 权限请求工具类演示
+ *
+ * 演示 BlankJ PermissionUtils 单项权限、权限组与系统特殊权限申请。
+ *
+ * 注意：
+ * 当 targetSdkVersion >= 30 时，如果要申请 ACCESS_BACKGROUND_LOCATION 权限，
+ * 需要先申请 ACCESS_FINE_LOCATION 或 ACCESS_COARSE_LOCATION 权限，避免同时申请导致弹窗失效。
  */
 @Route(path = RouterPath.Utils.PermissionUtils)
-class PermissionUtilsActivity : BasicRecyclerActivity() {
+class PermissionUtilsActivity : BasicResponseActivity() {
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("演示 BlankJ PermissionUtils 权限申请与管理")
+    }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(
-            "requestCalendar",
-            "requestWriteSettings",
-            "requestDrawOverlays",
-            "launchAppDetailsSettings",
+            "requestCalendar (申请日历权限)",
+            "requestCamera (申请相机权限)",
+            "requestStorage (申请存储权限)",
+            "requestPermissionGroup (申请多项组合权限)",
+            "requestWriteSettings (申请修改系统设置)",
+            "requestDrawOverlays (申请悬浮窗权限)",
+            "launchAppDetailsSettings (跳转应用详情设置)",
         )
     }
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
-            0 -> {
-                requestCalendar()
-            }
-
-            1 -> {
-                requestWriteSettings()
-            }
-
-            2 -> {
-                requestDrawOverlays()
-            }
-
-            3 -> {
-                launchAppDetailsSettings()
-            }
+            0 -> requestCalendar()
+            1 -> requestCamera()
+            2 -> requestStorage()
+            3 -> requestPermissionGroup()
+            4 -> requestWriteSettings()
+            5 -> requestDrawOverlays()
+            6 -> launchAppDetailsSettings()
         }
     }
 
+    /**
+     * 申请日历权限
+     */
     private fun requestCalendar() {
-        PermissionUtils.permissionGroup(
-            PermissionConstants.CALENDAR,  //日历
-            PermissionConstants.CAMERA,  //相机
-            PermissionConstants.CONTACTS,  //联系人
-            PermissionConstants.LOCATION,  //位置
-            PermissionConstants.MICROPHONE,  //麦克风
-            PermissionConstants.PHONE,  //手机权限
-            PermissionConstants.SENSORS,  //传感器
-            PermissionConstants.SMS,  //短信
-            PermissionConstants.STORAGE //存储
-        )
+        requestSinglePermission(PermissionConstants.CALENDAR, "Calendar")
+    }
+
+    /**
+     * 申请相机权限
+     */
+    private fun requestCamera() {
+        requestSinglePermission(PermissionConstants.CAMERA, "Camera")
+    }
+
+    /**
+     * 申请存储权限
+     */
+    private fun requestStorage() {
+        requestSinglePermission(PermissionConstants.STORAGE, "Storage")
+    }
+
+    private fun requestSinglePermission(
+        @PermissionConstants.PermissionGroup permission: String,
+        name: String
+    ) {
+        PermissionUtils.permission(permission)
             .callback(object : PermissionUtils.FullCallback {
                 override fun onGranted(granted: MutableList<String>) {
-                    showSnackBar(true, "Permission is granted")
+                    appendLog("$name 权限已授予: $granted")
                 }
 
                 override fun onDenied(
@@ -68,12 +86,39 @@ class PermissionUtilsActivity : BasicRecyclerActivity() {
                     denied: MutableList<String>
                 ) {
                     if (deniedForever.isNotEmpty()) {
-                        showSnackBar(false, "Permission is denied forever")
+                        appendLog("$name 权限被永久拒绝: $deniedForever")
                     } else {
-                        showSnackBar(false, "Permission is denied")
+                        appendLog("$name 权限被拒绝: $denied")
                     }
                 }
+            })
+            .request()
+    }
 
+    /**
+     * 申请组合权限
+     */
+    private fun requestPermissionGroup() {
+        PermissionUtils.permissionGroup(
+            PermissionConstants.CALENDAR,
+            PermissionConstants.CAMERA,
+            PermissionConstants.LOCATION
+        )
+            .callback(object : PermissionUtils.FullCallback {
+                override fun onGranted(granted: MutableList<String>) {
+                    appendLog("组合权限已授予: $granted")
+                }
+
+                override fun onDenied(
+                    deniedForever: MutableList<String>,
+                    denied: MutableList<String>
+                ) {
+                    if (deniedForever.isNotEmpty()) {
+                        appendLog("组合权限被永久拒绝: $deniedForever")
+                    } else {
+                        appendLog("组合权限被拒绝: $denied")
+                    }
+                }
             })
             .request()
     }
@@ -85,11 +130,11 @@ class PermissionUtilsActivity : BasicRecyclerActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionUtils.requestWriteSettings(object : PermissionUtils.SimpleCallback {
                 override fun onGranted() {
-                    showSnackBar(true, "Write Settings is granted")
+                    appendLog("Write Settings 权限已授予")
                 }
 
                 override fun onDenied() {
-                    showSnackBar(false, "Write Settings is denied")
+                    appendLog("Write Settings 权限被拒绝")
                 }
             })
         }
@@ -102,11 +147,11 @@ class PermissionUtilsActivity : BasicRecyclerActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionUtils.requestDrawOverlays(object : PermissionUtils.SimpleCallback {
                 override fun onGranted() {
-                    showSnackBar(true, "Draw Overlays is granted")
+                    appendLog("Draw Overlays 权限已授予")
                 }
 
                 override fun onDenied() {
-                    showSnackBar(false, "Draw Overlays is denied")
+                    appendLog("Draw Overlays 权限被拒绝")
                 }
             })
         }
@@ -117,16 +162,6 @@ class PermissionUtilsActivity : BasicRecyclerActivity() {
      */
     private fun launchAppDetailsSettings() {
         PermissionUtils.launchAppDetailsSettings()
-    }
-
-    private fun showSnackBar(isSuccess: Boolean, msg: String) {
-        SnackbarUtils.with(binding.root).setDuration(SnackbarUtils.LENGTH_LONG).setMessage(msg)
-            .apply {
-                if (isSuccess) {
-                    showSuccess()
-                } else {
-                    showError()
-                }
-            }
+        appendLog("已跳转至应用详情设置页面")
     }
 }

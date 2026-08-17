@@ -9,6 +9,9 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.ImageUtilsService
 import java.io.File
 
+/**
+ * 图片处理路由服务实现
+ */
 @Route(path = RouterPath.Service.ImageUtilsService)
 class ImageUtilsServiceImpl : ImageUtilsService {
 

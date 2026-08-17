@@ -6,6 +6,8 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
+ * BlankJ AndroidUtilCode 工具类导航页面
+ *
  * https://github.com/Blankj/AndroidUtilCode
  */
 @Route(path = RouterPath.Utils.Main)
@@ -16,6 +18,7 @@ class AndroidUtilsActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("AdaptScreenUtilsActivity", RouterPath.Utils.AdaptScreenUtils))
         routerItems.add(RouterItem("FileIOUtilsActivity", RouterPath.Utils.FileIOUtils))
         routerItems.add(RouterItem("PermissionUtilsActivity", RouterPath.Utils.PermissionUtils))
+        routerItems.add(RouterItem("ThreadUtilsActivity", RouterPath.Utils.ThreadUtils))
         return routerItems
     }
 }

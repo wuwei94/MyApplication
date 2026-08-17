@@ -8,6 +8,9 @@ import com.example.william.my.basic.basic_shared.router.service.FileIOUtilsServi
 import java.io.File
 import java.io.InputStream
 
+/**
+ * 文件读写路由服务实现
+ */
 @Route(path = RouterPath.Service.FileIOUtilsService)
 class FileIOUtilsServiceImpl : FileIOUtilsService {
 
