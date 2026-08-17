@@ -19,7 +19,7 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 
 ### 日志显示规范
 
-- **初始化**：使用 `showResponse()` 设置说明文字，`gravity = Gravity.CENTER`
+- **初始化**：使用 `showDescription()` 设置说明文字，`gravity = Gravity.CENTER`
 - **追加日志**：使用 `appendLog()` 追加日志，`gravity = Gravity.TOP`
 - **日志格式**：每条日志必须是一行，不要换行或多行输出
 - **日志累积**：使用 `StringBuilder` 累积日志，不覆盖历史记录
@@ -44,7 +44,7 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 ### 操作触发规范
 
 - **所有**使用 `BasicResponseActivity` 的 Activity（包括目标页）必须使用下方 RecyclerView 列表（`buildList` + `onRecyclerClick`）
-- 禁止使用 `onResponseClick` 点击上方区域触发操作
+- 禁止点击上方区域触发操作
 - 上方作为结果展示区域
 - 不要覆盖上一次的结果，日志要累积显示
 
@@ -53,7 +53,7 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 对每个 Activity 评估以下 3 个维度：
 
 ### 1. 交互性
-- **操作触发方式**：操作项必须放在下方 RecyclerView 列表（`buildList` + `onRecyclerClick`），禁止使用 `onResponseClick` 点击上方区域
+- **操作触发方式**：操作项必须放在下方 RecyclerView 列表（`buildList` + `onRecyclerClick`），禁止点击上方区域触发操作
 - 用户能否触发/切换演示行为？
 - 操作 → 结果 的反馈循环是否清晰？
 - 反面：打开就显示静态结果，无法操作
@@ -92,7 +92,7 @@ description: 审查技术栈沉淀项目中的 Android 示例 Activity 质量。
 
 ## 常见反面模式
 
-1. **点击上方区域触发操作**：使用 `onResponseClick` 点击上方 TextView 触发操作，应改为下方 RecyclerView 列表
+1. **点击上方区域触发操作**：点击上方 TextView 触发操作，应改为下方 RecyclerView 列表
 2. **静态展示**：Activity 打开就显示结果，无法交互（如模糊直接显示，无开关）
 3. **无状态提示（动画）**：动画 demo 没有文字显示当前播放的是哪种动画
 4. **提示文字无中文说明**：Toast 或状态文字只有英文 API 名称，没有中文解释（应为「Alpha（透明度）」格式）

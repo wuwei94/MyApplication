@@ -26,7 +26,7 @@ class NettyWebSocketClientRxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【Netty TCP】RxJava 封装\n地址：$serverUrl\n需要先启动本地服务端")
+        showDescription("【Netty TCP】RxJava 封装\n地址：$serverUrl\n需要先启动本地服务端")
     }
 
     override fun buildList(): ArrayList<String> {

@@ -23,7 +23,7 @@ class OnBackPressedActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("OnBackPressedDispatcher\n\n点击下方按钮拦截返回键")
+        showDescription("OnBackPressedDispatcher\n\n点击下方按钮拦截返回键")
     }
 
     override fun buildList(): ArrayList<String> {

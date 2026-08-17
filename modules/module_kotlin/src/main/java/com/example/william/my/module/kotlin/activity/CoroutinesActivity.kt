@@ -1,6 +1,6 @@
 package com.example.william.my.module.kotlin.activity
 
-import android.view.View
+import android.os.Bundle
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -20,17 +20,28 @@ class CoroutinesActivity : BasicResponseActivity() {
         CoroutinesVMFactory
     }
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("点击下方列表项发起协程登录请求")
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("协程登录请求")
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        if (position == 0) {
+            appendLog("发起登录请求...")
+            mViewModel.login(Constants.Value_Username, Constants.Value_Password)
+        }
+    }
+
     override fun observeViewModel() {
         super.observeViewModel()
 
         mViewModel.login.observe(this) {
-            showResponse(it)
+            appendLog("登录结果: $it")
         }
-    }
-
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        mViewModel.login(Constants.Value_Username, Constants.Value_Password)
     }
 }

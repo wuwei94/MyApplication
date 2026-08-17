@@ -49,9 +49,8 @@ class JobSchedulerActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("JobScheduler — 系统任务调度")
         startService()
-        showResponse("JobScheduler — 系统任务调度")
     }
 
     private fun startService() {

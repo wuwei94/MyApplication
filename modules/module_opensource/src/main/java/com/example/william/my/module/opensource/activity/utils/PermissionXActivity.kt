@@ -1,20 +1,32 @@
 package com.example.william.my.module.opensource.activity.utils
 
 import android.Manifest
-import android.view.View
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.utils.Utils
 import com.permissionx.guolindev.PermissionX
 
+/**
+ * PermissionX 权限申请
+ */
 @Route(path = RouterPath.OpenSource.Utils.PermissionX)
 class PermissionXActivity : BasicResponseActivity() {
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("点击下方列表项使用 PermissionX 申请权限")
+    }
 
-        requestPermission()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("申请相机和通知权限")
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        if (position == 0) {
+            requestPermission()
+        }
     }
 
     private fun requestPermission() {
@@ -42,9 +54,9 @@ class PermissionXActivity : BasicResponseActivity() {
             }
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
-                    Utils.toast("All permissions are granted: $grantedList")
+                    appendLog("全部权限已授予: $grantedList")
                 } else {
-                    Utils.toast("These permissions are denied: $deniedList")
+                    appendLog("权限被拒绝: $deniedList")
                 }
             }
     }

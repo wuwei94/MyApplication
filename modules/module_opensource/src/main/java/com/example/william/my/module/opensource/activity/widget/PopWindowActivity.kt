@@ -1,55 +1,60 @@
 package com.example.william.my.module.opensource.activity.widget
 
-import android.view.View
+import android.os.Bundle
+import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseBinding
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.utils.Utils
 
 /**
- * https://github.com/pinguo-zhouwei/CustomPopwindow
+ * PopupWindow 演示
  */
 @Route(path = RouterPath.OpenSource.Widget.PopWindow)
 class PopWindowActivity : BasicResponseActivity() {
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        initPopWindow()
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("点击下方列表项展示 PopupWindow")
     }
 
-    private fun initPopWindow() {
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("显示 PopupWindow")
+    }
 
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        if (position == 0) {
+            showPopWindow()
+        }
+    }
+
+    private fun showPopWindow() {
         val binding = SharedLayoutResponseBinding.inflate(layoutInflater)
+        val popupWindow = PopupWindow(
+            binding.root,
+            resources.getDimensionPixelOffset(R.dimen.shared_dp_dialog_width),
+            resources.getDimensionPixelOffset(R.dimen.shared_dp_dialog_height),
+            true
+        ).apply {
+            isOutsideTouchable = true
+        }
 
-        //处理popWindow 显示内容
-        handleLogic(binding)
-
-        //创建并显示popWindow
-        //CustomPopWindow.PopupWindowBuilder(this)
-        //    .setView(binding.root)
-        //    .size(
-        //        resources.getDimensionPixelOffset(R.dimen.shared_dimen_width_320),
-        //        resources.getDimensionPixelOffset(R.dimen.shared_dimen_height_200)
-        //    ) //设置显示的大小，不设置就默认包裹内容
-        //    .setFocusable(true) //是否获取焦点，默认为ture
-        //    .setOutsideTouchable(true) //是否PopupWindow以外触摸dismiss
-        //    .create() //创建PopupWindow
-        //    .showAsDropDown(mBinding.basicsResponse, 0, 0) //显示PopupWindow
-    }
-
-    private fun handleLogic(binding: SharedLayoutResponseBinding) {
         binding.basicsResponse.setBackgroundColor(
             ContextCompat.getColor(
                 this,
                 R.color.shared_color_primary
             )
         )
+        binding.basicsResponse.text = "PopupWindow 内容区域\n点击关闭"
         binding.basicsResponse.setOnClickListener {
-            Utils.toast("您点击了按钮")
+            appendLog("点击了 PopupWindow 内容区域")
+            popupWindow.dismiss()
         }
+
+        popupWindow.showAsDropDown(mBinding.basicsResponse, 0, 0)
+        appendLog("展示 PopupWindow")
     }
 }

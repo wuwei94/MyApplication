@@ -21,7 +21,7 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【Java-WebSocket】RxJava 封装\n地址：$serverUrl")
+        showDescription("【Java-WebSocket】RxJava 封装\n地址：$serverUrl")
     }
 
     override fun buildList(): ArrayList<String> {

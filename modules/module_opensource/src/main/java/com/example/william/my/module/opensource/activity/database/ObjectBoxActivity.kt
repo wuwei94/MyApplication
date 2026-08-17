@@ -1,7 +1,6 @@
 package com.example.william.my.module.opensource.activity.database
 
 import android.os.Bundle
-import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -21,18 +20,31 @@ class ObjectBoxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("点击下方列表项操作 ObjectBox 数据库")
         initBox()
-
-        showNote()
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("插入 Note 数据", "查询所有 Note", "清空 Note 数据")
+    }
 
-        addNote()
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> {
+                addNote()
+                showNote()
+            }
 
-        showNote()
+            1 -> {
+                showNote()
+            }
+
+            2 -> {
+                clearNotes()
+                showNote()
+            }
+        }
     }
 
     private fun initBox() {
@@ -40,26 +52,25 @@ class ObjectBoxActivity : BasicResponseActivity() {
         notesBox = ObjectBox.boxStore.boxFor(ObjectBoxNote::class.java)
     }
 
-
     private fun addNote() {
-        val note = ObjectBoxNote(text = "ObjectBox")
+        val note = ObjectBoxNote(text = "ObjectBox Note ${System.currentTimeMillis()}")
         notesBox.put(note)
+        appendLog("插入 Note: id=${note.id}, text=${note.text}")
+    }
+
+    private fun clearNotes() {
+        notesBox.removeAll()
+        appendLog("已清空所有 Note 数据")
     }
 
     private fun showNote() {
         val notes = notesBox.all
-        showResponse(listToString(notes))
-    }
-
-    private fun listToString(list: List<ObjectBoxNote>): String {
-        return if (list.isNotEmpty()) {
-            val stringBuilder = StringBuilder()
-            for (i in list.indices) {
-                stringBuilder.append(Gson().toJson(list[i])).append(",").append("\n")
-            }
-            stringBuilder.substring(0, stringBuilder.toString().length - 1)
+        if (notes.isEmpty()) {
+            appendLog("当前数据库无数据")
         } else {
-            ""
+            notes.forEach { note ->
+                appendLog(Gson().toJson(note))
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ class ServiceActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("Service 演示\n\n点击下方按钮操作服务")
+        showDescription("Service 演示\n\n点击下方按钮操作服务")
     }
 
     override fun buildList(): ArrayList<String> {

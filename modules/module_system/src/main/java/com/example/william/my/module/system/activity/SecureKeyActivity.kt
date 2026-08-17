@@ -18,7 +18,7 @@ class SecureKeyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("Android Keystore 安全密钥\n\n点击下方按钮操作密钥")
+        showDescription("Android Keystore 安全密钥\n\n点击下方按钮操作密钥")
     }
 
     override fun buildList(): ArrayList<String> {

@@ -27,8 +27,7 @@ class NinePatchActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        showResponse("点击下方按钮加载 9-patch 图片")
+        showDescription("点击下方按钮加载 9-patch 图片")
     }
 
     override fun onRecyclerClick(position: Int, string: String) {

@@ -34,14 +34,13 @@ import java.util.Locale
 class PickerViewActivity : BasicResponseActivity() {
 
     private var isLoaded = false
-    private var isSwitch = false
     private val options1Items: MutableList<ProvinceData> = arrayListOf() //所有省份数组
     private val options2Items: MutableList<List<String>> = arrayListOf() //所有城市数组
     private val options3Items: MutableList<List<List<String>>> = arrayListOf() //所有地区数组
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("点击下方列表项展示不同类型的 PickerView")
         initPickView()
     }
 
@@ -52,23 +51,25 @@ class PickerViewActivity : BasicResponseActivity() {
         }.start()
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        showPickView()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("城市三级选择器", "时间选择器")
     }
 
-    private fun showPickView() {
-        if (isSwitch) {
-            showTimePickerView()
-        } else {
-            if (isLoaded) {
-                showOptionsPickerView()
-            } else {
-                Utils.toast("Please waiting until the data is parsed")
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> {
+                if (isLoaded) {
+                    showOptionsPickerView()
+                } else {
+                    appendLog("正在解析城市数据，请稍候...")
+                }
+            }
+
+            1 -> {
+                showTimePickerView()
             }
         }
-        isSwitch = !isSwitch
     }
 
     private fun initJsonData() { //解析数据
@@ -149,7 +150,7 @@ class PickerViewActivity : BasicResponseActivity() {
                 val options = options1Items[options1].pickerViewText +
                         options2Items[options1][options2] +
                         options3Items[options1][options2][options3]
-                showResponse(options)
+                appendLog("选中城市: $options")
             }
                 .setDecorView(window.decorView.findViewById(R.id.content)) //防止被虚拟按键遮挡
                 .setSubmitText("确定") //确定按钮文字
@@ -177,12 +178,11 @@ class PickerViewActivity : BasicResponseActivity() {
 
     private fun showTimePickerView() {
         val pvTime = TimePickerBuilder(this) { date, v ->
-            showResponse(
-                SimpleDateFormat(
-                    "yyyy-MM-dd HH:mm:ss",
-                    Locale.CHINA
-                ).format(date)
-            )
+            val time = SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss",
+                Locale.CHINA
+            ).format(date)
+            appendLog("选中时间: $time")
         }
             .setType(booleanArrayOf(true, true, true, false, false, false))
             .setCancelText("Cancel") //取消按钮文字

@@ -1,6 +1,6 @@
 package com.example.william.my.module.kotlin.activity
 
-import android.view.View
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +25,23 @@ class FLowActivity : BasicResponseActivity() {
         FlowVMFactory
     }
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("点击下方列表项通过 Flow 发起登录请求")
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("Flow 登录请求")
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        if (position == 0) {
+            appendLog("发起 Flow 登录请求...")
+            mViewModel.login(Constants.Value_Username, Constants.Value_Password)
+        }
+    }
+
     override fun observeViewModel() {
         super.observeViewModel()
 
@@ -43,25 +60,19 @@ class FLowActivity : BasicResponseActivity() {
                     // New value received
                     when (uiState) {
                         is NetworkResult.Loading -> {
-                            showResponse(uiState.string())
+                            appendLog("Flow 状态: Loading")
                         }
 
                         is NetworkResult.Success -> {
-                            showResponse(uiState.string())
+                            appendLog("Flow 成功: ${uiState.string()}")
                         }
 
                         is NetworkResult.Error -> {
-                            showResponse(uiState.string())
+                            appendLog("Flow 失败: ${uiState.string()}")
                         }
                     }
                 }
             }
         }
-    }
-
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        mViewModel.login(Constants.Value_Username, Constants.Value_Password)
     }
 }

@@ -35,7 +35,7 @@ class DialogActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("点击下方列表项查看不同 Dialog 效果")
+        showDescription("点击下方列表项查看不同 Dialog 效果")
     }
 
     override fun onRecyclerClick(position: Int, string: String) {

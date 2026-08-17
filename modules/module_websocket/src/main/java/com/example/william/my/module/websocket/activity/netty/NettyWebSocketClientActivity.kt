@@ -26,7 +26,7 @@ class NettyWebSocketClientActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【Netty TCP】客户端示例\n地址：$serverUrl\n需要先启动本地服务端")
+        showDescription("【Netty TCP】客户端示例\n地址：$serverUrl\n需要先启动本地服务端")
     }
 
     override fun buildList(): ArrayList<String> {

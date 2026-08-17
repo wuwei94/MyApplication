@@ -36,9 +36,20 @@ class FloatWindowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("点击下方列表项展示/隐藏悬浮窗")
         initFloatParams()
         initFloatWindow()
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("显示/隐藏 悬浮窗")
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        if (position == 0) {
+            showFloat()
+        }
     }
 
     private fun initFloatParams() {
@@ -146,7 +157,7 @@ class FloatWindowActivity : BasicResponseActivity() {
             })
 
             float.setOnClickListener {
-                Utils.toast("您点击了悬浮窗")
+                appendLog("点击了悬浮窗")
             }
         }
     }
@@ -157,25 +168,22 @@ class FloatWindowActivity : BasicResponseActivity() {
         }
     }
 
-    public override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        showFloat()
-    }
-
     private fun showFloat() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
                 val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
                 intent.data = Uri.parse("package:$packageName")
                 startActivity(intent)
+                appendLog("请求悬浮窗权限...")
             } else {
                 if (!isShow) {
                     isShow = true
                     showFloatWindow()
+                    appendLog("显示悬浮窗")
                 } else {
                     isShow = false
                     dismissFloatWindow()
+                    appendLog("隐藏悬浮窗")
                 }
             }
         }

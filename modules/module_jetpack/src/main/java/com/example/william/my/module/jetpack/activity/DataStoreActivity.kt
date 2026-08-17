@@ -1,7 +1,6 @@
 package com.example.william.my.module.jetpack.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -23,21 +22,25 @@ import kotlinx.coroutines.runBlocking
 class DataStoreActivity : BasicResponseActivity() {
 
     private val preDataStore = ExamplePreferenceDataStore(this)
-
     private val protoDataStore = ExampleProtoDataStore(this)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("点击下方列表项操作 DataStore")
         initCounter()
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        incrementCounter()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("自增计数器 (Increment)", "清空数据 (Clear)")
     }
 
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> incrementCounter()
+            1 -> clearCounter()
+        }
+    }
 
     /**
      * 从 DataStore 读取内容
@@ -46,11 +49,13 @@ class DataStoreActivity : BasicResponseActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             preDataStore.getCounter()
                 .collect {
-                    showResponse("Count: $it")
+                    appendLog("Preferences Count: $it")
                 }
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
             protoDataStore.getCounter()
                 .collect {
-                    showResponse("Count: $it")
+                    appendLog("Proto Count: $it")
                 }
         }
     }
@@ -62,6 +67,14 @@ class DataStoreActivity : BasicResponseActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             preDataStore.incrementCounter()
             protoDataStore.incrementCounter()
+        }
+    }
+
+    private fun clearCounter() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            preDataStore.clear()
+            protoDataStore.clear()
+            appendLog("已清空 DataStore 数据")
         }
     }
 

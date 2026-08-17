@@ -1,7 +1,6 @@
 package com.example.william.my.module.jetpack.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.Data
@@ -12,15 +11,14 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.jetpack.work.ExpeditedWorker
 import com.example.william.my.module.jetpack.work.UploadWorker
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 /**
@@ -31,14 +29,12 @@ import java.util.concurrent.TimeUnit
 class WorkManagerActivity : BasicResponseActivity() {
 
     private lateinit var constraints: Constraints
-
     private lateinit var oneTimeWorkRequest: OneTimeWorkRequest
-
     private lateinit var periodicWorkRequest: PeriodicWorkRequest
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("点击下方列表项提交 WorkManager 任务")
         initConstraints()
         initWorkRequest()
     }
@@ -55,12 +51,10 @@ class WorkManagerActivity : BasicResponseActivity() {
 
     private fun initWorkRequest() {
         oneTimeWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>() // 一次性工作
-            // Additional configuration
             .build()
 
         periodicWorkRequest =
             PeriodicWorkRequestBuilder<UploadWorker>(1, TimeUnit.HOURS) // 定期工作，可以定义的最短重复间隔是 15 分钟
-                // Additional configuration
                 .build()
 
         val expeditedRequest = OneTimeWorkRequestBuilder<ExpeditedWorker>()
@@ -84,44 +78,59 @@ class WorkManagerActivity : BasicResponseActivity() {
             ).build()
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-
-        enqueueWork()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("提交一次性任务", "提交唯一任务 (UniqueWork)", "链式执行任务 (beginWith -> then)", "取消所有任务")
     }
 
-    private fun enqueueWork() {
-        //任务提交给系统
-        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest)
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> enqueueOneTimeWork()
+            1 -> enqueueUniqueWork()
+            2 -> enqueueChainWork()
+            3 -> cancelWork()
+        }
+    }
 
-        // 唯一工作
+    private fun enqueueOneTimeWork() {
+        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest)
+        appendLog("提交一次性任务: ${oneTimeWorkRequest.id}")
+        observeWork(oneTimeWorkRequest.id)
+    }
+
+    private fun enqueueUniqueWork() {
         WorkManager.getInstance(this)
             .beginUniqueWork("upload", ExistingWorkPolicy.REPLACE, oneTimeWorkRequest).enqueue()
+        appendLog("提交唯一任务 (REPLACE): upload")
+        observeWork(oneTimeWorkRequest.id)
+    }
 
-        //链式执行
+    private fun enqueueChainWork() {
         WorkManager.getInstance(this)
-            .beginWith(listOf(oneTimeWorkRequest, oneTimeWorkRequest)) // 并列运行
-            .then(oneTimeWorkRequest) // 链式运行
+            .beginWith(listOf(oneTimeWorkRequest, oneTimeWorkRequest))
+            .then(oneTimeWorkRequest)
             .enqueue()
+        appendLog("提交链式任务: beginWith -> then")
+        observeWork(oneTimeWorkRequest.id)
+    }
 
-        //观察工作
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(oneTimeWorkRequest.id)
+    private fun observeWork(id: UUID) {
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(id)
             .observe(this) { value ->
-                if (value != null && value.state == WorkInfo.State.SUCCEEDED) {
-                    val progress = value.progress
-                    Utils.logcat(TAG, progress.toString())
+                if (value != null) {
+                    appendLog("任务状态变更: state=${value.state}, id=$id")
                 }
             }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         cancelWork()
     }
 
     private fun cancelWork() {
         WorkManager.getInstance(this).cancelWorkById(oneTimeWorkRequest.id)
         WorkManager.getInstance(this).cancelWorkById(periodicWorkRequest.id)
+        appendLog("已取消所有任务")
     }
 }

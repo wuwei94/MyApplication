@@ -1,6 +1,6 @@
 package com.example.william.my.module.opensource.activity.widget
 
-import android.view.View
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -13,9 +13,28 @@ import com.lzf.easyfloat.EasyFloat
 @Route(path = RouterPath.OpenSource.Widget.EasyFloat)
 class EasyFloatActivity : BasicResponseActivity() {
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
-        showEasyFloat()
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("点击下方列表项展示 EasyFloat 悬浮窗")
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("显示悬浮窗", "隐藏悬浮窗")
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> {
+                showEasyFloat()
+                appendLog("显示 EasyFloat 悬浮窗")
+            }
+
+            1 -> {
+                EasyFloat.dismiss()
+                appendLog("隐藏 EasyFloat 悬浮窗")
+            }
+        }
     }
 
     private fun showEasyFloat() {

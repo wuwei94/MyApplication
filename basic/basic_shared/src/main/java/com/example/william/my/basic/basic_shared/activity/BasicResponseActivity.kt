@@ -5,7 +5,6 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseRecyclerBinding
@@ -24,17 +23,6 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
         mRecycler = mBinding.basicsRecycler
     }
 
-    override fun initView(savedInstanceState: Bundle?) {
-        super.initView(savedInstanceState)
-        mBinding.basicsResponse.setOnClickListener {
-            onResponseClick(it)
-        }
-    }
-
-    protected open fun onResponseClick(view: View) {
-
-    }
-
     /**
      * 居中显示页面初始说明。
      *
@@ -44,19 +32,6 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
         runOnUiThread {
             mBinding.basicsResponse.text = description
             mBinding.basicsResponse.gravity = Gravity.CENTER
-        }
-    }
-
-    /**
-     * 显示响应内容，居中显示（用于初始化说明）
-     */
-    @Deprecated("响应替换展示已废弃，请使用 appendLog 或 appendFormatLog")
-    override fun showResponse(response: String?) {
-        runOnUiThread {
-            response?.let {
-                mBinding.basicsResponse.text = it
-                mBinding.basicsResponse.gravity = Gravity.CENTER
-            }
         }
     }
 

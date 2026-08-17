@@ -13,7 +13,7 @@ class ActivityResultActivity2 : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("收到数据：${intent?.getStringExtra("input")}")
+        showDescription("收到数据：${intent?.getStringExtra("input")}")
     }
 
     override fun buildList(): ArrayList<String> {

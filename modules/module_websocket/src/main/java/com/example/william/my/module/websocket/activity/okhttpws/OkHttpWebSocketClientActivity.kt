@@ -24,7 +24,7 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【OkHttp WebSocket】普通版本\n地址：$serverUrl")
+        showDescription("【OkHttp WebSocket】普通版本\n地址：$serverUrl")
     }
 
     override fun buildList(): ArrayList<String> {

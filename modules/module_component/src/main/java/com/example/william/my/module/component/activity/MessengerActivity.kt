@@ -44,7 +44,7 @@ class MessengerActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("Messenger 跨进程通信\n\n点击下方按钮向 Service 发送消息")
+        showDescription("Messenger 跨进程通信\n\n点击下方按钮向 Service 发送消息")
         initMessenger()
     }
 

@@ -27,8 +27,8 @@
 
 ## Activity 基类
 
-- `BasicResponseActivity` — RecyclerView 操作列表与内联日志区；页面初始说明使用 `showDescription` 居中展示，离散事件使用 `appendLog`，高频状态使用 `updateLog(key, message)` 原位更新
-- `BasicRecyclerActivity` — RecyclerView 操作列表；`showResponse` 与 `showFailure` 弹窗接口已废弃，新页面应提供内联状态或日志区域
+- `BasicResponseActivity` — RecyclerView 操作列表与内联日志区；页面初始说明使用 `showDescription` 居中展示，离散事件使用 `appendLog`，高频状态使用 `updateLog(key, message)` 原位更新；统一由下方 `buildList` + `onRecyclerClick` 触发操作
+- `BasicRecyclerActivity` — RecyclerView 操作列表
 - `BaseVBActivity<VB>` — ViewBinding 基类
 - `BaseFragmentActivity` — Fragment 宿主
 - `RouterRecyclerActivity` — RecyclerView 列表（带路由项）

@@ -10,6 +10,6 @@ class FlutterMainActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("Flutter is disabled. \nSet enableFlutter=true to restore the Flutter page.")
+        showDescription("Flutter is disabled. \nSet enableFlutter=true to restore the Flutter page.")
     }
 }

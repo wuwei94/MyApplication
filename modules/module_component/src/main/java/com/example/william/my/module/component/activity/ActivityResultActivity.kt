@@ -21,7 +21,7 @@ class ActivityResultActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("ActivityResultContracts\n\n点击下方按钮启动目标页，接收回传数据")
+        showDescription("ActivityResultContracts\n\n点击下方按钮启动目标页，接收回传数据")
     }
 
     override fun buildList(): ArrayList<String> {

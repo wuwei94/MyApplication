@@ -26,7 +26,7 @@ class BroadcastActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("BroadcastReceiver\n\n点击下方按钮发送广播")
+        showDescription("BroadcastReceiver\n\n点击下方按钮发送广播")
     }
 
     override fun buildList(): ArrayList<String> {

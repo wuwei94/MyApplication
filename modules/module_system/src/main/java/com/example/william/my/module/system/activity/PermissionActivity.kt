@@ -86,7 +86,7 @@ class PermissionActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("运行时权限申请\n\n点击下方列表请求各组权限")
+        showDescription("运行时权限申请\n\n点击下方列表请求各组权限")
     }
 
     override fun buildList(): ArrayList<String> {

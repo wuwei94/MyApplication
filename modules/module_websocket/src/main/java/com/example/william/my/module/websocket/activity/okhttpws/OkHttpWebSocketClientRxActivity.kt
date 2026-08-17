@@ -23,7 +23,7 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【OkHttp WebSocket】RxJava 封装\n地址：$serverUrl")
+        showDescription("【OkHttp WebSocket】RxJava 封装\n地址：$serverUrl")
     }
 
     override fun buildList(): ArrayList<String> {

@@ -1,7 +1,6 @@
 package com.example.william.my.module.jetpack.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -26,15 +25,20 @@ class RoomActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("点击下方列表项操作 Room 数据库")
         showOAuth()
     }
 
-    override fun onResponseClick(view: View) {
-        super.onResponseClick(view)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf("插入 OAuth 数据", "清空 OAuth 数据")
+    }
 
-        addOAuth()
-        //showOAuth()
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> addOAuth()
+            1 -> clearOAuth()
+        }
     }
 
     private fun addOAuth() {
@@ -44,6 +48,14 @@ class RoomActivity : BasicResponseActivity() {
         Executors.newSingleThreadExecutor().execute {
             val oAuth = OAuth()
             mOAuthDao.insertOAuth(oAuth)
+            appendLog("插入 OAuth 数据成功")
+        }
+    }
+
+    private fun clearOAuth() {
+        Executors.newSingleThreadExecutor().execute {
+            mOAuthDao.deleteAllOAuth()
+            appendLog("清空 OAuth 数据成功")
         }
     }
 
@@ -51,23 +63,13 @@ class RoomActivity : BasicResponseActivity() {
         lifecycleScope.launch {
             mOAuthDao.getAllOAuthFlow().collect { list: List<OAuth> ->
                 if (list.isEmpty()) {
-                    showResponse("ROOM")
+                    appendLog("当前 Room 无数据")
                 } else {
-                    showResponse(listToString(list))
+                    list.forEach { oauth ->
+                        appendLog(Gson().toJson(oauth))
+                    }
                 }
             }
-        }
-    }
-
-    private fun listToString(list: List<OAuth>): String {
-        return if (list.isNotEmpty()) {
-            val stringBuilder = StringBuilder()
-            for (i in list.indices) {
-                stringBuilder.append(Gson().toJson(list[i])).append(",").append("\n")
-            }
-            stringBuilder.substring(0, stringBuilder.toString().length - 1)
-        } else {
-            ""
         }
     }
 

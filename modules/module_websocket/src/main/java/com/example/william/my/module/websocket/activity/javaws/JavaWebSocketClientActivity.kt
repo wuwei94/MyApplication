@@ -22,7 +22,7 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showResponse("【Java-WebSocket】原始 API\n地址：$serverUrl")
+        showDescription("【Java-WebSocket】原始 API\n地址：$serverUrl")
     }
 
     override fun buildList(): ArrayList<String> {

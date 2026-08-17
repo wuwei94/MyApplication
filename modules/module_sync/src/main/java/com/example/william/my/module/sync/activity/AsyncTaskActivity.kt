@@ -26,8 +26,7 @@ class AsyncTaskActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        showResponse("AsyncTask（已废弃）— 异步任务演示")
+        showDescription("AsyncTask（已废弃）— 异步任务演示")
     }
 
     override fun buildList(): ArrayList<String> {

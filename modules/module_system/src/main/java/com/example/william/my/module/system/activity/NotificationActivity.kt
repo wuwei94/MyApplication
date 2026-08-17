@@ -26,7 +26,7 @@ class NotificationActivity : BasicResponseActivity() {
         super.initView(savedInstanceState)
         mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         createChannel()
-        showResponse("NotificationChannel 通知渠道\n\n点击下方按钮发送通知")
+        showDescription("NotificationChannel 通知渠道\n\n点击下方按钮发送通知")
     }
 
     override fun buildList(): ArrayList<String> {

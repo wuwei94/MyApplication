@@ -22,9 +22,8 @@ class HandlerThreadActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        showDescription("HandlerThread — 子线程通信")
         initHandlerThread()
-        showResponse("HandlerThread — 子线程通信")
     }
 
     private fun initHandlerThread() {
