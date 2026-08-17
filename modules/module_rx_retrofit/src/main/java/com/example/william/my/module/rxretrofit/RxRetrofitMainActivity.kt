@@ -9,7 +9,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * Rx 动态请求与文件传输示例入口
  */
 @Route(path = RouterPath.RxRetrofit.Main)
-class RxRetrofitActivity : RouterRecyclerActivity() {
+class RxRetrofitMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         return arrayListOf(

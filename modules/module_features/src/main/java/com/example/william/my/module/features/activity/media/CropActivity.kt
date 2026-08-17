@@ -16,7 +16,7 @@ import com.example.william.my.basic.basic_shared.router.service.ImageUtilsServic
 import java.io.File
 
 @Suppress("deprecation")
-@Route(path = RouterPath.Features.Media.Crop)
+@Route(path = RouterPath.Features.Crop)
 class CropActivity : BasicImageActivity() {
 
     private val mItems = arrayOf("图库", "拍照", "拍照")

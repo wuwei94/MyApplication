@@ -10,7 +10,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivityPagBindi
 /**
  * https://github.com/Tencent/libpag
  */
-@Route(path = RouterPath.OpenSource.Animation.Pag)
+@Route(path = RouterPath.OpenSource.Pag)
 class PagActivity : BaseVBActivity<OpenActivityPagBinding>() {
 
     override fun getViewBinding(): OpenActivityPagBinding {

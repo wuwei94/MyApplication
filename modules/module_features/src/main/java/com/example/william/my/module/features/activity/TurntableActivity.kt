@@ -13,7 +13,7 @@ import java.util.Random
 /**
  * 图片旋转动画之转盘功能
  */
-@Route(path = RouterPath.Features.Business.Turntable)
+@Route(path = RouterPath.Features.Turntable)
 class TurntableActivity : BasicImageActivity() {
 
     private var startDegree = 0 //初始角度

@@ -19,7 +19,7 @@ import org.json.JSONObject
  * - connectTimeout / readTimeout 控制连接和读取超时
  * - disconnect() 释放连接资源
  */
-@Route(path = RouterPath.Network.HttpURL.HttpURL)
+@Route(path = RouterPath.Network.HttpURL)
 class HttpURLActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

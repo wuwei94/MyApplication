@@ -16,16 +16,16 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 注意：每个客户端页面都有"启动服务端"按钮，可直接启动本地服务器
  */
 @Route(path = RouterPath.WebSocket.Main)
-class WebSocketActivity : RouterRecyclerActivity() {
+class WebSocketMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         return arrayListOf(
-            RouterItem("OkHttpWebSocketClient", RouterPath.WebSocket.OkHttpWebSocket.OkHttpWebSocketClient),
-            RouterItem("OkHttpWebSocketClientRx", RouterPath.WebSocket.OkHttpWebSocket.OkHttpWebSocketClientRx),
-            RouterItem("JavaWebSocketClient", RouterPath.WebSocket.JavaWebSocket.JavaWebSocketClient),
-            RouterItem("JavaWebSocketClientRx", RouterPath.WebSocket.JavaWebSocket.JavaWebSocketClientRx),
-            RouterItem("NettyWebSocketClient", RouterPath.WebSocket.NettyWebSocket.NettyWebSocketClient),
-            RouterItem("NettyWebSocketClientRx", RouterPath.WebSocket.NettyWebSocket.NettyWebSocketClientRx),
+            RouterItem("OkHttpWebSocketClient", RouterPath.WebSocket.OkHttpWebSocketClient),
+            RouterItem("OkHttpWebSocketClientRx", RouterPath.WebSocket.OkHttpWebSocketClientRx),
+            RouterItem("JavaWebSocketClient", RouterPath.WebSocket.JavaWebSocketClient),
+            RouterItem("JavaWebSocketClientRx", RouterPath.WebSocket.JavaWebSocketClientRx),
+            RouterItem("NettyWebSocketClient", RouterPath.WebSocket.NettyWebSocketClient),
+            RouterItem("NettyWebSocketClientRx", RouterPath.WebSocket.NettyWebSocketClientRx),
         )
     }
 }

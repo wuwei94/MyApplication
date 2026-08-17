@@ -3,7 +3,7 @@
 
     <application>
         <activity android:name=".activity.ComposeActivity" />
-        <activity android:name=".LazyColumnActivity" />
+        <activity android:name=".ComposeMainActivity" />
 
         <activity android:name=".activity.basic.TextActivity" />
         <activity android:name=".activity.basic.ButtonActivity" />

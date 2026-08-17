@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".OpenSourceActivity" />
+        <activity android:name=".OpenSourceMainActivity" />
         <activity android:name=".activity.widget.BannerActivity" />
 
         <activity android:name=".activity.selector.CityPickerActivity" />

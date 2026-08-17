@@ -17,7 +17,7 @@ import okio.ByteString
  * 演示使用 OkHttpWebSocketClient 封装进行 WebSocket 通信
  * 连接到 echo.websocket.org 服务器
  */
-@Route(path = RouterPath.WebSocket.OkHttpWebSocket.OkHttpWebSocketClient)
+@Route(path = RouterPath.WebSocket.OkHttpWebSocketClient)
 class OkHttpWebSocketClientActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

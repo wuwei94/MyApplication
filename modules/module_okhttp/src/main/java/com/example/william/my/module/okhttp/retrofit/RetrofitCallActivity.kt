@@ -17,7 +17,7 @@ import retrofit2.Retrofit
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.Retrofit.RetrofitCall)
+@Route(path = RouterPath.OkHttp.RetrofitCall)
 class RetrofitCallActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {

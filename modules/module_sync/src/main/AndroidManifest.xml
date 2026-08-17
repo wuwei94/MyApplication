@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".SyncActivity" />
+        <activity android:name=".SyncMainActivity" />
         <activity android:name=".activity.AsyncTaskActivity" />
         <activity android:name=".activity.HandlerThreadActivity" />
         <activity android:name=".activity.JobSchedulerActivity" />

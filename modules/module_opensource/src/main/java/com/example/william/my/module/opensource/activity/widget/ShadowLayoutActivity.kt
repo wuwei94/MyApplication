@@ -8,7 +8,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivityShadowLa
 /**
  * https://github.com/lihangleo2/ShadowLayout
  */
-@Route(path = RouterPath.OpenSource.Widget.ShadowLayout)
+@Route(path = RouterPath.OpenSource.ShadowLayout)
 class ShadowLayoutActivity : BaseVBActivity<OpenActivityShadowLayoutBinding>() {
 
     override fun getViewBinding(): OpenActivityShadowLayoutBinding {

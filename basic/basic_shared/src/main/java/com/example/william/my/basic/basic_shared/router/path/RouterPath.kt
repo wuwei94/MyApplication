@@ -43,7 +43,6 @@ object RouterPath {
 
     // UI 组件
     object UI {
-
         private const val UI = "/UI"
 
         const val Main = "${UI}/Main"
@@ -61,7 +60,6 @@ object RouterPath {
 
     // Tab 导航
     object Tab {
-
         private const val Tab = "/Tab"
 
         const val Main = "${Tab}/Main"
@@ -75,7 +73,6 @@ object RouterPath {
 
     // 动画
     object Anim {
-
         private const val Anim = "/Anim"
 
         const val Main = "${Anim}/Main"
@@ -163,19 +160,10 @@ object RouterPath {
 
         const val Main = "${Features}/Main"
 
-        object Business {
-            private const val Business = "${Features}/Business"
-
-            const val Turntable = "${Business}/Turntable"
-            const val MicAnimation = "${Business}/MicAnimation"
-        }
-
-        object Media {
-            private const val Media = "${Features}/Media"
-
-            const val Camera = "${Media}/Camera"
-            const val Crop = "${Media}/Crop"
-        }
+        const val Turntable = "${Features}/Turntable"
+        const val MicAnimation = "${Features}/MicAnimation"
+        const val Camera = "${Features}/Camera"
+        const val Crop = "${Features}/Crop"
     }
 
     // ═══════════════════════════════════════════
@@ -187,26 +175,11 @@ object RouterPath {
         private const val PATH = "/OkHttp"
 
         const val Main = "${PATH}/Main"
-
-        object OkHttpLib {
-            private const val OKHTTP_PATH = "${PATH}/OkHttpLib"
-
-            const val OkHttp = "${OKHTTP_PATH}/OkHttp"
-        }
-
-        object Retrofit {
-            private const val RETROFIT_PATH = "${PATH}/Retrofit"
-
-            const val RetrofitCall = "${RETROFIT_PATH}/RetrofitCall"
-            const val RetrofitCallDsl = "${RETROFIT_PATH}/RetrofitCallDsl"
-        }
-
-        object RetrofitRx {
-            private const val RETROFIT_RX_PATH = "${PATH}/RetrofitRx"
-
-            const val RetrofitRx = "${RETROFIT_RX_PATH}/RetrofitRx"
-            const val RetrofitRxDsl = "${RETROFIT_RX_PATH}/RetrofitRxDsl"
-        }
+        const val OkHttp = "${PATH}/OkHttp"
+        const val RetrofitCall = "${PATH}/RetrofitCall"
+        const val RetrofitCallDsl = "${PATH}/RetrofitCallDsl"
+        const val RetrofitRx = "${PATH}/RetrofitRx"
+        const val RetrofitRxDsl = "${PATH}/RetrofitRxDsl"
     }
 
     // Rx 动态请求 / 文件传输
@@ -236,25 +209,10 @@ object RouterPath {
         private const val PATH = "/Network"
 
         const val Main = "${PATH}/Main"
-
-        object Ktor {
-            private const val KTOR_PATH = "${PATH}/Ktor"
-
-            const val Ktor = "${KTOR_PATH}/Ktor"
-            const val KtorClient = "${KTOR_PATH}/KtorClient"
-        }
-
-        object HttpURL {
-            private const val HTTP_URL_PATH = "${PATH}/HttpURL"
-
-            const val HttpURL = "${HTTP_URL_PATH}/HttpURL"
-        }
-
-        object Volley {
-            private const val VOLLEY_PATH = "${PATH}/Volley"
-
-            const val Volley = "${VOLLEY_PATH}/Volley"
-        }
+        const val HttpURL = "${PATH}/HttpURL"
+        const val Volley = "${PATH}/Volley"
+        const val Ktor = "${PATH}/Ktor"
+        const val KtorClient = "${PATH}/KtorClient"
     }
 
     // Socket 模块
@@ -262,25 +220,12 @@ object RouterPath {
         private const val PATH = "/WebSocket"
 
         const val Main = "${PATH}/Main"
-
-        object OkHttpWebSocket {
-            private const val WS_PATH = "${PATH}/OkHttpWebSocket"
-
-            const val OkHttpWebSocketClient = "${WS_PATH}/OkHttpWebSocketClient"
-            const val OkHttpWebSocketClientRx = "${WS_PATH}/OkHttpWebSocketClientRx"
-        }
-
-        object JavaWebSocket {
-            private const val SOCKET_PATH = "${PATH}/JavaWebSocket"
-            const val JavaWebSocketClient = "${SOCKET_PATH}/JavaWebSocketClient"
-            const val JavaWebSocketClientRx = "${SOCKET_PATH}/JavaWebSocketClientRx"
-        }
-
-        object NettyWebSocket {
-            private const val NETTY_PATH = "${PATH}/NettyWebSocket"
-            const val NettyWebSocketClient = "${NETTY_PATH}/NettyWebSocketClient"
-            const val NettyWebSocketClientRx = "${NETTY_PATH}/NettyWebSocketClientRx"
-        }
+        const val OkHttpWebSocketClient = "${PATH}/OkHttpWebSocketClient"
+        const val OkHttpWebSocketClientRx = "${PATH}/OkHttpWebSocketClientRx"
+        const val JavaWebSocketClient = "${PATH}/JavaWebSocketClient"
+        const val JavaWebSocketClientRx = "${PATH}/JavaWebSocketClientRx"
+        const val NettyWebSocketClient = "${PATH}/NettyWebSocketClient"
+        const val NettyWebSocketClientRx = "${PATH}/NettyWebSocketClientRx"
     }
 
     // 第三方库
@@ -289,57 +234,33 @@ object RouterPath {
 
         const val Main = "${Opensource}/Main"
 
-        object Widget {
-            private const val Widget = "${Opensource}/Widget"
+        const val Banner = "${Opensource}/Banner"
+        const val CountdownView = "${Opensource}/CountdownView"
+        const val EasyFloat = "${Opensource}/EasyFloat"
+        const val FlycoTabLayout = "${Opensource}/FlycoTabLayout"
+        const val PhotoView = "${Opensource}/PhotoView"
+        const val PopWindow = "${Opensource}/PopWindow"
+        const val ShadowLayout = "${Opensource}/ShadowLayout"
+        const val SwipeLayout = "${Opensource}/SwipeLayout"
+        const val RealtimeBlurView = "${Opensource}/BlurView"
 
-            const val Banner = "${Widget}/Banner"
-            const val CountdownView = "${Widget}/CountdownView"
-            const val EasyFloat = "${Widget}/EasyFloat"
-            const val FlycoTabLayout = "${Widget}/FlycoTabLayout"
-            const val PhotoView = "${Widget}/PhotoView"
-            const val PopWindow = "${Widget}/PopWindow"
-            const val ShadowLayout = "${Widget}/ShadowLayout"
-            const val SwipeLayout = "${Widget}/SwipeLayout"
-            const val RealtimeBlurView = "${Widget}/BlurView"
-        }
+        const val Pag = "${Opensource}/Pag"
+        const val Lottie = "${Opensource}/Lottie"
+        const val SVGAPlayer = "${Opensource}/SVGAPlayer"
 
-        object Animation {
-            private const val Animation = "${Opensource}/Animation"
+        const val CityPicker = "${Opensource}/CityPicker"
+        const val PickerView = "${Opensource}/PickerView"
+        const val PictureSelector = "${Opensource}/PictureSelector"
 
-            const val Pag = "${Animation}/Pag"
-            const val Lottie = "${Animation}/Lottie"
-            const val SVGAPlayer = "${Animation}/SVGAPlayer"
-        }
+        const val LoadSir = "${Opensource}/LoadSir"
+        const val MMKV = "${Opensource}/MMKV"
+        const val PermissionX = "${Opensource}/PermissionX"
+        const val RxJava = "${Opensource}/RxJava"
 
-        object Selector {
-            private const val Selector = "${Opensource}/Selector"
+        const val Coil = "${Opensource}/Coil"
+        const val Glide = "${Opensource}/Glide"
 
-            const val CityPicker = "${Selector}/CityPicker"
-            const val PickerView = "${Selector}/PickerView"
-            const val PictureSelector = "${Selector}/PictureSelector"
-        }
-
-        object Utils {
-            private const val Utils = "${Opensource}/Utils"
-
-            const val LoadSir = "${Utils}/LoadSir"
-            const val MMKV = "${Utils}/MMKV"
-            const val PermissionX = "${Utils}/PermissionX"
-            const val RxJava = "${Utils}/RxJava"
-        }
-
-        object ImageLoader {
-            private const val ImageLoader = "${Opensource}/ImageLoader"
-
-            const val Coil = "${ImageLoader}/Coil"
-            const val Glide = "${ImageLoader}/Glide"
-        }
-
-        object Database {
-            private const val Database = "${Opensource}/Database"
-
-            const val ObjectBox = "${Database}/ObjectBox"
-        }
+        const val ObjectBox = "${Opensource}/ObjectBox"
     }
 
     // ═══════════════════════════════════════════

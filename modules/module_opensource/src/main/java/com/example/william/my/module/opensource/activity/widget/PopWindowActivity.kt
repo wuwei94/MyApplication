@@ -12,7 +12,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * PopupWindow 演示
  */
-@Route(path = RouterPath.OpenSource.Widget.PopWindow)
+@Route(path = RouterPath.OpenSource.PopWindow)
 class PopWindowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

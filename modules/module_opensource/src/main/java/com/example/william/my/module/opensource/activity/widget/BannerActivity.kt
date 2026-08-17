@@ -13,7 +13,7 @@ import com.youth.banner.indicator.CircleIndicator
 /**
  * https://github.com/youth5201314/banner
  */
-@Route(path = RouterPath.OpenSource.Widget.Banner)
+@Route(path = RouterPath.OpenSource.Banner)
 class BannerActivity : BaseVBActivity<OpenActivityBannerBinding>() {
 
     override fun getViewBinding(): OpenActivityBannerBinding {

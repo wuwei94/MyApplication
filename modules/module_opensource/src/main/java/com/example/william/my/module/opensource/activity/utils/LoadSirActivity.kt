@@ -10,7 +10,7 @@ import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 
-@Route(path = RouterPath.OpenSource.Utils.LoadSir)
+@Route(path = RouterPath.OpenSource.LoadSir)
 class LoadSirActivity : BasicResponseActivity() {
 
     private lateinit var loadService: LoadService<Any>

@@ -19,7 +19,7 @@ import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.RetrofitRx.RetrofitRxDsl)
+@Route(path = RouterPath.OkHttp.RetrofitRxDsl)
 class RetrofitRxDslActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {

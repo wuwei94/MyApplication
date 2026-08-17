@@ -11,7 +11,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 聚合了主流事件总线方案（EventBus、RxJava、LiveData、Flow）的演示示例。
  */
 @Route(path = RouterPath.Event.Main)
-class EventActivity : RouterRecyclerActivity() {
+class EventMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems = ArrayList<RouterItem>()

@@ -10,7 +10,7 @@ import com.permissionx.guolindev.PermissionX
 /**
  * PermissionX 权限申请
  */
-@Route(path = RouterPath.OpenSource.Utils.PermissionX)
+@Route(path = RouterPath.OpenSource.PermissionX)
 class PermissionXActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

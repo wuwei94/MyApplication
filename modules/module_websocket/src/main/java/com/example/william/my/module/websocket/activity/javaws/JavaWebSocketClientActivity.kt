@@ -15,7 +15,7 @@ import org.java_websocket.handshake.ServerHandshake
  *
  * 演示使用 JavaWebSocketClient + JavaWebSocketClientListener 回调
  */
-@Route(path = RouterPath.WebSocket.JavaWebSocket.JavaWebSocketClient)
+@Route(path = RouterPath.WebSocket.JavaWebSocketClient)
 class JavaWebSocketClientActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

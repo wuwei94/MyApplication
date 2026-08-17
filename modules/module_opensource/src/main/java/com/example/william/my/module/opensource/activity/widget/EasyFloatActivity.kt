@@ -10,7 +10,7 @@ import com.lzf.easyfloat.EasyFloat
 /**
  * https://github.com/princekin-f/EasyFloat
  */
-@Route(path = RouterPath.OpenSource.Widget.EasyFloat)
+@Route(path = RouterPath.OpenSource.EasyFloat)
 class EasyFloatActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

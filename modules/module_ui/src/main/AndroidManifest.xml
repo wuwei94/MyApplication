@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".UiActivity" />
+        <activity android:name=".UiMainActivity" />
         <activity android:name=".activity.AppBarActivity" />
         <activity android:name=".activity.DialogActivity" />
         <activity android:name=".activity.FlexBoxActivity" />

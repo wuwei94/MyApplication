@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application>
-        <activity android:name=".ComponentActivity" />
+        <activity android:name=".ComponentMainActivity" />
         <activity android:name=".activity.BroadcastActivity" />
         <activity android:name=".activity.ActivityResultActivity" />
         <activity android:name=".activity.ActivityResultActivity2" />

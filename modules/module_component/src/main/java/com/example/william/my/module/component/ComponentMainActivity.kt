@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.Component.Main)
-class ComponentActivity : RouterRecyclerActivity() {
+class ComponentMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         return arrayListOf(

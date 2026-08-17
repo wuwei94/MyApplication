@@ -10,7 +10,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * https://github.com/bumptech/glide
  */
-@Route(path = RouterPath.OpenSource.ImageLoader.Glide)
+@Route(path = RouterPath.OpenSource.Glide)
 class GlideActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

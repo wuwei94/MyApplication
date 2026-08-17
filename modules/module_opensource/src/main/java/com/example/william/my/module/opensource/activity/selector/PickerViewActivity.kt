@@ -30,7 +30,7 @@ import java.util.Locale
  *
  * https://github.com/Bigkoo/Android-PickerView
  */
-@Route(path = RouterPath.OpenSource.Selector.PickerView)
+@Route(path = RouterPath.OpenSource.PickerView)
 class PickerViewActivity : BasicResponseActivity() {
 
     private var isLoaded = false

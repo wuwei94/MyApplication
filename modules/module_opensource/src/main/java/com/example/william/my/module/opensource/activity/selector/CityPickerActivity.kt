@@ -19,7 +19,7 @@ import com.zaaach.citypicker.model.LocatedCity
  * 添加 setTheme(R.style.DefaultCityPickerTheme)
  * 或 android:theme="@style/DefaultCityPickerTheme"
  */
-@Route(path = RouterPath.OpenSource.Selector.CityPicker)
+@Route(path = RouterPath.OpenSource.CityPicker)
 class CityPickerActivity : BasicResponseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

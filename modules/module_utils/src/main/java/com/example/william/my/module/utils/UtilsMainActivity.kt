@@ -11,7 +11,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * https://github.com/Blankj/AndroidUtilCode
  */
 @Route(path = RouterPath.Utils.Main)
-class AndroidUtilsActivity : RouterRecyclerActivity() {
+class UtilsMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()

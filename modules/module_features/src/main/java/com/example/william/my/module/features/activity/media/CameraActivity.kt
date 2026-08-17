@@ -8,7 +8,7 @@ import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.features.databinding.FeaturesActivityCameraBinding
 import com.example.william.my.module.features.utils.CameraUtils
 
-@Route(path = RouterPath.Features.Media.Camera)
+@Route(path = RouterPath.Features.Camera)
 class CameraActivity : BaseVBActivity<FeaturesActivityCameraBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): FeaturesActivityCameraBinding {

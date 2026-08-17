@@ -12,7 +12,7 @@ import com.example.william.my.core.ktor.request.postFormResponse
 import kotlinx.coroutines.launch
 
 /** 演示固定使用 OkHttp Engine 的项目级 Ktor 客户端。 */
-@Route(path = RouterPath.Network.Ktor.KtorClient)
+@Route(path = RouterPath.Network.KtorClient)
 class KtorClientActivity : BasicResponseActivity() {
 
     private val clientDelegate = lazy {

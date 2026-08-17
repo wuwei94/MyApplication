@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.RetrofitRx.RetrofitRx)
+@Route(path = RouterPath.OkHttp.RetrofitRx)
 class RetrofitRxActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()

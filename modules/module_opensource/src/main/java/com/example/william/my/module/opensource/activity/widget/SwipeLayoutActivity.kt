@@ -10,7 +10,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivitySwipeLay
 /**
  * https://github.com/daimajia/AndroidSwipeLayout
  */
-@Route(path = RouterPath.OpenSource.Widget.SwipeLayout)
+@Route(path = RouterPath.OpenSource.SwipeLayout)
 class SwipeLayoutActivity : BaseVBActivity<OpenActivitySwipeLayoutBinding>() {
 
     override fun getViewBinding(): OpenActivitySwipeLayoutBinding {

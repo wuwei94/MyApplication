@@ -10,7 +10,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivityLottieBi
 /**
  * https://github.com/airbnb/lottie-android
  */
-@Route(path = RouterPath.OpenSource.Animation.Lottie)
+@Route(path = RouterPath.OpenSource.Lottie)
 class LottieActivity : BaseVBActivity<OpenActivityLottieBinding>() {
 
     override fun getViewBinding(): OpenActivityLottieBinding {

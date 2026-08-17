@@ -15,7 +15,7 @@ import java.io.File
 /**
  * https://github.com/svga/SVGAPlayer-Android
  */
-@Route(path = RouterPath.OpenSource.Animation.SVGAPlayer)
+@Route(path = RouterPath.OpenSource.SVGAPlayer)
 class SvgaPlayerActivity : BaseVBActivity<OpenActivitySvgaBinding>() {
 
     override fun getViewBinding(): OpenActivitySvgaBinding {

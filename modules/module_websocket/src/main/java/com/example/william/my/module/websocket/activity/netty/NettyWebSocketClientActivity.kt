@@ -17,7 +17,7 @@ import com.example.william.my.module.websocket.utils.NetworkUtils
  * 注意：Netty 是 TCP 协议，不是 WebSocket 协议
  * 需要先启动本地服务端
  */
-@Route(path = RouterPath.WebSocket.NettyWebSocket.NettyWebSocketClient)
+@Route(path = RouterPath.WebSocket.NettyWebSocketClient)
 class NettyWebSocketClientActivity : BasicResponseActivity() {
 
     private val host: String get() = NetworkUtils.getIPAddress(true)

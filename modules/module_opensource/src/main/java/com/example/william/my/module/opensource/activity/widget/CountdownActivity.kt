@@ -11,7 +11,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivityCountdow
  *
  * add ' tools:replace="android:allowBackup,android:label" ' to <application>
  */
-@Route(path = RouterPath.OpenSource.Widget.CountdownView)
+@Route(path = RouterPath.OpenSource.CountdownView)
 class CountdownActivity : BaseVBActivity<OpenActivityCountdownBinding>() {
 
     override fun getViewBinding(): OpenActivityCountdownBinding {

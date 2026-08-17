@@ -26,7 +26,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 @Route(path = RouterPath.Compose.Main)
-class LazyColumnActivity : ComponentActivity() {
+class ComposeMainActivity : ComponentActivity() {
 
     private val routerItems: ArrayList<RouterItem> = arrayListOf()
 

@@ -13,7 +13,7 @@ import io.objectbox.Box
  * https://objectbox.io/
  * https://github.com/objectbox/objectbox-java
  */
-@Route(path = RouterPath.OpenSource.Database.ObjectBox)
+@Route(path = RouterPath.OpenSource.ObjectBox)
 class ObjectBoxActivity : BasicResponseActivity() {
 
     private lateinit var notesBox: Box<ObjectBoxNote>

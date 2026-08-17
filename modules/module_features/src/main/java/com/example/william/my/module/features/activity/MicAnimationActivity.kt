@@ -14,7 +14,7 @@ import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.features.databinding.FeaturesActivityMicAnimationBinding
 import com.example.william.my.module.features.layoutmanager.MicLayoutManager
 
-@Route(path = RouterPath.Features.Business.MicAnimation)
+@Route(path = RouterPath.Features.MicAnimation)
 class MicAnimationActivity : BaseVBActivity<FeaturesActivityMicAnimationBinding>() {
 
     private lateinit var micLayoutManager: MicLayoutManager

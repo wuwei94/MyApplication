@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
  * 错误处理操作符：
  */
 @SuppressLint("CheckResult")
-@Route(path = RouterPath.OpenSource.Utils.RxJava)
+@Route(path = RouterPath.OpenSource.RxJava)
 class RxJavaActivity : BasicResponseActivity() {
 
     /**

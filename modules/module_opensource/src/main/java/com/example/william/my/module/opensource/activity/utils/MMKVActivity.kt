@@ -10,7 +10,7 @@ import com.tencent.mmkv.MMKV
 /**
  * https://github.com/Tencent/MMKV/wiki/android_tutorial_cn
  */
-@Route(path = RouterPath.OpenSource.Utils.MMKV)
+@Route(path = RouterPath.OpenSource.MMKV)
 class MMKVActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

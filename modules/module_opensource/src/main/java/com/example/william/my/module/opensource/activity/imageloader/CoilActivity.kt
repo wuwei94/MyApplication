@@ -11,7 +11,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * https://github.com/coil-kt/coil
  * 圆形变换（CircleCropTransformation）和圆角变换（RoundedCornersTransformation）
  */
-@Route(path = RouterPath.OpenSource.ImageLoader.Coil)
+@Route(path = RouterPath.OpenSource.Coil)
 class CoilActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

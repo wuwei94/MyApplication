@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application>
-        <activity android:name=".WebSocketActivity"/>
+        <activity android:name=".WebSocketMainActivity"/>
         <activity android:name=".activity.okhttpws.OkHttpWebSocketClientActivity"/>
         <activity android:name=".activity.okhttpws.OkHttpWebSocketClientRxActivity"/>
         <activity android:name=".activity.javaws.JavaWebSocketClientActivity"/>

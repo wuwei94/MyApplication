@@ -12,7 +12,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivityBlurView
  * IOS UIVisualEffectView.
  * https://github.com/mmin18/RealtimeBlurView
  */
-@Route(path = RouterPath.OpenSource.Widget.RealtimeBlurView)
+@Route(path = RouterPath.OpenSource.RealtimeBlurView)
 class RealtimeBlurViewActivity : BaseVBActivity<OpenActivityBlurViewBinding>() {
 
     override fun getViewBinding(): OpenActivityBlurViewBinding {

@@ -27,7 +27,7 @@ import okio.IOException
  *
  * @see <a href="https://square.github.io/okhttp">OkHttp 官方文档</a>
  */
-@Route(path = RouterPath.OkHttp.OkHttpLib.OkHttp)
+@Route(path = RouterPath.OkHttp.OkHttp)
 class OkHttpActivity : BasicResponseActivity() {
 
     /**

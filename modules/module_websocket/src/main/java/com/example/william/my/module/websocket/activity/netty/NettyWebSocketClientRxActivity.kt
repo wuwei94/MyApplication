@@ -17,7 +17,7 @@ import com.example.william.my.module.websocket.utils.NetworkUtils
  * 使用 RxJava Observable 方式处理事件
  * 需要先启动本地服务端
  */
-@Route(path = RouterPath.WebSocket.NettyWebSocket.NettyWebSocketClientRx)
+@Route(path = RouterPath.WebSocket.NettyWebSocketClientRx)
 class NettyWebSocketClientRxActivity : BasicResponseActivity() {
 
     private val host: String get() = NetworkUtils.getIPAddress(true)

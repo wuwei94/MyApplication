@@ -10,7 +10,7 @@ import com.example.william.my.module.opensource.databinding.OpenActivityPhotoVie
 /**
  * https://github.com/chrisbanes/PhotoView
  */
-@Route(path = RouterPath.OpenSource.Widget.PhotoView)
+@Route(path = RouterPath.OpenSource.PhotoView)
 class PhotoViewActivity : BaseVBActivity<OpenActivityPhotoViewBinding>() {
 
     override fun getViewBinding(): OpenActivityPhotoViewBinding {

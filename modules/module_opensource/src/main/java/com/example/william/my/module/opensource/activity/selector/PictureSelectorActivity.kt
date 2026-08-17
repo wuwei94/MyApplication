@@ -19,7 +19,7 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener
 /**
  * https://github.com/LuckSiege/PictureSelector
  */
-@Route(path = RouterPath.OpenSource.Selector.PictureSelector)
+@Route(path = RouterPath.OpenSource.PictureSelector)
 class PictureSelectorActivity : BaseVBActivity<OpenActivityPictureSelectorBinding>() {
 
     private lateinit var mAdapter: PictureSelectorAdapter

@@ -1,39 +1,30 @@
-package com.example.william.my.module.okhttp
+package com.example.william.my.module.network
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
-@Route(path = RouterPath.OkHttp.Main)
-class HttpClientActivity : RouterRecyclerActivity() {
+@Route(path = RouterPath.Network.Main)
+class NetworkMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(
-            RouterItem("OkHttpActivity", RouterPath.OkHttp.OkHttpLib.OkHttp)
+            RouterItem("HttpURLActivity", RouterPath.Network.HttpURL)
         )
-
+        routerItems.add(
+            RouterItem("VolleyActivity", RouterPath.Network.Volley)
+        )
         routerItems.add(
             RouterItem("", "")
         )
         routerItems.add(
-            RouterItem("RetrofitCall", RouterPath.OkHttp.Retrofit.RetrofitCall)
+            RouterItem("KtorActivity", RouterPath.Network.Ktor)
         )
         routerItems.add(
-            RouterItem("RetrofitCallDsl", RouterPath.OkHttp.Retrofit.RetrofitCallDsl)
+            RouterItem("KtorClientActivity", RouterPath.Network.KtorClient)
         )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitRx", RouterPath.OkHttp.RetrofitRx.RetrofitRx)
-        )
-        routerItems.add(
-            RouterItem("RetrofitRxDsl", RouterPath.OkHttp.RetrofitRx.RetrofitRxDsl)
-        )
-
         return routerItems
     }
 }

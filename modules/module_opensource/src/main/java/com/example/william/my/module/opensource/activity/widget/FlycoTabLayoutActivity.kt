@@ -14,7 +14,7 @@ import com.example.william.my.module.opensource.utils.TabLayoutUtils
 /**
  * https://github.com/H07000223/FlycoTabLayout
  */
-@Route(path = RouterPath.OpenSource.Widget.FlycoTabLayout)
+@Route(path = RouterPath.OpenSource.FlycoTabLayout)
 class FlycoTabLayoutActivity : BaseVBActivity<OpenActivityFlycoTabLayoutBinding>() {
 
     override fun getViewBinding(): OpenActivityFlycoTabLayoutBinding {

@@ -14,7 +14,7 @@ import org.java_websocket.client.WebSocketClient
  *
  * 演示使用 JavaWebSocketClientRx + JavaWebSocketRxObserver 进行 WebSocket 通信
  */
-@Route(path = RouterPath.WebSocket.JavaWebSocket.JavaWebSocketClientRx)
+@Route(path = RouterPath.WebSocket.JavaWebSocketClientRx)
 class JavaWebSocketClientRxActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

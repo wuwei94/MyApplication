@@ -6,26 +6,26 @@
 
 | 模块 | 职责 | 入口 Activity | 路由前缀 |
 |------|------|--------------|---------|
-| module_ui | 系统 UI 组件 | UiActivity | /UI |
-| module_tab | Tab 导航 | TabActivity | /Tab |
-| module_anim | 动画 | AnimActivity | /Animation |
-| module_widget | 自定义控件 | WidgetActivity | /Widget |
-| module_sync | 异步处理 | SyncActivity | /Sync |
-| module_component | 组件交互 | ComponentActivity | /Component |
-| module_system | 系统能力 | SystemActivity | /System |
-| module_sample | 技术示例 | SampleActivity | /Sample |
-| module_features | 业务功能 | FeaturesActivity | /Features |
-| module_network | 网络库 | NetWorkActivity | /Network |
-| module_okhttp | OkHttp / Retrofit / Retrofit Rx | HttpClientActivity | /OkHttp |
-| module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitActivity | /RxRetrofit |
-| module_websocket | WebSocket 示例 | WebSocketActivity | /WebSocket |
-| module_utils | 工具类 | AndroidUtilsActivity | /Utils |
-| module_event | 事件总线 | EventActivity | /Event |
-| module_opensource | 第三方库 | OpenSourceActivity | /Opensource |
-| module_kotlin | Kotlin 特性 | KotlinActivity | /Kotlin |
-| module_jetpack | Jetpack 组件 | JetPackActivity | /JetPack |
-| module_arch | 架构模式 | ArchActivity | /Arch |
-| module_compose | Compose UI | ComposeActivity | /Compose |
+| module_ui | 系统 UI 组件 | UiMainActivity | /UI |
+| module_tab | Tab 导航 | TabMainActivity | /Tab |
+| module_anim | 动画 | AnimMainActivity | /Anim |
+| module_widget | 自定义控件 | WidgetMainActivity | /Widget |
+| module_sync | 异步处理 | SyncMainActivity | /Sync |
+| module_component | 组件交互 | ComponentMainActivity | /Component |
+| module_system | 系统能力 | SystemMainActivity | /System |
+| module_sample | 技术示例 | SampleMainActivity | /Sample |
+| module_features | 业务功能 | FeaturesMainActivity | /Features |
+| module_network | 网络库 | NetworkMainActivity | /Network |
+| module_okhttp | OkHttp / Retrofit / Retrofit Rx | OkHttpMainActivity | /OkHttp |
+| module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
+| module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
+| module_utils | 工具类 | UtilsMainActivity | /Utils |
+| module_event | 事件总线 | EventMainActivity | /Event |
+| module_opensource | 第三方库 | OpenSourceMainActivity | /Opensource |
+| module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
+| module_jetpack | Jetpack 组件 | JetPackMainActivity | /JetPack |
+| module_arch | 架构模式 | ArchMainActivity | /Arch |
+| module_compose | Compose UI | ComposeMainActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
 
 ---
@@ -195,7 +195,7 @@
 
 | Activity | 功能 |
 |----------|------|
-| RxRetrofitActivity | 模块入口，导航到动态请求、下载和上传页面 |
+| RxRetrofitMainActivity | 模块入口，导航到动态请求、下载和上传页面 |
 | RxRequestActivity | 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求 |
 | RxDownloadActivity | 基于 `BasicResponseActivity` 直接展示单任务 Builder、并发队列 Builder、统一 `RxDownloadCallback`、原位更新进度和 `File` 目录清理 |
 | RxUploadActivity | 基于 `BasicResponseActivity` 直接展示 `addFile` / `addFiles` 单多文件 Multipart 上传、`RxUploadCallback`、同步创建少量示例文件和 `File` 目录清理 |
@@ -326,7 +326,7 @@
 
 | Activity | 功能 |
 |----------|------|
-| LazyColumnActivity | LazyColumn 列表 |
+| ComposeMainActivity | Compose 模块入口导航页 |
 | TextActivity | Text 组件 |
 | ButtonActivity | Button 组件 |
 | ImageActivity | Image 组件 |

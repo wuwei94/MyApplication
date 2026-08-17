@@ -21,7 +21,7 @@ import org.json.JSONObject
  * - 自动线程管理，回调在主线程执行
  * - 支持 GET/POST/PUT/DELETE，支持 Form 和 JSON 请求体
  */
-@Route(path = RouterPath.Network.Volley.Volley)
+@Route(path = RouterPath.Network.Volley)
 class VolleyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

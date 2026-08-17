@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 /**
  * https://ktor.io/
  */
-@Route(path = RouterPath.Network.Ktor.Ktor)
+@Route(path = RouterPath.Network.Ktor)
 class KtorActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {
