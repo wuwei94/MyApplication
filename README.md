@@ -201,6 +201,7 @@ HttpURLConnection、Volley 与 Ktor 对比 Demo。请求页统一使用 `BasicRe
 
 - `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
 - `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
+- `retrofit_coroutine`：Retrofit 协程挂起函数原生调用与 `lib_retrofit` DSL
 - `retrofit_rx`：RxJava 原生订阅与默认网络策略
 
 ### module_rx_retrofit（Rx 动态请求与文件传输）

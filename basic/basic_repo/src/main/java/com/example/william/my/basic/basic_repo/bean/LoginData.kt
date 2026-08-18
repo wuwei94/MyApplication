@@ -4,13 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserData(
+data class LoginData(
     var id: String = "",
     var email: String = "",
     var nickname: String = "",
-) : Parcelable
-
-@Parcelize
-data class LoginData(
-    var data: UserData
 ) : Parcelable

@@ -28,6 +28,16 @@ class OkHttpMainActivity : RouterRecyclerActivity() {
             RouterItem("", "")
         )
         routerItems.add(
+            RouterItem("RetrofitCoroutine", RouterPath.OkHttp.RetrofitCoroutine)
+        )
+        routerItems.add(
+            RouterItem("RetrofitCoroutineDsl", RouterPath.OkHttp.RetrofitCoroutineDsl)
+        )
+
+        routerItems.add(
+            RouterItem("", "")
+        )
+        routerItems.add(
             RouterItem("RetrofitRx", RouterPath.OkHttp.RetrofitRx)
         )
         routerItems.add(

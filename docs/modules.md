@@ -186,6 +186,8 @@
 | OkHttpActivity | `lib_okhttp` DSL 与 OkHttp 原生请求示例 |
 | RetrofitCallActivity | Retrofit 原生 `Call` 请求示例 |
 | RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
+| RetrofitCoroutineActivity | Retrofit 协程挂起函数原生调用示例 |
+| RetrofitCoroutineDslActivity | `lib_retrofit` DSL 与协程挂起函数示例 |
 | RetrofitRxActivity | Retrofit RxJava 原生订阅与页面销毁释放示例 |
 | RetrofitRxDslActivity | `lib_retrofit_rx` 标准接口与默认策略示例 |
 

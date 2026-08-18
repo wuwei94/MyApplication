@@ -178,6 +178,8 @@ object RouterPath {
         const val OkHttp = "${PATH}/OkHttp"
         const val RetrofitCall = "${PATH}/RetrofitCall"
         const val RetrofitCallDsl = "${PATH}/RetrofitCallDsl"
+        const val RetrofitCoroutine = "${PATH}/RetrofitCoroutine"
+        const val RetrofitCoroutineDsl = "${PATH}/RetrofitCoroutineDsl"
         const val RetrofitRx = "${PATH}/RetrofitRx"
         const val RetrofitRxDsl = "${PATH}/RetrofitRxDsl"
     }

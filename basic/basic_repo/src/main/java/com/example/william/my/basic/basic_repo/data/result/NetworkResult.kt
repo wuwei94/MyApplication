@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.william.my.basic.basic_repo.data
+package com.example.william.my.basic.basic_repo.data.result
 
-import com.example.william.my.basic.basic_repo.data.NetworkResult.Success
+import com.example.william.my.basic.basic_repo.data.result.NetworkResult.Success
 
 /**
  * A generic class that holds a value with its loading status.

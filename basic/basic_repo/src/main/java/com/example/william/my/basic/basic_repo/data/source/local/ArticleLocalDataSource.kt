@@ -17,7 +17,7 @@ package com.example.william.my.basic.basic_repo.data.source.local
 
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.NetworkResult
+import com.example.william.my.basic.basic_repo.data.result.NetworkResult
 import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.basic.basic_repo.database.dao.ArticleDao
 import kotlinx.coroutines.CoroutineDispatcher

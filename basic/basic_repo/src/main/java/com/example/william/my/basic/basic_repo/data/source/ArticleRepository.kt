@@ -16,7 +16,7 @@
 package com.example.william.my.basic.basic_repo.data.source
 
 import androidx.lifecycle.LiveData
-import com.example.william.my.basic.basic_repo.data.NetworkResult
+import com.example.william.my.basic.basic_repo.data.result.NetworkResult
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow

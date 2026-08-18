@@ -37,7 +37,9 @@ class RetrofitCallActivity : BasicResponseActivity() {
 
     private fun loginCall(username: String, password: String) {
         // 创建 Retrofit 实例
-        val retrofit: Retrofit = Retrofit.Builder().build()
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(Constants.Url_Base)
+            .build()
 
         // 创建网络请求接口实例
         val api: NetworkApi = retrofit.create(NetworkApi::class.java)

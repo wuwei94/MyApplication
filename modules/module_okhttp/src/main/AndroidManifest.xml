@@ -9,6 +9,9 @@
         <activity android:name=".retrofit.RetrofitCallActivity" />
         <activity android:name=".retrofit.RetrofitCallDslActivity" />
 
+        <activity android:name=".retrofit_coroutine.RetrofitCoroutineActivity" />
+        <activity android:name=".retrofit_coroutine.RetrofitCoroutineDslActivity" />
+
         <activity android:name=".retrofit_rx.RetrofitRxActivity" />
         <activity android:name=".retrofit_rx.RetrofitRxDslActivity" />
 
