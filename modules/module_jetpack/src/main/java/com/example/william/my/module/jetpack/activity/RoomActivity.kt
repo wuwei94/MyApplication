@@ -16,7 +16,7 @@ import java.util.concurrent.Executors
  * Room
  * https://developer.android.google.cn/jetpack/androidx/releases/room
  */
-@Route(path = RouterPath.JetPack.Room)
+@Route(path = RouterPath.Jetpack.Room)
 class RoomActivity : BasicResponseActivity() {
 
     private val mOAuthDao: OAuthDao by lazy {

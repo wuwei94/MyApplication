@@ -11,7 +11,7 @@ class OkHttpMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(
-            RouterItem("OkHttpActivity", RouterPath.OkHttp.OkHttp)
+            RouterItem("OkHttp", RouterPath.OkHttp.OkHttp)
         )
 
         routerItems.add(

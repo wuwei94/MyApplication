@@ -76,12 +76,12 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_anim"))
             "implementation"(project(":modules:module_widget"))
 
-            "implementation"(project(":modules:module_sync"))
+            "implementation"(project(":modules:module_async"))
             "implementation"(project(":modules:module_component"))
             "implementation"(project(":modules:module_system"))
 
             "implementation"(project(":modules:module_sample"))
-            "implementation"(project(":modules:module_features"))
+            "implementation"(project(":modules:module_feature"))
 
             "implementation"(project(":modules:module_network"))
             "implementation"(project(":modules:module_okhttp"))
@@ -90,7 +90,7 @@ internal fun Project.configureFeatureAndroid(
 
             "implementation"(project(":modules:module_utils"))
             "implementation"(project(":modules:module_event"))
-            "implementation"(project(":modules:module_opensource"))
+            "implementation"(project(":modules:module_open_source"))
 
             "implementation"(project(":modules:module_kotlin"))
             "implementation"(project(":modules:module_jetpack"))

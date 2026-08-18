@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
  * Paging
  * https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
  */
-@Route(path = RouterPath.JetPack.Paging)
+@Route(path = RouterPath.Jetpack.Paging)
 class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
 
     private val mViewModel: PagingViewModel by viewModels {

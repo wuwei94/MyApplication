@@ -5,6 +5,6 @@
         <activity android:name=".KotlinMainActivity" />
 
         <activity android:name=".activity.CoroutinesActivity" />
-        <activity android:name=".activity.FLowActivity" />
+        <activity android:name=".activity.FlowActivity" />
     </application>
 </manifest>

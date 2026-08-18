@@ -15,10 +15,10 @@ class UtilsMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("AdaptScreenUtilsActivity", RouterPath.Utils.AdaptScreenUtils))
-        routerItems.add(RouterItem("FileIOUtilsActivity", RouterPath.Utils.FileIOUtils))
-        routerItems.add(RouterItem("PermissionUtilsActivity", RouterPath.Utils.PermissionUtils))
-        routerItems.add(RouterItem("ThreadUtilsActivity", RouterPath.Utils.ThreadUtils))
+        routerItems.add(RouterItem("AdaptScreenUtils", RouterPath.Utils.AdaptScreenUtils))
+        routerItems.add(RouterItem("FileIOUtils", RouterPath.Utils.FileIOUtils))
+        routerItems.add(RouterItem("PermissionUtils", RouterPath.Utils.PermissionUtils))
+        routerItems.add(RouterItem("ThreadUtils", RouterPath.Utils.ThreadUtils))
         return routerItems
     }
 }

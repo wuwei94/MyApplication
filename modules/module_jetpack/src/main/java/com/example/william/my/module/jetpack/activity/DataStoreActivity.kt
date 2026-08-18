@@ -18,7 +18,7 @@ import kotlinx.coroutines.runBlocking
  * Preferences DataStore：不需要预先定义，但是不支持类型安全
  * Proto DataStore：需要预先使用protocol buffers定义数据，但是类型安全
  */
-@Route(path = RouterPath.JetPack.DataStore)
+@Route(path = RouterPath.Jetpack.DataStore)
 class DataStoreActivity : BasicResponseActivity() {
 
     private val preDataStore = ExamplePreferenceDataStore(this)

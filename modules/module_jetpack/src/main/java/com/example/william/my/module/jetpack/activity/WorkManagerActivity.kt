@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
  * WorkManager
  * https://developer.android.google.cn/topic/libraries/architecture/workmanager
  */
-@Route(path = RouterPath.JetPack.WorkManager)
+@Route(path = RouterPath.Jetpack.WorkManager)
 class WorkManagerActivity : BasicResponseActivity() {
 
     private lateinit var constraints: Constraints

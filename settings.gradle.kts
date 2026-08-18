@@ -131,7 +131,7 @@ include(":modules:module_anim")
 include(":modules:module_widget")
 
 // 同步
-include(":modules:module_sync")
+include(":modules:module_async")
 // 组件交互
 include(":modules:module_component")
 // 系统能力
@@ -140,7 +140,7 @@ include(":modules:module_system")
 // 示例
 include(":modules:module_sample")
 // 业务功能
-include(":modules:module_features")
+include(":modules:module_feature")
 
 // 网络库
 include(":modules:module_network")
@@ -156,7 +156,7 @@ include(":modules:module_utils")
 // 事件总线
 include(":modules:module_event")
 // 第三方库
-include(":modules:module_opensource")
+include(":modules:module_open_source")
 
 // Kotlin 特性
 include(":modules:module_kotlin")

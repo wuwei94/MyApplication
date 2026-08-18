@@ -14,7 +14,7 @@ import dagger.hilt.android.components.ActivityComponent
 import javax.inject.Inject
 import javax.inject.Qualifier
 
-@Route(path = RouterPath.JetPack.Hilt)
+@Route(path = RouterPath.Jetpack.Hilt)
 @AndroidEntryPoint // 将依赖项注入 Android 类
 class HiltActivity : BasicResponseActivity() {
 

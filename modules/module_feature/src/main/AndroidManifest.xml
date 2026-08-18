@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".FeatureMainActivity" />
+        <activity android:name=".activity.TurntableActivity" />
+        <activity android:name=".activity.MicAnimationActivity" />
+
+        <!-- 多媒体 -->
+        <activity android:name=".activity.media.CameraActivity" />
+        <activity android:name=".activity.media.CropActivity" />
+    </application>
+
+</manifest>

@@ -10,20 +10,20 @@
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
 | module_widget | 自定义控件 | WidgetMainActivity | /Widget |
-| module_sync | 异步处理 | SyncMainActivity | /Sync |
+| module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | module_system | 系统能力 | SystemMainActivity | /System |
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
-| module_features | 业务功能 | FeaturesMainActivity | /Features |
+| module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_network | 网络库 | NetworkMainActivity | /Network |
 | module_okhttp | OkHttp / Retrofit / Retrofit Rx | OkHttpMainActivity | /OkHttp |
 | module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
 | module_utils | 工具类 | UtilsMainActivity | /Utils |
 | module_event | 事件总线 | EventMainActivity | /Event |
-| module_opensource | 第三方库 | OpenSourceMainActivity | /Opensource |
+| module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
-| module_jetpack | Jetpack 组件 | JetPackMainActivity | /JetPack |
+| module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
@@ -74,7 +74,8 @@
 | AnimatorSetActivity | AnimatorSet 动画组合（顺序/同时/Builder 编排） |
 | ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
 | KeyframeActivity | Keyframe 关键帧动画 + PropertyValuesHolder |
-| TransitionActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
+| TransitionFirstActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
+| TransitionSecondActivity | 视图过渡动画目标页 |
 | RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
 | RenderScriptActivity | RenderScript 图像处理（已废弃） |
 
@@ -98,12 +99,13 @@
 
 ---
 
-### module_sync（异步处理）
+### module_async（异步处理）
 
 演示 Android 异步/后台处理机制。
 
 | Activity | 功能 |
 |----------|------|
+| AsyncMainActivity | 模块入口，导航到异步演示页面 |
 | AsyncTaskActivity | AsyncTask 异步任务 |
 | HandlerThreadActivity | HandlerThread 线程间通信 |
 | JobSchedulerActivity | JobScheduler 定时任务调度 |
@@ -149,7 +151,7 @@
 
 ---
 
-### module_features（业务功能）
+### module_feature（业务功能）
 
 演示完整的业务场景。
 
@@ -250,7 +252,7 @@
 
 ---
 
-### module_opensource（第三方库）
+### module_open_source（第三方库）
 
 演示第三方开源库的使用。
 
@@ -288,7 +290,7 @@
 | Activity | 功能 |
 |----------|------|
 | CoroutinesActivity | Kotlin 协程 |
-| FLowActivity | Kotlin Flow 数据流 |
+| FlowActivity | Kotlin Flow 数据流 |
 
 ---
 

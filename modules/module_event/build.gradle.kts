@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.eventbus"
+    namespace = "com.example.william.my.module.event"
 }
 
 dependencies {

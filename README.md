@@ -78,18 +78,18 @@ MyApplication/
     ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
     ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    ├── module_sync             # 异步处理（AsyncTask / HandlerThread / JobScheduler）
+    ├── module_async            # 异步处理（AsyncTask / HandlerThread / JobScheduler）
     ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
     ├── module_system           # 系统能力（Notification / Permission / SecureKey）
     ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
-    ├── module_features         # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
+    ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
     ├── module_okhttp           # OkHttp / Retrofit / 标准 Retrofit Rx 示例
     ├── module_rx_retrofit      # Rx 动态 Retrofit 请求与上传下载示例
     ├── module_websocket        # WebSocket 专项示例
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
-    ├── module_opensource       # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
+    ├── module_open_source      # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
     ├── module_jetpack          # Jetpack 组件（Room / DataStore / WorkManager / Paging / Hilt）
     ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
@@ -145,7 +145,7 @@ MyApplication/
 - Spinner / TitleBar
 - 九宫格拉伸图片（NinePatch）
 
-### module_sync（异步处理）
+### module_async（异步处理）
 
 演示 Android 异步/后台处理机制。
 
@@ -179,7 +179,7 @@ MyApplication/
 - 自定义字体加载（Typeface.createFromAsset）
 - 悬浮窗（WindowManager + 拖拽 + 贴边动画）
 
-### module_features（业务功能）
+### module_feature（业务功能）
 
 业务功能 Demo。
 
@@ -239,7 +239,7 @@ WebSocket 专项功能演示。
 | LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
 | FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
 
-### module_opensource（第三方库）
+### module_open_source（第三方库）
 
 第三方开源框架集成 Demo。
 

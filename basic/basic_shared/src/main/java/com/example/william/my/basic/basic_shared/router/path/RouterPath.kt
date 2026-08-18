@@ -109,14 +109,14 @@ object RouterPath {
     // ═══════════════════════════════════════════
 
     // 异步处理
-    object Sync {
-        private const val Sync = "/Sync"
+    object Async {
+        private const val Async = "/Async"
 
-        const val Main = "${Sync}/Main"
+        const val Main = "${Async}/Main"
 
-        const val AsyncTask = "${Sync}/AsyncTask"
-        const val HandlerThread = "${Sync}/HandlerThread"
-        const val JobScheduler = "${Sync}/JobScheduler"
+        const val AsyncTask = "${Async}/AsyncTask"
+        const val HandlerThread = "${Async}/HandlerThread"
+        const val JobScheduler = "${Async}/JobScheduler"
     }
 
     // 组件交互
@@ -155,15 +155,15 @@ object RouterPath {
     }
 
     // 业务功能
-    object Features {
-        private const val Features = "/Features"
+    object Feature {
+        private const val Feature = "/Feature"
 
-        const val Main = "${Features}/Main"
+        const val Main = "${Feature}/Main"
 
-        const val Turntable = "${Features}/Turntable"
-        const val MicAnimation = "${Features}/MicAnimation"
-        const val Camera = "${Features}/Camera"
-        const val Crop = "${Features}/Crop"
+        const val Turntable = "${Feature}/Turntable"
+        const val MicAnimation = "${Feature}/MicAnimation"
+        const val Camera = "${Feature}/Camera"
+        const val Crop = "${Feature}/Crop"
     }
 
     // ═══════════════════════════════════════════
@@ -230,37 +230,37 @@ object RouterPath {
 
     // 第三方库
     object OpenSource {
-        private const val Opensource = "/Opensource"
+        private const val OpenSource = "/OpenSource"
 
-        const val Main = "${Opensource}/Main"
+        const val Main = "${OpenSource}/Main"
 
-        const val Banner = "${Opensource}/Banner"
-        const val CountdownView = "${Opensource}/CountdownView"
-        const val EasyFloat = "${Opensource}/EasyFloat"
-        const val FlycoTabLayout = "${Opensource}/FlycoTabLayout"
-        const val PhotoView = "${Opensource}/PhotoView"
-        const val PopWindow = "${Opensource}/PopWindow"
-        const val ShadowLayout = "${Opensource}/ShadowLayout"
-        const val SwipeLayout = "${Opensource}/SwipeLayout"
-        const val RealtimeBlurView = "${Opensource}/BlurView"
+        const val Banner = "${OpenSource}/Banner"
+        const val CountdownView = "${OpenSource}/CountdownView"
+        const val EasyFloat = "${OpenSource}/EasyFloat"
+        const val FlycoTabLayout = "${OpenSource}/FlycoTabLayout"
+        const val PhotoView = "${OpenSource}/PhotoView"
+        const val PopWindow = "${OpenSource}/PopWindow"
+        const val ShadowLayout = "${OpenSource}/ShadowLayout"
+        const val SwipeLayout = "${OpenSource}/SwipeLayout"
+        const val RealtimeBlurView = "${OpenSource}/BlurView"
 
-        const val Pag = "${Opensource}/Pag"
-        const val Lottie = "${Opensource}/Lottie"
-        const val SVGAPlayer = "${Opensource}/SVGAPlayer"
+        const val Pag = "${OpenSource}/Pag"
+        const val Lottie = "${OpenSource}/Lottie"
+        const val SVGAPlayer = "${OpenSource}/SVGAPlayer"
 
-        const val CityPicker = "${Opensource}/CityPicker"
-        const val PickerView = "${Opensource}/PickerView"
-        const val PictureSelector = "${Opensource}/PictureSelector"
+        const val CityPicker = "${OpenSource}/CityPicker"
+        const val PickerView = "${OpenSource}/PickerView"
+        const val PictureSelector = "${OpenSource}/PictureSelector"
 
-        const val LoadSir = "${Opensource}/LoadSir"
-        const val MMKV = "${Opensource}/MMKV"
-        const val PermissionX = "${Opensource}/PermissionX"
-        const val RxJava = "${Opensource}/RxJava"
+        const val LoadSir = "${OpenSource}/LoadSir"
+        const val MMKV = "${OpenSource}/MMKV"
+        const val PermissionX = "${OpenSource}/PermissionX"
+        const val RxJava = "${OpenSource}/RxJava"
 
-        const val Coil = "${Opensource}/Coil"
-        const val Glide = "${Opensource}/Glide"
+        const val Coil = "${OpenSource}/Coil"
+        const val Glide = "${OpenSource}/Glide"
 
-        const val ObjectBox = "${Opensource}/ObjectBox"
+        const val ObjectBox = "${OpenSource}/ObjectBox"
     }
 
     // ═══════════════════════════════════════════
@@ -286,10 +286,10 @@ object RouterPath {
         private const val Event = "/Event"
 
         const val Main = "${Event}/Main"
-        const val EventBus = "${Event}/event_bus"
-        const val RxEventBus = "${Event}/rx_event_bus"
-        const val LiveEventBus = "${Event}/live_event_bus"
-        const val FlowEventBus = "${Event}/flow_event_bus"
+        const val EventBus = "${Event}/EventBus"
+        const val RxEventBus = "${Event}/RxEventBus"
+        const val LiveEventBus = "${Event}/LiveEventBus"
+        const val FlowEventBus = "${Event}/FlowEventBus"
     }
 
     // Kotlin 特性
@@ -303,16 +303,16 @@ object RouterPath {
     }
 
     // Jetpack 组件
-    object JetPack {
-        private const val JetPack = "/JetPack"
+    object Jetpack {
+        private const val Jetpack = "/Jetpack"
 
-        const val Main = "${JetPack}/Main"
+        const val Main = "${Jetpack}/Main"
 
-        const val DataStore = "${JetPack}/DataStore"
-        const val WorkManager = "${JetPack}/WorkManager"
-        const val Room = "${JetPack}/Room"
-        const val Paging = "${JetPack}/Paging"
-        const val Hilt = "${JetPack}/Hilt"
+        const val DataStore = "${Jetpack}/DataStore"
+        const val WorkManager = "${Jetpack}/WorkManager"
+        const val Room = "${Jetpack}/Room"
+        const val Paging = "${Jetpack}/Paging"
+        const val Hilt = "${Jetpack}/Hilt"
     }
 
     // ═══════════════════════════════════════════
