@@ -101,16 +101,14 @@ val api = createApi(NetworkApi::class.java, retrofit)
 
 `RetrofitResponse<T>`、`ApiException`、`ExceptionHandler` 和 `ServerResultException` 位于核心 Retrofit 模块。Rx Callback 不属于该模块。
 
-### 当前限制
+### 数据解析与信封转换
 
-当前自定义 `RetrofitConverterFactory` 的普通对象/集合分支和自定义 code 字段规范化仍有失败契约：
+`RetrofitConverterFactory` 提供智能响应体转换能力：
 
-- `Call<User>` 等无信封响应可能被错误包装后再按 `User` 解析。
-- `code("status")` 目前只参与字段检测，没有完整规范化为 `RetrofitResponse` 字段。
-
-标准 `RetrofitResponse` 信封由 Gson `TypeAdapter` 按声明类型解析，不在自定义 Converter 中重复增加极少数异常输入的预校验。
-
-在修复相关契约测试前，生产调用应优先使用标准 `RetrofitResponse<T>` 信封和默认字段名，不应把直接对象、自定义业务码字段写成已保证能力。
+- **无信封响应/直接对象**：当接口声明类型为非 `RetrofitResponse` 类型（如 `Call<User>`、`Call<List<User>>`）时，直接反序列化为目标对象/集合，不执行信封包装。
+- **声明信封但返回裸数据**：当接口声明 `Call<RetrofitResponse<T>>` 且服务端返回裸数据（如顶层 JSON 数组或无 code 字段的 JSON 对象）时，自动将其包装为 `RetrofitResponse.success(data)`。
+- **自定义业务状态码**：支持通过 `code("status")` 和 `message("msg")` 配置自定义字段名，自动规范化并校验状态码类型（非数值类型抛出 `JsonParseException`）。
+- **标准信封**：支持标准 `errorCode`/`errorMsg`/`data` 结构解析。
 
 `loading/LoadingTipView` 和 `LoadingTipObserver` 是现有 View/LiveData 集成，不是网络协议能力，也不要求 Ktor 对齐。
 

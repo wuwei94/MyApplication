@@ -92,6 +92,25 @@ class RxUploadBuilderTest {
     }
 
     @Test
+    fun injectedRetrofitWithCustomCallFactoryPreservesFactory() {
+        val customFactory = okhttp3.Call.Factory { request ->
+            OkHttpClient().newCall(request)
+        }
+        val customRetrofit = retrofit2.Retrofit.Builder()
+            .baseUrl("https://example.com/")
+            .callFactory(customFactory)
+            .build()
+
+        val config = RxUpload.builder()
+            .api("https://example.com/upload")
+            .addFile("file", temporaryFolder.newFile())
+            .retrofit(customRetrofit)
+            .buildConfig()
+
+        assertEquals(customFactory, config.retrofit.callFactory())
+    }
+
+    @Test
     fun uploadRejectsUnthrottledProgress() {
         assertThrows(IllegalArgumentException::class.java) {
             RxUpload.builder().progressIntervalMillis(0L)

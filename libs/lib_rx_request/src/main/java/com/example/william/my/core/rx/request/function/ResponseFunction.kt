@@ -15,7 +15,7 @@ import java.lang.reflect.Type
  */
 internal class ResponseFunction<T>(
     private val dataType: Type,
-    private val gson: Gson = Gson()
+    private val gson: Gson = defaultGson
 ) :
     Function<RetrofitResponse<JsonElement>, RetrofitResponse<T>> {
 
@@ -25,5 +25,9 @@ internal class ResponseFunction<T>(
         }
         val data = response.data?.let { gson.fromJson<T>(it, dataType) }
         return RetrofitResponse.of(response.code, response.message, data)
+    }
+
+    internal companion object {
+        val defaultGson: Gson by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { Gson() }
     }
 }

@@ -151,10 +151,7 @@ class RxUploadRequest internal constructor(
         }
 
         fun withoutConnectionFailureRetry(retrofit: Retrofit): Retrofit {
-            val client = retrofit.callFactory() as? OkHttpClient
-                ?: throw IllegalArgumentException(
-                    "上传 Retrofit 必须使用 OkHttpClient 作为 Call.Factory"
-                )
+            val client = retrofit.callFactory() as? OkHttpClient ?: return retrofit
             if (!client.retryOnConnectionFailure) return retrofit
             return retrofit.newBuilder()
                 .client(client.newBuilder().retryOnConnectionFailure(false).build())

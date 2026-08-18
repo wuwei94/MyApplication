@@ -142,7 +142,7 @@ val disposable = RxUpload.builder()
 ```
 
 - 上传固定使用 POST，调用方不配置 HTTP method；`addParam(s)` 对应 Multipart 表单字段，可重复调用 `addFile()` 上传多个文件，包括相同字段名的文件列表；同一字段名和媒体类型的文件也可以使用 `addFiles()` 批量追加。
-- 上传请求会从默认或注入的 Retrofit 派生配置，并关闭底层 `OkHttpClient` 的连接失败重试；因此上传 Retrofit 必须使用 `OkHttpClient` 作为 `Call.Factory`。Redirect、Authenticator 和业务 Interceptor 仍可能重放请求，重要上传必须使用幂等键。
+- 上传请求会从默认或注入的 Retrofit 派生配置；若底层 `Call.Factory` 为 `OkHttpClient`，会自动关闭连接失败重试（自定义 `Call.Factory` 则保留原配置）。Redirect、Authenticator 和业务 Interceptor 仍可能重放请求，重要上传建议使用幂等键。
 - 进度统计覆盖完整 Multipart 请求体，包含文件、表单字段和边界字节。
 - 成功结果为原始 `UploadResult`，业务层自行按接口契约解析 `body`；`RxUploadCallback` 将失败统一转换为 `ApiException`。
 - 取消订阅会取消对应 Retrofit Call。文件存在性在生成配置快照时校验。

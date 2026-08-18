@@ -62,20 +62,26 @@ public class RetrofitConverterFactory extends Converter.Factory {
         this.message = message;
     }
 
-    /**
-     * 需要重写父类中responseBodyConverter，该方法用来转换服务器返回数据
-     */
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(@NonNull Type type, @NonNull Annotation[] annotations, @NonNull Retrofit retrofit) {
-        // 校验 RetrofitResponse 是否声明 data 的泛型类型。
-        if (type == RetrofitResponse.class ||
+        boolean isRetrofitResponse = false;
+        Type dataType = null;
+
+        if (type instanceof java.lang.reflect.ParameterizedType) {
+            java.lang.reflect.ParameterizedType parameterizedType = (java.lang.reflect.ParameterizedType) type;
+            if (RetrofitResponse.class.isAssignableFrom(getRawType(parameterizedType))) {
+                isRetrofitResponse = true;
+                dataType = getParameterUpperBound(0, parameterizedType);
+            }
+        } else if (type == RetrofitResponse.class ||
                 (type instanceof Class<?> && RetrofitResponse.class.isAssignableFrom((Class<?>) type))) {
             throw new IllegalArgumentException(
                     "RetrofitResponse must declare its data type, for example RetrofitResponse<User>"
             );
         }
+
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new RetrofitResponseBodyConverter<>(gson, adapter, code, message);
+        return new RetrofitResponseBodyConverter<>(gson, adapter, isRetrofitResponse, dataType, code, message);
     }
 
     /**
