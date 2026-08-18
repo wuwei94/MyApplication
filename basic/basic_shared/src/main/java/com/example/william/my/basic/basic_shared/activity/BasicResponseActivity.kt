@@ -10,6 +10,19 @@ import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseRecyclerBinding
 import com.example.william.my.basic.basic_shared.utils.JsonFormatter
 
+/**
+ * 通信/调度类示例 Activity 基类。
+ *
+ * 布局结构：
+ * - 上方展示：TextView 内联日志/响应展示区（[mBinding.basicsResponse]）
+ * - 下方列表：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
+ *
+ * 约定与规范：
+ * 1. 禁止点击上方 TextView 触发操作，所有演示行为必须由下方列表项触发。
+ * 2. 页面初始说明使用 [showDescription] 居中展示。
+ * 3. 离散事件（开始、成功、失败、取消等）使用 [appendLog] 追加单行日志（不覆盖历史）。
+ * 4. 高频进度或运行状态使用 [updateLog] 原位更新对应 key，避免频繁刷屏。
+ */
 abstract class BasicResponseActivity : BasicRecyclerActivity() {
 
     protected lateinit var mBinding: SharedLayoutResponseRecyclerBinding
@@ -36,7 +49,7 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
     }
 
     /**
-     * 追加日志到 TextView，使用默认颜色
+     * 追加单行日志到展示区（默认颜色）。
      */
     protected fun appendLog(message: String) {
         runOnUiThread {
@@ -46,14 +59,14 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
     }
 
     /**
-     * 追加格式化日志到 TextView（JSON 格式化）
+     * 追加 JSON 格式化单行日志到展示区。
      */
     protected fun appendFormatLog(prefix: String, message: String) {
         appendLog("$prefix${JsonFormatter.format(message)}")
     }
 
     /**
-     * 追加带颜色的日志到 TextView
+     * 追加指定颜色的单行日志到展示区。
      */
     protected fun appendLog(message: String, color: Int) {
         runOnUiThread {
@@ -70,7 +83,7 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
     }
 
     /**
-     * 更新指定运行状态；相同 key 的内容会被替换，不进入历史日志。
+     * 原位更新指定 key 的运行状态；相同 key 的内容会被替换，不累加历史日志。
      */
     protected fun updateLog(key: String, message: String) {
         runOnUiThread {
@@ -79,7 +92,9 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
         }
     }
 
-    /** 移除指定运行状态。 */
+    /**
+     * 移除指定 key 的运行状态。
+     */
     protected fun removeUpdatingLog(key: String) {
         runOnUiThread {
             mUpdatingLogs.remove(key)
@@ -87,7 +102,9 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
         }
     }
 
-    /** 清空全部运行状态，保留历史日志。 */
+    /**
+     * 清空全部运行状态，保留历史日志。
+     */
     protected fun clearUpdatingLogs() {
         runOnUiThread {
             mUpdatingLogs.clear()
@@ -96,14 +113,14 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
     }
 
     /**
-     * 追加 accent 颜色的日志到 TextView
+     * 追加强调色 (accent) 的单行日志到展示区。
      */
     protected fun appendLogAccent(message: String) {
         appendLog(message, ContextCompat.getColor(this, R.color.shared_color_accent))
     }
 
     /**
-     * 清空日志
+     * 清空全部历史日志与运行状态。
      */
     protected fun clearLog() {
         runOnUiThread {

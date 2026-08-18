@@ -8,15 +8,22 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import java.util.Random
+import com.example.william.my.basic.basic_shared.utils.Utils
+import kotlin.random.Random
 
 /**
- * 图片旋转动画之转盘功能
+ * 图片旋转动画之转盘抽奖功能
+ *
+ * 核心原理：
+ * 1. 使用 [RotateAnimation] 配合 [Animation.RELATIVE_TO_SELF] 设置以自身中心点 (0.5f, 0.5f) 为轴心旋转。
+ * 2. 角度计算：保持累加角度，确保每次抽奖至少旋转 [MIN_LAPS] 圈并平滑减速落在目标扇区。
+ * 3. 使用 [android.R.anim.accelerate_decelerate_interpolator] 先加速后减速，模拟真实物理阻尼效果。
  */
 @Route(path = RouterPath.Feature.Turntable)
 class TurntableActivity : BasicImageActivity() {
 
-    private var startDegree = 0 //初始角度
+    private var currentDegree = 0f // 当前停靠角度
+    private var isAnimating = false // 动画执行状态标志，防止重复触发
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -31,48 +38,95 @@ class TurntableActivity : BasicImageActivity() {
                 R.drawable.shared_ic_launcher
             )
         )
-        mBinding.basicsImage.setOnClickListener {
-            goAward(Random().nextInt(10))
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "随机抽奖（旋转动画）",
+            "指定抽中奖品 1（0°）",
+            "指定抽中奖品 4（108°）",
+            "指定抽中奖品 7（216°）",
+            "重置转盘（恢复 0°）"
+        )
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> goAward(Random.nextInt(TOTAL_PRIZES))
+            1 -> goAward(0)
+            2 -> goAward(3)
+            3 -> goAward(6)
+            4 -> resetTurntable()
         }
     }
 
-    private fun goAward(index: Int) {
-        val n = 10 //奖品数目
-        val lap = 3 //旋转圈数
-        val one = 1000 //旋转一圈需要的时间
-        val angle = index * 360 / n //奖品角度
-        val increaseDegree = lap * 360 + angle //目标角度
-        //初始化旋转动画，后面的四个参数是用来设置以自己的中心点为圆心转圈
+    /**
+     * 执行抽奖旋转动画
+     *
+     * @param prizeIndex 奖品索引 (0 until TOTAL_PRIZES)
+     */
+    private fun goAward(prizeIndex: Int) {
+        if (isAnimating) {
+            Utils.toast("转盘正在旋转中，请稍候...")
+            return
+        }
+
+        // 1. 计算目标奖品在 360° 圆周中的相对角度
+        val targetAngle = prizeIndex * 360f / TOTAL_PRIZES
+
+        // 2. 计算从当前停靠角到达目标角所需的顺时针增量角度（确保至少旋转 MIN_LAPS 圈）
+        val currentMod = (currentDegree % 360f + 360f) % 360f
+        val deltaToTarget = (targetAngle - currentMod + 360f) % 360f
+        val toDegree = currentDegree + MIN_LAPS * 360f + deltaToTarget
+
+        // 3. 构建旋转动画，相对自身中心 (0.5f, 0.5f) 旋转
         val rotateAnimation = RotateAnimation(
-            startDegree.toFloat(),
-            increaseDegree.toFloat(),
+            currentDegree,
+            toDegree,
             RotateAnimation.RELATIVE_TO_SELF,
             0.5f,
             RotateAnimation.RELATIVE_TO_SELF,
             0.5f
-        )
-        //计算动画播放总时间index
-        val time = ((lap + angle / 360) * one).toLong()
-        //设置动画播放时间
-        rotateAnimation.duration = time
-        //设置动画播放完后，停留在最后一帧画面上
-        rotateAnimation.fillAfter = true
-        //设置动画的加速行为，是先加速后减速
-        rotateAnimation.setInterpolator(
-            this@TurntableActivity,
-            android.R.anim.accelerate_decelerate_interpolator
-        )
-        //设置动画的监听器
-        rotateAnimation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) {
-                //将最后的角度赋值给startDegree作为下次转圈的初始角度
-                startDegree = angle
-            }
+        ).apply {
+            duration = ANIMATION_DURATION
+            fillAfter = true // 动画结束后停留在最终角度
+            setInterpolator(
+                this@TurntableActivity,
+                android.R.anim.accelerate_decelerate_interpolator
+            )
+            setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {
+                    isAnimating = true
+                }
 
-            override fun onAnimationRepeat(animation: Animation) {}
-        })
-        //开始播放动画
+                override fun onAnimationEnd(animation: Animation) {
+                    isAnimating = false
+                    // 记录最终角度（取模保持数值稳定）
+                    currentDegree = toDegree % 360f
+                    Utils.toast("抽奖完成：恭喜抽中奖品 ${prizeIndex + 1}（${targetAngle.toInt()}°）")
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+        }
+
         mBinding.basicsImage.startAnimation(rotateAnimation)
+    }
+
+    /**
+     * 重置转盘状态与角度
+     */
+    private fun resetTurntable() {
+        if (isAnimating) return
+        mBinding.basicsImage.clearAnimation()
+        currentDegree = 0f
+        Utils.toast("转盘已重置为初始状态（0°）")
+    }
+
+    companion object {
+        private const val TOTAL_PRIZES = 10 // 奖品总数目
+        private const val MIN_LAPS = 3 // 每次抽奖最小旋转圈数
+        private const val ANIMATION_DURATION = 3000L // 动画播放总时间 (ms)
     }
 }

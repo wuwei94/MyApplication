@@ -13,6 +13,16 @@ import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerBinding
 import com.example.william.my.core.base.activity.BaseActivity
 
+/**
+ * 纯列表类示例 Activity 基类。
+ *
+ * 布局结构：
+ * - 列表展示：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
+ *
+ * 约定与规范：
+ * 1. 继承类实现 [buildList] 构建列表数据源。
+ * 2. 继承类实现 [onRecyclerClick] 响应列表项点击事件。
+ */
 abstract class BasicRecyclerActivity : BaseActivity(),
     BaseQuickAdapter.OnItemClickListener<String> {
 

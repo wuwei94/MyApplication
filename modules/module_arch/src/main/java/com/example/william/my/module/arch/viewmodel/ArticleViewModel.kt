@@ -15,7 +15,6 @@ import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
-import com.example.william.my.core.base.app.BaseApp
 
 /**
  * 如果需要Context则使用AndroidViewModel
@@ -92,7 +91,7 @@ class ArticleViewModel(
         val Factory2: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application =
-                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as BaseApp
+                    checkNotNull(this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
                 val savedStateHandle = createSavedStateHandle()
 
                 val repository = ServiceLocator.provideArticleRepository(application)

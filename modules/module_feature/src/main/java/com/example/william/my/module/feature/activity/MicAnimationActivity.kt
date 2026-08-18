@@ -50,18 +50,31 @@ class MicAnimationActivity : BaseVBActivity<FeatureActivityMicAnimationBinding>(
         }
     }
 
+    /**
+     * 使用 FLIP (First, Last, Invert, Play) 技术实现自定义 LayoutManager 切换动画：
+     * 1. First（初始态）：记录每个子 View 当前在屏幕上的实际视觉位置（包含未完成动画的 translation 偏移量）。
+     * 2. Last（最终态）：切换 LayoutManager 布局模式并请求重新测量布局（requestLayout）。
+     * 3. Invert（反转）：在布局完成后的 rv.post 回调中，获取子 View 新的物理位置，通过 translation 反向偏移回旧位置。
+     * 4. Play（播放）：启动属性动画将 translation 平滑过渡回 0f，呈现流畅的位置移动动画。
+     */
     private fun switchLayout(mode: MicLayoutManager.LayoutMode) {
         val rv = mBinding.recyclerView
 
+        // 1. First: 记录旧视觉坐标（累加当前 translation 防止动画打断跳帧），并取消上一轮未完成的动画
         val oldPositions = mutableMapOf<Int, Pair<Float, Float>>()
         for (i in 0 until rv.childCount) {
             val child = rv.getChildAt(i)
             val pos = rv.getChildAdapterPosition(child)
-            oldPositions[pos] = Pair(child.left.toFloat(), child.top.toFloat())
+            val currentVisualX = child.left + child.translationX
+            val currentVisualY = child.top + child.translationY
+            oldPositions[pos] = Pair(currentVisualX, currentVisualY)
+            child.animate().cancel()
         }
 
+        // 2. Last: 切换布局模式并触发 requestLayout()
         if (!micLayoutManager.switchMode(mode)) return
 
+        // 3. Invert & Play: 在新布局完成后执行反向偏移与平滑动画
         rv.post {
             for (i in 0 until rv.childCount) {
                 val child = rv.getChildAt(i)

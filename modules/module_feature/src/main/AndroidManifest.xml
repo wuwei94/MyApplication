@@ -5,10 +5,8 @@
         <activity android:name=".FeatureMainActivity" />
         <activity android:name=".activity.TurntableActivity" />
         <activity android:name=".activity.MicAnimationActivity" />
-
-        <!-- 多媒体 -->
-        <activity android:name=".activity.media.CameraActivity" />
-        <activity android:name=".activity.media.CropActivity" />
+        <activity android:name=".activity.CameraActivity" />
+        <activity android:name=".activity.CropActivity" />
     </application>
 
 </manifest>

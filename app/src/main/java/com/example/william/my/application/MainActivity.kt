@@ -1,10 +1,8 @@
 package com.example.william.my.application
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -51,59 +49,30 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  */
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mSplashScreen: SplashScreen
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        //ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { v, insets ->
-        //    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-        //    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-        //    insets
-        //}
 
         if (isRetry()) {
             return
         }
 
-        //判断是否是任务栈中的根Activity，如果是就不做任何处理，如果不是则直接finish掉
+        // 判断是否是任务栈中的根Activity，如果是就不做任何处理，如果不是则直接finish掉
         if (!isTaskRoot) {
             finish()
             return
         }
 
-        mSplashScreen = installSplashScreen()
-        setContentView(R.layout.activity_main)
+        ARouter.getInstance()
+            .build(RouterPath.Module_Main)
+            .withTransition(
+                R.anim.base_anim_slide_in_left,
+                R.anim.base_anim_slide_out_right
+            )
+            .withString("param_key", "param_value")
+            .navigation()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            splashScreen.setOnExitAnimationListener {
-                ARouter.getInstance()
-                    .build(RouterPath.Module_Main)
-                    .withTransition(
-                        R.anim.base_anim_slide_in_left,
-                        R.anim.base_anim_slide_out_right
-                    )
-                    .withString("param_key", "param_value")
-                    .navigation()
-                //.greenChannel()//使用绿色通道(跳过所有的拦截器)
-                //.navigation()
-
-                finish()
-            }
-        } else {
-            ARouter.getInstance()
-                .build(RouterPath.Module_Main)
-                .withTransition(
-                    R.anim.base_anim_slide_in_left,
-                    R.anim.base_anim_slide_out_right
-                )
-                .withString("param_key", "param_value")
-                .navigation()
-            //.greenChannel()//使用绿色通道(跳过所有的拦截器)
-            //.navigation()
-
-            finish()
-        }
+        finish()
     }
 
     /**

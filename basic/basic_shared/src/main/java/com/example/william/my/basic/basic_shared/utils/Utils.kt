@@ -1,5 +1,7 @@
 package com.example.william.my.basic.basic_shared.utils
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.example.william.my.core.base.app.BaseApp
@@ -7,6 +9,7 @@ import com.example.william.my.core.base.app.BaseApp
 object Utils {
 
     private const val TAG = "Utils"
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     ///////////////////////////////////////////////////////////////////////////
     // Logcat
@@ -34,6 +37,13 @@ object Utils {
     ///////////////////////////////////////////////////////////////////////////
 
     fun toast(msg: String?) {
-        Toast.makeText(BaseApp.app, msg, Toast.LENGTH_SHORT).show()
+        if (msg.isNullOrEmpty()) return
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            Toast.makeText(BaseApp.app, msg, Toast.LENGTH_SHORT).show()
+        } else {
+            mainHandler.post {
+                Toast.makeText(BaseApp.app, msg, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
