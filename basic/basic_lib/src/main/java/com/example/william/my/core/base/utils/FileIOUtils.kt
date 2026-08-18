@@ -1,5 +1,6 @@
 package com.example.william.my.core.base.utils
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.blankj.utilcode.util.FileUtils
@@ -98,7 +99,27 @@ object FileIOUtils {
         }
     }
 
-    fun writeFileFromIS(uri: Uri?, inputStream: InputStream?, append: Boolean): Boolean {
-        return false
+    fun writeFileFromIS(context: Context, uri: Uri?, inputStream: InputStream?): Boolean {
+        if (uri == null || inputStream == null) return false
+        return try {
+            context.contentResolver.openOutputStream(uri)?.use { outputStream ->
+                val buffer = ByteArray(1024 * 4)
+                var len: Int
+                while (inputStream.read(buffer).also { len = it } != -1) {
+                    outputStream.write(buffer, 0, len)
+                }
+                outputStream.flush()
+                true
+            } ?: false
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        } finally {
+            try {
+                inputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 }

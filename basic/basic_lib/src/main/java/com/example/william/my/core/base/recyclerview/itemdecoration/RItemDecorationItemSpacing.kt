@@ -14,26 +14,27 @@ class RItemDecorationItemSpacing(
     override fun getItemOffsets(
         outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
     ) {
+        val position = parent.getChildAdapterPosition(view)
+        if (position == RecyclerView.NO_POSITION) return
+
         val itemCount = getItemCount(parent)
         val spanCount = getSpanCount(parent)
+        if (spanCount <= 0) return
 
-        val position = parent.getChildAdapterPosition(view)
         val column = position % spanCount // 第几列
         val row = position / spanCount  // 第几行
 
-        if (position == RecyclerView.NO_POSITION) return
-
         if (includeEdge) {
-            outRect.left = spacing - spacing / spanCount * column
-            outRect.right = spacing / spanCount * (column + 1)
+            outRect.left = spacing - column * spacing / spanCount
+            outRect.right = (column + 1) * spacing / spanCount
         } else {
-            outRect.left = spacing / spanCount * column
-            outRect.right = spacing - spacing / spanCount * (column + 1)
+            outRect.left = column * spacing / spanCount
+            outRect.right = spacing - (column + 1) * spacing / spanCount
         }
 
         if (includeBottom) {
             outRect.bottom = bottom
-        } else if (row != itemCount / spanCount) {
+        } else if (itemCount > 0 && row != (itemCount - 1) / spanCount) {
             outRect.bottom = bottom
         }
     }

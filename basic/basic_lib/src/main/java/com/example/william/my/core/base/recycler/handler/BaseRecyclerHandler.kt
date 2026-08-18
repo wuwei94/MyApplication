@@ -56,18 +56,19 @@ class BaseRecyclerHandler<T : Any>(
 
         // 设置Adapter
         mAdapter = host.initRecyclerAdapter()
+        mMultiItemAdapter = host.initRecyclerMultiAdapter()
+
         mAdapter?.let {
             it.setOnItemClickListener(this)
             mAdapterHelper = QuickAdapterHelper.Builder(it).build()
+            binding.recyclerView.adapter = mAdapterHelper.adapter
         }
 
-        mMultiItemAdapter = host.initRecyclerMultiAdapter()
         mMultiItemAdapter?.let {
             it.setOnItemClickListener(this)
             mAdapterHelper = QuickAdapterHelper.Builder(it).build()
+            binding.recyclerView.adapter = mAdapterHelper.adapter
         }
-
-        binding.recyclerView.adapter = mAdapterHelper.adapter
 
         // 添加装饰器
         host.initItemDecoration().forEach {
@@ -107,7 +108,7 @@ class BaseRecyclerHandler<T : Any>(
         val newList = list ?: emptyList()
         val binding = host.getHostBinding()
 
-        if (mPage == 1) {
+        if (mPage == 0 || mPage == 1) {
             mAdapter?.submitList(newList)
             mMultiItemAdapter?.submitList(newList)
         } else {
@@ -118,17 +119,21 @@ class BaseRecyclerHandler<T : Any>(
         initRecyclerViewStateView()
 
         if (newList.size < mPageSize) {
-            binding.smartRefresh.setEnableLoadMore(false)
+            binding.smartRefresh.finishLoadMoreWithNoMoreData()
         } else {
             binding.smartRefresh.setEnableLoadMore(host.canLoadMore())
         }
+        binding.smartRefresh.finishRefresh()
+        binding.smartRefresh.finishLoadMore()
     }
 
     /**
      * 数据加载失败处理
      */
     fun onDataFail() {
-        host.getHostBinding().smartRefresh.setEnableLoadMore(false)
+        val binding = host.getHostBinding()
+        binding.smartRefresh.finishRefresh(false)
+        binding.smartRefresh.finishLoadMore(false)
     }
 
     /**
@@ -151,13 +156,11 @@ class BaseRecyclerHandler<T : Any>(
     override fun onRefresh(refreshLayout: RefreshLayout) {
         mPage = 0
         host.queryData()
-        host.getHostBinding().smartRefresh.finishRefresh(1000)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         mPage++
         host.queryData()
-        host.getHostBinding().smartRefresh.finishLoadMore(1000)
     }
 
     // ===== 点击事件委托 =====

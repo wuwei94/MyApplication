@@ -10,10 +10,6 @@ import java.lang.ref.WeakReference
  */
 object HandlerUtils {
 
-    init {
-        throw UnsupportedOperationException("Guy, r u crazy? u can NOT instantiate me...")
-    }
-
     class HandlerHolder : Handler {
 
         private val weakReference: WeakReference<OnReceiveMessageHandler>

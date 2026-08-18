@@ -34,7 +34,7 @@ abstract class BaseVMFragment<VB : ViewBinding?, VM : BaseViewModel>(layout: Int
     }
 
     override fun observeViewModel() {
-        _viewModel!!.error.observe(requireActivity()) { throwable ->
+        _viewModel?.error?.observe(viewLifecycleOwner) { throwable ->
             onError(throwable)
         }
     }

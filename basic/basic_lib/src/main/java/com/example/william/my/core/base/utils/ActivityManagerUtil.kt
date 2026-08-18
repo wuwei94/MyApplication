@@ -16,11 +16,11 @@ object ActivityManagerUtil {
      */
     private var allActivityStacks: Stack<Activity> = Stack()
 
-    val currentActivity: Activity
-        get() = allActivityStacks.lastElement()
+    val currentActivity: Activity?
+        get() = allActivityStacks.lastOrNull()
 
     val currentActivityName: String
-        get() = allActivityStacks.lastElement().localClassName
+        get() = allActivityStacks.lastOrNull()?.localClassName ?: ""
 
     /**
      * 获取指定类名的 Activity

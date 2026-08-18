@@ -18,18 +18,19 @@ class RItemDecorationItemBottom(
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
+        val position = parent.getChildAdapterPosition(view)
+        if (position == RecyclerView.NO_POSITION) return
+
         val itemCount = getItemCount(parent)
         val spanCount = getSpanCount(parent)
+        if (spanCount <= 0) return
 
-        val position = parent.getChildAdapterPosition(view)
         val column = position % spanCount // 第几列
         val row = position / spanCount  // 第几行
 
-        if (position == RecyclerView.NO_POSITION) return
-
         if (includeBottom) {
             outRect.bottom = space
-        } else if (row != itemCount / spanCount) {
+        } else if (itemCount > 0 && row != (itemCount - 1) / spanCount) {
             outRect.bottom = space
         }
     }

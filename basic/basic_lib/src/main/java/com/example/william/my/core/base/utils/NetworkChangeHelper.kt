@@ -21,55 +21,88 @@ import android.util.Log
  *
  * 7.0及以上静态注册广播不能收到"ConnectivityManager.CONNECTIVITY_ACTION"这个广播了
  */
-@SuppressLint("MissingPermission", "ObsoleteSdkInt")
+@SuppressLint("MissingPermission")
 object NetworkChangeHelper {
 
     private val TAG = this.javaClass.simpleName
 
     private var mNetworkChangeListener: NetworkChangeListener? = null
+    private var mNetworkCallback: NetworkCallback? = null
+    private var mReceiver: BroadcastReceiver? = null
 
     fun register(context: Context, networkChangeListener: NetworkChangeListener?) {
         mNetworkChangeListener = networkChangeListener
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val connectivityManager =
+            context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+                ?: return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            /*
+             * 7.0及以上使用registerDefaultNetworkCallback
+             */
+            val callback = NetworkCallbackImpl()
+            mNetworkCallback = callback
+            connectivityManager.registerDefaultNetworkCallback(callback)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             /*
              * 5.0以上使用ConnectivityManager.NetworkCallback
              */
-            val connectivityManager =
-                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            // 请注意这里会有一个版本适配bug，所以请在这里添加非空判断
-            connectivityManager.requestNetwork(
-                NetworkRequest.Builder().build(),
-                NetworkCallbackImpl()
-            )
+            val callback = NetworkCallbackImpl()
+            mNetworkCallback = callback
+            val request = NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build()
+            connectivityManager.registerNetworkCallback(request, callback)
         } else {
             /*
              * 5.0以下使用广播方式监听，即ConnectivityManager.CONNECTIVITY_ACTION
              */
             val receiver = NetworkChangeReceiver()
-            val filter = IntentFilter()
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-            context.registerReceiver(receiver, filter)
+            mReceiver = receiver
+            val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            context.applicationContext.registerReceiver(receiver, filter)
         }
+    }
+
+    fun unregister(context: Context) {
+        val connectivityManager =
+            context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        mNetworkCallback?.let {
+            try {
+                connectivityManager?.unregisterNetworkCallback(it)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            mNetworkCallback = null
+        }
+        mReceiver?.let {
+            try {
+                context.applicationContext.unregisterReceiver(it)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            mReceiver = null
+        }
+        mNetworkChangeListener = null
     }
 
     class NetworkChangeReceiver : BroadcastReceiver() {
 
+        @Suppress("DEPRECATION")
         override fun onReceive(context: Context, intent: Intent) {
             if (ConnectivityManager.CONNECTIVITY_ACTION == intent.action) {
                 val connectivityManager =
                     context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 val info = connectivityManager.activeNetworkInfo
-                if (info != null) {
-                    if (info.state == NetworkInfo.State.CONNECTED) {
-                        if (ConnectivityManager.TYPE_WIFI == info.type) {
-                            Log.i(TAG, "CONNECTIVITY_ACTION: 网络类型为WIFI")
-                        } else if (ConnectivityManager.TYPE_MOBILE == info.type) {
-                            Log.i(TAG, "CONNECTIVITY_ACTION: 网络类型为移动数据")
-                        }
-                        mNetworkChangeListener!!.onNetworkStatusChange(true)
-                    } else {
-                        mNetworkChangeListener!!.onNetworkStatusChange(false)
+                if (info != null && info.isConnected) {
+                    if (ConnectivityManager.TYPE_WIFI == info.type) {
+                        Log.i(TAG, "CONNECTIVITY_ACTION: 网络类型为WIFI")
+                    } else if (ConnectivityManager.TYPE_MOBILE == info.type) {
+                        Log.i(TAG, "CONNECTIVITY_ACTION: 网络类型为移动数据")
                     }
+                    mNetworkChangeListener?.onNetworkStatusChange(true)
+                } else {
+                    mNetworkChangeListener?.onNetworkStatusChange(false)
                 }
             }
         }
@@ -78,12 +111,12 @@ object NetworkChangeHelper {
     private class NetworkCallbackImpl : NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            mNetworkChangeListener!!.onNetworkStatusChange(true)
+            mNetworkChangeListener?.onNetworkStatusChange(true)
         }
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            mNetworkChangeListener!!.onNetworkStatusChange(false)
+            mNetworkChangeListener?.onNetworkStatusChange(false)
         }
 
         override fun onCapabilitiesChanged(

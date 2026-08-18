@@ -171,11 +171,12 @@ object CrashUtils {
     }
 
     fun getFullStackTrace(throwable: Throwable?): String {
+        if (throwable == null) return ""
         val throwableList = arrayListOf<Throwable>()
-        throwable?.let {
-            while (!throwableList.contains(it)) {
-                throwableList.add(it)
-            }
+        var curr: Throwable? = throwable
+        while (curr != null && !throwableList.contains(curr)) {
+            throwableList.add(curr)
+            curr = curr.cause
         }
         val size = throwableList.size
         val frames = arrayListOf<String>()

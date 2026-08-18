@@ -26,4 +26,9 @@ abstract class BaseVBDialogFragment<VB : ViewBinding?>(
         _binding = getViewBinding()
         return mBinding.root
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

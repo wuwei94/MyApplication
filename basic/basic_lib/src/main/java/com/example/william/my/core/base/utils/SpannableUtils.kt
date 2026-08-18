@@ -14,21 +14,24 @@ object SpannableUtils {
         isUnderlineText: Boolean = false,
         onClick: () -> Unit = {}
     ): SpannableStringBuilder {
-        setSpan(
-            object : ClickableSpan() {
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.setColor(color)
-                    ds.isUnderlineText = isUnderlineText
-                }
+        val startIndex = this.indexOf(highlight)
+        if (startIndex >= 0) {
+            setSpan(
+                object : ClickableSpan() {
+                    override fun updateDrawState(ds: TextPaint) {
+                        ds.color = color
+                        ds.isUnderlineText = isUnderlineText
+                    }
 
-                override fun onClick(widget: View) {
-                    onClick()
-                }
-            },
-            this.indexOf(highlight),
-            this.indexOf(highlight) + highlight.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+                    override fun onClick(widget: View) {
+                        onClick()
+                    }
+                },
+                startIndex,
+                startIndex + highlight.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
         return this
     }
 }

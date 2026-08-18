@@ -40,14 +40,18 @@ object AudioPlayer {
 
     //Record
 
-    @RequiresApi(Build.VERSION_CODES.S)
     fun startRecord(context: Context, callback: Callback) {
         mRecordCallback = callback
         try {
             mAudioRecordPath =
                 context.applicationContext.externalCacheDir.toString() + File.separator +
                         "auto_" + System.currentTimeMillis() + ".m4a"
-            mRecorder = MediaRecorder(context)
+            mRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                MediaRecorder(context)
+            } else {
+                @Suppress("DEPRECATION")
+                MediaRecorder()
+            }
             mRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
             // 使用mp4容器并且后缀改为.m4a，来兼容小程序的播放
             mRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -131,9 +135,9 @@ object AudioPlayer {
             return 0
         }
         var duration = 0
-        // 通过初始化播放器的方式来获取真实的音频长度
+        var mp: MediaPlayer? = null
         try {
-            val mp = MediaPlayer()
+            mp = MediaPlayer()
             mp.setDataSource(mAudioRecordPath)
             mp.prepare()
             duration = mp.duration
@@ -145,6 +149,12 @@ object AudioPlayer {
             }
         } catch (e: Exception) {
             println("getDuration failed")
+        } finally {
+            try {
+                mp?.release()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         if (duration < 0) {
             duration = 0

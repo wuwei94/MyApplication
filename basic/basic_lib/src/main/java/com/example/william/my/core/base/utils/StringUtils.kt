@@ -9,35 +9,30 @@ import android.view.View
 object StringUtils {
 
     fun List<String>?.toString(separator: String): String {
-        return if (this.isNullOrEmpty()) {
-            ""
-        } else {
-            val sb = StringBuilder()
-            for (i in this.indices) {
-                sb.append(this[i]).append(separator)
-            }
-            sb.substring(0, sb.toString().length - 1)
-        }
+        return this?.joinToString(separator) ?: ""
     }
 
     fun SpannableString.setTextColor(
         text: String, highlight: String, color: Int, onClick: () -> Unit
     ): SpannableString {
-        setSpan(
-            object : ClickableSpan() {
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.setColor(color)
-                    ds.isUnderlineText = false
-                }
+        val startIndex = text.indexOf(highlight)
+        if (startIndex >= 0) {
+            setSpan(
+                object : ClickableSpan() {
+                    override fun updateDrawState(ds: TextPaint) {
+                        ds.color = color
+                        ds.isUnderlineText = false
+                    }
 
-                override fun onClick(widget: View) {
-                    onClick()
-                }
-            },
-            text.indexOf(highlight),
-            text.indexOf(highlight) + highlight.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+                    override fun onClick(widget: View) {
+                        onClick()
+                    }
+                },
+                startIndex,
+                startIndex + highlight.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
         return this
     }
 }
