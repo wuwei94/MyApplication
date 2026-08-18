@@ -20,6 +20,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.intent.ArticleIntent
 import com.example.william.my.module.arch.intent.ArticleViewState
 import kotlinx.coroutines.channels.Channel
@@ -50,16 +51,17 @@ class ArticleStateFlowViewModel(private val repository: ArticleRepository<Articl
     }
 
     private fun loadArticle(page: Int) {
-        // 启动一个新的协程
         viewModelScope.launch {
-            _state.value = ArticleViewState.Loading
-            _state.value =
-                try {
-                    val response = repository.getArticleSuspend(page)
-                    ArticleViewState.Success(response.data!!.datas)
-                } catch (e: Exception) {
-                    ArticleViewState.Error(e.message)
+            repository.getArticleFlow(page).collect { response ->
+                _state.value = when {
+                    response.code == RetrofitResponse.LOADING -> ArticleViewState.Loading
+                    response.isSuccess -> {
+                        val datas = response.data?.datas ?: emptyList()
+                        ArticleViewState.Success(datas)
+                    }
+                    else -> ArticleViewState.Error(response.message)
                 }
+            }
         }
     }
 }

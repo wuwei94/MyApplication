@@ -59,7 +59,7 @@ Flutter 的 `Future` 对应单次 suspend/`Single` 请求。线程调度、Parce
 
 ### lib_retrofit_rx
 
-标准 Retrofit Rx 能力按 `api/callback/function` 分层：`api` 提供 `rxRetrofit()`、`createRxApi()` 和 `Single` 默认网络策略，`callback` 提供 `ResponseCallback`、`LiveDataCallback` 等订阅回调，`function` 负责传输异常和业务结果转换。包路径已经包含 `retrofit.rx`，类型名不再重复添加 `Rx` 前缀。
+标准 Retrofit Rx 能力按 `api/callback/function` 分层：`api` 提供 `rxRetrofit()`、`createRxApi()` 和 `Single` 默认网络策略，`callback` 提供 `ResponseCallback` 等订阅回调，`function` 负责传输异常和业务结果转换。包路径已经包含 `retrofit.rx`，类型名不再重复添加 `Rx` 前缀。
 
 ### lib_rx_request
 

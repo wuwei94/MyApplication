@@ -129,7 +129,7 @@ api.login(username, password)
 
 `rxRetrofit {}` 自动安装 `RxJava3CallAdapterFactory`。`withNetworkDefaults()` 负责业务失败与上游异常转换、IO 订阅、主线程观察和可选生命周期绑定。
 
-该模块按 `api/callback/function` 分层。由于包路径已经明确为 `retrofit.rx`，回调和转换类型使用 `ResponseCallback`、`LiveDataCallback`、`HttpResultFunction`、`ServerResultFunction` 等名称，不再重复添加 `Rx` 前缀。
+该模块按 `api/callback/function` 分层。由于包路径已经明确为 `retrofit.rx`，回调和转换类型使用 `ResponseCallback`、`HttpResultFunction`、`ServerResultFunction` 等名称，不再重复添加 `Rx` 前缀。
 
 ## lib_rx_request
 

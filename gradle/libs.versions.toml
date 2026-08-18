@@ -114,6 +114,7 @@ dependencyGuard = "0.5.0"
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-rx3 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-rx3", version.ref = "kotlinxCoroutines" }
 # ##################################################################################################
 # https://github.com/google/gson
 google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "googleGson" }
@@ -145,6 +146,7 @@ androidx-viewPager2 = { group = "androidx.viewpager2", name = "viewpager2", vers
 # https://developer.android.google.cn/topic/libraries/architecture/lifecycle
 # lifecycle
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 # lifecycle optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
 # 架构组件 - 界面层库

@@ -23,6 +23,7 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Default implementation of [ArticleRepository]. Single entry point for managing Articles' data.
@@ -32,6 +33,10 @@ class DefaultArticleRepository(
     private val articlesLocalDataSource: ArticleDataSource<ArticleData, ArticleDetailData>,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ArticleRepository<ArticleData, ArticleDetailData> {
+
+    // =========================================================================
+    // 1. 传统回调 API（教学对比演示）
+    // =========================================================================
 
     override fun getArticle(
         page: Int,
@@ -49,37 +54,72 @@ class DefaultArticleRepository(
             })
     }
 
-    /**
-     * ArticleLiveDataViewModel
-     */
-    override fun getArticleLiveData(
-        page: Int,
-        postValue: (RetrofitResponse<ArticleData>) -> Unit
-    ) {
-        articlesRemoteDataSource.getArticleLiveData(page, postValue)
-    }
+    // =========================================================================
+    // 2. 基础请求 API（Single 与 挂起函数）
+    // =========================================================================
 
     /**
-     * ArticleLiveDataViewModel
-     */
-    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return articlesRemoteDataSource.getArticleLiveData(page)
-    }
-
-    /**
-     * Single
-     * ArticleLiveDataViewModel
+     * RxJava3 Single：执行网络请求并返回单次响应流。
      */
     override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> {
         return articlesRemoteDataSource.getArticleSingle(page)
     }
 
     /**
-     * Continuation
-     * ArticleStateFlowViewModel
+     * 协程挂起函数：执行网络请求并返回业务响应。
      */
     override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> {
         return articlesRemoteDataSource.getArticleSuspend(page)
+    }
+
+    // =========================================================================
+    // 3. Flow 响应式数据流及互转 API
+    // =========================================================================
+
+    /**
+     * RxJava 转 Flow：将 Single 转换为 Kotlin 响应式 Flow (asFlow)。
+     */
+    override fun getArticleFlowByRx(page: Int): Flow<RetrofitResponse<ArticleData>> {
+        return articlesRemoteDataSource.getArticleFlowByRx(page)
+    }
+
+    /**
+     * 纯协程 Flow 构建：通过 flow { ... } 发送 loading/error/success 状态。
+     */
+    override fun getArticleFlow(page: Int): Flow<RetrofitResponse<ArticleData>> {
+        return articlesRemoteDataSource.getArticleFlow(page)
+    }
+
+    /**
+     * LiveData 转 Flow：将 LiveData 转换为 Kotlin 响应式 Flow (asFlow)。
+     */
+    override fun getArticleFlowByLiveData(page: Int): Flow<RetrofitResponse<ArticleData>> {
+        return articlesRemoteDataSource.getArticleFlowByLiveData(page)
+    }
+
+    // =========================================================================
+    // 4. LiveData 响应式数据流及互转 API
+    // =========================================================================
+
+    /**
+     * RxJava 转 LiveData：遵循 ReactiveStreams 规范将 Single 桥接为 LiveData。
+     */
+    override fun getArticleLiveDataByRx(page: Int): LiveData<RetrofitResponse<ArticleData>> {
+        return articlesRemoteDataSource.getArticleLiveDataByRx(page)
+    }
+
+    /**
+     * 官方 liveData 协程构建器：通过 liveData(Dispatchers.IO) { ... } 构建生命周期感知的 LiveData。
+     */
+    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {
+        return articlesRemoteDataSource.getArticleLiveData(page)
+    }
+
+    /**
+     * Flow 转 LiveData：通过 asLiveData() 将 Kotlin Flow 桥接为 LiveData。
+     */
+    override fun getArticleLiveDataByFlow(page: Int): LiveData<RetrofitResponse<ArticleData>> {
+        return articlesRemoteDataSource.getArticleLiveDataByFlow(page)
     }
 
     override suspend fun getArticleResult(

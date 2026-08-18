@@ -35,9 +35,25 @@ class ArticleViewModel(
 
     private val _articleData = MutableLiveData<Int>()
 
-    // 转换 LiveData
+    /**
+     * LiveData 数据流：使用 Jetpack 官方 liveData 协程构建器
+     */
     val articleData: LiveData<RetrofitResponse<ArticleData>> = _articleData.switchMap { page ->
         repository.getArticleLiveData(page)
+    }
+
+    /**
+     * LiveData 数据流：使用 RxJava 响应式流转 LiveData (toLiveData)
+     */
+    val articleDataByRx: LiveData<RetrofitResponse<ArticleData>> = _articleData.switchMap { page ->
+        repository.getArticleLiveDataByRx(page)
+    }
+
+    /**
+     * LiveData 数据流：使用 Kotlin 协程 Flow 管道转 LiveData (asLiveData)
+     */
+    val articleDataByFlow: LiveData<RetrofitResponse<ArticleData>> = _articleData.switchMap { page ->
+        repository.getArticleLiveDataByFlow(page)
     }
 
     fun loadArticle(page: Int) {

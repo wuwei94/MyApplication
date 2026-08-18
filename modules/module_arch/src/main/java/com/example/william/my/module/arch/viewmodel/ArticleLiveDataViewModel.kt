@@ -18,45 +18,53 @@ package com.example.william.my.module.arch.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
-import com.example.william.my.core.retrofit.rx.callback.LiveDataCallback
 import com.example.william.my.core.retrofit.exception.ExceptionHandler
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.usecase.ArticleUseCase
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import kotlinx.coroutines.launch
 
 class ArticleLiveDataViewModel(
     private val repository: ArticleRepository<ArticleData, ArticleDetailData>
 ) : ViewModel() {
+
+    private val compositeDisposable = CompositeDisposable()
 
     private val _articleResponse = MutableLiveData<RetrofitResponse<ArticleData>>()
     val articleResponse: LiveData<RetrofitResponse<ArticleData>>
         get() = _articleResponse
 
     /**
-     * postValue
+     * 协程挂起函数：手动执行并 postValue
      */
     fun loadArticle(page: Int) {
-        repository.getArticleLiveData(page) {
-            _articleResponse.postValue(it)
+        viewModelScope.launch {
+            _articleResponse.value = RetrofitResponse.loading()
+            try {
+                val response = repository.getArticleSuspend(page)
+                _articleResponse.value = response
+            } catch (e: Exception) {
+                _articleResponse.value = RetrofitResponse.error(e.message ?: "网络请求失败")
+            }
         }
     }
 
     /**
-     * Single
+     * RxJava3 Single：手动订阅并 postValue
      */
     fun loadArticle2(page: Int) {
-        repository.getArticleSingle(page)
-            .subscribe(object : LiveDataCallback<ArticleData>() {
-                override fun onPostValue(value: RetrofitResponse<ArticleData>?) {
-                    super.onPostValue(value)
-                    value?.let {
-                        _articleResponse.postValue(it)
-                    }
-                }
+        val disposable = repository.getArticleSingle(page)
+            .subscribe({ response ->
+                _articleResponse.postValue(response)
+            }, { error ->
+                _articleResponse.postValue(RetrofitResponse.error(error.message ?: "网络请求失败"))
             })
+        compositeDisposable.add(disposable)
     }
 
     private val articleUseCase: ArticleUseCase = ArticleUseCase(repository)
@@ -85,6 +93,7 @@ class ArticleLiveDataViewModel(
     override fun onCleared() {
         super.onCleared()
         articleUseCase.clear()
+        compositeDisposable.clear()
     }
 }
 

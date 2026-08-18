@@ -17,4 +17,6 @@ dependencies {
     api(project(":libs:lib_okhttp"))
     api(project(":libs:lib_retrofit"))
     api(project(":libs:lib_retrofit_rx"))
+
+    api(libs.androidx.lifecycle.livedata)
 }
