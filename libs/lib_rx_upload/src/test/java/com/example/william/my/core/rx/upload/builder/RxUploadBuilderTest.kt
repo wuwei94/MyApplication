@@ -135,4 +135,31 @@ class RxUploadBuilderTest {
 
         assertEquals(1, finallyCount)
     }
+
+    @Test
+    fun addHeadersAndFieldsMergeIncrementallyAndSetReplaces() {
+        val config = RxUpload.builder()
+            .api("https://example.com/upload")
+            .addFile("file", temporaryFolder.newFile())
+            .addHeader("A", "1")
+            .addHeaders(mapOf("B" to "2"))
+            .addFormField("f1", "v1")
+            .addFormFields(mapOf("f2" to "v2"))
+            .buildConfig()
+
+        assertEquals(mapOf("A" to "1", "B" to "2"), config.headers)
+        assertEquals(listOf("f1" to "v1", "f2" to "v2"), config.formFields)
+
+        val resetConfig = RxUpload.builder()
+            .api("https://example.com/upload")
+            .addFile("file", temporaryFolder.newFile())
+            .addHeader("A", "1")
+            .setHeaders(mapOf("C" to "3"))
+            .addFormField("f1", "v1")
+            .setFormFields(mapOf("f3" to "v3"))
+            .buildConfig()
+
+        assertEquals(mapOf("C" to "3"), resetConfig.headers)
+        assertEquals(listOf("f3" to "v3"), resetConfig.formFields)
+    }
 }

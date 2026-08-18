@@ -21,17 +21,17 @@ import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.NetworkResult
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Default implementation of [ArticleRepository]. Single entry point for managing Articles' data.
+ * 文章数据仓库默认实现（[ArticleRepository]）。
+ *
+ * 遵循现代 Android 协程架构设计原则：挂起函数应保证主线程安全（Suspend functions should be main-safe）。
+ * 底层数据源（Room DAO、Retrofit）已自行调度并在后台线程执行耗时与 I/O 操作，因此 Repository 层无需重复注入 CoroutineDispatcher 进行多余的上下文切换。
  */
 class DefaultArticleRepository(
     private val articlesRemoteDataSource: ArticleDataSource<ArticleData, ArticleDetailData>,
-    private val articlesLocalDataSource: ArticleDataSource<ArticleData, ArticleDetailData>,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val articlesLocalDataSource: ArticleDataSource<ArticleData, ArticleDetailData>
 ) : ArticleRepository<ArticleData, ArticleDetailData> {
 
     // =========================================================================

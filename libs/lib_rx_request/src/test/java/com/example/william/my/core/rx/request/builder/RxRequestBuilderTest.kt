@@ -106,5 +106,30 @@ class RxRequestBuilderTest {
         assertNotNull(config.multipartBody)
     }
 
+    @Test
+    fun addHeadersMergesIncrementallyAndSetHeadersReplaces() {
+        val config = RxRequest.builder<User>()
+            .api("user")
+            .addHeader("A", "1")
+            .addHeaders(mapOf("B" to "2"))
+            .addParam("p1", "v1")
+            .addParams(mapOf("p2" to "v2"))
+            .buildConfig()
+
+        assertEquals(mapOf("A" to "1", "B" to "2"), config.header)
+        assertEquals(mapOf("p1" to "v1", "p2" to "v2"), config.parameter)
+
+        val resetConfig = RxRequest.builder<User>()
+            .api("user")
+            .addHeader("A", "1")
+            .setHeaders(mapOf("C" to "3"))
+            .addParam("p1", "v1")
+            .setParams(mapOf("p3" to "v3"))
+            .buildConfig()
+
+        assertEquals(mapOf("C" to "3"), resetConfig.header)
+        assertEquals(mapOf("p3" to "v3"), resetConfig.parameter)
+    }
+
     private data class User(val name: String)
 }

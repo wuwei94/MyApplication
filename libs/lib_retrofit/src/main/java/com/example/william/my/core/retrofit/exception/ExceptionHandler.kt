@@ -95,7 +95,7 @@ object ExceptionHandler {
      * JSON 响应依次读取 `message`、`msg`、`errorMsg`；空响应或没有这些字段时返回 null，
      * 非 JSON 响应则保留原始文本。
      */
-    private fun extractErrorMessage(body: String): String? {
+    fun extractErrorMessage(body: String): String? {
         if (body.isBlank()) return null
         return try {
             val jsonObj = JsonParser.parseString(body).asJsonObject

@@ -13,27 +13,24 @@ annotation class RetrofitDslMarker
 @RetrofitDslMarker
 class RetrofitBuilder {
 
-    private val builder = Retrofit.Builder()
-    private var code: String = "errorCode"
-    private var message: String = "errorMsg"
+    private var baseUrl: String = "http://host/"
+    private var client: OkHttpClient? = null
     private var converterFactory: Converter.Factory? = null
     private var callAdapterFactory: CallAdapter.Factory? = null
-
-    init {
-        builder.baseUrl("http://host/")
-        builder.client(okHttpClient { logging() })
-    }
+    private var code: String = "errorCode"
+    private var message: String = "errorMsg"
+    private val rawBlocks = mutableListOf<Retrofit.Builder.() -> Unit>()
 
     // region 基础配置
 
     /** 设置 BaseUrl */
     fun baseUrl(url: String) {
-        builder.baseUrl(url)
+        baseUrl = url
     }
 
     /** 设置 OkHttpClient */
     fun client(okHttpClient: OkHttpClient) {
-        builder.client(okHttpClient)
+        client = okHttpClient
     }
 
     // endregion
@@ -66,23 +63,27 @@ class RetrofitBuilder {
 
     /** 直接操作底层 Retrofit.Builder */
     fun raw(block: Retrofit.Builder.() -> Unit) {
-        builder.block()
+        rawBlocks += block
     }
 
     // endregion
 
     internal fun build(): Retrofit {
-        val finalBuilder = builder.build().newBuilder()
-        converterFactory?.let {
-            finalBuilder.addConverterFactory(it)
-        } ?: run {
-            finalBuilder.addConverterFactory(
-                RetrofitConverterFactory.create(code, message)
+        val builder = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(client ?: okHttpClient { logging() })
+            .addConverterFactory(
+                converterFactory ?: RetrofitConverterFactory.create(code, message)
             )
-        }
+
         callAdapterFactory?.let {
-            finalBuilder.addCallAdapterFactory(it)
+            builder.addCallAdapterFactory(it)
         }
-        return finalBuilder.build()
+
+        rawBlocks.forEach { block ->
+            builder.block()
+        }
+
+        return builder.build()
     }
 }

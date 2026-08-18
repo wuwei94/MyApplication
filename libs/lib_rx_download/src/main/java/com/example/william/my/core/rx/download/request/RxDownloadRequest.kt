@@ -95,7 +95,6 @@ class RxDownloadRequest internal constructor(
                 termination.finish()
             }
         }
-        source = source.doOnDispose(termination::close)
         config.lifecycle?.let { lifecycle ->
             source = source.compose(lifecycle.bindToLifecycle())
         }

@@ -19,4 +19,5 @@ dependencies {
     api(project(":libs:lib_retrofit_rx"))
 
     api(libs.androidx.lifecycle.livedata)
+    api(libs.kotlinx.coroutines.rx3)
 }

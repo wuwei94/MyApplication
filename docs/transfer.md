@@ -55,8 +55,8 @@ val disposable = RxDownload.builder()
             install(response.file)
         }
 
-        override fun onFailure(e: ApiException) {
-            showError(e.message)
+        override fun onFailure(error: ApiException) {
+            showError(error.message)
         }
     })
 ```
@@ -135,8 +135,8 @@ val disposable = RxUpload.builder()
             handle(response.body)
         }
 
-        override fun onFailure(e: ApiException) {
-            showError(e.message)
+        override fun onFailure(error: ApiException) {
+            showError(error.message)
         }
     })
 ```
@@ -153,7 +153,7 @@ val disposable = RxUpload.builder()
 
 - 网络与文件 I/O 默认运行在 `Schedulers.io()`，结果和进度默认投递 Android 主线程。
 - Worker、后台任务和 JVM 测试可分别使用 `subscribeOn()`、`observeOn()`、`progressOn()` 覆盖调度器。
-- `addHeaders()`、表单字段和文件列表会在 `build()` / `buildSingle()` 时复制；之后修改原始集合或 Builder 不影响已经生成的请求。
+- `addHeaders()` / `setHeaders()`、表单字段和文件列表会在 `build()` / `buildSingle()` 时复制；之后修改原始集合或 Builder 不影响已经生成的请求。
 - 进度默认最多每 100 ms 分发一次，允许的最小间隔为 50 ms，并保证最终进度先于成功回调；可通过 `progressIntervalMillis()` 调整。
 - 示例页面使用 `updateLog(key, message)` 覆盖当前进度，只将开始、完成、失败和取消追加到历史日志，避免长任务无限扩张 TextView 内容。
 - 通过请求对象的 `subscribeWith(callback)` 订阅时，进度自动进入 `RxDownloadCallback` 或 `RxUploadCallback`；`onProgress {}` 仍作为直接订阅原始 Rx 类型时的高级入口保留。

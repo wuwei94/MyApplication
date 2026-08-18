@@ -44,6 +44,10 @@ class RxUploadBuilder internal constructor() {
     fun addHeader(headers: Map<String, String>) = addHeaders(headers)
 
     fun addHeaders(headers: Map<String, String>) = apply {
+        this.headers.putAll(headers)
+    }
+
+    fun setHeaders(headers: Map<String, String>) = apply {
         this.headers.clear()
         this.headers.putAll(headers)
     }
@@ -56,11 +60,17 @@ class RxUploadBuilder internal constructor() {
     fun addParam(name: String, value: String) = addFormField(name, value)
 
     fun addFormFields(fields: Map<String, String>) = apply {
+        formFields += fields.entries.map { it.key to it.value }
+    }
+
+    fun setFormFields(fields: Map<String, String>) = apply {
         formFields.clear()
         formFields += fields.entries.map { it.key to it.value }
     }
 
     fun addParams(params: Map<String, String>) = addFormFields(params)
+
+    fun setParams(params: Map<String, String>) = setFormFields(params)
 
     fun addFile(
         name: String,

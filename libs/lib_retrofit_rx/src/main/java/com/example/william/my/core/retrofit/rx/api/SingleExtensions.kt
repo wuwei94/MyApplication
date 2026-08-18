@@ -4,15 +4,12 @@
 package com.example.william.my.core.retrofit.rx.api
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
 import com.example.william.my.core.retrofit.rx.function.ServerResultFunction
-import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.trello.lifecycle4.android.lifecycle.AndroidLifecycle
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 /**
@@ -50,32 +47,4 @@ fun <T : Any> Single<RetrofitResponse<T>>.withNetworkDefaults(
         .onErrorResumeNext(HttpResultFunction())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-}
-
-/**
- * 将 RxJava3 的 [Single] 转换为生命周期感知的 [LiveData]。
- *
- * 遵循 ReactiveStreams 桥接机制：
- * 当 [LiveData] 处于活跃状态（Active）时自动订阅上游，处于非活跃状态（Inactive）时自动取消订阅（Dispose），
- * 避免内存泄漏与无效后台计算。
- */
-fun <T : Any> Single<T>.toLiveData(): LiveData<T> {
-    return object : MutableLiveData<T>() {
-        private var disposable: Disposable? = null
-
-        override fun onActive() {
-            super.onActive()
-            disposable = this@toLiveData.subscribe({ value ->
-                postValue(value)
-            }, { error ->
-                // 异常处理：若上游已通过 withNetworkDefaults 转换为 RetrofitResponse，则不会抛出未经处理的未捕获异常
-            })
-        }
-
-        override fun onInactive() {
-            super.onInactive()
-            disposable?.dispose()
-            disposable = null
-        }
-    }
 }

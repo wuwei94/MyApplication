@@ -27,7 +27,6 @@ import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.rx.api.createRxApi
-import com.example.william.my.core.retrofit.rx.api.toLiveData
 import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
 import com.example.william.my.core.retrofit.rx.function.ServerResultFunction
 import com.example.william.my.core.retrofit.response.RetrofitResponse
@@ -157,7 +156,9 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
             .onErrorResumeNext(HttpResultFunction())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .toLiveData()
+            .toObservable()
+            .asFlow()
+            .asLiveData()
     }
 
     /**

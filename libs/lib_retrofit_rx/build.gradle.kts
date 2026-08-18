@@ -11,7 +11,4 @@ dependencies {
     api(libs.retrofit.adapter.rxjava3)
     api(libs.rxandroid)
     implementation(libs.rxlifecycle)
-
-    api(libs.androidx.lifecycle.livedata)
-    api(libs.kotlinx.coroutines.rx3)
 }

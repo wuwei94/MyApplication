@@ -178,6 +178,20 @@ class RetrofitDslTest {
     }
 
     @Test
+    fun rawConfigurationBlockIsAppliedDuringBuild() {
+        var rawExecuted = false
+        val instance = retrofit {
+            baseUrl("https://example.com/")
+            raw {
+                rawExecuted = true
+            }
+        }
+
+        assertTrue(rawExecuted)
+        assertEquals("example.com", instance.baseUrl().host)
+    }
+
+    @Test
     fun defaultApiFactoryCreatesAnImplementation() {
         val api = createApi(TestApi::class.java)
 

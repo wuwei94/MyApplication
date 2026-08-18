@@ -42,23 +42,23 @@ class RxDownloadNetworkContractTest {
         try {
             val target = File(temporaryFolder.root, "result.txt")
             seedPartial(server, target, "hello ")
-            val progress = mutableListOf<Pair<Long, Long>>()
+            val progressUpdates = mutableListOf<Pair<Long, Long>>()
             var result: DownloadResult? = null
             var failure: ApiException? = null
 
             request(server, target)
                 .build()
                 .subscribeWith(object : RxDownloadCallback<DownloadProgress, DownloadResult>() {
-                    override fun onProgress(progressValue: DownloadProgress) {
-                        progress += progressValue.currentBytes to progressValue.totalBytes
+                    override fun onProgress(progress: DownloadProgress) {
+                        progressUpdates += progress.currentBytes to progress.totalBytes
                     }
 
                     override fun onResponse(response: DownloadResult) {
                         result = response
                     }
 
-                    override fun onFailure(e: ApiException) {
-                        failure = e
+                    override fun onFailure(error: ApiException) {
+                        failure = error
                     }
                 })
 
@@ -69,7 +69,7 @@ class RxDownloadNetworkContractTest {
             assertFalse(partialFile(target).exists())
             assertNull(failure)
             assertTrue(requireNotNull(result).resumed)
-            assertEquals(11L to 11L, progress.last())
+            assertEquals(11L to 11L, progressUpdates.last())
         } finally {
             server.shutdown()
         }
@@ -160,13 +160,38 @@ class RxDownloadNetworkContractTest {
             request(server, target)
                 .build()
                 .subscribeWith(object : RxDownloadCallback<DownloadProgress, DownloadResult>() {
-                    override fun onFailure(e: ApiException) {
-                        failure = e
+                    override fun onFailure(error: ApiException) {
+                        failure = error
                     }
                 })
 
             assertEquals(404, failure?.code)
             assertEquals("file not found", failure?.message)
+        } finally {
+            server.shutdown()
+        }
+    }
+
+    @Test
+    fun callbackExtractsJsonErrorMessageFromHttpError() {
+        val server = MockWebServer().apply {
+            enqueue(MockResponse().setResponseCode(403).setBody("""{"message":"文件已过期"}"""))
+            start()
+        }
+        try {
+            val target = File(temporaryFolder.root, "expired.txt")
+            var failure: ApiException? = null
+
+            request(server, target)
+                .build()
+                .subscribeWith(object : RxDownloadCallback<DownloadProgress, DownloadResult>() {
+                    override fun onFailure(error: ApiException) {
+                        failure = error
+                    }
+                })
+
+            assertEquals(403, failure?.code)
+            assertEquals("文件已过期", failure?.message)
         } finally {
             server.shutdown()
         }

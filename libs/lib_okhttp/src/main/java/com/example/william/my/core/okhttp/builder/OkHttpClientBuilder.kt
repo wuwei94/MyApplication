@@ -29,33 +29,52 @@ annotation class OkHttpDslMarker
 @OkHttpDslMarker
 class OkHttpClientBuilder {
 
-    private val builder = OkHttpClient.Builder()
+    private var connectTimeoutSeconds: Long? = null
+    private var readTimeoutSeconds: Long? = null
+    private var writeTimeoutSeconds: Long? = null
+    private var callTimeoutSeconds: Long? = null
+    private var retryOnConnectionFailure: Boolean? = null
+    private var connectionPoolConfig: ConnectionPoolConfig? = null
+    private val interceptors = mutableListOf<Interceptor>()
+    private val networkInterceptors = mutableListOf<Interceptor>()
+    private var basicLogLevel: HttpLoggingInterceptor.Level? = null
+    private var formatLogFilters: List<String>? = null
+    private var ignoreSsl = false
+    private var noProxy = false
+    private var cookieJarEnabled = false
+    private var cookieStore: CookieStore? = null
+    private var cacheAppDirConfig: CacheAppDirConfig? = null
+    private var cacheAppFileConfig: CacheAppFileConfig? = null
+    private val rawBlocks = mutableListOf<OkHttpClient.Builder.() -> Unit>()
 
     // region 超时
 
     /** 连接超时（秒） */
     fun connectTimeout(seconds: Long) {
-        CompatTimeout.setConnectTimeout(builder, seconds)
+        connectTimeoutSeconds = seconds
     }
 
     /** 读取超时（秒） */
     fun readTimeout(seconds: Long) {
-        CompatTimeout.setReadTimeout(builder, seconds)
+        readTimeoutSeconds = seconds
     }
 
     /** 写入超时（秒） */
     fun writeTimeout(seconds: Long) {
-        CompatTimeout.setWriteTimeout(builder, seconds)
+        writeTimeoutSeconds = seconds
     }
 
     /** 整体调用超时（秒） */
     fun callTimeout(seconds: Long) {
-        CompatTimeout.setCallTimeout(builder, seconds)
+        callTimeoutSeconds = seconds
     }
 
     /** 所有超时统一设置（秒） */
     fun timeout(seconds: Long) {
-        CompatTimeout.setTimeout(builder, seconds)
+        connectTimeoutSeconds = seconds
+        readTimeoutSeconds = seconds
+        writeTimeoutSeconds = seconds
+        callTimeoutSeconds = seconds
     }
 
     // endregion
@@ -64,12 +83,12 @@ class OkHttpClientBuilder {
 
     /** 失败重试 */
     fun retryOnConnectionFailure(retry: Boolean) {
-        CompatRetry.setRetry(builder, retry)
+        retryOnConnectionFailure = retry
     }
 
     /** 自定义连接池 */
     fun connectionPool(maxIdleConnections: Int, keepAliveDuration: Long, unit: TimeUnit = TimeUnit.MINUTES) {
-        CompatConnectionPool.setConnectionPool(builder, maxIdleConnections, keepAliveDuration, unit)
+        connectionPoolConfig = ConnectionPoolConfig(maxIdleConnections, keepAliveDuration, unit)
     }
 
     // endregion
@@ -78,12 +97,12 @@ class OkHttpClientBuilder {
 
     /** 添加应用拦截器 */
     fun addInterceptor(interceptor: Interceptor) {
-        CompatInterceptor.addInterceptor(builder, interceptor)
+        interceptors += interceptor
     }
 
     /** 添加网络拦截器 */
     fun addNetworkInterceptor(interceptor: Interceptor) {
-        CompatInterceptor.addNetworkInterceptor(builder, interceptor)
+        networkInterceptors += interceptor
     }
 
     // endregion
@@ -92,12 +111,12 @@ class OkHttpClientBuilder {
 
     /** 配置 OkHttp 官方日志 */
     fun logging(level: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BASIC) {
-        CompatLogging.applyBasicLog(builder, level)
+        basicLogLevel = level
     }
 
     /** 配置自定义格式化日志，[filters] 为需要过滤（不打印）的 URL 后缀 */
     fun loggingFormat(filters: List<String> = emptyList()) {
-        CompatLogging.applyFormatLog(builder, filters)
+        formatLogFilters = filters
     }
 
     // endregion
@@ -106,12 +125,12 @@ class OkHttpClientBuilder {
 
     /** 忽略 SSL 证书校验（仅调试用） */
     fun ignoreSSL() {
-        CompatHttpsSSL.ignoreSSLForOkHttp(builder)
+        ignoreSsl = true
     }
 
     /** 禁用代理 */
     fun noProxy() {
-        CompatProxy.noProxy(builder)
+        noProxy = true
     }
 
     // endregion
@@ -120,12 +139,14 @@ class OkHttpClientBuilder {
 
     /** 启用 Cookie 管理（默认内存存储） */
     fun cookieJar() {
-        CompatCookieJar.cookieJar(builder)
+        cookieJarEnabled = true
+        cookieStore = null
     }
 
     /** 启用 Cookie 管理（自定义存储） */
     fun cookieJar(store: CookieStore) {
-        CompatCookieJar.cookieJar(builder, store)
+        cookieJarEnabled = true
+        cookieStore = store
     }
 
     // endregion
@@ -134,12 +155,14 @@ class OkHttpClientBuilder {
 
     /** 按目录名设置缓存 */
     fun cache(app: Application, dirName: String = "cache", dirSize: Long = 10L * 1024L * 1024L) {
-        CompatCache.setCache(builder, app, dirName, dirSize)
+        cacheAppDirConfig = CacheAppDirConfig(app, dirName, dirSize)
+        cacheAppFileConfig = null
     }
 
     /** 按目录设置缓存 */
     fun cache(app: Application, dir: File, dirSize: Long = 10L * 1024L * 1024L) {
-        CompatCache.setCache(builder, app, dir, dirSize)
+        cacheAppFileConfig = CacheAppFileConfig(app, dir, dirSize)
+        cacheAppDirConfig = null
     }
 
     // endregion
@@ -153,10 +176,69 @@ class OkHttpClientBuilder {
      * 不会在 Release 构建中意外禁用证书校验。
      */
     fun raw(block: OkHttpClient.Builder.() -> Unit) {
-        builder.block()
+        rawBlocks += block
     }
 
     // endregion
 
-    internal fun build(): OkHttpClient = builder.build()
+    internal fun build(): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+
+        connectTimeoutSeconds?.let { CompatTimeout.setConnectTimeout(builder, it) }
+        readTimeoutSeconds?.let { CompatTimeout.setReadTimeout(builder, it) }
+        writeTimeoutSeconds?.let { CompatTimeout.setWriteTimeout(builder, it) }
+        callTimeoutSeconds?.let { CompatTimeout.setCallTimeout(builder, it) }
+
+        retryOnConnectionFailure?.let { CompatRetry.setRetry(builder, it) }
+        connectionPoolConfig?.let {
+            CompatConnectionPool.setConnectionPool(builder, it.maxIdleConnections, it.keepAliveDuration, it.unit)
+        }
+
+        if (ignoreSsl) {
+            CompatHttpsSSL.ignoreSSLForOkHttp(builder)
+        }
+
+        if (noProxy) {
+            CompatProxy.noProxy(builder)
+        }
+
+        if (cookieJarEnabled) {
+            cookieStore?.let { CompatCookieJar.cookieJar(builder, it) } ?: CompatCookieJar.cookieJar(builder)
+        }
+
+        cacheAppDirConfig?.let {
+            CompatCache.setCache(builder, it.app, it.dirName, it.dirSize)
+        }
+        cacheAppFileConfig?.let {
+            CompatCache.setCache(builder, it.app, it.dir, it.dirSize)
+        }
+
+        interceptors.forEach { builder.addInterceptor(it) }
+        networkInterceptors.forEach { builder.addNetworkInterceptor(it) }
+
+        basicLogLevel?.let { CompatLogging.applyBasicLog(builder, it) }
+        formatLogFilters?.let { CompatLogging.applyFormatLog(builder, it) }
+
+        rawBlocks.forEach { block -> builder.block() }
+
+        return builder.build()
+    }
+
+    private data class ConnectionPoolConfig(
+        val maxIdleConnections: Int,
+        val keepAliveDuration: Long,
+        val unit: TimeUnit,
+    )
+
+    private data class CacheAppDirConfig(
+        val app: Application,
+        val dirName: String,
+        val dirSize: Long,
+    )
+
+    private data class CacheAppFileConfig(
+        val app: Application,
+        val dir: File,
+        val dirSize: Long,
+    )
 }

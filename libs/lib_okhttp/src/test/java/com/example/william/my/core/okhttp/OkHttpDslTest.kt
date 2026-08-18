@@ -104,4 +104,67 @@ class OkHttpDslTest {
         assertNull(removeCachedClient(firstName))
         assertNull(removeCachedClient(secondName))
     }
+
+    @Test
+    fun cachedClientInitializationIsThreadSafe() {
+        val name = "okhttp-dsl-concurrent-test"
+        val count = 8
+        val executor = java.util.concurrent.Executors.newFixedThreadPool(count)
+        val barrier = java.util.concurrent.CyclicBarrier(count)
+        try {
+            val results = (1..count).map {
+                executor.submit<okhttp3.OkHttpClient> {
+                    barrier.await()
+                    cachedClient(name) { timeout(5) }
+                }
+            }.map { it.get() }
+
+            val first = results.first()
+            results.forEach { assertSame(first, it) }
+        } finally {
+            executor.shutdown()
+            removeCachedClient(name)
+        }
+    }
+
+    @Test
+    fun builderConfiguresTimeoutsAndInterceptorsCorrectly() {
+        val interceptor = okhttp3.Interceptor { chain -> chain.proceed(chain.request()) }
+        val client = okHttpClient {
+            connectTimeout(3)
+            readTimeout(4)
+            writeTimeout(5)
+            callTimeout(6)
+            retryOnConnectionFailure(false)
+            addInterceptor(interceptor)
+        }
+
+        try {
+            org.junit.Assert.assertEquals(3000, client.connectTimeoutMillis)
+            org.junit.Assert.assertEquals(4000, client.readTimeoutMillis)
+            org.junit.Assert.assertEquals(5000, client.writeTimeoutMillis)
+            org.junit.Assert.assertEquals(6000, client.callTimeoutMillis)
+            assertFalse(client.retryOnConnectionFailure)
+            assertTrue(client.interceptors.contains(interceptor))
+        } finally {
+            client.closeResources()
+        }
+    }
+
+    @Test
+    fun rawConfigurationBlockIsAppliedInOkHttp() {
+        var rawExecuted = false
+        val client = okHttpClient {
+            timeout(5)
+            raw {
+                rawExecuted = true
+            }
+        }
+
+        try {
+            assertTrue(rawExecuted)
+        } finally {
+            client.closeResources()
+        }
+    }
 }

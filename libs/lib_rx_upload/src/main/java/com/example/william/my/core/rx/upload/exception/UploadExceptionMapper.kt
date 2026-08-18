@@ -8,7 +8,8 @@ internal fun Throwable.toUploadApiException(): ApiException {
     return when (this) {
         is ApiException -> this
         is UploadHttpException -> ApiException(this, statusCode).apply {
-            message = responseBody.takeIf { it.isNotBlank() }
+            message = ExceptionHandler.extractErrorMessage(responseBody)
+                ?: responseBody.takeIf { it.isNotBlank() }
                 ?: this@toUploadApiException.message?.takeIf { it.isNotBlank() }
                 ?: ApiException.DEFAULT_MESSAGE
         }

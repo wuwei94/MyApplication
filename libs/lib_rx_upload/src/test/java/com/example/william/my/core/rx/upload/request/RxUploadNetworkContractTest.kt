@@ -34,7 +34,7 @@ class RxUploadNetworkContractTest {
         }
         try {
             val file = temporaryFolder.newFile("avatar.txt").apply { writeText("payload") }
-            val progress = mutableListOf<Pair<Long, Long>>()
+            val progressUpdates = mutableListOf<Pair<Long, Long>>()
             var uploadResult: UploadResult? = null
             var failure: ApiException? = null
 
@@ -44,16 +44,16 @@ class RxUploadNetworkContractTest {
                 .addFile("file", file)
                 .build()
                 .subscribeWith(object : RxUploadCallback() {
-                    override fun onProgress(progressValue: UploadProgress) {
-                        progress += progressValue.currentBytes to progressValue.totalBytes
+                    override fun onProgress(progress: UploadProgress) {
+                        progressUpdates += progress.currentBytes to progress.totalBytes
                     }
 
                     override fun onResponse(response: UploadResult) {
                         uploadResult = response
                     }
 
-                    override fun onFailure(e: ApiException) {
-                        failure = e
+                    override fun onFailure(error: ApiException) {
+                        failure = error
                     }
                 })
 
@@ -68,7 +68,7 @@ class RxUploadNetworkContractTest {
             assertTrue(body.contains("payload"))
             assertNull(failure)
             assertEquals("{\"ok\":true}", uploadResult?.body)
-            assertEquals(progress.last().second, progress.last().first)
+            assertEquals(progressUpdates.last().second, progressUpdates.last().first)
         } finally {
             server.shutdown()
         }
@@ -92,6 +92,32 @@ class RxUploadNetworkContractTest {
                         error.statusCode == 413 &&
                         error.responseBody == "too large"
                 }
+        } finally {
+            server.shutdown()
+        }
+    }
+
+    @Test
+    fun callbackExtractsJsonErrorMessageFromHttpError() {
+        val server = MockWebServer().apply {
+            enqueue(MockResponse().setResponseCode(400).setBody("""{"message":"文件大小超限"}"""))
+            start()
+        }
+        try {
+            val file = temporaryFolder.newFile("large.txt").apply { writeText("payload") }
+            var failure: ApiException? = null
+
+            request(server)
+                .addFile("file", file)
+                .build()
+                .subscribeWith(object : RxUploadCallback() {
+                    override fun onFailure(error: ApiException) {
+                        failure = error
+                    }
+                })
+
+            assertEquals(400, failure?.code)
+            assertEquals("文件大小超限", failure?.message)
         } finally {
             server.shutdown()
         }

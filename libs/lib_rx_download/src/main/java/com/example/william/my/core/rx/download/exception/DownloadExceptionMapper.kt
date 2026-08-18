@@ -8,7 +8,8 @@ internal fun Throwable.toDownloadApiException(): ApiException {
     return when (this) {
         is ApiException -> this
         is DownloadHttpException -> ApiException(this, statusCode).apply {
-            message = responseBody.takeIf { it.isNotBlank() }
+            message = ExceptionHandler.extractErrorMessage(responseBody)
+                ?: responseBody.takeIf { it.isNotBlank() }
                 ?: this@toDownloadApiException.message?.takeIf { it.isNotBlank() }
                 ?: ApiException.DEFAULT_MESSAGE
         }

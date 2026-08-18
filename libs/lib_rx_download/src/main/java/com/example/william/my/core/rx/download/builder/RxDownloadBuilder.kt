@@ -47,6 +47,10 @@ class RxDownloadBuilder internal constructor() {
     fun addHeader(headers: Map<String, String>) = addHeaders(headers)
 
     fun addHeaders(headers: Map<String, String>) = apply {
+        this.headers.putAll(headers)
+    }
+
+    fun setHeaders(headers: Map<String, String>) = apply {
         this.headers.clear()
         this.headers.putAll(headers)
     }

@@ -75,8 +75,18 @@ class RxRequestBuilder<T> @PublishedApi internal constructor(
     }
 
     fun addHeader(header: Map<String, String>): RxRequestBuilder<T> {
-        this.header.clear()
         this.header.putAll(header)
+        return this
+    }
+
+    fun addHeaders(headers: Map<String, String>): RxRequestBuilder<T> {
+        this.header.putAll(headers)
+        return this
+    }
+
+    fun setHeaders(headers: Map<String, String>): RxRequestBuilder<T> {
+        this.header.clear()
+        this.header.putAll(headers)
         return this
     }
 
@@ -86,6 +96,11 @@ class RxRequestBuilder<T> @PublishedApi internal constructor(
     }
 
     fun addParams(params: Map<String, String>): RxRequestBuilder<T> {
+        this.parameter.putAll(params)
+        return this
+    }
+
+    fun setParams(params: Map<String, String>): RxRequestBuilder<T> {
         this.parameter.clear()
         this.parameter.putAll(params)
         return this

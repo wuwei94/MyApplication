@@ -94,7 +94,7 @@ class RxDownloadQueueNetworkContractTest {
             start()
         }
         try {
-            var progress: DownloadQueueProgress? = null
+            var recordedProgress: DownloadQueueProgress? = null
             var result: DownloadQueueResult? = null
             var failure: ApiException? = null
             val completed = CountDownLatch(1)
@@ -111,8 +111,8 @@ class RxDownloadQueueNetworkContractTest {
                 .build()
                 .subscribeWith(
                     object : RxDownloadCallback<DownloadQueueProgress, DownloadQueueResult>() {
-                        override fun onProgress(progressValue: DownloadQueueProgress) {
-                            progress = progressValue
+                        override fun onProgress(progress: DownloadQueueProgress) {
+                            recordedProgress = progress
                         }
 
                         override fun onResponse(response: DownloadQueueResult) {
@@ -130,7 +130,7 @@ class RxDownloadQueueNetworkContractTest {
             assertTrue(completed.await(10L, TimeUnit.SECONDS))
             assertNull(failure)
             assertEquals(1, requireNotNull(result).successes.size)
-            assertEquals(1, requireNotNull(progress).completedCount)
+            assertEquals(1, requireNotNull(recordedProgress).completedCount)
         } finally {
             server.shutdown()
         }

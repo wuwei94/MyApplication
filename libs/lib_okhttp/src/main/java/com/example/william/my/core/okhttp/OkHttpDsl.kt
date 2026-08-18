@@ -49,8 +49,11 @@ fun okHttpClient(init: OkHttpClientBuilder.() -> Unit): OkHttpClient {
  * ```
  */
 fun cachedClient(name: String, init: OkHttpClientBuilder.() -> Unit): OkHttpClient {
-    return clientCache.getOrPut(name) {
-        OkHttpClientBuilder().apply(init).build()
+    clientCache[name]?.let { return it }
+    return synchronized(clientCache) {
+        clientCache[name] ?: OkHttpClientBuilder().apply(init).build().also {
+            clientCache[name] = it
+        }
     }
 }
 
@@ -72,14 +75,21 @@ fun getCachedClient(name: String): OkHttpClient {
  * 返回的 Client 已关闭资源，仅用于确认或识别被移除的实例，不应继续发起请求。
  */
 fun removeCachedClient(name: String): OkHttpClient? {
-    return clientCache.remove(name)?.also(OkHttpClient::closeResources)
+    return synchronized(clientCache) {
+        clientCache.remove(name)
+    }?.also(OkHttpClient::closeResources)
 }
 
 /**
  * 清空并关闭所有缓存的 Client。
  */
 fun clearCachedClients() {
-    clientCache.keys.toList().forEach(::removeCachedClient)
+    val clients = synchronized(clientCache) {
+        val list = clientCache.values.toList()
+        clientCache.clear()
+        list
+    }
+    clients.forEach(OkHttpClient::closeResources)
 }
 
 /** 关闭由调用方拥有的 Client 资源。关闭后该 Client 不应继续使用。 */
@@ -115,7 +125,5 @@ fun createClient(init: Consumer<OkHttpClientBuilder>): OkHttpClient {
  * ```
  */
 fun cachedClient(name: String, init: Consumer<OkHttpClientBuilder>): OkHttpClient {
-    return clientCache.getOrPut(name) {
-        OkHttpClientBuilder().apply { init.accept(this) }.build()
-    }
+    return cachedClient(name) { init.accept(this) }
 }

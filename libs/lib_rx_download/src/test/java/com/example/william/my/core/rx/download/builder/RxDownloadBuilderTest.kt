@@ -136,4 +136,25 @@ class RxDownloadBuilderTest {
 
         assertEquals(1, finallyCount)
     }
+
+    @Test
+    fun addHeadersMergesIncrementallyAndSetHeadersReplaces() {
+        val config = RxDownload.builder()
+            .api("https://example.com/file")
+            .destination(temporaryFolder.newFile())
+            .addHeader("A", "1")
+            .addHeaders(mapOf("B" to "2"))
+            .buildConfig()
+
+        assertEquals(mapOf("A" to "1", "B" to "2"), config.headers)
+
+        val resetConfig = RxDownload.builder()
+            .api("https://example.com/file")
+            .destination(temporaryFolder.newFile())
+            .addHeader("A", "1")
+            .setHeaders(mapOf("C" to "3"))
+            .buildConfig()
+
+        assertEquals(mapOf("C" to "3"), resetConfig.headers)
+    }
 }
