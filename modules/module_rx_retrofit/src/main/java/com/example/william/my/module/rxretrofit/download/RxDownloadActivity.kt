@@ -1,5 +1,6 @@
 package com.example.william.my.module.rxretrofit.download
 
+import android.os.Bundle
 import android.text.format.Formatter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -34,6 +35,11 @@ class RxDownloadActivity : BasicResponseActivity() {
 
     /** 下载示例文件保存目录。 */
     private val downloadDirectory = File(cacheDir, "downloads")
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("单文件与批量并发下载示例，进度在下方日志区原位更新")
+    }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(

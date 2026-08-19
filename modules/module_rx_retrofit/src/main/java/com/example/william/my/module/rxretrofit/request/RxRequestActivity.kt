@@ -1,5 +1,6 @@
 package com.example.william.my.module.rxretrofit.request
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
@@ -16,6 +17,11 @@ import org.json.JSONObject
  */
 @Route(path = RouterPath.RxRetrofit.Request)
 class RxRequestActivity : BasicResponseActivity() {
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("RxRequest 动态请求示例（支持表单、JSON 与 Multipart）")
+    }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(

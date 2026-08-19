@@ -1,126 +1,141 @@
 package com.example.william.my.module.kotlin.activity
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
+import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.utils.Utils
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.google.gson.Gson
 
 /**
- * kotlin 内联函数
+ * Kotlin 内联函数（Inline Functions）与作用域函数演示
+ *
+ * 1. 作用域函数（Scope Functions）：
+ *    - `with(T)`：非扩展，接收者为 `this`，返回 Lambda 结果。
+ *    - `T.let`：扩展函数，接收者为参数 `it`，返回 Lambda 结果，常用空安全调用。
+ *    - `T.run`：扩展函数，接收者为 `this`，返回 Lambda 结果。
+ *    - `T.also`：扩展函数，接收者为参数 `it`，返回对象本身 `this`，常用于附加链式操作。
+ *    - `T.apply`：扩展函数，接收者为 `this`，返回对象本身 `this`，常用于对象初始化配置。
+ * 2. 泛型实化（reified）：在 `inline` 函数中使用 `reified T` 绕过 JVM 泛型擦除，直接获取 `T::class.java`。
+ * 3. 自定义内联扩展函数：演示高阶函数内联消除 Lambda 对象分配开销。
  */
+@Route(path = RouterPath.Kotlin.Inline)
 class MyInlineActivity : BasicResponseActivity() {
 
-    data class MyData(var value: String? = "") {
-        fun string(): String {
-            return Gson().toJson(this)
+    data class UserData(var name: String = "", var score: Int = 0) {
+        fun toJson(): String = Gson().toJson(this)
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("演示 Kotlin 内联函数、作用域函数与泛型实化 (reified)")
+    }
+
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "作用域函数对比（with / let / run / also / apply）",
+            "泛型实化类型获取（inline + reified）",
+            "自定义内联扩展函数（mAlso / mApply / mStandard）"
+        )
+    }
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> testScopeFunctions()
+            1 -> testReifiedGenerics()
+            2 -> testCustomInlineExtensions()
         }
     }
 
-    private fun innerFun() {
-        val mData = MyData()
+    // ─────────────────────────────────────────────
+    // 1. 作用域函数对比
+    // ─────────────────────────────────────────────
+    private fun testScopeFunctions() {
+        val user = UserData("InitUser", 60)
 
-        /**
-         * with 函数
-         * 回值由return表达式指定或作用域内最后一行
-         */
-        with(mData) {
-            value = "with"
+        // with
+        val withResult = with(user) {
+            name = "WithUser"
+            "with 返回: name=$name"
         }
+        appendLog("【with】$withResult")
 
-        /**
-         * let 函数
-         * 返回值由return表达式指定或作用域内最后一行
-         */
-        val let: String = mData.let { data ->
-            data.value = "let"
-            "let"
+        // let
+        val letResult = user.let {
+            it.score = 70
+            "let 返回: score=${it.score}"
         }
-        println("let $let")
+        appendLog("【let】$letResult")
 
-        /**
-         * run 函数
-         * 返回值由return表达式指定或作用域内最后一行
-         */
-        val run: String = mData.run {
-            mData.value = "run"
-            "run"
+        // run
+        val runResult = user.run {
+            score = 80
+            "run 返回: ${toJson()}"
         }
-        println("run $run")
+        appendLog("【run】$runResult")
 
-        /**
-         * also 函数
-         * 返回值是调用的对象本身
-         */
-        val alsoData: MyData = mData.also { data ->
-            data.value = "also"
+        // also
+        val alsoResult = user.also {
+            it.name = "AlsoUser"
         }
-        println(alsoData.string())
+        appendLog("【also】返回对象本身: ${alsoResult.toJson()}")
 
-        /**
-         * apply 函数
-         * 返回值是调用的对象本身
-         */
-        val applyData: MyData = mData.apply {
-            value = "apply"
+        // apply
+        val applyResult = user.apply {
+            name = "ApplyUser"
+            score = 100
         }
-        println(applyData.string())
+        appendLog("【apply】返回对象本身: ${applyResult.toJson()}")
     }
 
-    //==============================================================================================
-
-    private inline fun <reified T : Activity> Activity.startActivity(context: Context) {
-        startActivity(Intent(context, T::class.java))
+    // ─────────────────────────────────────────────
+    // 2. 泛型实化 (reified)
+    // ─────────────────────────────────────────────
+    private inline fun <reified T> getTypeName(): String {
+        return "类型名称: ${T::class.java.simpleName}, 全限定名: ${T::class.java.name}"
     }
 
-    /**
-     * reified 关键字
-     */
-    fun reifiedFun() {
-        startActivity<MyInlineActivity>(this)
+    private inline fun <reified T> parseJson(json: String): T {
+        return Gson().fromJson(json, T::class.java)
     }
 
-    //==============================================================================================
+    private fun testReifiedGenerics() {
+        appendLog("【reified】${getTypeName<UserData>()}")
+        appendLog("【reified】${getTypeName<String>()}")
 
-    private fun <T> T.mAlso(block: (T) -> Unit): T {
+        val json = """{"name":"ReifiedUser","score":95}"""
+        val parsedUser: UserData = parseJson(json)
+        appendLog("【reified 解析】name=${parsedUser.name}, score=${parsedUser.score}")
+    }
+
+    // ─────────────────────────────────────────────
+    // 3. 自定义内联扩展函数
+    // ─────────────────────────────────────────────
+    private inline fun <T> T.mAlso(block: (T) -> Unit): T {
         block(this)
         return this
     }
 
-    private fun <T> T.mApply(block: T.() -> Unit): T {
+    private inline fun <T> T.mApply(block: T.() -> Unit): T {
         block()
         return this
     }
 
-    private fun <T> T.mStandard(block: () -> Unit): T {
-        block()
-        return this
+    private inline fun <T, R> T.mRun(block: T.() -> R): R {
+        return block()
     }
 
-    /**
-     * 扩展函数
-     */
-    fun expandFun() {
-        val mData = MyData()
+    private fun testCustomInlineExtensions() {
+        val user = UserData("CustomUser", 50)
+            .mApply {
+                score = 88
+            }.mAlso {
+                it.name = "CustomUserUpdated"
+            }
 
-        val alsoData: MyData = mData.mAlso { data ->
-            data.value = "also"
+        val summary = user.mRun {
+            "【自定义内联】结果: ${toJson()}"
         }
-        println(alsoData.string())
-
-        val applyData: MyData = mData.mApply {
-            value = "apply"
-        }
-        println(applyData.string())
-
-        val standardData: MyData = mData.mStandard {
-            mData.string()
-        }
-        println(standardData.string())
-    }
-
-    private fun println(msg: String) {
-        Utils.logcat(TAG, msg)
+        appendLog(summary)
     }
 }

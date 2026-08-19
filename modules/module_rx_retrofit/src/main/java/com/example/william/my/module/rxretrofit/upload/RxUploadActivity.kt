@@ -1,5 +1,6 @@
 package com.example.william.my.module.rxretrofit.upload
 
+import android.os.Bundle
 import android.text.format.Formatter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -29,6 +30,11 @@ class RxUploadActivity : BasicResponseActivity() {
 
     /** 上传示例文件保存目录。 */
     private val uploadDirectory = File(cacheDir, "uploads")
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("单文件与批量并发上传示例，进度在下方日志区原位更新")
+    }
 
     override fun buildList(): ArrayList<String> {
         return arrayListOf(

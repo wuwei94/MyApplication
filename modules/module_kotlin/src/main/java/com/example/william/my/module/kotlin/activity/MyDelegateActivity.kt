@@ -1,158 +1,158 @@
 package com.example.william.my.module.kotlin.activity
 
+import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * kotlin 委托
+ * Kotlin 委托（Delegation）机制演示
+ *
+ * 1. 类委托（Class Delegation）：通过 `by` 关键字将接口实现委托给内部实例（装饰模式语法糖）。
+ * 2. 属性委托（Property Delegation）：通过 `ReadOnlyProperty` 或 `ReadWriteProperty` 拦截属性的 `getValue` / `setValue`。
+ * 3. 标准库委托：
+ *    - `by lazy`：延迟初始化（线程安全默认使用 `LazyThreadSafetyMode.SYNCHRONIZED`）。
+ *    - `Delegates.observable`：监听属性变更并接收新旧值。
+ *    - `Delegates.vetoable`：条件拦截，通过布尔返回值决定是否接受新值。
+ *    - Map 映射委托：通过 `val property: Type by map` 将属性名作为 Key 直接从 Map 读取。
  */
+@Route(path = RouterPath.Kotlin.Delegate)
 class MyDelegateActivity : BasicResponseActivity() {
 
-    // 约束类
-    interface Base {
-        fun debug()
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("演示 Kotlin 委托机制：类委托与属性委托")
     }
 
-    // 被委托对象，实现了约束类的接口
-    class BaseImpl : Base {
-        override fun debug() {
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "类委托（Class Delegation: by base）",
+            "自定义属性委托（ReadWriteProperty）",
+            "延迟属性委托（by lazy）",
+            "可观察属性（Delegates.observable）",
+            "可否决属性（Delegates.vetoable）",
+            "Map 映射属性委托（by map）"
+        )
+    }
 
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> testClassDelegate()
+            1 -> testAttrDelegate()
+            2 -> testLazyDelegate()
+            3 -> testObservableDelegate()
+            4 -> testVetoableDelegate()
+            5 -> testMapDelegate()
         }
     }
 
-    // 委托对象，同时把被委托对象作为委托对象的属性，通过构造方法传入。
-    class Derived(private val base: Base) : Base by base {
-        fun error() {
-
-        }
+    // ─────────────────────────────────────────────
+    // 1. 类委托
+    // ─────────────────────────────────────────────
+    interface Printer {
+        fun printMessage(): String
     }
 
-    /**
-     * 1. 类委托
-     */
-    fun classDelegate() {
-        val base = BaseImpl()
-        val derived = Derived(base)
-        derived.debug()
-        derived.error()
+    class RealPrinter : Printer {
+        override fun printMessage(): String = "RealPrinter.printMessage() 执行"
     }
 
-    //==============================================================================================
+    class DelegatedPrinter(printer: Printer) : Printer by printer
 
-    // 定义包含属性委托的类
-    class Example {
-        var delegate: String by Delegate()
+    private fun testClassDelegate() {
+        val printer = DelegatedPrinter(RealPrinter())
+        appendLog("【类委托】调用结果: ${printer.printMessage()}")
     }
 
-    // 委托的类
-    class Delegate : ReadWriteProperty<Any?, String> {
+    // ─────────────────────────────────────────────
+    // 2. 自定义属性委托
+    // ─────────────────────────────────────────────
+    class StringDelegate : ReadWriteProperty<Any?, String> {
+        private var innerValue = "DefaultValue"
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): String {
-            return "$thisRef, 这里委托了 ${property.name} 属性"
+            return innerValue
         }
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
-            println("$thisRef 的 ${property.name} 属性赋值为 $value")
+            innerValue = value
         }
     }
 
-    /**
-     * 2. 属性委托
-     */
-    fun attrDelegate() {
-        val e = Example()
-        println(e.delegate)     // 调用 getValue() 函数
-
-        e.delegate = "Delegate"   // 调用 setValue() 函数
-        println(e.delegate)
+    class CustomDelegateHolder {
+        var text: String by StringDelegate()
     }
 
-    //==============================================================================================
+    private fun testAttrDelegate() {
+        val holder = CustomDelegateHolder()
+        appendLog("【属性委托】读取初始值: ${holder.text}")
+        holder.text = "NewDelegateValue"
+        appendLog("【属性委托】赋值后读取: ${holder.text}")
+    }
 
+    // ─────────────────────────────────────────────
+    // 3. 延迟属性委托 by lazy
+    // ─────────────────────────────────────────────
+    private var lazyInitCount = 0
     private val lazyValue: String by lazy {
-        println("Delegate!")     // 第一次调用输出，第二次调用不执行
-        "Hello"
+        lazyInitCount++
+        "LazyComputedResult(count=$lazyInitCount)"
     }
 
-    /**
-     * 1. 延迟属性 Lazy
-     */
-    fun lazyDelegate() {
-        println(lazyValue)   // 第一次执行，执行两次输出表达式
-        println(lazyValue)   // 第二次执行，只输出返回值
+    private fun testLazyDelegate() {
+        appendLog("【Lazy委托】第 1 次访问: $lazyValue")
+        appendLog("【Lazy委托】第 2 次访问: $lazyValue（未重复初始化，计算次数: $lazyInitCount）")
     }
 
-    //==============================================================================================
-
-    class Bean {
-        var notNullStr: String by Delegates.notNull()
-    }
-
-    /**
-     * 2. Not Null
-     */
-    fun notNullDelegate() {
-        Bean().notNullStr = "Str"
-        println(Bean().notNullStr)
-    }
-
-
-    //==============================================================================================
-
-    class User {
-        var name: String by Delegates.observable("初始值") { property, old, new ->
-            println(property.name + " 旧值：$old -> 新值：$new")
+    // ─────────────────────────────────────────────
+    // 4. 可观察属性 Delegates.observable
+    // ─────────────────────────────────────────────
+    class ObservableUser(private val logCallback: (String) -> Unit) {
+        var name: String by Delegates.observable("InitName") { prop, old, new ->
+            logCallback("【Observable】属性 ${prop.name} 变更: $old -> $new")
         }
     }
 
-    /**
-     * 2. 可观察属性 Observable
-     */
-    fun observableDelegate() {
-        val user = User()
-        user.name = "第一次赋值"
-        user.name = "第二次赋值"
+    private fun testObservableDelegate() {
+        val user = ObservableUser { appendLog(it) }
+        user.name = "Alice"
+        user.name = "Bob"
     }
 
-    //==============================================================================================
-
-    class User2 {
-        var name: String by Delegates.vetoable("初始值") { property, old, new ->
-            println(property.name + " 旧值：$old -> 新值：$new")
-            // 新值不能为空，否则保持原值
-            new.isNotEmpty()
+    // ─────────────────────────────────────────────
+    // 5. 可否决属性 Delegates.vetoable
+    // ─────────────────────────────────────────────
+    class VetoableUser(private val logCallback: (String) -> Unit) {
+        var age: Int by Delegates.vetoable(18) { prop, old, new ->
+            val allow = new in 0..150
+            logCallback("【Vetoable】尝试将 ${prop.name} 从 $old 修改为 $new: ${if (allow) "允许" else "否决"}")
+            allow
         }
     }
 
-    /**
-     * 3. 可观察属性 vetoable
-     */
-    fun vetoableDelegate2() {
-        val user = User2()
-        user.name = ""
-        user.name = "第二次赋值"
+    private fun testVetoableDelegate() {
+        val user = VetoableUser { appendLog(it) }
+        user.age = 25
+        appendLog("【Vetoable】当前 age: ${user.age}")
+        user.age = -5
+        appendLog("【Vetoable】当前 age: ${user.age}（非法值未生效）")
     }
 
-    //==============================================================================================
-
-    class Site(val map: Map<String, Any?>) {
-        val key1: String by map
-        val key2: String by map
+    // ─────────────────────────────────────────────
+    // 6. Map 映射属性委托
+    // ─────────────────────────────────────────────
+    class MapConfig(val map: Map<String, Any?>) {
+        val title: String by map
+        val version: Int by map
     }
 
-    /**
-     * 5. 把属性储存在映射中
-     */
-    fun mapDelegate() {
-        // 构造函数接受一个映射参数
-        val site = Site(
-            mapOf("key1" to "key", "key3" to "value")
-        )
-
-        // 读取映射值
-        println(site.key1)
-        println(site.key2)
+    private fun testMapDelegate() {
+        val map = mapOf("title" to "Antigravity App", "version" to 2)
+        val config = MapConfig(map)
+        appendLog("【Map委托】title: ${config.title}, version: ${config.version}")
     }
 }

@@ -14,6 +14,15 @@ import dagger.hilt.android.components.ActivityComponent
 import javax.inject.Inject
 import javax.inject.Qualifier
 
+/**
+ * Dagger Hilt 依赖注入演示
+ *
+ * 覆盖：
+ * 1. 构造函数注入：使用 `@Inject constructor()` 声明类的依赖注入方式。
+ * 2. 接口绑定注入：在 `@Module` 中使用 `@Binds` 将接口抽象类型绑定到具体实现类。
+ * 3. 第三方实例提供：在 `@Module` 中使用 `@Provides` 自定义提供依赖实例。
+ * 4. 限定符绑定：使用自定义 `@Qualifier` 注解为相同返回类型的依赖提供区分注入。
+ */
 @Route(path = RouterPath.Jetpack.Hilt)
 @AndroidEntryPoint // 将依赖项注入 Android 类
 class HiltActivity : BasicResponseActivity() {
@@ -32,14 +41,33 @@ class HiltActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        showDescription("演示 Dagger Hilt 依赖注入（@Inject / @Binds / @Provides / @Qualifier）")
+    }
 
-        driver.println()
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "构造函数注入（@Inject Driver）",
+            "接口绑定注入（@Binds Engine）",
+            "第三方类提供（@Provides ProvidesData）",
+            "限定符多实例绑定（@Qualifier Auth / Other）",
+            "全量依赖注入验证"
+        )
+    }
 
-        engine.println()
-
-        providesData.println()
-
-        exampleService.println()
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> appendLog("【@Inject 构造函数注入】${driver.getInfo()}")
+            1 -> appendLog("【@Binds 接口绑定注入】${engine.getInfo()}")
+            2 -> appendLog("【@Provides 模块注入】${providesData.getInfo()}")
+            3 -> appendLog("【@Qualifier 限定符注入】${exampleService.getInfo()}")
+            4 -> {
+                appendLog("【Hilt 注入校验】Driver: ${driver.getInfo()}")
+                appendLog("【Hilt 注入校验】Engine: ${engine.getInfo()}")
+                appendLog("【Hilt 注入校验】ProvidesData: ${providesData.getInfo()}")
+                appendLog("【Hilt 注入校验】ExampleService: ${exampleService.getInfo()}")
+            }
+        }
     }
 }
 
@@ -47,6 +75,8 @@ class HiltActivity : BasicResponseActivity() {
  * 构造函数的依赖注入
  */
 class Driver @Inject constructor() {
+
+    fun getInfo(): String = "Driver 实例通过 @Inject constructor() 成功注入"
 
     fun println() {
         Utils.logcat("Hilt", "@Inject")
@@ -57,10 +87,13 @@ class Driver @Inject constructor() {
  * 接口的依赖注入
  */
 interface Engine {
+    fun getInfo(): String
     fun println()
 }
 
 class EngineImpl @Inject constructor() : Engine {
+
+    override fun getInfo(): String = "EngineImpl 实例通过 @Binds 成功绑定到 Engine 接口"
 
     override fun println() {
         Utils.logcat("Hilt", "@Binds")
@@ -86,6 +119,9 @@ abstract class EngineModule {
  * 第三方类的依赖注入
  */
 class ProvidesData {
+
+    fun getInfo(): String = "ProvidesData 实例通过 @Provides Module 成功构建注入"
+
     fun println() {
         Utils.logcat("Hilt", "@Provides")
     }
@@ -144,6 +180,8 @@ class ExampleServiceImpl @Inject constructor(
     @param:Auth private val auth: String, // Auth
     @param:Other private val other: String // Other
 ) {
+
+    fun getInfo(): String = "ExampleService 携带限定符: @Auth='$auth', @Other='$other'"
 
     fun println() {
         Utils.logcat("Hilt", "@Qualifier: $auth,$other")

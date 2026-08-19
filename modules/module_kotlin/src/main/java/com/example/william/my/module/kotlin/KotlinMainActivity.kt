@@ -12,6 +12,8 @@ class KotlinMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Coroutines", RouterPath.Kotlin.Coroutines))
         routerItems.add(RouterItem("Flow", RouterPath.Kotlin.Flow))
+        routerItems.add(RouterItem("Delegate（委托属性与类委托）", RouterPath.Kotlin.Delegate))
+        routerItems.add(RouterItem("Inline（内联函数与泛型实化）", RouterPath.Kotlin.Inline))
         return routerItems
     }
 }

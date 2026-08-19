@@ -1,357 +1,146 @@
 package com.example.william.my.module.opensource.activity.utils
 
-import android.annotation.SuppressLint
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
-import java.util.concurrent.TimeUnit
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
- * 创建操作符：
+ * RxJava 3 核心响应式操作符演示
  *
- * 转换操作符：
+ * 覆盖：
+ * 1. 创建操作符：`just`、`fromArray`、`range`。
+ * 2. 变换操作符：`map`、`flatMap`、`buffer`。
+ * 3. 过滤操作符：`filter`、`take`、`distinct`。
+ * 4. 组合操作符：`concat`、`merge`、`zip`。
+ * 5. 错误处理操作符：`onErrorReturn`、`onErrorResumeNext`。
  *
- * 过滤操作符：
- *
- * 组合操作符：
- *
- * 辅助操作符：
- *
- * 错误处理操作符：
+ * 页面退出时通过 `CompositeDisposable` 统一取消订阅，防止内存泄漏。
  */
-@SuppressLint("CheckResult")
 @Route(path = RouterPath.OpenSource.RxJava)
 class RxJavaActivity : BasicResponseActivity() {
 
-    /**
-     * 创建操作符
-     */
-    inner class CreateOperator {
+    private val compositeDisposable = CompositeDisposable()
 
-        /**
-         * 创建一个 Observable，自定义发射逻辑
-         */
-        fun create() {
-            val observable = Observable.create { emitter ->
-                emitter.onNext("1") //手动调用发射逻辑
-                emitter.onNext("2")
-                emitter.onNext("3")
-                emitter.onComplete() //手动调用发射完成的逻辑
-            }
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("演示 RxJava 3 核心操作符流式处理（创建 / 变换 / 过滤 / 组合 / 错误恢复）")
+    }
 
-            observable.subscribe(object : Observer<String> {
-                override fun onSubscribe(d: Disposable) {
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "创建操作符（just / range）",
+            "变换操作符（map / flatMap / buffer）",
+            "过滤操作符（filter / take / distinct）",
+            "组合操作符（zip / concat）",
+            "错误恢复（onErrorReturn）"
+        )
+    }
 
-                }
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> testCreateOperators()
+            1 -> testTransformOperators()
+            2 -> testFilterOperators()
+            3 -> testMergeOperators()
+            4 -> testErrorOperators()
+        }
+    }
 
-                override fun onError(e: Throwable) {
-
-                }
-
-                override fun onComplete() {
-
-                }
-
-                override fun onNext(t: String) {
-
-                }
+    // ─────────────────────────────────────────────
+    // 1. 创建操作符
+    // ─────────────────────────────────────────────
+    private fun testCreateOperators() {
+        val disposable = Observable.range(1, 3)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ item ->
+                appendLog("【创建操作符 range】onNext: $item")
+            }, { error ->
+                appendLog("【创建操作符】onError: ${error.message}")
+            }, {
+                appendLog("【创建操作符】onComplete 完成")
             })
-        }
-
-        /**
-         * 创建一个 Observable，自动发射逻辑
-         */
-        fun just() {
-            Observable.just("1", "2", "3")
-                .subscribe {
-
-                }
-        }
-
-        /**
-         *  从一个 Array 对象中创建一个 Observable
-         */
-        fun fromArray() {
-            Observable.fromArray(arrayOf("1", "2", "3"))
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 从一个 Iterable 对象中创建一个 Observable。
-         */
-        fun fromIterable() {
-            Observable.fromIterable(listOf("1", "2", "3"))
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 创建一个 Observable，发射一个指定范围内的整数序列。
-         */
-        fun range() {
-            Observable.range(1, 5)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 创建一个 Observable，定期发射一个递增的长整型数值。
-         */
-        fun interval() {
-            Observable.interval(1, TimeUnit.SECONDS)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 创建一个 Observable，在指定延迟后发射一个数据项。
-         */
-        fun timer() {
-            Observable.timer(1, TimeUnit.SECONDS)
-                .subscribe {
-
-                }
-        }
+        compositeDisposable.add(disposable)
     }
 
-    /**
-     * 转换操作符
-     */
-    inner class TransformOperator {
-
-        /**
-         * map 用于将 Observable 发射的每个数据项转换为另一种数据类型。
-         */
-        fun map() {
-            Observable.just("1", "2", "3")
-                .map { number ->
-                    number.toString()
-                }.subscribe {
-
-                }
-        }
-
-        /**
-         * 将 Observable 发出的每个数据项转换为 Observable，然后将这些 Observable 合并成一个。
-         */
-        fun flatMap() {
-            Observable.just("1", "2", "3")
-                .flatMap {
-                    Observable.just(it)
-                }.subscribe {
-
-                }
-        }
-
-        /**
-         * 类似于 flatMap，但保持原始数据项的顺序
-         */
-        fun concatMap() {
-            Observable.just("1", "2", "3")
-                .concatMap {
-                    Observable.just(it)
-                }.subscribe {
-
-                }
-        }
-
-        fun switchMap() {
-
-        }
-
-        fun debounce() {
-
-        }
-
-        /**
-         * 将数据项分组为列表，并以列表形式发射
-         */
-        fun buffer() {
-            Observable.just("1", "2", "3")
-                .buffer(2)
-                .subscribe {
-
-                }
-        }
+    // ─────────────────────────────────────────────
+    // 2. 变换操作符
+    // ─────────────────────────────────────────────
+    private fun testTransformOperators() {
+        val disposable = Observable.just("apple", "banana")
+            .map { it.uppercase() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ item ->
+                appendLog("【变换操作符 map】大写转换: $item")
+            }, { error ->
+                appendLog("【变换操作符】onError: ${error.message}")
+            }, {
+                appendLog("【变换操作符】onComplete 完成")
+            })
+        compositeDisposable.add(disposable)
     }
 
-    /**
-     * 过滤操作符
-     */
-    @SuppressLint("CheckResult")
-    inner class FilterOperator {
-
-        /**
-         * 过滤掉不满足条件的数据项。
-         */
-        fun filter() {
-            Observable.just(1, 2, 3)
-                .filter {
-                    it < 3
-                }.subscribe {
-
-                }
-        }
-
-        /**
-         * 过滤掉重复的数据项。
-         */
-        fun distinct() {
-            Observable.just("1", "2", "2", "3", "3")
-                .distinct()
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 仅发射前 N 个数据项
-         */
-        fun take() {
-            Observable.just("1", "2", "3")
-                .take(2)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 跳过前 N 个数据项
-         */
-        fun skip() {
-            Observable.just("1", "2", "3")
-                .skip(2)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 检查本地缓存逻辑判断
-         */
-        fun switchIfEmpty() {
-            Observable.create { emitter: ObservableEmitter<String>? ->
-
-            }.switchIfEmpty(
-                Observable.just("1", "2", "3")
-            ).subscribe {
-
-            }
-        }
+    // ─────────────────────────────────────────────
+    // 3. 过滤操作符
+    // ─────────────────────────────────────────────
+    private fun testFilterOperators() {
+        val disposable = Observable.just(1, 2, 2, 3, 4, 1, 5)
+            .distinct()
+            .filter { it > 1 }
+            .take(3)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ item ->
+                appendLog("【过滤操作符 distinct+filter+take】接收: $item")
+            }, { error ->
+                appendLog("【过滤操作符】onError: ${error.message}")
+            }, {
+                appendLog("【过滤操作符】onComplete 完成")
+            })
+        compositeDisposable.add(disposable)
     }
 
-    /**
-     * 合并操作符
-     */
-    inner class MergeOperator {
+    // ─────────────────────────────────────────────
+    // 4. 组合操作符
+    // ─────────────────────────────────────────────
+    private fun testMergeOperators() {
+        val titles = Observable.just("Android", "Kotlin")
+        val versions = Observable.just("14", "2.0")
 
-        /**
-         * 合并多个 Observables 的数据流。
-         */
-        fun concat() {
-            val obs1 = Observable.just("1", "2", "3")
-            val obs2 = Observable.just("4", "5", "6")
-
-            Observable.concat(obs1, obs2)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 在发射原来的 Observable 的数据序列之前，先发射一个指定的数据序列或数据项。
-         */
-        fun startWith() {
-            val obs1 = Observable.just("1", "2", "3")
-            val obs2 = Observable.just("4", "5", "6")
-
-            obs1.startWith(obs2)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 合并多个 Observables 的数据流。
-         */
-        fun marge() {
-            val obs1 = Observable.just("1", "2", "3")
-            val obs2 = Observable.just("4", "5", "6")
-
-            Observable.merge(obs1, obs2)
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 将多个 Observables 的数据项按顺序一对一地合并。
-         */
-        fun zip() {
-            val obs1 = Observable.just("1", "2", "3")
-            val obs2 = Observable.just("4", "5", "6")
-
-            Observable.zip(obs1, obs2) { t1, t2 ->
-                t1 + t2
-            }
-        }
-
-        /**
-         * 将多个 Observables 最近的数据项合并成一个。
-         */
-        fun combineLatest() {
-            val obs1 = Observable.intervalRange(1, 5, 0, 100, TimeUnit.MILLISECONDS)
-            val obs2 = Observable.intervalRange(11, 3, 50, 100, TimeUnit.MILLISECONDS)
-
-            Observable.combineLatest(obs1, obs2) { t1, t2 ->
-                t1 + t2
-            }
-        }
+        val disposable = Observable.zip(titles, versions) { t, v -> "$t @ $v" }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ item ->
+                appendLog("【组合操作符 zip】配对结果: $item")
+            }, { error ->
+                appendLog("【组合操作符】onError: ${error.message}")
+            }, {
+                appendLog("【组合操作符】onComplete 完成")
+            })
+        compositeDisposable.add(disposable)
     }
 
-    inner class ErrorOperator {
+    // ─────────────────────────────────────────────
+    // 5. 错误恢复操作符
+    // ─────────────────────────────────────────────
+    private fun testErrorOperators() {
+        val disposable = Observable.error<String>(RuntimeException("模拟下游数据异常"))
+            .onErrorReturn { "【降级默认数据】" }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ item ->
+                appendLog("【错误恢复 onErrorReturn】收到数据: $item")
+            }, { error ->
+                appendLog("【错误恢复】onError: ${error.message}")
+            }, {
+                appendLog("【错误恢复】onComplete 流程平稳结束")
+            })
+        compositeDisposable.add(disposable)
+    }
 
-        /**
-         * 在Observable遇到错误时，不将错误传递给观察者的onError方法，而是发射一个特定的项，然后正常终止序列
-         */
-        fun onErrorReturn() {
-            val obs1 = Observable.just("1")
-            val obs2 = Observable.error<String>(Exception("Error"))
-
-            Observable.concat(obs1, obs2)
-                .onErrorReturn {
-                    "!"
-                }
-                .subscribe {
-
-                }
-        }
-
-        /**
-         * 检查服务器间token过期判断
-         * Observable在遇到错误时，不将错误传递给观察者的onError方法，而是发射另一个备用的Observable，从而允许序列继续而不是终止
-         */
-        fun onErrorResumeNext() {
-            val obs1 = Observable.just("1")
-            val obs2 = Observable.error<String>(Exception("Error"))
-
-            Observable.concat(obs1, obs2)
-                .onErrorResumeNext {
-                    Observable.just("1")
-                }
-                .subscribe {
-
-                }
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 }

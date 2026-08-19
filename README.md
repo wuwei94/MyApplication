@@ -257,6 +257,8 @@ Kotlin 语言特性在 Android 上的实践。
 
 - Coroutines 协程（结构化并发、异常处理、线程切换）
 - Flow 数据流（StateFlow / SharedFlow / 操作符链）
+- Delegate 属性委托与类委托（lazy / observable / vetoable / map）
+- Inline 内联函数与泛型实化（reified / scope functions）
 
 ### module_jetpack（Jetpack 组件库）
 

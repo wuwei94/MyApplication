@@ -293,6 +293,8 @@
 |----------|------|
 | CoroutinesActivity | Kotlin 协程 |
 | FlowActivity | Kotlin Flow 数据流 |
+| MyDelegateActivity | Kotlin 委托属性与类委托 |
+| MyInlineActivity | Kotlin 内联函数与泛型实化 |
 
 ---
 
