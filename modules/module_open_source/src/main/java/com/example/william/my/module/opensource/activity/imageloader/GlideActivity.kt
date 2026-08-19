@@ -11,13 +11,32 @@ import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Glide 4 图片加载框架演示
+ * Glide 4 — 高性能图片加载框架
+ *
+ * Glide 是 Android 最流行的图片加载框架，由 Google 推荐使用。
  *
  * 核心特性：
- * 1. 完善的多级内存/磁盘缓存机制。
- * 2. 丰富的图像变换（circleCrop、RoundedCorners、centerCrop 等）。
- * 3. 动画与渐变过渡（DrawableTransitionOptions.withCrossFade）。
- * 4. 自动感知 Activity / Fragment 生命周期。
+ * 1. 多级缓存：内存缓存 + 磁盘缓存，自动管理缓存生命周期
+ * 2. 丰富的变换：circleCrop（圆形裁剪）、RoundedCorners（圆角）、centerCrop（居中裁剪）等
+ * 3. 生命周期感知：自动绑定 Activity/Fragment 生命周期，避免内存泄漏
+ * 4. 渐变动画：支持 crossFade 等过渡动画，提升用户体验
+ *
+ * 基本用法：
+ * ```kotlin
+ * Glide.with(context)
+ *     .load(url)
+ *     .placeholder(R.drawable.placeholder)  // 占位图
+ *     .error(R.drawable.error)              // 错误图
+ *     .circleCrop()                         // 圆形裁剪
+ *     .into(imageView)
+ * ```
+ *
+ * 适用场景：
+ * - 列表/网格中的图片加载
+ * - 用户头像、商品图片等需要圆形/圆角显示
+ * - 需要缓存和生命周期管理的场景
+ *
+ * https://github.com/bumptech/glide
  */
 @Route(path = RouterPath.OpenSource.Glide)
 class GlideActivity : BasicImageActivity() {

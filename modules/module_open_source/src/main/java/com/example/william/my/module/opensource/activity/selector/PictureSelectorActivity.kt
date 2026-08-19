@@ -17,6 +17,35 @@ import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 
 /**
+ * PictureSelector — 图片选择器
+ *
+ * PictureSelector 是一个功能强大的图片选择库，支持图片、视频、音频的选择和预览。
+ *
+ * 核心特性：
+ * 1. 多媒体选择：支持图片、视频、音频的选择
+ * 2. 丰富的配置：支持裁剪、压缩、过滤等配置
+ * 3. 预览功能：支持图片、视频的预览和删除
+ * 4. 多种来源：支持相册、拍照、录像等多种来源
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 打开相册选择图片
+ * PictureSelector.create(this)
+ *     .openGallery(SelectMimeType.ofImage())
+ *     .setImageEngine(GlideEngine.createGlideEngine())
+ *     .forResult(object : OnResultCallbackListener<LocalMedia?> {
+ *         override fun onResult(result: ArrayList<LocalMedia?>) {
+ *             // 处理选择结果
+ *         }
+ *         override fun onCancel() {}
+ *     })
+ * ```
+ *
+ * 适用场景：
+ * - 用户头像、商品图片选择
+ * - 图片上传、分享功能
+ * - 多媒体内容管理
+ *
  * https://github.com/LuckSiege/PictureSelector
  */
 @Route(path = RouterPath.OpenSource.PictureSelector)

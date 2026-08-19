@@ -11,10 +11,24 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * NotificationChannel 通知渠道创建与通知发送
+ * 通知渠道 — NotificationChannel 创建与通知发送
  *
- * Android 8.0 (API 26) 起，所有通知必须绑定到 NotificationChannel。
- * 本示例演示：自动创建渠道并发送通知。
+ * Android 8.0（API 26）起，所有通知必须绑定到 NotificationChannel。
+ * 用户可以在系统设置中按渠道精细控制通知行为（如是否振动、是否显示角标等）。
+ *
+ * 核心原理：
+ * 1. 创建 NotificationChannel（id + name + importance）
+ *    - IMPORTANCE_HIGH：弹出悬浮通知 + 提示音（适合即时消息）
+ *    - IMPORTANCE_DEFAULT：有提示音但不弹出（适合一般推送）
+ *    - IMPORTANCE_LOW：无提示音无弹出（适合后台进度）
+ * 2. NotificationManager.createNotificationChannel() 注册渠道（重复调用安全）
+ * 3. 通过 NotificationCompat.Builder(context, channelId) 构建通知并绑定渠道
+ * 4. NotificationManager.notify(id, notification) 发送通知，相同 id 会替换旧通知
+ *
+ * 适用场景：
+ * - 应用通知发送的标准实现
+ * - 多渠道分类管理通知（如聊天、系统、营销等不同渠道）
+ * - Android 8.0+ 通知兼容性适配
  */
 @Route(path = RouterPath.System.Notification)
 class NotificationActivity : BasicResponseActivity() {

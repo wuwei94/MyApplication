@@ -10,7 +10,37 @@ import com.google.gson.Gson
 import io.objectbox.Box
 
 /**
- * https://objectbox.io/
+ * ObjectBox — 高性能移动数据库
+ *
+ * ObjectBox 是一个高性能的移动数据库，专为 Android 和 IoT 设备优化。
+ *
+ * 核心特性：
+ * 1. 高性能：比 SQLite 快 10 倍，比 Room 快 2 倍
+ * 2. 轻量级：APK 体积小，内存占用低
+ * 3. 对象存储：直接存储对象，无需 ORM 映射
+ * 4. 跨平台：支持 Android、iOS、Linux、Windows
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 初始化
+ * val boxStore = MyObjectBox.builder().androidContext(context).build()
+ *
+ * // 获取 Box
+ * val notesBox = boxStore.boxFor(Note::class.java)
+ *
+ * // 插入数据
+ * val note = Note(text = "Hello ObjectBox")
+ * notesBox.put(note)
+ *
+ * // 查询数据
+ * val notes = notesBox.all
+ * ```
+ *
+ * 适用场景：
+ * - 本地数据存储、缓存
+ * - 离线应用、数据同步
+ * - 需要高性能数据库的场景
+ *
  * https://github.com/objectbox/objectbox-java
  */
 @Route(path = RouterPath.OpenSource.ObjectBox)

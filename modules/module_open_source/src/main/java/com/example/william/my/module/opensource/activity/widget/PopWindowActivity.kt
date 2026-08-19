@@ -10,7 +10,32 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRespons
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * PopupWindow 演示
+ * PopupWindow — 弹出窗口演示
+ *
+ * PopupWindow 是 Android 原生的弹出窗口组件，可在任意位置显示浮层。
+ *
+ * 核心特性：
+ * 1. 灵活定位：可相对于锚点 View 显示在任意位置
+ * 2. 自定义布局：支持自定义布局内容
+ * 3. 焦点控制：可设置是否获取焦点、是否可点击外部关闭
+ * 4. 动画支持：可自定义显示/隐藏动画
+ *
+ * 基本用法：
+ * ```kotlin
+ * val popupWindow = PopupWindow(
+ *     contentView,           // 内容布局
+ *     width,                 // 宽度
+ *     height,                // 高度
+ *     focusable              // 是否可聚焦
+ * )
+ * popupWindow.isOutsideTouchable = true  // 点击外部可关闭
+ * popupWindow.showAsDropDown(anchorView)  // 相对于锚点显示
+ * ```
+ *
+ * 适用场景：
+ * - 下拉菜单、筛选菜单
+ * - 提示气泡、引导提示
+ * - 自定义弹窗、对话框
  */
 @Route(path = RouterPath.OpenSource.PopWindow)
 class PopWindowActivity : BasicResponseActivity() {

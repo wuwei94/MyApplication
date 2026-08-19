@@ -10,15 +10,28 @@ import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * AnimatorSet — 动画组合
+ * AnimatorSet — 动画组合与编排
  *
- * 将多个 Animator 组合在一起，控制它们的播放顺序和并发关系。
- * 比 AnimatorSet.playSequentially() 更精细的编排可用 AnimatorSet.Builder。
+ * 将多个 Animator（ObjectAnimator / ValueAnimator 等）组合在一起，
+ * 精确控制它们的播放顺序和并发关系。支持顺序播放、同时播放和自定义编排三种模式。
  *
- * 三种组合方式：
- * 1. playSequentially() — 顺序播放
- * 2. playTogether() — 同时播放
- * 3. AnimatorSet.Builder — 精细编排（with / before / after）
+ * 核心原理：
+ * 1. **playSequentially(animator1, animator2, ...)** — 顺序播放
+ *    - 按传入顺序依次执行，前一个结束后才开始下一个
+ * 2. **playTogether(animator1, animator2, ...)** — 同时播放
+ *    - 所有动画在同一时刻开始，同时执行
+ * 3. **AnimatorSet.Builder** — 精细编排
+ *    - play(a).with(b) — a 和 b 同时播放
+ *    - play(a).before(b) — a 在 b 之前播放
+ *    - play(a).after(b) — a 在 b 之后播放
+ *    - 可链式组合，构建复杂的动画时序
+ *
+ * 适用场景：
+ * - 多个属性动画需要协同播放（如先缩放再旋转）
+ * - 复杂的入场 / 出场动画编排
+ * - 模拟 Material Design 的联动动画效果
+ *
+ * @see ObjectAnimatorActivity 单个属性动画基础
  */
 @Route(path = RouterPath.Anim.AnimatorSet)
 class AnimatorSetActivity : BasicImageActivity() {

@@ -24,7 +24,58 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
- * Paging
+ * Paging — 分页加载框架
+ *
+ * Paging 是 Android Jetpack 提供的分页加载框架，用于高效加载大量数据。
+ *
+ * 核心特性：
+ * 1. 高效加载：只加载当前页面需要的数据，减少内存占用
+ * 2. 自动分页：自动处理分页逻辑，支持上拉加载更多
+ * 3. 缓存机制：支持数据缓存，提升用户体验
+ * 4. 多数据源：支持网络、数据库、内存等多种数据源
+ *
+ * 核心组件：
+ * 1. PagingSource：数据源，负责加载数据
+ * 2. PagingData：分页数据，包含当前页的数据
+ * 3. Pager：分页器，负责创建 PagingData
+ * 4. PagingDataAdapter：适配器，负责绑定数据到 View
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建 PagingSource
+ * class MyPagingSource : PagingSource<Int, Item>() {
+ *     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Item> {
+ *         val page = params.key ?: 1
+ *         val response = api.getItems(page, params.loadSize)
+ *         return LoadResult.Page(
+ *             data = response.items,
+ *             prevKey = if (page == 1) null else page - 1,
+ *             nextKey = if (response.items.isEmpty()) null else page + 1
+ *         )
+ *     }
+ * }
+ *
+ * // 创建 Pager
+ * val pager = Pager(PagingConfig(pageSize = 20)) {
+ *     MyPagingSource()
+ * }.flow
+ *
+ * // 在 ViewModel 中
+ * val items: Flow<PagingData<Item>> = pager.cachedIn(viewModelScope)
+ *
+ * // 在 Activity 中
+ * lifecycleScope.launch {
+ *     viewModel.items.collectLatest { pagingData ->
+ *         adapter.submitData(pagingData)
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 列表分页加载
+ * - 下拉刷新、上拉加载更多
+ * - 大量数据展示
+ *
  * https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
  */
 @Route(path = RouterPath.Jetpack.Paging)

@@ -7,12 +7,35 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.tencent.mmkv.MMKV
 
 /**
- * 腾讯 MMKV 高性能键值存储框架演示
+ * MMKV — 高性能键值存储框架
+ *
+ * MMKV 是腾讯开源的高性能键值存储库，基于 mmap 内存映射实现。
  *
  * 核心特性：
- * 1. 基于 mmap 内存映射，读写性能远超系统原生 SharedPreferences。
- * 2. 支持多进程并发访问与数据同步。
- * 3. 支持跨平台及丰富的基本类型与二进制数据存取。
+ * 1. 高性能：基于 mmap 内存映射，读写性能远超 SharedPreferences
+ * 2. 多进程支持：支持多进程并发访问与数据同步
+ * 3. 跨平台：支持 Android、iOS、Windows、macOS 等平台
+ * 4. 数据安全：支持数据加密，保障数据安全
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 初始化
+ * MMKV.initialize(context)
+ *
+ * // 写入数据
+ * val kv = MMKV.defaultMMKV()
+ * kv.encode("key", "value")
+ *
+ * // 读取数据
+ * val value = kv.decodeString("key", "default")
+ * ```
+ *
+ * 适用场景：
+ * - 替代 SharedPreferences，提升性能
+ * - 多进程数据共享
+ * - 需要高性能键值存储的场景
+ *
+ * https://github.com/Tencent/MMKV
  */
 @Route(path = RouterPath.OpenSource.MMKV)
 class MMKVActivity : BasicResponseActivity() {

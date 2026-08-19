@@ -16,10 +16,48 @@ import com.example.william.my.module.component.service.MyMessageService
 import java.lang.ref.WeakReference
 
 /**
- * Messenger 跨进程通信（IPC）
+ * Messenger — 跨进程通信（IPC）
  *
- * 演示使用 Messenger 在 Activity 和 Service 之间进行跨进程通信。
- * Service 通过 Message.replyTo 将客户端 Messenger 返回，实现双向通信。
+ * Messenger 是 Android 提供的轻量级 IPC 方案，基于 Handler 实现。
+ *
+ * 核心特性：
+ * 1. 简单易用：基于 Handler，学习成本低
+ * 2. 串行处理：消息排队处理，避免并发问题
+ * 3. 双向通信：通过 Message.replyTo 实现双向通信
+ * 4. 跨进程：支持不同进程间通信
+ *
+ * 与 AIDL 的区别：
+ * - Messenger：串行处理，简单易用，适合轻量级通信
+ * - AIDL：并行处理，功能强大，适合复杂通信
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 服务端
+ * class MyService : Service() {
+ *     private val messenger = Messenger(IncomingHandler())
+ *
+ *     override fun onBind(intent: Intent): IBinder {
+ *         return messenger.binder
+ *     }
+ * }
+ *
+ * // 客户端
+ * val connection = object : ServiceConnection {
+ *     override fun onServiceConnected(name: ComponentName, service: IBinder) {
+ *         val messenger = Messenger(service)
+ *         val msg = Message.obtain().apply {
+ *             what = MSG_CODE
+ *             replyTo = clientMessenger  // 设置回复 Messenger
+ *         }
+ *         messenger.send(msg)
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 跨进程通信
+ * - Activity 与 Service 通信
+ * - 轻量级 IPC 需求
  */
 @Route(path = RouterPath.Component.Messenger)
 class MessengerActivity : BasicResponseActivity() {

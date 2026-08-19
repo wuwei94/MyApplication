@@ -23,15 +23,29 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * RenderEffect 模糊 — Android 12+（API 31）
+ * RenderEffect 模糊 — Android 12+ 推荐方案
  *
- * 两种方案：
- * 1. View.setRenderEffect() — 直接对 View 应用模糊，代码最简
- * 2. HardwareRenderer 离屏渲染 — 输出为 Bitmap，可保存/分享
+ * Android 12（API 31）引入 RenderEffect，是 RenderScript 的官方替代方案。
+ * 本示例演示两种模糊实现方式及其适用场景。
  *
- * RenderEffect.createBlurEffect(radius, radius, TileMode)
- * - radius: 模糊半径，范围 0.1 ~ 25.0
- * - TileMode: CLAMP（边缘自然过渡，推荐）/ REPEAT / MIRROR
+ * 核心原理：
+ * 1. **View.setRenderEffect()** — 直接对 View 应用 GPU 加速模糊，代码最简
+ *    - 内部由 RenderThread 异步执行，不阻塞 UI 线程
+ *    - 模糊结果直接渲染到 View 层级，无法导出为 Bitmap
+ * 2. **HardwareRenderer 离屏渲染** — 将 Bitmap 渲染到 RenderNode，应用模糊后输出为新 Bitmap
+ *    - 使用 ImageReader + HardwareBuffer 获取 GPU 渲染结果
+ *    - 适合需要保存 / 分享模糊图的场景
+ *
+ * RenderEffect.createBlurEffect(radiusX, radiusY, TileMode)
+ * - radiusX / radiusY：模糊半径，范围 0.1 ~ 25.0
+ * - TileMode：CLAMP（边缘自然过渡，推荐）/ REPEAT / MIRROR
+ *
+ * 适用场景：
+ * - 毛玻璃效果（弹窗、底部 Sheet 背景模糊）
+ * - 图片模糊处理并保存
+ * - 替代已废弃的 RenderScript 模糊方案
+ *
+ * @see RenderScriptActivity RenderScript 模糊方案（已废弃）
  */
 @Route(path = RouterPath.Anim.RenderEffect)
 class RenderEffectActivity : BasicImageActivity() {

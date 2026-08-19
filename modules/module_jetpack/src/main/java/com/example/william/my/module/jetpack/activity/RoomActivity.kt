@@ -13,7 +13,52 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 /**
- * Room
+ * Room — 数据库持久化框架
+ *
+ * Room 是 Android Jetpack 提供的数据库持久化框架，在 SQLite 之上提供抽象层。
+ *
+ * 核心特性：
+ * 1. 编译时验证：在编译时验证 SQL 语句，减少运行时错误
+ * 2. 注解驱动：使用注解定义数据库结构，简化代码
+ * 3. LiveData/Flow 支持：支持响应式查询，数据变化自动通知
+ * 4. 迁移支持：支持数据库版本迁移，避免数据丢失
+ *
+ * 核心组件：
+ * 1. @Entity：定义数据库表结构
+ * 2. @Dao：定义数据访问对象，包含查询方法
+ * 3. @Database：定义数据库，包含版本号和实体列表
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 定义实体
+ * @Entity
+ * data class User(
+ *     @PrimaryKey val uid: Int,
+ *     @ColumnInfo(name = "first_name") val firstName: String?
+ * )
+ *
+ * // 定义 DAO
+ * @Dao
+ * interface UserDao {
+ *     @Query("SELECT * FROM user")
+ *     fun getAll(): List<User>
+ *
+ *     @Insert
+ *     fun insertAll(vararg users: User)
+ * }
+ *
+ * // 定义数据库
+ * @Database(entities = [User::class], version = 1)
+ * abstract class AppDatabase : RoomDatabase() {
+ *     abstract fun userDao(): UserDao
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 本地数据持久化
+ * - 离线数据缓存
+ * - 复杂数据查询
+ *
  * https://developer.android.google.cn/jetpack/androidx/releases/room
  */
 @Route(path = RouterPath.Jetpack.Room)

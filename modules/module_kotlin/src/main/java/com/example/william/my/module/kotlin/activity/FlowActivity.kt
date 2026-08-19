@@ -15,7 +15,40 @@ import com.example.william.my.module.kotlin.viewmodel.FlowViewModel
 import kotlinx.coroutines.launch
 
 /**
- * Android 上的 Kotlin 数据流
+ * Kotlin Flow — 响应式数据流
+ *
+ * Flow 是 Kotlin 协程的响应式数据流，用于处理异步数据流。
+ *
+ * 核心特性：
+ * 1. 冷流：只有在收集时才会执行，避免资源浪费
+ * 2. 顺序执行：数据按顺序发射，保证数据一致性
+ * 3. 协程支持：基于协程，支持挂起函数
+ * 4. 生命周期感知：结合 repeatOnLifecycle，自动管理订阅
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建 Flow
+ * fun fetchData(): Flow<String> = flow {
+ *     emit("Loading...")
+ *     delay(1000)
+ *     emit("Data loaded")
+ * }
+ *
+ * // 收集 Flow
+ * lifecycleScope.launch {
+ *     repeatOnLifecycle(Lifecycle.State.STARTED) {
+ *         fetchData().collect { value ->
+ *             // 处理数据
+ *         }
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 网络请求、数据库查询等异步操作
+ * - 数据流处理、事件流处理
+ * - 需要生命周期感知的场景
+ *
  * https://developer.android.google.cn/kotlin/flow
  */
 @Route(path = RouterPath.Kotlin.Flow)

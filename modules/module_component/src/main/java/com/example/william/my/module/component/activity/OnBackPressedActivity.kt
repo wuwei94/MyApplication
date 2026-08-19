@@ -7,14 +7,43 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * OnBackPressedDispatcher 返回键拦截
+ * OnBackPressedDispatcher — 返回键拦截
  *
- * 演示使用 OnBackPressedCallback 拦截返回键操作。
- * Android 13+ 推荐使用 OnBackPressedDispatcher 替代已废弃的 onBackPressed()。
+ * OnBackPressedDispatcher 是 AndroidX 提供的返回键拦截 API，替代已废弃的 onBackPressed()。
+ *
+ * 核心特性：
+ * 1. 生命周期感知：自动处理生命周期，避免内存泄漏
+ * 2. 优先级控制：支持多个回调，按优先级执行
+ * 3. 动态启用/禁用：支持动态启用或禁用回调
+ * 4. 代码简洁：无需重写 onBackPressed，代码更简洁
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建回调
+ * val callback = object : OnBackPressedCallback(true) {
+ *     override fun handleOnBackPressed() {
+ *         // 处理返回键
+ *     }
+ * }
+ *
+ * // 添加回调
+ * onBackPressedDispatcher.addCallback(this, callback)
+ *
+ * // 禁用回调
+ * callback.isEnabled = false
+ *
+ * // 移除回调
+ * callback.remove()
+ * ```
  *
  * 页面逻辑：
  * - 点击「拦截返回键」：注册回调，按返回键时显示 Toast 并关闭页面
  * - 点击「取消拦截」：移除回调，按返回键正常返回
+ *
+ * 适用场景：
+ * - 拦截返回键操作
+ * - 自定义返回逻辑
+ * - 多个返回键处理优先级
  */
 @Route(path = RouterPath.Component.OnBackPressed)
 class OnBackPressedActivity : BasicResponseActivity() {

@@ -9,16 +9,31 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
- * RxJava 3 核心响应式操作符演示
+ * RxJava 3 — 响应式编程框架
  *
- * 覆盖：
- * 1. 创建操作符：`just`、`fromArray`、`range`。
- * 2. 变换操作符：`map`、`flatMap`、`buffer`。
- * 3. 过滤操作符：`filter`、`take`、`distinct`。
- * 4. 组合操作符：`concat`、`merge`、`zip`。
- * 5. 错误处理操作符：`onErrorReturn`、`onErrorResumeNext`。
+ * RxJava 是一个基于观察者模式的异步编程库，提供丰富的操作符处理数据流。
  *
- * 页面退出时通过 `CompositeDisposable` 统一取消订阅，防止内存泄漏。
+ * 核心特性：
+ * 1. 响应式编程：基于观察者模式，优雅处理异步数据流
+ * 2. 丰富的操作符：提供创建、变换、过滤、组合等操作符
+ * 3. 线程调度：灵活的线程切换，简化多线程编程
+ * 4. 错误处理：完善的错误处理机制，支持重试、降级
+ *
+ * 基本用法：
+ * ```kotlin
+ * Observable.just("Hello", "World")
+ *     .map { it.uppercase() }
+ *     .subscribeOn(Schedulers.io())
+ *     .observeOn(AndroidSchedulers.mainThread())
+ *     .subscribe { item -> Log.d("TAG", item) }
+ * ```
+ *
+ * 适用场景：
+ * - 网络请求、数据库操作等异步任务
+ * - 多个数据源组合、链式处理
+ * - 复杂的异步业务逻辑
+ *
+ * https://github.com/ReactiveX/RxJava
  */
 @Route(path = RouterPath.OpenSource.RxJava)
 class RxJavaActivity : BasicResponseActivity() {

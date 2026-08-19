@@ -14,10 +14,41 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * 原生 Retrofit + 协程方式
+ * Retrofit + 协程 — 现代化网络请求
+ *
+ * 使用 Kotlin 协程的 Retrofit 网络请求方式，是 Google 推荐的方式。
+ *
+ * 核心特性：
+ * 1. 协程支持：使用 suspend 函数，代码更简洁
+ * 2. 生命周期感知：结合 lifecycleScope，自动取消请求
+ * 3. 错误处理：使用 try-catch 处理异常
+ * 4. 代码简洁：比回调方式更易读
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 定义 API 接口
+ * interface ApiService {
+ *     @POST("login")
+ *     suspend fun login(@Body body: LoginRequest): LoginResponse
+ * }
+ *
+ * // 发起请求
+ * lifecycleScope.launch {
+ *     try {
+ *         val response = api.login(request)
+ *         // 处理成功
+ *     } catch (e: Exception) {
+ *         // 处理失败
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - Kotlin 协程项目
+ * - 需要现代化网络请求方式
+ * - 需要生命周期感知的场景
  *
  * https://square.github.io/retrofit
- * https://github.com/square/retrofit
  */
 @Route(path = RouterPath.OkHttp.RetrofitCoroutine)
 class RetrofitCoroutineActivity : BasicResponseActivity() {

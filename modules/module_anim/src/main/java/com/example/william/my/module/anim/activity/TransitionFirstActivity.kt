@@ -14,16 +14,40 @@ import com.example.william.my.module.anim.R
 import com.example.william.my.module.anim.databinding.AnimActivityTransitionFirstBinding
 
 /**
- * Activity 跳转过渡动画 — 选择页
+ * Activity 跳转过渡动画 — 窗口过渡效果
  *
- * 演示 Activity 之间的窗口过渡效果（Window Transitions）。
- * 通过 Intent extra 传递过渡类型，在目标 Activity 中设置 window.enterTransition。
+ * 演示 Activity 之间的窗口过渡效果（Window Transitions），提升用户体验。
  *
  * 四种过渡方式：
- * - Explode — 元素从屏幕四周爆炸散开
- * - Slide — 内容从边缘滑入
- * - Fade — 内容淡入
- * - Shared Element — 共享元素过渡（View 到 View 的连续动画）
+ * 1. Explode：元素从屏幕四周爆炸散开
+ * 2. Slide：内容从边缘滑入
+ * 3. Fade：内容淡入
+ * 4. Shared Element：共享元素过渡（View 到 View 的连续动画）
+ *
+ * 核心特性：
+ * 1. 平滑过渡：Activity 切换时提供平滑的视觉过渡
+ * 2. 共享元素：支持两个 Activity 之间共享元素的连续动画
+ * 3. 自定义过渡：可自定义过渡效果和时长
+ * 4. 兼容性好：支持 Android 5.0+（API 21+）
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 普通过渡
+ * val options = ActivityOptions.makeSceneTransitionAnimation(this)
+ * startActivity(intent, options.toBundle())
+ *
+ * // 共享元素过渡
+ * val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+ *     this,
+ *     Pair(sharedView, "transitionName")
+ * )
+ * startActivity(intent, options.toBundle())
+ * ```
+ *
+ * 适用场景：
+ * - Activity 切换动画
+ * - 页面跳转过渡效果
+ * - 共享元素连续动画
  */
 @Route(path = RouterPath.Anim.Transition)
 class TransitionFirstActivity : BaseVBActivity<AnimActivityTransitionFirstBinding>(),

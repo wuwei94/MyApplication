@@ -9,13 +9,49 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 权限请求工具类演示
+ * PermissionUtils — 权限请求工具
  *
- * 演示 BlankJ PermissionUtils 单项权限、权限组与系统特殊权限申请。
+ * BlankJ PermissionUtils 提供便捷的权限申请功能。
  *
- * 注意：
- * 当 targetSdkVersion >= 30 时，如果要申请 ACCESS_BACKGROUND_LOCATION 权限，
- * 需要先申请 ACCESS_FINE_LOCATION 或 ACCESS_COARSE_LOCATION 权限，避免同时申请导致弹窗失效。
+ * 核心特性：
+ * 1. 单项权限：支持单个权限申请
+ * 2. 权限组：支持多个权限组合申请
+ * 3. 系统权限：支持修改系统设置、悬浮窗等特殊权限
+ * 4. 回调机制：提供授权、拒绝、永久拒绝回调
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 申请单个权限
+ * PermissionUtils.permission(PermissionConstants.CAMERA)
+ *     .callback(object : PermissionUtils.FullCallback {
+ *         override fun onGranted(granted: MutableList<String>) {
+ *             // 权限已授予
+ *         }
+ *         override fun onDenied(deniedForever: MutableList<String>, denied: MutableList<String>) {
+ *             // 权限被拒绝
+ *         }
+ *     })
+ *     .request()
+ *
+ * // 申请多个权限
+ * PermissionUtils.permissionGroup(
+ *     PermissionConstants.CAMERA,
+ *     PermissionConstants.STORAGE
+ * )
+ *     .callback(callback)
+ *     .request()
+ * ```
+ *
+ * 注意事项：
+ * - 当 targetSdkVersion >= 30 时，如果要申请 ACCESS_BACKGROUND_LOCATION 权限，
+ *   需要先申请 ACCESS_FINE_LOCATION 或 ACCESS_COARSE_LOCATION 权限，避免同时申请导致弹窗失效。
+ *
+ * 适用场景：
+ * - 运行时权限申请
+ * - 批量权限申请
+ * - 系统特殊权限申请
+ *
+ * https://github.com/Blankj/AndroidUtilCode
  */
 @Route(path = RouterPath.Utils.PermissionUtils)
 class PermissionUtilsActivity : BasicResponseActivity() {

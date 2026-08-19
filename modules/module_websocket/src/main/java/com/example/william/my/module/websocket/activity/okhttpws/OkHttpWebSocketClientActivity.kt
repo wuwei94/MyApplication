@@ -14,8 +14,19 @@ import okio.ByteString
 /**
  * OkHttp WebSocket 客户端示例（普通版本）
  *
- * 演示使用 OkHttpWebSocketClient 封装进行 WebSocket 通信
- * 连接到 echo.websocket.org 服务器
+ * WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，适合实时应用场景。
+ *
+ * 与 HTTP 的区别：
+ * - HTTP：请求-响应模式，单向通信
+ * - WebSocket：全双向通信，服务器可主动推送
+ *
+ * 典型应用场景：
+ * - 实时聊天、即时通讯
+ * - 在线游戏、实时数据推送
+ * - 股票行情、实时监控
+ *
+ * 本示例使用 OkHttpWebSocketClient 封装进行 WebSocket 通信，
+ * 演示连接、发送消息、断开连接的基本操作。
  */
 @Route(path = RouterPath.WebSocket.OkHttpWebSocketClient)
 class OkHttpWebSocketClientActivity : BasicResponseActivity() {

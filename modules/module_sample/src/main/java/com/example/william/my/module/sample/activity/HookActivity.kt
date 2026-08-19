@@ -9,14 +9,26 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.lang.reflect.Proxy
 
 /**
- * 反射 Hook OnClickListener 机制演示
+ * 反射 Hook OnClickListener — 动态代理机制演示
  *
- * 原理：
- * 1. Android 中 View 的点击事件监听器保存在私有内部类 `View.ListenerInfo.mOnClickListener`。
- * 2. 通过反射调用私有方法 `View.getListenerInfo()` 获取 `ListenerInfo` 实例。
- * 3. 获取 `mOnClickListener` 字段并取出原始的 `View.OnClickListener` 对象。
- * 4. 使用 `Proxy.newProxyInstance` 动态代理包装原始 Listener，插入埋点/拦截逻辑。
- * 5. 将代理对象反射写回 `ListenerInfo.mOnClickListener`。
+ * 通过反射和动态代理技术，拦截 View 的点击事件。
+ *
+ * 核心原理：
+ * 1. Android 中 View 的点击事件监听器保存在私有内部类 View.ListenerInfo.mOnClickListener
+ * 2. 通过反射调用私有方法 View.getListenerInfo() 获取 ListenerInfo 实例
+ * 3. 获取 mOnClickListener 字段并取出原始的 View.OnClickListener 对象
+ * 4. 使用 Proxy.newProxyInstance 动态代理包装原始 Listener，插入埋点/拦截逻辑
+ * 5. 将代理对象反射写回 ListenerInfo.mOnClickListener
+ *
+ * 适用场景：
+ * - 埋点统计：统一拦截点击事件，记录用户行为
+ * - 防重放：防止按钮重复点击
+ * - AOP 编程：面向切面编程，解耦业务逻辑
+ *
+ * 注意事项：
+ * - 反射调用有性能损耗，不适合高频调用
+ * - Android 高版本可能限制反射访问私有 API
+ * - 仅用于学习和研究，生产环境慎用
  */
 @Route(path = RouterPath.Sample.Hook)
 class HookActivity : BasicResponseActivity() {

@@ -11,14 +11,40 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * EventBus 3.x 示例
+ * EventBus 3.x — 事件总线框架
  *
- * 演示基于 GreenRobot EventBus 的事件注册、注销、普通事件与粘性事件分发。
+ * EventBus 是一个 Android 事件总线库，简化组件间通信，替代 Intent、Handler 等传统方式。
+ *
+ * 核心特性：
+ * 1. 简化通信：组件间解耦，无需直接引用
+ * 2. 线程切换：支持主线程、后台线程、新线程等多种线程模式
+ * 3. 粘性事件：支持发送粘性事件，新订阅者也能收到
+ * 4. 高性能：基于注解处理，性能优秀
  *
  * 特性对比：
  * 延迟发送: ❌ | 有序接收: ✅ | Sticky: ✅ | 生命周期感知: ❌ | 可跨进程: ❌ | 线程分发: ✅
  *
+ * 基本用法：
+ * ```kotlin
+ * // 注册
+ * EventBus.getDefault().register(this)
+ *
+ * // 发送事件
+ * EventBus.getDefault().post(MessageEvent("Hello"))
+ *
+ * // 订阅事件
+ * @Subscribe(threadMode = ThreadMode.MAIN)
+ * fun onMessageEvent(event: MessageEvent) {
+ *     // 处理事件
+ * }
+ *
+ * // 注销
+ * EventBus.getDefault().unregister(this)
+ * ```
+ *
  * 注意：必须在 onDestroy 中执行 unregister 保底，避免内存泄漏。
+ *
+ * https://github.com/greenrobot/EventBus
  */
 @Route(path = RouterPath.Event.EventBus)
 class EventBusActivity : BasicResponseActivity() {

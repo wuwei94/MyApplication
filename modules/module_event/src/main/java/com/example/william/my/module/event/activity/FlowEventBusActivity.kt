@@ -11,15 +11,39 @@ import com.example.william.my.module.event.event.StickyEvent
 import kotlinx.coroutines.Job
 
 /**
- * Kotlin Flow 事件总线示例
+ * FlowEventBus — 基于 Kotlin Flow 的事件总线
  *
- * 演示基于 Kotlin SharedFlow + repeatOnLifecycle 实现的协程事件总线。
+ * 利用 Kotlin SharedFlow + repeatOnLifecycle 实现的协程事件总线。
+ *
+ * 核心特性：
+ * 1. 协程驱动：基于 Kotlin 协程，性能优秀
+ * 2. 生命周期感知：利用 repeatOnLifecycle 自动管理订阅
+ * 3. 粘性事件：支持粘性事件，使用 SharedFlow 的 replay 参数
+ * 4. 线程安全：协程天然线程安全，无需额外处理
  *
  * 特性对比：
  * 延迟发送: ✅ | 有序接收: ✅ | Sticky: ✅ | 生命周期感知: ✅ | 可跨进程: ❌ | 线程分发: ✅
  *
- * 特性说明：
- * 利用 SharedFlow 结合 repeatOnLifecycle 在指定生命周期（STARTED）自动收集事件并在 STOPPED 时暂停，页面销毁自动取消。
+ * 基本用法：
+ * ```kotlin
+ * // 订阅事件
+ * val job = FlowEventBus.observeEvent<MessageEvent>(this) { event ->
+ *     // 处理事件
+ * }
+ *
+ * // 发送事件
+ * FlowEventBus.postEvent(this, MessageEvent("Hello"))
+ *
+ * // 取消订阅
+ * job.cancel()
+ * ```
+ *
+ * 适用场景：
+ * - Kotlin 项目中的事件通信
+ * - 需要协程支持的场景
+ * - 现代化的 Android 架构
+ *
+ * https://github.com/Kotlin/kotlinx.coroutines
  */
 @Route(path = RouterPath.Event.FlowEventBus)
 class FlowEventBusActivity : BasicResponseActivity() {

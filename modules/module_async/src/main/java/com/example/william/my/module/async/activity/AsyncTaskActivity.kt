@@ -10,6 +10,9 @@ import java.lang.ref.WeakReference
 /**
  * AsyncTask（已废弃）— 异步任务演示
  *
+ * ⚠️ 历史参考：AsyncTask 在 API 30 已废弃，生产代码应使用 Kotlin Coroutines 替代。
+ * 保留此页面作为历史参考，展示废弃 API 的用法。
+ *
  * 泛型参数：<Params, Progress, Result>
  *   - Params: doInBackground 入参类型
  *   - Progress: onProgressUpdate 入参类型（publishProgress 发送）
@@ -17,7 +20,12 @@ import java.lang.ref.WeakReference
  *
  * 回调顺序：onPreExecute → doInBackground → onProgressUpdate → onPostExecute
  *
- * 注意：生产代码应使用 Kotlin Coroutines 替代
+ * 迁移方案：
+ * - 使用 viewModelScope.launch {} 替代 execute()
+ * - 使用 withContext(Dispatchers.IO) 替代 doInBackground
+ * - 使用 Flow 或 LiveData 替代 publishProgress
+ *
+ * @see CoroutinesActivity 协程替代方案
  */
 @Route(path = RouterPath.Async.AsyncTask)
 class AsyncTaskActivity : BasicResponseActivity() {

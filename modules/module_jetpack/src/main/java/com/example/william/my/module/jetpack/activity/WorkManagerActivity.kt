@@ -22,7 +22,45 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 /**
- * WorkManager
+ * WorkManager — 后台任务调度框架
+ *
+ * WorkManager 是 Android Jetpack 提供的后台任务调度框架，用于处理可靠的后台工作。
+ *
+ * 核心特性：
+ * 1. 可靠性：即使应用退出或设备重启，任务也会执行
+ * 2. 约束条件：支持网络、电量、存储等约束条件
+ * 3. 任务链：支持任务链式执行，按顺序或并行
+ * 4. 重试策略：支持指数退避重试策略
+ *
+ * 任务类型：
+ * 1. OneTimeWorkRequest：一次性任务
+ * 2. PeriodicWorkRequest：定期任务（最短 15 分钟）
+ * 3. 加急任务：使用 setExpedited()，适合重要任务
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建一次性任务
+ * val workRequest = OneTimeWorkRequestBuilder<MyWorker>()
+ *     .setConstraints(constraints)
+ *     .setInitialDelay(10, TimeUnit.SECONDS)
+ *     .build()
+ *
+ * // 提交任务
+ * WorkManager.getInstance(context).enqueue(workRequest)
+ *
+ * // 观察任务状态
+ * WorkManager.getInstance(context).getWorkInfoByIdLiveData(workRequest.id)
+ *     .observe(this) { workInfo ->
+ *         // 处理任务状态变化
+ *     }
+ * ```
+ *
+ * 适用场景：
+ * - 后台数据同步
+ * - 文件上传下载
+ * - 定期日志上传
+ * - 需要可靠执行的任务
+ *
  * https://developer.android.google.cn/topic/libraries/architecture/workmanager
  */
 @Route(path = RouterPath.Jetpack.WorkManager)

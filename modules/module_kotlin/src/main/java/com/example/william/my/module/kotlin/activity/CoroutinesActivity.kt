@@ -11,6 +11,21 @@ import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
 
 /**
  * Android 上的 Kotlin 协程
+ *
+ * 协程是 Kotlin 的轻量级线程管理方案，简化异步编程。
+ *
+ * 核心优势：
+ * - 轻量级：一个线程可运行成千上万个协程
+ * - 结构化并发：自动管理协程生命周期
+ * - 代码简洁：用同步代码风格写异步逻辑
+ *
+ * 在 Android 中的使用：
+ * - viewModelScope.launch {} — 在 ViewModel 中启动协程
+ * - withContext(Dispatchers.IO) — 切换到 IO 线程执行耗时操作
+ * - Flow — 响应式数据流，替代 LiveData 处理异步数据
+ *
+ * 本示例使用 ViewModel + 协程发起网络请求，展示基本用法。
+ *
  * https://developer.android.google.cn/kotlin/coroutines
  */
 @Route(path = RouterPath.Kotlin.Coroutines)

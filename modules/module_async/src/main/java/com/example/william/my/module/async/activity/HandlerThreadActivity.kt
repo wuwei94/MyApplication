@@ -9,10 +9,44 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * HandlerThread — 子线程通信演示
+ * HandlerThread — 子线程通信
  *
- * HandlerThread 是一个自带 Looper 的线程，可以异步处理消息
- * 与普通 Thread 的区别：可以重复发送消息，不需要每次创建新线程
+ * HandlerThread 是一个自带 Looper 的线程，用于在子线程中处理消息。
+ *
+ * 核心特性：
+ * 1. 自带 Looper：内部维护消息队列，可重复发送消息
+ * 2. 线程安全：消息按顺序处理，避免并发问题
+ * 3. 生命周期管理：需手动调用 quit() 释放资源
+ * 4. 适合场景：需要长时间运行的后台任务
+ *
+ * 与普通 Thread 的区别：
+ * - 普通 Thread：每次任务需创建新线程，无法重复使用
+ * - HandlerThread：自带 Looper，可重复发送消息，线程复用
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建并启动 HandlerThread
+ * val handlerThread = HandlerThread("MyThread")
+ * handlerThread.start()
+ *
+ * // 创建 Handler
+ * val handler = object : Handler(handlerThread.looper) {
+ *     override fun handleMessage(msg: Message) {
+ *         // 处理消息
+ *     }
+ * }
+ *
+ * // 发送消息
+ * handler.sendEmptyMessage(MSG_CODE)
+ *
+ * // 释放资源
+ * handlerThread.quit()
+ * ```
+ *
+ * 适用场景：
+ * - 需要长时间运行的后台任务
+ * - 多个消息按顺序处理
+ * - 避免频繁创建/销毁线程
  */
 @Route(path = RouterPath.Async.HandlerThread)
 class HandlerThreadActivity : BasicResponseActivity() {

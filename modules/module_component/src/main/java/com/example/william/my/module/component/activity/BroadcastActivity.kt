@@ -13,11 +13,44 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.lang.ref.WeakReference
 
 /**
- * BroadcastReceiver 广播注册与发送
+ * BroadcastReceiver — 广播接收器
  *
- * 演示动态注册广播接收器、发送广播、接收并处理广播消息的完整流程。
- * 使用 WeakReference 防止内部类持有 Activity 导致内存泄漏。
- * Android 13+ 需要指定 RECEIVER_NOT_EXPORTED 标志。
+ * BroadcastReceiver 是 Android 四大组件之一，用于接收和处理广播消息。
+ *
+ * 核心特性：
+ * 1. 系统广播：接收系统事件（如电量变化、网络状态变化）
+ * 2. 自定义广播：应用内或应用间发送自定义消息
+ * 3. 动态注册：在代码中注册，生命周期跟随注册者
+ * 4. 静态注册：在 AndroidManifest 中注册，应用未启动也能接收
+ *
+ * 注册方式：
+ * 1. 动态注册：registerReceiver() / unregisterReceiver()
+ * 2. 静态注册：在 AndroidManifest 中声明 receiver
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 动态注册
+ * val receiver = MyReceiver()
+ * val filter = IntentFilter("com.example.MY_ACTION")
+ * registerReceiver(receiver, filter)
+ *
+ * // 发送广播
+ * val intent = Intent("com.example.MY_ACTION")
+ * sendBroadcast(intent)
+ *
+ * // 注销
+ * unregisterReceiver(receiver)
+ * ```
+ *
+ * 注意事项：
+ * - Android 13+ 需要指定 RECEIVER_NOT_EXPORTED 标志
+ * - 使用 WeakReference 防止内存泄漏
+ * - 避免在广播中执行耗时操作
+ *
+ * 适用场景：
+ * - 系统事件监听
+ * - 应用内消息传递
+ * - 跨组件通信
  */
 @Route(path = RouterPath.Component.Broadcast)
 class BroadcastActivity : BasicResponseActivity() {

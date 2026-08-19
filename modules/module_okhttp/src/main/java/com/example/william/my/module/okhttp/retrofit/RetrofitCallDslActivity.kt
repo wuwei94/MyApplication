@@ -13,10 +13,42 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * 封装后 Retrofit + Call 回调方式
+ * Retrofit + Call — 封装后回调方式
+ *
+ * 使用 DSL 封装的 Retrofit + Call 回调方式，简化 Retrofit 配置。
+ *
+ * 核心特性：
+ * 1. DSL 封装：使用 Kotlin DSL 简化 Retrofit 配置
+ * 2. Call 回调：使用 Call.enqueue() 发起异步请求
+ * 3. 类型安全：编译时检查 API 接口
+ * 4. 代码简洁：比原生 Retrofit 更简洁
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建 Retrofit 实例
+ * val retrofit = retrofit { }
+ *
+ * // 创建 API 接口
+ * val api = createApi(NetworkApi::class.java, retrofit)
+ *
+ * // 发起请求
+ * val call = api.login(username, password)
+ * call.enqueue(object : Callback<ResponseBody> {
+ *     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+ *         // 处理响应
+ *     }
+ *     override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+ *         // 处理失败
+ *     }
+ * })
+ * ```
+ *
+ * 适用场景：
+ * - 需要简化 Retrofit 配置的场景
+ * - 喜欢 DSL 风格的开发者
+ * - 需要 Call 回调方式的场景
  *
  * https://square.github.io/retrofit
- * https://github.com/square/retrofit
  */
 @Route(path = RouterPath.OkHttp.RetrofitCallDsl)
 class RetrofitCallDslActivity : BasicResponseActivity() {

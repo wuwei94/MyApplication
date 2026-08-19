@@ -22,6 +22,35 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 /**
+ * Ktor — Kotlin 网络框架
+ *
+ * Ktor 是 JetBrains 开发的 Kotlin 网络框架，支持多平台。
+ *
+ * 核心特性：
+ * 1. Kotlin 优先：原生支持 Kotlin 协程，异步编程友好
+ * 2. 多平台支持：支持 Android、iOS、Web、Desktop 等平台
+ * 3. 插件系统：通过插件扩展功能（日志、认证、序列化等）
+ * 4. 轻量级：依赖少，APK 体积小
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建客户端
+ * val client = HttpClient(OkHttp) {
+ *     install(Logging) {
+ *         level = LogLevel.ALL
+ *     }
+ * }
+ *
+ * // 发送请求
+ * val response: HttpResponse = client.get("https://api.example.com/data")
+ * val body = response.bodyAsText()
+ * ```
+ *
+ * 适用场景：
+ * - Kotlin 项目中的网络请求
+ * - 多平台项目
+ * - 需要协程支持的场景
+ *
  * https://ktor.io/
  */
 @Route(path = RouterPath.Network.Ktor)

@@ -17,14 +17,40 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 import java.io.File
 
 /**
- * 图片裁剪示例（系统 Intent 调用）
+ * 图片裁剪 — 系统 Intent 调用
+ *
+ * 通过系统 Intent 实现图片裁剪功能，支持图库选择和拍照。
+ *
+ * 核心特性：
+ * 1. 图库选择：从相册选择图片并裁剪
+ * 2. 拍照裁剪：支持缩略图和高清原图两种模式
+ * 3. 系统裁剪：调用系统裁剪 Intent，兼容性好
+ * 4. 权限处理：Android 7.0+ 使用 FileProvider 处理文件 URI
  *
  * 核心注意点：
- * 1. Android 7.0+ (API 24+) 禁止向第三方应用直接暴露 `file://` URI，否则将抛出 [android.os.FileUriExposedException]。
- *    必须使用 [FileProvider.getUriForFile] 生成 `content://` URI 并附加读写权限标志。
- * 2. `com.android.camera.action.CROP` 为 Android 非公开标准 Intent（部分厂商定制 ROM 可能未内置裁剪 App），
- *    实际商业应用建议优先使用 UCrop 等成熟内嵌裁剪库。
- * 3. 结果回调已全面迁移至 AndroidX [registerForActivityResult]。
+ * 1. Android 7.0+ (API 24+) 禁止向第三方应用直接暴露 file:// URI，否则将抛出 FileUriExposedException
+ *    必须使用 FileProvider.getUriForFile 生成 content:// URI 并附加读写权限标志
+ * 2. com.android.camera.action.CROP 为 Android 非公开标准 Intent（部分厂商定制 ROM 可能未内置裁剪 App）
+ *    实际商业应用建议优先使用 UCrop 等成熟内嵌裁剪库
+ * 3. 结果回调已全面迁移至 AndroidX registerForActivityResult
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 启动裁剪
+ * val intent = Intent("com.android.camera.action.CROP").apply {
+ *     setDataAndType(sourceUri, "image/*")
+ *     putExtra("crop", "true")
+ *     putExtra("aspectX", 1)
+ *     putExtra("aspectY", 1)
+ *     putExtra(MediaStore.EXTRA_OUTPUT, destinationUri)
+ * }
+ * cropLauncher.launch(intent)
+ * ```
+ *
+ * 适用场景：
+ * - 用户头像裁剪
+ * - 图片编辑、分享
+ * - 需要图片裁剪的场景
  */
 @Route(path = RouterPath.Feature.Crop)
 class CropActivity : BasicImageActivity() {

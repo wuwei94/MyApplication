@@ -9,9 +9,34 @@ import java.io.ByteArrayInputStream
 import java.io.File
 
 /**
- * 文件读写工具类演示
+ * FileIOUtils — 文件读写工具
  *
- * 演示 BlankJ FileIOUtils 文件读写能力
+ * BlankJ FileIOUtils 提供便捷的文件读写功能。
+ *
+ * 核心特性：
+ * 1. 文本读写：支持字符串读写
+ * 2. 流读写：支持 InputStream、OutputStream 读写
+ * 3. 文件操作：支持文件创建、删除、复制等
+ * 4. 缓冲优化：使用缓冲区提升读写性能
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 写入文本
+ * FileIOUtils.writeFileFromString(file, "Hello World")
+ *
+ * // 读取文本
+ * val content = FileIOUtils.readFile2String(file)
+ *
+ * // 从输入流写入
+ * FileIOUtils.writeFileFromIS(file, inputStream)
+ * ```
+ *
+ * 适用场景：
+ * - 文件读写操作
+ * - 配置文件管理
+ * - 日志文件写入
+ *
+ * https://github.com/Blankj/AndroidUtilCode
  */
 @Route(path = RouterPath.Utils.FileIOUtils)
 class FileIOUtilsActivity : BasicResponseActivity() {

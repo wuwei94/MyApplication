@@ -9,15 +9,40 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * Kotlin 委托（Delegation）机制演示
+ * Kotlin 委托机制
  *
- * 1. 类委托（Class Delegation）：通过 `by` 关键字将接口实现委托给内部实例（装饰模式语法糖）。
- * 2. 属性委托（Property Delegation）：通过 `ReadOnlyProperty` 或 `ReadWriteProperty` 拦截属性的 `getValue` / `setValue`。
- * 3. 标准库委托：
- *    - `by lazy`：延迟初始化（线程安全默认使用 `LazyThreadSafetyMode.SYNCHRONIZED`）。
- *    - `Delegates.observable`：监听属性变更并接收新旧值。
- *    - `Delegates.vetoable`：条件拦截，通过布尔返回值决定是否接受新值。
- *    - Map 映射委托：通过 `val property: Type by map` 将属性名作为 Key 直接从 Map 读取。
+ * 委托是 Kotlin 的重要特性，通过 by 关键字实现代码复用和解耦。
+ *
+ * 类委托（Class Delegation）：
+ * 通过 by 关键字将接口实现委托给内部实例，装饰模式语法糖。
+ *
+ * 属性委托（Property Delegation）：
+ * 通过 ReadOnlyProperty 或 ReadWriteProperty 拦截属性的 getValue / setValue。
+ *
+ * 标准库委托：
+ * 1. by lazy：延迟初始化（线程安全默认使用 LazyThreadSafetyMode.SYNCHRONIZED）
+ * 2. Delegates.observable：监听属性变更并接收新旧值
+ * 3. Delegates.vetoable：条件拦截，通过布尔返回值决定是否接受新值
+ * 4. Map 映射委托：通过 val property: Type by map 将属性名作为 Key 直接从 Map 读取
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 类委托
+ * interface Printer { fun print(): String }
+ * class RealPrinter : Printer { override fun print() = "Hello" }
+ * class DelegatedPrinter(printer: Printer) : Printer by printer
+ *
+ * // 属性委托
+ * val lazyValue: String by lazy { "Computed" }
+ * var observedValue: String by Delegates.observable("Initial") { _, old, new ->
+ *     println("$old -> $new")
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 装饰模式、代理模式
+ * - 延迟初始化、属性监听
+ * - 配置管理、数据映射
  */
 @Route(path = RouterPath.Kotlin.Delegate)
 class MyDelegateActivity : BasicResponseActivity() {

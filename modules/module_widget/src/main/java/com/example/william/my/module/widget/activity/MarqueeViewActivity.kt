@@ -12,6 +12,35 @@ import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.widget.R
 import com.example.william.my.module.widget.databinding.DemoActivityMarqueeViewBinding
 
+/**
+ * MarqueeView — 跑马灯控件
+ *
+ * 跑马灯控件，支持垂直滚动的公告、消息展示。
+ *
+ * 核心特性：
+ * 1. 垂直滚动：支持垂直方向的滚动动画
+ * 2. 自动轮播：支持自动轮播，可设置间隔时间
+ * 3. 自定义布局：支持自定义每项的布局样式
+ * 4. 点击事件：支持每项的点击事件
+ *
+ * 基本用法：
+ * ```kotlin
+ * // XML 中使用
+ * <com.example.widget.MarqueeView
+ *     android:layout_width="match_parent"
+ *     android:layout_height="wrap_content"
+ *     app:marquee_interval="3000" />
+ *
+ * // 代码中设置数据
+ * marqueeView.setViews(viewList)
+ * marqueeView.startFlipping()
+ * ```
+ *
+ * 适用场景：
+ * - 公告通知、消息滚动
+ * - 商品推荐、活动宣传
+ * - 任何需要垂直滚动的场景
+ */
 @Route(path = RouterPath.Widget.MarqueeView)
 class MarqueeViewActivity : BaseVBActivity<DemoActivityMarqueeViewBinding>() {
 

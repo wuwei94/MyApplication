@@ -16,6 +16,39 @@ import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBinding
 import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter2
 
+/**
+ * ViewPager2 + Tab — ViewPager2 实现 Tab 切换
+ *
+ * 使用 ViewPager2 + RadioGroup 实现 Tab 切换，支持 Fragment 页面切换。
+ *
+ * 核心特性：
+ * 1. ViewPager2 联动：Tab 和 ViewPager2 联动切换
+ * 2. Fragment 支持：支持 Fragment 页面切换
+ * 3. 禁用滑动：支持禁用用户手动滑动
+ * 4. 页面同步：支持页面变化同步到 Tab
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 设置 ViewPager2 适配器
+ * viewPager2.adapter = ViewPagerFragmentAdapter2(supportFragmentManager, lifecycle, fragments)
+ *
+ * // 禁用用户手动滑动
+ * viewPager2.isUserInputEnabled = false
+ *
+ * // 注册页面变化回调
+ * viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+ *     override fun onPageSelected(position: Int) {
+ *         // 同步 Tab
+ *     }
+ * })
+ * ```
+ *
+ * 适用场景：
+ * - Tab 切换
+ * - 底部导航栏
+ * - 多 Tab 页面切换
+ * - 需要禁用滑动的场景
+ */
 @Route(path = RouterPath.Tab.ViewPager2Tab)
 class ViewPager2TabActivity : BaseVBActivity<TabActivityViewPager2TabBinding>(),
     RadioGroup.OnCheckedChangeListener {

@@ -7,11 +7,32 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Typeface 字体加载与切换演示
+ * Typeface — 字体加载与切换
  *
- * 演示：
- * 1. 系统内置字体族（DEFAULT、DEFAULT_BOLD、MONOSPACE、SERIF、SANS_SERIF）。
- * 2. 外部字体文件加载（通过 `Typeface.createFromAsset(assets, path)`）。
+ * Typeface 是 Android 的字体管理类，用于加载和切换字体样式。
+ *
+ * 核心特性：
+ * 1. 系统内置字体：DEFAULT、DEFAULT_BOLD、MONOSPACE、SERIF、SANS_SERIF
+ * 2. 自定义字体：支持从 assets、resources、文件加载字体
+ * 3. 字体样式：支持粗体、斜体、粗斜体等样式组合
+ * 4. 性能优化：字体文件会被缓存，避免重复加载
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 系统内置字体
+ * textView.typeface = Typeface.DEFAULT
+ * textView.typeface = Typeface.DEFAULT_BOLD
+ * textView.typeface = Typeface.MONOSPACE
+ *
+ * // 自定义字体
+ * val typeface = Typeface.createFromAsset(assets, "fonts/custom.ttf")
+ * textView.typeface = typeface
+ * ```
+ *
+ * 适用场景：
+ * - 自定义字体样式
+ * - 品牌字体展示
+ * - 特殊字体需求（如等宽字体、手写字体）
  */
 @Route(path = RouterPath.Sample.Typeface)
 class TypefaceActivity : BasicResponseActivity() {

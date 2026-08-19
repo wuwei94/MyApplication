@@ -13,8 +13,38 @@ import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapte
 import com.example.william.my.module.ui.databinding.UiActivityViewPager2Binding
 
 /**
- * Pages must fill the whole ViewPager2 (use match_parent)
- * ViewPager2内的view布局必须是match_parent，否则会报错
+ * ViewPager2 — 现代化页面滑动控件
+ *
+ * ViewPager2 是 AndroidX 提供的现代化页面滑动控件，替代 ViewPager。
+ *
+ * 核心特性：
+ * 1. 基于 RecyclerView：性能更好，支持更多布局
+ * 2. 垂直滑动：支持垂直方向滑动
+ * 3. Fragment 支持：支持 Fragment 页面切换
+ * 4. 适配器模式：使用 RecyclerView.Adapter
+ *
+ * 注意事项：
+ * - ViewPager2 内的 view 布局必须是 match_parent，否则会报错
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 设置适配器
+ * viewPager2.adapter = ViewPagerAdapter2(titles)
+ *
+ * // 设置方向
+ * viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+ *
+ * // Fragment 适配器
+ * viewPager2.adapter = ViewPagerFragmentAdapter2(supportFragmentManager, lifecycle, fragments)
+ * ```
+ *
+ * 适用场景：
+ * - 引导页、欢迎页
+ * - Tab 切换
+ * - 图片轮播
+ * - 需要垂直滑动的场景
+ *
+ * https://developer.android.google.cn/jetpack/androidx/releases/viewpager2
  */
 @Route(path = RouterPath.UI.ViewPager2)
 class ViewPager2Activity : BaseVBActivity<UiActivityViewPager2Binding>() {

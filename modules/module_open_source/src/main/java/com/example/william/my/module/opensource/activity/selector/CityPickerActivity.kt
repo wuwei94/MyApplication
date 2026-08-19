@@ -14,10 +14,39 @@ import com.zaaach.citypicker.model.LocateState
 import com.zaaach.citypicker.model.LocatedCity
 
 /**
- * https://github.com/zaaach/CityPicker
+ * CityPicker — 城市选择器
  *
- * 添加 setTheme(R.style.DefaultCityPickerTheme)
- * 或 android:theme="@style/DefaultCityPickerTheme"
+ * CityPicker 是一个漂亮的城市选择器，支持城市搜索和定位功能。
+ *
+ * 核心特性：
+ * 1. 美观的 UI：Material Design 风格，动画流畅
+ * 2. 城市搜索：支持城市名称搜索，快速定位
+ * 3. 定位功能：支持 GPS 定位当前城市
+ * 4. 热门城市：支持自定义热门城市列表
+ *
+ * 基本用法：
+ * ```kotlin
+ * CityPicker.from(context)
+ *     .enableAnimation(true)
+ *     .setLocatedCity(null)
+ *     .setOnPickListener(object : OnPickListener {
+ *         override fun onPick(position: Int, data: City) {
+ *             // 处理选择结果
+ *         }
+ *         override fun onCancel() {}
+ *         override fun onLocate() {
+ *             // 开始定位
+ *         }
+ *     })
+ *     .show()
+ * ```
+ *
+ * 适用场景：
+ * - 切换城市、选择收货地址
+ * - 城市列表选择
+ * - 需要定位功能的场景
+ *
+ * https://github.com/zaaach/CityPicker
  */
 @Route(path = RouterPath.OpenSource.CityPicker)
 class CityPickerActivity : BasicResponseActivity() {

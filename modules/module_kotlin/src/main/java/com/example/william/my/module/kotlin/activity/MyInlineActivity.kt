@@ -7,16 +7,41 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.google.gson.Gson
 
 /**
- * Kotlin 内联函数（Inline Functions）与作用域函数演示
+ * Kotlin 内联函数与作用域函数
  *
- * 1. 作用域函数（Scope Functions）：
- *    - `with(T)`：非扩展，接收者为 `this`，返回 Lambda 结果。
- *    - `T.let`：扩展函数，接收者为参数 `it`，返回 Lambda 结果，常用空安全调用。
- *    - `T.run`：扩展函数，接收者为 `this`，返回 Lambda 结果。
- *    - `T.also`：扩展函数，接收者为参数 `it`，返回对象本身 `this`，常用于附加链式操作。
- *    - `T.apply`：扩展函数，接收者为 `this`，返回对象本身 `this`，常用于对象初始化配置。
- * 2. 泛型实化（reified）：在 `inline` 函数中使用 `reified T` 绕过 JVM 泛型擦除，直接获取 `T::class.java`。
- * 3. 自定义内联扩展函数：演示高阶函数内联消除 Lambda 对象分配开销。
+ * 内联函数是 Kotlin 的重要特性，可提高性能并支持泛型实化。
+ *
+ * 作用域函数：
+ * 1. with(T)：非扩展，接收者为 this，返回 Lambda 结果
+ * 2. T.let：扩展函数，接收者为参数 it，返回 Lambda 结果，常用空安全调用
+ * 3. T.run：扩展函数，接收者为 this，返回 Lambda 结果
+ * 4. T.also：扩展函数，接收者为参数 it，返回对象本身 this，常用于附加链式操作
+ * 5. T.apply：扩展函数，接收者为 this，返回对象本身 this，常用于对象初始化配置
+ *
+ * 泛型实化（reified）：
+ * 在 inline 函数中使用 reified T 绕过 JVM 泛型擦除，直接获取 T::class.java。
+ *
+ * 自定义内联扩展函数：
+ * 演示高阶函数内联消除 Lambda 对象分配开销。
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 作用域函数
+ * val user = User().apply {
+ *     name = "Alice"
+ *     age = 25
+ * }
+ *
+ * // 泛型实化
+ * inline fun <reified T> parseJson(json: String): T {
+ *     return Gson().fromJson(json, T::class.java)
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 对象初始化配置
+ * - 空安全调用
+ * - 类型获取、JSON 解析
  */
 @Route(path = RouterPath.Kotlin.Inline)
 class MyInlineActivity : BasicResponseActivity() {

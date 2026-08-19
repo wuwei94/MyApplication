@@ -12,13 +12,22 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 运行时权限申请
+ * 运行时权限 — 按权限分组请求与结果展示
  *
- * 使用 ActivityResultContracts.RequestMultiplePermissions 替代已废弃的
- * ActivityCompat.requestPermissions + onRequestPermissionsResult。
+ * 使用 Jetpack ActivityResultContracts.RequestMultiplePermissions 替代已废弃的
+ * ActivityCompat.requestPermissions + onRequestPermissionsResult 模式。
  *
- * 下方列表展示各权限分组，点击即可请求对应权限，
- * 请求结果在上方区域显示。
+ * 核心原理：
+ * 1. 按场景将权限分为 9 组（通知、相机、存储、位置、麦克风、联系人、电话、日历、短信）
+ * 2. 点击列表项时，先过滤当前设备 API 不支持的权限（如 POST_NOTIFICATIONS 需 API 33+）
+ * 3. 再过滤已授权的权限，仅请求尚未授予的权限
+ * 4. 通过 registerForActivityResult() 注册回调，自动在 Activity 销毁时解注册
+ * 5. 区分"普通拒绝"和"永久拒绝"（shouldShowRequestPermissionRationale 返回 false）
+ *
+ * 适用场景：
+ * - 运行时权限申请的标准实现参考
+ * - 按权限分组批量请求
+ * - 处理权限永久拒绝后引导用户前往设置页
  */
 @Route(path = RouterPath.System.Permission)
 class PermissionActivity : BasicResponseActivity() {

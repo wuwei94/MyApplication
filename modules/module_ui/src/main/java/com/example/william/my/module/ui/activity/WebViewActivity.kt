@@ -15,6 +15,42 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.ui.databinding.UiActivityWebviewBinding
 
+/**
+ * WebView — 网页加载控件
+ *
+ * WebView 是 Android 内置的网页加载控件，用于展示网页内容。
+ *
+ * 核心特性：
+ * 1. 网页加载：支持加载 URL、本地 HTML、JavaScript
+ * 2. 交互支持：支持 JavaScript 与原生代码交互
+ * 3. 缓存机制：支持网页缓存，提升加载速度
+ * 4. 安全控制：支持 SSL 证书处理、文件访问控制
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 加载网页
+ * webView.loadUrl("https://www.example.com")
+ *
+ * // 启用 JavaScript
+ * webView.settings.javaScriptEnabled = true
+ *
+ * // 添加 JavaScript 接口
+ * webView.addJavascriptInterface(MyInterface(), "Android")
+ *
+ * // 设置 WebViewClient
+ * webView.webViewClient = object : WebViewClient() {
+ *     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+ *         view.loadUrl(url)
+ *         return true
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 加载网页内容
+ * - 混合开发（Hybrid App）
+ * - 展示富文本内容
+ */
 @Route(path = RouterPath.UI.WebView)
 class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
 

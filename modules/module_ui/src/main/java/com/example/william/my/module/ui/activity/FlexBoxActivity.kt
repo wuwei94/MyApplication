@@ -11,12 +11,54 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 
 /**
- * FlexboxLayoutManager 是 Google 出品的弹性布局管理器，可用于 RecyclerView
+ * FlexBox — 弹性布局管理器
+ *
+ * FlexboxLayoutManager 是 Google 出品的弹性布局管理器，用于 RecyclerView。
+ *
+ * 核心特性：
+ * 1. 弹性布局：支持类似 CSS Flexbox 的弹性布局
+ * 2. 自动换行：支持自动换行，适合标签、流式布局
+ * 3. 灵活对齐：支持多种对齐方式
+ * 4. 响应式：支持不同屏幕尺寸的自适应布局
+ *
  * 核心属性：
- * - FlexDirection: 主轴方向（ROW 水平 / COLUMN 垂直 / ROW_REVERSE / COLUMN_REVERSE）
- * - FlexWrap: 是否换行（WRAP 换行 / NOWRAP 不换行 / WRAP_REVERSE 反向换行）
- * - justifyContent: 主轴对齐方式（FLEX_START / CENTER / FLEX_END / SPACE_BETWEEN 等）
- * - alignItems: 交叉轴对齐方式（FLEX_START / CENTER / FLEX_END / STRETCH 等）
+ * 1. FlexDirection：主轴方向
+ *    - ROW：水平方向
+ *    - COLUMN：垂直方向
+ *    - ROW_REVERSE：水平反向
+ *    - COLUMN_REVERSE：垂直反向
+ *
+ * 2. FlexWrap：是否换行
+ *    - WRAP：换行
+ *    - NOWRAP：不换行
+ *    - WRAP_REVERSE：反向换行
+ *
+ * 3. justifyContent：主轴对齐方式
+ *    - FLEX_START：起始对齐
+ *    - CENTER：居中对齐
+ *    - FLEX_END：结束对齐
+ *    - SPACE_BETWEEN：两端对齐
+ *
+ * 4. alignItems：交叉轴对齐方式
+ *    - FLEX_START：起始对齐
+ *    - CENTER：居中对齐
+ *    - FLEX_END：结束对齐
+ *    - STRETCH：拉伸对齐
+ *
+ * 基本用法：
+ * ```kotlin
+ * val manager = FlexboxLayoutManager(context)
+ * manager.flexDirection = FlexDirection.ROW
+ * manager.flexWrap = FlexWrap.WRAP
+ * recyclerView.layoutManager = manager
+ * ```
+ *
+ * 适用场景：
+ * - 标签云、流式布局
+ * - 自适应布局
+ * - 响应式设计
+ *
+ * https://github.com/google/flexbox-layout
  */
 @Route(path = RouterPath.UI.FlexBox)
 class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {

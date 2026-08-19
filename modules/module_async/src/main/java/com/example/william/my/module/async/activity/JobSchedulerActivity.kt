@@ -18,15 +18,42 @@ import com.example.william.my.module.async.service.MyJobSchedulerService
 import java.lang.ref.WeakReference
 
 /**
- * JobScheduler — 系统任务调度演示
+ * JobScheduler — 系统任务调度
  *
- * JobScheduler 是 Android 提供的任务调度 API，可以根据条件（网络、充电等）执行任务
+ * JobScheduler 是 Android 提供的任务调度 API，用于在满足特定条件时执行任务。
  *
- * 核心步骤：
- * 1. 创建 JobInfo.Builder，配置 jobId 和 JobService
- * 2. 设置约束条件（延迟、网络、空闲、充电等）
- * 3. 调用 JobScheduler.schedule() 提交任务
- * 4. 系统满足条件时回调 JobService 的 onStartJob()
+ * 核心特性：
+ * 1. 条件调度：根据网络、充电、空闲等条件执行任务
+ * 2. 系统优化：系统统一调度，优化电池和性能
+ * 3. 可靠性：即使应用退出，任务也会执行
+ * 4. 约束条件：支持多种约束条件组合
+ *
+ * 约束条件：
+ * - setMinimumLatency()：最小延迟时间
+ * - setOverrideDeadline()：最大截止时间
+ * - setRequiredNetworkType()：网络类型要求
+ * - setRequiresDeviceIdle()：设备空闲要求
+ * - setRequiresCharging()：充电状态要求
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建 JobInfo
+ * val jobInfo = JobInfo.Builder(jobId, serviceName)
+ *     .setMinimumLatency(5000L)  // 5 秒延迟
+ *     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)  // 任何网络
+ *     .build()
+ *
+ * // 调度任务
+ * val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+ * jobScheduler.schedule(jobInfo)
+ * ```
+ *
+ * 适用场景：
+ * - 后台数据同步
+ * - 日志上传
+ * - 需要特定条件执行的任务
+ *
+ * https://developer.android.google.cn/reference/android/app/job/JobScheduler
  */
 @Route(path = RouterPath.Async.JobScheduler)
 class JobSchedulerActivity : BasicResponseActivity() {

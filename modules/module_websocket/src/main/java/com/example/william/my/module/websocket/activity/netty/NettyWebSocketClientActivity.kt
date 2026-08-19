@@ -11,11 +11,52 @@ import com.example.william.my.core.server.ServerManager
 import com.example.william.my.module.websocket.utils.NetworkUtils
 
 /**
- * Netty TCP 客户端示例
+ * Netty — 高性能网络框架
  *
- * 演示使用 Netty 作为 TCP 客户端进行通信
- * 注意：Netty 是 TCP 协议，不是 WebSocket 协议
- * 需要先启动本地服务端
+ * Netty 是一个高性能的异步事件驱动的网络应用框架。
+ *
+ * 核心特性：
+ * 1. 高性能：基于 NIO，支持高并发
+ * 2. 异步事件驱动：非阻塞 I/O，性能优秀
+ * 3. 丰富的协议支持：支持 TCP、UDP、HTTP、WebSocket 等
+ * 4. 易于使用：API 简单，易于扩展
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 连接服务器
+ * NettyClient.connect(
+ *     host = "192.168.1.100",
+ *     port = 8080,
+ *     listener = object : NettyClientHandler.OnMessageListener {
+ *         override fun onConnected(remoteAddress: String) {
+ *             // 连接成功
+ *         }
+ *         override fun onMessage(message: String) {
+ *             // 收到消息
+ *         }
+ *         override fun onDisconnected() {
+ *             // 连接断开
+ *         }
+ *         override fun onError(throwable: Throwable) {
+ *             // 发生错误
+ *         }
+ *     }
+ * )
+ *
+ * // 发送消息
+ * NettyClient.sendMessage("Hello")
+ *
+ * // 断开连接
+ * NettyClient.disconnect()
+ * ```
+ *
+ * 适用场景：
+ * - 高并发网络应用
+ * - 实时通信
+ * - 游戏服务器
+ * - 即时通讯
+ *
+ * https://github.com/netty/netty
  */
 @Route(path = RouterPath.WebSocket.NettyWebSocketClient)
 class NettyWebSocketClientActivity : BasicResponseActivity() {

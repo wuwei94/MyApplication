@@ -12,12 +12,33 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 import kotlin.random.Random
 
 /**
- * 图片旋转动画之转盘抽奖功能
+ * 转盘抽奖 — 旋转动画实现
+ *
+ * 通过 RotateAnimation 实现转盘抽奖功能，支持指定奖品和随机抽奖。
+ *
+ * 核心特性：
+ * 1. 旋转动画：使用 RotateAnimation 实现平滑旋转
+ * 2. 指定奖品：支持指定抽中特定奖品
+ * 3. 随机抽奖：支持随机抽奖功能
+ * 4. 动画控制：防止重复触发，支持重置
  *
  * 核心原理：
- * 1. 使用 [RotateAnimation] 配合 [Animation.RELATIVE_TO_SELF] 设置以自身中心点 (0.5f, 0.5f) 为轴心旋转。
- * 2. 角度计算：保持累加角度，确保每次抽奖至少旋转 [MIN_LAPS] 圈并平滑减速落在目标扇区。
- * 3. 使用 [android.R.anim.accelerate_decelerate_interpolator] 先加速后减速，模拟真实物理阻尼效果。
+ * 1. 使用 RotateAnimation 配合 Animation.RELATIVE_TO_SELF 设置以自身中心点 (0.5f, 0.5f) 为轴心旋转
+ * 2. 角度计算：保持累加角度，确保每次抽奖至少旋转 MIN_LAPS 圈并平滑减速落在目标扇区
+ * 3. 使用 android.R.anim.accelerate_decelerate_interpolator 先加速后减速，模拟真实物理阻尼效果
+ *
+ * 角度计算公式：
+ * ```kotlin
+ * val targetAngle = prizeIndex * 360f / TOTAL_PRIZES
+ * val currentMod = (currentDegree % 360f + 360f) % 360f
+ * val deltaToTarget = (targetAngle - currentMod + 360f) % 360f
+ * val toDegree = currentDegree + MIN_LAPS * 360f + deltaToTarget
+ * ```
+ *
+ * 适用场景：
+ * - 抽奖活动、转盘游戏
+ * - 随机选择、抽奖功能
+ * - 需要旋转动画的场景
  */
 @Route(path = RouterPath.Feature.Turntable)
 class TurntableActivity : BasicImageActivity() {

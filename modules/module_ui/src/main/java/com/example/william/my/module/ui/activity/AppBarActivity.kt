@@ -14,19 +14,34 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 /**
- * layout_scrollFlags (滚动标志)
- * scroll - scroll首先滑动的是列表，列表的数据全部滚动完毕，才开始toolbar滑动。
- * enterAlways - enterAlways首先滑动的是toolbar，然后再去滑动其他的view。
- * enterAlwaysCollapsed - 向下滚动事件时，子View先向下滚动最小高度值，然后Scrolling View开始滚动，到达边界时，子View再向下滚动，直至显示完全。
- * exitUntilCollapsed - 向上滚动事件时，子View向上滚动直至最小高度，然后Scrolling View开始滚动。也就是，子View不会完全退出屏幕。
+ * AppBar — Material Design 应用栏
  *
- * layout_collapseMode (折叠模式)
- * pin - 设置为这个模式时，当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。
- * parallax - 设置为这个模式时，在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，实现视差滚动效果，通常和layout_collapseParallaxMultiplier(设置视差因子)搭配使用。
+ * 使用 AppBarLayout + CollapsingToolbarLayout 实现 Material Design 应用栏。
  *
- * tabMode (Tab布局模式)
- * MODE_FIXED - 固定均分，所有Tab等宽排列，适合少量固定Tab（3-5个），配合 tabGravity = GRAVITY_FILL
- * MODE_SCROLLABLE - 可滚动，Tab按内容宽度排列，数量多时可左右滑动，适合动态或大量Tab
+ * 核心特性：
+ * 1. 折叠效果：支持 CollapsingToolbarLayout 折叠效果
+ * 2. 滚动标志：支持多种滚动标志控制滚动行为
+ * 3. Tab 支持：支持 TabLayout + ViewPager 联动
+ * 4. 自定义样式：支持自定义样式和主题
+ *
+ * 滚动标志（layout_scrollFlags）：
+ * 1. scroll：首先滑动的是列表，列表的数据全部滚动完毕，才开始 toolbar 滑动
+ * 2. enterAlways：首先滑动的是 toolbar，然后再去滑动其他的 view
+ * 3. enterAlwaysCollapsed：向下滚动事件时，子 View 先向下滚动最小高度值，然后 Scrolling View 开始滚动
+ * 4. exitUntilCollapsed：向上滚动事件时，子 View 向上滚动直至最小高度，然后 Scrolling View 开始滚动
+ *
+ * 折叠模式（layout_collapseMode）：
+ * 1. pin：当 CollapsingToolbarLayout 完全收缩后，Toolbar 还可以保留在屏幕上
+ * 2. parallax：在内容滚动时，CollapsingToolbarLayout 中的 View 也可以同时滚动，实现视差滚动效果
+ *
+ * Tab 布局模式（tabMode）：
+ * 1. MODE_FIXED：固定均分，所有 Tab 等宽排列，适合少量固定 Tab（3-5 个）
+ * 2. MODE_SCROLLABLE：可滚动，Tab 按内容宽度排列，数量多时可左右滑动
+ *
+ * 适用场景：
+ * - Material Design 应用栏
+ * - 折叠效果
+ * - Tab 切换
  */
 @Route(path = RouterPath.UI.Appbar)
 class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {

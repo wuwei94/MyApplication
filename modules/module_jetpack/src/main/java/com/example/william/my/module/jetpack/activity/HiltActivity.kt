@@ -15,13 +15,60 @@ import javax.inject.Inject
 import javax.inject.Qualifier
 
 /**
- * Dagger Hilt 依赖注入演示
+ * Hilt — Android 依赖注入框架
  *
- * 覆盖：
- * 1. 构造函数注入：使用 `@Inject constructor()` 声明类的依赖注入方式。
- * 2. 接口绑定注入：在 `@Module` 中使用 `@Binds` 将接口抽象类型绑定到具体实现类。
- * 3. 第三方实例提供：在 `@Module` 中使用 `@Provides` 自定义提供依赖实例。
- * 4. 限定符绑定：使用自定义 `@Qualifier` 注解为相同返回类型的依赖提供区分注入。
+ * Hilt 是 Google 推荐的 Android 依赖注入框架，基于 Dagger 构建。
+ *
+ * 核心特性：
+ * 1. 简化配置：自动完成 Dagger 的复杂配置
+ * 2. 生命周期感知：自动管理依赖的生命周期
+ * 3. 标准化：统一的依赖注入方式，便于团队协作
+ * 4. 测试友好：便于单元测试和集成测试
+ *
+ * 核心注解：
+ * 1. @HiltAndroidApp：Application 类注解，启用 Hilt
+ * 2. @AndroidEntryPoint：Activity/Fragment/Service 注解，启用依赖注入
+ * 3. @Inject：构造函数或字段注入
+ * 4. @Module：定义依赖提供模块
+ * 5. @InstallIn：指定模块安装的组件
+ * 6. @Provides：提供依赖实例
+ * 7. @Binds：绑定接口到实现
+ * 8. @Qualifier：限定符，区分同类型依赖
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 1. Application 注解
+ * @HiltAndroidApp
+ * class MyApp : Application()
+ *
+ * // 2. Activity 注解
+ * @AndroidEntryPoint
+ * class MyActivity : AppCompatActivity() {
+ *     @Inject lateinit var myService: MyService
+ * }
+ *
+ * // 3. 构造函数注入
+ * class MyService @Inject constructor() {
+ *     fun doWork() { ... }
+ * }
+ *
+ * // 4. 模块提供
+ * @Module
+ * @InstallIn(ActivityComponent::class)
+ * object AppModule {
+ *     @Provides
+ *     fun provideMyService(): MyService {
+ *         return MyService()
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 依赖注入
+ * - 解耦组件
+ * - 单元测试
+ *
+ * https://dagger.dev/hilt/
  */
 @Route(path = RouterPath.Jetpack.Hilt)
 @AndroidEntryPoint // 将依赖项注入 Android 类

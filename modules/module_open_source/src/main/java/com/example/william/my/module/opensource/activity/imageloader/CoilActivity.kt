@@ -12,12 +12,35 @@ import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Coil 3 现代 Kotlin 图片加载库演示
+ * Coil 3 — 现代 Kotlin 图片加载库
+ *
+ * Coil 是一个基于 Kotlin 协程的现代图片加载库，由 Google 推荐使用。
  *
  * 核心特性：
- * 1. 轻量快速、协程驱动。
- * 2. 原生支持 Kotlin 协程与 Flow。
- * 3. 内存与磁盘缓存自动管理。
+ * 1. 轻量快速：基于 Kotlin 协程，性能优秀
+ * 2. 协程驱动：原生支持 Kotlin 协程与 Flow
+ * 3. 自动缓存：内存与磁盘缓存自动管理
+ * 4. 简单易用：一行代码加载图片
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 一行代码加载图片
+ * imageView.load("https://example.com/image.jpg")
+ *
+ * // 带配置的加载
+ * imageView.load(url) {
+ *     placeholder(R.drawable.placeholder)
+ *     error(R.drawable.error)
+ *     crossfade(true)
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - Kotlin 项目中的图片加载
+ * - 需要协程支持的场景
+ * - 轻量级图片加载需求
+ *
+ * https://github.com/coil-kt/coil
  */
 @Route(path = RouterPath.OpenSource.Coil)
 class CoilActivity : BasicImageActivity() {

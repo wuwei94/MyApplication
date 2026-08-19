@@ -22,22 +22,47 @@ import com.example.william.my.module.ui.adapter.RecyclerAdapter
 import com.example.william.my.module.ui.databinding.UiActivityRecyclerViewBinding
 
 /**
- * RecyclerView 示例
+ * RecyclerView — 高性能列表控件
  *
- * LayoutManager -> ItemDecoration -> ItemAnimator -> Adapter -> LayoutAnimation -> SnapHelper
+ * RecyclerView 是 Android 最重要的列表控件，用于展示大量数据。
  *
- * 布局管理器（LayoutManager）：
- * - LinearLayoutManager: 线性布局，单列
- * - GridLayoutManager: 网格布局，多列
- * - StaggeredGridLayoutManager: 瀑布流布局，列宽/行高不等
+ * 核心组件：
+ * 1. LayoutManager：布局管理器，控制 Item 的排列方式
+ *    - LinearLayoutManager：线性布局，单列
+ *    - GridLayoutManager：网格布局，多列
+ *    - StaggeredGridLayoutManager：瀑布流布局，列宽/行高不等
  *
- * 装饰器（ItemDecoration）：
- * - RItemDecorationItemSpacing: Item 间距
- * - DividerItemDecoration: 分割线
+ * 2. ItemDecoration：装饰器，添加分割线、间距等
+ *    - DividerItemDecoration：分割线
+ *    - RItemDecorationItemSpacing：Item 间距
  *
- * SnapHelper：
- * - LinearSnapHelper: 支持快速滑动，像 ViewPager 一样每次滑动一页
- * - PagerSnapHelper: 限制一次只能滑动一页，不能快速滑动
+ * 3. ItemAnimator：项动画，处理 add/remove/move/change 动画
+ *    - DefaultItemAnimator：默认动画
+ *
+ * 4. Adapter：适配器，绑定数据到 View
+ *
+ * 5. LayoutAnimation：入场动画，列表首次显示时的动画
+ *
+ * 6. SnapHelper：对齐方式，控制滑动停止时的对齐
+ *    - LinearSnapHelper：支持快速滑动，像吸附效果
+ *    - PagerSnapHelper：一次只能滑动一页，像翻页效果
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 设置布局管理器
+ * recyclerView.layoutManager = LinearLayoutManager(context)
+ *
+ * // 设置适配器
+ * recyclerView.adapter = MyAdapter(data)
+ *
+ * // 添加装饰器
+ * recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+ * ```
+ *
+ * 适用场景：
+ * - 列表展示、网格展示
+ * - 瀑布流布局
+ * - 大量数据展示
  */
 @Route(path = RouterPath.UI.RecyclerView)
 class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {

@@ -14,6 +14,15 @@ import retrofit2.Retrofit
 /**
  * 原生 Retrofit + Call 回调方式
  *
+ * 使用 Retrofit.Builder 构建 API 接口实例，通过 Call.enqueue() 发起异步请求。
+ *
+ * 特点：
+ * - 原生回调方式，无需额外依赖
+ * - 支持同步（execute）和异步（enqueue）请求
+ * - 需要手动处理线程切换
+ *
+ * 注意：response.body()?.string() 只能调用一次，后续访问会返回 null。
+ *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */

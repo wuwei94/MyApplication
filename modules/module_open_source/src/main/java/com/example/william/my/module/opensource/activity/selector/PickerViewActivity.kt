@@ -22,11 +22,39 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 /**
- * plist转json
- * http://json2plist.sinaapp.com/
- * 格式化
- * http://www.bejson.com/
+ * Android-PickerView — 滚动选择器
  *
+ * Android-PickerView 是一个功能丰富的滚动选择器库，支持多种选择模式。
+ *
+ * 核心特性：
+ * 1. 多种选择器：支持时间选择器、选项选择器、城市选择器
+ * 2. 丰富的自定义：支持自定义样式、颜色、文字大小
+ * 3. 联动选择：支持三级联动选择（如省市区）
+ * 4. 农历支持：时间选择器支持农历显示
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 时间选择器
+ * val pvTime = TimePickerBuilder(context) { date, v ->
+ *     // 处理选择结果
+ * }
+ * .setType(booleanArrayOf(true, true, true, false, false, false))
+ * .build()
+ * pvTime.show()
+ *
+ * // 选项选择器
+ * val pvOptions = OptionsPickerBuilder(context) { options1, options2, options3, v ->
+ *     // 处理选择结果
+ * }
+ * .build()
+ * pvOptions.setPicker(options1Items, options2Items, options3Items)
+ * pvOptions.show()
+ * ```
+ *
+ * 适用场景：
+ * - 日期时间选择
+ * - 城市地区选择
+ * - 自定义选项选择
  *
  * https://github.com/Bigkoo/Android-PickerView
  */

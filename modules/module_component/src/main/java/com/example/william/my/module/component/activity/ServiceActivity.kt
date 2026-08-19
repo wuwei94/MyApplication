@@ -15,13 +15,37 @@ import com.example.william.my.module.component.service.MyBoundService
 import com.example.william.my.module.component.service.MyForegroundService
 
 /**
- * Service 演示
+ * Service — Android 服务组件
  *
- * 演示四种 Service 模式：
- * - Started Service：通过 startService 启动，独立运行
- * - Bound Service：通过 bindService 绑定，直接调用 Service 方法
- * - AIDL Service：通过 bindService 绑定，跨进程通信
- * - Foreground Service：通过 startForegroundService 启动，有通知栏常驻
+ * Service 是 Android 四大组件之一，用于在后台执行长时间运行的操作。
+ *
+ * 四种 Service 模式：
+ * 1. Started Service：通过 startService 启动，独立运行，需手动停止
+ * 2. Bound Service：通过 bindService 绑定，可直接调用 Service 方法
+ * 3. AIDL Service：通过 bindService 绑定，支持跨进程通信（IPC）
+ * 4. Foreground Service：通过 startForegroundService 启动，有通知栏常驻
+ *
+ * 核心特性：
+ * 1. 后台运行：在后台执行长时间操作，不阻塞 UI
+ * 2. 进程间通信：通过 AIDL、Messenger 等方式实现 IPC
+ * 3. 生命周期管理：系统自动管理，但需注意资源释放
+ * 4. 前台服务：Android 8.0+ 需要使用前台服务
+ *
+ * 基本用法：
+ * ```kotlin
+ * // Started Service
+ * startService(Intent(context, MyService::class.java))
+ * stopService(Intent(context, MyService::class.java))
+ *
+ * // Bound Service
+ * bindService(intent, connection, Context.BIND_AUTO_CREATE)
+ * unbindService(connection)
+ * ```
+ *
+ * 适用场景：
+ * - 音乐播放、文件下载等后台操作
+ * - 跨进程通信
+ * - 需要长期运行的任务
  */
 @Route(path = RouterPath.Component.Service)
 class ServiceActivity : BasicResponseActivity() {

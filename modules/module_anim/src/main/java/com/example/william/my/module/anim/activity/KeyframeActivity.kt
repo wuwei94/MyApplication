@@ -14,13 +14,40 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Keyframe + PropertyValuesHolder — 关键帧动画
  *
- * Keyframe: 定义动画在特定时间点的状态，系统自动补间中间过程
- * PropertyValuesHolder: 封装属性名+值序列，可同时驱动多个属性
+ * 关键帧动画允许开发者定义动画在特定时间点的状态，系统自动补间中间过程。
  *
- * 核心方法：
- * - Keyframe.ofFloat(fraction, value) — fraction 为 0~1 的时间比例
- * - PropertyValuesHolder.ofKeyframe(propertyName, keyframes...) — 关键帧组合
- * - ObjectAnimator.ofPropertyValuesHolder(target, pvh...) — 用 PHV 驱动动画
+ * 核心组件：
+ * 1. Keyframe：定义动画在特定时间点的状态，fraction 为 0~1 的时间比例
+ * 2. PropertyValuesHolder：封装属性名+值序列，可同时驱动多个属性
+ * 3. ObjectAnimator.ofPropertyValuesHolder：用 PropertyValuesHolder 驱动动画
+ *
+ * 核心特性：
+ * 1. 精细控制：可定义任意时间点的状态
+ * 2. 多属性支持：可同时驱动多个属性
+ * 3. 自动补间：系统自动计算中间状态
+ * 4. 灵活组合：可自由组合关键帧
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 定义关键帧
+ * val kf1 = Keyframe.ofFloat(0f, 0f)      // 0% 时值为 0
+ * val kf2 = Keyframe.ofFloat(0.5f, 90f)   // 50% 时值为 90
+ * val kf3 = Keyframe.ofFloat(1f, 0f)      // 100% 时值为 0
+ *
+ * // 创建 PropertyValuesHolder
+ * val pvh = PropertyValuesHolder.ofKeyframe("rotation", kf1, kf2, kf3)
+ *
+ * // 创建动画
+ * ObjectAnimator.ofPropertyValuesHolder(view, pvh).apply {
+ *     duration = 3000
+ *     start()
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 复杂的动画效果
+ * - 多属性组合动画
+ * - 需要精细控制动画时间线的场景
  */
 @Route(path = RouterPath.Anim.Keyframe)
 class KeyframeActivity : BasicImageActivity() {

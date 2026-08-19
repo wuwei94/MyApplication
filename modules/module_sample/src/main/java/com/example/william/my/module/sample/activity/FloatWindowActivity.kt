@@ -23,7 +23,39 @@ import com.example.william.my.module.sample.R
 import kotlin.math.abs
 
 /**
- * 悬浮窗
+ * 悬浮窗 — 系统级悬浮窗实现
+ *
+ * 通过 WindowManager 实现系统级悬浮窗，支持拖拽和吸附效果。
+ *
+ * 核心特性：
+ * 1. 系统级悬浮窗：使用 WindowManager 添加全局悬浮窗
+ * 2. 拖拽支持：支持手势拖拽移动位置
+ * 3. 吸附效果：松手后自动吸附到屏幕边缘
+ * 4. 权限处理：Android 6.0+ 需要悬浮窗权限
+ *
+ * 实现原理：
+ * 1. 创建 WindowManager.LayoutParams，设置窗体类型和标志
+ * 2. 使用 WindowManager.addView() 添加悬浮窗
+ * 3. 通过 OnTouchListener 监听触摸事件，实现拖拽
+ * 4. 松手时计算位置，使用 ValueAnimator 实现吸附动画
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建悬浮窗
+ * val floatView = LayoutInflater.from(context).inflate(R.layout.float_layout, null)
+ * val params = WindowManager.LayoutParams().apply {
+ *     type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+ *     flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+ * }
+ *
+ * // 添加到窗口
+ * windowManager.addView(floatView, params)
+ * ```
+ *
+ * 适用场景：
+ * - 悬浮菜单、快捷入口
+ * - 客服悬浮球、反馈入口
+ * - 画中画、小窗口播放
  */
 @Route(path = RouterPath.Sample.FloatWindow)
 class FloatWindowActivity : BasicResponseActivity() {

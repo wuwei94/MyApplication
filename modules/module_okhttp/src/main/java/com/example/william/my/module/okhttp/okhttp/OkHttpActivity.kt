@@ -16,16 +16,49 @@ import okhttp3.Response
 import okio.IOException
 
 /**
- * OkHttp 基础示例
+ * OkHttp — HTTP 客户端库
  *
- * 演示 OkHttp 原生 API 的基本用法，不依赖任何封装。
- * 演示 Kotlin DSL 方式创建 OkHttpClient，以及原生 API 构建请求。
- * - okHttpClient {}：DSL 创建客户端
- * - FormBody.Builder：构建表单请求体
- * - JSON 请求体：application/json 格式
- * - MultipartBody.Builder：构建多部分请求体（文件上传场景）
+ * OkHttp 是 Square 开源的 HTTP 客户端库，是 Android 最流行的网络请求库。
  *
- * @see <a href="https://square.github.io/okhttp">OkHttp 官方文档</a>
+ * 核心特性：
+ * 1. HTTP/2 支持：支持 HTTP/2 协议，多路复用
+ * 2. 连接池：自动管理连接池，减少延迟
+ * 3. 透明压缩：支持 gzip 压缩，减少传输数据量
+ * 4. 请求重试：自动重试失败的请求
+ *
+ * 请求体类型：
+ * 1. FormBody：表单请求体（application/x-www-form-urlencoded）
+ * 2. MultipartBody：多部分请求体（multipart/form-data），支持文件上传
+ * 3. RequestBody：自定义请求体，支持 JSON 等格式
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建客户端
+ * val client = OkHttpClient()
+ *
+ * // 构建请求
+ * val request = Request.Builder()
+ *     .url("https://api.example.com/data")
+ *     .post(formBody)
+ *     .build()
+ *
+ * // 发送异步请求
+ * client.newCall(request).enqueue(object : Callback {
+ *     override fun onFailure(call: Call, e: IOException) {
+ *         // 请求失败
+ *     }
+ *     override fun onResponse(call: Call, response: Response) {
+ *         // 请求成功
+ *     }
+ * })
+ * ```
+ *
+ * 适用场景：
+ * - HTTP 请求
+ * - 文件上传下载
+ * - 需要高性能网络请求的场景
+ *
+ * https://square.github.io/okhttp
  */
 @Route(path = RouterPath.OkHttp.OkHttp)
 class OkHttpActivity : BasicResponseActivity() {

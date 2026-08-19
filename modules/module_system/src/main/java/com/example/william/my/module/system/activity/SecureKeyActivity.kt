@@ -7,11 +7,49 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.system.utils.SecureKeyDemoUtils
 
 /**
- * Android Keystore 安全密钥演示
+ * Android Keystore — 安全密钥管理
  *
- * 演示使用 Android Keystore 生成 EC P-256 密钥对，并通过私钥进行 ECDSA 签名。
- * 私钥始终保存在系统安全边界内（TEE 或 StrongBox），不会导出到业务层，
- * 适用于设备绑定、challenge-response 防重放等安全场景。
+ * Android Keystore 提供硬件级安全密钥管理，私钥始终保存在系统安全边界内。
+ *
+ * 核心特性：
+ * 1. 硬件保护：私钥存储在 TEE 或 StrongBox 中，无法导出
+ * 2. 设备绑定：密钥与设备绑定，无法迁移到其他设备
+ * 3. 安全签名：支持 ECDSA、RSA 等签名算法
+ * 4. 防重放：支持 challenge-response 机制，防止重放攻击
+ *
+ * 密钥类型：
+ * 1. EC P-256：椭圆曲线密钥，安全性高，性能好
+ * 2. RSA：RSA 密钥，兼容性好
+ * 3. AES：对称密钥，用于数据加密
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 生成密钥对
+ * val keyPairGenerator = KeyPairGenerator.getInstance(
+ *     KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore"
+ * )
+ * keyPairGenerator.initialize(
+ *     KeyGenParameterSpec.Builder(
+ *         "key_alias",
+ *         KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
+ *     )
+ *     .setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
+ *     .build()
+ * )
+ * val keyPair = keyPairGenerator.generateKeyPair()
+ *
+ * // 使用私钥签名
+ * val signature = Signature.getInstance("SHA256withECDSA")
+ * signature.initSign(keyPair.private)
+ * signature.update(data)
+ * val signedData = signature.sign()
+ * ```
+ *
+ * 适用场景：
+ * - 设备绑定、身份验证
+ * - 安全签名、防篡改
+ * - challenge-response 防重放
+ * - 生物识别认证
  */
 @Route(path = RouterPath.System.SecureKey)
 class SecureKeyActivity : BasicResponseActivity() {

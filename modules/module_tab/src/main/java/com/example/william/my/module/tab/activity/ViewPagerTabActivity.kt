@@ -15,6 +15,34 @@ import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityViewPagerTabBinding
 
+/**
+ * ViewPager + Tab — ViewPager 实现 Tab 切换
+ *
+ * 使用 ViewPager + RadioGroup 实现 Tab 切换，支持 Fragment 页面切换。
+ *
+ * 核心特性：
+ * 1. ViewPager 联动：Tab 和 ViewPager 联动切换
+ * 2. Fragment 支持：支持 Fragment 页面切换
+ * 3. 自定义样式：支持自定义 Tab 样式
+ * 4. 图标支持：支持图标和文字组合
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 设置 ViewPager 适配器
+ * viewPager.adapter = ViewPagerFragmentAdapter(supportFragmentManager, fragments)
+ *
+ * // 设置 RadioGroup 监听
+ * radioGroup.setOnCheckedChangeListener { group, checkedId ->
+ *     // 切换 ViewPager
+ *     viewPager.currentItem = position
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - Tab 切换
+ * - 底部导航栏
+ * - 多 Tab 页面切换
+ */
 @Route(path = RouterPath.Tab.ViewPagerTab)
 class ViewPagerTabActivity : BaseVBActivity<TabActivityViewPagerTabBinding>(),
     RadioGroup.OnCheckedChangeListener {

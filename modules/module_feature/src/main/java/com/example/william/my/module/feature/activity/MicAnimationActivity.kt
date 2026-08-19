@@ -14,6 +14,23 @@ import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.feature.databinding.FeatureActivityMicAnimationBinding
 import com.example.william.my.module.feature.layoutmanager.MicLayoutManager
 
+/**
+ * 麦位动画 — 自定义 LayoutManager 切换动画演示
+ *
+ * 使用 FLIP (First, Last, Invert, Play) 技术实现自定义 LayoutManager 切换动画。
+ * 演示 RecyclerView 布局切换时的流畅动画效果。
+ *
+ * FLIP 技术原理：
+ * 1. First：记录每个子 View 当前在屏幕上的实际视觉位置
+ * 2. Last：切换 LayoutManager 布局模式并触发重新布局
+ * 3. Invert：获取子 View 新位置，通过 translation 反向偏移回旧位置
+ * 4. Play：启动属性动画将 translation 平滑过渡回 0f
+ *
+ * 适用场景：
+ * - 自定义 LayoutManager 切换动画
+ * - 列表布局模式切换（如网格 ↔ 列表）
+ * - 需要流畅过渡的布局变化
+ */
 @Route(path = RouterPath.Feature.MicAnimation)
 class MicAnimationActivity : BaseVBActivity<FeatureActivityMicAnimationBinding>() {
 

@@ -10,14 +10,37 @@ import com.example.william.my.module.event.event.StickyEvent
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
- * RxJava 事件总线示例
+ * RxJava 事件总线 — 基于 RxJava 的事件总线
  *
- * 演示基于 RxJava PublishSubject 实现的事件总线。
+ * 利用 RxJava 的 PublishSubject 实现的事件总线，支持响应式编程。
+ *
+ * 核心特性：
+ * 1. 响应式编程：基于 RxJava，支持丰富的操作符
+ * 2. 线程调度：支持灵活的线程切换
+ * 3. 粘性事件：支持粘性事件，使用 BehaviorSubject
+ * 4. 背压处理：支持背压策略，防止数据溢出
  *
  * 特性对比：
  * 延迟发送: ❌ | 有序接收: ✅ | Sticky: ✅ | 生命周期感知: ❌ | 可跨进程: ❌ | 线程分发: ✅
  *
+ * 基本用法：
+ * ```kotlin
+ * // 订阅事件
+ * val disposable = RxEventBus.observeEvent(MessageEvent::class.java)
+ *     .subscribe { event ->
+ *         // 处理事件
+ *     }
+ *
+ * // 发送事件
+ * RxEventBus.postEvent(MessageEvent("Hello"))
+ *
+ * // 取消订阅
+ * disposable.dispose()
+ * ```
+ *
  * 注意：RxEventBus 不具备生命周期感知能力，必须通过 CompositeDisposable 在 onDestroy 中解绑，防止内存泄漏。
+ *
+ * https://github.com/ReactiveX/RxJava
  */
 @Route(path = RouterPath.Event.RxEventBus)
 class RxEventBusActivity : BasicResponseActivity() {

@@ -11,9 +11,52 @@ import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 
 /**
- * Java-WebSocket 原始 API 示例
+ * Java-WebSocket — Java WebSocket 客户端
  *
- * 演示使用 JavaWebSocketClient + JavaWebSocketClientListener 回调
+ * Java-WebSocket 是一个轻量级的 Java WebSocket 客户端库。
+ *
+ * 核心特性：
+ * 1. 轻量级：依赖少，APK 体积小
+ * 2. 自动重连：支持自动重连机制
+ * 3. 回调机制：提供连接、消息、关闭、错误回调
+ * 4. 简单易用：API 简单，易于集成
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 连接服务器
+ * JavaWebSocketClient.connect(
+ *     url = "ws://echo.websocket.org",
+ *     autoReconnect = true,
+ *     reconnectInterval = 3000,
+ *     listener = object : JavaWebSocketClientListener() {
+ *         override fun onOpen(webSocket: WebSocketClient, handshakedata: ServerHandshake) {
+ *             // 连接成功
+ *         }
+ *         override fun onMessage(webSocket: WebSocketClient, message: String) {
+ *             // 收到消息
+ *         }
+ *         override fun onClose(webSocket: WebSocketClient, code: Int, reason: String?, remote: Boolean) {
+ *             // 连接关闭
+ *         }
+ *         override fun onError(webSocket: WebSocketClient, ex: Exception) {
+ *             // 发生错误
+ *         }
+ *     }
+ * )
+ *
+ * // 发送消息
+ * JavaWebSocketClient.send(url, "Hello")
+ *
+ * // 关闭连接
+ * JavaWebSocketClient.close(url)
+ * ```
+ *
+ * 适用场景：
+ * - 实时通信
+ * - 在线游戏
+ * - 实时数据推送
+ *
+ * https://github.com/TooTallNate/Java-WebSocket
  */
 @Route(path = RouterPath.WebSocket.JavaWebSocketClient)
 class JavaWebSocketClientActivity : BasicResponseActivity() {

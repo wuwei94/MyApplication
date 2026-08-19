@@ -11,7 +11,42 @@ import com.example.william.my.core.ktor.ktorClient
 import com.example.william.my.core.ktor.request.postFormResponse
 import kotlinx.coroutines.launch
 
-/** 演示固定使用 OkHttp Engine 的项目级 Ktor 客户端。 */
+/**
+ * Ktor Client — 项目级 Ktor 客户端封装
+ *
+ * 演示固定使用 OkHttp Engine 的项目级 Ktor 客户端封装。
+ *
+ * 核心特性：
+ * 1. 统一封装：项目级统一的网络请求封装
+ * 2. OkHttp Engine：使用 OkHttp 作为底层引擎
+ * 3. 协程支持：原生支持 Kotlin 协程
+ * 4. 配置灵活：支持 baseUrl、timeout 等配置
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 创建客户端
+ * val client = ktorClient {
+ *     baseUrl("https://api.example.com")
+ *     timeout(15)
+ * }
+ *
+ * // 发送请求
+ * lifecycleScope.launch {
+ *     val result = client.postFormResponse<LoginData>("user/login", params)
+ *     result.onSuccess { response ->
+ *         // 处理成功
+ *     }
+ *     result.onFailure { error ->
+ *         // 处理失败
+ *     }
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 项目级网络请求封装
+ * - 需要统一配置的场景
+ * - Kotlin 协程项目
+ */
 @Route(path = RouterPath.Network.KtorClient)
 class KtorClientActivity : BasicResponseActivity() {
 

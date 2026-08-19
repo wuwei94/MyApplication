@@ -14,6 +14,35 @@ import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityTabHostBinding
 
+/**
+ * TabHost — 传统 Tab 切换（已废弃）
+ *
+ * TabHost 是 Android 传统的 Tab 切换控件，已废弃，推荐使用 TabLayout + ViewPager。
+ *
+ * 核心特性：
+ * 1. 传统 Tab：支持 Tab 切换和内容切换
+ * 2. 自定义 Tab：支持自定义 Tab 样式
+ * 3. Fragment 支持：支持 Fragment 切换
+ *
+ * 基本用法：
+ * ```kotlin
+ * // 初始化 TabHost
+ * tabHost.setup(context, fragmentManager, containerId)
+ *
+ * // 添加 Tab
+ * val tabSpec = tabHost.newTabSpec("tag")
+ *     .setIndicator(tabView)
+ * tabHost.addTab(tabSpec, Fragment::class.java, null)
+ * ```
+ *
+ * 注意事项：
+ * - TabHost 已废弃，推荐使用 TabLayout + ViewPager
+ * - 仅用于学习和兼容旧代码
+ *
+ * 适用场景：
+ * - 兼容旧代码
+ * - 学习传统 Tab 实现
+ */
 @Route(path = RouterPath.Tab.TabHost)
 class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
 
