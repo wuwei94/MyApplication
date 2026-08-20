@@ -8,7 +8,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.sample.adapter.ArticleAdapter
-import com.example.william.my.module.sample.adapter.ArticleDiffCallback
 import com.example.william.my.module.sample.bean.ArticleItem
 import com.example.william.my.module.sample.databinding.SampleActivityDiffBinding
 
@@ -124,7 +123,7 @@ class DiffUtilActivity : BaseVBActivity<SampleActivityDiffBinding>() {
      * 核心流程：计算 Diff 并分发更新
      */
     private fun applyDiffResult(newList: MutableList<ArticleItem>) {
-        val callback = ArticleDiffCallback(currentList, newList)
+        val callback = ArticleAdapter.DiffCallback(currentList, newList)
         val diffResult = DiffUtil.calculateDiff(callback)
 
         currentList = newList
