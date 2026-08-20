@@ -16,6 +16,7 @@
 package com.example.william.my.basic.basic_repo.database
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -38,13 +39,37 @@ abstract class ArticleDatabase : RoomDatabase() {
 
         private const val DB_NAME = "Articles.db"
 
+        @Volatile
         private var instance: ArticleDatabase? = null
-        fun getInstance(context: Context) =
+
+        fun getInstance(context: Context): ArticleDatabase =
             instance ?: synchronized(this) {
                 instance ?: createDataBase(context).also {
                     instance = it
                 }
             }
+
+        /**
+         * 创建并返回一个内存数据库实例，专供单元测试使用（支持主线程查询，随进程结束销毁）。
+         */
+        @VisibleForTesting
+        fun createInMemoryDatabase(context: Context): ArticleDatabase {
+            return createDataBase(context, inMemory = true)
+        }
+
+        /**
+         * 清空并关闭数据库实例，供单元测试或重置时使用。
+         */
+        @VisibleForTesting
+        fun resetDatabase() {
+            synchronized(this) {
+                instance?.apply {
+                    clearAllTables()
+                    close()
+                }
+                instance = null
+            }
+        }
 
         private fun createDataBase(
             context: Context,

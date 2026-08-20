@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.example.william.my.basic.basic_repo.database.dao
 
+import androidx.annotation.WorkerThread
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -38,12 +38,30 @@ interface ArticleDao {
     suspend fun getArticles(): List<ArticleDetailData>
 
     /**
+     * Select articles for a specific page from the Articles table.
+     *
+     * @param page the page number.
+     * @return articles of the specified page.
+     */
+    @Query("SELECT * FROM Articles WHERE page = :page")
+    suspend fun getArticlesByPage(page: Int): List<ArticleDetailData>
+
+    /**
      * Insert articles in the database. If the articlse already exists, replace it.
      *
      * @param articles the article to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticles(articles: List<ArticleDetailData>)
+
+    /**
+     * 同步阻塞插入文章数据。
+     *
+     * 注意：属于同步 I/O 操作，禁止在主线程直接调用。
+     */
+    @WorkerThread
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertArticlesSync(articles: List<ArticleDetailData>)
 
     /**
      * Insert a article in the database. If the article already exists, replace it.
@@ -58,6 +76,23 @@ interface ArticleDao {
      */
     @Query("DELETE FROM Articles")
     suspend fun deleteAllArticles()
+
+    /**
+     * 同步阻塞清空文章数据。
+     *
+     * 注意：属于同步 I/O 操作，禁止在主线程直接调用。
+     */
+    @WorkerThread
+    @Query("DELETE FROM Articles")
+    fun deleteAllArticlesSync()
+
+    /**
+     * Delete articles for a specific page.
+     *
+     * @param page the page number.
+     */
+    @Query("DELETE FROM Articles WHERE page = :page")
+    suspend fun deleteArticlesByPage(page: Int)
 
     /**
      * PagingSource

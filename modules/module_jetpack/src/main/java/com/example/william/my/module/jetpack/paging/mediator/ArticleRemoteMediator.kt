@@ -146,8 +146,8 @@ class ArticleRemoteMediator(
                 // Insert new users into database, which invalidates the
                 // current PagingData, allowing Paging to present the updates
                 // in the DB.
-                articleDao.insertArticles(articles.onEachIndexed { _, article ->
-                    article.page = curPage
+                articleDao.insertArticles(articles.map { article ->
+                    article.copy(page = curPage)
                 })
             }
 

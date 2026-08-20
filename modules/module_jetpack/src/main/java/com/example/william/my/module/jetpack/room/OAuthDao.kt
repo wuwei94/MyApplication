@@ -1,4 +1,4 @@
-package com.example.william.my.module.jetpack.oauth
+package com.example.william.my.module.jetpack.room
 
 import androidx.room.Dao
 import androidx.room.Delete

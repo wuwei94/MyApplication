@@ -15,11 +15,24 @@ import retrofit2.http.Part
 import retrofit2.http.Query
 import retrofit2.http.Url
 
+/**
+ * 通用网络请求接口（Retrofit API）—— **网络原语与通信测试层**。
+ *
+ * 【分层定位与设计意图】：
+ * 本接口属于“底层网络协议原语测试层”，不经过 Repository / ServiceLocator 封装，直接暴露 Retrofit 注解接口形态。
+ * 专为验证网络底层通信能力提供原生 API：
+ * 1. module_okhttp：验证 OkHttp / Retrofit DSL、拦截器、Call 同步/异步、RxJava Single、协程挂起函数、Multipart 上传与文件下载等原始网络行为。
+ * 2. module_kotlin：在 UseCase / ViewModel 中直接使用协程挂起与 Flow DSL 处理原生网络响应。
+ *
+ * 【访问约定】：
+ * 外部各示例页面根据演示目标，自由使用 [com.example.william.my.core.retrofit.createApi] 或 [com.example.william.my.core.retrofit.rx.api.createRxApi] 动态创建实例。
+ */
 interface NetworkApi {
 
     /**
-     * RetrofitActivity
-     * RetrofitHelperActivity
+     * Call 回调方式登录请求。
+     *
+     * 供 module_okhttp 的 RetrofitCallActivity、RetrofitCallDslActivity 调用。
      */
     @POST(Constants.Url_Login)
     fun loginCall(
@@ -28,8 +41,9 @@ interface NetworkApi {
     ): Call<ResponseBody>
 
     /**
-     * RetrofitRxJavaActivity
-     * RetrofitRxJavaHelperActivity
+     * RxJava3 Single 响应式登录请求。
+     *
+     * 供 module_okhttp 的 RetrofitRxActivity、RetrofitRxDslActivity 调用。
      */
     @POST(Constants.Url_Login)
     fun loginSingle(
@@ -38,26 +52,34 @@ interface NetworkApi {
     ): Single<RetrofitResponse<LoginData>>
 
     /**
-     * RetrofitDownloadActivity
+     * 文件下载请求。
+     *
+     * 供 module_okhttp 的 RetrofitDownloadActivity 调用。
      */
     @GET
     fun downloadFile(@Url url: String): Call<ResponseBody>
 
     /**
-     * RetrofitUploadActivity
+     * MultipartBody 文件上传请求。
+     *
+     * 供 module_okhttp 的 RetrofitUploadActivity 调用。
      */
     @POST
     fun uploadFile(@Url url: String, @Body body: MultipartBody): Call<ResponseBody>
 
     /**
-     * RetrofitUploadActivity
+     * 单文件 Multipart Part 上传请求。
+     *
+     * 供 module_okhttp 的 RetrofitUploadActivity 调用。
      */
     @Multipart
     @POST
     fun uploadFile(@Url url: String, @Part part: MultipartBody.Part): Call<ResponseBody>
 
     /**
-     * RetrofitUploadActivity
+     * 多文件 Multipart Part 上传请求。
+     *
+     * 供 module_okhttp 的 RetrofitUploadActivity 调用。
      */
     @Multipart
     @POST
@@ -66,10 +88,11 @@ interface NetworkApi {
     // =============================================================================================
 
     /**
-     * RetrofitCoroutineActivity
-     * RetrofitCoroutineDslActivity
-     * CoroutinesUseCase
-     * FlowUseCase
+     * 协程挂起函数登录请求。
+     *
+     * 调用方：
+     * - module_okhttp：RetrofitCoroutineActivity、RetrofitCoroutineDslActivity
+     * - module_kotlin：CoroutinesUseCase、FlowUseCase
      */
     @POST(Constants.Url_Login)
     suspend fun loginSuspend(

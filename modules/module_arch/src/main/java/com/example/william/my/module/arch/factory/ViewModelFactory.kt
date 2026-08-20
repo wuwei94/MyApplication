@@ -20,10 +20,8 @@ import android.app.Application
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.module.arch.viewmodel.ArticleLiveDataViewModel
 import com.example.william.my.module.arch.viewmodel.ArticleStateFlowViewModel
 
@@ -33,7 +31,7 @@ import com.example.william.my.module.arch.viewmodel.ArticleStateFlowViewModel
  * This creator is to showcase how to inject dependencies into ViewModels. It's not
  * actually necessary in this case, as the product ID can be passed in a public method.
  */
-class ViewModelFactory private constructor(private val articleRepository: ArticleRepository<ArticleData, ArticleDetailData>) :
+class ViewModelFactory private constructor(private val articleRepository: ArticleRepository) :
     ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>) =

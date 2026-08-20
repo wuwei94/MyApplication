@@ -11,9 +11,8 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 
 /**
@@ -27,7 +26,7 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
  * 3.MutableLiveData则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
  */
 class ArticleViewModel(
-    private val repository: ArticleRepository<ArticleData, ArticleDetailData>,
+    private val repository: ArticleRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 //class ArticleViewModel(val application: Application) : AndroidViewModel(application) {

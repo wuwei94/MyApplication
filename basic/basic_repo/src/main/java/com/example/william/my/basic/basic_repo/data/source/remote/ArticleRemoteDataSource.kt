@@ -15,34 +15,58 @@
  */
 package com.example.william.my.basic.basic_repo.data.source.remote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import com.example.william.my.basic.basic_repo.api.ArticleApi
+import com.example.william.my.basic.basic_repo.api.ArticleRxApi
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
-import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.response.RetrofitResponse
-import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
 import com.example.william.my.core.retrofit.rx.function.ServerResultFunction
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.rx3.asFlow
 
-object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetailData> {
+/**
+ * 远程网络数据源接口。
+ */
+interface ArticleRemoteDataSource {
 
-    private val articleApi = createRxApi(ArticleApi::class.java)
+    interface LoadArticleCallback {
+        fun onArticleLoaded(articles: List<ArticleDetailData>)
+        fun onDataNotAvailable()
+    }
+
+    /**
+     * 传统异步回调方式加载数据。
+     */
+    fun getArticleCallback(page: Int, callback: LoadArticleCallback)
+
+    /**
+     * RxJava3 Single：执行网络请求并返回单次响应流。
+     */
+    fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>>
+
+    /**
+     * 协程挂起函数：执行网络请求并返回业务响应。
+     */
+    suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData>
+
+    /**
+     * 业务数据挂起请求并包装为 [NetworkResult]。
+     */
+    suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>>
+}
+
+/**
+ * 远程网络数据源默认实现。
+ */
+class ArticleRemoteDataSourceImpl(
+    private val articleApi: ArticleApi,
+    private val articleRxApi: ArticleRxApi
+) : ArticleRemoteDataSource {
 
     // =========================================================================
     // 1. 传统回调 API（教学对比演示）
@@ -50,9 +74,9 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
 
     override fun getArticleCallback(
         page: Int,
-        callback: ArticleDataSource.LoadArticleCallback<ArticleDetailData>
+        callback: ArticleRemoteDataSource.LoadArticleCallback
     ) {
-        articleApi.getArticleSingle(page)
+        articleRxApi.getArticleSingle(page)
             .map(ServerResultFunction())
             .onErrorResumeNext(HttpResultFunction())
             .subscribeOn(Schedulers.io())
@@ -84,7 +108,7 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
      * RxJava3 Single：执行网络请求并返回单次响应流。
      */
     override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> {
-        return articleApi.getArticleSingle(page)
+        return articleRxApi.getArticleSingle(page)
             .map(ServerResultFunction())
             .onErrorResumeNext(HttpResultFunction())
             .subscribeOn(Schedulers.io())
@@ -99,105 +123,18 @@ object ArticleRemoteDataSourceImpl : ArticleDataSource<ArticleData, ArticleDetai
     }
 
     // =========================================================================
-    // 3. Flow 响应式数据流及互转 API
+    // 3. 业务数据挂起请求
     // =========================================================================
-
-    /**
-     * RxJava 转 Flow：将 Single 转换为 Kotlin 响应式 Flow (asFlow)。
-     */
-    override fun getArticleFlowByRx(page: Int): Flow<RetrofitResponse<ArticleData>> {
-        return articleApi.getArticleSingle(page)
-            .map(ServerResultFunction())
-            .onErrorResumeNext(HttpResultFunction())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .toObservable()
-            .asFlow()
-    }
-
-    /**
-     * 纯协程 Flow 构建：通过 flow { ... } 发送 loading/error/success 状态。
-     */
-    override fun getArticleFlow(page: Int): Flow<RetrofitResponse<ArticleData>> {
-        return flow {
-            emit(RetrofitResponse.loading())
-            val response = articleApi.getArticleSuspend(page)
-            emit(response)
-        }.catch { e ->
-            emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
-        }.flowOn(Dispatchers.IO)
-    }
-
-    /**
-     * LiveData 转 Flow：将 LiveData 转换为 Kotlin 响应式 Flow (asFlow)。
-     */
-    override fun getArticleFlowByLiveData(page: Int): Flow<RetrofitResponse<ArticleData>> {
-        return liveData(Dispatchers.IO) {
-            emit(RetrofitResponse.loading())
-            try {
-                val response = articleApi.getArticleSuspend(page)
-                emit(response)
-            } catch (e: Exception) {
-                emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
-            }
-        }.asFlow()
-    }
-
-    // =========================================================================
-    // 4. LiveData 响应式数据流及互转 API
-    // =========================================================================
-
-    /**
-     * RxJava 转 LiveData：遵循 ReactiveStreams 规范将 Single 桥接为 LiveData。
-     */
-    override fun getArticleLiveDataByRx(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return articleApi.getArticleSingle(page)
-            .map(ServerResultFunction())
-            .onErrorResumeNext(HttpResultFunction())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .toObservable()
-            .asFlow()
-            .asLiveData()
-    }
-
-    /**
-     * 官方 liveData 协程构建器：通过 liveData(Dispatchers.IO) { ... } 构建生命周期感知的 LiveData。
-     */
-    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return liveData(Dispatchers.IO) {
-            emit(RetrofitResponse.loading())
-            try {
-                val response = articleApi.getArticleSuspend(page)
-                emit(response)
-            } catch (e: Exception) {
-                emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
-            }
-        }
-    }
-
-    /**
-     * Flow 转 LiveData：通过 asLiveData() 将 Kotlin Flow 桥接为 LiveData。
-     */
-    override fun getArticleLiveDataByFlow(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return flow {
-            emit(RetrofitResponse.loading())
-            val response = articleApi.getArticleSuspend(page)
-            emit(response)
-        }.catch { e ->
-            emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
-        }.flowOn(Dispatchers.IO).asLiveData()
-    }
 
     override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> {
         return try {
             val response = articleApi.getArticleSuspend(page)
             val data = response.data
                 ?: return NetworkResult.Error(IllegalStateException("Response data is null"))
-            NetworkResult.Success(data.datas)
+            val articles = data.datas.map { it.copy(page = page) }
+            NetworkResult.Success(articles)
         } catch (e: Exception) {
             NetworkResult.Error(e)
         }
     }
-
 }

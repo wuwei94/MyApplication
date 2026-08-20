@@ -2,21 +2,17 @@ package com.example.william.my.module.jetpack.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import autodispose2.AutoDispose
 import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.jetpack.databinding.JetpackActivityPagingBinding
 import com.example.william.my.module.jetpack.paging.adapter.PagingAdapter
 import com.example.william.my.module.jetpack.paging.adapter.PagingStateAdapter
-import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
 import com.example.william.my.module.jetpack.paging.viewmodel.PagingViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -82,22 +78,7 @@ import kotlinx.coroutines.launch
 class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
 
     private val mViewModel: PagingViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val articleDatabase =
-                    ServiceLocator.provideArticleDatabase(application)
-                val remoteKeyDatabase =
-                    RemoteKeyDatabase.getInstance(application)
-                val networkApi =
-                    ServiceLocator.provideArticleApi()
-                @Suppress("UNCHECKED_CAST")
-                return PagingViewModel(
-                    articleDatabase,
-                    remoteKeyDatabase,
-                    networkApi
-                ) as T
-            }
-        }
+        PagingViewModel.Factory
     }
 
     private lateinit var mAdapter: PagingAdapter
@@ -116,7 +97,7 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
         mAdapter =
             PagingAdapter(PagingAdapter.PagingComparator())
 
-        initArticles(mViewModel, mAdapter)
+        initArticlesByMediatorFlow(mViewModel, mAdapter)
 
         //获取加载状态
         mAdapter.addLoadStateListener {
@@ -144,33 +125,37 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
         mBinding.pagingRecycleView.adapter = mAdapter
     }
 
-    private fun initArticles(
+    // =========================================================================
+    // 1. 网络 + 数据库缓存（RemoteMediator 模式）
+    // =========================================================================
+
+    private fun initArticlesByMediatorLiveData(
         viewModel: PagingViewModel,
         adapter: PagingAdapter
     ) {
-        lifecycleScope.launch {
-            viewModel.articles.collectLatest { pagingData ->
+        viewModel.articlesByMediatorLiveData.observe(this@PagingActivity) { pagingData ->
+            lifecycleScope.launch {
                 adapter.submitData(pagingData)
             }
         }
     }
 
-    private fun initArticleFlow(
+    private fun initArticlesByMediatorFlow(
         viewModel: PagingViewModel,
         adapter: PagingAdapter
     ) {
         lifecycleScope.launch {
-            viewModel.articleFlow.collectLatest { pagingData ->
+            viewModel.articlesByMediatorFlow.collectLatest { pagingData ->
                 adapter.submitData(pagingData)
             }
         }
     }
 
-    private fun initArticleFlowable(
+    private fun initArticlesByMediatorFlowable(
         viewModel: PagingViewModel,
         adapter: PagingAdapter
     ) {
-        viewModel.articleFlowable
+        viewModel.articlesByMediatorFlowable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .to(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
@@ -179,14 +164,42 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
             }
     }
 
-    private fun initArticleLiveData(
+    // =========================================================================
+    // 2. 纯网络直接加载（PagingSource 模式）
+    // =========================================================================
+
+    private fun initArticlesByNetworkLiveData(
         viewModel: PagingViewModel,
         adapter: PagingAdapter
     ) {
-        viewModel.articleLiveData.observe(this@PagingActivity) { pagingData ->
+        viewModel.articlesByNetworkLiveData.observe(this@PagingActivity) { pagingData ->
             lifecycleScope.launch {
                 adapter.submitData(pagingData)
             }
         }
+    }
+
+    private fun initArticlesByNetworkFlow(
+        viewModel: PagingViewModel,
+        adapter: PagingAdapter
+    ) {
+        lifecycleScope.launch {
+            viewModel.articlesByNetworkFlow.collectLatest { pagingData ->
+                adapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun initArticlesByNetworkFlowable(
+        viewModel: PagingViewModel,
+        adapter: PagingAdapter
+    ) {
+        viewModel.articlesByNetworkFlowable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .to(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+            .subscribe {
+                adapter.submitData(lifecycle, it)
+            }
     }
 }

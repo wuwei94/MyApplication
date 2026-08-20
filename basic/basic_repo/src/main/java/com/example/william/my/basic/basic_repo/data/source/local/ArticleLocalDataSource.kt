@@ -15,46 +15,65 @@
  */
 package com.example.william.my.basic.basic_repo.data.source.local
 
-import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
-import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
 import com.example.william.my.basic.basic_repo.database.dao.ArticleDao
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
+/**
+ * 本地持久化数据源接口。
+ */
+interface ArticleLocalDataSource {
+
+    /**
+     * 从本地数据库按页查询文章数据。
+     */
+    suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>>
+
+    /**
+     * 保存单篇文章到本地数据库。
+     */
+    suspend fun saveArticle(article: ArticleDetailData)
+
+    /**
+     * 批量保存文章到本地数据库。
+     */
+    suspend fun saveArticles(articles: List<ArticleDetailData>)
+
+    /**
+     * 清空本地数据库中的所有文章。
+     */
+    suspend fun deleteAllArticles()
+}
+
+/**
+ * 本地持久化数据源实现（Room DAO 挂起函数原生 main-safe，无需额外 withContext）。
+ */
 class ArticleLocalDataSourceImpl(
-    private val articleDao: ArticleDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ArticleDataSource<ArticleData, ArticleDetailData> {
+    private val articleDao: ArticleDao
+) : ArticleLocalDataSource {
 
     override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> {
-        return withContext(ioDispatcher) {
-            try {
-                val articles = articleDao.getArticles()
-                NetworkResult.Success(articles)
-            } catch (e: Exception) {
-                NetworkResult.Error(e)
+        return try {
+            val articles = if (page >= 0) {
+                articleDao.getArticlesByPage(page)
+            } else {
+                articleDao.getArticles()
             }
+            NetworkResult.Success(articles)
+        } catch (e: Exception) {
+            NetworkResult.Error(e)
         }
     }
 
     override suspend fun saveArticle(article: ArticleDetailData) {
-        withContext(ioDispatcher) {
-            articleDao.insertArticle(article)
-        }
+        articleDao.insertArticle(article)
     }
 
     override suspend fun saveArticles(articles: List<ArticleDetailData>) {
-        withContext(ioDispatcher) {
-            articleDao.insertArticles(articles)
-        }
+        articleDao.insertArticles(articles)
     }
 
     override suspend fun deleteAllArticles() {
-        withContext(ioDispatcher) {
-            articleDao.deleteAllArticles()
-        }
+        articleDao.deleteAllArticles()
     }
 }

@@ -234,6 +234,16 @@ Ktor 日志默认关闭，启用后默认记录 Header，并脱敏认证与 Cook
 | Java API | Ktor 依赖 suspend、reified 和 typealias，不追求与 Retrofit Java API 完全相同 |
 | UI 加载状态 | `LoadingTipView` 属于现有 Retrofit UI 集成，不是网络核心能力 |
 
+## basic_repo 网络 API 分层定位与约定
+
+`basic_repo` 提供了两套针对不同演示目标设计的基础网络 API，其分层职责与调用约定如下：
+
+| 网络接口 | 架构分层 | 封装形式 | 主要服务模块 | 设计意图与调用约定 |
+|---|---|---|---|---|
+| **`ArticleApi`** | **业务架构层（协程标准 API）** | 纯净挂起函数<br>(基于 `createApi`，未装配 Rx Adapter) | `module_arch`<br>`module_jetpack` | 专为协程、Flow 与 Paging 3 协程组件（`ArticlePagingSource`, `ArticleRemoteMediator`）提供挂起请求；统一由 `ServiceLocator.provideArticleApi()` 提供。 |
+| **`ArticleRxApi`** | **业务架构层（Rx 响应式 API）** | RxJava 响应式流<br>(基于 `createRxApi`，装配 `RxJava3CallAdapterFactory`) | `module_arch`<br>`module_jetpack` | 专为 MVP 回调、RxJava 响应式流与 Paging 3 Rx 组件（`ArticleRxPagingSource`, `ArticleRxRemoteMediator`）提供 Single 请求；统一由 `ServiceLocator.provideArticleRxApi()` 提供。 |
+| **`NetworkApi`** | **网络通信原语层** | 裸 Retrofit 注解接口<br>(无 Repository 包装) | `module_okhttp`<br>`module_kotlin` | 专为 OkHttp/Retrofit/Rx/协程/Flow 演示底层请求能力（Call、Single、Suspend、Multipart 上传、下载）；由各演示页面动态创建调用。 |
+
 ## 验证命令
 
 ```powershell

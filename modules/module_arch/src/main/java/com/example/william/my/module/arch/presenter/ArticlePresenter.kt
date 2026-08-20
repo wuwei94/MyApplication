@@ -15,26 +15,24 @@
  */
 package com.example.william.my.module.arch.presenter
 
-import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.module.arch.contract.ArticleContract
 import com.example.william.my.module.arch.fragment.MvpFragment
-
 
 /**
  * Listens to user actions from the UI ([MvpFragment]), retrieves the data and updates the
  * UI as required.
  */
 class ArticlePresenter(
-    private val repository: ArticleRepository<ArticleData, ArticleDetailData>,
+    private val repository: ArticleRepository,
     val view: ArticleContract.View
 ) : ArticleContract.Presenter {
 
     override fun loadArticle(page: Int) {
-        repository.getArticle(
+        repository.getArticleCallback(
             page,
-            object : ArticleRepository.LoadArticleCallback<ArticleDetailData> {
+            object : ArticleRepository.LoadArticleCallback {
                 override fun onArticleLoaded(articles: List<ArticleDetailData>) {
                     view.showArticle(articles)
                 }

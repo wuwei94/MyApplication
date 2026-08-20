@@ -17,9 +17,7 @@ package com.example.william.my.module.arch.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.intent.ArticleIntent
 import com.example.william.my.module.arch.intent.ArticleViewState
@@ -29,7 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 
-class ArticleStateFlowViewModel(private val repository: ArticleRepository<ArticleData, ArticleDetailData>) :
+class ArticleStateFlowViewModel(private val repository: ArticleRepository) :
     ViewModel() {
 
     val intent = Channel<ArticleIntent>(Channel.UNLIMITED)

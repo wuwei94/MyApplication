@@ -20,8 +20,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.exception.ExceptionHandler
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.usecase.ArticleUseCase
@@ -30,7 +29,7 @@ import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import kotlinx.coroutines.launch
 
 class ArticleLiveDataViewModel(
-    private val repository: ArticleRepository<ArticleData, ArticleDetailData>
+    private val repository: ArticleRepository
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()

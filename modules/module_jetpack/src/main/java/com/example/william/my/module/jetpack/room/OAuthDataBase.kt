@@ -1,4 +1,4 @@
-package com.example.william.my.module.jetpack.oauth
+package com.example.william.my.module.jetpack.room
 
 import android.content.Context
 import androidx.room.Database

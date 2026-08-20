@@ -13,11 +13,17 @@ interface RemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertKey(key: RemoteKeyData)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertKeySync(key: RemoteKeyData)
+
     @Query("SELECT * FROM RemoteKey WHERE tag = :tag")
     suspend fun remoteKeyByTag(tag: String): RemoteKeyData?
 
     @Query("DELETE FROM RemoteKey WHERE tag = :tag")
     suspend fun deleteByTag(tag: String)
+
+    @Query("DELETE FROM RemoteKey WHERE tag = :tag")
+    fun deleteByTagSync(tag: String)
 
     @Query("Select createdAt From RemoteKey Order By createdAt DESC LIMIT 1")
     suspend fun lastUpdated(): Long?

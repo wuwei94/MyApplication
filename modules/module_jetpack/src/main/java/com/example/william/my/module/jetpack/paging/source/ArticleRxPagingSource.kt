@@ -2,7 +2,7 @@ package com.example.william.my.module.jetpack.paging.source
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
-import com.example.william.my.basic.basic_repo.api.ArticleApi
+import com.example.william.my.basic.basic_repo.api.ArticleRxApi
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.core.retrofit.response.RetrofitResponse
@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ArticleRxPagingSource(
-    private val networkApi: ArticleApi
+    private val networkApi: ArticleRxApi
 ) :
     RxPagingSource<Int, ArticleDetailData>() {
 

@@ -5,9 +5,9 @@ import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.jetpack.oauth.OAuth
-import com.example.william.my.module.jetpack.oauth.OAuthDao
-import com.example.william.my.module.jetpack.oauth.OAuthDataBase
+import com.example.william.my.module.jetpack.room.OAuth
+import com.example.william.my.module.jetpack.room.OAuthDao
+import com.example.william.my.module.jetpack.room.OAuthDataBase
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors

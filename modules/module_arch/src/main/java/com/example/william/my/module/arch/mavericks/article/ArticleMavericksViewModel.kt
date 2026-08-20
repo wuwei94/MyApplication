@@ -5,16 +5,19 @@ import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MavericksViewModel
 import com.airbnb.mvrx.MavericksViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
-import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
-import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
+import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
+/**
+ * Mavericks 文章列表 ViewModel。
+ *
+ * 管理文章列表状态并驱动 UI 更新。内部使用包装了 [ArticleRepository] 的 [ArticleMavericksRepository]。
+ */
 @OptIn(ExperimentalMavericksApi::class)
 class ArticleMavericksViewModel(
     initialState: ArticleMavericksState,
-    articleRepository: ArticleRepository<ArticleData, ArticleDetailData>
+    articleRepository: ArticleRepository
 ) : MavericksViewModel<ArticleMavericksState>(initialState) {
 
     private val repository = ArticleMavericksRepository(viewModelScope, articleRepository)
