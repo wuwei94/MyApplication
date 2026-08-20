@@ -10,8 +10,6 @@ android {
 }
 
 dependencies {
-    //BottomSheetDialogFragment
-    api(libs.google.material)
     //Utils
     implementation(libs.utils)
     //PAG

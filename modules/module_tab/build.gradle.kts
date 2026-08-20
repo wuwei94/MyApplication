@@ -12,9 +12,4 @@ android {
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
-
-    // ViewPager2
-    implementation(libs.androidx.viewPager2)
-    // BottomNavigationView
-    implementation(libs.google.material)
 }

@@ -44,6 +44,7 @@ internal fun Project.configureDepsAndroid(
 
             "implementation"(libs.findLibrary("google-gson").get())
             "implementation"(libs.findLibrary("google-guava").get())
+            "implementation"(libs.findLibrary("google-material").get())
 
             "implementation"(libs.findLibrary("androidx-core-ktx").get())
             "implementation"(libs.findLibrary("androidx-activity-ktx").get())

@@ -17,7 +17,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.google.material)
     //Utils
     implementation(libs.utils)
     //ImmersionBar

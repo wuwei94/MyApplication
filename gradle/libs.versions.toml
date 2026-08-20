@@ -31,6 +31,7 @@ androidxDataStore = "1.2.0"
 androidxWorkManager = "2.11.1"
 androidxNavigation = "2.9.7"
 androidxStartup = "1.2.0"
+androidxCamera = "1.3.0"
 
 # https://mvnrepository.com/artifact/com.google.dagger/hilt-android
 androidxHilt = "2.58"
@@ -174,6 +175,14 @@ androidx-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-com
 # 应用启动
 # https://developer.android.google.cn/topic/libraries/app-startup
 androidx-startup = { group = "androidx.startup", name = "startup-runtime", version.ref = "androidxStartup" }
+
+# CameraX
+# https://developer.android.google.cn/jetpack/androidx/releases/camera
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "androidxCamera" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "androidxCamera" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "androidxCamera" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "androidxCamera" }
+androidx-camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "androidxCamera" }
 
 # https://developer.android.com/training/data-storage/room
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }

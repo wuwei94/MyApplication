@@ -12,13 +12,10 @@ dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
 
-    implementation(libs.google.material)
-
     // CameraX
-    val camerax_version = "1.3.0"
-    implementation("androidx.camera:camera-core:$camerax_version")
-    implementation("androidx.camera:camera-camera2:$camerax_version")
-    implementation("androidx.camera:camera-lifecycle:$camerax_version")
-    implementation("androidx.camera:camera-view:$camerax_version")
-    implementation("androidx.camera:camera-video:$camerax_version")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.video)
 }

@@ -20,7 +20,7 @@
 
 `AndroidDeps.kt` 中配置了所有模块的公共依赖：
 
-- **基础依赖**：Coroutines、Gson、Guava、AndroidX（Core、Activity、Fragment、AppCompat、ConstraintLayout、RecyclerView、ViewPager2）、BRVAH、SmartRefresh
+- **基础依赖**：Coroutines、Gson、Guava、Material、AndroidX（Core、Activity、Fragment、AppCompat、ConstraintLayout、RecyclerView、ViewPager2）、BRVAH、SmartRefresh
 - **测试依赖**：JUnit、AndroidX Test、Espresso
 - **功能模块依赖**：每个功能模块自动依赖其他所有功能模块（通过 `configureFeatureAndroid`）
 - **Convention Plugin**：13 个插件统一管理构建配置，详见 `docs/build-logic.md`

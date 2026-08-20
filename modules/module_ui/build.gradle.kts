@@ -15,5 +15,4 @@ dependencies {
     //TODO
     implementation(project(":libs:lib_widget"))
     implementation(libs.google.flexBox)
-    implementation(libs.google.material)
 }

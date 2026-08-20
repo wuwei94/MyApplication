@@ -40,7 +40,7 @@ build-logic/convention/src/main/kotlin/
 
 **基础依赖**（通过 `configureDepsAndroid`）：
 - Kotlin 协程：`kotlinx-coroutines-core`、`kotlinx-coroutines-android`
-- 工具库：`google-gson`、`google-guava`
+- 工具库：`google-gson`、`google-guava`、`google-material`
 - AndroidX：`core-ktx`、`activity-ktx`、`fragment-ktx`、`appCompat`、`constraintLayout`、`recyclerView`、`viewPager2`
 - UI 库：`brvah`、`smartrefresh-layout`、`smartrefresh-header`、`smartrefresh-footer`
 - 测试：`junit`、`androidx-test-ext`、`androidx-test-espresso`
