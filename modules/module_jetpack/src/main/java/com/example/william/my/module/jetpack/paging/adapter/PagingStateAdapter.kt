@@ -14,27 +14,33 @@ class PagingStateAdapter(private val retry: () -> Unit) :
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.mBinding.itemTextView.setOnClickListener {
-            retry
+            if (loadState is LoadState.Error) {
+                retry()
+            }
         }
         when (loadState) {
-            is LoadState.Loading ->
+            is LoadState.Loading -> {
+                holder.mBinding.itemTextView.text = "正在加载更多数据..."
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
                         R.color.shared_color_primary
                     )
                 )
+            }
 
-            is LoadState.NotLoading ->
+            is LoadState.NotLoading -> {
+                holder.mBinding.itemTextView.text = ""
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.shared_color_primary_dark
+                        android.R.color.transparent
                     )
                 )
+            }
 
             is LoadState.Error -> {
-                holder.mBinding.itemTextView.text = loadState.error.localizedMessage
+                holder.mBinding.itemTextView.text = "加载失败，点击重试 (${loadState.error.localizedMessage ?: "网络异常"})"
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,

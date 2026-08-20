@@ -48,3 +48,60 @@
  * ```
  */
 ````
+
+## 示例页面类注释（Activity 模板）
+
+各功能模块的演示 Activity 应采用结构化 KDoc，便于读者快速了解该技术方案的定位、特性、用法与官方来源：
+
+- **标题与定位**：`<技术/组件名> — <职责定位>`
+- **概述**：简明描述框架作用与核心机制。
+- **核心特性**：条理化罗列关键能力与技术优势。
+- **核心组件/类型**（可选）：说明涉及的关键接口、注解或类型划分。
+- **基本用法**：提供标准、小巧、自闭合的关键 API 调用代码块。
+- **适用场景**：罗列典型的业务使用场景。
+- **参考文档**：官方文档或权威技术链接。
+
+模板示例：
+
+````kotlin
+/**
+ * DataStore — 数据存储框架
+ *
+ * DataStore 是 Android Jetpack 提供的数据存储框架，用于替代 SharedPreferences。
+ *
+ * 两种类型：
+ * 1. Preferences DataStore：键值对存储，无需预先定义 schema
+ * 2. Proto DataStore：类型安全存储，需要预先定义 Protocol Buffers schema
+ *
+ * 核心特性：
+ * 1. 异步 API：基于 Kotlin 协程与 Flow，完全避免阻塞主线程
+ * 2. 类型安全：Proto DataStore 提供编译时类型检查
+ * 3. 事务支持：支持数据事务与原子读写，保证数据一致性
+ * 4. 自动迁移：支持从 SharedPreferences 自动迁移
+ *
+ * 基本用法：
+ * ```kotlin
+ * // Preferences DataStore（顶层单例声明）
+ * val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+ *
+ * // 读取数据
+ * val counterFlow: Flow<Int> = dataStore.data.map { preferences ->
+ *     preferences[intPreferencesKey("counter")] ?: 0
+ * }
+ *
+ * // 写入数据
+ * dataStore.edit { settings ->
+ *     val currentCounter = settings[intPreferencesKey("counter")] ?: 0
+ *     settings[intPreferencesKey("counter")] = currentCounter + 1
+ * }
+ * ```
+ *
+ * 适用场景：
+ * - 替代 SharedPreferences
+ * - 键值对数据存储
+ * - 需要异步 API 与响应式 Flow 监听的场景
+ *
+ * https://developer.android.google.cn/topic/libraries/architecture/datastore
+ */
+````
+

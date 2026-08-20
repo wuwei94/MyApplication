@@ -15,8 +15,8 @@
   -->
 
 <resources>
-    <string name="notification_title_saving_image">WorkManager Sample: Saving Filtered Image</string>
-    <string name="notification_cancel_processing">Cancel processing</string>
-    <string name="notification_channel_id">WorkManagerSample</string>
-    <string name="notification_channel_name">WorkManager Sample</string>
+    <string name="jetpack_notification_title_saving_image">WorkManager: 正在保存处理后的图片</string>
+    <string name="jetpack_notification_cancel_processing">取消任务</string>
+    <string name="jetpack_notification_channel_id">JetpackWorkManagerSample</string>
+    <string name="jetpack_notification_channel_name">WorkManager 加急任务通知</string>
 </resources>

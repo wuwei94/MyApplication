@@ -195,16 +195,8 @@ androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = 
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoom" }
 androidx-room-rxjava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "androidxRoom" }
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "androidxRoom" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler-processing", version.ref = "androidxRoom" }
-# https://blog.csdn.net/weiyu1992/article/details/144223184
-# room-compiler 和 room-compiler-processing 的区别：
-# room-compiler 是 Room 的标准注解处理器，它负责在编译时处理 Room 的数据库注解（如 @Entity, @Dao 等）。但是，在某些情况下，特别是在使用 Kotlin 1.9 或更高版本时，room-compiler 可能与 Kotlin 元数据 2.1.0 版本不兼容，导致无法正常处理注解。
-# room-compiler-processing是一个专门为 Kotlin 1.9+ 和 新版 Kotlin 元数据版本（例如 2.1.0） 提供支持的版本。它更新了对 Kotlin 元数据 的支持，解决了版本冲突的问题。
-# room-compiler-processing 的改进： androidx.room:room-compiler-processing 版本提供了对 Kotlin 2.1.0 元数据 的支持，并解决了与旧版注解处理器（room-compiler）的 不兼容问题。具体来说，它更新了对 Kotlin 元数据的版本兼容性，使得 Room 能够正确处理新的 Kotlin 编译器元数据格式（2.1.0）。
-# 这就是为什么当你将 room-compiler 替换为 room-compiler-processing 后，问题得到了解决。room-compiler-processing 版本在内部处理了 Kotlin 元数据格式的更新，从而避免了因版本不兼容导致的错误。
-# 为什么会发生这种错误：
-# 这是因为 Room 在处理 Kotlin 注解时，依赖于 kotlinx-metadata-jvm 库来解析 Kotlin 的类和注解。Kotlin 1.9 版本引入了 2.1.0 的 Kotlin 元数据格式，而旧版 Room 库（如 room-compiler）并不兼容这个格式。
-# 使用 room-compiler-processing 版本，Room 内部更新了对该新格式的支持，从而解决了与 kotlinx-metadata-jvm 2.1.0 版本之间的兼容性问题。
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
+
 
 # Compose
 androidx-material = { group = "androidx.compose.material", name = "material" }

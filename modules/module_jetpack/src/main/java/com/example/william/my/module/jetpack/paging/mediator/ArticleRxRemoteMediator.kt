@@ -106,21 +106,22 @@ class ArticleRxRemoteMediator(
             .map { response ->
                 val articles = response.data?.datas ?: emptyList()
 
-                // 将网络数据和下一个 RemoteKey 统一在事务中写入，保证本地数据与分页状态的一致性
+                if (loadType == LoadType.REFRESH) {
+                    // 下拉刷新时清空旧的 RemoteKey
+                    remoteKeyDao.deleteByTagSync(tag)
+                }
+
+                val curPage = response.data?.curPage ?: 0
+                val nextPage = if (articles.isEmpty()) null else curPage
+
+                // 更新 RemoteKey 为下一页页码
+                remoteKeyDao.insertKeySync(RemoteKeyData(tag, nextPage))
+
+                // 将文章列表插入 Room 数据库事务中，Room 会自动使关联的 PagingSource 失效以刷新 UI
                 articleDatabase.runInTransaction {
                     if (loadType == LoadType.REFRESH) {
-                        // 下拉刷新时清空旧的 RemoteKey 和文章缓存
-                        remoteKeyDao.deleteByTagSync(tag)
                         articleDao.deleteAllArticlesSync()
                     }
-
-                    val curPage = response.data?.curPage ?: 0
-                    val nextPage = if (articles.isEmpty()) null else curPage
-
-                    // 更新 RemoteKey 为下一页页码
-                    remoteKeyDao.insertKeySync(RemoteKeyData(tag, nextPage))
-
-                    // 将文章列表插入 Room 数据库，Room 会自动使关联的 PagingSource 失效以刷新 UI
                     articleDao.insertArticlesSync(articles.map { article ->
                         article.copy(page = curPage)
                     })

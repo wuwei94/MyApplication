@@ -12,22 +12,20 @@ class UploadWorker(appContext: Context, workerParams: WorkerParameters) :
     private val TAG = this.javaClass.simpleName
 
     override fun doWork(): Result {
-        // Get the input
-        val input = inputData.getString("key")
+        // 安全读取输入参数（避免强制解包抛 NPE）
+        val input = inputData.getString("key") ?: "默认输入数据"
+        uploadImages(input)
 
-        // Do the work here--in this case, upload the images.
-        uploadImages(input!!)
+        // 模拟后台耗时与进度更新（Data 对象大小上限 10KB）
+        setProgressAsync(Data.Builder().putInt("progress", 50).build())
+        Thread.sleep(1000)
+        setProgressAsync(Data.Builder().putInt("progress", 100).build())
 
-        // Create the output of the work
-        // Data 对象的大小上限为 10KB。
+        // 创建任务输出数据
         val outputData = Data.Builder()
-            .putString("key", "outData")
+            .putString("result", "上传成功: $input")
             .build()
 
-        //更新进度
-        setProgressAsync(outputData)
-
-        // Indicate whether the task finished successfully with the Result
         return Result.success(outputData)
     }
 

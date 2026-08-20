@@ -29,21 +29,12 @@ abstract class OAuthDataBase : RoomDatabase() {
             }
 
         private fun createDataBase(context: Context): OAuthDataBase {
-            return Room.databaseBuilder(context, OAuthDataBase::class.java, DB_NAME)
-                //是否允许在主线程进行查询
-                .allowMainThreadQueries()
-                //数据库创建和打开后的回调
-                //.addCallback()
-                //设置查询的线程池
-                //.setQueryExecutor()
-                //.openHelperFactory()
-                //room的日志模式
-                //.setJournalMode()
-                //数据库升级异常之后的回滚
-                //.fallbackToDestructiveMigration()
-                //数据库升级异常后根据指定版本进行回滚
-                //.fallbackToDestructiveMigrationFrom()
-                // .addMigrations(CacheDatabase.sMigration)
+            return Room.databaseBuilder(
+                context.applicationContext,
+                OAuthDataBase::class.java,
+                DB_NAME
+            )
+                .fallbackToDestructiveMigration(true)
                 .build()
         }
 

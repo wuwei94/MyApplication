@@ -65,7 +65,9 @@ abstract class RemoteKeyDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context.applicationContext,
                     RemoteKeyDatabase::class.java, DB_NAME
-                ).build()
+                )
+                    .fallbackToDestructiveMigration(true)
+                    .build()
             }
             return result
         }

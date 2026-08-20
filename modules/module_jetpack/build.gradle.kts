@@ -1,10 +1,8 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
     alias(libs.plugins.nowinandroid.android.arouter)
-    alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.protobuf)
     alias(libs.plugins.nowinandroid.android.room)
-    alias(libs.plugins.nowinandroid.android.hilt)
 }
 
 android {

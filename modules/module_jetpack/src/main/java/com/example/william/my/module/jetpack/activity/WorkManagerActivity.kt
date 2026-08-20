@@ -6,11 +6,9 @@ import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -31,11 +29,12 @@ import java.util.concurrent.TimeUnit
  * 2. 约束条件：支持网络、电量、存储等约束条件
  * 3. 任务链：支持任务链式执行，按顺序或并行
  * 4. 重试策略：支持指数退避重试策略
+ * 5. 加急任务：支持 Expedited 前台服务即时调度
  *
  * 任务类型：
  * 1. OneTimeWorkRequest：一次性任务
  * 2. PeriodicWorkRequest：定期任务（最短 15 分钟）
- * 3. 加急任务：使用 setExpedited()，适合重要任务
+ * 3. 加急任务：使用 setExpedited()，适合高优先级即时任务
  *
  * 基本用法：
  * ```kotlin
@@ -66,109 +65,149 @@ import java.util.concurrent.TimeUnit
 @Route(path = RouterPath.Jetpack.WorkManager)
 class WorkManagerActivity : BasicResponseActivity() {
 
-    private lateinit var constraints: Constraints
-    private lateinit var oneTimeWorkRequest: OneTimeWorkRequest
-    private lateinit var periodicWorkRequest: PeriodicWorkRequest
+    private val workManager by lazy { WorkManager.getInstance(applicationContext) }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("点击下方列表项提交 WorkManager 任务")
-        initConstraints()
-        initWorkRequest()
-    }
-
-    private fun initConstraints() {
-        constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED) // 约束运行工作所需的网络类型。例如 Wi-Fi (UNMETERED)。
-            .setRequiresBatteryNotLow(true) // 如果设置为 true，那么当设备处于“电量不足模式”时，工作不会运行。
-            .setRequiresCharging(true) // 如果设置为 true，那么工作只能在设备充电时运行。
-            //.setRequiresDeviceIdle(true) // 如果设置为 true，则要求用户的设备必须处于空闲状态，才能运行工作。
-            .setRequiresStorageNotLow(true) // 如果设置为 true，那么当用户设备上的存储空间不足时，工作不会运行。
-            .build()
-    }
-
-    private fun initWorkRequest() {
-        oneTimeWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>() // 一次性工作
-            .build()
-
-        periodicWorkRequest =
-            PeriodicWorkRequestBuilder<UploadWorker>(1, TimeUnit.HOURS) // 定期工作，可以定义的最短重复间隔是 15 分钟
-                .build()
-
-        val expeditedRequest = OneTimeWorkRequestBuilder<ExpeditedWorker>()
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST) // 执行加急工作
-            .build()
-
-        val myWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
-            // 工作约束
-            .setConstraints(constraints)
-            // 延迟工作
-            .setInitialDelay(3, TimeUnit.SECONDS)
-            // 重试和退避政策
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS
-            )
-            // 标记工作
-            .addTag("upload")
-            // 分配输入数据
-            .setInputData(
-                Data.Builder().putString("key", "inputData").build()
-            ).build()
+        showDescription("点击下方列表项提交与管理 WorkManager 后台任务")
     }
 
     override fun buildList(): ArrayList<String> {
-        return arrayListOf("提交一次性任务", "提交唯一任务 (UniqueWork)", "链式执行任务 (beginWith -> then)", "取消所有任务")
+        return arrayListOf(
+            "提交一次性任务 (带约束与参数)",
+            "提交加急任务 (Expedited Worker)",
+            "提交唯一任务 (UniqueWork REPLACE)",
+            "链式执行任务 (beginWith -> then)",
+            "取消所有任务 (Cancel All)"
+        )
     }
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> enqueueOneTimeWork()
-            1 -> enqueueUniqueWork()
-            2 -> enqueueChainWork()
-            3 -> cancelWork()
+            1 -> enqueueExpeditedWork()
+            2 -> enqueueUniqueWork()
+            3 -> enqueueChainWork()
+            4 -> cancelWork()
         }
     }
 
+    /**
+     * 1. 提交带约束和输入参数的一次性任务
+     */
     private fun enqueueOneTimeWork() {
-        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest)
-        appendLog("提交一次性任务: ${oneTimeWorkRequest.id}")
-        observeWork(oneTimeWorkRequest.id)
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val inputData = Data.Builder()
+            .putString("key", "用户图片数据.jpg")
+            .build()
+
+        val request = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setConstraints(constraints)
+            .setInputData(inputData)
+            .setBackoffCriteria(BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .addTag(TAG_WORK)
+            .build()
+
+        workManager.enqueue(request)
+        appendLog("已提交一次性任务: ${request.id}")
+        observeWork(request.id, "一次性任务")
     }
 
+    /**
+     * 2. 提交加急任务（Expedited Work，支持前台服务通知）
+     */
+    private fun enqueueExpeditedWork() {
+        val request = OneTimeWorkRequestBuilder<ExpeditedWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .addTag(TAG_WORK)
+            .build()
+
+        workManager.enqueue(request)
+        appendLog("已提交加急任务 (Expedited): ${request.id}")
+        observeWork(request.id, "加急任务")
+    }
+
+    /**
+     * 3. 提交唯一任务（如果已存在则替换 REPLACE）
+     */
     private fun enqueueUniqueWork() {
-        WorkManager.getInstance(this)
-            .beginUniqueWork("upload", ExistingWorkPolicy.REPLACE, oneTimeWorkRequest).enqueue()
-        appendLog("提交唯一任务 (REPLACE): upload")
-        observeWork(oneTimeWorkRequest.id)
+        val inputData = Data.Builder()
+            .putString("key", "唯一同步任务")
+            .build()
+
+        val request = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setInputData(inputData)
+            .addTag(TAG_WORK)
+            .build()
+
+        workManager.beginUniqueWork(UNIQUE_WORK_NAME, ExistingWorkPolicy.REPLACE, request).enqueue()
+        appendLog("已提交唯一任务 (REPLACE): $UNIQUE_WORK_NAME -> ${request.id}")
+        observeWork(request.id, "唯一任务")
     }
 
+    /**
+     * 4. 链式任务执行：并行执行 Task A 和 Task B，全部完成后执行 Task C
+     */
     private fun enqueueChainWork() {
-        WorkManager.getInstance(this)
-            .beginWith(listOf(oneTimeWorkRequest, oneTimeWorkRequest))
-            .then(oneTimeWorkRequest)
+        val taskA = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setInputData(Data.Builder().putString("key", "任务 A (并行)").build())
+            .addTag(TAG_WORK)
+            .build()
+
+        val taskB = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setInputData(Data.Builder().putString("key", "任务 B (并行)").build())
+            .addTag(TAG_WORK)
+            .build()
+
+        val taskC = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setInputData(Data.Builder().putString("key", "任务 C (串行收尾)").build())
+            .addTag(TAG_WORK)
+            .build()
+
+        workManager.beginWith(listOf(taskA, taskB))
+            .then(taskC)
             .enqueue()
-        appendLog("提交链式任务: beginWith -> then")
-        observeWork(oneTimeWorkRequest.id)
+
+        appendLog("已提交链式任务: [Task A, Task B] -> then Task C")
+        observeWork(taskA.id, "Task A")
+        observeWork(taskB.id, "Task B")
+        observeWork(taskC.id, "Task C")
     }
 
-    private fun observeWork(id: UUID) {
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(id)
-            .observe(this) { value ->
-                if (value != null) {
-                    appendLog("任务状态变更: state=${value.state}, id=$id")
-                }
+    /**
+     * 监听任务执行状态、进度与输出
+     */
+    private fun observeWork(id: UUID, label: String) {
+        workManager.getWorkInfoByIdLiveData(id).observe(this) { info: WorkInfo? ->
+            if (info != null) {
+                val progress = info.progress.getInt("progress", -1)
+                val progressText = if (progress >= 0) ", 进度: $progress%" else ""
+                val output = info.outputData.getString("result")
+                val outputText = if (!output.isNullOrEmpty()) ", 结果: $output" else ""
+                appendLog("[$label] 状态: ${info.state}$progressText$outputText (ID: ${id.toString().substring(0, 8)}...)")
             }
+        }
+    }
+
+    /**
+     * 取消所有任务
+     */
+    private fun cancelWork() {
+        workManager.cancelAllWorkByTag(TAG_WORK)
+        appendLog("已取消所有带有 tag [$TAG_WORK] 的任务")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        cancelWork()
+        workManager.cancelAllWorkByTag(TAG_WORK)
     }
 
-    private fun cancelWork() {
-        WorkManager.getInstance(this).cancelWorkById(oneTimeWorkRequest.id)
-        WorkManager.getInstance(this).cancelWorkById(periodicWorkRequest.id)
-        appendLog("已取消所有任务")
+    companion object {
+        private const val TAG_WORK = "jetpack_work_sample"
+        private const val UNIQUE_WORK_NAME = "jetpack_unique_upload_work"
     }
 }

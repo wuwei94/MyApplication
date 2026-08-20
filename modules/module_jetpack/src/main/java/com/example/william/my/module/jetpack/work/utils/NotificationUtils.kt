@@ -37,9 +37,9 @@ fun createNotification(
     workRequestId: UUID,
     notificationTitle: String
 ): Notification {
-    val channelId = context.getString(R.string.notification_channel_id)
-    val channelName = context.getString(R.string.notification_channel_name)
-    val cancelText = context.getString(R.string.notification_cancel_processing)
+    val channelId = context.getString(R.string.jetpack_notification_channel_id)
+    val channelName = context.getString(R.string.jetpack_notification_channel_name)
+    val cancelText = context.getString(R.string.jetpack_notification_cancel_processing)
     // This PendingIntent can be used to cancel the Worker.
     val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(workRequestId)
 

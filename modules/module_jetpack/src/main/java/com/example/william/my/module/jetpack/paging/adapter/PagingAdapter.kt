@@ -43,7 +43,7 @@ class PagingAdapter(diffCallback: DiffUtil.ItemCallback<ArticleDetailData>) :
             oldItem: ArticleDetailData,
             newItem: ArticleDetailData
         ): Boolean {
-            return newItem.id == oldItem.id
+            return oldItem == newItem
         }
     }
 }

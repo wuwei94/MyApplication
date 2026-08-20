@@ -74,9 +74,7 @@ class ArticleRemoteMediator(
                     Utils.logcat("RemoteMediator", "LoadType APPEND")
 
                     // 查询 RemoteKey 表获取下一个分页页码（也可以使用 state.lastItemOrNull() 基于最后一条数据的 id 进行游标分页）
-                    val remoteKey = articleDatabase.withTransaction {
-                        remoteKeyDao.remoteKeyByTag(tag)
-                    }
+                    val remoteKey = remoteKeyDao.remoteKeyByTag(tag)
 
                     // 追加时必须明确检查 nextKey 是否为 null：
                     // 1. 若 remoteKey != null 且 nextKey == null，表示上一页已是末尾，分页结束；
@@ -91,21 +89,22 @@ class ArticleRemoteMediator(
             val response = networkApi.getArticleSuspend(page)
             val articles = response.data?.datas ?: emptyList()
 
-            // 将网络数据和下一个 RemoteKey 统一在事务中写入，保证本地数据与分页状态的一致性
+            if (loadType == LoadType.REFRESH) {
+                // 下拉刷新时清空旧的 RemoteKey
+                remoteKeyDao.deleteByTag(tag)
+            }
+
+            val curPage = response.data?.curPage ?: 0
+            val nextPage = if (articles.isEmpty()) null else curPage
+
+            // 更新 RemoteKey 为下一页页码
+            remoteKeyDao.insertKey(RemoteKeyData(tag, nextPage))
+
+            // 将文章列表插入 Room 数据库事务中，Room 会自动使关联的 PagingSource 失效以刷新 UI
             articleDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    // 下拉刷新时清空旧的 RemoteKey 和文章缓存
-                    remoteKeyDao.deleteByTag(tag)
                     articleDao.deleteAllArticles()
                 }
-
-                val curPage = response.data?.curPage ?: 0
-                val nextPage = if (articles.isEmpty()) null else curPage
-
-                // 更新 RemoteKey 为下一页页码
-                remoteKeyDao.insertKey(RemoteKeyData(tag, nextPage))
-
-                // 将文章列表插入 Room 数据库，Room 会自动使关联的 PagingSource 失效以刷新 UI
                 articleDao.insertArticles(articles.map { article ->
                     article.copy(page = curPage)
                 })
