@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity
+package com.example.william.my.module.sample.activity.feature
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -13,12 +13,6 @@ import com.example.william.my.module.sample.R
  * Typeface — 字体加载与切换
  *
  * Typeface 是 Android 的字体管理类，用于加载和切换字体样式。
- *
- * 核心特性：
- * 1. 系统内置字体：DEFAULT、DEFAULT_BOLD、MONOSPACE、SERIF、SANS_SERIF
- * 2. 自定义字体：支持从 assets、resources、文件加载字体
- * 3. 字体样式：支持粗体、斜体、粗斜体等样式组合
- * 4. 性能优化：字体文件会被缓存，避免重复加载
  */
 @Route(path = RouterPath.Sample.Typeface)
 class TypefaceActivity : BasicLayoutActivity() {

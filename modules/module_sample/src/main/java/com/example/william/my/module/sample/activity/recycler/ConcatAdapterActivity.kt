@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.recycler
+package com.example.william.my.module.sample.activity.recycler
 
 import android.os.Bundle
 import androidx.recyclerview.widget.ConcatAdapter

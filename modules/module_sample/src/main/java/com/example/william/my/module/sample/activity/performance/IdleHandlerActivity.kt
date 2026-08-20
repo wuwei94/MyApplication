@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.performance
+package com.example.william.my.module.sample.activity.performance
 
 import android.os.Bundle
 import android.os.Handler

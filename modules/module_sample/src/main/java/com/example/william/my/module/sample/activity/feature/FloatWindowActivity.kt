@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity
+package com.example.william.my.module.sample.activity.feature
 
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -21,36 +21,6 @@ import com.example.william.my.module.sample.window.FloatTouchHelper
  * 悬浮窗 — 系统级悬浮窗实现
  *
  * 通过 WindowManager 实现系统级悬浮窗，支持拖拽和吸附效果。
- *
- * 核心特性：
- * 1. 系统级悬浮窗：使用 WindowManager 添加全局悬浮窗
- * 2. 拖拽支持：支持手势拖拽移动位置
- * 3. 吸附效果：松手后自动吸附到屏幕边缘
- * 4. 权限处理：Android 6.0+ 需要悬浮窗权限
- *
- * 实现原理：
- * 1. 创建 WindowManager.LayoutParams，设置窗体类型和标志
- * 2. 使用 WindowManager.addView() 添加悬浮窗
- * 3. 通过 OnTouchListener 监听触摸事件，实现拖拽
- * 4. 松手时计算位置，使用 ValueAnimator 实现吸附动画
- *
- * 基本用法：
- * ```kotlin
- * // 创建悬浮窗
- * val floatView = LayoutInflater.from(context).inflate(R.layout.float_layout, null)
- * val params = WindowManager.LayoutParams().apply {
- *     type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
- *     flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
- * }
- *
- * // 添加到窗口
- * windowManager.addView(floatView, params)
- * ```
- *
- * 适用场景：
- * - 悬浮菜单、快捷入口
- * - 客服悬浮球、反馈入口
- * - 画中画、小窗口播放
  */
 @Route(path = RouterPath.Sample.FloatWindow)
 class FloatWindowActivity : BasicResponseActivity() {
@@ -80,7 +50,6 @@ class FloatWindowActivity : BasicResponseActivity() {
     }
 
     private fun initFloatParams() {
-
         mLayoutParams = WindowManager.LayoutParams()
 
         // 设置宽高
@@ -93,7 +62,6 @@ class FloatWindowActivity : BasicResponseActivity() {
         // 设置屏幕左上角为起始点
         mLayoutParams?.gravity = Gravity.START or Gravity.TOP
 
-
         mLayoutParams?.flags = (WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN //覆盖状态栏
                 or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE  //不获取焦点
                 or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL) //允许window之外点击事件传递给其他在其之后的window
@@ -101,8 +69,7 @@ class FloatWindowActivity : BasicResponseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mLayoutParams?.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
-            // 设置窗体显示类型(TYPE_TOAST:与toast一个级别)
-            mLayoutParams?.type = WindowManager.LayoutParams.TYPE_TOAST
+            mLayoutParams?.type = WindowManager.LayoutParams.TYPE_PHONE
         }
     }
 
@@ -159,7 +126,6 @@ class FloatWindowActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         dismissFloatWindow()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.recycler
+package com.example.william.my.module.sample.activity.recycler
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
