@@ -14,7 +14,6 @@ class JetpackMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("WorkManager", RouterPath.Jetpack.WorkManager))
         routerItems.add(RouterItem("Room", RouterPath.Jetpack.Room))
         routerItems.add(RouterItem("Paging", RouterPath.Jetpack.Paging))
-        routerItems.add(RouterItem("Hilt", RouterPath.Jetpack.Hilt))
         return routerItems
     }
 }

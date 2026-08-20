@@ -27,7 +27,7 @@
 | Build       | Gradle Kotlin DSL · Version Catalogs · Convention Plugin |
 | UI          | Android Views · Jetpack Compose · Material3 · Flutter |
 | Architecture| MVP · MVVM · MVI · Mavericks |
-| DI          | Hilt |
+| DI          | Hilt · Koin |
 | Navigation  | ARouter · Navigation Component |
 | Network     | OkHttp · Retrofit · Ktor · Volley · WebSocket · Netty · NanoHTTPD |
 | Persistence | Room · ObjectBox · DataStore |
@@ -50,7 +50,7 @@ MyApplication/
 ├── app                         # 壳工程（Hilt + ARouter 入口）
 ├── build-logic                 # Convention Plugin，统一插件配置
 ├── gradle/libs.versions.toml   # 统一版本目录
-├── docs                        # 文档（modules / libs / network / transfer / build-logic / conventions）
+├── docs                        # 文档（modules / libs / di / event / network / transfer / build-logic / conventions）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_shared            # 通用 Bus、Router、内联日志 UI 脚手架与 JSON 格式化
@@ -94,7 +94,8 @@ MyApplication/
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     ├── module_open_source      # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
-    ├── module_jetpack          # Jetpack 组件（Room / DataStore / WorkManager / Paging / Hilt）
+    ├── module_jetpack          # Jetpack 组件（Room / DataStore / WorkManager / Paging）
+    ├── module_di               # 依赖注入（Hilt / Koin）
     ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
     ├── module_compose          # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     └── module_flutter          # Flutter 子工程
@@ -270,11 +271,17 @@ Kotlin 语言特性在 Android 上的实践。
 
 Jetpack 组件库 Demo。
 
-- **Hilt**：依赖注入基础配置
 - **Room**：数据库 CRUD + DAO
 - **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
 - **DataStore**：Preferences / Proto 两种存储
 - **WorkManager**：后台任务（普通 + expedited）
+
+### module_di（依赖注入）
+
+主流依赖注入方案对比与实战。
+
+- **Hilt**：基于 Dagger 2 的编译期依赖注入，覆盖构造注入、接口绑定（@Binds）、第三方对象构建（@Provides）、限定符（@Qualifier）、上下文限定符（@ApplicationContext / @ActivityContext）、作用域生命周期（@Singleton / @ActivityScoped）、@HiltViewModel 及非组件入口点（@EntryPoint）
+- **Koin**：基于 Kotlin DSL 的实用主义运行时依赖注入，覆盖 singleOf / factoryOf 声明、接口绑定（bind）、具名限定符（named）、动态参数注入（parametersOf）、Koin ViewModel（viewModelOf / by viewModel）及 Scope 作用域管理
 
 ### module_arch（架构模式）
 

@@ -323,7 +323,16 @@ object RouterPath {
         const val WorkManager = "${Jetpack}/WorkManager"
         const val Room = "${Jetpack}/Room"
         const val Paging = "${Jetpack}/Paging"
-        const val Hilt = "${Jetpack}/Hilt"
+    }
+
+    // 依赖注入 (DI)
+    object DI {
+        private const val DI = "/DI"
+
+        const val Main = "${DI}/Main"
+
+        const val Hilt = "${DI}/Hilt"
+        const val Koin = "${DI}/Koin"
     }
 
     // ═══════════════════════════════════════════

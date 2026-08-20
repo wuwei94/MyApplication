@@ -24,6 +24,7 @@
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
+| module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
@@ -314,7 +315,18 @@
 | WorkManagerActivity | WorkManager 后台任务调度 |
 | RoomActivity | Room 数据库 |
 | PagingActivity | Paging3 分页加载 |
-| HiltActivity | Hilt 依赖注入 |
+
+---
+
+### module_di（依赖注入）
+
+演示 Android 主流依赖注入框架（Hilt 与 Koin）的对比与实践。
+
+| Activity | 功能 |
+|----------|------|
+| DiMainActivity | 模块入口，导航到 Hilt 与 Koin 示例 |
+| HiltActivity | 基于 `BasicResponseActivity` 展示 Hilt 构造注入、接口绑定、第三方构建、限定符、上下文、作用域、ViewModel 及 EntryPoint |
+| KoinActivity | 基于 `BasicResponseActivity` 展示 Koin 4.x DSL 声明、singleOf/factoryOf、接口绑定、具名限定符、动态传参、ViewModel 及 Scope |
 
 ---
 

@@ -7,7 +7,6 @@
         <activity android:name=".activity.WorkManagerActivity" />
         <activity android:name=".activity.RoomActivity" />
         <activity android:name=".activity.PagingActivity" />
-        <activity android:name=".activity.HiltActivity" />
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@
 
 MyApplication 是一个个人 Android 技术栈沉淀项目，用于展示 Android 开发模式、库和最佳实践。采用 Kotlin、多模块架构和 ARouter 路由导航。
 
-**技术栈**：Kotlin、Jetpack Compose、ARouter、Hilt、Coroutines、Flow、CameraX、Flutter
+**技术栈**：Kotlin、Jetpack Compose、ARouter、Hilt / Koin、Coroutines、Flow、CameraX、Flutter
 
 ## 架构
 
@@ -30,8 +30,10 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 
 | 文档 | 内容 |
 |------|------|
-| docs/modules.md | 功能模块详情（21 个模块，每个模块的 Activity 列表） |
+| docs/modules.md | 功能模块详情（22 个模块，每个模块的 Activity 列表） |
 | docs/libs.md | 库封装层职责索引 |
+| docs/di.md | 依赖注入方案对比（Hilt vs Koin 原理、语法、作用域与选型） |
+| docs/event.md | 事件总线方案对比（EventBus / RxEventBus / LiveEventBus / FlowEventBus 特性与选型） |
 | docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
 | docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |
 | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
