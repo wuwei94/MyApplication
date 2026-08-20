@@ -2,15 +2,13 @@ package com.example.william.my.module.jetpack.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.jetpack.R
-import com.example.william.my.module.jetpack.databinding.JetpackActivityPagingBinding
 import com.example.william.my.module.jetpack.paging.adapter.PagingAdapter
 import com.example.william.my.module.jetpack.paging.adapter.PagingStateAdapter
 import com.example.william.my.module.jetpack.paging.viewmodel.PagingViewModel
@@ -61,7 +59,7 @@ import kotlinx.coroutines.launch
  * https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
  */
 @Route(path = RouterPath.Jetpack.Paging)
-class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
+class PagingActivity : BasicRecyclerActivity() {
 
     private val mViewModel: PagingViewModel by viewModels {
         PagingViewModel.Factory
@@ -71,14 +69,19 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
     private var flowJob: Job? = null
     private var rxDisposable: Disposable? = null
 
-    override fun getViewBinding(): JetpackActivityPagingBinding {
-        return JetpackActivityPagingBinding.inflate(layoutInflater)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "Mediator (Flow 离线缓存流)",
+            "Mediator (RxJava 离线缓存流)",
+            "Network (Flow 纯网络流)",
+            "Network (RxJava 纯网络流)",
+            "刷新当前列表 (adapter.refresh())"
+        )
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         initPagingAdapter()
-        initModeButtons()
         switchMode(PagingMode.MEDIATOR_FLOW)
     }
 
@@ -95,18 +98,22 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
         }
 
         // 绑定 Header 与 Footer 加载状态
-        mBinding.pagingRecycleView.adapter = mAdapter.withLoadStateHeaderAndFooter(
+        mDataRecycler.layoutManager = LinearLayoutManager(this)
+        mDataRecycler.adapter = mAdapter.withLoadStateHeaderAndFooter(
             header = PagingStateAdapter(mAdapter::retry),
             footer = PagingStateAdapter(mAdapter::retry)
         )
     }
 
-    private fun initModeButtons() {
-        mBinding.btnMediatorFlow.setOnClickListener { switchMode(PagingMode.MEDIATOR_FLOW) }
-        mBinding.btnMediatorRx.setOnClickListener { switchMode(PagingMode.MEDIATOR_RX) }
-        mBinding.btnNetworkFlow.setOnClickListener { switchMode(PagingMode.NETWORK_FLOW) }
-        mBinding.btnNetworkRx.setOnClickListener { switchMode(PagingMode.NETWORK_RX) }
-        mBinding.btnRefresh.setOnClickListener { mAdapter.refresh() }
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> switchMode(PagingMode.MEDIATOR_FLOW)
+            1 -> switchMode(PagingMode.MEDIATOR_RX)
+            2 -> switchMode(PagingMode.NETWORK_FLOW)
+            3 -> switchMode(PagingMode.NETWORK_RX)
+            4 -> mAdapter.refresh()
+        }
     }
 
     /**
@@ -118,8 +125,6 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
         flowJob = null
         rxDisposable?.dispose()
         rxDisposable = null
-
-        updateButtonStates(mode)
 
         when (mode) {
             PagingMode.MEDIATOR_FLOW -> {
@@ -155,21 +160,6 @@ class PagingActivity : BaseVBActivity<JetpackActivityPagingBinding>() {
                         mAdapter.submitData(lifecycle, pagingData)
                     }
             }
-        }
-    }
-
-    private fun updateButtonStates(activeMode: PagingMode) {
-        val buttons = mapOf(
-            PagingMode.MEDIATOR_FLOW to mBinding.btnMediatorFlow,
-            PagingMode.MEDIATOR_RX to mBinding.btnMediatorRx,
-            PagingMode.NETWORK_FLOW to mBinding.btnNetworkFlow,
-            PagingMode.NETWORK_RX to mBinding.btnNetworkRx
-        )
-
-        buttons.forEach { (mode, btn: androidx.appcompat.widget.AppCompatButton) ->
-            val isSelected = mode == activeMode
-            btn.isSelected = isSelected
-            btn.alpha = if (isSelected) 1.0f else 0.5f
         }
     }
 

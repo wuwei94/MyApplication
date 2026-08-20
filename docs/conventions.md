@@ -27,9 +27,11 @@
 
 ## Activity 基类
 
-- `BasicResponseActivity` — RecyclerView 操作列表与内联日志区；页面初始说明使用 `showDescription` 居中展示，离散事件使用 `appendLog`，高频状态使用 `updateLog(key, message)` 原位更新；统一由下方 `buildList` + `onRecyclerClick` 触发操作
-- `BasicLayoutActivity` — RecyclerView 操作列表与上方空白动态 View 容器（`mContainer` / `ConstraintLayout`）；支持 `setView` / `addView` 动态挂载、替换与展示自定义 View 或异步渲染结果
-- `BasicRecyclerActivity` — RecyclerView 操作列表
+- `BasicControlActivity` — 纯操作/控制列表类示例 Activity 基类
+- `BasicResponseActivity` — 上方内联日志区与下方操作控制列表；页面初始说明使用 `showDescription` 居中展示，离散事件使用 `appendLog`，高频状态使用 `updateLog(key, message)` 原位更新；统一由下方 `buildList` + `onRecyclerClick` 触发操作
+- `BasicImageActivity` — 上方图片展示区与下方操作控制列表；支持 `showImage` 主线程更新展示
+- `BasicLayoutActivity` — 上方空白动态 View 容器（`mContainer` / `ConstraintLayout`）与下方操作控制列表；支持 `setView` / `addView` 动态挂载、替换与展示自定义 View 或异步渲染结果
+- `BasicRecyclerActivity` — 上方数据展示列表（`mContainer` / `basics_response_container` 内含 `mDataRecycler`，高度 0dp 自适应撑满）与下方操作控制列表（固定高度 300dp）
 - `BaseVBActivity<VB>` — ViewBinding 基类
 - `BaseFragmentActivity` — Fragment 宿主
 - `RouterRecyclerActivity` — RecyclerView 列表（带路由项）

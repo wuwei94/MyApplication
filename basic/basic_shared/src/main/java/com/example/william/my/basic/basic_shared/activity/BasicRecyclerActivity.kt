@@ -1,90 +1,44 @@
 package com.example.william.my.basic.basic_shared.activity
 
-import android.content.Context
-import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter4.BaseQuickAdapter
-import com.chad.library.adapter4.QuickAdapterHelper
-import com.chad.library.adapter4.viewholder.QuickViewHolder
-import com.example.william.my.basic.basic_shared.R
-import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerBinding
-import com.example.william.my.core.base.activity.BaseActivity
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerRecyclerBinding
 
 /**
- * 纯列表类示例 Activity 基类。
+ * 列表/数据展示类示例 Activity 基类。
  *
  * 布局结构：
- * - 列表展示：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
+ * - 上方展示：ConstraintLayout 容器（[mContainer] / [mBinding.basicsResponseContainer]），高度为 0dp 自适应撑满，内部包含数据展示列表（[mDataRecycler] / [mBinding.basicsDataRecycler]）
+ * - 下方列表：RecyclerView 操作列表（[mRecycler] / [mBinding.basicsRecycler]），固定高度为 300dp（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
- * 1. 继承类实现 [buildList] 构建列表数据源。
- * 2. 继承类实现 [onRecyclerClick] 响应列表项点击事件。
+ * 1. 继承类通过 [mDataRecycler] 或 [setAdapter] 配置上方区域的数据展示列表。
+ * 2. 下方统一由 [buildList] + [onRecyclerClick] 触发操作。
+ * 3. 适用场景：RecyclerView 各种 LayoutManager 演示、DiffUtil 局部刷新、ConcatAdapter 组合等。
  */
-abstract class BasicRecyclerActivity : BaseActivity(),
-    BaseQuickAdapter.OnItemClickListener<String> {
+abstract class BasicRecyclerActivity : BasicControlActivity() {
 
-    private val mAdapter: RecyclerAdapter by lazy {
-        RecyclerAdapter()
-    }
-    private val mAdapterHelper: QuickAdapterHelper by lazy {
-        QuickAdapterHelper.Builder(mAdapter).build()
-    }
-
-    protected lateinit var binding: SharedLayoutRecyclerBinding
-    protected lateinit var mRecycler: RecyclerView
+    protected lateinit var mBinding: SharedLayoutRecyclerRecyclerBinding
+    protected lateinit var mContainer: ConstraintLayout
+    protected lateinit var mDataRecycler: RecyclerView
 
     override fun initViewBinding() {
-        super.initViewBinding()
-        binding = SharedLayoutRecyclerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        mRecycler = binding.basicsRecycler
+        mBinding = SharedLayoutRecyclerRecyclerBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
+        mRecycler = mBinding.basicsRecycler
+        mContainer = mBinding.basicsResponseContainer
+        mDataRecycler = mBinding.basicsDataRecycler
     }
 
-    override fun initView(savedInstanceState: Bundle?) {
-        super.initView(savedInstanceState)
-
-        initRecycler()
-    }
-
-    private fun initRecycler() {
-        mAdapter.submitList(buildRecyclerList())
-        mAdapter.setOnItemClickListener(this)
-        mRecycler.layoutManager = LinearLayoutManager(this)
-        mRecycler.adapter = mAdapterHelper.adapter
-    }
-
-    protected open fun buildRecyclerList(): ArrayList<String> {
-        return buildList()
-    }
-
-    protected open fun buildList(): ArrayList<String> {
-        return arrayListOf()
-    }
-
-    override fun onClick(adapter: BaseQuickAdapter<String, *>, view: View, position: Int) {
-        onRecyclerClick(position, adapter.items[position])
-    }
-
-    protected open fun onRecyclerClick(position: Int, string: String) {
-
-    }
-
-    class RecyclerAdapter(data: ArrayList<String> = arrayListOf()) :
-        BaseQuickAdapter<String, QuickViewHolder>(data) {
-
-        override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
-            holder.setText(R.id.item_textView, item)
-        }
-
-        override fun onCreateViewHolder(
-            context: Context,
-            parent: ViewGroup,
-            viewType: Int
-        ): QuickViewHolder {
-            return QuickViewHolder(R.layout.shared_item_recycler, parent)
-        }
+    /**
+     * 便捷设置上方数据列表的适配器与布局管理器
+     */
+    protected fun setAdapter(
+        adapter: RecyclerView.Adapter<*>,
+        layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+    ) {
+        mDataRecycler.layoutManager = layoutManager
+        mDataRecycler.adapter = adapter
     }
 }

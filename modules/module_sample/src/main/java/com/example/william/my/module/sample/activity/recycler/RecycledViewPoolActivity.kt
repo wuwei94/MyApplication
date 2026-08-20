@@ -2,11 +2,12 @@ package com.example.william.my.module.sample.activity.recycler
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.sample.adapter.PoolItemAdapter
 import com.example.william.my.module.sample.adapter.PoolPagerAdapter
-import com.example.william.my.module.sample.databinding.SampleActivityRecycledViewPoolBinding
+import com.example.william.my.module.sample.databinding.SampleLayoutPoolPagerBinding
 import com.example.william.my.module.sample.pool.GlobalRecycledViewPool
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -21,15 +22,21 @@ import com.google.android.material.tabs.TabLayoutMediator
  * 4. 生命周期管理：列表退出或数据源销毁时适时调用 `GlobalRecycledViewPool.clear()` 清空池内引用。
  */
 @Route(path = RouterPath.Sample.RecycledViewPool)
-class RecycledViewPoolActivity : BaseVBActivity<SampleActivityRecycledViewPoolBinding>() {
+class RecycledViewPoolActivity : BasicRecyclerActivity() {
+
+    private lateinit var poolBinding: SampleLayoutPoolPagerBinding
 
     private var tab1CreateCount = 0
     private var tab1BindCount = 0
     private var tab2CreateCount = 0
     private var tab2BindCount = 0
 
-    override fun getViewBinding(): SampleActivityRecycledViewPoolBinding {
-        return SampleActivityRecycledViewPoolBinding.inflate(layoutInflater)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "清空全局共享池 (GlobalRecycledViewPool.clear())",
+            "重置创建/绑定统计计数",
+            "查看当前池状态及统计"
+        )
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -39,61 +46,65 @@ class RecycledViewPoolActivity : BaseVBActivity<SampleActivityRecycledViewPoolBi
         GlobalRecycledViewPool.setMaxRecycledViews(PoolItemAdapter.VIEW_TYPE_CARD, 15)
 
         initViewPager()
-        initActionButtons()
-        updateHudStats()
     }
 
     private fun initViewPager() {
+        mContainer.removeAllViews()
+        poolBinding = SampleLayoutPoolPagerBinding.inflate(layoutInflater, mContainer, true)
+
         val tabTitles = listOf("推荐专区 (Tab 1)", "热门专区 (Tab 2)")
 
         // 统一使用全局共享的 GlobalRecycledViewPool
-        mBinding.samplePoolViewPager.adapter = PoolPagerAdapter(
+        poolBinding.samplePoolViewPager.adapter = PoolPagerAdapter(
             sharedViewPool = GlobalRecycledViewPool.getPool(),
             tabCount = tabTitles.size,
             onCreateItem = { isTab1 ->
                 if (isTab1) tab1CreateCount++ else tab2CreateCount++
-                updateHudStats()
+                logHudStats()
             },
             onBindItem = { isTab1 ->
                 if (isTab1) tab1BindCount++ else tab2BindCount++
-                updateHudStats()
+                logHudStats()
             }
         )
 
         // TabLayout 与 ViewPager2 联动
         TabLayoutMediator(
-            mBinding.samplePoolTabLayout,
-            mBinding.samplePoolViewPager
+            poolBinding.samplePoolTabLayout,
+            poolBinding.samplePoolViewPager
         ) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
     }
 
-    private fun initActionButtons() {
-        mBinding.sampleBtnClearPool.setOnClickListener {
-            GlobalRecycledViewPool.clear()
-            updateHudStats()
-        }
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> {
+                GlobalRecycledViewPool.clear()
+                logHudStats("已清空共享池")
+            }
 
-        mBinding.sampleBtnResetStats.setOnClickListener {
-            tab1CreateCount = 0
-            tab1BindCount = 0
-            tab2CreateCount = 0
-            tab2BindCount = 0
-            updateHudStats()
+            1 -> {
+                tab1CreateCount = 0
+                tab1BindCount = 0
+                tab2CreateCount = 0
+                tab2BindCount = 0
+                logHudStats("已重置统计计数")
+            }
+
+            2 -> {
+                logHudStats()
+            }
         }
     }
 
-    private fun updateHudStats() {
-        runOnUiThread {
-            val poolCount = GlobalRecycledViewPool.getRecycledViewCount(PoolItemAdapter.VIEW_TYPE_CARD)
-            val tab2ReuseCount = (tab2BindCount - tab2CreateCount).coerceAtLeast(0)
-
-            mBinding.samplePoolStatsText.text =
-                "全局共享池当前缓存数: $poolCount (上限: 15)\n" +
-                        "Tab 1 (推荐): 创建 $tab1CreateCount 次 | 绑定 $tab1BindCount 次\n" +
-                        "Tab 2 (热门): 创建 $tab2CreateCount 次 | 绑定 $tab2BindCount 次 (跨池复用命中: $tab2ReuseCount 次)"
-        }
+    private fun logHudStats(prefix: String = "") {
+        val poolCount = GlobalRecycledViewPool.getRecycledViewCount(PoolItemAdapter.VIEW_TYPE_CARD)
+        val tab2ReuseCount = (tab2BindCount - tab2CreateCount).coerceAtLeast(0)
+        val message = (if (prefix.isNotEmpty()) "$prefix | " else "") +
+                "池缓存数: $poolCount (上限: 15) | Tab 1 创建: $tab1CreateCount, 绑定: $tab1BindCount | Tab 2 创建: $tab2CreateCount, 绑定: $tab2BindCount (跨池复用: $tab2ReuseCount)"
+        Utils.logcat("RecycledViewPool", message)
     }
 
     override fun onDestroy() {

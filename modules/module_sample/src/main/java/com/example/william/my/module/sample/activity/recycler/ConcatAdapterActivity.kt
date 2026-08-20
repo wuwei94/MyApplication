@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.sample.adapter.ConcatBannerAdapter
 import com.example.william.my.module.sample.adapter.ConcatFeedAdapter
 import com.example.william.my.module.sample.adapter.ConcatFooterAdapter
 import com.example.william.my.module.sample.adapter.ConcatHeaderAdapter
-import com.example.william.my.module.sample.databinding.SampleActivityConcatBinding
 
 /**
  * ConcatAdapter 模块化列表组合与视图类型隔离示例
@@ -22,7 +21,7 @@ import com.example.william.my.module.sample.databinding.SampleActivityConcatBind
  * 4. 动态插拔模块：支持在运行时使用 `addAdapter(index, adapter)` / `removeAdapter(adapter)` 动态上线或下架特定业务模块。
  */
 @Route(path = RouterPath.Sample.ConcatAdapter)
-class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
+class ConcatAdapterActivity : BasicRecyclerActivity() {
 
     private lateinit var concatAdapter: ConcatAdapter
     private lateinit var headerAdapter: ConcatHeaderAdapter
@@ -34,17 +33,19 @@ class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
     private var isFooterVisible = true
     private var feedItemIndex = 1
 
-    override fun getViewBinding(): SampleActivityConcatBinding {
-        return SampleActivityConcatBinding.inflate(layoutInflater)
+    override fun buildList(): ArrayList<String> {
+        return arrayListOf(
+            "上线/下架 Banner 模块",
+            "向 Feed 列表新增项 (局部插入)",
+            "局部精准更新 Feed 首条 (notifyItemChanged)",
+            "上线/下架 Footer 模块"
+        )
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
         initSubAdapters()
         initConcatAdapter()
-        initActionButtons()
-        updateStatusInfo()
     }
 
     private fun initSubAdapters() {
@@ -76,64 +77,54 @@ class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
             footerAdapter
         )
 
-        mBinding.sampleConcatRecycler.apply {
+        mDataRecycler.apply {
             layoutManager = LinearLayoutManager(this@ConcatAdapterActivity)
             adapter = concatAdapter
         }
     }
 
-    private fun initActionButtons() {
-        // 1. 动态插拔 Banner 模块
-        mBinding.sampleBtnToggleBanner.setOnClickListener {
-            if (isBannerVisible) {
-                concatAdapter.removeAdapter(bannerAdapter)
-                isBannerVisible = false
-                mBinding.sampleBtnToggleBanner.text = "上线 Banner 模块"
-            } else {
-                concatAdapter.addAdapter(1, bannerAdapter)
-                isBannerVisible = true
-                mBinding.sampleBtnToggleBanner.text = "下架 Banner 模块"
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> {
+                // 1. 动态插拔 Banner 模块
+                if (isBannerVisible) {
+                    concatAdapter.removeAdapter(bannerAdapter)
+                    isBannerVisible = false
+                } else {
+                    concatAdapter.addAdapter(1, bannerAdapter)
+                    isBannerVisible = true
+                }
             }
-            updateStatusInfo()
-        }
 
-        // 2. 向 Feed 列表新增项（触发 Feed 局部增量刷新）
-        mBinding.sampleBtnInsertFeed.setOnClickListener {
-            val newTitle = "新增商品 $feedItemIndex"
-            val newDesc = "动态插入推荐，触发 FeedAdapter 局部 notifyItemInserted"
-            feedItemIndex++
-            feedAdapter.items.add(newTitle to newDesc)
-            feedAdapter.notifyItemInserted(feedAdapter.items.size - 1)
-            updateStatusInfo()
-        }
+            1 -> {
+                // 2. 向 Feed 列表新增项（触发 Feed 局部增量刷新）
+                val newTitle = "新增商品 $feedItemIndex"
+                val newDesc = "动态插入推荐，触发 FeedAdapter 局部 notifyItemInserted"
+                feedItemIndex++
+                feedAdapter.items.add(newTitle to newDesc)
+                feedAdapter.notifyItemInserted(feedAdapter.items.size - 1)
+            }
 
-        // 3. 仅更新 Feed 首条（验证局部精准刷新）
-        mBinding.sampleBtnUpdateFeed.setOnClickListener {
-            if (feedAdapter.items.isNotEmpty()) {
-                val old = feedAdapter.items[0]
-                feedAdapter.items[0] = old.first to "已局部精准刷新：${System.currentTimeMillis() % 1000}"
-                feedAdapter.notifyItemChanged(0)
-                updateStatusInfo()
+            2 -> {
+                // 3. 仅更新 Feed 首条（验证局部精准刷新）
+                if (feedAdapter.items.isNotEmpty()) {
+                    val old = feedAdapter.items[0]
+                    feedAdapter.items[0] = old.first to "已局部精准刷新：${System.currentTimeMillis() % 1000}"
+                    feedAdapter.notifyItemChanged(0)
+                }
+            }
+
+            3 -> {
+                // 4. 动态插拔 Footer 模块
+                if (isFooterVisible) {
+                    concatAdapter.removeAdapter(footerAdapter)
+                    isFooterVisible = false
+                } else {
+                    concatAdapter.addAdapter(concatAdapter.adapters.size, footerAdapter)
+                    isFooterVisible = true
+                }
             }
         }
-
-        // 4. 动态插拔 Footer 模块
-        mBinding.sampleBtnToggleFooter.setOnClickListener {
-            if (isFooterVisible) {
-                concatAdapter.removeAdapter(footerAdapter)
-                isFooterVisible = false
-                mBinding.sampleBtnToggleFooter.text = "上线 Footer 模块"
-            } else {
-                concatAdapter.addAdapter(concatAdapter.adapters.size, footerAdapter)
-                isFooterVisible = true
-                mBinding.sampleBtnToggleFooter.text = "移除 Footer 模块"
-            }
-            updateStatusInfo()
-        }
-    }
-
-    private fun updateStatusInfo() {
-        mBinding.sampleConcatStatus.text =
-            "子 Adapter: ${concatAdapter.adapters.size} 个 | 合并项: ${concatAdapter.itemCount} 项 | Banner: ${if (isBannerVisible) "已上线" else "已下架"} | Footer: ${if (isFooterVisible) "已上线" else "已下架"}"
     }
 }

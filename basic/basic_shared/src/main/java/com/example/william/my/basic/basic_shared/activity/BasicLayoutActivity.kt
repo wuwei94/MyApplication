@@ -17,7 +17,7 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutLayoutR
  * 2. 下方统一由 [buildList] + [onRecyclerClick] 触发操作。
  * 3. 适用场景：自定义 View 效果演示、动态布局加载（如 AsyncLayoutInflater）、视图预加载展示等。
  */
-abstract class BasicLayoutActivity : BasicRecyclerActivity() {
+abstract class BasicLayoutActivity : BasicControlActivity() {
 
     protected lateinit var mBinding: SharedLayoutLayoutRecyclerBinding
     protected lateinit var mContainer: ConstraintLayout

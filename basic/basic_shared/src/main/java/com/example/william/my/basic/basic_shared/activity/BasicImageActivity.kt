@@ -15,7 +15,7 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutImageRe
  * 2. 继承类实现 [buildList] 提供操作项，并在 [onRecyclerClick] 中执行相应动作。
  * 3. 支持使用 [showImage] 在主线程更新展示的图片或资源。
  */
-abstract class BasicImageActivity : BasicRecyclerActivity() {
+abstract class BasicImageActivity : BasicControlActivity() {
 
     protected lateinit var mBinding: SharedLayoutImageRecyclerBinding
 

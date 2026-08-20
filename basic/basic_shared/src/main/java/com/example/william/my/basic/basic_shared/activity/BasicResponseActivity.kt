@@ -25,7 +25,7 @@ import com.example.william.my.basic.basic_shared.utils.JsonFormatter
  * 4. 高频进度或运行状态使用 [updateLog] 原位更新对应 key，避免频繁刷屏。
  * 5. 底部列表末尾自动附加“清空日志”选项，点击可清空展示区日志。
  */
-abstract class BasicResponseActivity : BasicRecyclerActivity() {
+abstract class BasicResponseActivity : BasicControlActivity() {
 
     protected lateinit var mBinding: SharedLayoutResponseRecyclerBinding
 
