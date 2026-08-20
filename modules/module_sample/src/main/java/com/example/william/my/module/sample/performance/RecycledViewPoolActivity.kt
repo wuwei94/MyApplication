@@ -1,13 +1,12 @@
 package com.example.william.my.module.sample.performance
 
 import android.os.Bundle
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.sample.adapter.PoolItemAdapter
+import com.example.william.my.module.sample.adapter.PoolPagerAdapter
 import com.example.william.my.module.sample.databinding.SampleActivityRecycledViewPoolBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -49,45 +48,19 @@ class RecycledViewPoolActivity : BaseVBActivity<SampleActivityRecycledViewPoolBi
     private fun initViewPager() {
         val tabTitles = listOf("推荐专区 (Tab 1)", "热门专区 (Tab 2)")
 
-        // 使用 ViewPager2 承载两个共用池的 RecyclerView
-        mBinding.samplePoolViewPager.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-            override fun getItemCount(): Int = tabTitles.size
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val recyclerView = RecyclerView(parent.context).apply {
-                    layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-                    layoutManager = LinearLayoutManager(parent.context)
-                    clipToPadding = false
-                    setPadding(0, 0, 0, 32)
-                    // 核心关键：为每个 Tab 的 RecyclerView 设置同一个 RecycledViewPool
-                    setRecycledViewPool(sharedViewPool)
-                }
-                return object : RecyclerView.ViewHolder(recyclerView) {}
+        // 统一使用独立抽离的 PoolPagerAdapter
+        mBinding.samplePoolViewPager.adapter = PoolPagerAdapter(
+            sharedViewPool = sharedViewPool,
+            tabCount = tabTitles.size,
+            onCreateItem = { isTab1 ->
+                if (isTab1) tab1CreateCount++ else tab2CreateCount++
+                updateHudStats()
+            },
+            onBindItem = { isTab1 ->
+                if (isTab1) tab1BindCount++ else tab2BindCount++
+                updateHudStats()
             }
-
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                val recyclerView = holder.itemView as RecyclerView
-                val isTab1 = position == 0
-                val data = (1..60).map { "商品卡片 #$it" }
-
-                val adapter = PoolItemAdapter(
-                    tabName = if (isTab1) "Tab 1" else "Tab 2",
-                    items = data,
-                    onCreateCallback = {
-                        if (isTab1) tab1CreateCount++ else tab2CreateCount++
-                        updateHudStats()
-                    },
-                    onBindCallback = {
-                        if (isTab1) tab1BindCount++ else tab2BindCount++
-                        updateHudStats()
-                    }
-                )
-                recyclerView.adapter = adapter
-            }
-        }
+        )
 
         // TabLayout 与 ViewPager2 联动
         TabLayoutMediator(
