@@ -1,7 +1,7 @@
 package com.example.william.my.core.retrofit.exception
 
-import com.google.gson.JsonParser
 import com.google.gson.JsonParseException
+import com.google.gson.JsonParser
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException

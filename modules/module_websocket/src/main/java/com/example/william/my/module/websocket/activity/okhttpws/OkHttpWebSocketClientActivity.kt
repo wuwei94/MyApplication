@@ -9,7 +9,6 @@ import com.example.william.my.core.okhttpws.client.OkHttpWebSocketClient
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketClientListener
 import okhttp3.Response
 import okhttp3.WebSocket
-import okio.ByteString
 
 /**
  * OkHttp WebSocket 客户端示例（普通版本）

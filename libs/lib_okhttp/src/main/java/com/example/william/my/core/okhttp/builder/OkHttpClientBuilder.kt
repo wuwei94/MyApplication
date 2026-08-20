@@ -5,7 +5,6 @@ import com.example.william.my.core.okhttp.compat.CompatCache
 import com.example.william.my.core.okhttp.compat.CompatConnectionPool
 import com.example.william.my.core.okhttp.compat.CompatCookieJar
 import com.example.william.my.core.okhttp.compat.CompatHttpsSSL
-import com.example.william.my.core.okhttp.compat.CompatInterceptor
 import com.example.william.my.core.okhttp.compat.CompatLogging
 import com.example.william.my.core.okhttp.compat.CompatProxy
 import com.example.william.my.core.okhttp.compat.CompatRetry

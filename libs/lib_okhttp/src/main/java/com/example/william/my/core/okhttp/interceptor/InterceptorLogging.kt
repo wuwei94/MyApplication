@@ -1,9 +1,9 @@
 package com.example.william.my.core.okhttp.interceptor
 
-import com.example.william.my.core.okhttp.format.FormatPrinterImpl
 import com.example.william.my.core.okhttp.format.FormatParser
 import com.example.william.my.core.okhttp.format.FormatParser.MAX_LOG_BODY_BYTES
 import com.example.william.my.core.okhttp.format.FormatParser.isParseAble
+import com.example.william.my.core.okhttp.format.FormatPrinterImpl
 import okhttp3.Interceptor
 import okhttp3.RequestBody
 import okhttp3.Response

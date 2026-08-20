@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 顶部状态与说明卡片 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/shared_dp_16"
+        android:layout_marginTop="@dimen/shared_dp_12"
+        android:background="@drawable/shared_bg_container_border"
+        android:orientation="vertical"
+        android:padding="@dimen/shared_dp_12">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ConcatAdapter 模块化列表组合与 ViewType 隔离"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/shared_sp_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sample_concat_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shared_dp_4"
+            android:text="子 Adapter: 4 个 | 全局合并项: 6 项 | isolateViewTypes: true"
+            android:textColor="@color/shared_color_accent"
+            android:textSize="@dimen/shared_sp_12" />
+    </LinearLayout>
+
+    <!-- 操作控制栏 -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/shared_dp_8"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/shared_dp_12">
+
+            <Button
+                android:id="@+id/sample_btn_toggle_banner"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/shared_dp_4"
+                android:text="下架 Banner 模块"
+                android:textSize="@dimen/shared_sp_12" />
+
+            <Button
+                android:id="@+id/sample_btn_insert_feed"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/shared_dp_4"
+                android:text="Feed 独立新增条目"
+                android:textSize="@dimen/shared_sp_12" />
+
+            <Button
+                android:id="@+id/sample_btn_update_feed"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/shared_dp_4"
+                android:text="Feed 仅刷新首条"
+                android:textSize="@dimen/shared_sp_12" />
+
+            <Button
+                android:id="@+id/sample_btn_toggle_footer"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/shared_dp_4"
+                android:text="移除 Footer 模块"
+                android:textSize="@dimen/shared_sp_12" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- 真实 ConcatAdapter 复合列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sample_concat_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/shared_dp_16" />
+
+</LinearLayout>

@@ -3,8 +3,8 @@ package com.example.william.my.core.retrofit
 import com.example.william.my.core.retrofit.builder.RetrofitBuilder
 import com.example.william.my.core.retrofit.converter.RetrofitConverterFactory
 import okhttp3.OkHttpClient
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotSame
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -12,12 +12,12 @@ import org.junit.Assert.fail
 import org.junit.Test
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
+import java.lang.reflect.Type
 import java.util.Collections
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
-import java.lang.reflect.Type
 
 class RetrofitDslTest {
     @Test

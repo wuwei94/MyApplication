@@ -1,14 +1,14 @@
 package com.example.william.my.core.rx.upload.request
 
 import com.example.william.my.core.okhttp.body.UploadProgressRequestBody
+import com.example.william.my.core.retrofit.rx.api.createRxApi
+import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import com.example.william.my.core.rx.upload.callback.RxUploadCallback
 import com.example.william.my.core.rx.upload.config.UploadConfig
 import com.example.william.my.core.rx.upload.exception.UploadHttpException
 import com.example.william.my.core.rx.upload.exception.toUploadApiException
 import com.example.william.my.core.rx.upload.model.UploadProgress
 import com.example.william.my.core.rx.upload.model.UploadResult
-import com.example.william.my.core.retrofit.rx.api.createRxApi
-import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single

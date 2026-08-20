@@ -1,5 +1,7 @@
 package com.example.william.my.core.rx.download.request
 
+import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import com.example.william.my.core.rx.download.RxDownload
 import com.example.william.my.core.rx.download.builder.RxDownloadBuilder
 import com.example.william.my.core.rx.download.callback.RxDownloadCallback
@@ -7,10 +9,8 @@ import com.example.william.my.core.rx.download.exception.DownloadHttpException
 import com.example.william.my.core.rx.download.model.DownloadProgress
 import com.example.william.my.core.rx.download.model.DownloadResult
 import com.example.william.my.core.rx.download.resume.DownloadResumeMetadata
-import com.example.william.my.core.retrofit.rx.api.rxRetrofit
-import com.example.william.my.core.retrofit.exception.ApiException
-import io.reactivex.rxjava3.schedulers.TestScheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.TestScheduler
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

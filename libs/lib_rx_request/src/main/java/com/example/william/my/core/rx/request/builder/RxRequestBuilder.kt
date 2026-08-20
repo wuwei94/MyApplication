@@ -3,10 +3,10 @@ package com.example.william.my.core.rx.request.builder
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.example.william.my.core.okhttp.media.MediaTypes
+import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.rx.request.RxRequest
 import com.example.william.my.core.rx.request.config.RequestConfig
 import com.example.william.my.core.rx.request.method.HttpMethod
-import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.trello.lifecycle4.android.lifecycle.AndroidLifecycle
 import com.trello.rxlifecycle4.LifecycleProvider
 import io.reactivex.rxjava3.core.Scheduler

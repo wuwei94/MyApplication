@@ -10,7 +10,6 @@ import android.hardware.HardwareBuffer
 import android.media.ImageReader
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat

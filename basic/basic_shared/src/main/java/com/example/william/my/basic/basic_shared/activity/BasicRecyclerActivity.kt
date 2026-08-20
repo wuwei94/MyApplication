@@ -50,10 +50,14 @@ abstract class BasicRecyclerActivity : BaseActivity(),
     }
 
     private fun initRecycler() {
-        mAdapter.submitList(buildList())
+        mAdapter.submitList(buildRecyclerList())
         mAdapter.setOnItemClickListener(this)
         mRecycler.layoutManager = LinearLayoutManager(this)
         mRecycler.adapter = mAdapterHelper.adapter
+    }
+
+    protected open fun buildRecyclerList(): ArrayList<String> {
+        return buildList()
     }
 
     protected open fun buildList(): ArrayList<String> {

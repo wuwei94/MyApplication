@@ -15,6 +15,7 @@
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
 - **自定义 View**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等。
 - **Compose**：Navigation、BackHandler、手势 / 拖拽 / `rememberSaveable`、SmartRefresh 等原生能力示例。
+- **性能优化**：DiffUtil 差量刷新、LRU 内存缓存策略、协程 Dispatcher 调度性能对比。
 
 ---
 
@@ -34,6 +35,8 @@
 | Reactive    | Coroutines · Flow · RxJava 3 · LiveData |
 | Messaging   | EventBus · RxEventBus · LiveEventBus · FlowEventBus |
 | Others      | WorkManager · Paging 3 · SplashScreen · MMKV |
+| Performance | DiffUtil · LruCache · Dispatcher 调度优化 |
+| Quality     | Dependency Guard（已接入） |
 | CI/CD       | GitHub Actions（lint + assemble） |
 
 > 各库版本详见 `gradle/libs.versions.toml`。
@@ -173,11 +176,14 @@ MyApplication/
 
 ### module_sample（技术示例）
 
-演示零散的技术技巧，不属于完整业务场景。
+演示零散的技术技巧与性能优化方案，不属于完整业务场景。
 
-- View Hook 反射技术
-- 自定义字体加载（Typeface.createFromAsset）
-- 悬浮窗（WindowManager + 拖拽 + 贴边动画）
+- **View Hook**：反射技术（动态代理替换 OnClickListener）
+- **自定义字体**：字体加载（Typeface.createFromAsset）
+- **悬浮窗**：WindowManager + 拖拽 + 贴边动画
+- **DiffUtil**：对比 `notifyDataSetChanged` 全量刷新 vs `DiffUtil` 差量更新性能差异
+- **LRU 内存缓存**：Repository 层缓存策略演示，含 LruCache 命中率统计、TTL 过期、LRU 淘汰机制
+- **协程 Dispatcher**：`Dispatchers.IO` vs `Dispatchers.Default` 在 CPU/IO 密集型任务下的性能对比，含 `withContext` 切换开销与并发调度加速比
 
 ### module_feature（业务功能）
 

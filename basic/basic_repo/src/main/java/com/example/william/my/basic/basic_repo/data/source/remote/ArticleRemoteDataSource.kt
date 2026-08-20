@@ -24,12 +24,12 @@ import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
 import com.example.william.my.basic.basic_repo.data.source.ArticleDataSource
-import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.retrofit.rx.api.createRxApi
+import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
 import com.example.william.my.core.retrofit.rx.function.ServerResultFunction
-import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers

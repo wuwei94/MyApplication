@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/shared_dp_16"
+    android:layout_marginVertical="@dimen/shared_dp_8"
+    android:background="@drawable/shared_bg_container_border"
+    android:orientation="vertical"
+    android:padding="@dimen/shared_dp_16">
+
+    <TextView
+        android:id="@+id/sample_concat_banner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎉【Banner 模块】年中狂欢大促（支持动态插拔）"
+        android:textColor="@color/shared_color_accent"
+        android:textSize="@dimen/shared_sp_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sample_concat_banner_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shared_dp_4"
+        android:text="由 BannerAdapter 驱动，点击顶部【下架/上线 Banner】可动态移除或重新插入"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/shared_sp_12" />
+
+</LinearLayout>

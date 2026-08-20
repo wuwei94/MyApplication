@@ -23,6 +23,7 @@ androidxAppCompat = "1.7.1"
 androidxConstraintLayout = "2.2.1"
 androidxRecyclerView = "1.4.0"
 androidxViewPager2 = "1.1.0"
+androidxAsyncLayoutInflater = "1.0.0"
 
 androidxLifecycle = "2.10.0"
 androidxPaging = "3.3.6"
@@ -141,6 +142,7 @@ androidx-appCompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidxConstraintLayout" }
 androidx-recyclerView = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidxRecyclerView" }
 androidx-viewPager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "androidxViewPager2" }
+androidx-asyncLayoutInflater = { group = "androidx.asynclayoutinflater", name = "asynclayoutinflater", version.ref = "androidxAsyncLayoutInflater" }
 # ##################################################################################################
 # 架构组件 - 界面层库
 # https://developer.android.google.cn/topic/libraries/architecture/lifecycle

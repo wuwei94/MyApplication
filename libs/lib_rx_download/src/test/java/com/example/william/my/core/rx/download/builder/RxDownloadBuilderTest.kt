@@ -1,8 +1,8 @@
 package com.example.william.my.core.rx.download.builder
 
+import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import com.example.william.my.core.rx.download.RxDownload
 import com.example.william.my.core.rx.download.RxDownloadManager
-import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.schedulers.TestScheduler
 import org.junit.Assert.assertEquals

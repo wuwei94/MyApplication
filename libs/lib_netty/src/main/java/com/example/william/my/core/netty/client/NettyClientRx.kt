@@ -2,17 +2,12 @@ package com.example.william.my.core.netty.client
 
 import com.example.william.my.core.netty.NettyClientInfo
 import com.example.william.my.core.netty.NettyLogger
+import io.netty.channel.Channel
+import io.netty.channel.EventLoopGroup
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import io.netty.channel.Channel
-import io.netty.bootstrap.Bootstrap
-import io.netty.channel.ChannelOption
-import io.netty.channel.EventLoopGroup
-import io.netty.channel.nio.NioEventLoopGroup
-import io.netty.channel.socket.nio.NioSocketChannel
-import java.net.InetSocketAddress
 import java.util.concurrent.ConcurrentHashMap
 
 /**

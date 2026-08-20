@@ -1,8 +1,8 @@
 package com.example.william.my.module.event.hilt
 
 import android.app.Application
-import com.example.william.my.core.eventbus.flow.FlowEventBus
 import com.example.william.my.core.base.hilt.interfaces.IAppInit
+import com.example.william.my.core.eventbus.flow.FlowEventBus
 import javax.inject.Inject
 
 /**

@@ -8,13 +8,13 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter2
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBinding
-import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter2
 
 /**
  * ViewPager2 + Tab — ViewPager2 实现 Tab 切换

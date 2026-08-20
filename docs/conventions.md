@@ -28,6 +28,7 @@
 ## Activity 基类
 
 - `BasicResponseActivity` — RecyclerView 操作列表与内联日志区；页面初始说明使用 `showDescription` 居中展示，离散事件使用 `appendLog`，高频状态使用 `updateLog(key, message)` 原位更新；统一由下方 `buildList` + `onRecyclerClick` 触发操作
+- `BasicLayoutActivity` — RecyclerView 操作列表与上方空白动态 View 容器（`mContainer` / `ConstraintLayout`）；支持 `setView` / `addView` 动态挂载、替换与展示自定义 View 或异步渲染结果
 - `BasicRecyclerActivity` — RecyclerView 操作列表
 - `BaseVBActivity<VB>` — ViewBinding 基类
 - `BaseFragmentActivity` — Fragment 宿主

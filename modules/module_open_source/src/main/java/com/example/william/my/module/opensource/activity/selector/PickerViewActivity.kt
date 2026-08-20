@@ -3,7 +3,6 @@ package com.example.william.my.module.opensource.activity.selector
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.FrameLayout.LayoutParams
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -13,7 +12,6 @@ import com.bigkoo.pickerview.view.OptionsPickerView
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.ResourceUtilsService
-import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.opensource.R
 import com.example.william.my.module.opensource.data.ProvinceData
 import com.google.gson.Gson

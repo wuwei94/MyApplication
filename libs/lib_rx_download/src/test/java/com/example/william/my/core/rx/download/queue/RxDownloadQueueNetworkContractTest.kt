@@ -1,13 +1,13 @@
 package com.example.william.my.core.rx.download.queue
 
 import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import com.example.william.my.core.rx.download.RxDownloadManager
 import com.example.william.my.core.rx.download.callback.RxDownloadCallback
 import com.example.william.my.core.rx.download.queue.model.DownloadQueueEvent
 import com.example.william.my.core.rx.download.queue.model.DownloadQueueProgress
 import com.example.william.my.core.rx.download.queue.model.DownloadQueueResult
 import com.example.william.my.core.rx.download.queue.model.DownloadQueueTask
-import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient

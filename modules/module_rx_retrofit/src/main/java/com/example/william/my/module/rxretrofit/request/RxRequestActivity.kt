@@ -5,9 +5,9 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.rx.request.RxRequest
-import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
+import com.example.william.my.core.rx.request.RxRequest
 import com.google.gson.JsonElement
 import org.json.JSONObject
 

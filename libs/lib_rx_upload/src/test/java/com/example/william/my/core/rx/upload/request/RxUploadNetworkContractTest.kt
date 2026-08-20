@@ -1,15 +1,15 @@
 package com.example.william.my.core.rx.upload.request
 
+import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import com.example.william.my.core.rx.upload.RxUpload
 import com.example.william.my.core.rx.upload.builder.RxUploadBuilder
-import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.rx.upload.callback.RxUploadCallback
 import com.example.william.my.core.rx.upload.exception.UploadHttpException
 import com.example.william.my.core.rx.upload.model.UploadProgress
 import com.example.william.my.core.rx.upload.model.UploadResult
-import com.example.william.my.core.retrofit.rx.api.rxRetrofit
-import io.reactivex.rxjava3.schedulers.TestScheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.TestScheduler
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

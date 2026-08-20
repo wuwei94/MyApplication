@@ -1,17 +1,17 @@
 package com.example.william.my.core.ktor
 
+import io.ktor.client.plugins.cookies.CookiesStorage
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import io.ktor.client.plugins.cookies.CookiesStorage
 import io.ktor.http.Cookie
-import kotlinx.coroutines.runBlocking
 import io.ktor.http.Url
+import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
 
 class KtorNetworkContractTest {
     @get:Rule

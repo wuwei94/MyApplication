@@ -2,14 +2,13 @@ package com.example.william.my.core.netty.client
 
 import com.example.william.my.core.netty.NettyClientInfo
 import com.example.william.my.core.netty.NettyLogger
-import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.netty.bootstrap.Bootstrap
-import io.netty.channel.Channel
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
+import io.reactivex.rxjava3.core.ObservableEmitter
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import java.net.InetSocketAddress
 
 class NettyClientRxOnSubscribe(

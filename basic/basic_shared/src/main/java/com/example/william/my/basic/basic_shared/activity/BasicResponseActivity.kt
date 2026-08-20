@@ -1,11 +1,12 @@
 package com.example.william.my.basic.basic_shared.activity
 
-import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
+import android.view.View
 import androidx.core.content.ContextCompat
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseRecyclerBinding
 import com.example.william.my.basic.basic_shared.utils.JsonFormatter
@@ -22,6 +23,7 @@ import com.example.william.my.basic.basic_shared.utils.JsonFormatter
  * 2. 页面初始说明使用 [showDescription] 居中展示。
  * 3. 离散事件（开始、成功、失败、取消等）使用 [appendLog] 追加单行日志（不覆盖历史）。
  * 4. 高频进度或运行状态使用 [updateLog] 原位更新对应 key，避免频繁刷屏。
+ * 5. 底部列表末尾自动附加“清空日志”选项，点击可清空展示区日志。
  */
 abstract class BasicResponseActivity : BasicRecyclerActivity() {
 
@@ -34,6 +36,23 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
         mBinding = SharedLayoutResponseRecyclerBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mRecycler = mBinding.basicsRecycler
+    }
+
+    override fun buildRecyclerList(): ArrayList<String> {
+        val list = ArrayList(buildList())
+        if (list.none { it.contains(ACTION_CLEAR_LOG) }) {
+            list.add(ACTION_CLEAR_LOG)
+        }
+        return list
+    }
+
+    override fun onClick(adapter: BaseQuickAdapter<String, *>, view: View, position: Int) {
+        val item = adapter.items.getOrNull(position)
+        if (item == ACTION_CLEAR_LOG) {
+            clearLog()
+        } else {
+            super.onClick(adapter, view, position)
+        }
     }
 
     /**
@@ -135,5 +154,9 @@ abstract class BasicResponseActivity : BasicRecyclerActivity() {
         mUpdatingLogs.values.forEach { message -> content.appendLine(message) }
         mBinding.basicsResponse.text = content
         mBinding.basicsResponse.gravity = Gravity.TOP
+    }
+
+    companion object {
+        private const val ACTION_CLEAR_LOG = "清空日志"
     }
 }

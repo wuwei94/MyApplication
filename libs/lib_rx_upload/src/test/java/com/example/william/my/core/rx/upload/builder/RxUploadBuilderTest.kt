@@ -1,7 +1,7 @@
 package com.example.william.my.core.rx.upload.builder
 
-import com.example.william.my.core.rx.upload.RxUpload
 import com.example.william.my.core.retrofit.rx.api.rxRetrofit
+import com.example.william.my.core.rx.upload.RxUpload
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.schedulers.TestScheduler
 import okhttp3.MediaType.Companion.toMediaType

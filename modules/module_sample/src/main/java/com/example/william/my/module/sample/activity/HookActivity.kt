@@ -1,12 +1,11 @@
 package com.example.william.my.module.sample.activity
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import java.lang.reflect.Proxy
+import com.example.william.my.module.sample.hook.HookHelper
 
 /**
  * 反射 Hook OnClickListener — 动态代理机制演示
@@ -83,56 +82,24 @@ class HookActivity : BasicResponseActivity() {
         }
     }
 
-    @SuppressLint("PrivateApi,DiscouragedPrivateApi")
     private fun applyHook(view: View) {
-        try {
-            // 1. 反射获取 ListenerInfo
-            val getListenerInfo = View::class.java.getDeclaredMethod("getListenerInfo").apply {
-                isAccessible = true
-            }
-            val listenerInfo = getListenerInfo.invoke(view)
-
-            // 2. 获取 ListenerInfo 中的 mOnClickListener 字段
-            val listenerInfoClz = Class.forName("android.view.View\$ListenerInfo")
-            val field = listenerInfoClz.getDeclaredField("mOnClickListener").apply {
-                isAccessible = true
-            }
-            val currentListener = field.get(listenerInfo) as? View.OnClickListener
-
-            if (currentListener == null) {
-                appendLog("【Hook 失败】未找到原始 OnClickListener")
-                return
-            }
-
-            // 3. 动态代理包装
-            val proxy = Proxy.newProxyInstance(
-                classLoader,
-                arrayOf(View.OnClickListener::class.java)
-            ) { _, method, args ->
-                appendLog("【Hook 拦截】>>> 成功拦截到 onClick() 调用！可在此处做埋点或防重放校验 <<<")
-                if (args != null) {
-                    method.invoke(currentListener, *args)
-                } else {
-                    method.invoke(currentListener)
-                }
-            } as View.OnClickListener
-
-            // 4. 写回代理对象
-            field.set(listenerInfo, proxy)
+        val success = HookHelper.hookOnClickListener(view) {
+            appendLog("【Hook 拦截】>>> 成功拦截到 onClick() 调用！可在此处做埋点或防重放校验 <<<")
+        }
+        if (success) {
             isHooked = true
             appendLog("【Hook 成功】已使用 Proxy 代理对象替换 ListenerInfo.mOnClickListener")
-        } catch (e: Exception) {
-            appendLog("【Hook 异常】${e.message}")
+        } else {
+            appendLog("【Hook 失败】未找到原始 OnClickListener 或反射失败")
         }
     }
 
-    @SuppressLint("PrivateApi,DiscouragedPrivateApi")
     private fun restoreHook(view: View) {
         if (!isHooked) {
             appendLog("【还原提示】当前未处于 Hook 状态")
             return
         }
-        view.setOnClickListener(originalClickListener)
+        HookHelper.restoreOnClickListener(view, originalClickListener)
         isHooked = false
         appendLog("【Hook 还原】已恢复原始 OnClickListener")
     }

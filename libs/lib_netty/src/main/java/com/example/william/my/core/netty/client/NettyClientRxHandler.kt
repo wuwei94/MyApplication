@@ -2,9 +2,9 @@ package com.example.william.my.core.netty.client
 
 import com.example.william.my.core.netty.NettyClientInfo
 import com.example.william.my.core.netty.NettyLogger
-import io.reactivex.rxjava3.core.ObservableEmitter
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
+import io.reactivex.rxjava3.core.ObservableEmitter
 
 class NettyClientRxHandler(
     private val emitter: ObservableEmitter<NettyClientInfo>

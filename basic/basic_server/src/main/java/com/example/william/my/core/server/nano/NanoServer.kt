@@ -4,7 +4,6 @@ import android.app.Application
 import com.example.william.my.core.nanohttpd.NanoHttpLogger
 import com.example.william.my.core.nanohttpd.NanoHttpServer
 import com.example.william.my.core.nanohttpd.ServerConfig
-import fi.iki.elonen.NanoHTTPD
 import java.io.IOException
 
 class NanoServer(context: Application) :

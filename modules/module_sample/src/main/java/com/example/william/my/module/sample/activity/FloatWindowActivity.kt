@@ -1,6 +1,5 @@
 package com.example.william.my.module.sample.activity
 
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.net.Uri
@@ -9,18 +8,14 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.animation.LinearInterpolator
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.sample.R
-import kotlin.math.abs
+import com.example.william.my.module.sample.window.FloatTouchHelper
 
 /**
  * 悬浮窗 — 系统级悬浮窗实现
@@ -116,87 +111,16 @@ class FloatWindowActivity : BasicResponseActivity() {
             .inflate(R.layout.sample_layout_float_window, window.decorView as ViewGroup, false)
 
         mFloatWindow?.let { float ->
-            float.setOnTouchListener(object : View.OnTouchListener {
-
-                var startX = 0
-                var startY = 0
-                var isPerformClick = false //是否点击
-                var finalMoveX = 0 //最后通过动画将mView的X轴坐标移动到finalMoveX
-                val mTouchSlop = ViewConfiguration.get(this@FloatWindowActivity).scaledTouchSlop
-
-                override fun onTouch(v: View, event: MotionEvent): Boolean {
-                    when (event.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            startX = event.x.toInt()
-                            startY = event.y.toInt()
-                            isPerformClick = true
-                            return true
-                        }
-
-                        MotionEvent.ACTION_MOVE -> {
-                            //判断是CLICK还是MOVE
-                            //只要移动过，就认为不是点击
-                            if (abs(startX - event.x) >= mTouchSlop || abs(startY - event.y) >= mTouchSlop) {
-                                isPerformClick = false
-                            }
-
-                            mLayoutParams?.let { params ->
-                                params.x = (event.rawX - startX).toInt()
-                                params.y = (event.rawY - startY).toInt()
-                            }
-
-                            updateFloatWindow()
-                            return true
-                        }
-
-                        MotionEvent.ACTION_UP -> {
-                            if (isPerformClick) {
-                                float.performClick()
-                            }
-
-                            //判断mView是在Window中的位置，以中间为界
-                            mLayoutParams?.let { params ->
-                                finalMoveX =
-                                    if (params.x + float.measuredWidth / 2 >= resources.displayMetrics.widthPixels / 2) {
-                                        resources.displayMetrics.widthPixels - float.measuredWidth
-                                    } else {
-                                        0
-                                    }
-                            }
-
-                            stickToSide()
-                            return !isPerformClick
-                        }
-
-                        else -> {}
-                    }
-                    return false
-                }
-
-                private fun stickToSide() {
-                    mLayoutParams?.let { params ->
-                        val animator = ValueAnimator
-                            .ofInt(params.x, finalMoveX)
-                            .setDuration(abs(params.x - finalMoveX).toLong())
-                        animator.interpolator = LinearInterpolator()
-                        animator.addUpdateListener { animation ->
-                            params.x = animation.animatedValue as Int
-                            updateFloatWindow()
-                        }
-                        animator.start()
-                    }
-                }
-            })
+            float.setOnTouchListener(
+                FloatTouchHelper(
+                    windowManager = mWindowManager,
+                    layoutParams = mLayoutParams
+                )
+            )
 
             float.setOnClickListener {
                 appendLog("点击了悬浮窗")
             }
-        }
-    }
-
-    private fun updateFloatWindow() {
-        if (mFloatWindow != null && mLayoutParams != null) {
-            mWindowManager?.updateViewLayout(mFloatWindow, mLayoutParams)
         }
     }
 

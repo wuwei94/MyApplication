@@ -38,7 +38,7 @@ import java.io.File
  * ```kotlin
  * // 启动裁剪
  * val intent = Intent("com.android.camera.action.CROP").apply {
- *     setDataAndType(sourceUri, "image/*")
+ *     setDataAndType(sourceUri, "image/jpeg")
  *     putExtra("crop", "true")
  *     putExtra("aspectX", 1)
  *     putExtra("aspectY", 1)

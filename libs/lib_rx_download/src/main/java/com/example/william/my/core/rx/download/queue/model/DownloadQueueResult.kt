@@ -1,7 +1,7 @@
 package com.example.william.my.core.rx.download.queue.model
 
-import com.example.william.my.core.rx.download.model.DownloadResult
 import com.example.william.my.core.retrofit.exception.ApiException
+import com.example.william.my.core.rx.download.model.DownloadResult
 
 /** 单个批量任务的成功结果。 */
 data class DownloadTaskResult(

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 顶部 DiffUtil 说明与状态卡片 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/shared_dp_16"
+        android:layout_marginTop="@dimen/shared_dp_12"
+        android:background="@drawable/shared_bg_container_border"
+        android:orientation="vertical"
+        android:padding="@dimen/shared_dp_12">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DiffUtil 差量局部刷新与 Payload 机制"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/shared_sp_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sample_diff_status_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shared_dp_4"
+            android:text="当前数据项: 4 篇 | 点击下方按钮观察局部刷新与 ItemAnimator 动画"
+            android:textColor="@color/shared_color_accent"
+            android:textSize="@dimen/shared_sp_12" />
+    </LinearLayout>
+
+    <!-- 真实文章列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sample_diff_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/shared_dp_8"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/shared_dp_8" />
+
+    <!-- 底部操作控制面板 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shared_bg_container_border"
+        android:layout_marginHorizontal="@dimen/shared_dp_16"
+        android:layout_marginBottom="@dimen/shared_dp_12"
+        android:orientation="vertical"
+        android:padding="@dimen/shared_dp_8">
+
+        <!-- 第一排按钮：字段更新与 Payload 刷新 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sample_btn_payload_like"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="点赞+1 (Payload 局部刷新)"
+                android:textSize="@dimen/shared_sp_12" />
+
+            <Button
+                android:id="@+id/sample_btn_update_title"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/shared_dp_8"
+                android:layout_weight="1"
+                android:text="修改文章标题"
+                android:textSize="@dimen/shared_sp_12" />
+        </LinearLayout>
+
+        <!-- 第二排按钮：增、删、乱序 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shared_dp_4"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sample_btn_insert_item"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="头部插入文章"
+                android:textSize="@dimen/shared_sp_12" />
+
+            <Button
+                android:id="@+id/sample_btn_delete_item"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/shared_dp_4"
+                android:layout_weight="1"
+                android:text="删除首条文章"
+                android:textSize="@dimen/shared_sp_12" />
+
+            <Button
+                android:id="@+id/sample_btn_shuffle_items"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/shared_dp_4"
+                android:layout_weight="1"
+                android:text="随机乱序"
+                android:textSize="@dimen/shared_sp_12" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

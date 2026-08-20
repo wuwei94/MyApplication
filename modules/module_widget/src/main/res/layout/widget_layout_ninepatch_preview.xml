@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/shared_dp_16">
+
+    <TextView
+        android:id="@+id/widget_ninepatch_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/shared_dp_12"
+        android:text="9-Patch 局部不失真拉伸演示"
+        android:textColor="@color/shared_color_accent"
+        android:textSize="@dimen/shared_sp_14"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/widget_ninepatch_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="120dp"
+        android:minHeight="48dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/shared_dp_16"
+        android:paddingVertical="@dimen/shared_dp_12"
+        android:text="Hello, 9-Patch!"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/shared_sp_14" />
+
+</LinearLayout>

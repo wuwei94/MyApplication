@@ -148,6 +148,12 @@
 | HookActivity | View Hook 反射技术 |
 | TypefaceActivity | 自定义字体加载（Typeface.createFromAsset） |
 | FloatWindowActivity | 悬浮窗（WindowManager + 拖拽 + 贴边动画） |
+| DiffUtilActivity | DiffUtil 列表差量计算与 Payload 细粒度局部刷新 |
+| LruCacheActivity | LruCache 内存缓存设计模式（Cache-Aside 回源与容量淘汰） |
+| IdleHandlerActivity | IdleHandler 主线程空闲调度（单次/持续监听与延迟初始化） |
+| AsyncLayoutInflaterActivity | AsyncLayoutInflater 异步布局解析与视图预加载池 |
+| RecycledViewPoolActivity | RecyclerView.RecycledViewPool 跨列表/Tab 共享视图池 |
+| ConcatAdapterActivity | ConcatAdapter 模块化列表组合与 ViewType 隔离刷新 |
 
 ---
 

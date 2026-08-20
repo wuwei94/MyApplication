@@ -1,13 +1,13 @@
 package com.example.william.my.core.rx.request
 
+import com.example.william.my.core.retrofit.response.RetrofitResponse
+import com.example.william.my.core.retrofit.rx.api.createRxApi
+import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
 import com.example.william.my.core.rx.request.api.RequestApi
 import com.example.william.my.core.rx.request.builder.RxRequestBuilder
 import com.example.william.my.core.rx.request.config.RequestConfig
 import com.example.william.my.core.rx.request.function.ResponseFunction
 import com.example.william.my.core.rx.request.method.HttpMethod
-import com.example.william.my.core.retrofit.rx.api.createRxApi
-import com.example.william.my.core.retrofit.rx.function.HttpResultFunction
-import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.google.gson.reflect.TypeToken
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single

@@ -1,8 +1,8 @@
 package com.example.william.my.core.rx.download.queue.model
 
+import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.rx.download.model.DownloadProgress
 import com.example.william.my.core.rx.download.model.DownloadResult
-import com.example.william.my.core.retrofit.exception.ApiException
 
 /** 批量下载对外发送的任务和整体事件。 */
 sealed interface DownloadQueueEvent {

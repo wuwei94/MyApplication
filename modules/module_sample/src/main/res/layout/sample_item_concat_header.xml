@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/shared_dp_16"
+    android:layout_marginTop="@dimen/shared_dp_12"
+    android:layout_marginBottom="@dimen/shared_dp_8"
+    android:background="@drawable/shared_bg_container_border"
+    android:orientation="vertical"
+    android:padding="@dimen/shared_dp_16">
+
+    <TextView
+        android:id="@+id/sample_concat_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="【Header 模块】首页动态推荐"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/shared_sp_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sample_concat_header_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shared_dp_4"
+        android:text="由 HeaderAdapter 独立驱动（ViewType = 0，已配置隔离）"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/shared_sp_12" />
+
+</LinearLayout>

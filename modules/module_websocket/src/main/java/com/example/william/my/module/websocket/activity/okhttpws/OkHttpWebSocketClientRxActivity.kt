@@ -8,7 +8,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketClientRx
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketObserver
 import okhttp3.WebSocket
-import okio.ByteString
 
 /**
  * OkHttp WebSocket RxJava 封装示例

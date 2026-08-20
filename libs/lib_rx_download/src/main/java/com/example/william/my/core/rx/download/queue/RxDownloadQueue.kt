@@ -1,5 +1,6 @@
 package com.example.william.my.core.rx.download.queue
 
+import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.rx.download.RxDownload
 import com.example.william.my.core.rx.download.callback.RxDownloadCallback
 import com.example.william.my.core.rx.download.exception.toDownloadApiException
@@ -11,7 +12,6 @@ import com.example.william.my.core.rx.download.queue.model.DownloadQueueResult
 import com.example.william.my.core.rx.download.queue.model.DownloadQueueTask
 import com.example.william.my.core.rx.download.queue.model.DownloadTaskFailure
 import com.example.william.my.core.rx.download.queue.model.DownloadTaskResult
-import com.example.william.my.core.retrofit.exception.ApiException
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable

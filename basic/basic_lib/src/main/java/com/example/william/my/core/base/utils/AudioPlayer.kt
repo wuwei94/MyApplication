@@ -9,7 +9,6 @@ import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.example.william.my.core.base.app.BaseApp
 import java.io.File
 

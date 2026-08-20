@@ -1,9 +1,9 @@
 package com.example.william.my.core.server.javaws
 
-import com.example.william.my.core.javaws.server.JavaWebSocketServer as CoreJavaWebSocketServer
 import com.example.william.my.core.javaws.server.JavaWebSocketServerListener
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
+import com.example.william.my.core.javaws.server.JavaWebSocketServer as CoreJavaWebSocketServer
 
 class JavaWebSocketServer {
 

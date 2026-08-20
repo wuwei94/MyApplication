@@ -1,7 +1,7 @@
 package com.example.william.my.module.okhttp
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.Assert.*
 
 class ExampleUnitTest {
     @Test

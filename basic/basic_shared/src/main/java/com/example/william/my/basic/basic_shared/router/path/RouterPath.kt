@@ -152,6 +152,13 @@ object RouterPath {
         const val Hook = "${Sample}/Hook"
         const val Typeface = "${Sample}/Typeface"
         const val FloatWindow = "${Sample}/FloatWindow"
+
+        const val DiffUtil = "${Sample}/DiffUtil"
+        const val LruCache = "${Sample}/LruCache"
+        const val IdleHandler = "${Sample}/IdleHandler"
+        const val AsyncLayoutInflater = "${Sample}/AsyncLayoutInflater"
+        const val RecycledViewPool = "${Sample}/RecycledViewPool"
+        const val ConcatAdapter = "${Sample}/ConcatAdapter"
     }
 
     // 业务功能

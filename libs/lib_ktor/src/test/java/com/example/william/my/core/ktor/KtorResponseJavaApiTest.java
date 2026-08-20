@@ -1,10 +1,10 @@
 package com.example.william.my.core.ktor;
 
+import static org.junit.Assert.assertEquals;
+
 import com.example.william.my.core.ktor.response.KtorResponse;
 
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class KtorResponseJavaApiTest {
 

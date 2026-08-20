@@ -3,8 +3,8 @@ package com.example.william.my.module.arch.usecase
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.source.ArticleRepository
-import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.base.usecase.SingleObserverUseCase
+import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 
 class ArticleUseCase(private val repository: ArticleRepository<ArticleData, ArticleDetailData>) :

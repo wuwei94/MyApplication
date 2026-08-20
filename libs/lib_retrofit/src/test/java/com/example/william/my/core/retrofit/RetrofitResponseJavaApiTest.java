@@ -1,10 +1,10 @@
 package com.example.william.my.core.retrofit;
 
+import static org.junit.Assert.assertEquals;
+
 import com.example.william.my.core.retrofit.response.RetrofitResponse;
 
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class RetrofitResponseJavaApiTest {
 

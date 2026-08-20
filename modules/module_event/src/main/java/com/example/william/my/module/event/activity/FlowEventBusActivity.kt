@@ -1,7 +1,6 @@
 package com.example.william.my.module.event.activity
 
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath

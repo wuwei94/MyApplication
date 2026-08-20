@@ -3,8 +3,8 @@ package com.example.william.my.core.widget.bottomsheet;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import android.annotation.SuppressLint;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
