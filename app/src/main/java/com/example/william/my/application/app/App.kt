@@ -6,6 +6,7 @@ import com.example.william.my.core.base.app.BaseApp
 import com.example.william.my.core.base.eventbus.EventBusHelper
 import com.example.william.my.core.base.utils.CrashUtils
 import com.example.william.my.core.base.utils.FileSDCardUtil
+import com.example.william.my.module.arch.app.ArchApp
 import com.example.william.my.module.event.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp
 import com.example.william.my.module.opensource.app.OpenSourceApp
@@ -26,7 +27,7 @@ class App : BaseApp() {
 
     override fun initApp() {
 
-        //registerAppInit(ArchApp::class.java)
+        registerAppInit(ArchApp::class.java)
         registerAppInit(EventApp::class.java)
         registerAppInit(OpenSourceApp::class.java)
 

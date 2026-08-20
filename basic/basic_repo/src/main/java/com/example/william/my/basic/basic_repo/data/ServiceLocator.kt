@@ -65,7 +65,7 @@ object ServiceLocator {
      *
      * 专门提供给 module_arch 中的各个架构模式使用：
      * - MVP：ArticlePresenter
-     * - MVVM：ArticleLiveDataViewModel、ArticleViewModel、ViewModelFactory
+     * - MVVM：ArticleLiveDataViewModel、ViewModelFactory
      * - MVI：ArticleStateFlowViewModel
      * - Mavericks：ArticleMavericksViewModel、ArticleMavericksRepository
      */

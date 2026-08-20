@@ -15,6 +15,15 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+/**
+ * 文章分页数据远程协调器（协程/挂起函数版本）。
+ *
+ * 核心机制（Paging 3 离线优先架构）：
+ * 1. 单一真实数据源：UI 仅观察 Room 数据库返回的 PagingSource，不直接消费网络数据。
+ * 2. 边界触发：当 UI 滑动到达已加载数据的边界（或初始加载）时，Paging 框架自动回调本协调器的 [load] 方法。
+ * 3. 事务写入与自动失效：[load] 请求网络获取最新数据后，在数据库事务中写入 Room，Room 会自动触发 [androidx.paging.PagingSource.invalidate]，
+ *    从而驱动 Paging 重新从数据库拉取最新数据并在 UI 上呈现。
+ */
 @OptIn(ExperimentalPagingApi::class)
 class ArticleRemoteMediator(
     private val articleDatabase: ArticleDatabase,
@@ -25,138 +34,85 @@ class ArticleRemoteMediator(
     private val articleDao = articleDatabase.articleDao()
     private val remoteKeyDao = remoteKeyDatabase.remoteKeyDao()
 
+    /**
+     * 初始化策略检查：在初次加载前执行，决定是否需要跳过初始网络刷新。
+     */
     override suspend fun initialize(): InitializeAction {
         val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
-        return if (System.currentTimeMillis() - (remoteKeyDao.lastUpdated() ?: 0L) <
-            cacheTimeout
-        ) {
-            // Cached data is up-to-date, so there is no need to re-fetch
-            // from the network.
+        return if (System.currentTimeMillis() - (remoteKeyDao.lastUpdated() ?: 0L) < cacheTimeout) {
+            // 本地缓存仍在有效期内（1小时），直接展示缓存数据，跳过初始网络刷新
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
-            // Need to refresh cached data from network; returning
-            // LAUNCH_INITIAL_REFRESH here will also block RemoteMediator's
-            // APPEND and PREPEND from running until REFRESH succeeds.
+            // 本地缓存已过期或不存在，需要执行初始网络刷新；
+            // 返回 LAUNCH_INITIAL_REFRESH 会在 REFRESH 成功前阻止并发的 APPEND 和 PREPEND
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
 
+    /**
+     * 分页加载核心逻辑：根据 [loadType] 判断加载方向并请求网络，随后写入 Room。
+     */
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, ArticleDetailData>
     ): MediatorResult {
         return try {
-            // 网络负载方法采用可选的String参数。
-            // 对于第一个页面之后的每个页面，传递上一个页面返回的 String 令牌，使其从停止的地方继续。
-            // 对于REFRESH，传递 null 以加载第一个页面。
-            // The network load method takes an optional String
-            // parameter. For every page after the first, pass the String
-            // token returned from the previous page to let it continue
-            // from where it left off. For REFRESH, pass null to load the
-            // first page.
             val loadKey = when (loadType) {
                 LoadType.REFRESH -> {
                     Utils.logcat("RemoteMediator", "LoadType REFRESH")
-
+                    // REFRESH 对应首页加载，传递 null 以映射为第 0 页
                     null
                 }
-                // 在本例中，您永远不需要预先准备
-                // 因为 REFRESH 将始终加载列表中的第一页。立即返回，报告分页结束。
-                // In this example, you never need to prepend, since REFRESH
-                // will always load the first page in the list. Immediately
-                // return, reporting end of pagination.
+
                 LoadType.PREPEND -> {
-
                     Utils.logcat("RemoteMediator", "LoadType PREPEND")
-
-                    return MediatorResult.Success(
-                        endOfPaginationReached = true
-                    )
+                    // 本示例为单向追加列表，首页即为起始位置，无需向前加载，直接返回分页结束
+                    return MediatorResult.Success(endOfPaginationReached = true)
                 }
 
                 LoadType.APPEND -> {
-
                     Utils.logcat("RemoteMediator", "LoadType APPEND")
 
-//                    // 获取下一个 RemoteKey 的最后一个 Article 对象 id。
-//                    // Get the last Article object id for the next RemoteKey.
-//                    val lastItem = state.lastItemOrNull()
-//                        ?: return MediatorResult.Success(
-//                            endOfPaginationReached = true
-//                        )
-//                    // 追加时必须明确检查最后一项是否为 null，因为将null传递给networkService仅对初始加载有效。
-//                    // 如果 lastItem 为 null，则表示在初始 REFRESH 之后没有加载任何项，并且没有更多的项要加载。
-//                    // You must explicitly check if the last item is null when
-//                    // appending, since passing null to networkService is only
-//                    // valid for initial load. If lastItem is null it means no
-//                    // items were loaded after the initial REFRESH and there are
-//                    // no more items to load.
-//
-//                    lastItem.id
-
-                    // 查询 remoteKeyDao 以获取下一个 RemoteKey。
-                    // Query remoteKeyDao for the next RemoteKey.
-                    //val remoteKey = getRemoteKeyForLastItem(state)
+                    // 查询 RemoteKey 表获取下一个分页页码（也可以使用 state.lastItemOrNull() 基于最后一条数据的 id 进行游标分页）
                     val remoteKey = articleDatabase.withTransaction {
                         remoteKeyDao.remoteKeyByTag(tag)
                     }
 
-                    // 追加时必须明确检查最后一项是否为 null，因为将 null 传递给 networkService 仅对初始加载有效
-                    // 如果 lastItem 为 null，则表示在初始 REFRESH 之后没有加载任何项，并且没有更多的项要加载。
-                    // You must explicitly check if the page key is null when
-                    // appending, since null is only valid for initial load.
-                    // If you receive null for APPEND, that means you have
-                    // reached the end of pagination and there are no more
-                    // items to load.
+                    // 追加时必须明确检查 nextKey 是否为 null：
+                    // 1. 若 remoteKey != null 且 nextKey == null，表示上一页已是末尾，分页结束；
+                    // 2. 若 remoteKey == null，表示初始 REFRESH 尚未写入有效 Key，此时不应加载更多，等待刷新完成。
                     val nextKey = remoteKey?.nextPageKey
-                    nextKey
-                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
+                    nextKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
                 }
             }
 
-            // 通过改装挂起网络负载。
-            // 这不需要封装在withContext（Dispatcher.IO）｛…｝块中，
-            // 因为Reform的Coroutine CallAdapter在工作线程上进行调度。
-            // Suspending network load via Retrofit. This doesn't need to
-            // be wrapped in a withContext(Dispatcher.IO) { ... } block
-            // since Retrofit's Coroutine CallAdapter dispatches on a
-            // worker thread.
+            // 发起网络请求加载文章列表（Retrofit 挂起函数会在工作线程调度）
             val page = loadKey ?: 0
             val response = networkApi.getArticleSuspend(page)
+            val articles = response.data?.datas ?: emptyList()
 
-            val articles = response.data!!.datas
-
-            // 将加载的数据和下一个密钥存储在事务中，以便它们始终保持一致。
-            // Store loaded data, and next key in transaction, so that
-            // they're always consistent.
+            // 将网络数据和下一个 RemoteKey 统一在事务中写入，保证本地数据与分页状态的一致性
             articleDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
+                    // 下拉刷新时清空旧的 RemoteKey 和文章缓存
                     remoteKeyDao.deleteByTag(tag)
                     articleDao.deleteAllArticles()
                 }
 
-                val curPage = response.data!!.curPage
+                val curPage = response.data?.curPage ?: 0
                 val nextPage = if (articles.isEmpty()) null else curPage
 
-                // 更新查询的 RemoteKey。
-                // Update RemoteKey for this query.
+                // 更新 RemoteKey 为下一页页码
                 remoteKeyDao.insertKey(RemoteKeyData(tag, nextPage))
 
-                // 将新用户插入数据库，这将使当前的 PagingData 无效，从而允许 Paging 在数据库中显示更新。
-                // Insert new users into database, which invalidates the
-                // current PagingData, allowing Paging to present the updates
-                // in the DB.
+                // 将文章列表插入 Room 数据库，Room 会自动使关联的 PagingSource 失效以刷新 UI
                 articleDao.insertArticles(articles.map { article ->
                     article.copy(page = curPage)
                 })
             }
 
-            // 如果没有从服务返回用户，则到达分页结束
-            // End of pagination has been reached if no users are returned from the
-            // service
-            MediatorResult.Success(
-                endOfPaginationReached = articles.isEmpty()
-            )
+            // 若本次网络请求返回的数据为空，说明已达到最后一页
+            MediatorResult.Success(endOfPaginationReached = articles.isEmpty())
         } catch (e: IOException) {
             MediatorResult.Error(e)
         } catch (e: HttpException) {

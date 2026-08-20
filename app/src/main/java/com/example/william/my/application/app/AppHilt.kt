@@ -3,6 +3,7 @@ package com.example.william.my.application.app
 import android.app.Application
 import com.example.william.my.core.base.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.hilt.qualifier.AppInit
+import com.example.william.my.core.base.hilt.qualifier.ArchInit
 import com.example.william.my.core.base.hilt.qualifier.BaseInit
 import com.example.william.my.core.base.hilt.qualifier.EventInit
 import com.example.william.my.core.base.hilt.qualifier.FlutterInit
@@ -21,9 +22,9 @@ class AppHilt : Application() {
     @Inject
     lateinit var appInit: IAppInit
 
-//    @ArchInit
-//    @Inject
-//    lateinit var archInit: IAppInit
+    @ArchInit
+    @Inject
+    lateinit var archInit: IAppInit
 
     @EventInit
     @Inject
@@ -45,7 +46,7 @@ class AppHilt : Application() {
 
         appInit.init(this)
 
-        //archInit.init(this)
+        archInit.init(this)
         eventInit.init(this)
         openSourceInit.init(this)
 

@@ -14,7 +14,9 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 /**
- * https://github.com/airbnb/mavericks/blob/main/utils-view-binding/src/main/java/com/airbnb/mvrx/viewbinding/FragmentViewBindingDelegate.kt
+ * Fragment ViewBinding 属性委托类
+ *
+ * 自动管理 Fragment ViewBinding 的生命周期，在视图销毁时自动解绑释放。
  */
 class FragmentViewBindingDelegate<T : ViewBinding>(
     bindingClass: Class<T>,
@@ -30,9 +32,8 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
             fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
                 viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
                     override fun onDestroy(owner: LifecycleOwner) {
-                        // Lifecycle listeners are called before onDestroyView in a Fragment.
-                        // However, we want views to be able to use bindings in onDestroyView
-                        // to do cleanup so we clear the reference one frame later.
+                        // 生命周期监听器在 Fragment 的 onDestroyView 之前被调用。
+                        // 为了让视图在 onDestroyView 中仍能访问 binding 执行清理操作，延迟一帧置空引用。
                         clearBindingHandler.post { binding = null }
                     }
                 })
@@ -41,8 +42,8 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
-        // onCreateView may be called between onDestroyView and next Main thread cycle.
-        // In this case [binding] refers to the previous fragment view. Check that binding's root view matches current fragment view
+        // onCreateView 可能在 onDestroyView 与下一个主线程循环之间被调用。
+        // 此时 binding 可能指向前一个视图，需检查 root view 是否与当前一致。
         if (binding != null && binding?.root !== thisRef.view) {
             binding = null
         }
@@ -50,7 +51,7 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
 
         val lifecycle = fragment.viewLifecycleOwner.lifecycle
         if (!lifecycle.currentState.isAtLeast(Lifecycle.State.INITIALIZED)) {
-            error("Cannot access view bindings. View lifecycle is ${lifecycle.currentState}!")
+            error("无法访问 ViewBinding，当前视图生命周期状态为 ${lifecycle.currentState}！")
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -60,11 +61,12 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
 }
 
 /**
- * Create bindings for a view similar to bindView.
+ * Fragment 的 ViewBinding 委托扩展函数
  *
- * To use, just call
- * private val binding: FHomeWorkoutDetailsBinding by viewBinding()
- * with your binding class and access it as you normally would.
+ * 用法：
+ * ```kotlin
+ * private val binding: FragmentLayoutBinding by viewBinding()
+ * ```
  */
 inline fun <reified T : ViewBinding> Fragment.viewBinding() =
-    FragmentViewBindingDelegate(T::class.java, this)
+    FragmentViewBindingDelegate(T::class.java, this)

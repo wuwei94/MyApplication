@@ -3,10 +3,10 @@
 
     <application>
         <activity android:name=".ArchMainActivity" />
-        <activity android:name=".activity.MvpActivity" />
-        <activity android:name=".activity.MvvmActivity" />
-        <activity android:name=".activity.MviActivity" />
-        <activity android:name=".activity.mavericks.CounterActivity" />
-        <activity android:name=".activity.mavericks.MavericksActivity" />
+        <activity android:name=".mvp.MvpActivity" />
+        <activity android:name=".mvvm.MvvmActivity" />
+        <activity android:name=".mvi.MviActivity" />
+        <activity android:name=".mavericks.counter.CounterActivity" />
+        <activity android:name=".mavericks.article.MavericksActivity" />
     </application>
 </manifest>
