@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.performance
+package com.example.william.my.module.sample.recycler
 
 import android.os.Bundle
 import androidx.recyclerview.widget.ConcatAdapter
@@ -24,15 +24,15 @@ import com.example.william.my.module.sample.databinding.SampleActivityConcatBind
 @Route(path = RouterPath.Sample.ConcatAdapter)
 class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
 
+    private lateinit var concatAdapter: ConcatAdapter
     private lateinit var headerAdapter: ConcatHeaderAdapter
     private lateinit var bannerAdapter: ConcatBannerAdapter
     private lateinit var feedAdapter: ConcatFeedAdapter
     private lateinit var footerAdapter: ConcatFooterAdapter
-    private lateinit var concatAdapter: ConcatAdapter
 
-    private var isBannerActive = true
-    private var isFooterActive = true
-    private var feedItemCounter = 103
+    private var isBannerVisible = true
+    private var isFooterVisible = true
+    private var feedItemIndex = 1
 
     override fun getViewBinding(): SampleActivityConcatBinding {
         return SampleActivityConcatBinding.inflate(layoutInflater)
@@ -41,35 +41,41 @@ class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        initAdapters()
-        initRecyclerView()
+        initSubAdapters()
+        initConcatAdapter()
         initActionButtons()
         updateStatusInfo()
     }
 
-    private fun initAdapters() {
-        // 1. 初始化各子模块 Adapter（各自内部 ViewType 均定义为 0）
+    private fun initSubAdapters() {
         headerAdapter = ConcatHeaderAdapter()
         bannerAdapter = ConcatBannerAdapter()
 
-        val feedItems = mutableListOf(
-            "商品 Item #101" to "热销商品，库存充足，点击查看详情",
-            "商品 Item #102" to "秒杀特惠，限时抢购中",
-            "商品 Item #103" to "新品首发，专享早鸟优惠"
+        val feedList = mutableListOf(
+            "推荐商品 1" to "热销爆款，限时五折优惠中",
+            "推荐商品 2" to "新品首发，好评如潮，立即抢购",
+            "推荐商品 3" to "爆款数码科技，会员专属特惠价"
         )
-        feedAdapter = ConcatFeedAdapter(feedItems)
+        feedAdapter = ConcatFeedAdapter(feedList)
+        feedItemIndex = feedList.size + 1
+
         footerAdapter = ConcatFooterAdapter()
-
-        // 2. 使用 ConcatAdapter.Config 配置视图类型隔离
-        val config = ConcatAdapter.Config.Builder()
-            .setIsolateViewTypes(true) // 关键：隔离各子 Adapter 的 viewType，避免冲突
-            .build()
-
-        // 3. 组装多模块 ConcatAdapter
-        concatAdapter = ConcatAdapter(config, headerAdapter, bannerAdapter, feedAdapter, footerAdapter)
     }
 
-    private fun initRecyclerView() {
+    private fun initConcatAdapter() {
+        // 配置 ConcatAdapter：开启 ViewType 隔离（核心保护）
+        val config = ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(true)
+            .build()
+
+        concatAdapter = ConcatAdapter(
+            config,
+            headerAdapter,
+            bannerAdapter,
+            feedAdapter,
+            footerAdapter
+        )
+
         mBinding.sampleConcatRecycler.apply {
             layoutManager = LinearLayoutManager(this@ConcatAdapterActivity)
             adapter = concatAdapter
@@ -77,48 +83,49 @@ class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
     }
 
     private fun initActionButtons() {
-        // 1. 动态下架 / 恢复 Banner 模块
+        // 1. 动态插拔 Banner 模块
         mBinding.sampleBtnToggleBanner.setOnClickListener {
-            if (isBannerActive) {
-                // 动态移除 Banner
+            if (isBannerVisible) {
                 concatAdapter.removeAdapter(bannerAdapter)
-                isBannerActive = false
-                mBinding.sampleBtnToggleBanner.text = "重新上线 Banner 模块"
+                isBannerVisible = false
+                mBinding.sampleBtnToggleBanner.text = "上线 Banner 模块"
             } else {
-                // 动态重新插入 Banner 至 Header 下方（索引 1）
                 concatAdapter.addAdapter(1, bannerAdapter)
-                isBannerActive = true
+                isBannerVisible = true
                 mBinding.sampleBtnToggleBanner.text = "下架 Banner 模块"
             }
             updateStatusInfo()
         }
 
-        // 2. Feed 模块独立新增条目（仅刷新 Feed 区域）
+        // 2. 向 Feed 列表新增项（触发 Feed 局部增量刷新）
         mBinding.sampleBtnInsertFeed.setOnClickListener {
-            feedItemCounter++
-            feedAdapter.items.add("商品 Item #$feedItemCounter" to "由 Feed 模块独立新增，未触发整表重绑")
+            val newTitle = "新增商品 $feedItemIndex"
+            val newDesc = "动态插入推荐，触发 FeedAdapter 局部 notifyItemInserted"
+            feedItemIndex++
+            feedAdapter.items.add(newTitle to newDesc)
             feedAdapter.notifyItemInserted(feedAdapter.items.size - 1)
             updateStatusInfo()
         }
 
-        // 3. Feed 模块仅刷新首条
+        // 3. 仅更新 Feed 首条（验证局部精准刷新）
         mBinding.sampleBtnUpdateFeed.setOnClickListener {
             if (feedAdapter.items.isNotEmpty()) {
-                val first = feedAdapter.items[0]
-                feedAdapter.items[0] = first.first to "首条数据已更新（${System.currentTimeMillis() % 10000}）"
+                val old = feedAdapter.items[0]
+                feedAdapter.items[0] = old.first to "已局部精准刷新：${System.currentTimeMillis() % 1000}"
                 feedAdapter.notifyItemChanged(0)
+                updateStatusInfo()
             }
         }
 
-        // 4. 追加 / 移除 Footer 模块
+        // 4. 动态插拔 Footer 模块
         mBinding.sampleBtnToggleFooter.setOnClickListener {
-            if (isFooterActive) {
+            if (isFooterVisible) {
                 concatAdapter.removeAdapter(footerAdapter)
-                isFooterActive = false
-                mBinding.sampleBtnToggleFooter.text = "追加 Footer 模块"
+                isFooterVisible = false
+                mBinding.sampleBtnToggleFooter.text = "上线 Footer 模块"
             } else {
-                concatAdapter.addAdapter(footerAdapter)
-                isFooterActive = true
+                concatAdapter.addAdapter(concatAdapter.adapters.size, footerAdapter)
+                isFooterVisible = true
                 mBinding.sampleBtnToggleFooter.text = "移除 Footer 模块"
             }
             updateStatusInfo()
@@ -126,9 +133,7 @@ class ConcatAdapterActivity : BaseVBActivity<SampleActivityConcatBinding>() {
     }
 
     private fun updateStatusInfo() {
-        val adapterCount = concatAdapter.adapters.size
-        val totalItemCount = concatAdapter.itemCount
         mBinding.sampleConcatStatus.text =
-            "子 Adapter: $adapterCount 个 | 全局合并项: $totalItemCount 项 | isolateViewTypes: true"
+            "子 Adapter: ${concatAdapter.adapters.size} 个 | 合并项: ${concatAdapter.itemCount} 项 | Banner: ${if (isBannerVisible) "已上线" else "已下架"} | Footer: ${if (isFooterVisible) "已上线" else "已下架"}"
     }
 }
