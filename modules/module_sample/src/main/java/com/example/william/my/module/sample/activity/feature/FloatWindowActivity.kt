@@ -15,7 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.sample.R
-import com.example.william.my.module.sample.window.FloatTouchHelper
+import com.example.william.my.module.sample.floatwindow.FloatTouchHelper
 
 /**
  * 悬浮窗 — 系统级悬浮窗实现

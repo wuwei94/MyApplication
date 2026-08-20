@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.window
+package com.example.william.my.module.sample.floatwindow
 
 import android.animation.ValueAnimator
 import android.view.MotionEvent
