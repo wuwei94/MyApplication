@@ -11,7 +11,6 @@ class JetpackMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("DataStore", RouterPath.Jetpack.DataStore))
-        routerItems.add(RouterItem("WorkManager", RouterPath.Jetpack.WorkManager))
         routerItems.add(RouterItem("Paging", RouterPath.Jetpack.Paging))
         return routerItems
     }

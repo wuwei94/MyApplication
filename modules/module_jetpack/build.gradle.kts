@@ -30,6 +30,4 @@ dependencies {
     implementation(libs.autodispose)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.rxjava3)
-    //WorkManager
-    implementation(libs.androidx.workmanager.ktx)
 }

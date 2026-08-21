@@ -1,12 +1,15 @@
-package com.example.william.my.module.jetpack.work
+package com.example.william.my.module.async.work
 
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import com.example.william.my.module.jetpack.R
-import com.example.william.my.module.jetpack.work.utils.createNotification
+import com.example.william.my.module.async.R
+import com.example.william.my.module.async.work.utils.createNotification
 
+/**
+ * 示例加急后台任务工作者 (Expedited Work)
+ */
 class ExpeditedWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
@@ -20,7 +23,7 @@ class ExpeditedWorker(appContext: Context, workerParams: WorkerParameters) :
         return ForegroundInfo(
             NOTIFICATION_ID, createNotification(
                 applicationContext, id,
-                applicationContext.getString(R.string.jetpack_notification_title_saving_image)
+                applicationContext.getString(R.string.async_notification_title_saving_image)
             )
         )
     }

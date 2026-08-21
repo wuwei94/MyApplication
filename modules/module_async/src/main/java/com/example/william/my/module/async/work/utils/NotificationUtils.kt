@@ -1,22 +1,6 @@
-/*
- * Copyright (C) 2021 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 @file:JvmName("NotificationUtils")
 
-package com.example.william.my.module.jetpack.work.utils
+package com.example.william.my.module.async.work.utils
 
 import android.annotation.TargetApi
 import android.app.Notification
@@ -26,27 +10,27 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.WorkManager
-import com.example.william.my.module.jetpack.R
+import com.example.william.my.module.async.R
 import java.util.UUID
 
 /**
- * Create the notification and required channel (O+) for running work in a foreground service.
+ * 为加急后台任务 (Expedited Work) 创建前台通知和通知渠道 (O+)
  */
 fun createNotification(
     context: Context,
     workRequestId: UUID,
     notificationTitle: String
 ): Notification {
-    val channelId = context.getString(R.string.jetpack_notification_channel_id)
-    val channelName = context.getString(R.string.jetpack_notification_channel_name)
-    val cancelText = context.getString(R.string.jetpack_notification_cancel_processing)
-    // This PendingIntent can be used to cancel the Worker.
+    val channelId = context.getString(R.string.async_notification_channel_id)
+    val channelName = context.getString(R.string.async_notification_channel_name)
+    val cancelText = context.getString(R.string.async_notification_cancel_processing)
+    // 用于取消正在运行的任务的 PendingIntent
     val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(workRequestId)
 
     val builder = NotificationCompat.Builder(context, channelId)
         .setContentTitle(notificationTitle)
         .setTicker(notificationTitle)
-        .setSmallIcon(R.drawable.baseline_gradient)
+        .setSmallIcon(R.drawable.async_ic_gradient)
         .setOngoing(true)
         .addAction(android.R.drawable.ic_delete, cancelText, cancelIntent)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -58,7 +42,7 @@ fun createNotification(
 }
 
 /**
- * Create the required notification channel for O+ devices.
+ * 为 Android 8.0 (API 26+) 创建通知渠道
  */
 @TargetApi(Build.VERSION_CODES.O)
 fun createNotificationChannel(

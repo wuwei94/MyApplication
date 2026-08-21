@@ -112,6 +112,7 @@
 | AsyncTaskActivity | AsyncTask 异步任务 |
 | HandlerThreadActivity | HandlerThread 线程间通信 |
 | JobSchedulerActivity | JobScheduler 定时任务调度 |
+| WorkManagerActivity | WorkManager 现代化可靠后台任务调度与加急前台服务 |
 
 ---
 
@@ -327,7 +328,6 @@
 | Activity | 功能 |
 |----------|------|
 | DataStoreActivity | DataStore（Preferences + Proto）数据存储 |
-| WorkManagerActivity | WorkManager 后台任务调度 |
 | PagingActivity | Paging3 分页加载 |
 
 ---

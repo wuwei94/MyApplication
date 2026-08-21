@@ -81,7 +81,7 @@ MyApplication/
     ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
     ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    ├── module_async            # 异步处理（AsyncTask / HandlerThread / JobScheduler）
+    ├── module_async            # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
     ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
     ├── module_system           # 系统能力（Notification / Permission / SecureKey）
     ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
@@ -95,7 +95,7 @@ MyApplication/
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     ├── module_open_source      # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / Coil / Glide）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
-    ├── module_jetpack          # Jetpack 组件（DataStore / WorkManager / Paging）
+    ├── module_jetpack          # Jetpack 组件（DataStore / Paging）
     ├── module_database         # 数据库（Room / ObjectBox）
     ├── module_di               # 依赖注入（Hilt / Koin）
     ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
@@ -151,13 +151,14 @@ MyApplication/
 - Spinner / TitleBar
 - 九宫格拉伸图片（NinePatch）
 
-### module_async（异步处理）
+### module_async（异步处理与任务调度）
 
-演示 Android 异步/后台处理机制。
+演示 Android 异步/后台处理机制与系统任务调度。
 
 - AsyncTask 异步任务
 - HandlerThread 线程间通信
 - JobScheduler 定时任务调度
+- WorkManager 现代化可靠后台任务调度与加急前台服务
 
 ### module_component（组件交互）
 
@@ -285,7 +286,6 @@ Jetpack 组件库 Demo。
 
 - **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
 - **DataStore**：Preferences / Proto 两种存储
-- **WorkManager**：后台任务（普通 + expedited）
 
 ### module_database（数据库）
 

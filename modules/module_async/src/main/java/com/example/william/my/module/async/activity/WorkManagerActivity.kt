@@ -1,4 +1,4 @@
-package com.example.william.my.module.jetpack.activity
+package com.example.william.my.module.async.activity
 
 import android.os.Bundle
 import androidx.work.BackoffPolicy
@@ -14,55 +14,29 @@ import androidx.work.WorkRequest
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.jetpack.work.ExpeditedWorker
-import com.example.william.my.module.jetpack.work.UploadWorker
+import com.example.william.my.module.async.work.ExpeditedWorker
+import com.example.william.my.module.async.work.UploadWorker
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 /**
- * WorkManager — 后台任务调度框架
+ * WorkManager — 现代化后台任务调度框架
  *
- * WorkManager 是 Android Jetpack 提供的后台任务调度框架，用于处理可靠的后台工作。
+ * WorkManager 用于处理可靠的、带约束条件的后台异步与定时工作。
  *
  * 核心特性：
- * 1. 可靠性：即使应用退出或设备重启，任务也会执行
- * 2. 约束条件：支持网络、电量、存储等约束条件
- * 3. 任务链：支持任务链式执行，按顺序或并行
- * 4. 重试策略：支持指数退避重试策略
- * 5. 加急任务：支持 Expedited 前台服务即时调度
+ * 1. 可靠性：即使应用退出或设备重启，任务也会可靠执行；
+ * 2. 约束条件：支持网络类型、充电状态、空闲状态、电量等约束；
+ * 3. 任务链式编排：支持 beginWith -> then 串并行编排；
+ * 4. 指数退避重试策略：支持 BackoffPolicy 灵活退避；
+ * 5. 加急任务（Expedited Work）：支持 OutOfQuotaPolicy 搭配前台通知即时调度。
  *
- * 任务类型：
- * 1. OneTimeWorkRequest：一次性任务
- * 2. PeriodicWorkRequest：定期任务（最短 15 分钟）
- * 3. 加急任务：使用 setExpedited()，适合高优先级即时任务
- *
- * 基本用法：
- * ```kotlin
- * // 创建一次性任务
- * val workRequest = OneTimeWorkRequestBuilder<MyWorker>()
- *     .setConstraints(constraints)
- *     .setInitialDelay(10, TimeUnit.SECONDS)
- *     .build()
- *
- * // 提交任务
- * WorkManager.getInstance(context).enqueue(workRequest)
- *
- * // 观察任务状态
- * WorkManager.getInstance(context).getWorkInfoByIdLiveData(workRequest.id)
- *     .observe(this) { workInfo ->
- *         // 处理任务状态变化
- *     }
- * ```
- *
- * 适用场景：
- * - 后台数据同步
- * - 文件上传下载
- * - 定期日志上传
- * - 需要可靠执行的任务
- *
- * https://developer.android.google.cn/topic/libraries/architecture/workmanager
+ * 与 JobScheduler / HandlerThread / AsyncTask 的选型边界：
+ * - WorkManager：需要跨进程/重启持久化可靠执行的任务、带约束后台任务、加急前台 Worker；
+ * - JobScheduler：系统级定时 JobService；
+ * - HandlerThread / 协程：应用内生命周期相关的轻量异步并发。
  */
-@Route(path = RouterPath.Jetpack.WorkManager)
+@Route(path = RouterPath.Async.WorkManager)
 class WorkManagerActivity : BasicResponseActivity() {
 
     private val workManager by lazy { WorkManager.getInstance(applicationContext) }
@@ -207,7 +181,7 @@ class WorkManagerActivity : BasicResponseActivity() {
     }
 
     companion object {
-        private const val TAG_WORK = "jetpack_work_sample"
-        private const val UNIQUE_WORK_NAME = "jetpack_unique_upload_work"
+        private const val TAG_WORK = "async_work_sample"
+        private const val UNIQUE_WORK_NAME = "async_unique_upload_work"
     }
 }

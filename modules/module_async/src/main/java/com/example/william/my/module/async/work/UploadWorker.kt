@@ -1,4 +1,4 @@
-package com.example.william.my.module.jetpack.work
+package com.example.william.my.module.async.work
 
 import android.content.Context
 import androidx.work.Data
@@ -6,6 +6,9 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.william.my.basic.basic_shared.utils.Utils
 
+/**
+ * 示例数据上传工作者
+ */
 class UploadWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
 

@@ -117,6 +117,7 @@ object RouterPath {
         const val AsyncTask = "${Async}/AsyncTask"
         const val HandlerThread = "${Async}/HandlerThread"
         const val JobScheduler = "${Async}/JobScheduler"
+        const val WorkManager = "${Async}/WorkManager"
     }
 
     // 组件交互
@@ -329,7 +330,6 @@ object RouterPath {
         const val Main = "${Jetpack}/Main"
 
         const val DataStore = "${Jetpack}/DataStore"
-        const val WorkManager = "${Jetpack}/WorkManager"
         const val Paging = "${Jetpack}/Paging"
     }
 

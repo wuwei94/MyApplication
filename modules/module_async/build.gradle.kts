@@ -12,4 +12,6 @@ android {
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
+
+    implementation(libs.androidx.workmanager.ktx)
 }
