@@ -43,6 +43,7 @@ class ModuleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Kotlin", RouterPath.Kotlin.Main))
         routerItems.add(RouterItem("Jetpack", RouterPath.Jetpack.Main))
+        routerItems.add(RouterItem("Database", RouterPath.Database.Main))
         routerItems.add(RouterItem("DI", RouterPath.DI.Main))
         routerItems.add(RouterItem("Arch", RouterPath.Arch.Main))
 

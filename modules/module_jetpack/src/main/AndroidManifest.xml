@@ -5,7 +5,6 @@
         <activity android:name=".JetpackMainActivity" />
         <activity android:name=".activity.DataStoreActivity" />
         <activity android:name=".activity.WorkManagerActivity" />
-        <activity android:name=".activity.RoomActivity" />
         <activity android:name=".activity.PagingActivity" />
     </application>
 

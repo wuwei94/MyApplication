@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.objectbox
+package com.example.william.my.module.database.objectbox
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

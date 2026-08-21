@@ -29,8 +29,6 @@
         <activity android:name=".activity.imageloader.CoilActivity" />
         <activity android:name=".activity.imageloader.GlideActivity" />
         <activity android:name=".activity.widget.RealtimeBlurViewActivity" />
-
-        <activity android:name=".activity.database.ObjectBoxActivity" />
     </application>
 
 </manifest>

@@ -49,9 +49,6 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("Coil", RouterPath.OpenSource.Coil))
         routerItems.add(RouterItem("Glide", RouterPath.OpenSource.Glide))
-
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("ObjectBox", RouterPath.OpenSource.ObjectBox))
         return routerItems
     }
 }

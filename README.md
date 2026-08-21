@@ -92,9 +92,10 @@ MyApplication/
     ├── module_websocket        # WebSocket 专项示例
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
-    ├── module_open_source      # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / ObjectBox）
+    ├── module_open_source      # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / Coil / Glide）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
-    ├── module_jetpack          # Jetpack 组件（Room / DataStore / WorkManager / Paging）
+    ├── module_jetpack          # Jetpack 组件（DataStore / WorkManager / Paging）
+    ├── module_database         # 数据库（Room / ObjectBox）
     ├── module_di               # 依赖注入（Hilt / Koin）
     ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
     ├── module_compose          # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
@@ -252,7 +253,6 @@ WebSocket 专项功能演示。
 第三方开源框架集成 Demo。
 
 - 动画：PAG / Lottie / SVGAPlayer
-- 数据库：ObjectBox
 - UI：FlycoTabLayout / SwipeLayout / PhotoView / Banner / EasyFloat / RealtimeBlurView / ShadowLayout
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / LoadSir / MMKV / PermissionX
@@ -271,10 +271,16 @@ Kotlin 语言特性在 Android 上的实践。
 
 Jetpack 组件库 Demo。
 
-- **Room**：数据库 CRUD + DAO
 - **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
 - **DataStore**：Preferences / Proto 两种存储
 - **WorkManager**：后台任务（普通 + expedited）
+
+### module_database（数据库）
+
+移动端主流数据库方案对比与实战。
+
+- **Room**：Jetpack 官方数据库持久化框架，演示 CRUD、Flow 响应式数据流、RxJava Single 异步查询及批量事务操作
+- **ObjectBox**：高性能 NoSQL/对象数据库，演示实体存储、Box CRUD 与对象查询
 
 ### module_di（依赖注入）
 

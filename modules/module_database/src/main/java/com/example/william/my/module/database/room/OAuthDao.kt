@@ -1,4 +1,4 @@
-package com.example.william.my.module.jetpack.room
+package com.example.william.my.module.database.room
 
 import androidx.room.Dao
 import androidx.room.Delete

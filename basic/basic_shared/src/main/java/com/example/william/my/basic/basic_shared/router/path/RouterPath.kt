@@ -268,8 +268,6 @@ object RouterPath {
 
         const val Coil = "${OpenSource}/Coil"
         const val Glide = "${OpenSource}/Glide"
-
-        const val ObjectBox = "${OpenSource}/ObjectBox"
     }
 
     // ═══════════════════════════════════════════
@@ -321,8 +319,17 @@ object RouterPath {
 
         const val DataStore = "${Jetpack}/DataStore"
         const val WorkManager = "${Jetpack}/WorkManager"
-        const val Room = "${Jetpack}/Room"
         const val Paging = "${Jetpack}/Paging"
+    }
+
+    // 数据库
+    object Database {
+        private const val Database = "/Database"
+
+        const val Main = "${Database}/Main"
+
+        const val Room = "${Database}/Room"
+        const val ObjectBox = "${Database}/ObjectBox"
     }
 
     // 依赖注入 (DI)

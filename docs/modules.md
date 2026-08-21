@@ -24,6 +24,7 @@
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
+| module_database | 数据库 | DatabaseMainActivity | /Database |
 | module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
@@ -288,7 +289,6 @@
 | CoilActivity | Coil 图片加载库 |
 | GlideActivity | Glide 图片加载库 |
 | RealtimeBlurViewActivity | RealtimeBlurView 实时模糊 |
-| ObjectBoxActivity | ObjectBox 数据库 |
 
 ---
 
@@ -313,8 +313,19 @@
 |----------|------|
 | DataStoreActivity | DataStore（Preferences + Proto）数据存储 |
 | WorkManagerActivity | WorkManager 后台任务调度 |
-| RoomActivity | Room 数据库 |
 | PagingActivity | Paging3 分页加载 |
+
+---
+
+### module_database（数据库）
+
+演示 Android 移动端主流数据库持久化方案。
+
+| Activity | 功能 |
+|----------|------|
+| DatabaseMainActivity | 模块入口，导航到 Room 与 ObjectBox 示例 |
+| RoomActivity | Room 数据库 CRUD、协程 Flow 响应式查询与 RxJava 响应式流 |
+| ObjectBoxActivity | ObjectBox 高性能对象数据库增删查改 |
 
 ---
 

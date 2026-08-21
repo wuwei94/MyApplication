@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.activity.database
+package com.example.william.my.module.database.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.opensource.objectbox.ObjectBox
-import com.example.william.my.module.opensource.objectbox.ObjectBoxNote
+import com.example.william.my.module.database.objectbox.ObjectBox
+import com.example.william.my.module.database.objectbox.ObjectBoxNote
 import com.google.gson.Gson
 import io.objectbox.Box
 
@@ -43,7 +43,7 @@ import io.objectbox.Box
  *
  * https://github.com/objectbox/objectbox-java
  */
-@Route(path = RouterPath.OpenSource.ObjectBox)
+@Route(path = RouterPath.Database.ObjectBox)
 class ObjectBoxActivity : BasicResponseActivity() {
 
     private lateinit var notesBox: Box<ObjectBoxNote>
@@ -78,6 +78,7 @@ class ObjectBoxActivity : BasicResponseActivity() {
     }
 
     private fun initBox() {
+        ObjectBox.init(this)
         // Using ObjectBox Kotlin extension functions (https://docs.objectbox.io/kotlin-support)
         notesBox = ObjectBox.boxStore.boxFor(ObjectBoxNote::class.java)
     }

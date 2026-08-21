@@ -1,9 +1,9 @@
-package com.example.william.my.module.opensource.objectbox
+package com.example.william.my.module.database.objectbox
 
 import android.content.Context
 import android.util.Log
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.module.opensource.BuildConfig
+import com.example.william.my.module.database.BuildConfig
 import io.objectbox.BoxStore
 import io.objectbox.android.Admin
 import io.objectbox.exception.DbException
@@ -17,6 +17,9 @@ object ObjectBox {
         private set
 
     fun init(context: Context) {
+        if (::boxStore.isInitialized && !boxStore.isClosed) {
+            return
+        }
         // On Android make sure to pass a Context when building the Store.
         boxStore = try {
             MyObjectBox.builder()
