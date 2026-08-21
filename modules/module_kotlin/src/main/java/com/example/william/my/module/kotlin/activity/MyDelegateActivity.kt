@@ -59,7 +59,8 @@ class MyDelegateActivity : BasicResponseActivity() {
             "延迟属性委托（by lazy）",
             "可观察属性（Delegates.observable）",
             "可否决属性（Delegates.vetoable）",
-            "Map 映射属性委托（by map）"
+            "Map 映射属性委托（by map）",
+            "属性重定向委托（::otherProp）与 notNull"
         )
     }
 
@@ -72,6 +73,7 @@ class MyDelegateActivity : BasicResponseActivity() {
             3 -> testObservableDelegate()
             4 -> testVetoableDelegate()
             5 -> testMapDelegate()
+            6 -> testPropertyRedirectAndNotNull()
         }
     }
 
@@ -179,5 +181,29 @@ class MyDelegateActivity : BasicResponseActivity() {
         val map = mapOf("title" to "Antigravity App", "version" to 2)
         val config = MapConfig(map)
         appendLog("【Map委托】title: ${config.title}, version: ${config.version}")
+    }
+
+    // ─────────────────────────────────────────────
+    // 7. 属性别名重定向委托与 notNull 校验
+    // ─────────────────────────────────────────────
+    class MyMigrationBean {
+        var newFeatureName: String = "Kotlin-NextGen"
+
+        // 委托给另一个属性（常用于旧 API 重命名平滑过渡）
+        var oldFeatureName: String by this::newFeatureName
+
+        // Delegates.notNull 非空委托（延迟赋值且非空保护）
+        var initializedToken: String by Delegates.notNull()
+    }
+
+    private fun testPropertyRedirectAndNotNull() {
+        val bean = MyMigrationBean()
+        appendLog("【属性重定向】读取 oldFeatureName: ${bean.oldFeatureName}")
+        bean.oldFeatureName = "Kotlin-2.0-Evolution"
+        appendLog("【属性重定向】修改 oldFeatureName 后 newFeatureName 同步变更为: ${bean.newFeatureName}")
+
+        // notNull 赋值测试
+        bean.initializedToken = "Auth-Token-987654"
+        appendLog("【Delegates.notNull】读取非空属性: ${bean.initializedToken}")
     }
 }

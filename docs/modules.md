@@ -299,10 +299,13 @@
 
 | Activity | 功能 |
 |----------|------|
-| CoroutinesActivity | Kotlin 协程 |
-| FlowActivity | Kotlin Flow 数据流 |
-| MyDelegateActivity | Kotlin 委托属性与类委托 |
-| MyInlineActivity | Kotlin 内联函数与泛型实化 |
+| CoroutinesActivity | Kotlin 协程（线程切换、async/await 并发、supervisorScope 异常隔离、超时取消与 CoroutineExceptionHandler） |
+| FlowActivity | Kotlin Flow 数据流（冷流收集、数据变换、zip/combine 双流组合、debounce/flatMapLatest 防抖搜索、StateFlow/SharedFlow 热流与 catch/retry 重试） |
+| ChannelActivity | Kotlin Channel 与回调桥接（4 种缓冲模式、produce 生产消费模型、callbackFlow 回调防漏桥接与 channelFlow 跨协程并发发射） |
+| ConcurrencyActivity | Kotlin 协程高阶并发控制（Mutex 非阻塞互斥锁、Semaphore 信号量限流、select 竞速多路复用与 NonCancellable 清理保障） |
+| MyDelegateActivity | Kotlin 委托机制（类委托、自定义 ReadWriteProperty、by lazy、observable、vetoable、by map、属性重定向与 notNull） |
+| MyInlineActivity | Kotlin 内联函数（作用域函数 with/let/run/also/apply、reified 泛型实化、自定义扩展、noinline 与 crossinline） |
+| MySyntaxActivity | Kotlin 现代语法与 DSL（操作符重载 +/*/[ ]/in/invoke、中缀函数 infix fun、解构声明、密封接口 Sealed Interface 穷举与类型安全 DSL 构建器） |
 
 ---
 

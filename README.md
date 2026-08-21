@@ -262,10 +262,13 @@ WebSocket 专项功能演示。
 
 Kotlin 语言特性在 Android 上的实践。
 
-- Coroutines 协程（结构化并发、异常处理、线程切换）
-- Flow 数据流（StateFlow / SharedFlow / 操作符链）
-- Delegate 属性委托与类委托（lazy / observable / vetoable / map）
-- Inline 内联函数与泛型实化（reified / scope functions）
+- **Coroutines 协程**：结构化并发、线程切换调度（Dispatchers）、async/await 并行提速、supervisorScope 异常隔离、withTimeoutOrNull 超时协作式取消与 CoroutineExceptionHandler
+- **Flow 数据流**：冷流收集（repeatOnLifecycle）、变换操作符（map/filter/take）、zip/combine 双流组合、debounce + flatMapLatest 搜索防抖、StateFlow vs SharedFlow 热流机制、catch 异常捕获与 retry 自动重试
+- **Channel 通道与回调桥接**：Channel 4 种缓冲模式（RENDEZVOUS/BUFFERED/CONFLATED/UNLIMITED）、produce 生产消费模型、callbackFlow 传统监听器桥接（awaitClose 优雅反注册防泄漏）与 channelFlow 跨协程并发发射
+- **Concurrency 并发与同步**：Mutex 非阻塞互斥挂起锁（杜绝线程阻塞与死锁）、Semaphore 信号量最大并发度限流、select 多路复用异步竞速与 withContext(NonCancellable) 关键清理保障
+- **Delegate 委托机制**：类委托（by base）、自定义 ReadWriteProperty、by lazy 延迟初始化、observable 变更监听、vetoable 条件拦截、Map 映射委托、属性别名重定向与 notNull 非空校验
+- **Inline 内联函数**：作用域函数对比（with/let/run/also/apply）、reified 泛型实化与 JSON 解析、自定义内联高阶扩展、noinline 与 crossinline 修饰符
+- **Syntax 现代语法与 DSL**：操作符重载（+/*/[ ]/in/invoke）、中缀函数（infix fun）、解构声明（Data Class 与 componentN）、密封接口（Sealed Interface）when 编译器穷举与 @DslMarker 类型安全 DSL 构建器
 
 ### module_jetpack（Jetpack 组件库）
 

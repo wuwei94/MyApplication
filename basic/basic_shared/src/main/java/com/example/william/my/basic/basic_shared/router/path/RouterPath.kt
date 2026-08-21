@@ -307,8 +307,11 @@ object RouterPath {
 
         const val Coroutines = "${Kotlin}/Coroutines"
         const val Flow = "${Kotlin}/Flow"
+        const val Channel = "${Kotlin}/Channel"
+        const val Concurrency = "${Kotlin}/Concurrency"
         const val Delegate = "${Kotlin}/Delegate"
         const val Inline = "${Kotlin}/Inline"
+        const val Syntax = "${Kotlin}/Syntax"
     }
 
     // Jetpack 组件

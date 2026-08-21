@@ -59,7 +59,8 @@ class MyInlineActivity : BasicResponseActivity() {
         return arrayListOf(
             "作用域函数对比（with / let / run / also / apply）",
             "泛型实化类型获取（inline + reified）",
-            "自定义内联扩展函数（mAlso / mApply / mStandard）"
+            "自定义内联扩展函数（mAlso / mApply / mRun）",
+            "内联修饰符（noinline 与 crossinline）"
         )
     }
 
@@ -69,6 +70,7 @@ class MyInlineActivity : BasicResponseActivity() {
             0 -> testScopeFunctions()
             1 -> testReifiedGenerics()
             2 -> testCustomInlineExtensions()
+            3 -> testNoinlineAndCrossinline()
         }
     }
 
@@ -162,5 +164,41 @@ class MyInlineActivity : BasicResponseActivity() {
             "【自定义内联】结果: ${toJson()}"
         }
         appendLog(summary)
+    }
+
+    // ─────────────────────────────────────────────
+    // 4. noinline 与 crossinline
+    // ─────────────────────────────────────────────
+    private inline fun executeWithNoinline(
+        inlinedBlock: () -> String,
+        noinline storedBlock: () -> String
+    ): Pair<String, () -> String> {
+        val inlinedResult = inlinedBlock()
+        // noinline 的参数可以作为函数对象返回或保存
+        return Pair(inlinedResult, storedBlock)
+    }
+
+    private inline fun executeWithCrossinline(
+        crossinline asyncAction: () -> Unit
+    ) {
+        // 在非局部上下文（如 Runnable）中执行 crossinline Lambda
+        val runnable = Runnable {
+            asyncAction()
+        }
+        runnable.run()
+    }
+
+    private fun testNoinlineAndCrossinline() {
+        // noinline 演示
+        val (_, savedLambda) = executeWithNoinline(
+            inlinedBlock = { "Inlined-Content" },
+            storedBlock = { "Stored-Non-Inlined-Content" }
+        )
+        appendLog("【noinline】成功将未内联 Lambda 传递并延迟调用: ${savedLambda()}")
+
+        // crossinline 演示
+        executeWithCrossinline {
+            appendLog("【crossinline】在内部 Runnable 上下文中安全执行，禁止破坏栈帧的非局部 return")
+        }
     }
 }

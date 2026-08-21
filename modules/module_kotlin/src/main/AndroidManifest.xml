@@ -6,7 +6,10 @@
 
         <activity android:name=".activity.CoroutinesActivity" />
         <activity android:name=".activity.FlowActivity" />
+        <activity android:name=".activity.ChannelActivity" />
+        <activity android:name=".activity.ConcurrencyActivity" />
         <activity android:name=".activity.MyDelegateActivity" />
         <activity android:name=".activity.MyInlineActivity" />
+        <activity android:name=".activity.MySyntaxActivity" />
     </application>
 </manifest>
