@@ -152,13 +152,21 @@ object RouterPath {
         const val Hook = "${Sample}/Hook"
         const val Typeface = "${Sample}/Typeface"
         const val FloatWindow = "${Sample}/FloatWindow"
+    }
 
-        const val DiffUtil = "${Sample}/DiffUtil"
-        const val LruCache = "${Sample}/LruCache"
-        const val IdleHandler = "${Sample}/IdleHandler"
-        const val AsyncLayoutInflater = "${Sample}/AsyncLayoutInflater"
-        const val RecycledViewPool = "${Sample}/RecycledViewPool"
-        const val ConcatAdapter = "${Sample}/ConcatAdapter"
+    // 性能优化
+    object Performance {
+        private const val Performance = "/Performance"
+
+        const val Main = "${Performance}/Main"
+
+        const val AsyncLayoutInflater = "${Performance}/AsyncLayoutInflater"
+        const val IdleHandler = "${Performance}/IdleHandler"
+        const val LruCache = "${Performance}/LruCache"
+
+        const val ConcatAdapter = "${Performance}/ConcatAdapter"
+        const val RecycledViewPool = "${Performance}/RecycledViewPool"
+        const val DiffUtil = "${Performance}/DiffUtil"
     }
 
     // 业务功能

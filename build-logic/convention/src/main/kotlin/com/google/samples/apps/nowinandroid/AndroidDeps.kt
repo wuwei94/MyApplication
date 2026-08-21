@@ -83,6 +83,7 @@ internal fun Project.configureFeatureAndroid(
 
             "implementation"(project(":modules:module_sample"))
             "implementation"(project(":modules:module_feature"))
+            "implementation"(project(":modules:module_performance"))
 
             "implementation"(project(":modules:module_http"))
             "implementation"(project(":modules:module_okhttp"))

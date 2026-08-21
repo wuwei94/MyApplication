@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".PerformanceMainActivity" />
+
+        <activity android:name=".activity.AsyncLayoutInflaterActivity" />
+        <activity android:name=".activity.IdleHandlerActivity" />
+        <activity android:name=".activity.LruCacheActivity" />
+
+        <activity android:name=".activity.ConcatAdapterActivity" />
+        <activity android:name=".activity.DiffUtilActivity" />
+        <activity android:name=".activity.RecycledViewPoolActivity" />
+    </application>
+</manifest>

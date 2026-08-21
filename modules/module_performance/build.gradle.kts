@@ -5,10 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.sample"
+    namespace = "com.example.william.my.module.performance"
+    resourcePrefix("performance_")
 }
 
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
+
+    implementation(libs.androidx.asyncLayoutInflater)
 }

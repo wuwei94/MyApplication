@@ -6,11 +6,5 @@
         <activity android:name=".activity.HookActivity" />
         <activity android:name=".activity.TypefaceActivity" />
         <activity android:name=".activity.FloatWindowActivity" />
-        <activity android:name=".performance.DiffUtilActivity" />
-        <activity android:name=".performance.LruCacheActivity" />
-        <activity android:name=".performance.IdleHandlerActivity" />
-        <activity android:name=".performance.AsyncLayoutInflaterActivity" />
-        <activity android:name=".performance.RecycledViewPoolActivity" />
-        <activity android:name=".performance.ConcatAdapterActivity" />
     </application>
 </manifest>

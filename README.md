@@ -85,6 +85,7 @@ MyApplication/
     ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
     ├── module_system           # 系统能力（Notification / Permission / SecureKey）
     ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
+    ├── module_performance      # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_http             # HTTP 客户端（HttpURLConnection / Volley / Ktor）
     ├── module_okhttp           # OkHttp / Retrofit / 标准 Retrofit Rx 示例
@@ -178,14 +179,22 @@ MyApplication/
 
 ### module_sample（技术示例）
 
-演示零散的技术技巧与性能优化方案，不属于完整业务场景。
+演示零散的技术技巧，不属于完整业务场景。
 
 - **View Hook**：反射技术（动态代理替换 OnClickListener）
 - **自定义字体**：字体加载（Typeface.createFromAsset）
 - **悬浮窗**：WindowManager + 拖拽 + 贴边动画
-- **DiffUtil**：对比 `notifyDataSetChanged` 全量刷新 vs `DiffUtil` 差量更新性能差异
-- **LRU 内存缓存**：Repository 层缓存策略演示，含 LruCache 命中率统计、TTL 过期、LRU 淘汰机制
-- **协程 Dispatcher**：`Dispatchers.IO` vs `Dispatchers.Default` 在 CPU/IO 密集型任务下的性能对比，含 `withContext` 切换开销与并发调度加速比
+
+### module_performance（性能优化）
+
+演示 Android 性能优化与深度调度机制。
+
+- **AsyncLayoutInflater**：异步布局解析与 ViewPreloadManager 视图预加载池（0ms 秒开）
+- **IdleHandler**：主线程空闲调度（单次/持续监听与延迟初始化）
+- **LruCache**：内存缓存设计模式（Cache-Aside 回源与容量淘汰）
+- **ConcatAdapter**：模块化列表组合与 ViewType 隔离刷新
+- **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
+- **DiffUtil**：列表差量计算与 Payload 细粒度局部刷新
 
 ### module_feature（业务功能）
 

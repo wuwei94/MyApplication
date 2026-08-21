@@ -14,6 +14,7 @@
 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | module_system | 系统能力 | SystemMainActivity | /System |
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
+| module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_http | HTTP 客户端 | HttpMainActivity | /Http |
 | module_okhttp | OkHttp / Retrofit / Retrofit Rx | OkHttpMainActivity | /OkHttp |
@@ -150,12 +151,22 @@
 | HookActivity | View Hook 反射技术 |
 | TypefaceActivity | 自定义字体加载（Typeface.createFromAsset） |
 | FloatWindowActivity | 悬浮窗（WindowManager + 拖拽 + 贴边动画） |
-| DiffUtilActivity | DiffUtil 列表差量计算与 Payload 细粒度局部刷新 |
-| LruCacheActivity | LruCache 内存缓存设计模式（Cache-Aside 回源与容量淘汰） |
-| IdleHandlerActivity | IdleHandler 主线程空闲调度（单次/持续监听与延迟初始化） |
+
+---
+
+### module_performance（性能优化）
+
+演示 Android 性能优化与深度调度机制。
+
+| Activity | 功能 |
+|----------|------|
+| PerformanceMainActivity | 模块入口，导航到性能与列表优化页面 |
 | AsyncLayoutInflaterActivity | AsyncLayoutInflater 异步布局解析与视图预加载池 |
-| RecycledViewPoolActivity | RecyclerView.RecycledViewPool 跨列表/Tab 共享视图池 |
+| IdleHandlerActivity | IdleHandler 主线程空闲调度（单次/持续监听与延迟初始化） |
+| LruCacheActivity | LruCache 内存缓存设计模式（Cache-Aside 回源与容量淘汰） |
 | ConcatAdapterActivity | ConcatAdapter 模块化列表组合与 ViewType 隔离刷新 |
+| RecycledViewPoolActivity | RecyclerView.RecycledViewPool 跨列表/Tab 共享视图池 |
+| DiffUtilActivity | DiffUtil 列表差量计算与 Payload 细粒度局部刷新 |
 
 ---
 

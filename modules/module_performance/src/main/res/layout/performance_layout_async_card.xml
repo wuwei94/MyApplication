@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/shared_dp_16"
+    android:layout_marginVertical="@dimen/shared_dp_8"
+    android:background="@drawable/shared_bg_container_border"
+    android:orientation="vertical"
+    android:padding="@dimen/shared_dp_16">
+
+    <TextView
+        android:id="@+id/performance_async_card_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="异步加载卡片标题"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/shared_sp_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/performance_async_card_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shared_dp_8"
+        android:text="本卡片 View 由 AsyncLayoutInflater 在后台工作线程异步解析完成，随后在主线程回调中挂载！"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/shared_sp_12" />
+
+</LinearLayout>

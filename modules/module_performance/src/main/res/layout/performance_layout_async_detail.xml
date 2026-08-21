@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/shared_dp_16"
+    android:layout_marginVertical="@dimen/shared_dp_8"
+    android:background="@drawable/shared_bg_container_border"
+    android:orientation="vertical"
+    android:padding="@dimen/shared_dp_16">
+
+    <TextView
+        android:id="@+id/performance_detail_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/shared_color_accent"
+        android:paddingHorizontal="@dimen/shared_dp_8"
+        android:paddingVertical="@dimen/shared_dp_4"
+        android:text="⚡ 0ms 预加载就绪"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/shared_sp_12"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/performance_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shared_dp_12"
+        android:text="【复杂详情页】超级预加载大促专区"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/shared_sp_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/performance_detail_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shared_dp_8"
+        android:lineSpacingExtra="@dimen/shared_dp_4"
+        android:text="本页面模拟高度复杂的业务详情页，包含多个嵌套容器与自定义样式。\n通过在前置列表页调用 ViewPreloadManager 提前在后台异步 Pre-inflate，用户点击跳转进入本页时直接 0ms 瞬间上屏，彻底消除首帧卡顿！"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/shared_sp_12" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="@dimen/shared_dp_12"
+        android:background="#E0E0E0" />
+
+    <TextView
+        android:id="@+id/performance_detail_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="状态：命中 ViewPreloadManager 缓存池"
+        android:textColor="@color/shared_color_accent"
+        android:textSize="@dimen/shared_sp_12" />
+
+</LinearLayout>

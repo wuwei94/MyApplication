@@ -30,7 +30,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 
 | 文档 | 内容 |
 |------|------|
-| docs/modules.md | 功能模块详情（23 个模块，每个模块的 Activity 列表） |
+| docs/modules.md | 功能模块详情（24 个模块，每个模块的 Activity 列表） |
 | docs/libs.md | 库封装层职责索引 |
 | docs/di.md | 依赖注入方案对比（Hilt vs Koin 原理、语法、作用域与选型） |
 | docs/event.md | 事件总线方案对比（EventBus / RxEventBus / LiveEventBus / FlowEventBus 特性与选型） |

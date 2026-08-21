@@ -141,6 +141,8 @@ include(":modules:module_system")
 include(":modules:module_sample")
 // 业务功能
 include(":modules:module_feature")
+// 性能优化
+include(":modules:module_performance")
 
 // HTTP 客户端
 include(":modules:module_http")

@@ -28,6 +28,7 @@ class ModuleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Sample", RouterPath.Sample.Main))
         routerItems.add(RouterItem("Feature", RouterPath.Feature.Main))
+        routerItems.add(RouterItem("Performance", RouterPath.Performance.Main))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Http", RouterPath.Http.Main))
