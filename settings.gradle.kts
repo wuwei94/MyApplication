@@ -142,8 +142,8 @@ include(":modules:module_sample")
 // 业务功能
 include(":modules:module_feature")
 
-// 网络库
-include(":modules:module_network")
+// HTTP 客户端
+include(":modules:module_http")
 // OkHttp
 include(":modules:module_okhttp")
 // RxJava 动态请求 / 文件传输

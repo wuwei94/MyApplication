@@ -86,7 +86,7 @@ MyApplication/
     ├── module_system           # 系统能力（Notification / Permission / SecureKey）
     ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
     ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
-    ├── module_network          # 网络库（OkHttp / Retrofit / Ktor / Volley / WebSocket / Socket）
+    ├── module_http             # HTTP 客户端（HttpURLConnection / Volley / Ktor）
     ├── module_okhttp           # OkHttp / Retrofit / 标准 Retrofit Rx 示例
     ├── module_rx_retrofit      # Rx 动态 Retrofit 请求与上传下载示例
     ├── module_websocket        # WebSocket 专项示例
@@ -196,7 +196,7 @@ MyApplication/
 - CameraX 相机拍照/录像
 - 图片裁剪（Intent 调用系统裁剪）
 
-### module_network（网络库全栈对比）
+### module_http（HTTP 客户端全栈对比）
 
 HttpURLConnection、Volley 与 Ktor 对比 Demo。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加成功、HTTP/业务失败和传输异常；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
 

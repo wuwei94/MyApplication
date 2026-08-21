@@ -29,7 +29,7 @@ lib_ktor -> Ktor Client + OkHttp Engine
 - 响应对象可通过工厂方法创建，`success(data)` 的 `data` 可空。泛型响应通过 `@RawValue` 实现 `Parcelable`，实际数据仍必须是 Parcel 支持的类型。
 - Token 刷新属于业务策略。OkHttp/Retrofit 使用 `Interceptor` 或 `Authenticator`，Ktor 使用 Auth Plugin 或注入的 OkHttp 配置。
 - 日志、缓存和 Cookie 默认不应携带业务状态；正式业务实例应交给 Hilt 或 ServiceLocator 管理。
-- `module_network`、`module_okhttp` 和 `module_rx_retrofit` 的实际请求页统一继承 `BasicResponseActivity`：需要页面说明时使用 `showDescription` 居中展示，离散响应与错误追加到内联日志，高频传输进度按 key 原位更新；模块入口页只负责路由导航。
+- `module_http`、`module_okhttp` 和 `module_rx_retrofit` 的实际请求页统一继承 `BasicResponseActivity`：需要页面说明时使用 `showDescription` 居中展示，离散响应与错误追加到内联日志，高频传输进度按 key 原位更新；模块入口页只负责路由导航。
 
 ## lib_okhttp
 

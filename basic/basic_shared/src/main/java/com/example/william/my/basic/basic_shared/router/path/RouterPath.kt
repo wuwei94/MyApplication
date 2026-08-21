@@ -213,9 +213,9 @@ object RouterPath {
         const val ThreadUtils = "${Utils}/ThreadUtils"
     }
 
-    // 网络库
-    object Network {
-        private const val PATH = "/Network"
+    // HTTP 客户端
+    object Http {
+        private const val PATH = "/Http"
 
         const val Main = "${PATH}/Main"
         const val HttpURL = "${PATH}/HttpURL"

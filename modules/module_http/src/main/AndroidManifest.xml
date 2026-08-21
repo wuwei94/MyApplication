@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".HttpMainActivity" />
+        <activity android:name=".activity.httpurl.HttpURLActivity" />
+        <activity android:name=".activity.volley.VolleyActivity" />
+
+        <activity android:name=".activity.ktor.KtorActivity" />
+        <activity android:name=".activity.ktor.KtorClientActivity" />
+    </application>
+
+</manifest>

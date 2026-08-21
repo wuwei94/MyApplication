@@ -15,7 +15,7 @@
 | module_system | 系统能力 | SystemMainActivity | /System |
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
-| module_network | 网络库 | NetworkMainActivity | /Network |
+| module_http | HTTP 客户端 | HttpMainActivity | /Http |
 | module_okhttp | OkHttp / Retrofit / Retrofit Rx | OkHttpMainActivity | /OkHttp |
 | module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
@@ -172,12 +172,13 @@
 
 ---
 
-### module_network（网络库）
+### module_http（HTTP 客户端）
 
 演示 HttpURLConnection、Volley、Ktor 原生客户端和项目级 Ktor 封装。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
 
 | Activity | 功能 |
 |----------|------|
+| HttpMainActivity | 模块入口，导航到各个 HTTP 客户端示例页面 |
 | KtorActivity | Ktor 原生 HTTP 客户端，区分成功与非 2xx 响应 |
 | KtorClientActivity | 项目级 Ktor Client 封装，区分业务失败与传输失败 |
 | HttpURLActivity | HttpURLConnection 原生网络请求 |

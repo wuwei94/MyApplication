@@ -310,7 +310,7 @@
 | module_okhttp | 3 | 1 | 0 | 4 |
 | module_websocket | 3 | 1 | 0 | 4 |
 | module_async | 1 | 0 | 1 | 2 |
-| module_network | 4 | 0 | 0 | 4 |
+| module_http | 4 | 0 | 0 | 4 |
 | module_component | 3 | 0 | 0 | 3 |
 | module_arch | 5 | 0 | 0 | 5 |
 | module_jetpack | 2 | 0 | 0 | 2 |
