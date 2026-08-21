@@ -10,9 +10,9 @@ abstract class CatalogSection {
   List<CatalogEntry> get items;
 
   CatalogEntry get catalog => CatalogEntry.catalog(
-        path: path,
-        title: title,
-        subtitle: subtitle,
-        children: items,
-      );
+    path: path,
+    title: title,
+    subtitle: subtitle,
+    children: items,
+  );
 }

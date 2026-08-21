@@ -19,7 +19,8 @@ class ListenableBuilderDemoView extends StatefulWidget {
   final String title;
 
   @override
-  State<ListenableBuilderDemoView> createState() => _ListenableBuilderDemoViewState();
+  State<ListenableBuilderDemoView> createState() =>
+      _ListenableBuilderDemoViewState();
 }
 
 class _ListenableBuilderDemoViewState extends State<ListenableBuilderDemoView> {

@@ -20,9 +20,8 @@ final CatalogEntry stateSharingCatalog = CatalogEntry.catalog(
       path: 'value-listenable-builder',
       title: 'ValueListenableBuilder',
       subtitle: '值监听构建器',
-      pageBuilder: (BuildContext context) => const ValueListenableBuilderDemoPage(
-        title: 'ValueListenableBuilder',
-      ),
+      pageBuilder: (BuildContext context) =>
+          const ValueListenableBuilderDemoPage(title: 'ValueListenableBuilder'),
     ),
     CatalogEntry.page(
       path: 'listenable-builder',

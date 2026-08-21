@@ -12,7 +12,8 @@ final CatalogEntry stackCatalog = CatalogEntry.catalog(
       path: 'stack',
       title: 'Stack',
       subtitle: '堆叠布局',
-      pageBuilder: (BuildContext context) => const StackDemoPage(title: 'Stack'),
+      pageBuilder: (BuildContext context) =>
+          const StackDemoPage(title: 'Stack'),
     ),
     CatalogEntry.page(
       path: 'positioned',

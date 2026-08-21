@@ -203,62 +203,65 @@ class _DriftDemoViewState extends State<DriftDemoView> {
   Widget getBody() {
     return FutureBuilder<DriftTaskDatabase>(
       future: _databaseFuture,
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<DriftTaskDatabase> databaseSnapshot,
-      ) {
-        if (databaseSnapshot.connectionState != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (databaseSnapshot.hasError) {
-          return _buildCenteredState(
-            icon: Icons.error_outline,
-            title: 'Drift 初始化失败',
-            description: '${databaseSnapshot.error}',
-          );
-        }
-
-        final DriftTaskDatabase database = databaseSnapshot.data!;
-        return StreamBuilder<List<DriftTask>>(
-          stream: database.watchTasks(),
-          builder: (
+      builder:
+          (
             BuildContext context,
-            AsyncSnapshot<List<DriftTask>> snapshot,
+            AsyncSnapshot<DriftTaskDatabase> databaseSnapshot,
           ) {
-            final List<DriftTask> tasks = snapshot.data ?? <DriftTask>[];
-            final List<DriftTask> filteredTasks = _applyFilter(tasks);
-            final int completedCount = tasks
-                .where((DriftTask task) => task.isDone)
-                .length;
-            final int starredCount = tasks
-                .where((DriftTask task) => task.isStarred)
-                .length;
+            if (databaseSnapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-            return ListView(
-              padding: const EdgeInsets.all(16),
-              children: <Widget>[
-                _DriftHeroCard(
-                  accentColor: _accentColor,
-                  statusMessage: _statusMessage,
-                  totalCount: tasks.length,
-                  completedCount: completedCount,
-                  starredCount: starredCount,
-                ),
-                const SizedBox(height: 16),
-                _buildComposerSection(),
-                const SizedBox(height: 16),
-                _buildFilterSection(
-                  totalCount: tasks.length,
-                  filteredCount: filteredTasks.length,
-                ),
-                const SizedBox(height: 16),
-                _buildTaskListSection(filteredTasks),
-              ],
+            if (databaseSnapshot.hasError) {
+              return _buildCenteredState(
+                icon: Icons.error_outline,
+                title: 'Drift 初始化失败',
+                description: '${databaseSnapshot.error}',
+              );
+            }
+
+            final DriftTaskDatabase database = databaseSnapshot.data!;
+            return StreamBuilder<List<DriftTask>>(
+              stream: database.watchTasks(),
+              builder:
+                  (
+                    BuildContext context,
+                    AsyncSnapshot<List<DriftTask>> snapshot,
+                  ) {
+                    final List<DriftTask> tasks =
+                        snapshot.data ?? <DriftTask>[];
+                    final List<DriftTask> filteredTasks = _applyFilter(tasks);
+                    final int completedCount = tasks
+                        .where((DriftTask task) => task.isDone)
+                        .length;
+                    final int starredCount = tasks
+                        .where((DriftTask task) => task.isStarred)
+                        .length;
+
+                    return ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: <Widget>[
+                        _DriftHeroCard(
+                          accentColor: _accentColor,
+                          statusMessage: _statusMessage,
+                          totalCount: tasks.length,
+                          completedCount: completedCount,
+                          starredCount: starredCount,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildComposerSection(),
+                        const SizedBox(height: 16),
+                        _buildFilterSection(
+                          totalCount: tasks.length,
+                          filteredCount: filteredTasks.length,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildTaskListSection(filteredTasks),
+                      ],
+                    );
+                  },
             );
           },
-        );
-      },
     );
   }
 
@@ -367,7 +370,8 @@ class _DriftDemoViewState extends State<DriftDemoView> {
   }) {
     return _SectionCard(
       title: '实时查询视图',
-      subtitle: '当前展示 $filteredCount / $totalCount 条记录。切换筛选时，仍然沿用同一条 Drift 数据流。',
+      subtitle:
+          '当前展示 $filteredCount / $totalCount 条记录。切换筛选时，仍然沿用同一条 Drift 数据流。',
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
@@ -690,9 +694,10 @@ class _SectionCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             subtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.black54, height: 1.5),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.black54,
+              height: 1.5,
+            ),
           ),
           const SizedBox(height: 16),
           child,
@@ -862,9 +867,9 @@ class _DriftTaskCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 '更新于 $relativeTime',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.black45,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: Colors.black45),
               ),
               const Spacer(),
               TextButton.icon(

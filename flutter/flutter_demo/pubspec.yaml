@@ -70,6 +70,8 @@ dependencies:
   dio: ^5.9.0
   # https://pub.dev/packages/async
   async: ^2.13.0
+  # https://pub.dev/packages/web_socket_channel
+  web_socket_channel: ^3.0.3
   lib_network_dio:
     path: ../flutter_libs/lib_network_dio
   lib_network_http:

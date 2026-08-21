@@ -40,7 +40,8 @@ class InheritedWidgetDemoView extends StatefulWidget {
   final String title;
 
   @override
-  State<InheritedWidgetDemoView> createState() => _InheritedWidgetDemoViewState();
+  State<InheritedWidgetDemoView> createState() =>
+      _InheritedWidgetDemoViewState();
 }
 
 class _InheritedWidgetDemoViewState extends State<InheritedWidgetDemoView> {

@@ -13,28 +13,31 @@ class CatalogTreeResolver {
     List<CatalogEntry> items,
     String parentPath,
   ) {
-    return items.map((CatalogEntry item) {
-      final String fullPath = _joinPaths(parentPath, item.path);
-      final List<ResolvedCatalogEntry> resolvedChildren = item.children.isEmpty
-          ? const <ResolvedCatalogEntry>[]
-          : _resolveItems(item.children, fullPath);
+    return items
+        .map((CatalogEntry item) {
+          final String fullPath = _joinPaths(parentPath, item.path);
+          final List<ResolvedCatalogEntry> resolvedChildren =
+              item.children.isEmpty
+              ? const <ResolvedCatalogEntry>[]
+              : _resolveItems(item.children, fullPath);
 
-      if (resolvedChildren.isEmpty) {
-        return ResolvedCatalogEntry.page(
-          path: fullPath,
-          title: item.title,
-          subtitle: item.subtitle,
-          pageBuilder: item.pageBuilder,
-        );
-      }
+          if (resolvedChildren.isEmpty) {
+            return ResolvedCatalogEntry.page(
+              path: fullPath,
+              title: item.title,
+              subtitle: item.subtitle,
+              pageBuilder: item.pageBuilder,
+            );
+          }
 
-      return ResolvedCatalogEntry.catalog(
-        path: fullPath,
-        title: item.title,
-        subtitle: item.subtitle,
-        children: resolvedChildren,
-      );
-    }).toList(growable: false);
+          return ResolvedCatalogEntry.catalog(
+            path: fullPath,
+            title: item.title,
+            subtitle: item.subtitle,
+            children: resolvedChildren,
+          );
+        })
+        .toList(growable: false);
   }
 
   static String _joinPaths(String parentPath, String childPath) {

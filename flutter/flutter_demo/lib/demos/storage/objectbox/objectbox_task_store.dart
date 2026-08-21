@@ -25,12 +25,8 @@ class ObjectBoxTaskStore {
   }
 
   Stream<List<ObjectBoxTaskEntity>> watchTasks() {
-    final QueryBuilder<ObjectBoxTaskEntity> builder =
-        _taskBox.query()
-          ..order(
-            ObjectBoxTaskEntity_.updatedAt,
-            flags: Order.descending,
-          );
+    final QueryBuilder<ObjectBoxTaskEntity> builder = _taskBox.query()
+      ..order(ObjectBoxTaskEntity_.updatedAt, flags: Order.descending);
     return builder
         .watch(triggerImmediately: true)
         .map((Query<ObjectBoxTaskEntity> query) => query.find());

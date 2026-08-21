@@ -24,7 +24,8 @@ class ChewieVideoPlayerDemoView extends StatefulWidget {
   final String title;
 
   @override
-  State<ChewieVideoPlayerDemoView> createState() => _ChewieVideoPlayerDemoViewState();
+  State<ChewieVideoPlayerDemoView> createState() =>
+      _ChewieVideoPlayerDemoViewState();
 }
 
 class _ChewieVideoPlayerDemoViewState extends State<ChewieVideoPlayerDemoView> {

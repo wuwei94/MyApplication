@@ -35,9 +35,9 @@ class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
     await ImageLoader.clear(_avatarUrl);
 
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('缓存已清理，重新进入页面会重新下载')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('缓存已清理，重新进入页面会重新下载')));
   }
 
   @override
@@ -80,7 +80,8 @@ class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
           const SizedBox(height: 16),
           _PreviewCard(
             title: 'ImageLoader.provider（ImageProvider）',
-            subtitle: '返回 ImageProvider，可直接用于 CircleAvatar、FadeInImage、Hero 等组件。',
+            subtitle:
+                '返回 ImageProvider，可直接用于 CircleAvatar、FadeInImage、Hero 等组件。',
             child: Center(
               child: CircleAvatar(
                 radius: 48,
@@ -181,10 +182,7 @@ class _PreviewCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(subtitle, style: theme.textTheme.bodySmall),
             const SizedBox(height: 12),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: child,
-            ),
+            ClipRRect(borderRadius: BorderRadius.circular(16), child: child),
           ],
         ),
       ),

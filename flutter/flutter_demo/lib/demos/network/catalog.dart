@@ -3,10 +3,11 @@ import 'package:flutter_demo/catalog/models/catalog_entry.dart';
 import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/network/dio_demo.dart';
 import 'package:flutter_demo/demos/network/http_demo.dart';
+import 'package:flutter_demo/demos/network/websocket_demo.dart';
 
 /// Network 模块
 ///
-/// 包含：Dio、Http 等网络请求示例
+/// 包含：Dio、Http、WebSocket 等网络请求与通信示例
 class NetworkCatalog extends CatalogSection {
   const NetworkCatalog._();
 
@@ -17,7 +18,7 @@ class NetworkCatalog extends CatalogSection {
   String get title => 'Network';
 
   @override
-  String get subtitle => '请求发送、响应展示与异常处理';
+  String get subtitle => '请求发送、响应展示与实时通信';
 
   @override
   List<CatalogEntry> get items => _items;
@@ -34,6 +35,13 @@ class NetworkCatalog extends CatalogSection {
       title: 'Http',
       subtitle: '基础 POST 请求与统一响应结果展示',
       pageBuilder: (BuildContext context) => const HttpDemoPage(title: 'Http'),
+    ),
+    CatalogEntry.page(
+      path: 'websocket',
+      title: 'WebSocket',
+      subtitle: 'WebSocket 连接、消息收发与连接状态管理',
+      pageBuilder: (BuildContext context) =>
+          const WebSocketDemoPage(title: 'WebSocket'),
     ),
   ];
 }

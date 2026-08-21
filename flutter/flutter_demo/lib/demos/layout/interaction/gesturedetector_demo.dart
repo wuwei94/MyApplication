@@ -19,7 +19,8 @@ class GestureDetectorDemoView extends StatefulWidget {
   final String title;
 
   @override
-  State<GestureDetectorDemoView> createState() => _GestureDetectorDemoViewState();
+  State<GestureDetectorDemoView> createState() =>
+      _GestureDetectorDemoViewState();
 }
 
 class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {

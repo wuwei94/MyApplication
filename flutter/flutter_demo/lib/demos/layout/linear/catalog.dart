@@ -19,7 +19,8 @@ final CatalogEntry linearCatalog = CatalogEntry.catalog(
       path: 'column',
       title: 'Column',
       subtitle: '垂直布局',
-      pageBuilder: (BuildContext context) => const ColumnDemoPage(title: 'Column'),
+      pageBuilder: (BuildContext context) =>
+          const ColumnDemoPage(title: 'Column'),
     ),
     CatalogEntry.page(
       path: 'flexible-expanded',

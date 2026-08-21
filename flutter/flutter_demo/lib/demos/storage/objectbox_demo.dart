@@ -66,8 +66,7 @@ class _ObjectBoxDemoViewState extends State<ObjectBoxDemoView> {
     }
 
     setState(() {
-      _statusMessage =
-          'ObjectBox 已就绪，当前示例通过 watch() 自动监听对象变化。';
+      _statusMessage = 'ObjectBox 已就绪，当前示例通过 watch() 自动监听对象变化。';
     });
     return store;
   }
@@ -205,63 +204,66 @@ class _ObjectBoxDemoViewState extends State<ObjectBoxDemoView> {
   Widget getBody() {
     return FutureBuilder<ObjectBoxTaskStore>(
       future: _storeFuture,
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<ObjectBoxTaskStore> storeSnapshot,
-      ) {
-        if (storeSnapshot.connectionState != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (storeSnapshot.hasError) {
-          return _buildCenteredState(
-            icon: Icons.error_outline,
-            title: 'ObjectBox 初始化失败',
-            description: '${storeSnapshot.error}',
-          );
-        }
-
-        final ObjectBoxTaskStore store = storeSnapshot.data!;
-        return StreamBuilder<List<ObjectBoxTaskEntity>>(
-          stream: store.watchTasks(),
-          builder: (
+      builder:
+          (
             BuildContext context,
-            AsyncSnapshot<List<ObjectBoxTaskEntity>> snapshot,
+            AsyncSnapshot<ObjectBoxTaskStore> storeSnapshot,
           ) {
-            final List<ObjectBoxTaskEntity> tasks =
-                snapshot.data ?? <ObjectBoxTaskEntity>[];
-            final List<ObjectBoxTaskEntity> filteredTasks = _applyFilter(tasks);
-            final int completedCount = tasks
-                .where((ObjectBoxTaskEntity task) => task.isDone)
-                .length;
-            final int starredCount = tasks
-                .where((ObjectBoxTaskEntity task) => task.isStarred)
-                .length;
+            if (storeSnapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-            return ListView(
-              padding: const EdgeInsets.all(16),
-              children: <Widget>[
-                _ObjectBoxHeroCard(
-                  accentColor: _accentColor,
-                  statusMessage: _statusMessage,
-                  totalCount: tasks.length,
-                  completedCount: completedCount,
-                  starredCount: starredCount,
-                ),
-                const SizedBox(height: 16),
-                _buildComposerSection(),
-                const SizedBox(height: 16),
-                _buildFilterSection(
-                  totalCount: tasks.length,
-                  filteredCount: filteredTasks.length,
-                ),
-                const SizedBox(height: 16),
-                _buildTaskListSection(filteredTasks),
-              ],
+            if (storeSnapshot.hasError) {
+              return _buildCenteredState(
+                icon: Icons.error_outline,
+                title: 'ObjectBox 初始化失败',
+                description: '${storeSnapshot.error}',
+              );
+            }
+
+            final ObjectBoxTaskStore store = storeSnapshot.data!;
+            return StreamBuilder<List<ObjectBoxTaskEntity>>(
+              stream: store.watchTasks(),
+              builder:
+                  (
+                    BuildContext context,
+                    AsyncSnapshot<List<ObjectBoxTaskEntity>> snapshot,
+                  ) {
+                    final List<ObjectBoxTaskEntity> tasks =
+                        snapshot.data ?? <ObjectBoxTaskEntity>[];
+                    final List<ObjectBoxTaskEntity> filteredTasks =
+                        _applyFilter(tasks);
+                    final int completedCount = tasks
+                        .where((ObjectBoxTaskEntity task) => task.isDone)
+                        .length;
+                    final int starredCount = tasks
+                        .where((ObjectBoxTaskEntity task) => task.isStarred)
+                        .length;
+
+                    return ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: <Widget>[
+                        _ObjectBoxHeroCard(
+                          accentColor: _accentColor,
+                          statusMessage: _statusMessage,
+                          totalCount: tasks.length,
+                          completedCount: completedCount,
+                          starredCount: starredCount,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildComposerSection(),
+                        const SizedBox(height: 16),
+                        _buildFilterSection(
+                          totalCount: tasks.length,
+                          filteredCount: filteredTasks.length,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildTaskListSection(filteredTasks),
+                      ],
+                    );
+                  },
             );
           },
-        );
-      },
     );
   }
 
@@ -694,9 +696,10 @@ class _SectionCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             subtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.black54, height: 1.5),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.black54,
+              height: 1.5,
+            ),
           ),
           const SizedBox(height: 16),
           child,
@@ -763,7 +766,9 @@ class _ObjectBoxTaskCard extends StatelessWidget {
         color: task.isDone ? const Color(0xFFF8FAFC) : const Color(0xFFFCFDFF),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: task.isStarred ? accentColor.withValues(alpha: 0.25) : const Color(0xFFE2E8F0),
+          color: task.isStarred
+              ? accentColor.withValues(alpha: 0.25)
+              : const Color(0xFFE2E8F0),
         ),
       ),
       child: Column(
@@ -839,8 +844,12 @@ class _ObjectBoxTaskCard extends StatelessWidget {
                     onPressed: onToggleStarred,
                     tooltip: task.isStarred ? '取消星标' : '设为星标',
                     icon: Icon(
-                      task.isStarred ? Icons.star_rounded : Icons.star_outline_rounded,
-                      color: task.isStarred ? const Color(0xFFF59E0B) : Colors.black38,
+                      task.isStarred
+                          ? Icons.star_rounded
+                          : Icons.star_outline_rounded,
+                      color: task.isStarred
+                          ? const Color(0xFFF59E0B)
+                          : Colors.black38,
                     ),
                   ),
                   IconButton(
@@ -860,9 +869,9 @@ class _ObjectBoxTaskCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 '更新于 $relativeTime',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.black45,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: Colors.black45),
               ),
               const Spacer(),
               TextButton.icon(

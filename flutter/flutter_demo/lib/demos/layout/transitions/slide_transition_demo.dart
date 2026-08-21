@@ -19,7 +19,8 @@ class SlideTransitionDemoView extends StatefulWidget {
   final String title;
 
   @override
-  State<SlideTransitionDemoView> createState() => _SlideTransitionDemoViewState();
+  State<SlideTransitionDemoView> createState() =>
+      _SlideTransitionDemoViewState();
 }
 
 class _SlideTransitionDemoViewState extends State<SlideTransitionDemoView>

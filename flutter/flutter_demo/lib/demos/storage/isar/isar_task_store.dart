@@ -147,11 +147,6 @@ class IsarTaskStore {
       ..priority = 1
       ..updatedAt = now.subtract(const Duration(days: 2, hours: 5));
 
-    return <IsarTaskRecord>[
-      draftTask,
-      badgeTask,
-      feedTask,
-      uploadTask,
-    ];
+    return <IsarTaskRecord>[draftTask, badgeTask, feedTask, uploadTask];
   }
 }

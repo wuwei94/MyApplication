@@ -86,26 +86,21 @@ class DriftTaskDatabase extends _$DriftTaskDatabase {
   }
 
   Future<void> toggleDone(DriftTask task) async {
-    await update(driftTasks).replace(
-      task.copyWith(
-        isDone: !task.isDone,
-        updatedAt: DateTime.now(),
-      ),
-    );
+    await update(
+      driftTasks,
+    ).replace(task.copyWith(isDone: !task.isDone, updatedAt: DateTime.now()));
   }
 
   Future<void> toggleStarred(DriftTask task) async {
     await update(driftTasks).replace(
-      task.copyWith(
-        isStarred: !task.isStarred,
-        updatedAt: DateTime.now(),
-      ),
+      task.copyWith(isStarred: !task.isStarred, updatedAt: DateTime.now()),
     );
   }
 
   Future<void> removeTask(int id) async {
-    await (delete(driftTasks)
-      ..where((DriftTasks table) => table.id.equals(id))).go();
+    await (delete(
+      driftTasks,
+    )..where((DriftTasks table) => table.id.equals(id))).go();
   }
 
   Future<void> clearAll() async {

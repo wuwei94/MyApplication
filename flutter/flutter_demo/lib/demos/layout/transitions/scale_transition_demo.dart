@@ -19,7 +19,8 @@ class ScaleTransitionDemoView extends StatefulWidget {
   final String title;
 
   @override
-  State<ScaleTransitionDemoView> createState() => _ScaleTransitionDemoViewState();
+  State<ScaleTransitionDemoView> createState() =>
+      _ScaleTransitionDemoViewState();
 }
 
 class _ScaleTransitionDemoViewState extends State<ScaleTransitionDemoView>

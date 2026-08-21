@@ -136,10 +136,7 @@ class _KernelCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            FilledButton.tonal(
-              onPressed: onSwitch,
-              child: const Text('切换内核'),
-            ),
+            FilledButton.tonal(onPressed: onSwitch, child: const Text('切换内核')),
           ],
         ),
       ),

@@ -34,8 +34,7 @@ class BasicsCatalog extends CatalogSection {
       path: 'getx-app',
       title: 'GetX',
       subtitle: '路由、状态、国际化与依赖注入小应用',
-      pageBuilder: (BuildContext context) =>
-          const GetXDemoApp(title: 'GetX'),
+      pageBuilder: (BuildContext context) => const GetXDemoApp(title: 'GetX'),
     ),
   ];
 }

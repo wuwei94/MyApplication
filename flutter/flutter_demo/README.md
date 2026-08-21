@@ -9,7 +9,7 @@
 - **Demo Catalog First 架构**：`app` 负责壳层和路由，`catalog` 负责目录树和解析，`demos` 负责示例内容
 - **双路由支持**：同时支持 `GoRouter` 和 `AutoRoute`，通过常量切换路由实现
 - **10 个顶层分组**：basics / layout / state_management / network / storage / image / animation / video / packages / showcase
-- **93 个叶子示例页面**：覆盖 Flutter 开发的绝大部分常见场景
+- **94 个叶子示例页面**：覆盖 Flutter 开发的绝大部分常见场景
 - **add-to-app 集成**：保留 Flutter module 能力，可用于原生宿主 App 的集成
 
 ## 目录结构
@@ -29,7 +29,7 @@ lib/
 
 | 文档 | 内容 |
 |------|------|
-| docs/demos.md | 示例分组详情（10 个分组，93 个叶子页面） |
+| docs/demos.md | 示例分组详情（10 个分组，94 个叶子页面） |
 | docs/dependencies.md | 依赖清单（按分类列出所有三方包） |
 | docs/conventions.md | 开发约定（Catalog 设计、路由模式、编码规范） |
 

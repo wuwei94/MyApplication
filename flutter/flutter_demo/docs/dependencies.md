@@ -9,7 +9,7 @@
 - [lib_network_dio](https://pub.dev/packages/dio) — `package:lib_network_dio/lib_network_dio.dart`，DioClient；持有 Dio 依赖
 - [lib_network_http](https://pub.dev/packages/http) — `package:lib_network_http/lib_network_http.dart`，HttpClient；持有 package:http、Async 与 Logger 依赖，启用日志后原样输出且不脱敏
 
-主 `flutter_demo` 仅保留示例直接使用的 [Dio](https://pub.dev/packages/dio) 与 [Async](https://pub.dev/packages/async)，并通过 path 依赖接入两个本地 package。两个 package 之间不存在共享的 `network_core`。
+主 `flutter_demo` 仅保留示例直接使用的 [Dio](https://pub.dev/packages/dio)、[Async](https://pub.dev/packages/async) 与 [web_socket_channel](https://pub.dev/packages/web_socket_channel)，并通过 path 依赖接入两个本地 package。两个 package 之间不存在共享的 `network_core`。
 
 ## 数据存储
 

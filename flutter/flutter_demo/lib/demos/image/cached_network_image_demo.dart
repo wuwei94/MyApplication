@@ -28,11 +28,7 @@ class CachedNetworkImageDemoView extends StatefulWidget {
 class _CachedNetworkImageDemoViewState
     extends State<CachedNetworkImageDemoView> {
   static const Color _accentColor = Color(0xFF2563EB);
-  static const List<String> _capabilities = <String>[
-    '网络缓存',
-    '占位图', 
-    '错误态'
-  ];
+  static const List<String> _capabilities = <String>['网络缓存', '占位图', '错误态'];
   static const String _basicImageUrl =
       'https://picsum.photos/seed/cached-basic/900/520';
   static const String _roundedImageUrl =

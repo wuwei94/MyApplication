@@ -18,4 +18,7 @@ class Urls {
 
   /// 密码（示例值）
   static const String valuePassword = '123456';
+
+  /// WebSocket Echo 测试服务
+  static const String websocketEcho = 'wss://echo.websocket.org';
 }

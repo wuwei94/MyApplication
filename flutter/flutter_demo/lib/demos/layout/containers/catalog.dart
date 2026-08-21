@@ -37,7 +37,8 @@ final CatalogEntry containersCatalog = CatalogEntry.catalog(
       path: 'align',
       title: 'Align',
       subtitle: '对齐组件',
-      pageBuilder: (BuildContext context) => const AlignDemoPage(title: 'Align'),
+      pageBuilder: (BuildContext context) =>
+          const AlignDemoPage(title: 'Align'),
     ),
     CatalogEntry.page(
       path: 'sized-box',

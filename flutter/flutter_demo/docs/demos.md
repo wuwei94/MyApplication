@@ -9,7 +9,7 @@
 | basics | 基础示例与完整小型应用 | 2 |
 | layout | 布局与交互类示例 | 14 个子目录 |
 | state_management | 状态管理示例 | 4 |
-| network | 网络请求示例 | 2 |
+| network | 网络请求示例 | 3 |
 | storage | 本地存储示例 | 8 |
 | image | 图片加载与选择示例 | 9 |
 | animation | 动画资源和播放示例 | 4 |
@@ -64,12 +64,13 @@
 
 ### network（网络请求）
 
-网络请求示例。Dio 与 package:http 共享 `code/message/data` 业务响应、`errorCode/errorMsg/data` JSON 字段、`code/message/cause` 异常和请求体契约，支持 GET/POST/PUT/PATCH/DELETE，并分别使用各自的底层请求取消能力。
+网络请求与实时通信示例。Dio 与 package:http 共享 `code/message/data` 业务响应、`errorCode/errorMsg/data` JSON 字段、`code/message/cause` 异常和请求体契约，支持 GET/POST/PUT/PATCH/DELETE，并分别使用各自的底层请求取消能力；WebSocket 示例演示双向长连接通信与生命周期。
 
 | 示例 | 说明 |
 |------|------|
 | dio | 业务 data decoder、完整业务响应展示、原生 LogInterceptor 和 CancelToken；当前示例不输出 Header/Body |
 | http | 业务 data decoder、完整业务响应展示、AbortableRequest 与原样请求日志；日志不脱敏 |
+| websocket | WebSocket 建立连接、消息双向收发、Echo 回显与连接生命周期状态展示 |
 
 ### storage（本地存储）
 

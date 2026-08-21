@@ -15,13 +15,15 @@ final CatalogEntry asynchronousCatalog = CatalogEntry.catalog(
       path: 'future',
       title: 'Future',
       subtitle: '异步任务',
-      pageBuilder: (BuildContext context) => const FutureDemoPage(title: 'Future'),
+      pageBuilder: (BuildContext context) =>
+          const FutureDemoPage(title: 'Future'),
     ),
     CatalogEntry.page(
       path: 'stream',
       title: 'Stream',
       subtitle: '异步流',
-      pageBuilder: (BuildContext context) => const StreamDemoPage(title: 'Stream'),
+      pageBuilder: (BuildContext context) =>
+          const StreamDemoPage(title: 'Stream'),
     ),
     CatalogEntry.page(
       path: 'completer',

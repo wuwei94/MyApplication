@@ -204,63 +204,64 @@ class _IsarDemoViewState extends State<IsarDemoView> {
   Widget getBody() {
     return FutureBuilder<IsarTaskStore>(
       future: _storeFuture,
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<IsarTaskStore> storeSnapshot,
-      ) {
-        if (storeSnapshot.connectionState != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        }
+      builder:
+          (BuildContext context, AsyncSnapshot<IsarTaskStore> storeSnapshot) {
+            if (storeSnapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-        if (storeSnapshot.hasError) {
-          return _buildCenteredState(
-            icon: Icons.error_outline,
-            title: 'Isar 初始化失败',
-            description: '${storeSnapshot.error}',
-          );
-        }
+            if (storeSnapshot.hasError) {
+              return _buildCenteredState(
+                icon: Icons.error_outline,
+                title: 'Isar 初始化失败',
+                description: '${storeSnapshot.error}',
+              );
+            }
 
-        final IsarTaskStore store = storeSnapshot.data!;
-        return StreamBuilder<List<IsarTaskRecord>>(
-          stream: store.watchTasks(),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<List<IsarTaskRecord>> snapshot,
-          ) {
-            final List<IsarTaskRecord> tasks =
-                snapshot.data ?? <IsarTaskRecord>[];
-            final List<IsarTaskRecord> filteredTasks = _applyFilter(tasks);
-            final int completedCount = tasks
-                .where((IsarTaskRecord task) => task.isDone)
-                .length;
-            final int starredCount = tasks
-                .where((IsarTaskRecord task) => task.isStarred)
-                .length;
+            final IsarTaskStore store = storeSnapshot.data!;
+            return StreamBuilder<List<IsarTaskRecord>>(
+              stream: store.watchTasks(),
+              builder:
+                  (
+                    BuildContext context,
+                    AsyncSnapshot<List<IsarTaskRecord>> snapshot,
+                  ) {
+                    final List<IsarTaskRecord> tasks =
+                        snapshot.data ?? <IsarTaskRecord>[];
+                    final List<IsarTaskRecord> filteredTasks = _applyFilter(
+                      tasks,
+                    );
+                    final int completedCount = tasks
+                        .where((IsarTaskRecord task) => task.isDone)
+                        .length;
+                    final int starredCount = tasks
+                        .where((IsarTaskRecord task) => task.isStarred)
+                        .length;
 
-            return ListView(
-              padding: const EdgeInsets.all(16),
-              children: <Widget>[
-                _IsarHeroCard(
-                  accentColor: _accentColor,
-                  statusMessage: _statusMessage,
-                  totalCount: tasks.length,
-                  completedCount: completedCount,
-                  starredCount: starredCount,
-                ),
-                const SizedBox(height: 16),
-                _buildComposerSection(),
-                const SizedBox(height: 16),
-                _buildFilterSection(
-                  totalCount: tasks.length,
-                  filteredCount: filteredTasks.length,
-                ),
-                const SizedBox(height: 16),
-                _buildTaskListSection(filteredTasks),
-              ],
+                    return ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: <Widget>[
+                        _IsarHeroCard(
+                          accentColor: _accentColor,
+                          statusMessage: _statusMessage,
+                          totalCount: tasks.length,
+                          completedCount: completedCount,
+                          starredCount: starredCount,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildComposerSection(),
+                        const SizedBox(height: 16),
+                        _buildFilterSection(
+                          totalCount: tasks.length,
+                          filteredCount: filteredTasks.length,
+                        ),
+                        const SizedBox(height: 16),
+                        _buildTaskListSection(filteredTasks),
+                      ],
+                    );
+                  },
             );
           },
-        );
-      },
     );
   }
 
@@ -369,8 +370,7 @@ class _IsarDemoViewState extends State<IsarDemoView> {
   }) {
     return _SectionCard(
       title: '实时查询视图',
-      subtitle:
-          '当前展示 $filteredCount / $totalCount 条记录。切换筛选时，仍然沿用同一条 Isar 数据流。',
+      subtitle: '当前展示 $filteredCount / $totalCount 条记录。切换筛选时，仍然沿用同一条 Isar 数据流。',
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
@@ -693,9 +693,10 @@ class _SectionCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             subtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.black54, height: 1.5),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.black54,
+              height: 1.5,
+            ),
           ),
           const SizedBox(height: 16),
           child,
@@ -865,9 +866,9 @@ class _IsarTaskCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 '更新于 $relativeTime',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.black45,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: Colors.black45),
               ),
               const Spacer(),
               TextButton.icon(
