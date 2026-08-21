@@ -5,6 +5,5 @@
         <activity android:name=".SampleMainActivity" />
         <activity android:name=".activity.HookActivity" />
         <activity android:name=".activity.TypefaceActivity" />
-        <activity android:name=".activity.FloatWindowActivity" />
     </application>
 </manifest>

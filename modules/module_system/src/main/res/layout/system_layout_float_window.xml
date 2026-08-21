@@ -7,7 +7,7 @@
     tools:context=".activity.FloatWindowActivity">
 
     <ImageView
-        android:id="@+id/icon_float"
+        android:id="@+id/system_icon_float"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:src="@drawable/shared_ic_launcher"

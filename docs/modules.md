@@ -140,6 +140,7 @@
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
 | PermissionActivity | 运行时权限批量申请 |
 | SecureKeyActivity | Android Keystore 安全密钥创建与签名 |
+| FloatWindowActivity | 系统级悬浮窗（WindowManager + 拖拽 + 贴边吸附动画） |
 
 ---
 
@@ -151,7 +152,6 @@
 |----------|------|
 | HookActivity | View Hook 反射技术 |
 | TypefaceActivity | 自定义字体加载（Typeface.createFromAsset） |
-| FloatWindowActivity | 悬浮窗（WindowManager + 拖拽 + 贴边动画） |
 
 ---
 

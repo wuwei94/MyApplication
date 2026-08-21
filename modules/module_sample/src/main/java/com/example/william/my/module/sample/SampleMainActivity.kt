@@ -14,7 +14,6 @@ class SampleMainActivity : RouterRecyclerActivity() {
         // 业务技巧与系统特性
         routerItems.add(RouterItem("Hook", RouterPath.Sample.Hook))
         routerItems.add(RouterItem("Typeface", RouterPath.Sample.Typeface))
-        routerItems.add(RouterItem("FloatWindow", RouterPath.Sample.FloatWindow))
 
         return routerItems
     }

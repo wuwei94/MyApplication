@@ -13,6 +13,7 @@ class SystemMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Notification", RouterPath.System.Notification))
         routerItems.add(RouterItem("Permission", RouterPath.System.Permission))
         routerItems.add(RouterItem("SecureKey", RouterPath.System.SecureKey))
+        routerItems.add(RouterItem("FloatWindow", RouterPath.System.FloatWindow))
         return routerItems
     }
 }

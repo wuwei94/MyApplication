@@ -142,6 +142,7 @@ object RouterPath {
         const val Notification = "${System}/Notification"
         const val Permission = "${System}/Permission"
         const val SecureKey = "${System}/SecureKey"
+        const val FloatWindow = "${System}/FloatWindow"
     }
 
     // 技术示例
@@ -152,7 +153,6 @@ object RouterPath {
 
         const val Hook = "${Sample}/Hook"
         const val Typeface = "${Sample}/Typeface"
-        const val FloatWindow = "${Sample}/FloatWindow"
     }
 
     // 性能优化

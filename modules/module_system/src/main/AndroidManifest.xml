@@ -6,5 +6,6 @@
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.PermissionActivity" />
         <activity android:name=".activity.SecureKeyActivity" />
+        <activity android:name=".activity.FloatWindowActivity" />
     </application>
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.william.my.module.sample.activity
+package com.example.william.my.module.system.activity
 
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -14,15 +14,21 @@ import android.view.WindowManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.sample.R
-import com.example.william.my.module.sample.floatwindow.FloatTouchHelper
+import com.example.william.my.module.system.R
+import com.example.william.my.module.system.floatwindow.FloatTouchHelper
 
 /**
  * 悬浮窗 — 系统级悬浮窗实现
  *
  * 通过 WindowManager 实现系统级悬浮窗，支持拖拽和吸附效果。
+ *
+ * 核心要点：
+ * 1. 需申请 SYSTEM_ALERT_WINDOW 权限（android.permission.SYSTEM_ALERT_WINDOW）；
+ * 2. 使用 TYPE_APPLICATION_OVERLAY（API 26+）或 TYPE_PHONE（旧版）；
+ * 3. FLAG_NOT_FOCUSABLE 确保不拦截输入焦点；
+ * 4. 通过 FloatTouchHelper 实现拖拽与边缘自动吸附。
  */
-@Route(path = RouterPath.Sample.FloatWindow)
+@Route(path = RouterPath.System.FloatWindow)
 class FloatWindowActivity : BasicResponseActivity() {
 
     private var mFloatWindow: View? = null
@@ -75,7 +81,7 @@ class FloatWindowActivity : BasicResponseActivity() {
 
     private fun initFloatWindow() {
         mFloatWindow = LayoutInflater.from(this)
-            .inflate(R.layout.sample_layout_float_window, window.decorView as ViewGroup, false)
+            .inflate(R.layout.system_layout_float_window, window.decorView as ViewGroup, false)
 
         mFloatWindow?.let { float ->
             float.setOnTouchListener(

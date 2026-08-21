@@ -83,8 +83,8 @@ MyApplication/
     ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
     ├── module_async            # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
     ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
-    ├── module_system           # 系统能力（Notification / Permission / SecureKey）
-    ├── module_sample           # 技术示例（Hook / Typeface / FloatWindow）
+    ├── module_system           # 系统能力（Notification / Permission / SecureKey / FloatWindow）
+    ├── module_sample           # 技术示例（Hook / Typeface）
     ├── module_performance      # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_http             # HTTP 客户端（HttpURLConnection / Volley / Ktor）
@@ -177,6 +177,7 @@ MyApplication/
 - NotificationChannel 通知渠道创建与通知发送
 - 运行时权限批量申请
 - Android Keystore 安全密钥创建与签名
+- **悬浮窗**：WindowManager 系统级浮层 + 拖拽 + 贴边吸附动画
 
 ### module_sample（技术示例）
 
@@ -184,7 +185,6 @@ MyApplication/
 
 - **View Hook**：反射技术（动态代理替换 OnClickListener）
 - **自定义字体**：字体加载（Typeface.createFromAsset）
-- **悬浮窗**：WindowManager + 拖拽 + 贴边动画
 
 ### module_performance（性能优化）
 
