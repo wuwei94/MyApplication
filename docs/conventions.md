@@ -63,9 +63,9 @@
 ## 快速查找
 
 - **新增 Activity**：复制目标模块中已有的 Activity，更新 `@Route`，在 `AndroidManifest.xml` 注册，在入口 Activity 的 `buildRouter()` 中添加路由项
-- **新增模块**：复制已有模块结构，在 `settings.gradle.kts` 注册，在 `RouterPath.kt` 添加路由，在 `ModuleActivity.kt` 添加入口
+- **新增模块**：复制已有模块结构，在 `settings.gradle.kts` 注册，在 `RouterPath.kt` 添加路由，在 `CategoryActivity.kt` 对应分类中添加入口
 - **路由路径**：`basic/basic_shared/.../RouterPath.kt`
-- **主入口列表**：`basic/basic_shared/.../ModuleActivity.kt`
+- **主入口列表**：`basic/basic_shared/.../DirectoryActivity.kt`（目录）/ `CategoryActivity.kt`（分类）
 - **基类**：`basic/basic_lib/.../activity/`
 
 ## 文档同步

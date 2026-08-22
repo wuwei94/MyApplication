@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         ARouter.getInstance()
-            .build(RouterPath.Module_Main)
+            .build(RouterPath.Directory_Main)
             .withTransition(
                 R.anim.base_anim_slide_in_left,
                 R.anim.base_anim_slide_out_right

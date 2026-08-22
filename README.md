@@ -76,33 +76,49 @@ MyApplication/
 │   ├── lib_imageloader         # Glide / Coil 图片加载封装（IImageLoader 接口 + 内核可切换）
 │   ├── lib_ninepatch           # NinePatch 图片处理工具
 │   └── lib_widget              # 自定义 Widget 控件集合
-└── modules                     # Feature 模块
-    ├── module_widget           # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
-    ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
-    ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
-    ├── module_custom_view      # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    ├── module_async            # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
-    ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
-    ├── module_system           # 系统能力（Notification / Permission / SecureKey / FloatWindow）
-    ├── module_sample           # 技术示例（Hook / Typeface）
-    ├── module_performance      # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
-    ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
-    ├── module_http             # HTTP 客户端（HttpURLConnection / Volley）
-    ├── module_ktor             # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
-    ├── module_okhttp           # OkHttp（OkHttp 原生请求 / lib_okhttp DSL）
-    ├── module_retrofit         # Retrofit（Call / 协程 / RxJava 调用方式）
-    ├── module_rx_retrofit      # Rx 动态 Retrofit 请求与上传下载示例
-    ├── module_websocket        # WebSocket 专项示例
-    ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
-    ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
-    ├── module_open_source      # 第三方库（Lottie / Banner / PhotoView / RxJava / Coil / Glide）
-    ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
-    ├── module_jetpack          # Jetpack 组件（Paging）
-    ├── module_storage          # 存储（Room / ObjectBox / DataStore / MMKV）
-    ├── module_di               # 依赖注入（Hilt / Koin）
-    ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
-    ├── module_compose          # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
-    └── module_flutter          # Flutter 子工程
+└── modules                     # Feature 模块（按技术领域分组）
+    │
+    ├── [UI 组件]
+    │   ├── module_widget       # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
+    │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
+    │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
+    │   └── module_custom_view  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
+    │
+    ├── [网络通信]
+    │   ├── module_http         # HTTP 客户端（HttpURLConnection / Volley）
+    │   ├── module_ktor         # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
+    │   ├── module_okhttp       # OkHttp（OkHttp 原生请求 / lib_okhttp DSL）
+    │   ├── module_retrofit     # Retrofit（Call / 协程 / RxJava 调用方式）
+    │   ├── module_rx_retrofit  # Rx 动态 Retrofit 请求与上传下载示例
+    │   └── module_websocket    # WebSocket 专项示例
+    │
+    ├── [数据存储]
+    │   └── module_storage      # 存储（Room / ObjectBox / DataStore / MMKV）
+    │
+    ├── [系统能力]
+    │   ├── module_async        # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
+    │   ├── module_component    # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
+    │   └── module_system       # 系统能力（Notification / Permission / SecureKey / FloatWindow）
+    │
+    ├── [架构模式]
+    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Mavericks）
+    │   ├── module_di           # 依赖注入（Hilt / Koin）
+    │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
+    │   └── module_performance  # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
+    │
+    ├── [Kotlin & Jetpack]
+    │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
+    │   └── module_jetpack      # Jetpack 组件（Paging）
+    │
+    ├── [跨平台]
+    │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
+    │   └── module_flutter      # Flutter 子工程
+    │
+    └── [三方库 & 工具]
+        ├── module_open_source  # 第三方库（Lottie / Banner / PhotoView / RxJava / Coil / Glide）
+        ├── module_utils        # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
+        ├── module_sample       # 技术示例（Hook / Typeface）
+        └── module_feature      # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
 ```
 
 ---

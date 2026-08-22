@@ -7,7 +7,8 @@ package com.example.william.my.basic.basic_shared.router.path
  */
 object RouterPath {
 
-    const val Module_Main = "/module/main"
+    const val Directory_Main = "/directory/main"
+    const val Category_Main = "/category/main"
 
     const val PERMISSION_LOGIN = 1 // 登录才能显示的页面
 

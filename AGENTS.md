@@ -12,7 +12,7 @@ MyApplication 是一个个人 Android 技术栈沉淀项目，用于展示 Andro
 ## 架构
 
 ```
-app/                          # 入口（SplashScreen → ModuleActivity）
+app/                          # 入口（SplashScreen → DirectoryActivity）
 basic/                        # 基础层
 ├── basic_lib/                # 基类（BaseActivity、BaseVBActivity、权限管理）
 ├── basic_shared/             # 路由（RouterPath）、共享 Layout、Utils

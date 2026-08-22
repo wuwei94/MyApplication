@@ -2,6 +2,39 @@
 
 > 每个模块有独立的入口 Activity，通过 ARouter 路由导航。
 
+## 目录结构
+
+项目采用两级目录结构，按技术领域分组：
+
+```
+目录页面 (DirectoryActivity)
+├── UI 组件
+│   ├── 系统原生：标准控件、Tab 导航、动画
+│   └── 自定义：自定义控件
+├── 网络通信
+│   ├── 系统原生：HTTP 客户端
+│   ├── 第三方库：OkHttp、Retrofit、Ktor
+│   └── 扩展能力：Rx 动态请求、WebSocket
+├── 数据存储
+│   ├── Jetpack：Room、DataStore
+│   └── 第三方库：ObjectBox、MMKV
+├── 系统能力
+│   └── 系统原生：异步处理、组件交互、系统能力
+├── 架构模式
+│   ├── 架构模式、依赖注入
+│   ├── 事件通信：事件总线
+│   └── 性能优化
+├── Kotlin & Jetpack
+│   ├── 语言特性：Kotlin
+│   └── Jetpack 组件
+├── 跨平台
+│   └── Compose、Flutter
+└── 三方库 & 工具
+    ├── 第三方库
+    ├── 工具类
+    └── 技术示例、业务功能
+```
+
 ## 模块总览
 
 | 模块 | 职责 | 入口 Activity | 路由前缀 |
@@ -17,7 +50,9 @@
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_http | HTTP 客户端 | HttpMainActivity | /Http |
-| module_okhttp | OkHttp / Retrofit / Retrofit Rx | OkHttpMainActivity | /OkHttp |
+| module_ktor | Ktor | KtorMainActivity | /Ktor |
+| module_okhttp | OkHttp | OkHttpMainActivity | /OkHttp |
+| module_retrofit | Retrofit | RetrofitMainActivity | /Retrofit |
 | module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
 | module_utils | 工具类 | UtilsMainActivity | /Utils |
