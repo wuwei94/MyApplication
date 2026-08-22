@@ -12,6 +12,7 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.jetpack.paging.adapter.PagingAdapter
 import com.example.william.my.module.jetpack.paging.adapter.PagingStateAdapter
 import com.example.william.my.module.jetpack.paging.viewmodel.PagingViewModel
+import android.annotation.SuppressLint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -118,7 +119,12 @@ class PagingActivity : BasicRecyclerActivity() {
 
     /**
      * 动态切换数据流模式
+     *
+     * @SuppressLint("AutoDispose") — AutoDispose 2.2.1 使用 Kotlin 1.9.0 编译，
+     * 与当前项目的 Kotlin 2.2.20 不兼容（编译时找不到 com.uber 包）。
+     * 此处手动管理 Disposable 生命周期，在 onDestroy() 中 dispose。
      */
+    @SuppressLint("AutoDispose")
     private fun switchMode(mode: PagingMode) {
         // 取消先前的流订阅，避免多流并发提交
         flowJob?.cancel()
