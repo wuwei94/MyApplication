@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit_coroutine
+package com.example.william.my.module.retrofit.retrofit_coroutine
 
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.RetrofitCoroutineDsl)
+@Route(path = RouterPath.Retrofit.RetrofitCoroutineDsl)
 class RetrofitCoroutineDslActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {

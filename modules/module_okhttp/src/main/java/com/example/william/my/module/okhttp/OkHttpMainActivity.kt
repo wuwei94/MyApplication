@@ -13,37 +13,6 @@ class OkHttpMainActivity : RouterRecyclerActivity() {
         routerItems.add(
             RouterItem("OkHttp", RouterPath.OkHttp.OkHttp)
         )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitCall", RouterPath.OkHttp.RetrofitCall)
-        )
-        routerItems.add(
-            RouterItem("RetrofitCallDsl", RouterPath.OkHttp.RetrofitCallDsl)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitCoroutine", RouterPath.OkHttp.RetrofitCoroutine)
-        )
-        routerItems.add(
-            RouterItem("RetrofitCoroutineDsl", RouterPath.OkHttp.RetrofitCoroutineDsl)
-        )
-
-        routerItems.add(
-            RouterItem("", "")
-        )
-        routerItems.add(
-            RouterItem("RetrofitRx", RouterPath.OkHttp.RetrofitRx)
-        )
-        routerItems.add(
-            RouterItem("RetrofitRxDsl", RouterPath.OkHttp.RetrofitRxDsl)
-        )
-
         return routerItems
     }
 }

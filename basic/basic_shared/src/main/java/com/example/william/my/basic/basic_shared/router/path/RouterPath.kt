@@ -186,12 +186,19 @@ object RouterPath {
     // 工具 / 网络 / 第三方库
     // ═══════════════════════════════════════════
 
-    // OkHttp / Retrofit
+    // OkHttp
     object OkHttp {
         private const val PATH = "/OkHttp"
 
         const val Main = "${PATH}/Main"
         const val OkHttp = "${PATH}/OkHttp"
+    }
+
+    // Retrofit
+    object Retrofit {
+        private const val PATH = "/Retrofit"
+
+        const val Main = "${PATH}/Main"
         const val RetrofitCall = "${PATH}/RetrofitCall"
         const val RetrofitCallDsl = "${PATH}/RetrofitCallDsl"
         const val RetrofitCoroutine = "${PATH}/RetrofitCoroutine"

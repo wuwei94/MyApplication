@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit_rx
+package com.example.william.my.module.retrofit.retrofit_rx
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
-@Route(path = RouterPath.OkHttp.RetrofitRx)
+@Route(path = RouterPath.Retrofit.RetrofitRx)
 class RetrofitRxActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()

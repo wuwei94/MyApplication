@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.okhttp"
+    namespace = "com.example.william.my.module.retrofit"
 }
 
 dependencies {
@@ -14,5 +14,6 @@ dependencies {
 
     implementation(project(":basic:basic_repo"))
 
-    implementation(project(":libs:lib_okhttp"))
+    implementation(project(":libs:lib_retrofit"))
+    implementation(project(":libs:lib_retrofit_rx"))
 }

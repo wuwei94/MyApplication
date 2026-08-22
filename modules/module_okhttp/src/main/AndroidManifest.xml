@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application android:supportsRtl="true">
+    <application>
         <activity android:name=".OkHttpMainActivity" />
-
         <activity android:name=".okhttp.OkHttpActivity" />
-
-        <activity android:name=".retrofit.RetrofitCallActivity" />
-        <activity android:name=".retrofit.RetrofitCallDslActivity" />
-
-        <activity android:name=".retrofit_coroutine.RetrofitCoroutineActivity" />
-        <activity android:name=".retrofit_coroutine.RetrofitCoroutineDslActivity" />
-
-        <activity android:name=".retrofit_rx.RetrofitRxActivity" />
-        <activity android:name=".retrofit_rx.RetrofitRxDslActivity" />
-
     </application>
 
 </manifest>

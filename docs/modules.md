@@ -208,13 +208,24 @@
 
 ---
 
-### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
+### module_okhttp（OkHttp）
 
-按封装库分类演示 OkHttp、Retrofit 和标准 Retrofit RxJava 的调用方式。实际请求页统一基于 `BasicResponseActivity` 累积展示响应与错误。
+演示 OkHttp 原生请求和 `lib_okhttp` DSL 封装。实际请求页统一基于 `BasicResponseActivity` 累积展示响应与错误。
 
 | Activity | 功能 |
 |----------|------|
+| OkHttpMainActivity | 模块入口，导航到 OkHttp 示例页面 |
 | OkHttpActivity | `lib_okhttp` DSL 与 OkHttp 原生请求示例 |
+
+---
+
+### module_retrofit（Retrofit）
+
+按封装方式分类演示 Retrofit 的 Call、协程和 RxJava 调用方式。实际请求页统一基于 `BasicResponseActivity` 累积展示响应与错误。
+
+| Activity | 功能 |
+|----------|------|
+| RetrofitMainActivity | 模块入口，导航到 Retrofit 示例页面 |
 | RetrofitCallActivity | Retrofit 原生 `Call` 请求示例 |
 | RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
 | RetrofitCoroutineActivity | Retrofit 协程挂起函数原生调用示例 |

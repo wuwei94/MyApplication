@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit_coroutine
+package com.example.william.my.module.retrofit.retrofit_coroutine
 
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -50,7 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  *
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.OkHttp.RetrofitCoroutine)
+@Route(path = RouterPath.Retrofit.RetrofitCoroutine)
 class RetrofitCoroutineActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {

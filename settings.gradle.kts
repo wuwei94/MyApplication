@@ -150,6 +150,8 @@ include(":modules:module_http")
 include(":modules:module_ktor")
 // OkHttp
 include(":modules:module_okhttp")
+// Retrofit
+include(":modules:module_retrofit")
 // RxJava 动态请求 / 文件传输
 include(":modules:module_rx_retrofit")
 // WebSocket

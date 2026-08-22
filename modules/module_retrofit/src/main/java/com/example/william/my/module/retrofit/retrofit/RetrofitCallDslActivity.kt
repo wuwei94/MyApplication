@@ -1,4 +1,4 @@
-package com.example.william.my.module.okhttp.retrofit
+package com.example.william.my.module.retrofit.retrofit
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
@@ -50,7 +50,7 @@ import retrofit2.Response
  *
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.OkHttp.RetrofitCallDsl)
+@Route(path = RouterPath.Retrofit.RetrofitCallDsl)
 class RetrofitCallDslActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {

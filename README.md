@@ -89,7 +89,8 @@ MyApplication/
     ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
     ├── module_http             # HTTP 客户端（HttpURLConnection / Volley）
     ├── module_ktor             # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
-    ├── module_okhttp           # OkHttp / Retrofit / 标准 Retrofit Rx 示例
+    ├── module_okhttp           # OkHttp（OkHttp 原生请求 / lib_okhttp DSL）
+    ├── module_retrofit         # Retrofit（Call / 协程 / RxJava 调用方式）
     ├── module_rx_retrofit      # Rx 动态 Retrofit 请求与上传下载示例
     ├── module_websocket        # WebSocket 专项示例
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
@@ -214,11 +215,16 @@ HttpURLConnection、Volley 与 Ktor 对比 Demo。请求页统一使用 `BasicRe
 - HttpURLConnection / Volley 基础请求
 - Ktor 原生客户端与项目级 Ktor Client 封装
 
-### module_okhttp（OkHttp / Retrofit / Retrofit Rx）
+### module_okhttp（OkHttp）
 
-按封装库组织网络请求示例。所有实际请求页使用 `BasicResponseActivity` 累积展示响应与错误。
+演示 OkHttp 原生请求和 `lib_okhttp` DSL 封装。
 
 - `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
+
+### module_retrofit（Retrofit）
+
+按封装方式分类演示 Retrofit 的 Call、协程和 RxJava 调用方式。
+
 - `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
 - `retrofit_coroutine`：Retrofit 协程挂起函数原生调用与 `lib_retrofit` DSL
 - `retrofit_rx`：RxJava 原生订阅与默认网络策略
