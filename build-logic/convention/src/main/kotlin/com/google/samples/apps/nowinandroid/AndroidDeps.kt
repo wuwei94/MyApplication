@@ -75,7 +75,7 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_ui"))
             "implementation"(project(":modules:module_tab"))
             "implementation"(project(":modules:module_anim"))
-            "implementation"(project(":modules:module_widget"))
+            "implementation"(project(":modules:module_custom_view"))
 
             "implementation"(project(":modules:module_async"))
             "implementation"(project(":modules:module_component"))

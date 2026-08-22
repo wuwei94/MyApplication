@@ -80,7 +80,7 @@ MyApplication/
     ├── module_ui               # 系统 UI 组件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
-    ├── module_widget           # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
+    ├── module_custom_view      # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
     ├── module_async            # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
     ├── module_component        # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
     ├── module_system           # 系统能力（Notification / Permission / SecureKey / FloatWindow）
@@ -138,7 +138,7 @@ MyApplication/
 - RenderScript 图像处理（已废弃）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
 
-### module_widget（自定义控件）
+### module_custom_view（自定义控件）
 
 演示项目自定义实现的 UI 控件。
 

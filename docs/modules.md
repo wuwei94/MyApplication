@@ -9,7 +9,7 @@
 | module_ui | 系统 UI 组件 | UiMainActivity | /UI |
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
-| module_widget | 自定义控件 | WidgetMainActivity | /Widget |
+| module_custom_view | 自定义控件 | CustomViewMainActivity | /CustomView |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | module_system | 系统能力 | SystemMainActivity | /System |
@@ -84,7 +84,7 @@
 
 ---
 
-### module_widget（自定义控件）
+### module_custom_view（自定义控件）
 
 演示项目自定义实现的 UI 控件。
 

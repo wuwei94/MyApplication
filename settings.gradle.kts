@@ -128,7 +128,7 @@ include(":modules:module_tab")
 // 动画
 include(":modules:module_anim")
 // 自定义控件
-include(":modules:module_widget")
+include(":modules:module_custom_view")
 
 // 同步
 include(":modules:module_async")

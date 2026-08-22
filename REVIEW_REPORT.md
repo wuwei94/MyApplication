@@ -82,7 +82,7 @@
 
 ## ⚠️ 需改进的 Activity
 
-### 1. BlurViewActivity (module_widget)
+### 1. BlurViewActivity (module_custom_view)
 **评级**: ✅ 良好（已修复）
 
 | 维度 | 状态 | 说明 |
@@ -175,7 +175,7 @@
 
 ---
 
-### 7. Sensor3DActivity (module_widget)
+### 7. Sensor3DActivity (module_custom_view)
 **评级**: ✅ 良好
 
 | 维度 | 状态 | 说明 |
@@ -303,7 +303,7 @@
 |------|---------|-----------|------------|------|
 | module_system | 2 | 0 | 0 | 2 |
 | module_anim | 4 | 0 | 2 | 6 |
-| module_widget | 1 | 2 | 0 | 3 |
+| module_custom_view | 1 | 2 | 0 | 3 |
 | module_feature | 1 | 2 | 0 | 3 |
 | module_event | 4 | 0 | 0 | 4 |
 | module_kotlin | 2 | 1 | 0 | 3 |

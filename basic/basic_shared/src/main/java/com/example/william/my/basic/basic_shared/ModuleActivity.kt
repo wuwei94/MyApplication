@@ -18,7 +18,7 @@ class ModuleActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("UI", RouterPath.UI.Main))
         routerItems.add(RouterItem("Tab", RouterPath.Tab.Main))
         routerItems.add(RouterItem("Anim", RouterPath.Anim.Main))
-        routerItems.add(RouterItem("Widget", RouterPath.Widget.Main))
+        routerItems.add(RouterItem("CustomView", RouterPath.CustomView.Main))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Async", RouterPath.Async.Main))
