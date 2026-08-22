@@ -77,7 +77,7 @@ MyApplication/
 │   ├── lib_ninepatch           # NinePatch 图片处理工具
 │   └── lib_widget              # 自定义 Widget 控件集合
 └── modules                     # Feature 模块
-    ├── module_ui               # 系统 UI 组件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
+    ├── module_widget           # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     ├── module_tab              # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     ├── module_anim             # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
     ├── module_custom_view      # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
@@ -107,7 +107,7 @@ MyApplication/
 
 ## Modules Detail
 
-### module_ui（系统 UI 组件）
+### module_widget（标准控件）
 
 演示 Android 标准 UI 组件。
 

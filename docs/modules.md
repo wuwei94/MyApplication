@@ -6,7 +6,7 @@
 
 | 模块 | 职责 | 入口 Activity | 路由前缀 |
 |------|------|--------------|---------|
-| module_ui | 系统 UI 组件 | UiMainActivity | /UI |
+| module_widget | 标准控件 | WidgetMainActivity | /Widget |
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
 | module_custom_view | 自定义控件 | CustomViewMainActivity | /CustomView |
@@ -35,7 +35,7 @@
 
 ## 模块详情
 
-### module_ui（系统 UI 组件）
+### module_widget（标准控件）
 
 演示 Android 标准 UI 组件。
 

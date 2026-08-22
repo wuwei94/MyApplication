@@ -41,21 +41,21 @@ object RouterPath {
     // UI 三件套
     // ═══════════════════════════════════════════
 
-    // UI 组件
-    object UI {
-        private const val UI = "/UI"
+    // 标准控件
+    object Widget {
+        private const val Widget = "/Widget"
 
-        const val Main = "${UI}/Main"
+        const val Main = "${Widget}/Main"
 
-        const val Appbar = "${UI}/Appbar"
-        const val Dialog = "${UI}/Dialog"
-        const val FlexBox = "${UI}/FlexBox"
-        const val RecyclerView = "${UI}/RecyclerView"
-        const val ViewFlipper = "${UI}/ViewFlipper"
-        const val ViewPager = "${UI}/ViewPager"
-        const val ViewPager2 = "${UI}/ViewPager2"
-        const val WebView = "${UI}/WebView"
-        const val RecyclerViewNested = "${UI}/RecyclerViewNested"
+        const val Appbar = "${Widget}/Appbar"
+        const val Dialog = "${Widget}/Dialog"
+        const val FlexBox = "${Widget}/FlexBox"
+        const val RecyclerView = "${Widget}/RecyclerView"
+        const val ViewFlipper = "${Widget}/ViewFlipper"
+        const val ViewPager = "${Widget}/ViewPager"
+        const val ViewPager2 = "${Widget}/ViewPager2"
+        const val WebView = "${Widget}/WebView"
+        const val RecyclerViewNested = "${Widget}/RecyclerViewNested"
     }
 
     // Tab 导航

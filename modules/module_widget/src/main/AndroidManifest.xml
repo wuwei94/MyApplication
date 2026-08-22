@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".WidgetMainActivity" />
+        <activity android:name=".activity.AppBarActivity" />
+        <activity android:name=".activity.DialogActivity" />
+        <activity android:name=".activity.FlexBoxActivity" />
+        <activity android:name=".activity.RecyclerViewActivity" />
+        <activity android:name=".activity.RecyclerViewNestedActivity" />
+        <activity android:name=".activity.ViewFlipperActivity" />
+        <activity android:name=".activity.ViewPagerActivity" />
+        <activity android:name=".activity.ViewPager2Activity" />
+        <activity android:name=".activity.WebViewActivity" />
+    </application>
+</manifest>

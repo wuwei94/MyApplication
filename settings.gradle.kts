@@ -122,7 +122,7 @@ include(":libs:lib_ninepatch")
 
 
 // UI 控件
-include(":modules:module_ui")
+include(":modules:module_widget")
 // Tab 导航
 include(":modules:module_tab")
 // 动画
