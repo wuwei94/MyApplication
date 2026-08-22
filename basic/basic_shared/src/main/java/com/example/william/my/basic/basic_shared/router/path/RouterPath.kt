@@ -343,18 +343,19 @@ object RouterPath {
 
         const val Main = "${Jetpack}/Main"
 
-        const val DataStore = "${Jetpack}/DataStore"
         const val Paging = "${Jetpack}/Paging"
     }
 
-    // 数据库
-    object Database {
-        private const val Database = "/Database"
+    // 存储
+    object Storage {
+        private const val Storage = "/Storage"
 
-        const val Main = "${Database}/Main"
+        const val Main = "${Storage}/Main"
 
-        const val Room = "${Database}/Room"
-        const val ObjectBox = "${Database}/ObjectBox"
+        const val Room = "${Storage}/Room"
+        const val ObjectBox = "${Storage}/ObjectBox"
+        const val DataStore = "${Storage}/DataStore"
+        const val MMKV = "${Storage}/MMKV"
     }
 
     // 依赖注入 (DI)

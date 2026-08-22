@@ -21,7 +21,6 @@
         <activity android:name=".activity.animation.SvgaPlayerActivity" />
 
         <activity android:name=".activity.utils.LoadSirActivity" />
-        <activity android:name=".activity.utils.MMKVActivity" />
         <activity android:name=".activity.utils.PermissionXActivity" />
 
         <activity android:name=".activity.utils.RxJavaActivity" />

@@ -168,8 +168,8 @@ include(":modules:module_open_source")
 include(":modules:module_kotlin")
 // Jetpack 组件库
 include(":modules:module_jetpack")
-// 数据库
-include(":modules:module_database")
+// 存储
+include(":modules:module_storage")
 // 依赖注入
 include(":modules:module_di")
 // 架构模式

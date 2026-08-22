@@ -25,7 +25,7 @@
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
-| module_database | 数据库 | DatabaseMainActivity | /Database |
+| module_storage | 存储 | StorageMainActivity | /Storage |
 | module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
@@ -348,20 +348,21 @@
 
 | Activity | 功能 |
 |----------|------|
-| DataStoreActivity | DataStore（Preferences + Proto）数据存储 |
 | PagingActivity | Paging3 分页加载 |
 
 ---
 
-### module_database（数据库）
+### module_storage（存储）
 
-演示 Android 移动端主流数据库持久化方案。
+演示 Android 移动端主流数据持久化方案。
 
 | Activity | 功能 |
 |----------|------|
-| DatabaseMainActivity | 模块入口，导航到 Room 与 ObjectBox 示例 |
+| StorageMainActivity | 模块入口，导航到 Room、ObjectBox、DataStore、MMKV 示例 |
 | RoomActivity | Room 数据库 CRUD、协程 Flow 响应式查询与 RxJava 响应式流 |
 | ObjectBoxActivity | ObjectBox 高性能对象数据库增删查改 |
+| DataStoreActivity | DataStore（Preferences + Proto）数据存储 |
+| MMKVActivity | MMKV 高性能键值存储（写入 / 读取 / 删除 / 清空） |
 
 ---
 

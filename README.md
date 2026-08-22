@@ -95,10 +95,10 @@ MyApplication/
     ├── module_websocket        # WebSocket 专项示例
     ├── module_utils            # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     ├── module_event            # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
-    ├── module_open_source      # 第三方库（Lottie / MMKV / Banner / PhotoView / RxJava / Coil / Glide）
+    ├── module_open_source      # 第三方库（Lottie / Banner / PhotoView / RxJava / Coil / Glide）
     ├── module_kotlin           # Kotlin 语言特性（Coroutines / Flow）
-    ├── module_jetpack          # Jetpack 组件（DataStore / Paging）
-    ├── module_database         # 数据库（Room / ObjectBox）
+    ├── module_jetpack          # Jetpack 组件（Paging）
+    ├── module_storage          # 存储（Room / ObjectBox / DataStore / MMKV）
     ├── module_di               # 依赖注入（Hilt / Koin）
     ├── module_arch             # 架构模式（MVP / MVVM / MVI / Mavericks）
     ├── module_compose          # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
@@ -292,14 +292,15 @@ Kotlin 语言特性在 Android 上的实践。
 Jetpack 组件库 Demo。
 
 - **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
-- **DataStore**：Preferences / Proto 两种存储
 
-### module_database（数据库）
+### module_storage（存储）
 
-移动端主流数据库方案对比与实战。
+移动端主流数据持久化方案对比与实战。
 
 - **Room**：Jetpack 官方数据库持久化框架，演示 CRUD、Flow 响应式数据流、RxJava Single 异步查询及批量事务操作
 - **ObjectBox**：高性能 NoSQL/对象数据库，演示实体存储、Box CRUD 与对象查询
+- **DataStore**：Preferences / Proto 两种存储
+- **MMKV**：腾讯开源高性能键值存储，基于 mmap 内存映射
 
 ### module_di（依赖注入）
 

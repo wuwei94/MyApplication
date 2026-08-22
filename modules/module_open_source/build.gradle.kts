@@ -36,7 +36,6 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.svgaPlayer)
 
-    implementation(libs.mmkv)
     implementation(libs.permission)
     implementation(libs.loadsir)
 

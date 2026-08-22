@@ -3,7 +3,6 @@
 
     <application>
         <activity android:name=".JetpackMainActivity" />
-        <activity android:name=".activity.DataStoreActivity" />
         <activity android:name=".activity.PagingActivity" />
     </application>
 
