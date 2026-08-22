@@ -93,7 +93,8 @@ MyApplication/
     │   └── module_websocket    # WebSocket 专项示例
     │
     ├── [数据存储]
-    │   └── module_storage      # 存储（Room / ObjectBox / DataStore / MMKV）
+    │   ├── module_database     # 数据库（Room / ObjectBox）
+    │   └── module_storage      # 键值存储（DataStore / MMKV）
     │
     ├── [系统能力]
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）

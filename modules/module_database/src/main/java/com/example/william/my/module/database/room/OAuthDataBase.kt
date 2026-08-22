@@ -1,4 +1,4 @@
-package com.example.william.my.module.storage.room
+package com.example.william.my.module.database.room
 
 import android.content.Context
 import androidx.room.Database

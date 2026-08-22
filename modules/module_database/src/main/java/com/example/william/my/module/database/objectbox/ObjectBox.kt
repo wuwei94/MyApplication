@@ -1,9 +1,9 @@
-package com.example.william.my.module.storage.objectbox
+package com.example.william.my.module.database.objectbox
 
 import android.content.Context
 import android.util.Log
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.module.storage.BuildConfig
+import com.example.william.my.module.database.BuildConfig
 import io.objectbox.BoxStore
 import io.objectbox.android.Admin
 import io.objectbox.exception.DbException

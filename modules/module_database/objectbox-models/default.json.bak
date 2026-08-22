@@ -1,0 +1,37 @@
+{
+    "_note1": "KEEP THIS FILE! It is auto-generated and used by ObjectBox at compile & runtime.",
+    "_note2": "It is NOT deleted by 'clean' and should be added to version control.",
+    "entities": [
+        {
+            "id": "1:6459480189084947444",
+            "lastPropertyId": "2:5960306087306122600",
+            "name": "ObjectBoxNote",
+            "properties": [
+                {
+                    "id": "1:3487245800095649605",
+                    "name": "text",
+                    "type": 9,
+                    "indexId": "1:4123948866935624989",
+                    "flags": 8
+                },
+                {
+                    "id": "2:5960306087306122600",
+                    "name": "date",
+                    "type": 10
+                }
+            ],
+            "relations": []
+        }
+    ],
+    "lastEntityId": "1:6459480189084947444",
+    "lastIndexId": "1:4123948866935624989",
+    "lastRelationId": "0:0",
+    "lastSequenceId": "0:0",
+    "modelVersion": 5,
+    "modelVersionParserMinimum": 5,
+    "retiredEntityUids": [],
+    "retiredIndexUids": [],
+    "retiredPropertyUids": [],
+    "retiredRelationUids": [],
+    "version": 1
+}

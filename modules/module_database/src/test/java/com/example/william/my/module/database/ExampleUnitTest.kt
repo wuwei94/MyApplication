@@ -1,4 +1,4 @@
-package com.example.william.my.module.storage
+package com.example.william.my.module.database
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

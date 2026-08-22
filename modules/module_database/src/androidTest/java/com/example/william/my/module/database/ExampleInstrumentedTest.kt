@@ -1,4 +1,4 @@
-package com.example.william.my.module.storage
+package com.example.william.my.module.database
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -11,6 +11,6 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.william.my.module.storage.test", appContext.packageName)
+        assertEquals("com.example.william.my.module.database.test", appContext.packageName)
     }
 }

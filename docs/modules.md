@@ -16,8 +16,8 @@
 │   ├── 第三方库：OkHttp、Retrofit、Ktor
 │   └── 扩展能力：Rx 动态请求、WebSocket
 ├── 数据存储
-│   ├── Jetpack：Room、DataStore
-│   └── 第三方库：ObjectBox、MMKV
+│   ├── 数据库：Room、ObjectBox
+│   └── 键值存储：DataStore、MMKV
 ├── 系统能力
 │   └── 系统原生：异步处理、组件交互、系统能力
 ├── 架构模式
@@ -60,7 +60,8 @@
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
-| module_storage | 存储 | StorageMainActivity | /Storage |
+| module_database | 数据库 | - | /Database |
+| module_storage | 存储 | - | /Storage |
 | module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |

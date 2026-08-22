@@ -347,14 +347,22 @@ object RouterPath {
         const val Paging = "${Jetpack}/Paging"
     }
 
+    // 数据库
+    object Database {
+        private const val Database = "/Database"
+
+        const val Main = "${Database}/Main"
+
+        const val Room = "${Database}/Room"
+        const val ObjectBox = "${Database}/ObjectBox"
+    }
+
     // 存储
     object Storage {
         private const val Storage = "/Storage"
 
         const val Main = "${Storage}/Main"
 
-        const val Room = "${Storage}/Room"
-        const val ObjectBox = "${Storage}/ObjectBox"
         const val DataStore = "${Storage}/DataStore"
         const val MMKV = "${Storage}/MMKV"
     }
