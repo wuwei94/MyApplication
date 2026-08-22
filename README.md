@@ -87,7 +87,8 @@ MyApplication/
     ├── module_sample           # 技术示例（Hook / Typeface）
     ├── module_performance      # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     ├── module_feature          # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
-    ├── module_http             # HTTP 客户端（HttpURLConnection / Volley / Ktor）
+    ├── module_http             # HTTP 客户端（HttpURLConnection / Volley）
+    ├── module_ktor             # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
     ├── module_okhttp           # OkHttp / Retrofit / 标准 Retrofit Rx 示例
     ├── module_rx_retrofit      # Rx 动态 Retrofit 请求与上传下载示例
     ├── module_websocket        # WebSocket 专项示例

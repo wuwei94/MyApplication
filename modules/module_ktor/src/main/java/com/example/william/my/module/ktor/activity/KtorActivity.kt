@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.ktor
+package com.example.william.my.module.ktor.activity
 
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
  *
  * https://ktor.io/
  */
-@Route(path = RouterPath.Http.Ktor)
+@Route(path = RouterPath.Ktor.Ktor)
 class KtorActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> {

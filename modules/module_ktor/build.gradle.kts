@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.http"
+    namespace = "com.example.william.my.module.ktor"
 }
 
 dependencies {
@@ -15,7 +15,5 @@ dependencies {
 
     implementation(project(":basic:basic_repo"))
 
-    implementation(project(":libs:lib_okhttp"))
-    implementation(project(":libs:lib_volley"))
-    implementation(project(":libs:lib_httpurl"))
+    implementation(project(":libs:lib_ktor"))
 }

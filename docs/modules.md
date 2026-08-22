@@ -186,15 +186,25 @@
 
 ### module_http（HTTP 客户端）
 
-演示 HttpURLConnection、Volley、Ktor 原生客户端和项目级 Ktor 封装。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
+演示 HttpURLConnection 和 Volley 原生客户端。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
 
 | Activity | 功能 |
 |----------|------|
 | HttpMainActivity | 模块入口，导航到各个 HTTP 客户端示例页面 |
-| KtorActivity | Ktor 原生 HTTP 客户端，区分成功与非 2xx 响应 |
-| KtorClientActivity | 项目级 Ktor Client 封装，区分业务失败与传输失败 |
 | HttpURLActivity | HttpURLConnection 原生网络请求 |
 | VolleyActivity | Volley HTTP 请求 |
+
+---
+
+### module_ktor（Ktor）
+
+演示 Ktor 原生客户端和项目级 Ktor Client 封装。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
+
+| Activity | 功能 |
+|----------|------|
+| KtorMainActivity | 模块入口，导航到 Ktor 示例页面 |
+| KtorActivity | Ktor 原生 HTTP 客户端，区分成功与非 2xx 响应 |
+| KtorClientActivity | 项目级 Ktor Client 封装，区分业务失败与传输失败 |
 
 ---
 

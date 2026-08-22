@@ -146,6 +146,8 @@ include(":modules:module_performance")
 
 // HTTP 客户端
 include(":modules:module_http")
+// Ktor
+include(":modules:module_ktor")
 // OkHttp
 include(":modules:module_okhttp")
 // RxJava 动态请求 / 文件传输

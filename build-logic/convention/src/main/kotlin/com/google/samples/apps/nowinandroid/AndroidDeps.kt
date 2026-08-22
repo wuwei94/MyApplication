@@ -86,6 +86,7 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_performance"))
 
             "implementation"(project(":modules:module_http"))
+            "implementation"(project(":modules:module_ktor"))
             "implementation"(project(":modules:module_okhttp"))
             "implementation"(project(":modules:module_rx_retrofit"))
             "implementation"(project(":modules:module_websocket"))

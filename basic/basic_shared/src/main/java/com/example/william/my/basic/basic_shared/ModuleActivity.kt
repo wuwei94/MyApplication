@@ -32,6 +32,7 @@ class ModuleActivity : RouterRecyclerActivity() {
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("Http", RouterPath.Http.Main))
+        routerItems.add(RouterItem("Ktor", RouterPath.Ktor.Main))
         routerItems.add(RouterItem("OkHttp", RouterPath.OkHttp.Main))
         routerItems.add(RouterItem("RxRetrofit", RouterPath.RxRetrofit.Main))
         routerItems.add(RouterItem("WebSocket", RouterPath.WebSocket.Main))

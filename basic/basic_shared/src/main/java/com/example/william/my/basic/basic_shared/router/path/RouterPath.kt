@@ -229,6 +229,13 @@ object RouterPath {
         const val Main = "${PATH}/Main"
         const val HttpURL = "${PATH}/HttpURL"
         const val Volley = "${PATH}/Volley"
+    }
+
+    // Ktor
+    object Ktor {
+        private const val PATH = "/Ktor"
+
+        const val Main = "${PATH}/Main"
         const val Ktor = "${PATH}/Ktor"
         const val KtorClient = "${PATH}/KtorClient"
     }

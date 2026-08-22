@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.ktor
+package com.example.william.my.module.ktor.activity
 
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
  * - 需要统一配置的场景
  * - Kotlin 协程项目
  */
-@Route(path = RouterPath.Http.KtorClient)
+@Route(path = RouterPath.Ktor.KtorClient)
 class KtorClientActivity : BasicResponseActivity() {
 
     private val clientDelegate = lazy {
