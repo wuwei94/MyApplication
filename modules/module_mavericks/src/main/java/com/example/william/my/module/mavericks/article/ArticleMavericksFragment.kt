@@ -6,7 +6,7 @@ import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.core.base.recycler.BaseRecyclerFragment
-import com.example.william.my.module.arch.adapter.ArticleAdapter
+import com.example.william.my.module.mavericks.article.adapter.ArticleAdapter
 import com.example.william.my.module.mavericks.article.data.ArticleMavericksState
 import com.example.william.my.module.mavericks.article.viewmodel.ArticleMavericksViewModel
 
