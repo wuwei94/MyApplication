@@ -50,7 +50,11 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
             return
         }
         try {
-            ARouter.getInstance().build(path).navigation()
+            val postcard = ARouter.getInstance().build(path)
+            item.mParams.forEach { (key, value) ->
+                postcard.withString(key, value)
+            }
+            postcard.navigation()
         } catch (e: HandlerException) {
             e.printStackTrace()
         }

@@ -19,33 +19,37 @@ class DirectoryActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
 
         // UI 组件
-        routerItems.add(RouterItem("UI 组件", getCategoryPath("ui")))
+        routerItems.add(RouterItem("UI 组件", getCategoryPath("ui"), getCategoryParams("ui")))
 
         // 网络通信
-        routerItems.add(RouterItem("网络通信", getCategoryPath("network")))
+        routerItems.add(RouterItem("网络通信", getCategoryPath("network"), getCategoryParams("network")))
 
         // 数据存储
-        routerItems.add(RouterItem("数据存储", getCategoryPath("storage")))
+        routerItems.add(RouterItem("数据存储", getCategoryPath("storage"), getCategoryParams("storage")))
 
         // 系统能力
-        routerItems.add(RouterItem("系统能力", getCategoryPath("system")))
+        routerItems.add(RouterItem("系统能力", getCategoryPath("system"), getCategoryParams("system")))
 
         // 架构模式
-        routerItems.add(RouterItem("架构模式", getCategoryPath("arch")))
+        routerItems.add(RouterItem("架构模式", getCategoryPath("arch"), getCategoryParams("arch")))
 
         // Kotlin & Jetpack
-        routerItems.add(RouterItem("Kotlin & Jetpack", getCategoryPath("kotlin_jetpack")))
+        routerItems.add(RouterItem("Kotlin & Jetpack", getCategoryPath("kotlin_jetpack"), getCategoryParams("kotlin_jetpack")))
 
         // 跨平台
-        routerItems.add(RouterItem("跨平台", getCategoryPath("cross_platform")))
+        routerItems.add(RouterItem("跨平台", getCategoryPath("cross_platform"), getCategoryParams("cross_platform")))
 
         // 三方库 & 工具
-        routerItems.add(RouterItem("三方库 & 工具", getCategoryPath("third_party")))
+        routerItems.add(RouterItem("三方库 & 工具", getCategoryPath("third_party"), getCategoryParams("third_party")))
 
         return routerItems
     }
 
     private fun getCategoryPath(category: String): String {
-        return "${RouterPath.Category_Main}?category=$category"
+        return RouterPath.Category_Main
+    }
+
+    private fun getCategoryParams(category: String): HashMap<String, String> {
+        return hashMapOf("category" to category)
     }
 }
