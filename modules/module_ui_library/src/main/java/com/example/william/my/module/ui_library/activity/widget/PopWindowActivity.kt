@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.ui_library.activity.widget
 
 import android.os.Bundle
 import android.widget.PopupWindow
@@ -37,7 +37,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * - 提示气泡、引导提示
  * - 自定义弹窗、对话框
  */
-@Route(path = RouterPath.OpenSource.PopWindow)
+@Route(path = RouterPath.UiLibrary.PopWindow)
 class PopWindowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -10,7 +10,8 @@
 目录页面 (DirectoryActivity)
 ├── UI 组件
 │   ├── 系统原生：标准控件、Tab 导航、动画
-│   └── 自定义：自定义控件
+│   ├── 自定义：自定义控件
+│   └── 第三方：UI 库
 ├── 网络通信
 │   ├── HTTP 请求：HTTP、OkHttp、Retrofit、Ktor、RxRetrofit
 │   └── 长连接：WebSocket
@@ -44,6 +45,7 @@
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
 | module_custom_view | 自定义控件 | CustomViewMainActivity | /CustomView |
+| module_ui_library | UI 库 | UiLibraryMainActivity | /UiLibrary |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | module_system | 系统能力 | SystemMainActivity | /System |
@@ -349,27 +351,37 @@
 
 ### module_open_source（第三方库）
 
-演示第三方开源库的使用。模块内部按类别组织：`widget`（UI 组件）/ `animation`（动画）/ `selector`（选择器）/ `utils`（工具）/ `imageloader`（图片加载），入口列表也按此分组展示。
+演示第三方开源库的使用。模块内部按类别组织：`widget`（UI 组件）/ `selector`（选择器）/ `utils`（工具）/ `imageloader`（图片加载），入口列表也按此分组展示。
 
 | Activity | 功能 |
 |----------|------|
-| BannerActivity | Youth Banner 轮播图 |
-| CityPickerActivity | CityPicker 城市选择器 |
-| CountdownActivity | CountdownView 倒计时 |
 | EasyFloatActivity | EasyFloat 悬浮窗 |
 | FlycoTabLayoutActivity | FlycoTabLayout 标签页 |
 | PhotoViewActivity | PhotoView 图片手势缩放 |
+| CityPickerActivity | CityPicker 城市选择器 |
 | PickerViewActivity | PickerView 选择器 |
 | PictureSelectorActivity | PictureSelector 图片选择器 |
-| PopWindowActivity | CustomPopWindow 弹窗 |
-| ShadowLayoutActivity | ShadowLayout 阴影布局 |
-| SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
-| LoadSirActivity | LoadSir 加载状态页 |
 | PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |
 | CoilActivity | Coil 图片加载库 |
 | GlideActivity | Glide 图片加载库 |
+
+---
+
+### module_ui_library（UI 库）
+
+演示第三方 UI 控件库。集中展示可复用的 View/ViewGroup 控件库与多状态页管理框架。
+
+| Activity | 功能 |
+|----------|------|
+| UiLibraryMainActivity | 模块入口，导航到各 UI 库示例页面 |
+| BannerActivity | Youth Banner 轮播图 |
+| CountdownActivity | CountdownView 倒计时 |
+| PopWindowActivity | PopupWindow 弹窗 |
+| ShadowLayoutActivity | ShadowLayout 阴影布局 |
+| SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
 | RealtimeBlurViewActivity | RealtimeBlurView 实时模糊 |
+| LoadSirActivity | LoadSir 加载状态页 |
 
 ---
 

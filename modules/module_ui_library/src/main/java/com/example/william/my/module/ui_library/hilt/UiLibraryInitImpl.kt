@@ -1,13 +1,13 @@
-package com.example.william.my.module.opensource.hilt
+package com.example.william.my.module.ui_library.hilt
 
 import android.app.Application
 import com.example.william.my.core.base.hilt.interfaces.IAppInit
-import com.example.william.my.module.opensource.loadsir.DefaultCallback
-import com.example.william.my.module.opensource.loadsir.ErrorCallback
+import com.example.william.my.module.ui_library.loadsir.DefaultCallback
+import com.example.william.my.module.ui_library.loadsir.ErrorCallback
 import com.kingja.loadsir.core.LoadSir
 import javax.inject.Inject
 
-class OpenSourceInitImpl @Inject constructor() : IAppInit {
+class UiLibraryInitImpl @Inject constructor() : IAppInit {
 
     private lateinit var mApp: Application
 

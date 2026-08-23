@@ -1,10 +1,10 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.ui_library.activity.widget
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivityCountdownBinding
+import com.example.william.my.module.ui_library.databinding.UiLibraryActivityCountdownBinding
 
 /**
  * CountdownView — 倒计时控件
@@ -37,11 +37,11 @@ import com.example.william.my.module.opensource.databinding.OpenActivityCountdow
  *
  * https://github.com/iwgang/CountdownView
  */
-@Route(path = RouterPath.OpenSource.CountdownView)
-class CountdownActivity : BaseVBActivity<OpenActivityCountdownBinding>() {
+@Route(path = RouterPath.UiLibrary.CountdownView)
+class CountdownActivity : BaseVBActivity<UiLibraryActivityCountdownBinding>() {
 
-    override fun getViewBinding(): OpenActivityCountdownBinding {
-        return OpenActivityCountdownBinding.inflate(layoutInflater)
+    override fun getViewBinding(): UiLibraryActivityCountdownBinding {
+        return UiLibraryActivityCountdownBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

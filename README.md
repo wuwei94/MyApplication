@@ -105,7 +105,8 @@ MyApplication/
     │   ├── module_widget       # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
-    │   └── module_custom_view  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
+    │   ├── module_custom_view  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
+    │   └── module_ui_library   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView / LoadSir）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 客户端（HttpURLConnection / Volley）
@@ -321,10 +322,22 @@ WebSocket 专项功能演示。
 
 第三方开源框架集成 Demo。
 
-- UI：FlycoTabLayout / SwipeLayout / PhotoView / Banner / EasyFloat / RealtimeBlurView / ShadowLayout
+- UI：FlycoTabLayout / PhotoView / EasyFloat
 - 选择器：PictureSelector / CityPicker / PickerView
-- 工具：RxJava / LoadSir / MMKV / PermissionX
+- 工具：RxJava / PermissionX
 - 图片加载：Coil / Glide
+
+### module_ui_library（UI 库）
+
+第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件与多状态页管理。
+
+- 轮播：Banner
+- 倒计时：CountdownView
+- 弹窗：PopupWindow
+- 阴影：ShadowLayout
+- 侧滑：SwipeLayout
+- 模糊：RealtimeBlurView
+- 多状态页：LoadSir
 
 ### module_kotlin（Kotlin 语言特性）
 

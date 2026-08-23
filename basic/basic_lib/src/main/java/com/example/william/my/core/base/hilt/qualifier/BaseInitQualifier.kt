@@ -20,7 +20,7 @@ annotation class MavericksInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class OpenSourceInit
+annotation class UiLibraryInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

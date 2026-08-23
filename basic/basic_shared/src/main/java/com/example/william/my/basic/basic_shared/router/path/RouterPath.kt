@@ -279,15 +279,9 @@ object RouterPath {
         const val Main = "${OpenSource}/Main"
 
         // ── UI 组件 ──
-        const val Banner = "${OpenSource}/Banner"
-        const val CountdownView = "${OpenSource}/CountdownView"
         const val EasyFloat = "${OpenSource}/EasyFloat"
         const val FlycoTabLayout = "${OpenSource}/FlycoTabLayout"
         const val PhotoView = "${OpenSource}/PhotoView"
-        const val PopWindow = "${OpenSource}/PopWindow"
-        const val ShadowLayout = "${OpenSource}/ShadowLayout"
-        const val SwipeLayout = "${OpenSource}/SwipeLayout"
-        const val RealtimeBlurView = "${OpenSource}/BlurView"
 
         // ── 选择器 ──
         const val CityPicker = "${OpenSource}/CityPicker"
@@ -295,13 +289,27 @@ object RouterPath {
         const val PictureSelector = "${OpenSource}/PictureSelector"
 
         // ── 工具 ──
-        const val LoadSir = "${OpenSource}/LoadSir"
         const val PermissionX = "${OpenSource}/PermissionX"
         const val RxJava = "${OpenSource}/RxJava"
 
         // ── 图片加载 ──
         const val Coil = "${OpenSource}/Coil"
         const val Glide = "${OpenSource}/Glide"
+    }
+
+    // UI 库（第三方 UI 控件库）
+    object UiLibrary {
+        private const val UiLibrary = "/UiLibrary"
+
+        const val Main = "${UiLibrary}/Main"
+
+        const val Banner = "${UiLibrary}/Banner"
+        const val CountdownView = "${UiLibrary}/CountdownView"
+        const val RealtimeBlurView = "${UiLibrary}/RealtimeBlurView"
+        const val PopWindow = "${UiLibrary}/PopWindow"
+        const val ShadowLayout = "${UiLibrary}/ShadowLayout"
+        const val SwipeLayout = "${UiLibrary}/SwipeLayout"
+        const val LoadSir = "${UiLibrary}/LoadSir"
     }
 
     // ═══════════════════════════════════════════

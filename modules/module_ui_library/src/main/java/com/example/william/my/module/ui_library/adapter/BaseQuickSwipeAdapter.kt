@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.adapter
+package com.example.william.my.module.ui_library.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter

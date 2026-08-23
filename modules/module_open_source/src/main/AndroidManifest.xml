@@ -3,27 +3,20 @@
 
     <application>
         <activity android:name=".OpenSourceMainActivity" />
-        <activity android:name=".activity.widget.BannerActivity" />
 
         <activity android:name=".activity.selector.CityPickerActivity" />
-        <activity android:name=".activity.widget.CountdownActivity" />
         <activity android:name=".activity.widget.EasyFloatActivity" />
         <activity android:name=".activity.widget.FlycoTabLayoutActivity" />
         <activity android:name=".activity.widget.PhotoViewActivity" />
         <activity android:name=".activity.selector.PickerViewActivity" />
         <activity android:name=".activity.selector.PictureSelectorActivity" />
-        <activity android:name=".activity.widget.PopWindowActivity" />
-        <activity android:name=".activity.widget.ShadowLayoutActivity" />
-        <activity android:name=".activity.widget.SwipeLayoutActivity" />
 
-        <activity android:name=".activity.utils.LoadSirActivity" />
         <activity android:name=".activity.utils.PermissionXActivity" />
 
         <activity android:name=".activity.utils.RxJavaActivity" />
 
         <activity android:name=".activity.imageloader.CoilActivity" />
         <activity android:name=".activity.imageloader.GlideActivity" />
-        <activity android:name=".activity.widget.RealtimeBlurViewActivity" />
     </application>
 
 </manifest>

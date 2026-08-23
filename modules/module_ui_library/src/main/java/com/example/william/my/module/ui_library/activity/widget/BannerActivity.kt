@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.ui_library.activity.widget
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivityBannerBinding
+import com.example.william.my.module.ui_library.databinding.UiLibraryActivityBannerBinding
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
@@ -36,11 +36,11 @@ import com.youth.banner.indicator.CircleIndicator
  *
  * https://github.com/youth5201314/banner
  */
-@Route(path = RouterPath.OpenSource.Banner)
-class BannerActivity : BaseVBActivity<OpenActivityBannerBinding>() {
+@Route(path = RouterPath.UiLibrary.Banner)
+class BannerActivity : BaseVBActivity<UiLibraryActivityBannerBinding>() {
 
-    override fun getViewBinding(): OpenActivityBannerBinding {
-        return OpenActivityBannerBinding.inflate(layoutInflater)
+    override fun getViewBinding(): UiLibraryActivityBannerBinding {
+        return UiLibraryActivityBannerBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

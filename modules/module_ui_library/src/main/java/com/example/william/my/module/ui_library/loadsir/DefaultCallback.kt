@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.loadsir
+package com.example.william.my.module.ui_library.loadsir
 
 import android.content.Context
 import android.view.View

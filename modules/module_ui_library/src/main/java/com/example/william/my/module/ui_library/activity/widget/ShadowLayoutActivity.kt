@@ -1,9 +1,9 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.ui_library.activity.widget
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivityShadowLayoutBinding
+import com.example.william.my.module.ui_library.databinding.UiLibraryActivityShadowLayoutBinding
 
 /**
  * ShadowLayout — 阴影布局控件
@@ -37,10 +37,10 @@ import com.example.william.my.module.opensource.databinding.OpenActivityShadowLa
  *
  * https://github.com/lihangleo2/ShadowLayout
  */
-@Route(path = RouterPath.OpenSource.ShadowLayout)
-class ShadowLayoutActivity : BaseVBActivity<OpenActivityShadowLayoutBinding>() {
+@Route(path = RouterPath.UiLibrary.ShadowLayout)
+class ShadowLayoutActivity : BaseVBActivity<UiLibraryActivityShadowLayoutBinding>() {
 
-    override fun getViewBinding(): OpenActivityShadowLayoutBinding {
-        return OpenActivityShadowLayoutBinding.inflate(layoutInflater)
+    override fun getViewBinding(): UiLibraryActivityShadowLayoutBinding {
+        return UiLibraryActivityShadowLayoutBinding.inflate(layoutInflater)
     }
 }

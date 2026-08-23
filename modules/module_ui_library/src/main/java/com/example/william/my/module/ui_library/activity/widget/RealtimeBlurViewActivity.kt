@@ -1,12 +1,12 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.ui_library.activity.widget
 
 import android.os.Bundle
 import android.util.TypedValue
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.R
-import com.example.william.my.module.opensource.databinding.OpenActivityBlurViewBinding
+import com.example.william.my.module.ui_library.R
+import com.example.william.my.module.ui_library.databinding.UiLibraryActivityBlurViewBinding
 
 /**
  * RealtimeBlurView — 实时高斯模糊控件
@@ -39,16 +39,16 @@ import com.example.william.my.module.opensource.databinding.OpenActivityBlurView
  *
  * https://github.com/mmin18/RealtimeBlurView
  */
-@Route(path = RouterPath.OpenSource.RealtimeBlurView)
-class RealtimeBlurViewActivity : BaseVBActivity<OpenActivityBlurViewBinding>() {
+@Route(path = RouterPath.UiLibrary.RealtimeBlurView)
+class RealtimeBlurViewActivity : BaseVBActivity<UiLibraryActivityBlurViewBinding>() {
 
-    override fun getViewBinding(): OpenActivityBlurViewBinding {
-        return OpenActivityBlurViewBinding.inflate(layoutInflater)
+    override fun getViewBinding(): UiLibraryActivityBlurViewBinding {
+        return UiLibraryActivityBlurViewBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.open_activity_blur_view)
+        setContentView(R.layout.ui_library_activity_blur_view)
 
         mBinding.realtimeBlurView.setBlurRadius(
             TypedValue.applyDimension(

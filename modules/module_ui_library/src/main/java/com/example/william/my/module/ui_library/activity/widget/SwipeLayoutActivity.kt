@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.ui_library.activity.widget
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.adapter.SwipeRecyclerAdapter
-import com.example.william.my.module.opensource.databinding.OpenActivitySwipeLayoutBinding
+import com.example.william.my.module.ui_library.adapter.SwipeRecyclerAdapter
+import com.example.william.my.module.ui_library.databinding.UiLibraryActivitySwipeLayoutBinding
 
 /**
  * SwipeLayout — 滑动布局控件
@@ -42,11 +42,11 @@ import com.example.william.my.module.opensource.databinding.OpenActivitySwipeLay
  *
  * https://github.com/daimajia/AndroidSwipeLayout
  */
-@Route(path = RouterPath.OpenSource.SwipeLayout)
-class SwipeLayoutActivity : BaseVBActivity<OpenActivitySwipeLayoutBinding>() {
+@Route(path = RouterPath.UiLibrary.SwipeLayout)
+class SwipeLayoutActivity : BaseVBActivity<UiLibraryActivitySwipeLayoutBinding>() {
 
-    override fun getViewBinding(): OpenActivitySwipeLayoutBinding {
-        return OpenActivitySwipeLayoutBinding.inflate(layoutInflater)
+    override fun getViewBinding(): UiLibraryActivitySwipeLayoutBinding {
+        return UiLibraryActivitySwipeLayoutBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

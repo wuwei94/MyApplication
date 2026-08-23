@@ -1,19 +1,19 @@
-package com.example.william.my.module.opensource.adapter
+package com.example.william.my.module.ui_library.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
-import com.example.william.my.module.opensource.R
-import com.example.william.my.module.opensource.databinding.OpenItemSwipeBinding
+import com.example.william.my.module.ui_library.R
+import com.example.william.my.module.ui_library.databinding.UiLibraryItemSwipeBinding
 
 class SwipeRecyclerAdapter(private var data: List<String>?) :
     RecyclerSwipeAdapter<SwipeRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            OpenItemSwipeBinding.inflate(
+            UiLibraryItemSwipeBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         return ViewHolder(binding)
@@ -41,6 +41,6 @@ class SwipeRecyclerAdapter(private var data: List<String>?) :
         return R.id.item_swipe_swipeLayout
     }
 
-    class ViewHolder(val binding: OpenItemSwipeBinding) :
+    class ViewHolder(val binding: UiLibraryItemSwipeBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

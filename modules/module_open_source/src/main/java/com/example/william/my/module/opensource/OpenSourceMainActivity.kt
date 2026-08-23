@@ -11,20 +11,9 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("── UI 组件 ──", ""))
-        routerItems.add(RouterItem("Banner", RouterPath.OpenSource.Banner))
-        routerItems.add(
-            RouterItem(
-                "RealtimeBlurView",
-                RouterPath.OpenSource.RealtimeBlurView
-            )
-        )
-        routerItems.add(RouterItem("CountdownView", RouterPath.OpenSource.CountdownView))
         routerItems.add(RouterItem("EasyFloat", RouterPath.OpenSource.EasyFloat))
         routerItems.add(RouterItem("FlycoTabLayout", RouterPath.OpenSource.FlycoTabLayout))
         routerItems.add(RouterItem("PhotoView", RouterPath.OpenSource.PhotoView))
-        routerItems.add(RouterItem("PopWindow", RouterPath.OpenSource.PopWindow))
-        routerItems.add(RouterItem("ShadowLayout", RouterPath.OpenSource.ShadowLayout))
-        routerItems.add(RouterItem("SwipeLayout", RouterPath.OpenSource.SwipeLayout))
 
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("── 选择器 ──", ""))
@@ -39,7 +28,6 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
 
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("── 工具 ──", ""))
-        routerItems.add(RouterItem("LoadSir", RouterPath.OpenSource.LoadSir))
         routerItems.add(RouterItem("PermissionX", RouterPath.OpenSource.PermissionX))
         routerItems.add(RouterItem("RxJava", RouterPath.OpenSource.RxJava))
 
