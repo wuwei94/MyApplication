@@ -106,7 +106,7 @@ MyApplication/
     │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
     │   ├── module_custom_view  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    │   └── module_ui_library   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView / LoadSir）
+    │   └── module_widget_thirdparty   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView / LoadSir）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 客户端（HttpURLConnection / Volley）
@@ -327,7 +327,7 @@ WebSocket 专项功能演示。
 - 工具：RxJava / PermissionX
 - 图片加载：Coil / Glide
 
-### module_ui_library（UI 库）
+### module_widget_thirdparty（UI 库）
 
 第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件与多状态页管理。
 

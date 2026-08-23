@@ -298,18 +298,18 @@ object RouterPath {
     }
 
     // UI 库（第三方 UI 控件库）
-    object UiLibrary {
-        private const val UiLibrary = "/UiLibrary"
+    object WidgetThirdparty {
+        private const val WidgetThirdparty = "/WidgetThirdparty"
 
-        const val Main = "${UiLibrary}/Main"
+        const val Main = "${WidgetThirdparty}/Main"
 
-        const val Banner = "${UiLibrary}/Banner"
-        const val CountdownView = "${UiLibrary}/CountdownView"
-        const val RealtimeBlurView = "${UiLibrary}/RealtimeBlurView"
-        const val PopWindow = "${UiLibrary}/PopWindow"
-        const val ShadowLayout = "${UiLibrary}/ShadowLayout"
-        const val SwipeLayout = "${UiLibrary}/SwipeLayout"
-        const val LoadSir = "${UiLibrary}/LoadSir"
+        const val Banner = "${WidgetThirdparty}/Banner"
+        const val CountdownView = "${WidgetThirdparty}/CountdownView"
+        const val RealtimeBlurView = "${WidgetThirdparty}/RealtimeBlurView"
+        const val PopWindow = "${WidgetThirdparty}/PopWindow"
+        const val ShadowLayout = "${WidgetThirdparty}/ShadowLayout"
+        const val SwipeLayout = "${WidgetThirdparty}/SwipeLayout"
+        const val LoadSir = "${WidgetThirdparty}/LoadSir"
     }
 
     // ═══════════════════════════════════════════

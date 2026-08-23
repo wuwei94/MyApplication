@@ -45,7 +45,7 @@
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
 | module_custom_view | 自定义控件 | CustomViewMainActivity | /CustomView |
-| module_ui_library | UI 库 | UiLibraryMainActivity | /UiLibrary |
+| module_widget_thirdparty | UI 库 | WidgetThirdpartyMainActivity | /WidgetThirdparty |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | module_system | 系统能力 | SystemMainActivity | /System |
@@ -368,13 +368,13 @@
 
 ---
 
-### module_ui_library（UI 库）
+### module_widget_thirdparty（UI 库）
 
 演示第三方 UI 控件库。集中展示可复用的 View/ViewGroup 控件库与多状态页管理框架。
 
 | Activity | 功能 |
 |----------|------|
-| UiLibraryMainActivity | 模块入口，导航到各 UI 库示例页面 |
+| WidgetThirdpartyMainActivity | 模块入口，导航到各 UI 库示例页面 |
 | BannerActivity | Youth Banner 轮播图 |
 | CountdownActivity | CountdownView 倒计时 |
 | PopWindowActivity | PopupWindow 弹窗 |

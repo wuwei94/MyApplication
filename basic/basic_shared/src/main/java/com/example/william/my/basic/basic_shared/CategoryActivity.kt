@@ -60,7 +60,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * - 自定义：CustomView (BlurView, MarqueeView, Sensor3D, Spinner, TitleBar, etc.)
      * - 导航：Tab
      * - 动画：Anim
-     * - 第三方：UiLibrary（Banner, CountdownView, ShadowLayout, SwipeLayout, RealtimeBlurView, PopWindow, LoadSir）
+     * - 第三方：WidgetThirdparty（Banner, CountdownView, ShadowLayout, SwipeLayout, RealtimeBlurView, PopWindow, LoadSir）
      */
     private fun buildUiCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -73,7 +73,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("自定义控件", RouterPath.CustomView.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 第三方 ──", ""))
-        items.add(RouterItem("UI 库", RouterPath.UiLibrary.Main))
+        items.add(RouterItem("UI 库", RouterPath.WidgetThirdparty.Main))
         return items
     }
 

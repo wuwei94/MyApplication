@@ -166,7 +166,7 @@ include(":modules:module_event")
 // 第三方库
 include(":modules:module_open_source")
 // UI 库（第三方 UI 控件库）
-include(":modules:module_ui_library")
+include(":modules:module_widget_thirdparty")
 
 // Kotlin 特性
 include(":modules:module_kotlin")

@@ -9,7 +9,7 @@ import com.example.william.my.core.base.utils.FileSDCardUtil
 import com.example.william.my.module.mavericks.app.MavericksApp
 import com.example.william.my.module.event.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp
-import com.example.william.my.module.ui_library.app.UiLibraryApp
+import com.example.william.my.module.widget_thirdparty.app.WidgetThirdpartyApp
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 
 /**
@@ -29,7 +29,7 @@ class App : BaseApp() {
         registerAppInit(EventApp::class.java)
         registerAppInit(MavericksApp::class.java)
 
-        registerAppInit(UiLibraryApp::class.java)
+        registerAppInit(WidgetThirdpartyApp::class.java)
 
         registerAppInit(FlutterApp::class.java) // FlutterEngine
     }
