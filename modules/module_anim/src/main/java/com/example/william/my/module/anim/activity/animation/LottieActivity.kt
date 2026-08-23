@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.activity.animation
+package com.example.william.my.module.anim.activity.animation
 
 import android.animation.Animator
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivityLottieBinding
+import com.example.william.my.module.anim.databinding.AnimActivityLottieBinding
 
 /**
  * Lottie — 高性能动画渲染框架
@@ -39,11 +39,11 @@ import com.example.william.my.module.opensource.databinding.OpenActivityLottieBi
  *
  * https://github.com/airbnb/lottie-android
  */
-@Route(path = RouterPath.OpenSource.Lottie)
-class LottieActivity : BaseVBActivity<OpenActivityLottieBinding>() {
+@Route(path = RouterPath.Anim.Lottie)
+class LottieActivity : BaseVBActivity<AnimActivityLottieBinding>() {
 
-    override fun getViewBinding(): OpenActivityLottieBinding {
-        return OpenActivityLottieBinding.inflate(layoutInflater)
+    override fun getViewBinding(): AnimActivityLottieBinding {
+        return AnimActivityLottieBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

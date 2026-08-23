@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.animation.SvgaPlayerActivity">
+    tools:context=".activity.animation.PagActivity">
 
-    <com.opensource.svgaplayer.SVGAImageView
-        android:id="@+id/svgaImageView"
+    <org.libpag.PAGImageView
+        android:id="@+id/pagImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

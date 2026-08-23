@@ -27,12 +27,6 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("SwipeLayout", RouterPath.OpenSource.SwipeLayout))
 
         routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("── 动画 ──", ""))
-        routerItems.add(RouterItem("Pag", RouterPath.OpenSource.Pag))
-        routerItems.add(RouterItem("Lottie", RouterPath.OpenSource.Lottie))
-        routerItems.add(RouterItem("SVGAPlayer", RouterPath.OpenSource.SVGAPlayer))
-
-        routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("── 选择器 ──", ""))
         routerItems.add(RouterItem("CityPicker", RouterPath.OpenSource.CityPicker))
         routerItems.add(RouterItem("PickerView", RouterPath.OpenSource.PickerView))

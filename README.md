@@ -104,7 +104,7 @@ MyApplication/
     ├── [UI 组件]
     │   ├── module_widget       # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
-    │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / Keyframe / RenderEffect / RenderScript / Transition）
+    │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
     │   └── module_custom_view  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
     │
     ├── [网络通信]
@@ -140,7 +140,7 @@ MyApplication/
     │   └── module_flutter      # Flutter 子工程
     │
     ├── [OpenSource]
-    │   ├── module_open_source  # 第三方库（Lottie / Banner / PhotoView / RxJava / Coil / Glide）
+    │   ├── module_open_source  # 第三方库（Banner / PhotoView / RxJava / Coil / Glide）
     │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
     └── [Other]
@@ -177,11 +177,13 @@ MyApplication/
 - ObjectAnimator 属性动画（透明度/旋转/缩放/平移）
 - AnimatorSet 动画组合（顺序/同时/Builder 编排）
 - ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator
-- Keyframe 关键帧动画 + PropertyValuesHolder
 - 视图过渡动画（ChangeBounds / Fade / Slide / AutoTransition）
 - RenderEffect 渲染效果（Android 12+）
 - RenderScript 图像处理（已废弃）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
+- PAG 动画播放器（腾讯 libpag）
+- Lottie 动画播放器（Airbnb Lottie）
+- SVGA 动画播放器（YY SVGA）
 
 ### module_custom_view（自定义控件）
 
@@ -312,7 +314,6 @@ WebSocket 专项功能演示。
 
 第三方开源框架集成 Demo。
 
-- 动画：PAG / Lottie / SVGAPlayer
 - UI：FlycoTabLayout / SwipeLayout / PhotoView / Banner / EasyFloat / RealtimeBlurView / ShadowLayout
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / LoadSir / MMKV / PermissionX

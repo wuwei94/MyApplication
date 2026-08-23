@@ -204,3 +204,6 @@ fabric.properties
 
 # Dart / Flutter local tool state
 **/.dart_tool/
+
+# Kotlin compiler daemon session files
+.kotlin/

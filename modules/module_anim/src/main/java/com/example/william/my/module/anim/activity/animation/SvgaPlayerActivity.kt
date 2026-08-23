@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.activity.animation
+package com.example.william.my.module.anim.activity.animation
 
 import android.net.http.HttpResponseCache
 import android.os.Bundle
@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivitySvgaBinding
+import com.example.william.my.module.anim.databinding.AnimActivitySvgaBinding
 import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAParser
 import com.opensource.svgaplayer.SVGAVideoEntity
@@ -43,11 +43,11 @@ import java.io.File
  *
  * https://github.com/svga/SVGAPlayer-Android
  */
-@Route(path = RouterPath.OpenSource.SVGAPlayer)
-class SvgaPlayerActivity : BaseVBActivity<OpenActivitySvgaBinding>() {
+@Route(path = RouterPath.Anim.SVGAPlayer)
+class SvgaPlayerActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
 
-    override fun getViewBinding(): OpenActivitySvgaBinding {
-        return OpenActivitySvgaBinding.inflate(layoutInflater)
+    override fun getViewBinding(): AnimActivitySvgaBinding {
+        return AnimActivitySvgaBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

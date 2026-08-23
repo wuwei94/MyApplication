@@ -32,9 +32,6 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.glide)
-    implementation(libs.pag)
-    implementation(libs.lottie)
-    implementation(libs.svgaPlayer)
 
     implementation(libs.permission)
     implementation(libs.loadsir)

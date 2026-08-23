@@ -112,11 +112,13 @@
 | ObjectAnimatorActivity | ObjectAnimator 属性动画（透明度/旋转/缩放/平移） |
 | AnimatorSetActivity | AnimatorSet 动画组合（顺序/同时/Builder 编排） |
 | ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
-| KeyframeActivity | Keyframe 关键帧动画 + PropertyValuesHolder |
 | TransitionFirstActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
 | TransitionSecondActivity | 视图过渡动画目标页 |
 | RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
 | RenderScriptActivity | RenderScript 图像处理（已废弃） |
+| PagActivity | PAG 动画播放器 |
+| LottieActivity | Lottie 动画播放器 |
+| SvgaPlayerActivity | SVGA 动画播放器 |
 
 ---
 
@@ -349,9 +351,6 @@
 | PopWindowActivity | CustomPopWindow 弹窗 |
 | ShadowLayoutActivity | ShadowLayout 阴影布局 |
 | SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
-| PagActivity | PAG 动画播放器 |
-| LottieActivity | Lottie 动画播放器 |
-| SvgaPlayerActivity | SVGA 动画播放器 |
 | LoadSirActivity | LoadSir 加载状态页 |
 | PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |

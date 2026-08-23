@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.activity.animation
+package com.example.william.my.module.anim.activity.animation
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.base.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivityPagBinding
+import com.example.william.my.module.anim.databinding.AnimActivityPagBinding
 
 /**
  * PAG (Portable Animated Graphics) — 腾讯开源的动画渲染方案
@@ -32,11 +32,11 @@ import com.example.william.my.module.opensource.databinding.OpenActivityPagBindi
  *
  * https://github.com/Tencent/libpag
  */
-@Route(path = RouterPath.OpenSource.Pag)
-class PagActivity : BaseVBActivity<OpenActivityPagBinding>() {
+@Route(path = RouterPath.Anim.Pag)
+class PagActivity : BaseVBActivity<AnimActivityPagBinding>() {
 
-    override fun getViewBinding(): OpenActivityPagBinding {
-        return OpenActivityPagBinding.inflate(layoutInflater)
+    override fun getViewBinding(): AnimActivityPagBinding {
+        return AnimActivityPagBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

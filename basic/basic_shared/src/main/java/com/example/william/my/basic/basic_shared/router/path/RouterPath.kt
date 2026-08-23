@@ -81,11 +81,14 @@ object RouterPath {
         const val ObjectAnimator = "${Anim}/ObjectAnimator"
         const val AnimatorSet = "${Anim}/AnimatorSet"
         const val ValueAnimator = "${Anim}/ValueAnimator"
-        const val Keyframe = "${Anim}/Keyframe"
         const val Transition = "${Anim}/Transition"
         const val Transition2 = "${Anim}/Transition2"
         const val RenderEffect = "${Anim}/RenderEffect"
         const val RenderScript = "${Anim}/RenderScript"
+
+        const val Pag = "${Anim}/Pag"
+        const val Lottie = "${Anim}/Lottie"
+        const val SVGAPlayer = "${Anim}/SVGAPlayer"
     }
 
     // 自定义控件
@@ -277,11 +280,6 @@ object RouterPath {
         const val ShadowLayout = "${OpenSource}/ShadowLayout"
         const val SwipeLayout = "${OpenSource}/SwipeLayout"
         const val RealtimeBlurView = "${OpenSource}/BlurView"
-
-        // ── 动画 ──
-        const val Pag = "${OpenSource}/Pag"
-        const val Lottie = "${OpenSource}/Lottie"
-        const val SVGAPlayer = "${OpenSource}/SVGAPlayer"
 
         // ── 选择器 ──
         const val CityPicker = "${OpenSource}/CityPicker"
