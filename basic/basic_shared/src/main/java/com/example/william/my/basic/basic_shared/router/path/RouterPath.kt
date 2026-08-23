@@ -286,7 +286,6 @@ object RouterPath {
         const val PictureSelector = "${OpenSource}/PictureSelector"
 
         const val LoadSir = "${OpenSource}/LoadSir"
-        const val MMKV = "${OpenSource}/MMKV"
         const val PermissionX = "${OpenSource}/PermissionX"
         const val RxJava = "${OpenSource}/RxJava"
 

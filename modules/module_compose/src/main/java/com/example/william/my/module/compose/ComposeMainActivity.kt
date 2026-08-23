@@ -3,21 +3,21 @@ package com.example.william.my.module.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.alibaba.android.arouter.exception.HandlerException
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -33,10 +33,14 @@ class ComposeMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        enableEdgeToEdge()
+
         buildRouterItems()
 
         setContent {
-            LazyColumnExample(routerItems)
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                LazyColumnExample(routerItems, Modifier.padding(innerPadding))
+            }
         }
     }
 
@@ -76,25 +80,20 @@ class ComposeMainActivity : ComponentActivity() {
 
 
     @Composable
-    fun LazyColumnExample(itemsList: List<RouterItem>) {
+    fun LazyColumnExample(itemsList: List<RouterItem>, modifier: Modifier = Modifier) {
         // 使用 rememberLazyListState 保存滚动的位置
         val scrollState = rememberLazyListState()
 
-        LazyColumn(state = scrollState) {
+        LazyColumn(
+            state = scrollState,
+            modifier = modifier
+        ) {
             items(itemsList) { item ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(6.dp)
-                        .height(48.dp)
-                        .background(color = Color.White)
-                ) {
-                    LazyColumnItemExample(item) {
-                        try {
-                            ARouter.getInstance().build(item.mRouterPath).navigation()
-                        } catch (e: HandlerException) {
-                            e.printStackTrace()
-                        }
+                LazyColumnItemExample(item) {
+                    try {
+                        ARouter.getInstance().build(item.mRouterPath).navigation()
+                    } catch (e: HandlerException) {
+                        e.printStackTrace()
                     }
                 }
             }
@@ -103,25 +102,18 @@ class ComposeMainActivity : ComponentActivity() {
 
     @Composable
     fun LazyColumnItemExample(routerItem: RouterItem? = null, onClick: () -> Unit) {
-        Button(
-            onClick = onClick,
+        // 参考 shared_item_recycler 布局：无背景无边框，minHeight 48dp，文字垂直居中
+        Box(
             modifier = Modifier
-                .padding(6.dp)
-                .height(48.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
-                contentColor = Color.Black
-            ),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 6.dp,
-                pressedElevation = 6.dp
-            ),
-            border = BorderStroke(
-                width = 1.dp,
-                color = Color.Black,
-            )
+                .fillMaxWidth()
+                .height(48.dp)
+                .clickable(onClick = onClick),
+            contentAlignment = Alignment.CenterStart
         ) {
-            Text(text = routerItem?.mRouterName ?: "")
+            Text(
+                text = routerItem?.mRouterName ?: "",
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
         }
     }
 }

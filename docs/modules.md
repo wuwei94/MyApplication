@@ -60,8 +60,8 @@
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
-| module_database | 数据库 | - | /Database |
-| module_storage | 存储 | - | /Storage |
+| module_database | 数据库 | DatabaseMainActivity | /Database |
+| module_storage | 存储 | StorageMainActivity | /Storage |
 | module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
@@ -353,7 +353,6 @@
 | LottieActivity | Lottie 动画播放器 |
 | SvgaPlayerActivity | SVGA 动画播放器 |
 | LoadSirActivity | LoadSir 加载状态页 |
-| MMKVActivity | MMKV 键值存储 |
 | PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |
 | CoilActivity | Coil 图片加载库 |
@@ -388,15 +387,25 @@
 
 ---
 
-### module_storage（存储）
+### module_database（数据库）
 
-演示 Android 移动端主流数据持久化方案。
+演示 Android 关系型 / 对象型数据库方案。
 
 | Activity | 功能 |
 |----------|------|
-| StorageMainActivity | 模块入口，导航到 Room、ObjectBox、DataStore、MMKV 示例 |
+| DatabaseMainActivity | 模块入口，导航到 Room、ObjectBox 示例 |
 | RoomActivity | Room 数据库 CRUD、协程 Flow 响应式查询与 RxJava 响应式流 |
 | ObjectBoxActivity | ObjectBox 高性能对象数据库增删查改 |
+
+---
+
+### module_storage（存储）
+
+演示 Android 键值存储方案。
+
+| Activity | 功能 |
+|----------|------|
+| StorageMainActivity | 模块入口，导航到 DataStore、MMKV 示例 |
 | DataStoreActivity | DataStore（Preferences + Proto）数据存储 |
 | MMKVActivity | MMKV 高性能键值存储（写入 / 读取 / 删除 / 清空） |
 

@@ -95,18 +95,16 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     /**
      * 数据存储
-     * - 数据库：Room, ObjectBox
-     * - 键值存储：DataStore, MMKV
+     * - 数据库：Database（Room, ObjectBox）
+     * - 键值存储：Storage（DataStore, MMKV）
      */
     private fun buildStorageCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
         items.add(RouterItem("── 数据库 ──", ""))
-        items.add(RouterItem("Room (关系型数据库)", RouterPath.Database.Room))
-        items.add(RouterItem("ObjectBox (NoSQL 对象数据库)", RouterPath.Database.ObjectBox))
+        items.add(RouterItem("数据库", RouterPath.Database.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 键值存储 ──", ""))
-        items.add(RouterItem("DataStore (Jetpack)", RouterPath.Storage.DataStore))
-        items.add(RouterItem("MMKV (高性能键值存储)", RouterPath.Storage.MMKV))
+        items.add(RouterItem("存储", RouterPath.Storage.Main))
         return items
     }
 
