@@ -182,8 +182,16 @@ object RouterPath {
 
         const val Turntable = "${Feature}/Turntable"
         const val MicAnimation = "${Feature}/MicAnimation"
-        const val Camera = "${Feature}/Camera"
         const val Crop = "${Feature}/Crop"
+    }
+
+    // 相机（CameraX 多媒体）
+    object Camera {
+        private const val Camera = "/Camera"
+
+        const val Main = "${Camera}/Main"
+        const val Photo = "${Camera}/Photo"
+        const val Video = "${Camera}/Video"
     }
 
     // ═══════════════════════════════════════════

@@ -110,6 +110,7 @@ class CategoryActivity : RouterRecyclerActivity() {
     /**
      * 系统能力
      * - 系统原生：Async, Component, System
+     * - 多媒体：Camera（CameraX 拍照/录像）
      */
     private fun buildSystemCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -117,6 +118,9 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("异步处理", RouterPath.Async.Main))
         items.add(RouterItem("组件交互", RouterPath.Component.Main))
         items.add(RouterItem("系统能力", RouterPath.System.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 多媒体 ──", ""))
+        items.add(RouterItem("相机", RouterPath.Camera.Main))
         return items
     }
 

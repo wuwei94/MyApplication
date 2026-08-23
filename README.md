@@ -122,7 +122,8 @@ MyApplication/
     ├── [系统能力]
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
     │   ├── module_component    # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
-    │   └── module_system       # 系统能力（Notification / Permission / SecureKey / FloatWindow）
+    │   ├── module_system       # 系统能力（Notification / Permission / SecureKey / FloatWindow）
+    │   └── module_camera       # 相机（CameraX 拍照 / 录像）
     │
     ├── [架构模式]
     │   ├── module_arch         # 架构模式（MVP / MVVM / MVI）
@@ -145,7 +146,7 @@ MyApplication/
     │
     └── [Other]
         ├── module_sample       # 技术示例（Hook / Typeface）
-        └── module_feature      # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
+        └── module_feature      # 业务功能（转盘 / 麦位动画 / 裁剪）
 ```
 
 ---
@@ -244,13 +245,19 @@ MyApplication/
 - **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
 - **DiffUtil**：列表差量计算与 Payload 细粒度局部刷新
 
+### module_camera（相机）
+
+演示 Android CameraX 多媒体能力，按用例（UseCase）拆分为独立示例页。
+
+- **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
+- **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
+
 ### module_feature（业务功能）
 
 业务功能 Demo。
 
 - 转盘抽奖（旋转动画）
 - 麦位动画（自定义 LayoutManager）
-- CameraX 相机拍照/录像
 - 图片裁剪（Intent 调用系统裁剪）
 
 ### module_http（HTTP 客户端全栈对比）

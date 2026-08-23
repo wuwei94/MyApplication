@@ -143,6 +143,8 @@ include(":modules:module_sample")
 include(":modules:module_feature")
 // 性能优化
 include(":modules:module_performance")
+// 相机（CameraX 多媒体）
+include(":modules:module_camera")
 
 // HTTP 客户端
 include(":modules:module_http")

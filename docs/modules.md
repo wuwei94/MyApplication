@@ -18,7 +18,8 @@
 │   ├── 数据库：Room、ObjectBox
 │   └── 键值存储：DataStore、MMKV
 ├── 系统能力
-│   └── 系统原生：异步处理、组件交互、系统能力
+│   ├── 系统原生：异步处理、组件交互、系统能力
+│   └── 多媒体：相机
 ├── 架构模式
 │   ├── 架构模式、依赖注入
 │   ├── 事件通信：事件总线
@@ -46,6 +47,7 @@
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | module_system | 系统能力 | SystemMainActivity | /System |
+| module_camera | 相机 | CameraMainActivity | /Camera |
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
@@ -217,8 +219,19 @@
 |----------|------|
 | TurntableActivity | 转盘抽奖（旋转动画） |
 | MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
-| CameraActivity | CameraX 相机拍照/录像 |
 | CropActivity | 图片裁剪（Intent 调用系统裁剪） |
+
+---
+
+### module_camera（相机）
+
+演示 Android CameraX 多媒体能力，按用例（UseCase）拆分为独立示例页。
+
+| Activity | 功能 |
+|----------|------|
+| CameraMainActivity | 模块入口，导航到拍照、录像示例页面 |
+| CameraPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
+| CameraVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
 
 ---
 

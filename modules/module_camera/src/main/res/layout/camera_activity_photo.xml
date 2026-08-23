@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".activity.media.CameraActivity">
+    tools:context=".activity.CameraPhotoActivity">
 
     <!-- 相机取景预览层 -->
     <androidx.camera.view.PreviewView
@@ -36,24 +36,13 @@
             android:layout_width="@dimen/shared_dp_56"
             android:layout_height="@dimen/shared_dp_56"
             android:layout_marginHorizontal="@dimen/shared_dp_24"
-            android:background="@drawable/feature_bg_circle_btn"
+            android:background="@drawable/camera_bg_circle_btn"
             android:contentDescription="拍照"
             android:padding="@dimen/shared_dp_12"
-            android:src="@drawable/feature_ic_capture" />
-
-        <!-- 录像按钮（开始/停止合一，动态切换图标） -->
-        <ImageView
-            android:id="@+id/btn_record"
-            android:layout_width="@dimen/shared_dp_56"
-            android:layout_height="@dimen/shared_dp_56"
-            android:layout_marginHorizontal="@dimen/shared_dp_24"
-            android:background="@drawable/feature_bg_circle_btn"
-            android:contentDescription="开始录像"
-            android:padding="@dimen/shared_dp_12"
-            android:src="@drawable/feature_ic_record_start" />
+            android:src="@drawable/camera_ic_capture" />
     </LinearLayout>
 
-    <!-- 居中预览卡片（拍照/录像完成后弹出，MaterialCardView 确保照片与视频均有完美圆角） -->
+    <!-- 居中预览卡片（拍照完成后弹出） -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/layout_preview"
         android:layout_width="0dp"
@@ -90,28 +79,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- 视频预览（使用 TextureView 确保完美继承父卡片圆角裁剪） -->
-            <TextureView
-                android:id="@+id/preview_texture"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <!-- 右上角关闭按钮 -->
             <ImageView
                 android:id="@+id/btn_close_preview"
                 android:layout_width="@dimen/shared_dp_32"
                 android:layout_height="@dimen/shared_dp_32"
                 android:layout_margin="@dimen/shared_dp_12"
-                android:background="@drawable/feature_bg_close_btn"
+                android:background="@drawable/camera_bg_close_btn"
                 android:contentDescription="关闭预览"
                 android:elevation="@dimen/shared_dp_16"
                 android:padding="@dimen/shared_dp_4"
-                android:src="@drawable/feature_ic_close"
+                android:src="@drawable/camera_ic_close"
                 android:translationZ="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

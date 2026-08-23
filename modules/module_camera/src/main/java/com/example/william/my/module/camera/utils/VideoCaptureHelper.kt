@@ -1,18 +1,13 @@
-package com.example.william.my.module.feature.utils
+package com.example.william.my.module.camera.utils
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Environment
 import android.view.Surface
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
@@ -29,36 +24,29 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.core.base.utils.AppExecutorsHelper
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 /**
- * CameraX 相机功能辅助类
+ * CameraX 录像辅助类
  *
- * 负责管理 CameraX 生命周期绑定、拍照取景、视频录制以及硬件回退策略。
- * 采用基于 Activity 生命周期的实例设计，避免在静态字段中持有 [ProcessCameraProvider] 或 Context 导致内存泄漏。
+ * 只负责绑定 Preview + VideoCapture 两个用例，演示视频录制与硬件回退策略。
+ * 采用基于 Activity 生命周期的实例设计，避免在静态字段中持有 ProcessCameraProvider 或 Context 导致内存泄漏。
  */
-class CameraHelper(
+class VideoCaptureHelper(
     private val activity: FragmentActivity,
     private val preview: PreviewView
 ) {
 
-    private val main = AppExecutorsHelper.main()
-
-    // 状态标志
     private var isRecording = false
 
-    // 录像相关对象
     private var currentRecording: Recording? = null
     private var onRecordingStopped: ((file: File) -> Unit)? = null
 
-    // 用例
     private var cameraProvider: ProcessCameraProvider? = null
     private var previewUseCase: Preview? = null
-    private var imageCaptureUseCase: ImageCapture? = null
     private var videoCaptureUseCase: VideoCapture<Recorder>? = null
 
     fun isRecording(): Boolean = isRecording
@@ -83,21 +71,11 @@ class CameraHelper(
                         )
                         .build()
 
-                    // 预览配置
                     previewUseCase = Preview.Builder()
                         .setResolutionSelector(resolutionSelector)
                         .setTargetRotation(rotation)
                         .build()
-                        .also {
-                            it.setSurfaceProvider(preview.surfaceProvider)
-                        }
-
-                    // 图像捕获配置
-                    imageCaptureUseCase = ImageCapture.Builder()
-                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-                        .setResolutionSelector(resolutionSelector)
-                        .setTargetRotation(rotation)
-                        .build()
+                        .also { it.setSurfaceProvider(preview.surfaceProvider) }
 
                     // 录像配置：配置带回退的多级分辨率，防止部分机型/模拟器不支持 HIGHEST 崩溃
                     val qualitySelector = QualitySelector.fromOrderedList(
@@ -109,35 +87,13 @@ class CameraHelper(
                         .build()
                     videoCaptureUseCase = VideoCapture.withOutput(recorder)
 
-                    // 选择后置摄像头
-                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-                    // 解除所有绑定
                     provider.unbindAll()
-
-                    // 优先尝试同时绑定 Preview + ImageCapture + VideoCapture
-                    try {
-                        provider.bindToLifecycle(
-                            activity,
-                            cameraSelector,
-                            previewUseCase,
-                            imageCaptureUseCase,
-                            videoCaptureUseCase
-                        )
-                    } catch (e: Exception) {
-                        Utils.logcat(
-                            TAG,
-                            "设备不支持同时绑定 3 个用例 (${e.message})，回退为默认绑定 Preview + ImageCapture"
-                        )
-                        // 回退方案：默认绑定 Preview + ImageCapture
-                        provider.unbindAll()
-                        provider.bindToLifecycle(
-                            activity,
-                            cameraSelector,
-                            previewUseCase,
-                            imageCaptureUseCase
-                        )
-                    }
+                    provider.bindToLifecycle(
+                        activity,
+                        CameraSelector.DEFAULT_BACK_CAMERA,
+                        previewUseCase,
+                        videoCaptureUseCase
+                    )
                 } catch (e: Exception) {
                     Utils.logcat(TAG, "setupCamera error: ${e.message}")
                 }
@@ -145,56 +101,12 @@ class CameraHelper(
         }
     }
 
-    fun captureImage(
-        processComplete: (bitmap: Bitmap) -> Unit
-    ) {
-        val provider = cameraProvider ?: run {
-            Utils.toast("相机未就绪，请稍候")
-            return
-        }
-        val imageCapture = imageCaptureUseCase ?: return
-        val preview = previewUseCase ?: return
-
-        // 确保 ImageCapture 已绑定（若之前只绑定了录像组件则重新绑定）
-        if (!provider.isBound(imageCapture)) {
-            try {
-                provider.unbindAll()
-                provider.bindToLifecycle(
-                    activity,
-                    CameraSelector.DEFAULT_BACK_CAMERA,
-                    preview,
-                    imageCapture
-                )
-            } catch (e: Exception) {
-                Utils.logcat(TAG, "bind imageCapture error: ${e.message}")
-            }
-        }
-
-        imageCapture.takePicture(
-            ContextCompat.getMainExecutor(activity),
-            object : ImageCapture.OnImageCapturedCallback() {
-                override fun onCaptureSuccess(image: ImageProxy) {
-                    processImage(image, processComplete)
-                    image.close()
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    Utils.logcat(TAG, "captureImage error: ${exception.message}")
-                    Utils.toast("拍照失败: ${exception.message}")
-                }
-            }
-        )
-    }
-
     @SuppressLint("MissingPermission")
-    fun startRecording(
-        processComplete: (file: File) -> Unit
-    ) {
+    fun startRecording(processComplete: (file: File) -> Unit) {
         val provider = cameraProvider
         val videoCapture = videoCaptureUseCase
-        val preview = previewUseCase
 
-        if (provider == null || videoCapture == null || preview == null) {
+        if (provider == null || videoCapture == null) {
             Utils.toast("相机未就绪，无法录像")
             return
         }
@@ -202,23 +114,6 @@ class CameraHelper(
         if (isRecording) {
             Utils.toast("录像已在进行中")
             return
-        }
-
-        // 确保 VideoCapture 已经绑定到生命周期（如果之前只绑定了拍照组件则通过 unbindAll 干净重绑）
-        if (!provider.isBound(videoCapture)) {
-            try {
-                provider.unbindAll()
-                provider.bindToLifecycle(
-                    activity,
-                    CameraSelector.DEFAULT_BACK_CAMERA,
-                    preview,
-                    videoCapture
-                )
-            } catch (e: Exception) {
-                Utils.logcat(TAG, "绑定录像用例失败: ${e.message}")
-                Utils.toast("启动录像失败: 无法绑定录像组件")
-                return
-            }
         }
 
         val videoFile = createVideoFile(activity)
@@ -301,30 +196,9 @@ class CameraHelper(
             cameraProvider?.unbindAll()
             cameraProvider = null
             previewUseCase = null
-            imageCaptureUseCase = null
             videoCaptureUseCase = null
         } catch (e: Exception) {
             Utils.logcat(TAG, "release error: ${e.message}")
-        }
-    }
-
-    private fun processImage(
-        imageProxy: ImageProxy,
-        processComplete: (bitmap: Bitmap) -> Unit
-    ) {
-        val rotationDegrees = imageProxy.imageInfo.rotationDegrees
-        val rawBitmap = imageProxy.toBitmap()
-
-        // 仅旋转 Bitmap 至屏幕正向，不做裁切，保持相机原生画幅与取景画面完全一致
-        val rotatedBitmap = if (rotationDegrees != 0) {
-            val matrix = Matrix().apply { postRotate(rotationDegrees.toFloat()) }
-            Bitmap.createBitmap(rawBitmap, 0, 0, rawBitmap.width, rawBitmap.height, matrix, true)
-        } else {
-            rawBitmap
-        }
-
-        main.execute {
-            processComplete.invoke(rotatedBitmap)
         }
     }
 
@@ -346,6 +220,6 @@ class CameraHelper(
     }
 
     companion object {
-        private const val TAG = "CameraHelper"
+        private const val TAG = "VideoCaptureHelper"
     }
 }

@@ -80,6 +80,7 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_async"))
             "implementation"(project(":modules:module_component"))
             "implementation"(project(":modules:module_system"))
+            "implementation"(project(":modules:module_camera"))
 
             "implementation"(project(":modules:module_sample"))
             "implementation"(project(":modules:module_feature"))

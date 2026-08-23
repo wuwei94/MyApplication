@@ -5,7 +5,6 @@
         <activity android:name=".FeatureMainActivity" />
         <activity android:name=".activity.TurntableActivity" />
         <activity android:name=".activity.MicAnimationActivity" />
-        <activity android:name=".activity.CameraActivity" />
         <activity android:name=".activity.CropActivity" />
     </application>
 

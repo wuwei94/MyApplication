@@ -1,8 +1,7 @@
-package com.example.william.my.module.feature.activity
+package com.example.william.my.module.camera.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.SurfaceTexture
 import android.media.MediaMetadataRetriever
@@ -19,19 +18,22 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.feature.R
-import com.example.william.my.module.feature.databinding.FeatureActivityCameraBinding
-import com.example.william.my.module.feature.utils.CameraHelper
+import com.example.william.my.module.camera.R
+import com.example.william.my.module.camera.databinding.CameraActivityVideoBinding
+import com.example.william.my.module.camera.utils.VideoCaptureHelper
 import java.io.File
 
-@Route(path = RouterPath.Feature.Camera)
-class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnClickListener {
+/**
+ * 录像示例 — 基于 CameraX 的 VideoCapture 用例，演示预览取景、录像与视频回放。
+ */
+@Route(path = RouterPath.Camera.Video)
+class CameraVideoActivity : BaseVBActivity<CameraActivityVideoBinding>(), View.OnClickListener {
 
     private var mediaPlayer: MediaPlayer? = null
     private var currentVideoFile: File? = null
 
-    private val cameraHelper by lazy {
-        CameraHelper(this, mBinding.previewView)
+    private val videoCaptureHelper by lazy {
+        VideoCaptureHelper(this, mBinding.previewView)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -39,14 +41,14 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
     ) { permissions ->
         val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
         if (cameraGranted) {
-            cameraHelper.setupCamera()
+            videoCaptureHelper.setupCamera()
         } else {
-            Utils.toast("未授予相机权限，无法使用拍照/录像功能")
+            Utils.toast("未授予相机权限，无法使用录像功能")
         }
     }
 
-    override fun getViewBinding(): FeatureActivityCameraBinding {
-        return FeatureActivityCameraBinding.inflate(layoutInflater)
+    override fun getViewBinding(): CameraActivityVideoBinding {
+        return CameraActivityVideoBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -54,7 +56,6 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
 
         checkAndRequestPermissions()
 
-        mBinding.btnCapture.setOnClickListener(this)
         mBinding.btnRecord.setOnClickListener(this)
         mBinding.btnClosePreview.setOnClickListener(this)
 
@@ -94,21 +95,15 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnCapture -> {
-                cameraHelper.captureImage { bitmap ->
-                    showImagePreview(bitmap)
-                }
-            }
-
             mBinding.btnRecord -> {
-                if (cameraHelper.isRecording()) {
+                if (videoCaptureHelper.isRecording()) {
                     Utils.toast("录像已停止，正在生成预览...")
                     updateRecordButtonState(false)
-                    cameraHelper.stopRecording()
+                    videoCaptureHelper.stopRecording()
                 } else {
                     Utils.toast("开始录像...")
                     updateRecordButtonState(true)
-                    cameraHelper.startRecording { videoFile ->
+                    videoCaptureHelper.startRecording { videoFile ->
                         updateRecordButtonState(false)
                         showVideoPreview(videoFile)
                     }
@@ -123,10 +118,10 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
 
     private fun updateRecordButtonState(isRecording: Boolean) {
         if (isRecording) {
-            mBinding.btnRecord.setImageResource(R.drawable.feature_ic_record_stop)
+            mBinding.btnRecord.setImageResource(R.drawable.camera_ic_record_stop)
             mBinding.btnRecord.contentDescription = "停止录像"
         } else {
-            mBinding.btnRecord.setImageResource(R.drawable.feature_ic_record_start)
+            mBinding.btnRecord.setImageResource(R.drawable.camera_ic_record_start)
             mBinding.btnRecord.contentDescription = "开始录像"
         }
     }
@@ -142,7 +137,7 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
         ) == PackageManager.PERMISSION_GRANTED
 
         if (hasCamera && hasAudio) {
-            cameraHelper.setupCamera()
+            videoCaptureHelper.setupCamera()
         } else {
             requestPermissionLauncher.launch(
                 arrayOf(
@@ -153,24 +148,12 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
         }
     }
 
-    private fun showImagePreview(bitmap: Bitmap) {
-        stopTexturePlayer()
-        currentVideoFile = null
-        mBinding.previewTexture.visibility = View.GONE
-        mBinding.previewImage.setImageBitmap(bitmap)
-        mBinding.previewImage.visibility = View.VISIBLE
-        mBinding.layoutPreview.visibility = View.VISIBLE
-    }
-
     private fun showVideoPreview(videoFile: File) {
         if (!videoFile.exists() || videoFile.length() == 0L) {
             Utils.toast("录像文件无效")
             return
         }
 
-        mBinding.previewImage.setImageBitmap(null)
-        mBinding.previewImage.visibility = View.GONE
-        mBinding.previewTexture.visibility = View.VISIBLE
         mBinding.layoutPreview.visibility = View.VISIBLE
 
         currentVideoFile = videoFile
@@ -193,14 +176,14 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
                     mp.start()
                 }
                 setOnErrorListener { _, what, extra ->
-                    Utils.logcat("CameraActivity", "MediaPlayer playback error: what=$what extra=$extra")
+                    Utils.logcat("CameraVideoActivity", "MediaPlayer playback error: what=$what extra=$extra")
                     Utils.toast("视频播放失败")
                     true
                 }
                 prepareAsync()
             }
         } catch (e: Exception) {
-            Utils.logcat("CameraActivity", "startTexturePlayer error: ${e.message}")
+            Utils.logcat("CameraVideoActivity", "startTexturePlayer error: ${e.message}")
         }
     }
 
@@ -232,7 +215,7 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
                     retriever.release()
                 }
             } catch (e: Exception) {
-                Utils.logcat("CameraActivity", "extract video metadata error: ${e.message}")
+                Utils.logcat("CameraVideoActivity", "extract video metadata error: ${e.message}")
             }
 
             if (videoWidth <= 0 || videoHeight <= 0) {
@@ -271,7 +254,7 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
                 it.release()
             }
         } catch (e: Exception) {
-            Utils.logcat("CameraActivity", "stopTexturePlayer error: ${e.message}")
+            Utils.logcat("CameraVideoActivity", "stopTexturePlayer error: ${e.message}")
         } finally {
             mediaPlayer = null
         }
@@ -281,7 +264,6 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
         stopTexturePlayer()
         currentVideoFile = null
         mBinding.layoutPreview.visibility = View.GONE
-        mBinding.previewImage.setImageBitmap(null)
         mBinding.previewTexture.setTransform(Matrix())
     }
 
@@ -292,7 +274,7 @@ class CameraActivity : BaseVBActivity<FeatureActivityCameraBinding>(), View.OnCl
     override fun onDestroy() {
         closePreview()
         updateRecordButtonState(false)
-        cameraHelper.release()
+        videoCaptureHelper.release()
         super.onDestroy()
     }
 }
