@@ -35,6 +35,10 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("── 图片加载 ──", ""))
         routerItems.add(RouterItem("Coil", RouterPath.OpenSource.Coil))
         routerItems.add(RouterItem("Glide", RouterPath.OpenSource.Glide))
+
+        routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("── 多状态页面 ──", ""))
+        routerItems.add(RouterItem("LoadSir", RouterPath.OpenSource.LoadSir))
         return routerItems
     }
 }

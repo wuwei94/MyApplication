@@ -365,12 +365,13 @@
 | RxJavaActivity | RxJava3 响应式编程 |
 | CoilActivity | Coil 图片加载库 |
 | GlideActivity | Glide 图片加载库 |
+| LoadSirActivity | LoadSir 加载状态页 |
 
 ---
 
 ### module_widget_thirdparty（UI 库）
 
-演示第三方 UI 控件库。集中展示可复用的 View/ViewGroup 控件库与多状态页管理框架。
+演示第三方 UI 控件库。集中展示可复用的 View/ViewGroup 控件库。
 
 | Activity | 功能 |
 |----------|------|
@@ -381,7 +382,6 @@
 | ShadowLayoutActivity | ShadowLayout 阴影布局 |
 | SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
 | RealtimeBlurViewActivity | RealtimeBlurView 实时模糊 |
-| LoadSirActivity | LoadSir 加载状态页 |
 
 ---
 

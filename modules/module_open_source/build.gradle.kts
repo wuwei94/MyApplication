@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.nowinandroid.android.library)
     alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
+    alias(libs.plugins.nowinandroid.android.hilt)
 }
 
 android {
@@ -30,4 +31,6 @@ dependencies {
     implementation(libs.permission)
 
     implementation(libs.rxandroid)
+
+    implementation(libs.loadsir)
 }

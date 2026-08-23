@@ -1,13 +1,13 @@
-package com.example.william.my.module.widget_thirdparty.activity.loadsir
+package com.example.william.my.module.opensource.activity.loadsir
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.widget_thirdparty.R
-import com.example.william.my.module.widget_thirdparty.loadsir.DefaultCallback
-import com.example.william.my.module.widget_thirdparty.loadsir.ErrorCallback
+import com.example.william.my.module.opensource.R
+import com.example.william.my.module.opensource.loadsir.DefaultCallback
+import com.example.william.my.module.opensource.loadsir.ErrorCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 
@@ -22,7 +22,7 @@ import com.kingja.loadsir.core.LoadSir
  * 3. 重试机制：支持重试点击事件，方便错误恢复
  * 4. 状态转换器：支持自定义状态转换逻辑
  */
-@Route(path = RouterPath.WidgetThirdparty.LoadSir)
+@Route(path = RouterPath.OpenSource.LoadSir)
 class LoadSirActivity : BasicLayoutActivity() {
 
     private lateinit var loadService: LoadService<Any>
@@ -34,7 +34,7 @@ class LoadSirActivity : BasicLayoutActivity() {
 
     private fun initTargetContent() {
         val targetContentView = LayoutInflater.from(this)
-            .inflate(R.layout.widget_thirdparty_layout_loadsir_target, mContainer, false)
+            .inflate(R.layout.open_source_layout_loadsir_target, mContainer, false)
 
         // 注册 LoadSir，无侵入包裹目标 View
         loadService = LoadSir.getDefault().register(targetContentView) {

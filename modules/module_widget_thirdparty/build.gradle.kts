@@ -18,7 +18,4 @@ dependencies {
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
     implementation(libs.blurview)
-
-    // 多状态页管理（LoadSir）
-    implementation(libs.loadsir)
 }

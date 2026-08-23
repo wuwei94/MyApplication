@@ -17,6 +17,8 @@
 
         <activity android:name=".activity.imageloader.CoilActivity" />
         <activity android:name=".activity.imageloader.GlideActivity" />
+
+        <activity android:name=".activity.loadsir.LoadSirActivity" />
     </application>
 
 </manifest>

@@ -20,6 +20,10 @@ annotation class MavericksInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class OpenSourceInit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class WidgetThirdpartyInit
 
 @Qualifier

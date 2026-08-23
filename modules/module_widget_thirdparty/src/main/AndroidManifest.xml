@@ -9,7 +9,6 @@
         <activity android:name=".activity.widget.ShadowLayoutActivity" />
         <activity android:name=".activity.widget.SwipeLayoutActivity" />
         <activity android:name=".activity.widget.RealtimeBlurViewActivity" />
-        <activity android:name=".activity.loadsir.LoadSirActivity" />
     </application>
 
 </manifest>

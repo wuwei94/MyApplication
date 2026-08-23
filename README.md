@@ -106,7 +106,7 @@ MyApplication/
     │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    │   └── module_widget_thirdparty   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView / LoadSir）
+    │   └── module_widget_thirdparty   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 客户端（HttpURLConnection / Volley）
@@ -142,7 +142,7 @@ MyApplication/
     │   └── module_flutter      # Flutter 子工程
     │
     ├── [OpenSource]
-    │   ├── module_open_source  # 第三方库（Banner / PhotoView / RxJava / Coil / Glide）
+    │   ├── module_open_source  # 第三方库（PhotoView / RxJava / Coil / Glide / LoadSir）
     │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
     └── [Other]
@@ -326,10 +326,11 @@ WebSocket 专项功能演示。
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / PermissionX
 - 图片加载：Coil / Glide
+- 多状态页：LoadSir
 
 ### module_widget_thirdparty（UI 库）
 
-第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件与多状态页管理。
+第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件。
 
 - 轮播：Banner
 - 倒计时：CountdownView
@@ -337,7 +338,6 @@ WebSocket 专项功能演示。
 - 阴影：ShadowLayout
 - 侧滑：SwipeLayout
 - 模糊：RealtimeBlurView
-- 多状态页：LoadSir
 
 ### module_kotlin（Kotlin 语言特性）
 

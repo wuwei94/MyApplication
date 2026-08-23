@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.fragment
+package com.example.william.my.module.opensource.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

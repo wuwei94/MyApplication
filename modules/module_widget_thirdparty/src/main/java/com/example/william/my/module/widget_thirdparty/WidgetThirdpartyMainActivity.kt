@@ -20,8 +20,6 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ShadowLayout", RouterPath.WidgetThirdparty.ShadowLayout))
         routerItems.add(RouterItem("SwipeLayout", RouterPath.WidgetThirdparty.SwipeLayout))
 
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("LoadSir", RouterPath.WidgetThirdparty.LoadSir))
         return routerItems
     }
 }

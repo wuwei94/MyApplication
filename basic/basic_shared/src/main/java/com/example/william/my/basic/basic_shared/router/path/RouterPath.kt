@@ -295,6 +295,9 @@ object RouterPath {
         // ── 图片加载 ──
         const val Coil = "${OpenSource}/Coil"
         const val Glide = "${OpenSource}/Glide"
+
+        // ── 多状态页面 ──
+        const val LoadSir = "${OpenSource}/LoadSir"
     }
 
     // UI 库（第三方 UI 控件库）
@@ -309,7 +312,6 @@ object RouterPath {
         const val PopWindow = "${WidgetThirdparty}/PopWindow"
         const val ShadowLayout = "${WidgetThirdparty}/ShadowLayout"
         const val SwipeLayout = "${WidgetThirdparty}/SwipeLayout"
-        const val LoadSir = "${WidgetThirdparty}/LoadSir"
     }
 
     // ═══════════════════════════════════════════
