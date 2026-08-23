@@ -92,20 +92,20 @@ object RouterPath {
     }
 
     // 自定义控件
-    object CustomView {
-        private const val CustomView = "/CustomView"
+    object WidgetCustom {
+        private const val WidgetCustom = "/WidgetCustom"
 
-        const val Main = "${CustomView}/Main"
+        const val Main = "${WidgetCustom}/Main"
 
-        const val AlertDialog = "${CustomView}/AlertDialog"
-        const val BlurView = "${CustomView}/BlurView"
-        const val InfiniteImage = "${CustomView}/InfiniteImage"
-        const val MarqueeView = "${CustomView}/MarqueeView"
-        const val Sensor3DView = "${CustomView}/Sensor3DView"
-        const val Spinner = "${CustomView}/Spinner"
-        const val TitleBar = "${CustomView}/TitleBar"
-        const val VerifyCode = "${CustomView}/VerifyCode"
-        const val NinePatch = "${CustomView}/NinePatch"
+        const val AlertDialog = "${WidgetCustom}/AlertDialog"
+        const val BlurView = "${WidgetCustom}/BlurView"
+        const val InfiniteImage = "${WidgetCustom}/InfiniteImage"
+        const val MarqueeView = "${WidgetCustom}/MarqueeView"
+        const val Sensor3DView = "${WidgetCustom}/Sensor3DView"
+        const val Spinner = "${WidgetCustom}/Spinner"
+        const val TitleBar = "${WidgetCustom}/TitleBar"
+        const val VerifyCode = "${WidgetCustom}/VerifyCode"
+        const val NinePatch = "${WidgetCustom}/NinePatch"
     }
 
     // ═══════════════════════════════════════════

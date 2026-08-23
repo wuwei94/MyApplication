@@ -44,7 +44,7 @@
 | module_widget | 标准控件 | WidgetMainActivity | /Widget |
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
-| module_custom_view | 自定义控件 | CustomViewMainActivity | /CustomView |
+| module_widget_custom | 自定义控件 | WidgetCustomMainActivity | /WidgetCustom |
 | module_widget_thirdparty | UI 库 | WidgetThirdpartyMainActivity | /WidgetThirdparty |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
@@ -126,7 +126,7 @@
 
 ---
 
-### module_custom_view（自定义控件）
+### module_widget_custom（自定义控件）
 
 演示项目自定义实现的 UI 控件。
 

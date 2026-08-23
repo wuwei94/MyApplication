@@ -57,7 +57,7 @@ class CategoryActivity : RouterRecyclerActivity() {
     /**
      * UI 组件
      * - 系统原生：Widget (RecyclerView, ViewPager, Dialog, AppBar, WebView, FlexBox)
-     * - 自定义：CustomView (BlurView, MarqueeView, Sensor3D, Spinner, TitleBar, etc.)
+     * - 自定义：WidgetCustom (BlurView, MarqueeView, Sensor3D, Spinner, TitleBar, etc.)
      * - 导航：Tab
      * - 动画：Anim
      * - 第三方：WidgetThirdparty（Banner, CountdownView, ShadowLayout, SwipeLayout, RealtimeBlurView, PopWindow, LoadSir）
@@ -70,7 +70,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("动画", RouterPath.Anim.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 自定义 ──", ""))
-        items.add(RouterItem("自定义控件", RouterPath.CustomView.Main))
+        items.add(RouterItem("自定义控件", RouterPath.WidgetCustom.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 第三方 ──", ""))
         items.add(RouterItem("UI 库", RouterPath.WidgetThirdparty.Main))

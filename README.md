@@ -105,7 +105,7 @@ MyApplication/
     │   ├── module_widget       # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
     │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
-    │   ├── module_custom_view  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
+    │   ├── module_widget_custom  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
     │   └── module_widget_thirdparty   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView / LoadSir）
     │
     ├── [网络通信]
@@ -187,7 +187,7 @@ MyApplication/
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
 
-### module_custom_view（自定义控件）
+### module_widget_custom（自定义控件）
 
 演示项目自定义实现的 UI 控件。
 
