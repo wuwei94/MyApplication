@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.activity.widget
+package com.example.william.my.module.widget_thirdparty.activity
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath

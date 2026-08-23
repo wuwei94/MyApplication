@@ -3,12 +3,12 @@
 
     <application>
         <activity android:name=".WidgetThirdpartyMainActivity" />
-        <activity android:name=".activity.widget.BannerActivity" />
-        <activity android:name=".activity.widget.CountdownActivity" />
-        <activity android:name=".activity.widget.PopWindowActivity" />
-        <activity android:name=".activity.widget.ShadowLayoutActivity" />
-        <activity android:name=".activity.widget.SwipeLayoutActivity" />
-        <activity android:name=".activity.widget.RealtimeBlurViewActivity" />
+        <activity android:name=".activity.BannerActivity" />
+        <activity android:name=".activity.CountdownActivity" />
+        <activity android:name=".activity.PopWindowActivity" />
+        <activity android:name=".activity.ShadowLayoutActivity" />
+        <activity android:name=".activity.SwipeLayoutActivity" />
+        <activity android:name=".activity.RealtimeBlurViewActivity" />
     </application>
 
 </manifest>

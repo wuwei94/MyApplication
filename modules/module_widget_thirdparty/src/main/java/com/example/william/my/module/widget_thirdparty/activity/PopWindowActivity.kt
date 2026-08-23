@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.activity.widget
+package com.example.william.my.module.widget_thirdparty.activity
 
 import android.os.Bundle
 import android.widget.PopupWindow
