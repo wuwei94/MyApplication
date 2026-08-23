@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name=".activity.ComposeActivity" />
+        <activity android:name=".activity.ComposeViewActivity" />
         <activity android:name=".ComposeMainActivity" />
 
         <activity android:name=".activity.basic.TextActivity" />

@@ -396,6 +396,9 @@ object RouterPath {
 
         const val Main = "${Compose}/Main"
 
+        const val ComposeActivity = "${Compose}/ComposeActivity"
+        const val ComposeViewActivity = "${Compose}/ComposeViewActivity"
+
         const val Text = "${Compose}/Text"
         const val Button = "${Compose}/Button"
         const val Image = "${Compose}/Image"

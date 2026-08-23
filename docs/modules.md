@@ -453,6 +453,8 @@
 | Activity | 功能 |
 |----------|------|
 | ComposeMainActivity | Compose 模块入口导航页 |
+| ComposeActivity | Compose 入门（声明式 UI / 组件复用） |
+| ComposeViewActivity | ComposeView 在传统 View 中嵌入 Compose 混排 |
 | TextActivity | Text 组件 |
 | ButtonActivity | Button 组件 |
 | ImageActivity | Image 组件 |

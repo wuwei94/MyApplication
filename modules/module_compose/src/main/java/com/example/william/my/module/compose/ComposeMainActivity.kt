@@ -45,6 +45,9 @@ class ComposeMainActivity : ComponentActivity() {
     }
 
     private fun buildRouterItems() {
+        routerItems.add(RouterItem("Compose", RouterPath.Compose.ComposeActivity))
+        routerItems.add(RouterItem("ComposeView", RouterPath.Compose.ComposeViewActivity))
+
         routerItems.add(RouterItem("Text", RouterPath.Compose.Text))
         routerItems.add(RouterItem("Button", RouterPath.Compose.Button))
         routerItems.add(RouterItem("Image", RouterPath.Compose.Image))
