@@ -36,11 +36,14 @@ class DirectoryActivity : RouterRecyclerActivity() {
         // Kotlin & Jetpack
         routerItems.add(RouterItem("Kotlin & Jetpack", getCategoryPath("kotlin_jetpack"), getCategoryParams("kotlin_jetpack")))
 
-        // 跨平台
-        routerItems.add(RouterItem("跨平台", getCategoryPath("cross_platform"), getCategoryParams("cross_platform")))
+        // Compose & Flutter
+        routerItems.add(RouterItem("Compose & Flutter", getCategoryPath("compose_flutter"), getCategoryParams("compose_flutter")))
 
-        // 三方库 & 工具
-        routerItems.add(RouterItem("三方库 & 工具", getCategoryPath("third_party"), getCategoryParams("third_party")))
+        // 第三方开源库
+        routerItems.add(RouterItem("OpenSource", getCategoryPath("open_source"), getCategoryParams("open_source")))
+
+        // 其他
+        routerItems.add(RouterItem("Other", getCategoryPath("other"), getCategoryParams("other")))
 
         return routerItems
     }

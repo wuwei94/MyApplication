@@ -12,9 +12,8 @@
 │   ├── 系统原生：标准控件、Tab 导航、动画
 │   └── 自定义：自定义控件
 ├── 网络通信
-│   ├── 系统原生：HTTP 客户端
-│   ├── 第三方库：OkHttp、Retrofit、Ktor
-│   └── 扩展能力：Rx 动态请求、WebSocket
+│   ├── HTTP 请求：HTTP、OkHttp、Retrofit、Ktor、RxRetrofit
+│   └── 长连接：WebSocket
 ├── 数据存储
 │   ├── 数据库：Room、ObjectBox
 │   └── 键值存储：DataStore、MMKV
@@ -27,11 +26,12 @@
 ├── Kotlin & Jetpack
 │   ├── 语言特性：Kotlin
 │   └── Jetpack 组件
-├── 跨平台
+├── Compose & Flutter
 │   └── Compose、Flutter
-└── 三方库 & 工具
-    ├── 第三方库
-    ├── 工具类
+├── OpenSource
+│   ├── OpenSource：第三方库
+│   └── AndroidUtils：工具类
+└── Other
     └── 技术示例、业务功能
 ```
 
@@ -334,7 +334,7 @@
 
 ### module_open_source（第三方库）
 
-演示第三方开源库的使用。
+演示第三方开源库的使用。模块内部按类别组织：`widget`（UI 组件）/ `animation`（动画）/ `selector`（选择器）/ `utils`（工具）/ `imageloader`（图片加载），入口列表也按此分组展示。
 
 | Activity | 功能 |
 |----------|------|

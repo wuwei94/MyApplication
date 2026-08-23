@@ -10,6 +10,7 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
+        routerItems.add(RouterItem("── UI 组件 ──", ""))
         routerItems.add(RouterItem("Banner", RouterPath.OpenSource.Banner))
         routerItems.add(
             RouterItem(
@@ -26,11 +27,13 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("SwipeLayout", RouterPath.OpenSource.SwipeLayout))
 
         routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("── 动画 ──", ""))
         routerItems.add(RouterItem("Pag", RouterPath.OpenSource.Pag))
         routerItems.add(RouterItem("Lottie", RouterPath.OpenSource.Lottie))
         routerItems.add(RouterItem("SVGAPlayer", RouterPath.OpenSource.SVGAPlayer))
 
         routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("── 选择器 ──", ""))
         routerItems.add(RouterItem("CityPicker", RouterPath.OpenSource.CityPicker))
         routerItems.add(RouterItem("PickerView", RouterPath.OpenSource.PickerView))
         routerItems.add(
@@ -41,11 +44,13 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         )
 
         routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("── 工具 ──", ""))
         routerItems.add(RouterItem("LoadSir", RouterPath.OpenSource.LoadSir))
         routerItems.add(RouterItem("PermissionX", RouterPath.OpenSource.PermissionX))
         routerItems.add(RouterItem("RxJava", RouterPath.OpenSource.RxJava))
 
         routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("── 图片加载 ──", ""))
         routerItems.add(RouterItem("Coil", RouterPath.OpenSource.Coil))
         routerItems.add(RouterItem("Glide", RouterPath.OpenSource.Glide))
         return routerItems

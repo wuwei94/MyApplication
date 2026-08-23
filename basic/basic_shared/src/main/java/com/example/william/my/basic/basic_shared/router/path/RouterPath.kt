@@ -267,6 +267,7 @@ object RouterPath {
 
         const val Main = "${OpenSource}/Main"
 
+        // ── UI 组件 ──
         const val Banner = "${OpenSource}/Banner"
         const val CountdownView = "${OpenSource}/CountdownView"
         const val EasyFloat = "${OpenSource}/EasyFloat"
@@ -277,18 +278,22 @@ object RouterPath {
         const val SwipeLayout = "${OpenSource}/SwipeLayout"
         const val RealtimeBlurView = "${OpenSource}/BlurView"
 
+        // ── 动画 ──
         const val Pag = "${OpenSource}/Pag"
         const val Lottie = "${OpenSource}/Lottie"
         const val SVGAPlayer = "${OpenSource}/SVGAPlayer"
 
+        // ── 选择器 ──
         const val CityPicker = "${OpenSource}/CityPicker"
         const val PickerView = "${OpenSource}/PickerView"
         const val PictureSelector = "${OpenSource}/PictureSelector"
 
+        // ── 工具 ──
         const val LoadSir = "${OpenSource}/LoadSir"
         const val PermissionX = "${OpenSource}/PermissionX"
         const val RxJava = "${OpenSource}/RxJava"
 
+        // ── 图片加载 ──
         const val Coil = "${OpenSource}/Coil"
         const val Glide = "${OpenSource}/Glide"
     }

@@ -32,8 +32,9 @@ class CategoryActivity : RouterRecyclerActivity() {
             "system" -> "系统能力"
             "arch" -> "架构模式"
             "kotlin_jetpack" -> "Kotlin & Jetpack"
-            "cross_platform" -> "跨平台"
-            "third_party" -> "三方库 & 工具"
+            "compose_flutter" -> "Compose & Flutter"
+            "open_source" -> "OpenSource"
+            "other" -> "Other"
             else -> "模块列表"
         }
     }
@@ -46,8 +47,9 @@ class CategoryActivity : RouterRecyclerActivity() {
             "system" -> buildSystemCategory()
             "arch" -> buildArchCategory()
             "kotlin_jetpack" -> buildKotlinJetpackCategory()
-            "cross_platform" -> buildCrossPlatformCategory()
-            "third_party" -> buildThirdPartyCategory()
+            "compose_flutter" -> buildComposeFlutterCategory()
+            "open_source" -> buildOpenSourceCategory()
+            "other" -> buildOtherCategory()
             else -> arrayListOf()
         }
     }
@@ -73,22 +75,19 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     /**
      * 网络通信
-     * - 系统原生：Http (HttpURLConnection, Volley)
-     * - 第三方库：OkHttp, Retrofit, Ktor
-     * - 扩展能力：RxRetrofit, WebSocket
+     * - HTTP 请求（请求-响应）：Http, OkHttp, Retrofit, Ktor, RxRetrofit
+     * - 长连接：WebSocket
      */
     private fun buildNetworkCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("── 系统原生 ──", ""))
-        items.add(RouterItem("HTTP 客户端", RouterPath.Http.Main))
-        items.add(RouterItem("", ""))
-        items.add(RouterItem("── 第三方库 ──", ""))
+        items.add(RouterItem("── HTTP 请求 ──", ""))
+        items.add(RouterItem("HTTP", RouterPath.Http.Main))
+        items.add(RouterItem("Ktor", RouterPath.Ktor.Main))
         items.add(RouterItem("OkHttp", RouterPath.OkHttp.Main))
         items.add(RouterItem("Retrofit", RouterPath.Retrofit.Main))
-        items.add(RouterItem("Ktor", RouterPath.Ktor.Main))
+        items.add(RouterItem("RxRetrofit", RouterPath.RxRetrofit.Main))
         items.add(RouterItem("", ""))
-        items.add(RouterItem("── 扩展能力 ──", ""))
-        items.add(RouterItem("Rx 动态请求", RouterPath.RxRetrofit.Main))
+        items.add(RouterItem("── 长连接 ──", ""))
         items.add(RouterItem("WebSocket", RouterPath.WebSocket.Main))
         return items
     }
@@ -104,7 +103,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("数据库", RouterPath.Database.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 键值存储 ──", ""))
-        items.add(RouterItem("存储", RouterPath.Storage.Main))
+        items.add(RouterItem("键值存储", RouterPath.Storage.Main))
         return items
     }
 
@@ -160,33 +159,40 @@ class CategoryActivity : RouterRecyclerActivity() {
     }
 
     /**
-     * 跨平台
+     * Compose & Flutter
      * - Compose
      * - Flutter
      */
-    private fun buildCrossPlatformCategory(): ArrayList<RouterItem> {
+    private fun buildComposeFlutterCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("── 跨平台 UI ──", ""))
+        items.add(RouterItem("── Compose ──", ""))
         items.add(RouterItem("Compose", RouterPath.Compose.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── Flutter ──", ""))
         items.add(RouterItem("Flutter", RouterPath.Flutter.Main))
         return items
     }
 
     /**
-     * 三方库 & 工具
-     * - 第三方库：OpenSource
-     * - 工具类：Utils
-     * - 事件总线：Event
+     * OpenSource
+     * - OpenSource：第三方库
+     * - AndroidUtils：工具类
+     */
+    private fun buildOpenSourceCategory(): ArrayList<RouterItem> {
+        val items = arrayListOf<RouterItem>()
+        items.add(RouterItem("── OpenSource ──", ""))
+        items.add(RouterItem("OpenSource", RouterPath.OpenSource.Main))
+        items.add(RouterItem("── AndroidUtils ──", ""))
+        items.add(RouterItem("AndroidUtils", RouterPath.Utils.Main))
+        return items
+    }
+
+    /**
+     * Other
      * - 示例：Sample, Feature
      */
-    private fun buildThirdPartyCategory(): ArrayList<RouterItem> {
+    private fun buildOtherCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("── 第三方库 ──", ""))
-        items.add(RouterItem("第三方库", RouterPath.OpenSource.Main))
-        items.add(RouterItem("", ""))
-        items.add(RouterItem("── 工具 ──", ""))
-        items.add(RouterItem("工具类", RouterPath.Utils.Main))
-        items.add(RouterItem("", ""))
         items.add(RouterItem("── 示例 ──", ""))
         items.add(RouterItem("技术示例", RouterPath.Sample.Main))
         items.add(RouterItem("业务功能", RouterPath.Feature.Main))

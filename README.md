@@ -135,13 +135,15 @@ MyApplication/
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
     │   └── module_jetpack      # Jetpack 组件（Paging）
     │
-    ├── [跨平台]
+    ├── [Compose & Flutter]
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     │   └── module_flutter      # Flutter 子工程
     │
-    └── [三方库 & 工具]
-        ├── module_open_source  # 第三方库（Lottie / Banner / PhotoView / RxJava / Coil / Glide）
-        ├── module_utils        # 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
+    ├── [OpenSource]
+    │   ├── module_open_source  # 第三方库（Lottie / Banner / PhotoView / RxJava / Coil / Glide）
+    │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
+    │
+    └── [Other]
         ├── module_sample       # 技术示例（Hook / Typeface）
         └── module_feature      # 业务功能（转盘 / 麦位动画 / 相机 / 裁剪）
 ```
