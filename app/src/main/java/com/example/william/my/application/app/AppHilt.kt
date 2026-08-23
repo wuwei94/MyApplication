@@ -3,10 +3,10 @@ package com.example.william.my.application.app
 import android.app.Application
 import com.example.william.my.core.base.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.hilt.qualifier.AppInit
-import com.example.william.my.core.base.hilt.qualifier.ArchInit
 import com.example.william.my.core.base.hilt.qualifier.BaseInit
 import com.example.william.my.core.base.hilt.qualifier.EventInit
 import com.example.william.my.core.base.hilt.qualifier.FlutterInit
+import com.example.william.my.core.base.hilt.qualifier.MavericksInit
 import com.example.william.my.core.base.hilt.qualifier.OpenSourceInit
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
@@ -22,10 +22,6 @@ class AppHilt : Application() {
     @Inject
     lateinit var appInit: IAppInit
 
-    @ArchInit
-    @Inject
-    lateinit var archInit: IAppInit
-
     @EventInit
     @Inject
     lateinit var eventInit: IAppInit
@@ -33,6 +29,10 @@ class AppHilt : Application() {
     @OpenSourceInit
     @Inject
     lateinit var openSourceInit: IAppInit
+
+    @MavericksInit
+    @Inject
+    lateinit var mavericksInit: IAppInit
 
     @FlutterInit
     @Inject
@@ -46,8 +46,8 @@ class AppHilt : Application() {
 
         appInit.init(this)
 
-        archInit.init(this)
         eventInit.init(this)
+        mavericksInit.init(this)
         openSourceInit.init(this)
 
         flutterInit.init(this) // FlutterEngine

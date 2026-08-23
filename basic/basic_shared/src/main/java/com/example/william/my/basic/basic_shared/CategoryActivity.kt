@@ -133,6 +133,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         val items = arrayListOf<RouterItem>()
         items.add(RouterItem("── 架构模式 ──", ""))
         items.add(RouterItem("架构模式", RouterPath.Arch.Main))
+        items.add(RouterItem("Mavericks", RouterPath.Mavericks.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 依赖注入 ──", ""))
         items.add(RouterItem("依赖注入", RouterPath.DI.Main))

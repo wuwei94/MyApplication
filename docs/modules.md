@@ -423,6 +423,16 @@
 | MvpActivity | MVP 架构模式 |
 | MvvmActivity | MVVM 架构模式 |
 | MviActivity | MVI 架构模式 |
+
+---
+
+### module_mavericks（Mavericks 架构）
+
+基于 Airbnb Mavericks 框架的 MVI 架构独立模块（已从 module_arch 拆出）。
+
+| Activity | 功能 |
+|----------|------|
+| MavericksMainActivity | 模块入口，导航到 Counter、Mavericks 示例 |
 | CounterActivity | Mavericks 计数器示例 |
 | MavericksActivity | Mavericks 文章列表示例 |
 

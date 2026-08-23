@@ -177,6 +177,9 @@ include(":modules:module_di")
 // 架构模式
 include(":modules:module_arch")
 
+// Mavericks 架构（从 module_arch 拆出）
+include(":modules:module_mavericks")
+
 // Compose
 include(":modules:module_compose")
 

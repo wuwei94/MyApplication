@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.article.data
+package com.example.william.my.module.mavericks.article.data
 
 import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MavericksState

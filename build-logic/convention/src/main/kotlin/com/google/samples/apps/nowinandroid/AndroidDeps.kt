@@ -102,6 +102,7 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_storage"))
             "implementation"(project(":modules:module_di"))
             "implementation"(project(":modules:module_arch"))
+            "implementation"(project(":modules:module_mavericks"))
 
             "implementation"(project(":modules:module_compose"))
             "implementation"(project(":modules:module_flutter"))

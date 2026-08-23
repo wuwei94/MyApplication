@@ -1,10 +1,10 @@
-package com.example.william.my.module.arch.mavericks.article.repository
+package com.example.william.my.module.mavericks.article.repository
 
 import com.airbnb.mvrx.BuildConfig
 import com.airbnb.mvrx.ExperimentalMavericksApi
 import com.airbnb.mvrx.MavericksRepository
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
-import com.example.william.my.module.arch.mavericks.article.data.ArticleMavericksState
+import com.example.william.my.module.mavericks.article.data.ArticleMavericksState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 

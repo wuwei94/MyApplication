@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.article.viewmodel
+package com.example.william.my.module.mavericks.article.viewmodel
 
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MavericksViewModel
@@ -6,7 +6,7 @@ import com.airbnb.mvrx.MavericksViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
-import com.example.william.my.module.arch.mavericks.article.data.ArticleMavericksState
+import com.example.william.my.module.mavericks.article.data.ArticleMavericksState
 import kotlinx.coroutines.Dispatchers
 
 /**

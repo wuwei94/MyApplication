@@ -1,7 +1,7 @@
-package com.example.william.my.module.arch.mavericks.counter.viewmodel
+package com.example.william.my.module.mavericks.counter.viewmodel
 
 import com.airbnb.mvrx.MavericksViewModel
-import com.example.william.my.module.arch.mavericks.counter.data.CounterState
+import com.example.william.my.module.mavericks.counter.data.CounterState
 
 /**
  * 计数器 ViewModel

@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.counter.data
+package com.example.william.my.module.mavericks.counter.data
 
 import com.airbnb.mvrx.MavericksState
 

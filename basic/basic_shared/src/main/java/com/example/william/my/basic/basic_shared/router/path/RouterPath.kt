@@ -307,9 +307,16 @@ object RouterPath {
         const val MVP = "${Arch}/MVP"
         const val MVVM = "${Arch}/MVVM"
         const val MVI = "${Arch}/MVI"
+    }
 
-        const val Counter = "${Arch}/Counter"
-        const val Mavericks = "${Arch}/Mavericks"
+    // Mavericks 架构
+    object Mavericks {
+        private const val PATH = "/Mavericks"
+
+        const val Main = "${PATH}/Main"
+
+        const val Counter = "${PATH}/Counter"
+        const val Mavericks = "${PATH}/Mavericks"
     }
 
     // 事件总线

@@ -43,6 +43,29 @@
 
 ---
 
+## Application 初始化（两种方案可手动切换）
+
+工程演示两种 Application 级别的初始化方案，二者通过 `AndroidManifest` 中的
+`android:name` 切换（`App` ↔ `AppHilt`），同一时刻只有一种生效：
+
+| 方案 | 机制 | 入口 | 各模块接入方式 |
+|------|------|------|----------------|
+| 手动方案 | 继承 `BaseAppInit`，在 `App.initApp()` 中 `registerAppInit(...)` | `app.App` | 模块提供 `XxxApp : BaseAppInit` |
+| Hilt 方案 | 实现 `IAppInit`，用 `@XxxInit` 限定符经 `@Binds` 绑定，注入 `AppHilt` 调用 | `app.AppHilt`（`@HiltAndroidApp`） | 模块提供 `XxxInitImpl : IAppInit` + `XxxModule` |
+
+已接入两套方案的模块（`@XxxInit` 与 `registerAppInit` 一一对应）：
+
+- `module_event`：`EventApp`（手动）/ `EventInitImpl` + `EventModule`（Hilt）
+- `module_open_source`：`OpenSourceApp` / `OpenSourceInitImpl` + `OpenSourceModule`
+- `module_flutter`：`FlutterApp` / `FlutterInitImpl` + `FlutterModule`
+- `module_mavericks`：`MavericksApp` / `MavericksInitImpl` + `MavericksModule`
+- `module_arch`：无三方库初始化需求，仅保留 Hilt 方案示例外壳 `ArchInitImpl` + `ArchModule`
+
+> 手动方案在 `App.initApp()` 中注册 `EventApp / MavericksApp / OpenSourceApp / FlutterApp`；
+> Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → archInit → eventInit → mavericksInit → openSourceInit → flutterInit` 顺序调用。
+
+---
+
 ## Project Structure
 
 ```
@@ -102,7 +125,8 @@ MyApplication/
     │   └── module_system       # 系统能力（Notification / Permission / SecureKey / FloatWindow）
     │
     ├── [架构模式]
-    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Mavericks）
+    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI）
+│   ├── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   └── module_performance  # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
@@ -335,7 +359,15 @@ Jetpack 组件库 Demo。
 | MVP | Presenter 持有 View 引用，手动桥接 |
 | MVVM | LiveData + ViewModel，UseCase 封装单一业务逻辑 |
 | MVI | 单向数据流：State → UI → Intent → ViewModel → State |
-| Mavericks | 基于 Mavericks 框架的 MVI 实现，含 Counter 示例 |
+
+> Mavericks 已拆分为独立模块 `module_mavericks`。
+
+### module_mavericks（Mavericks 架构）
+
+基于 Airbnb [Mavericks](https://airbnb.io/mavericks/) 框架的 MVI 架构独立模块（已从 module_arch 拆出），覆盖不可变状态、状态持久化与异步请求。
+
+- **Counter**：基础 State 的绑定与更新（setState / withState）
+- **Mavericks（文章列表）**：异步请求 + 分页列表数据绑定，演示 MavericksViewModel / MavericksState / MavericksView 协作
 
 ### module_compose（Compose 示例）
 

@@ -12,11 +12,11 @@ annotation class AppInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ArchInit
+annotation class EventInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class EventInit
+annotation class MavericksInit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

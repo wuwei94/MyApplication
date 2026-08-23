@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.article
+package com.example.william.my.module.mavericks.article
 
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
@@ -7,8 +7,8 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.core.base.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
-import com.example.william.my.module.arch.mavericks.article.data.ArticleMavericksState
-import com.example.william.my.module.arch.mavericks.article.viewmodel.ArticleMavericksViewModel
+import com.example.william.my.module.mavericks.article.data.ArticleMavericksState
+import com.example.william.my.module.mavericks.article.viewmodel.ArticleMavericksViewModel
 
 /**
  * Mavericks 文章列表页面

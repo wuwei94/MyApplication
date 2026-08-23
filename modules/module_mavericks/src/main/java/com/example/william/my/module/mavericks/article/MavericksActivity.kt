@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.article
+package com.example.william.my.module.mavericks.article
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -23,7 +23,7 @@ import com.example.william.my.core.base.activity.BaseFragmentActivity
  *
  * https://airbnb.io/mavericks/
  */
-@Route(path = RouterPath.Arch.Mavericks)
+@Route(path = RouterPath.Mavericks.Mavericks)
 class MavericksActivity : BaseFragmentActivity() {
 
     override fun setFragment(): Fragment {

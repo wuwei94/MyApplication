@@ -63,7 +63,7 @@ object ServiceLocator {
     /**
      * 获取文章数据仓库实例（[DefaultArticleRepository]）。
      *
-     * 专门提供给 module_arch 中的各个架构模式使用：
+     * 专门提供给 module_arch 与 module_mavericks 中的各个架构模式使用：
      * - MVP：ArticlePresenter
      * - MVVM：ArticleLiveDataViewModel、ViewModelFactory
      * - MVI：ArticleStateFlowViewModel

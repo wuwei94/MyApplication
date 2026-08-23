@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.counter
+package com.example.william.my.module.mavericks.counter
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -18,7 +18,7 @@ import com.example.william.my.core.base.activity.BaseFragmentActivity
  *
  * https://airbnb.io/mavericks/
  */
-@Route(path = RouterPath.Arch.Counter)
+@Route(path = RouterPath.Mavericks.Counter)
 class CounterActivity : BaseFragmentActivity() {
 
     override fun setFragment(): Fragment {

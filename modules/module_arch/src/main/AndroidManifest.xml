@@ -6,7 +6,5 @@
         <activity android:name=".mvp.MvpActivity" />
         <activity android:name=".mvvm.MvvmActivity" />
         <activity android:name=".mvi.MviActivity" />
-        <activity android:name=".mavericks.counter.CounterActivity" />
-        <activity android:name=".mavericks.article.MavericksActivity" />
     </application>
 </manifest>

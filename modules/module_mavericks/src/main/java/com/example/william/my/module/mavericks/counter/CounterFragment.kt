@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mavericks.counter
+package com.example.william.my.module.mavericks.counter
 
 import android.os.Bundle
 import android.view.View
@@ -7,9 +7,9 @@ import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseBinding
-import com.example.william.my.module.arch.R
-import com.example.william.my.module.arch.mavericks.counter.viewmodel.CounterViewModel
-import com.example.william.my.module.arch.mavericks.utils.viewBinding
+import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.module.mavericks.counter.viewmodel.CounterViewModel
+import com.example.william.my.module.mavericks.utils.viewBinding
 
 /**
  * 计数器页面
