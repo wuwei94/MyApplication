@@ -26,7 +26,7 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     private fun getCategoryTitle(): String {
         return when (category) {
-            "ui" -> "UI 组件"
+            "ui" -> "UI 与交互"
             "network" -> "网络通信"
             "storage" -> "数据存储"
             "system" -> "系统能力"
@@ -48,32 +48,34 @@ class CategoryActivity : RouterRecyclerActivity() {
             "arch" -> buildArchCategory()
             "kotlin_jetpack" -> buildKotlinJetpackCategory()
             "compose_flutter" -> buildComposeFlutterCategory()
-            "open_source" -> buildOpenSourceCategory()
-            "other" -> buildOtherCategory()
+            "open_source_android_utils" -> buildOpenSourceCategory()
+            "sample_feature" -> buildOtherCategory()
             else -> arrayListOf()
         }
     }
 
     /**
-     * UI 组件
-     * - 系统原生：Widget (RecyclerView, ViewPager, Dialog, AppBar, WebView, FlexBox)
-     * - 自定义：WidgetCustom (BlurView, MarqueeView, Sensor3D, Spinner, TitleBar, etc.)
+     * UI 与交互
+     * - 控件：官方控件（Widget）/ 自定义控件（WidgetCustom）/ 第三方控件（WidgetThirdparty）
      * - 导航：Tab
      * - 动画：Anim
-     * - 第三方：WidgetThirdparty（Banner, CountdownView, ShadowLayout, SwipeLayout, RealtimeBlurView, PopWindow, LoadSir）
+     * - 图片加载：ImageLoader（Coil / Glide / lib_imageloader）
      */
     private fun buildUiCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("── 系统原生 ──", ""))
-        items.add(RouterItem("标准控件", RouterPath.Widget.Main))
-        items.add(RouterItem("Tab 导航", RouterPath.Tab.Main))
-        items.add(RouterItem("动画", RouterPath.Anim.Main))
-        items.add(RouterItem("", ""))
-        items.add(RouterItem("── 自定义 ──", ""))
+        items.add(RouterItem("── 控件 ──", ""))
+        items.add(RouterItem("官方控件", RouterPath.Widget.Main))
         items.add(RouterItem("自定义控件", RouterPath.WidgetCustom.Main))
+        items.add(RouterItem("第三方控件", RouterPath.WidgetThirdparty.Main))
         items.add(RouterItem("", ""))
-        items.add(RouterItem("── 第三方 ──", ""))
-        items.add(RouterItem("UI 库", RouterPath.WidgetThirdparty.Main))
+        items.add(RouterItem("── 导航 ──", ""))
+        items.add(RouterItem("Tab 导航", RouterPath.Tab.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 动画交互 ──", ""))
+        items.add(RouterItem("动画交互", RouterPath.Anim.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 图片加载 ──", ""))
+        items.add(RouterItem("图片加载", RouterPath.ImageLoader.Main))
         return items
     }
 

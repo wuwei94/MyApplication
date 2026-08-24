@@ -5,6 +5,7 @@
         <activity android:name=".WidgetMainActivity" />
         <activity android:name=".activity.AppBarActivity" />
         <activity android:name=".activity.DialogActivity" />
+        <activity android:name=".activity.PopWindowActivity" />
         <activity android:name=".activity.FlexBoxActivity" />
         <activity android:name=".activity.RecyclerViewActivity" />
         <activity android:name=".activity.RecyclerViewNestedActivity" />

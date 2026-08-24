@@ -15,6 +15,7 @@ class TabMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ViewPagerTab", RouterPath.Tab.ViewPagerTab))
         routerItems.add(RouterItem("ViewPager2Tab", RouterPath.Tab.ViewPager2Tab))
         routerItems.add(RouterItem("BottomNav", RouterPath.Tab.BottomNav))
+        routerItems.add(RouterItem("FlycoTabLayout", RouterPath.Tab.FlycoTabLayout))
         return routerItems
     }
 }

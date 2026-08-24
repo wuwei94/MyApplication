@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.widget_thirdparty.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.databinding.OpenActivityPhotoViewBinding
+import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityPhotoViewBinding
 
 /**
  * PhotoView — 支持手势缩放的图片控件
@@ -36,11 +36,11 @@ import com.example.william.my.module.opensource.databinding.OpenActivityPhotoVie
  *
  * https://github.com/chrisbanes/PhotoView
  */
-@Route(path = RouterPath.OpenSource.PhotoView)
-class PhotoViewActivity : BaseVBActivity<OpenActivityPhotoViewBinding>() {
+@Route(path = RouterPath.WidgetThirdparty.PhotoView)
+class PhotoViewActivity : BaseVBActivity<WidgetThirdpartyActivityPhotoViewBinding>() {
 
-    override fun getViewBinding(): OpenActivityPhotoViewBinding {
-        return OpenActivityPhotoViewBinding.inflate(layoutInflater)
+    override fun getViewBinding(): WidgetThirdpartyActivityPhotoViewBinding {
+        return WidgetThirdpartyActivityPhotoViewBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

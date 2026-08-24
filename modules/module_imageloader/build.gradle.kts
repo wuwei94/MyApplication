@@ -5,13 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.tab"
-    resourcePrefix = "tab_"
+    namespace = "com.example.william.my.module.imageloader"
 }
 
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
 
-    implementation(libs.tablayout)
+    implementation(project(":libs:lib_imageloader"))
+
+    implementation(libs.coil)
+    implementation(libs.glide)
 }

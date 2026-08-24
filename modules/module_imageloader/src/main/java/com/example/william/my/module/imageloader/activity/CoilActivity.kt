@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.activity.imageloader
+package com.example.william.my.module.imageloader.activity
 
 import android.os.Bundle
 import coil3.load
@@ -42,7 +42,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://github.com/coil-kt/coil
  */
-@Route(path = RouterPath.OpenSource.Coil)
+@Route(path = RouterPath.ImageLoader.Coil)
 class CoilActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

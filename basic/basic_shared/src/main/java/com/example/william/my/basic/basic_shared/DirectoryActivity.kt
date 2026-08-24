@@ -18,8 +18,8 @@ class DirectoryActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
 
-        // UI 组件
-        routerItems.add(RouterItem("UI 组件", getCategoryPath("ui"), getCategoryParams("ui")))
+        // UI交互
+        routerItems.add(RouterItem("UI交互", getCategoryPath("ui"), getCategoryParams("ui")))
 
         // 网络通信
         routerItems.add(RouterItem("网络通信", getCategoryPath("network"), getCategoryParams("network")))
@@ -40,10 +40,10 @@ class DirectoryActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Compose & Flutter", getCategoryPath("compose_flutter"), getCategoryParams("compose_flutter")))
 
         // 第三方开源库
-        routerItems.add(RouterItem("OpenSource", getCategoryPath("open_source"), getCategoryParams("open_source")))
+        routerItems.add(RouterItem("OpenSource & AndroidUtils", getCategoryPath("open_source_android_utils"), getCategoryParams("open_source_android_utils")))
 
         // 其他
-        routerItems.add(RouterItem("Other", getCategoryPath("other"), getCategoryParams("other")))
+        routerItems.add(RouterItem("Sample & Feature", getCategoryPath("sample_feature"), getCategoryParams("sample_feature")))
 
         return routerItems
     }

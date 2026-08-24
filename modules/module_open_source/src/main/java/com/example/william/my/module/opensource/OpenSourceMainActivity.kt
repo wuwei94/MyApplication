@@ -10,12 +10,6 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("── UI 组件 ──", ""))
-        routerItems.add(RouterItem("EasyFloat", RouterPath.OpenSource.EasyFloat))
-        routerItems.add(RouterItem("FlycoTabLayout", RouterPath.OpenSource.FlycoTabLayout))
-        routerItems.add(RouterItem("PhotoView", RouterPath.OpenSource.PhotoView))
-
-        routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("── 选择器 ──", ""))
         routerItems.add(RouterItem("CityPicker", RouterPath.OpenSource.CityPicker))
         routerItems.add(RouterItem("PickerView", RouterPath.OpenSource.PickerView))
@@ -30,11 +24,6 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("── 工具 ──", ""))
         routerItems.add(RouterItem("PermissionX", RouterPath.OpenSource.PermissionX))
         routerItems.add(RouterItem("RxJava", RouterPath.OpenSource.RxJava))
-
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("── 图片加载 ──", ""))
-        routerItems.add(RouterItem("Coil", RouterPath.OpenSource.Coil))
-        routerItems.add(RouterItem("Glide", RouterPath.OpenSource.Glide))
 
         routerItems.add(RouterItem(" ", ""))
         routerItems.add(RouterItem("── 多状态页面 ──", ""))

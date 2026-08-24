@@ -102,11 +102,12 @@ MyApplication/
 └── modules                     # Feature 模块（按技术领域分组）
     │
     ├── [UI 组件]
-    │   ├── module_widget       # 标准控件（Dialog / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
-    │   ├── module_tab          # Tab 导航（TabLayout / FragmentTabHost / RadioGroup / ViewPager / ViewPager2 联动）
+    │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
+    │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
     │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
-    │   ├── module_widget_custom  # 自定义控件（AlertDialog / BlurView / NinePatch / 跑马灯 / 验证码）
-    │   └── module_widget_thirdparty   # UI 库（Banner / CountdownView / PopWindow / ShadowLayout / SwipeLayout / RealtimeBlurView）
+    │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
+    │   ├── module_widget_thirdparty   # UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView）
+    │   └── module_imageloader  # 图片加载（Coil / Glide / lib_imageloader）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 客户端（HttpURLConnection / Volley）
@@ -128,7 +129,7 @@ MyApplication/
     │
     ├── [架构模式]
     │   ├── module_arch         # 架构模式（MVP / MVVM / MVI）
-│   ├── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
+│   │   ├── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   └── module_performance  # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
@@ -141,11 +142,11 @@ MyApplication/
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     │   └── module_flutter      # Flutter 子工程
     │
-    ├── [OpenSource]
-    │   ├── module_open_source  # 第三方库（PhotoView / RxJava / Coil / Glide / LoadSir）
+    ├── [OpenSource & AndroidUtils]
+    │   ├── module_open_source  # 第三方库（RxJava / LoadSir）
     │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
-    └── [Other]
+    └── [Sample & Feature]
         ├── module_sample       # 技术示例（Hook / Typeface）
         └── module_feature      # 业务功能（转盘 / 麦位动画 / 裁剪）
 ```
@@ -158,7 +159,7 @@ MyApplication/
 
 演示 Android 标准 UI 组件。
 
-- AppBar / Dialog / FlexBox
+- AppBar / Dialog / PopupWindow / FlexBox
 - RecyclerView（基础 / 嵌套滚动）
 - ViewPager / ViewPager2
 - ViewFlipper / WebView
@@ -171,6 +172,7 @@ MyApplication/
 - RadioGroup + FrameLayout Tab
 - ViewPager + RadioGroup 联动
 - BottomNavigationView + Fragment（底部导航栏）
+- FlycoTabLayout（Sliding / Common / Segment 三种样式）
 
 ### module_anim（动画）
 
@@ -197,6 +199,7 @@ MyApplication/
 - 无限滚动 ImageView
 - 验证码控件
 - BottomSheetDialog / AlertDialog
+- PopupWindow 封装（CustomPopWindow）
 - Spinner / TitleBar
 - 九宫格拉伸图片（NinePatch）
 
@@ -322,11 +325,17 @@ WebSocket 专项功能演示。
 
 第三方开源框架集成 Demo。
 
-- UI：FlycoTabLayout / PhotoView / EasyFloat
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / PermissionX
-- 图片加载：Coil / Glide
 - 多状态页：LoadSir
+
+### module_imageloader（图片加载）
+
+图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 统一封装。
+
+- Coil：Coil 3 原生加载（基础 / crossfade / placeholder / error）
+- Glide：Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade）
+- ImageLoader：`lib_imageloader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换）
 
 ### module_widget_thirdparty（UI 库）
 
@@ -334,7 +343,8 @@ WebSocket 专项功能演示。
 
 - 轮播：Banner
 - 倒计时：CountdownView
-- 弹窗：PopupWindow
+- 悬浮窗：EasyFloat
+- 图片缩放：PhotoView
 - 阴影：ShadowLayout
 - 侧滑：SwipeLayout
 - 模糊：RealtimeBlurView

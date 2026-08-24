@@ -1,10 +1,10 @@
-package com.example.william.my.module.opensource.activity.widget
+package com.example.william.my.module.widget_thirdparty.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.opensource.R
+import com.example.william.my.module.widget_thirdparty.R
 import com.lzf.easyfloat.EasyFloat
 
 /**
@@ -36,7 +36,7 @@ import com.lzf.easyfloat.EasyFloat
  *
  * https://github.com/princekin-f/EasyFloat
  */
-@Route(path = RouterPath.OpenSource.EasyFloat)
+@Route(path = RouterPath.WidgetThirdparty.EasyFloat)
 class EasyFloatActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -65,7 +65,7 @@ class EasyFloatActivity : BasicResponseActivity() {
 
     private fun showEasyFloat() {
         EasyFloat.with(this)
-            .setLayout(R.layout.open_layout_float)
+            .setLayout(R.layout.widget_thirdparty_layout_float)
             .show()
     }
 }

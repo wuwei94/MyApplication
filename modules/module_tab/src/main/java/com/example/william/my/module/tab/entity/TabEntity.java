@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.entity;
+package com.example.william.my.module.tab.entity;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 

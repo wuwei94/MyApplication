@@ -14,9 +14,10 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Banner", RouterPath.WidgetThirdparty.Banner))
-        routerItems.add(RouterItem("RealtimeBlurView", RouterPath.WidgetThirdparty.RealtimeBlurView))
         routerItems.add(RouterItem("CountdownView", RouterPath.WidgetThirdparty.CountdownView))
-        routerItems.add(RouterItem("PopWindow", RouterPath.WidgetThirdparty.PopWindow))
+        routerItems.add(RouterItem("EasyFloat", RouterPath.WidgetThirdparty.EasyFloat))
+        routerItems.add(RouterItem("PhotoView", RouterPath.WidgetThirdparty.PhotoView))
+        routerItems.add(RouterItem("RealtimeBlurView", RouterPath.WidgetThirdparty.RealtimeBlurView))
         routerItems.add(RouterItem("ShadowLayout", RouterPath.WidgetThirdparty.ShadowLayout))
         routerItems.add(RouterItem("SwipeLayout", RouterPath.WidgetThirdparty.SwipeLayout))
 

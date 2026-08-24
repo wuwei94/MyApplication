@@ -93,7 +93,6 @@ tablayout = "3.0.0"
 photoview = "2.3.0"
 pickerview = "4.1.9"
 pictureselector = "v3.11.2"
-popwindow = "2.1.1"
 shadowlayout = "3.3.2"
 swipelayout = "1.2.0"
 # ##################################################################################################
@@ -326,8 +325,6 @@ photoview = { group = "com.github.chrisbanes", name = "PhotoView", version.ref =
 pickerview = { group = "com.contrarywind", name = "Android-PickerView", version.ref = "pickerview" }
 # https://github.com/LuckSiege/PictureSelector
 pictureselector = { group = "io.github.lucksiege", name = "pictureselector", version.ref = "pictureselector" }
-# https://github.com/pinguo-zhouwei/CustomPopwindow
-custompopwindow = { group = "com.github.pinguo-zhouwei", name = "CustomPopwindow", version.ref = "popwindow" }
 # https://github.com/lihangleo2/ShadowLayout
 shadowlayout = { group = "com.github.lihangleo2", name = "ShadowLayout", version.ref = "shadowlayout" }
 # https://github.com/daimajia/AndroidSwipeLayout

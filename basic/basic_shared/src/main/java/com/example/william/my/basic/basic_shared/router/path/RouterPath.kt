@@ -50,6 +50,7 @@ object RouterPath {
 
         const val Appbar = "${Widget}/Appbar"
         const val Dialog = "${Widget}/Dialog"
+        const val PopWindow = "${Widget}/PopWindow"
         const val FlexBox = "${Widget}/FlexBox"
         const val RecyclerView = "${Widget}/RecyclerView"
         const val ViewFlipper = "${Widget}/ViewFlipper"
@@ -70,6 +71,7 @@ object RouterPath {
         const val ViewPagerTab = "${Tab}/ViewPagerTab"
         const val ViewPager2Tab = "${Tab}/ViewPager2Tab"
         const val BottomNav = "${Tab}/BottomNav"
+        const val FlycoTabLayout = "${Tab}/FlycoTabLayout"
     }
 
     // 动画
@@ -98,6 +100,7 @@ object RouterPath {
         const val Main = "${WidgetCustom}/Main"
 
         const val AlertDialog = "${WidgetCustom}/AlertDialog"
+        const val CustomPopWindow = "${WidgetCustom}/CustomPopWindow"
         const val BlurView = "${WidgetCustom}/BlurView"
         const val InfiniteImage = "${WidgetCustom}/InfiniteImage"
         const val MarqueeView = "${WidgetCustom}/MarqueeView"
@@ -278,11 +281,6 @@ object RouterPath {
 
         const val Main = "${OpenSource}/Main"
 
-        // ── UI 组件 ──
-        const val EasyFloat = "${OpenSource}/EasyFloat"
-        const val FlycoTabLayout = "${OpenSource}/FlycoTabLayout"
-        const val PhotoView = "${OpenSource}/PhotoView"
-
         // ── 选择器 ──
         const val CityPicker = "${OpenSource}/CityPicker"
         const val PickerView = "${OpenSource}/PickerView"
@@ -292,12 +290,19 @@ object RouterPath {
         const val PermissionX = "${OpenSource}/PermissionX"
         const val RxJava = "${OpenSource}/RxJava"
 
-        // ── 图片加载 ──
-        const val Coil = "${OpenSource}/Coil"
-        const val Glide = "${OpenSource}/Glide"
-
         // ── 多状态页面 ──
         const val LoadSir = "${OpenSource}/LoadSir"
+    }
+
+    // 图片加载
+    object ImageLoader {
+        private const val PATH = "/ImageLoader"
+
+        const val Main = "${PATH}/Main"
+
+        const val Coil = "${PATH}/Coil"
+        const val Glide = "${PATH}/Glide"
+        const val ImageLoader = "${PATH}/ImageLoader"
     }
 
     // UI 库（第三方 UI 控件库）
@@ -308,8 +313,9 @@ object RouterPath {
 
         const val Banner = "${WidgetThirdparty}/Banner"
         const val CountdownView = "${WidgetThirdparty}/CountdownView"
+        const val EasyFloat = "${WidgetThirdparty}/EasyFloat"
+        const val PhotoView = "${WidgetThirdparty}/PhotoView"
         const val RealtimeBlurView = "${WidgetThirdparty}/RealtimeBlurView"
-        const val PopWindow = "${WidgetThirdparty}/PopWindow"
         const val ShadowLayout = "${WidgetThirdparty}/ShadowLayout"
         const val SwipeLayout = "${WidgetThirdparty}/SwipeLayout"
     }

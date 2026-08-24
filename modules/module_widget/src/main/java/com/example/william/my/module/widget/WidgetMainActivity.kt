@@ -12,6 +12,7 @@ class WidgetMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Appbar", RouterPath.Widget.Appbar))
         routerItems.add(RouterItem("Dialog", RouterPath.Widget.Dialog))
+        routerItems.add(RouterItem("PopWindow", RouterPath.Widget.PopWindow))
         routerItems.add(RouterItem("FlexBox", RouterPath.Widget.FlexBox))
         routerItems.add(RouterItem("RecyclerView", RouterPath.Widget.RecyclerView))
         routerItems.add(RouterItem("RecyclerViewNested", RouterPath.Widget.RecyclerViewNested))

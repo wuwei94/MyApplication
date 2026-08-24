@@ -5,6 +5,7 @@
         <activity android:name=".WidgetCustomMainActivity" />
 
         <activity android:name=".activity.AlertDialogActivity" />
+        <activity android:name=".activity.CustomPopWindowActivity" />
         <activity android:name=".activity.BlurViewActivity" />
         <activity android:name=".activity.InfiniteImageActivity" />
         <activity android:name=".activity.MarqueeViewActivity" />

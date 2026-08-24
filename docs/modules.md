@@ -12,6 +12,8 @@
 │   ├── 系统原生：标准控件、Tab 导航、动画
 │   ├── 自定义：自定义控件
 │   └── 第三方：UI 库
+├── 图片加载
+│   └── Coil、Glide、lib_imageloader
 ├── 网络通信
 │   ├── HTTP 请求：HTTP、OkHttp、Retrofit、Ktor、RxRetrofit
 │   └── 长连接：WebSocket
@@ -62,6 +64,7 @@
 | module_utils | 工具类 | UtilsMainActivity | /Utils |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
+| module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
 | module_database | 数据库 | DatabaseMainActivity | /Database |
@@ -83,6 +86,7 @@
 |----------|------|
 | AppBarActivity | AppBarLayout + CollapsingToolbarLayout + TabLayout |
 | DialogActivity | AlertDialog、DatePickerDialog、DialogFragment |
+| PopWindowActivity | PopupWindow 弹窗 |
 | FlexBoxActivity | FlexboxLayoutManager 弹性布局 |
 | RecyclerViewActivity | RecyclerView 多种 LayoutManager |
 | RecyclerViewNestedActivity | RecyclerView 嵌套滚动 |
@@ -104,6 +108,7 @@
 | ViewPagerTabActivity | ViewPager + NoScrollViewPager + RadioGroup 联动 |
 | ViewPager2TabActivity | ViewPager2 + RadioGroup 联动 |
 | BottomNavActivity | BottomNavigationView + Fragment（底部导航栏） |
+| FlycoTabLayoutActivity | FlycoTabLayout 标签页（Sliding / Common / Segment 三种样式） |
 
 ---
 
@@ -133,6 +138,7 @@
 | Activity | 功能 |
 |----------|------|
 | AlertDialogActivity | 自定义 IosAlertDialog/BottomSheetDialog |
+| CustomPopWindowActivity | 自定义 PopupWindow 封装 |
 | BlurViewActivity | 自定义高斯模糊控件 |
 | InfiniteImageActivity | 无限循环图片控件 |
 | MarqueeViewActivity | 自定义跑马灯滚动控件 |
@@ -351,21 +357,29 @@
 
 ### module_open_source（第三方库）
 
-演示第三方开源库的使用。模块内部按类别组织：`widget`（UI 组件）/ `selector`（选择器）/ `utils`（工具）/ `imageloader`（图片加载），入口列表也按此分组展示。
+演示第三方开源库的使用。模块内部按类别组织：`selector`（选择器）/ `utils`（工具）/ `loadsir`（多状态页面），入口列表也按此分组展示。
 
 | Activity | 功能 |
 |----------|------|
-| EasyFloatActivity | EasyFloat 悬浮窗 |
-| FlycoTabLayoutActivity | FlycoTabLayout 标签页 |
-| PhotoViewActivity | PhotoView 图片手势缩放 |
 | CityPickerActivity | CityPicker 城市选择器 |
 | PickerViewActivity | PickerView 选择器 |
 | PictureSelectorActivity | PictureSelector 图片选择器 |
 | PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |
-| CoilActivity | Coil 图片加载库 |
-| GlideActivity | Glide 图片加载库 |
 | LoadSirActivity | LoadSir 加载状态页 |
+
+---
+
+### module_imageloader（图片加载）
+
+图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 统一封装。
+
+| Activity | 功能 |
+|----------|------|
+| ImageLoaderMainActivity | 模块入口，导航到 Coil、Glide、ImageLoader 示例页面 |
+| CoilActivity | Coil 3 原生加载（基础 / crossfade / placeholder / error） |
+| GlideActivity | Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade） |
+| ImageLoaderActivity | `lib_imageloader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
 
 ---
 
@@ -378,7 +392,8 @@
 | WidgetThirdpartyMainActivity | 模块入口，导航到各 UI 库示例页面 |
 | BannerActivity | Youth Banner 轮播图 |
 | CountdownActivity | CountdownView 倒计时 |
-| PopWindowActivity | PopupWindow 弹窗 |
+| EasyFloatActivity | EasyFloat 悬浮窗 |
+| PhotoViewActivity | PhotoView 图片手势缩放 |
 | ShadowLayoutActivity | ShadowLayout 阴影布局 |
 | SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
 | RealtimeBlurViewActivity | RealtimeBlurView 实时模糊 |

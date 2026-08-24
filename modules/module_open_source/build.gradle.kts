@@ -17,15 +17,9 @@ dependencies {
     implementation(project(":basic:basic_shared"))
 
     implementation(libs.citypicker)
-    implementation(libs.easyfloat)
-    implementation(libs.tablayout)
-    implementation(libs.photoview)
     implementation(libs.pickerview)
     implementation(libs.pictureselector)
-    //CustomPopWindow
-    //implementation(libs.custompopwindow)
 
-    implementation(libs.coil)
     implementation(libs.glide)
 
     implementation(libs.permission)

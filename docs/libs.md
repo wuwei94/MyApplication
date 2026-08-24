@@ -19,7 +19,7 @@
 | `lib_websocket_java` | Java-WebSocket 客户端与服务端 | Java-WebSocket | - |
 | `lib_netty` | Netty TCP 客户端与服务端 | Netty | - |
 | `lib_nanohttpd` | 嵌入式 HTTP Server | NanoHTTPD | - |
-| `lib_imageloader` | 图片加载封装 | Glide | - |
+| `lib_imageloader` | 图片加载封装 | Glide、Coil | - |
 | `lib_eventbus` | 事件总线封装 | EventBus | - |
 | `lib_widget` | 自定义 Widget 集合 | Android View | - |
 | `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
@@ -94,7 +94,7 @@ com.example.william.my.core.rx.request/
 
 ### UI 与通用能力
 
-- `lib_imageloader`：Glide 图片加载。
+- `lib_imageloader`：图片加载封装（IImageLoader 接口 + Glide / Coil 内核）。
 - `lib_eventbus`：EventBus 注册、注销和事件发送。
 - `lib_widget`：项目自定义 View。
 - `lib_ninepatch`：NinePatch 图片处理工具。

@@ -120,15 +120,16 @@ include(":libs:lib_eventbus")
 include(":libs:lib_widget")
 include(":libs:lib_ninepatch")
 
-
-// UI 控件
-include(":modules:module_widget")
 // Tab 导航
 include(":modules:module_tab")
-// 动画
+// 动画特效
 include(":modules:module_anim")
+// UI 控件
+include(":modules:module_widget")
 // 自定义控件
 include(":modules:module_widget_custom")
+// 第三方控件
+include(":modules:module_widget_thirdparty")
 
 // 同步
 include(":modules:module_async")
@@ -146,7 +147,7 @@ include(":modules:module_performance")
 // 相机（CameraX 多媒体）
 include(":modules:module_camera")
 
-// HTTP 客户端
+// HTTP
 include(":modules:module_http")
 // Ktor
 include(":modules:module_ktor")
@@ -165,8 +166,8 @@ include(":modules:module_utils")
 include(":modules:module_event")
 // 第三方库
 include(":modules:module_open_source")
-// UI 库（第三方 UI 控件库）
-include(":modules:module_widget_thirdparty")
+// 图片加载
+include(":modules:module_imageloader")
 
 // Kotlin 特性
 include(":modules:module_kotlin")
@@ -178,10 +179,9 @@ include(":modules:module_database")
 include(":modules:module_storage")
 // 依赖注入
 include(":modules:module_di")
-// 架构模式
+// MVP，MVI，MVVM 架构
 include(":modules:module_arch")
-
-// Mavericks 架构（从 module_arch 拆出）
+// Mavericks 架构
 include(":modules:module_mavericks")
 
 // Compose

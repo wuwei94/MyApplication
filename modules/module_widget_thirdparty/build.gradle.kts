@@ -15,6 +15,8 @@ dependencies {
     // 第三方 UI 控件库
     implementation(libs.banner)
     implementation(libs.countdownview)
+    implementation(libs.easyfloat)
+    implementation(libs.photoview)
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
     implementation(libs.blurview)

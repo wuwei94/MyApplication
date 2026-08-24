@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".ImageLoaderMainActivity" />
+
+        <activity android:name=".activity.CoilActivity" />
+        <activity android:name=".activity.GlideActivity" />
+        <activity android:name=".activity.ImageLoaderActivity" />
+    </application>
+
+</manifest>

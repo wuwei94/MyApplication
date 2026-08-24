@@ -11,6 +11,7 @@ class WidgetCustomMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("AlertDialog", RouterPath.WidgetCustom.AlertDialog))
+        routerItems.add(RouterItem("CustomPopWindow", RouterPath.WidgetCustom.CustomPopWindow))
         routerItems.add(RouterItem("BlurView", RouterPath.WidgetCustom.BlurView))
         routerItems.add(RouterItem("InfiniteImage", RouterPath.WidgetCustom.InfiniteImage))
         routerItems.add(RouterItem("MarqueeView", RouterPath.WidgetCustom.MarqueeView))

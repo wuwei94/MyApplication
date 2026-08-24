@@ -1,10 +1,10 @@
-package com.example.william.my.module.opensource.utils
+package com.example.william.my.module.tab.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.example.william.my.module.opensource.entity.TabEntity
+import com.example.william.my.module.tab.entity.TabEntity
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.SegmentTabLayout
 import com.flyco.tablayout.SlidingTabLayout
