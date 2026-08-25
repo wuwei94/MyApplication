@@ -9,8 +9,6 @@ import android.os.IBinder
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.component.IMyAidlInterface
-import com.example.william.my.module.component.service.MyAIDLService
 import com.example.william.my.module.component.service.MyBoundService
 import com.example.william.my.module.component.service.MyForegroundService
 
@@ -19,17 +17,15 @@ import com.example.william.my.module.component.service.MyForegroundService
  *
  * Service 是 Android 四大组件之一，用于在后台执行长时间运行的操作。
  *
- * 四种 Service 模式：
+ * 三种 Service 模式：
  * 1. Started Service：通过 startService 启动，独立运行，需手动停止
  * 2. Bound Service：通过 bindService 绑定，可直接调用 Service 方法
- * 3. AIDL Service：通过 bindService 绑定，支持跨进程通信（IPC）
- * 4. Foreground Service：通过 startForegroundService 启动，有通知栏常驻
+ * 3. Foreground Service：通过 startForegroundService 启动，有通知栏常驻
  *
  * 核心特性：
  * 1. 后台运行：在后台执行长时间操作，不阻塞 UI
- * 2. 进程间通信：通过 AIDL、Messenger 等方式实现 IPC
- * 3. 生命周期管理：系统自动管理，但需注意资源释放
- * 4. 前台服务：Android 8.0+ 需要使用前台服务
+ * 2. 生命周期管理：系统自动管理，但需注意资源释放
+ * 3. 前台服务：Android 8.0+ 需要使用前台服务
  *
  * 基本用法：
  * ```kotlin
@@ -44,14 +40,12 @@ import com.example.william.my.module.component.service.MyForegroundService
  *
  * 适用场景：
  * - 音乐播放、文件下载等后台操作
- * - 跨进程通信
  * - 需要长期运行的任务
  */
 @Route(path = RouterPath.Component.Service)
 class ServiceActivity : BasicResponseActivity() {
 
     private var mBoundConnection: ServiceConnection? = null
-    private var mAIDLConnection: ServiceConnection? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -64,8 +58,6 @@ class ServiceActivity : BasicResponseActivity() {
             "停止 Started Service",
             "绑定 Bound Service",
             "解绑 Bound Service",
-            "绑定 AIDL Service",
-            "解绑 AIDL Service",
             "启动前台服务",
             "停止前台服务"
         )
@@ -77,10 +69,8 @@ class ServiceActivity : BasicResponseActivity() {
             1 -> stopStartedService()
             2 -> bindBoundService()
             3 -> unbindBoundService()
-            4 -> bindAIDLService()
-            5 -> unbindAIDLService()
-            6 -> startForegroundService()
-            7 -> stopForegroundService()
+            4 -> startForegroundService()
+            5 -> stopForegroundService()
         }
     }
 
@@ -130,40 +120,6 @@ class ServiceActivity : BasicResponseActivity() {
         } ?: appendLog("Bound Service 未绑定")
     }
 
-    private fun bindAIDLService() {
-        if (mAIDLConnection != null) {
-            appendLog("AIDL Service 已绑定")
-            return
-        }
-
-        mAIDLConnection = object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-                val service = IMyAidlInterface.Stub.asInterface(binder)
-                service.showToast("AIDL 服务已绑定")
-                appendLog("AIDL Service 绑定成功：${service.getMessage()}")
-            }
-
-            override fun onServiceDisconnected(name: ComponentName) {
-                appendLog("AIDL Service 连接断开")
-            }
-        }
-
-        val result = bindService(
-            Intent(this, MyAIDLService::class.java),
-            mAIDLConnection!!,
-            BIND_AUTO_CREATE
-        )
-        appendLog("正在绑定 AIDL Service...（result=$result）")
-    }
-
-    private fun unbindAIDLService() {
-        mAIDLConnection?.let { conn ->
-            unbindService(conn)
-            mAIDLConnection = null
-            appendLog("AIDL Service 已解绑")
-        } ?: appendLog("AIDL Service 未绑定")
-    }
-
     private fun startForegroundService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(Intent(this, MyForegroundService::class.java))
@@ -181,6 +137,5 @@ class ServiceActivity : BasicResponseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unbindBoundService()
-        unbindAIDLService()
     }
 }

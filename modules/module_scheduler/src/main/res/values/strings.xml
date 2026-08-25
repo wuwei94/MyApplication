@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scheduler_notification_title_saving_image">WorkManager: 正在保存处理后的图片</string>
+    <string name="scheduler_notification_cancel_processing">取消任务</string>
+    <string name="scheduler_notification_channel_id">SchedulerWorkManagerSample</string>
+    <string name="scheduler_notification_channel_name">WorkManager 加急任务通知</string>
+</resources>

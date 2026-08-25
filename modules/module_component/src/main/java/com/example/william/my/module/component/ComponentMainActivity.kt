@@ -12,7 +12,6 @@ class ComponentMainActivity : RouterRecyclerActivity() {
         return arrayListOf(
             RouterItem("Broadcast", RouterPath.Component.Broadcast),
             RouterItem("Service", RouterPath.Component.Service),
-            RouterItem("Messenger", RouterPath.Component.Messenger),
             RouterItem("ActivityResult", RouterPath.Component.ActivityResult),
             RouterItem("OnBackPressed", RouterPath.Component.OnBackPressed)
         )

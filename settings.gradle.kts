@@ -124,6 +124,8 @@ include(":libs:lib_ninepatch")
 include(":modules:module_tab")
 // 动画特效
 include(":modules:module_anim")
+// 第三方动画库
+include(":modules:module_anim_thirdparty")
 // UI 控件
 include(":modules:module_widget")
 // 自定义控件
@@ -133,10 +135,14 @@ include(":modules:module_widget_thirdparty")
 
 // 同步
 include(":modules:module_async")
+// 后台任务调度
+include(":modules:module_scheduler")
 // 组件交互
 include(":modules:module_component")
-// 系统能力
-include(":modules:module_system")
+// 跨进程通信
+include(":modules:module_ipc")
+// 系统服务
+include(":modules:module_system_service")
 
 // 示例
 include(":modules:module_sample")
@@ -144,11 +150,11 @@ include(":modules:module_sample")
 include(":modules:module_feature")
 // 性能优化
 include(":modules:module_performance")
-// 相机（CameraX 多媒体）
-include(":modules:module_camera")
+// 多媒体
+include(":modules:module_media")
 
-// HTTP
-include(":modules:module_http")
+// HTTP（基础）
+include(":modules:module_http_basic")
 // Ktor
 include(":modules:module_ktor")
 // OkHttp

@@ -11,13 +11,10 @@
         <activity android:name=".activity.ActivityResultActivity2" />
         <activity android:name=".activity.OnBackPressedActivity" />
         <activity android:name=".activity.ServiceActivity" />
-        <activity android:name=".activity.MessengerActivity" />
 
-        <service android:name=".service.MyAIDLService" />
         <service android:name=".service.MyBoundService" />
         <service
             android:name=".service.MyForegroundService"
             android:foregroundServiceType="specialUse" />
-        <service android:name=".service.MyMessageService" />
     </application>
 </manifest>

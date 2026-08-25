@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".MediaMainActivity" />
+        <activity android:name=".activity.MediaPhotoActivity" />
+        <activity android:name=".activity.MediaVideoActivity" />
+        <activity android:name=".activity.CropActivity" />
+    </application>
+
+</manifest>

@@ -20,6 +20,7 @@ class WidgetMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ViewPager2", RouterPath.Widget.ViewPager2))
         routerItems.add(RouterItem("ViewFlipper", RouterPath.Widget.ViewFlipper))
         routerItems.add(RouterItem("WebView", RouterPath.Widget.WebView))
+        routerItems.add(RouterItem("FloatWindow", RouterPath.Widget.FloatWindow))
         return routerItems
     }
 }

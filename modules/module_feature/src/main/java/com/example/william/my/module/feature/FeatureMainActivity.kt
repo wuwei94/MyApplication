@@ -12,9 +12,6 @@ class FeatureMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Turntable", RouterPath.Feature.Turntable))
         routerItems.add(RouterItem("MicAnimation", RouterPath.Feature.MicAnimation))
-
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("Crop", RouterPath.Feature.Crop))
         return routerItems
     }
 }

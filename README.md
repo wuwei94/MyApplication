@@ -101,15 +101,16 @@ MyApplication/
 └── modules                     # Feature 模块（按技术领域分组）
     │
     ├── [UI 组件]
-    │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
+    │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView / FloatWindow）
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
-    │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
+    │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition）
+    │   ├── module_anim_thirdparty  # 第三方动画库（PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector）
     │   └── module_imageloader  # 图片加载（Coil / Glide / lib_imageloader）
     │
     ├── [网络通信]
-    │   ├── module_http         # HTTP 客户端（HttpURLConnection / Volley）
+    │   ├── module_http_basic   # HTTP 客户端 · 基础（HttpURLConnection / Volley）
     │   ├── module_ktor         # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
     │   ├── module_okhttp       # OkHttp（OkHttp 原生请求 / lib_okhttp DSL）
     │   ├── module_retrofit     # Retrofit（Call / 协程 / RxJava 调用方式）
@@ -121,14 +122,20 @@ MyApplication/
     │   └── module_storage      # 键值存储（DataStore / MMKV）
     │
     ├── [系统能力]
-    │   ├── module_async        # 异步处理（AsyncTask / HandlerThread / JobScheduler / WorkManager）
-    │   ├── module_component    # 组件交互（Broadcast / Service / Messenger / ActivityResult / OnBackPressed）
-    │   ├── module_system       # 系统能力（Notification / Permission / SecureKey / FloatWindow）
-    │   └── module_camera       # 相机（CameraX 拍照 / 录像）
+    │   ├── module_async        # 异步处理（AsyncTask / HandlerThread）
+    │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
+    │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
+    │   ├── module_ipc          # 跨进程通信（AIDL / Messenger）
+    │   └── module_system_service  # 系统服务（Notification / Permission / SecureKey）
+    │
+    ├── [多媒体]
+    │   └── module_media        # 多媒体（CameraX 拍照 / 录像 / 图片裁剪）
     │
     ├── [架构模式]
     │   ├── module_arch         # 架构模式（MVP / MVVM / MVI）
-│   │   ├── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
+    │   └── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
+    │
+    ├── [工程实践]
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
@@ -145,7 +152,7 @@ MyApplication/
     │
     └── [Sample & Feature]
         ├── module_sample       # 技术示例（Hook / Typeface）
-        └── module_feature      # 业务功能（转盘 / 麦位动画 / 裁剪）
+        └── module_feature      # 业务功能（转盘 / 麦位动画）
 ```
 
 ---
@@ -160,6 +167,7 @@ MyApplication/
 - RecyclerView（基础 / 嵌套滚动）
 - ViewPager / ViewPager2
 - ViewFlipper / WebView
+- 悬浮窗（WindowManager 系统级浮层 + 拖拽 + 贴边吸附）
 
 ### module_tab（Tab 导航）
 
@@ -182,6 +190,11 @@ MyApplication/
 - RenderEffect 渲染效果（Android 12+）
 - RenderScript 图像处理（已废弃）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
+
+### module_anim_thirdparty（第三方动画库）
+
+演示第三方动画库，与 module_anim（系统原生动画）形成对照。
+
 - PAG 动画播放器（腾讯 libpag）
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
@@ -200,12 +213,17 @@ MyApplication/
 - Spinner / TitleBar
 - 九宫格拉伸图片（NinePatch）
 
-### module_async（异步处理与任务调度）
+### module_async（异步处理）
 
-演示 Android 异步/后台处理机制与系统任务调度。
+演示 Android 线程/协程层面的异步机制。
 
 - AsyncTask 异步任务
 - HandlerThread 线程间通信
+
+### module_scheduler（后台任务调度）
+
+演示 Android 后台任务调度，聚焦「任务调度」主题。
+
 - JobScheduler 定时任务调度
 - WorkManager 现代化可靠后台任务调度与加急前台服务
 
@@ -217,16 +235,21 @@ MyApplication/
 - ActivityResultContracts 新版结果回调 API
 - OnBackPressedDispatcher 返回键拦截
 - Service 绑定（bindService）与前台服务
+
+### module_ipc（跨进程通信）
+
+演示 Android 跨进程通信（IPC）的两种基于 Binder 的方案。
+
+- AIDL 跨进程通信（绑定 / 解绑 / 远程调用）
 - Messenger 跨进程通信（IPC）
 
-### module_system（系统能力）
+### module_system_service（系统服务）
 
-演示 Android 系统级能力。
+演示 Android 系统级服务调用。
 
 - NotificationChannel 通知渠道创建与通知发送
 - 运行时权限批量申请
 - Android Keystore 安全密钥创建与签名
-- **悬浮窗**：WindowManager 系统级浮层 + 拖拽 + 贴边吸附动画
 
 ### module_sample（技术示例）
 
@@ -246,12 +269,13 @@ MyApplication/
 - **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
 - **DiffUtil**：列表差量计算与 Payload 细粒度局部刷新
 
-### module_camera（相机）
+### module_media（多媒体）
 
-演示 Android CameraX 多媒体能力，按用例（UseCase）拆分为独立示例页。
+演示 Android 多媒体能力，按用例（UseCase）拆分为独立示例页。
 
 - **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
 - **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
+- **图片裁剪**：Intent 调用系统裁剪（图库选择 / 拍照裁剪）
 
 ### module_feature（业务功能）
 
@@ -259,14 +283,12 @@ MyApplication/
 
 - 转盘抽奖（旋转动画）
 - 麦位动画（自定义 LayoutManager）
-- 图片裁剪（Intent 调用系统裁剪）
 
-### module_http（HTTP 客户端全栈对比）
+### module_http_basic（HTTP 客户端 · 基础）
 
-HttpURLConnection、Volley 与 Ktor 对比 Demo。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加成功、HTTP/业务失败和传输异常；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
+HttpURLConnection 与 Volley 基础 HTTP 客户端 Demo。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加成功、HTTP/业务失败和传输异常；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
 
 - HttpURLConnection / Volley 基础请求
-- Ktor 原生客户端与项目级 Ktor Client 封装
 
 ### module_okhttp（OkHttp）
 

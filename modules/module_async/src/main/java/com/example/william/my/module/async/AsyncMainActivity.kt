@@ -12,8 +12,6 @@ class AsyncMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("AsyncTask", RouterPath.Async.AsyncTask))
         routerItems.add(RouterItem("HandlerThread", RouterPath.Async.HandlerThread))
-        routerItems.add(RouterItem("JobScheduler", RouterPath.Async.JobScheduler))
-        routerItems.add(RouterItem("WorkManager", RouterPath.Async.WorkManager))
         return routerItems
     }
 }

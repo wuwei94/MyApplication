@@ -10,19 +10,12 @@ class AnimMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("── 原生动画 ──", ""))
         routerItems.add(RouterItem("ValueAnimator", RouterPath.Anim.ValueAnimator))
         routerItems.add(RouterItem("ObjectAnimator", RouterPath.Anim.ObjectAnimator))
         routerItems.add(RouterItem("AnimatorSet", RouterPath.Anim.AnimatorSet))
         routerItems.add(RouterItem("Transition", RouterPath.Anim.Transition))
         routerItems.add(RouterItem("RenderEffect", RouterPath.Anim.RenderEffect))
         routerItems.add(RouterItem("RenderScript", RouterPath.Anim.RenderScript))
-
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("── 第三方动画库 ──", ""))
-        routerItems.add(RouterItem("Pag", RouterPath.Anim.Pag))
-        routerItems.add(RouterItem("Lottie", RouterPath.Anim.Lottie))
-        routerItems.add(RouterItem("SVGAPlayer", RouterPath.Anim.SVGAPlayer))
         return routerItems
     }
 }

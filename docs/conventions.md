@@ -16,6 +16,15 @@
 - 资源前缀：`<模块名>_`
 - 依赖：必须依赖 `basic_lib` 和 `basic_shared`
 
+## 分类判据
+
+示例模块的归类遵循「主题优先、来源标注」原则，新增模块或示例页前先按此判据确定归属：
+
+- **一级按技术主题**：模块挂到 `DirectoryActivity` 的某个技术领域分组（UI 交互 / 网络通信 / 数据存储 / 系统能力 / 多媒体 / 架构模式 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature）。
+- **二级按技术来源**：分组内用「系统原生 / Jetpack / 第三方」标注示例来源，便于横向对比。
+- **Jetpack 组件按主题归位**：有明确主题的 Jetpack 组件归入对应主题模块（如 Room → 数据存储、CameraX → 多媒体、Hilt → 依赖注入），不堆进 `module_jetpack`；仅无明确主题的架构组件（ViewModel、Paging 等）才进入 `module_jetpack`。
+- **Sample / Feature 边界**：`module_sample` 收纳零散技术技巧；`module_feature` 收纳从工作项目抽离的业务示例。业务示例沉淀出通用能力时，应升级到对应主题模块。
+
 ## 全局依赖（build-logic/convention）
 
 `AndroidDeps.kt` 中配置了所有模块的公共依赖：

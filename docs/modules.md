@@ -11,20 +11,25 @@
 ├── UI 组件
 │   ├── 系统原生：标准控件、Tab 导航、动画
 │   ├── 自定义：自定义控件
-│   └── 第三方：UI 库
+│   └── 第三方：UI 库、第三方动画库
 ├── 图片加载
 │   └── Coil、Glide、lib_imageloader
 ├── 网络通信
-│   ├── HTTP 请求：HTTP、OkHttp、Retrofit、Ktor、RxRetrofit
+│   ├── HTTP 请求：HTTP（基础）、OkHttp、Retrofit、Ktor、RxRetrofit
 │   └── 长连接：WebSocket
 ├── 数据存储
 │   ├── 数据库：Room、ObjectBox
 │   └── 键值存储：DataStore、MMKV
 ├── 系统能力
-│   ├── 系统原生：异步处理、组件交互、系统能力
-│   └── 多媒体：相机
+│   ├── 系统原生：异步处理、任务调度、组件交互、系统服务
+│   └── 跨进程通信：AIDL、Messenger
+├── 多媒体
+│   └── 相机、图片裁剪
 ├── 架构模式
-│   ├── 架构模式、依赖注入
+│   ├── 自实现：MVP、MVVM、MVI
+│   └── 第三方：Mavericks
+├── 工程实践
+│   ├── 依赖注入：Hilt、Koin
 │   ├── 事件通信：事件总线
 │   ├── 响应式编程：Reactive（Flow / RxJava 操作符对照）
 │   ├── 页面状态：多状态页面（LoadSir）
@@ -45,16 +50,19 @@
 | module_widget | 标准控件 | WidgetMainActivity | /Widget |
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
 | module_anim | 动画 | AnimMainActivity | /Anim |
+| module_anim_thirdparty | 第三方动画库 | AnimThirdpartyMainActivity | /AnimThirdparty |
 | module_widget_custom | 自定义控件 | WidgetCustomMainActivity | /WidgetCustom |
 | module_widget_thirdparty | UI 库 | WidgetThirdpartyMainActivity | /WidgetThirdparty |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
+| module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
-| module_system | 系统能力 | SystemMainActivity | /System |
-| module_camera | 相机 | CameraMainActivity | /Camera |
+| module_ipc | 跨进程通信 | IpcMainActivity | /Ipc |
+| module_system_service | 系统服务 | SystemServiceMainActivity | /SystemService |
+| module_media | 多媒体 | MediaMainActivity | /Media |
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
-| module_http | HTTP 客户端 | HttpMainActivity | /Http |
+| module_http_basic | HTTP 客户端（基础） | HttpBasicMainActivity | /HttpBasic |
 | module_ktor | Ktor | KtorMainActivity | /Ktor |
 | module_okhttp | OkHttp | OkHttpMainActivity | /OkHttp |
 | module_retrofit | Retrofit | RetrofitMainActivity | /Retrofit |
@@ -93,6 +101,7 @@
 | ViewPagerActivity | ViewPager 翻页 |
 | ViewPager2Activity | ViewPager2 + TabLayoutMediator |
 | WebViewActivity | WebView 配置、JS 交互、SSL 处理 |
+| FloatWindowActivity | 系统级悬浮窗（WindowManager + 拖拽 + 贴边吸附动画） |
 
 ---
 
@@ -124,6 +133,16 @@
 | TransitionSecondActivity | 视图过渡动画目标页 |
 | RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
 | RenderScriptActivity | RenderScript 图像处理（已废弃） |
+
+---
+
+### module_anim_thirdparty（第三方动画库）
+
+演示第三方动画库，与 module_anim（系统原生动画）形成对照。
+
+| Activity | 功能 |
+|----------|------|
+| AnimThirdpartyMainActivity | 模块入口，导航到 PAG、Lottie、SVGA 示例页面 |
 | PagActivity | PAG 动画播放器 |
 | LottieActivity | Lottie 动画播放器 |
 | SvgaPlayerActivity | SVGA 动画播放器 |
@@ -151,13 +170,23 @@
 
 ### module_async（异步处理）
 
-演示 Android 异步/后台处理机制。
+演示 Android 线程/协程层面的异步机制。
 
 | Activity | 功能 |
 |----------|------|
 | AsyncMainActivity | 模块入口，导航到异步演示页面 |
 | AsyncTaskActivity | AsyncTask 异步任务 |
 | HandlerThreadActivity | HandlerThread 线程间通信 |
+
+---
+
+### module_scheduler（后台任务调度）
+
+演示 Android 后台任务调度，聚焦「任务调度」主题：系统原生 JobScheduler 与 Jetpack WorkManager。
+
+| Activity | 功能 |
+|----------|------|
+| SchedulerMainActivity | 模块入口，导航到 JobScheduler、WorkManager 示例页面 |
 | JobSchedulerActivity | JobScheduler 定时任务调度 |
 | WorkManagerActivity | WorkManager 现代化可靠后台任务调度与加急前台服务 |
 
@@ -174,20 +203,31 @@
 | ActivityResultActivity2 | ActivityResultActivity 的目标页 |
 | OnBackPressedActivity | OnBackPressedDispatcher 返回键拦截 |
 | ServiceActivity | Service 绑定（bindService）与前台服务 |
+
+---
+
+### module_ipc（跨进程通信）
+
+演示 Android 跨进程通信（IPC）的两种基于 Binder 的方案。
+
+| Activity | 功能 |
+|----------|------|
+| IpcMainActivity | 模块入口，导航到 AIDL、Messenger 示例页面 |
+| AIDLActivity | AIDL 跨进程通信（绑定、解绑、远程调用） |
 | MessengerActivity | Messenger 跨进程通信（IPC） |
 
 ---
 
-### module_system（系统能力）
+### module_system_service（系统服务）
 
-演示 Android 系统级能力。
+演示 Android 系统级服务调用。
 
 | Activity | 功能 |
 |----------|------|
+| SystemServiceMainActivity | 模块入口，导航到系统服务示例页面 |
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
 | PermissionActivity | 运行时权限批量申请 |
 | SecureKeyActivity | Android Keystore 安全密钥创建与签名 |
-| FloatWindowActivity | 系统级悬浮窗（WindowManager + 拖拽 + 贴边吸附动画） |
 
 ---
 
@@ -226,29 +266,29 @@
 |----------|------|
 | TurntableActivity | 转盘抽奖（旋转动画） |
 | MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
-| CropActivity | 图片裁剪（Intent 调用系统裁剪） |
 
 ---
 
-### module_camera（相机）
+### module_media（多媒体）
 
-演示 Android CameraX 多媒体能力，按用例（UseCase）拆分为独立示例页。
+演示 Android 多媒体能力，按用例（UseCase）拆分为独立示例页。
 
 | Activity | 功能 |
 |----------|------|
-| CameraMainActivity | 模块入口，导航到拍照、录像示例页面 |
-| CameraPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
-| CameraVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
+| MediaMainActivity | 模块入口，导航到拍照、录像、图片裁剪示例页面 |
+| MediaPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
+| MediaVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
+| CropActivity | 图片裁剪（Intent 调用系统裁剪，支持图库选择与拍照） |
 
 ---
 
-### module_http（HTTP 客户端）
+### module_http_basic（HTTP 客户端 · 基础）
 
-演示 HttpURLConnection 和 Volley 原生客户端。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
+演示 HttpURLConnection 和 Volley 基础客户端。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
 
 | Activity | 功能 |
 |----------|------|
-| HttpMainActivity | 模块入口，导航到各个 HTTP 客户端示例页面 |
+| HttpBasicMainActivity | 模块入口，导航到各个 HTTP 客户端示例页面 |
 | HttpURLActivity | HttpURLConnection 原生网络请求 |
 | VolleyActivity | Volley HTTP 请求 |
 

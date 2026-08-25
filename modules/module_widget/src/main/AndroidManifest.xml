@@ -13,5 +13,6 @@
         <activity android:name=".activity.ViewPagerActivity" />
         <activity android:name=".activity.ViewPager2Activity" />
         <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.FloatWindowActivity" />
     </application>
 </manifest>

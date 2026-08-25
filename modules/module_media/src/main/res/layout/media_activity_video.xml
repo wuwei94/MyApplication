@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".activity.MediaVideoActivity">
+
+    <!-- 相机取景预览层 -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:scaleType="fitCenter" />
+
+    <!-- 底部操作按钮区域 -->
+    <LinearLayout
+        android:id="@+id/layout_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/shared_dp_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- 录像按钮（开始/停止合一，动态切换图标） -->
+        <ImageView
+            android:id="@+id/btn_record"
+            android:layout_width="@dimen/shared_dp_56"
+            android:layout_height="@dimen/shared_dp_56"
+            android:layout_marginHorizontal="@dimen/shared_dp_24"
+            android:background="@drawable/media_bg_circle_btn"
+            android:contentDescription="开始录像"
+            android:padding="@dimen/shared_dp_12"
+            android:src="@drawable/media_ic_record_start" />
+    </LinearLayout>
+
+    <!-- 居中预览卡片（录像完成后弹出，TextureView 确保完美继承父卡片圆角裁剪） -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#1A1A1A"
+        app:cardCornerRadius="@dimen/shared_dp_16"
+        app:cardElevation="@dimen/shared_dp_8"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="9:16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        app:strokeColor="#33FFFFFF"
+        app:strokeWidth="1dp"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- 视频预览（使用 TextureView 确保完美继承父卡片圆角裁剪） -->
+            <TextureView
+                android:id="@+id/preview_texture"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 右上角关闭按钮 -->
+            <ImageView
+                android:id="@+id/btn_close_preview"
+                android:layout_width="@dimen/shared_dp_32"
+                android:layout_height="@dimen/shared_dp_32"
+                android:layout_margin="@dimen/shared_dp_12"
+                android:background="@drawable/media_bg_close_btn"
+                android:contentDescription="关闭预览"
+                android:elevation="@dimen/shared_dp_16"
+                android:padding="@dimen/shared_dp_4"
+                android:src="@drawable/media_ic_close"
+                android:translationZ="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

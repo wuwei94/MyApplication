@@ -58,6 +58,7 @@ object RouterPath {
         const val ViewPager2 = "${Widget}/ViewPager2"
         const val WebView = "${Widget}/WebView"
         const val RecyclerViewNested = "${Widget}/RecyclerViewNested"
+        const val FloatWindow = "${Widget}/FloatWindow"
     }
 
     // Tab 导航
@@ -87,10 +88,17 @@ object RouterPath {
         const val Transition2 = "${Anim}/Transition2"
         const val RenderEffect = "${Anim}/RenderEffect"
         const val RenderScript = "${Anim}/RenderScript"
+    }
 
-        const val Pag = "${Anim}/Pag"
-        const val Lottie = "${Anim}/Lottie"
-        const val SVGAPlayer = "${Anim}/SVGAPlayer"
+    // 第三方动画库
+    object AnimThirdparty {
+        private const val AnimThirdparty = "/AnimThirdparty"
+
+        const val Main = "${AnimThirdparty}/Main"
+
+        const val Pag = "${AnimThirdparty}/Pag"
+        const val Lottie = "${AnimThirdparty}/Lottie"
+        const val SVGAPlayer = "${AnimThirdparty}/SVGAPlayer"
     }
 
     // 自定义控件
@@ -123,8 +131,16 @@ object RouterPath {
 
         const val AsyncTask = "${Async}/AsyncTask"
         const val HandlerThread = "${Async}/HandlerThread"
-        const val JobScheduler = "${Async}/JobScheduler"
-        const val WorkManager = "${Async}/WorkManager"
+    }
+
+    // 后台任务调度
+    object Scheduler {
+        private const val Scheduler = "/Scheduler"
+
+        const val Main = "${Scheduler}/Main"
+
+        const val JobScheduler = "${Scheduler}/JobScheduler"
+        const val WorkManager = "${Scheduler}/WorkManager"
     }
 
     // 组件交互
@@ -137,19 +153,27 @@ object RouterPath {
         const val ActivityResult = "${Component}/ActivityResult"
         const val OnBackPressed = "${Component}/OnBackPressed"
         const val Service = "${Component}/Service"
-        const val Messenger = "${Component}/Messenger"
     }
 
-    // 系统能力
-    object System {
-        private const val System = "/System"
+    // 跨进程通信
+    object Ipc {
+        private const val Ipc = "/Ipc"
 
-        const val Main = "${System}/Main"
+        const val Main = "${Ipc}/Main"
 
-        const val Notification = "${System}/Notification"
-        const val Permission = "${System}/Permission"
-        const val SecureKey = "${System}/SecureKey"
-        const val FloatWindow = "${System}/FloatWindow"
+        const val AIDL = "${Ipc}/AIDL"
+        const val Messenger = "${Ipc}/Messenger"
+    }
+
+    // 系统服务
+    object SystemService {
+        private const val SystemService = "/SystemService"
+
+        const val Main = "${SystemService}/Main"
+
+        const val Notification = "${SystemService}/Notification"
+        const val Permission = "${SystemService}/Permission"
+        const val SecureKey = "${SystemService}/SecureKey"
     }
 
     // 技术示例
@@ -185,16 +209,16 @@ object RouterPath {
 
         const val Turntable = "${Feature}/Turntable"
         const val MicAnimation = "${Feature}/MicAnimation"
-        const val Crop = "${Feature}/Crop"
     }
 
-    // 相机（CameraX 多媒体）
-    object Camera {
-        private const val Camera = "/Camera"
+    // 多媒体
+    object Media {
+        private const val Media = "/Media"
 
-        const val Main = "${Camera}/Main"
-        const val Photo = "${Camera}/Photo"
-        const val Video = "${Camera}/Video"
+        const val Main = "${Media}/Main"
+        const val Photo = "${Media}/Photo"
+        const val Video = "${Media}/Video"
+        const val Crop = "${Media}/Crop"
     }
 
     // ═══════════════════════════════════════════
@@ -232,9 +256,9 @@ object RouterPath {
         const val Upload = "${PATH}/RxUpload"
     }
 
-    // HTTP 客户端
-    object Http {
-        private const val PATH = "/Http"
+    // HTTP 客户端（基础）
+    object HttpBasic {
+        private const val PATH = "/HttpBasic"
 
         const val Main = "${PATH}/Main"
         const val HttpURL = "${PATH}/HttpURL"
