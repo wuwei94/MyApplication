@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.format.Formatter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.rx.api.rxRetrofit

@@ -1,4 +1,4 @@
-package com.example.william.my.module.utils.router
+package com.example.william.my.basic.basic_shared.router.service.impl
 
 import android.content.Context
 import android.graphics.Bitmap

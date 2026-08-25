@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_shared.base
+package com.example.william.my.basic.basic_shared.constant
 
 object Constants {
     const val Url_Base = "https://www.wanandroid.com/"

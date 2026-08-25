@@ -8,7 +8,7 @@ import coil3.request.placeholder
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**

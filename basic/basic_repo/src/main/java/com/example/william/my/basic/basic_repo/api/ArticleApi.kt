@@ -1,7 +1,7 @@
 package com.example.william.my.basic.basic_repo.api
 
 import com.example.william.my.basic.basic_repo.bean.ArticleData
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

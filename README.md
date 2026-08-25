@@ -131,20 +131,17 @@ MyApplication/
 │   │   ├── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
+    │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
+    │   ├── module_loadsir      # 多状态页面（LoadSir）
     │   └── module_performance  # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     │
     ├── [Kotlin & Jetpack]
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
-    │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
     │   └── module_jetpack      # Jetpack 组件（Paging）
     │
     ├── [Compose & Flutter]
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     │   └── module_flutter      # Flutter 子工程
-    │
-    ├── [AndroidUtils & 三方库]
-    │   ├── module_loadsir      # 多状态页面（LoadSir）
-    │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
     └── [Sample & Feature]
         ├── module_sample       # 技术示例（Hook / Typeface）
@@ -300,15 +297,6 @@ WebSocket 专项功能演示。
 - OkHttp WebSocket 实现
 - Java WebSocket 实现
 - Netty WebSocket 实现
-
-### module_utils（工具库示例）
-
-演示 BlankJ utilcode 工具库的各种工具类。
-
-- 屏幕适配（AdaptScreenUtils）
-- 文件 IO（FileIOUtils）
-- 权限申请（PermissionUtils）
-- 线程工具（ThreadUtils）
 
 ### module_event（事件总线）
 

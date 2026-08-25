@@ -3,7 +3,7 @@ package com.example.william.my.module.websocket.activity.okhttpws
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketClientRx
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketObserver

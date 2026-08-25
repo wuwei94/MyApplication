@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.ninepatch.NinePatchHelper
 import com.example.william.my.module.widget_custom.R

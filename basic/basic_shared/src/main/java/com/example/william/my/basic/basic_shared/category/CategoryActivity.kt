@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_shared
+package com.example.william.my.basic.basic_shared.category
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -33,7 +33,7 @@ class CategoryActivity : RouterRecyclerActivity() {
             "arch" -> "架构模式"
             "kotlin_jetpack" -> "Kotlin & Jetpack"
             "compose_flutter" -> "Compose & Flutter"
-            "android_utils" -> "AndroidUtils & 三方库"
+            "sample_feature" -> "Sample & Feature"
             "other" -> "Other"
             else -> "模块列表"
         }
@@ -48,7 +48,6 @@ class CategoryActivity : RouterRecyclerActivity() {
             "arch" -> buildArchCategory()
             "kotlin_jetpack" -> buildKotlinJetpackCategory()
             "compose_flutter" -> buildComposeFlutterCategory()
-            "android_utils" -> buildAndroidUtilsCategory()
             "sample_feature" -> buildOtherCategory()
             else -> arrayListOf()
         }
@@ -134,6 +133,9 @@ class CategoryActivity : RouterRecyclerActivity() {
      * 架构模式
      * - 架构：Arch (MVP, MVVM, MVI, Mavericks)
      * - 依赖注入：DI (Hilt, Koin)
+     * - 事件通信：Event（事件总线）
+     * - 响应式编程：Reactive（Flow / RxJava 操作符对照）
+     * - 页面状态：LoadSir（多状态页面）
      * - 性能优化：Performance
      */
     private fun buildArchCategory(): ArrayList<RouterItem> {
@@ -147,6 +149,12 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 事件通信 ──", ""))
         items.add(RouterItem("事件总线", RouterPath.Event.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 响应式编程 ──", ""))
+        items.add(RouterItem("响应式编程", RouterPath.Reactive.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 页面状态 ──", ""))
+        items.add(RouterItem("多状态页面", RouterPath.LoadSir.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 性能优化 ──", ""))
         items.add(RouterItem("性能优化", RouterPath.Performance.Main))
@@ -180,19 +188,6 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("", ""))
         items.add(RouterItem("── Flutter ──", ""))
         items.add(RouterItem("Flutter", RouterPath.Flutter.Main))
-        return items
-    }
-
-    /**
-     * AndroidUtils & 三方库
-     * - LoadSir：多状态页面
-     * - AndroidUtils：工具类
-     */
-    private fun buildAndroidUtilsCategory(): ArrayList<RouterItem> {
-        val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("LoadSir", RouterPath.LoadSir.Main))
-        items.add(RouterItem("── AndroidUtils ──", ""))
-        items.add(RouterItem("AndroidUtils", RouterPath.Utils.Main))
         return items
     }
 

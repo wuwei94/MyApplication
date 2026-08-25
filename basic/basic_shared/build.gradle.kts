@@ -10,4 +10,6 @@ android {
 
 dependencies {
     implementation(project(":basic:basic_lib"))
+
+    implementation(libs.utils)
 }

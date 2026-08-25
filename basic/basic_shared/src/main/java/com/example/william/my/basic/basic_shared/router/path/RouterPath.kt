@@ -232,18 +232,6 @@ object RouterPath {
         const val Upload = "${PATH}/RxUpload"
     }
 
-    // 工具类
-    object Utils {
-        private const val Utils = "/Utils"
-
-        const val Main = "${Utils}/Main"
-
-        const val AdaptScreenUtils = "${Utils}/AdaptScreenUtils"
-        const val FileIOUtils = "${Utils}/FileIOUtils"
-        const val PermissionUtils = "${Utils}/PermissionUtils"
-        const val ThreadUtils = "${Utils}/ThreadUtils"
-    }
-
     // HTTP 客户端
     object Http {
         private const val PATH = "/Http"

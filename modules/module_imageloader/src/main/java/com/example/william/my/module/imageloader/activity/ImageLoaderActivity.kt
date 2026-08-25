@@ -3,7 +3,7 @@ package com.example.william.my.module.imageloader.activity
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.imageloader.IImageLoader
 import com.example.william.my.core.imageloader.coil.ImageLoader as CoilImageLoader

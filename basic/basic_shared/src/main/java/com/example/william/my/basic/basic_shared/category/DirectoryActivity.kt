@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_shared
+package com.example.william.my.basic.basic_shared.category
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
@@ -38,9 +38,6 @@ class DirectoryActivity : RouterRecyclerActivity() {
 
         // Compose & Flutter
         routerItems.add(RouterItem("Compose & Flutter", getCategoryPath("compose_flutter"), getCategoryParams("compose_flutter")))
-
-        // AndroidUtils & 三方库
-        routerItems.add(RouterItem("AndroidUtils & 三方库", getCategoryPath("android_utils"), getCategoryParams("android_utils")))
 
         // 其他
         routerItems.add(RouterItem("Sample & Feature", getCategoryPath("sample_feature"), getCategoryParams("sample_feature")))

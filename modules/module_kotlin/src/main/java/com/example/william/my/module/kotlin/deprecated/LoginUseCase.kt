@@ -1,7 +1,7 @@
 package com.example.william.my.module.kotlin.deprecated
 
 import com.example.william.my.basic.basic_repo.bean.LoginData
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.module.kotlin.data.NetworkResult
 import com.example.william.my.module.kotlin.utils.ThreadUtils
 import com.google.gson.Gson

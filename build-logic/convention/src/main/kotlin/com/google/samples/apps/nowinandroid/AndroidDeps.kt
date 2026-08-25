@@ -93,7 +93,6 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_rxretrofit"))
             "implementation"(project(":modules:module_websocket"))
 
-            "implementation"(project(":modules:module_utils"))
             "implementation"(project(":modules:module_event"))
             "implementation"(project(":modules:module_loadsir"))
             "implementation"(project(":modules:module_imageloader"))

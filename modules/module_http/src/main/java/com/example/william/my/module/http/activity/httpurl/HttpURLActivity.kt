@@ -3,7 +3,7 @@ package com.example.william.my.module.http.activity.httpurl
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.utils.AppExecutorsHelper
 import com.example.william.my.core.httpurl.HttpURLUtils

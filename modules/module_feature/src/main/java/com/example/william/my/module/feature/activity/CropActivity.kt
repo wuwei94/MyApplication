@@ -236,7 +236,8 @@ class CropActivity : BasicImageActivity() {
         if (bitmap == null) return null
         val file = File(externalCacheDir, "THUMB_${System.currentTimeMillis()}.jpg")
         return try {
-            val service = ARouter.getInstance().build(RouterPath.Service.ImageUtilsService)
+            val service = ARouter.getInstance()
+                .build(RouterPath.Service.ImageUtilsService)
                 .navigation() as? ImageUtilsService
             val successful = service?.save(bitmap, file, Bitmap.CompressFormat.JPEG) ?: false
             if (successful) {

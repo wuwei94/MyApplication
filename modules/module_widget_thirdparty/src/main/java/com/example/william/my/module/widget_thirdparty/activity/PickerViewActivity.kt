@@ -1,6 +1,5 @@
 package com.example.william.my.module.widget_thirdparty.activity
 
-import android.R
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -178,7 +177,7 @@ class PickerViewActivity : BasicResponseActivity() {
                         options3Items[options1][options2][options3]
                 appendLog("选中城市: $options")
             }
-                .setDecorView(window.decorView.findViewById(R.id.content)) //防止被虚拟按键遮挡
+                .setDecorView(window.decorView.findViewById(android.R.id.content)) //防止被虚拟按键遮挡
                 .setSubmitText("确定") //确定按钮文字
                 .setCancelText("取消") //取消按钮文字
                 .setTitleText("城市选择") //标题

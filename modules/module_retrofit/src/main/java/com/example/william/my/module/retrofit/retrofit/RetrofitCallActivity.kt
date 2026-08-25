@@ -3,7 +3,7 @@ package com.example.william.my.module.retrofit.retrofit
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.base.Constants
+import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import okhttp3.ResponseBody
 import retrofit2.Call

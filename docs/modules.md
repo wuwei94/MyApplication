@@ -26,15 +26,14 @@
 ├── 架构模式
 │   ├── 架构模式、依赖注入
 │   ├── 事件通信：事件总线
+│   ├── 响应式编程：Reactive（Flow / RxJava 操作符对照）
+│   ├── 页面状态：多状态页面（LoadSir）
 │   └── 性能优化
 ├── Kotlin & Jetpack
 │   ├── 语言特性：Kotlin
 │   └── Jetpack 组件
 ├── Compose & Flutter
 │   └── Compose、Flutter
-├── AndroidUtils & 三方库
-│   ├── LoadSir：多状态页面
-│   └── AndroidUtils：工具类
 └── Other
     └── 技术示例、业务功能
 ```
@@ -61,7 +60,6 @@
 | module_retrofit | Retrofit | RetrofitMainActivity | /Retrofit |
 | module_rxretrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
-| module_utils | 工具类 | UtilsMainActivity | /Utils |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_loadsir | 多状态页面 | LoadSirMainActivity | /LoadSir |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
@@ -327,19 +325,6 @@
 |---------|------|----------|
 | JavaWebSocketServerService | Java-WebSocket 服务端 | 5566 |
 | NettyWebSocketServerService | Netty TCP 服务端 | 5567 |
-
----
-
-### module_utils（工具类）
-
-演示 BlankJ utilcode 工具库的各种工具类。
-
-| Activity | 功能 |
-|----------|------|
-| AdaptScreenUtilsActivity | 屏幕适配工具 |
-| FileIOUtilsActivity | 文件读写工具 |
-| PermissionUtilsActivity | 权限请求工具 |
-| ThreadUtilsActivity | 线程池工具 |
 
 ---
 

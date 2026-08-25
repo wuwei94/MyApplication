@@ -160,8 +160,6 @@ include(":modules:module_rxretrofit")
 // WebSocket
 include(":modules:module_websocket")
 
-// 工具库
-include(":modules:module_utils")
 // 事件总线
 include(":modules:module_event")
 // 多状态页面

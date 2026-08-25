@@ -9,7 +9,9 @@ import androidx.core.content.ContextCompat
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerResponseBinding
-import com.example.william.my.basic.basic_shared.utils.JsonFormatter
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParseException
+import com.google.gson.JsonParser
 
 /**
  * 通信/调度类示例 Activity 基类。
@@ -81,7 +83,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      * 追加 JSON 格式化单行日志到展示区。
      */
     protected fun appendFormatLog(prefix: String, message: String) {
-        appendLog("$prefix${JsonFormatter.format(message)}")
+        appendLog("$prefix${formatJson(message)}")
     }
 
     /**
@@ -158,5 +160,24 @@ abstract class BasicResponseActivity : BasicControlActivity() {
 
     companion object {
         private const val ACTION_CLEAR_LOG = "清空日志"
+
+        private val gson = GsonBuilder()
+            .setPrettyPrinting()
+            .create()
+
+        /**
+         * 格式化 JSON 对象或数组；非 JSON 以及解析失败的内容保持原样。
+         */
+        internal fun formatJson(value: String): String {
+            val content = value.trim()
+            if (!content.startsWith("{") && !content.startsWith("[")) {
+                return value
+            }
+            return try {
+                gson.toJson(JsonParser.parseString(content))
+            } catch (_: JsonParseException) {
+                value
+            }
+        }
     }
 }
