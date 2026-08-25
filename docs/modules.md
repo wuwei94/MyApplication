@@ -60,7 +60,7 @@
 | module_ktor | Ktor | KtorMainActivity | /Ktor |
 | module_okhttp | OkHttp | OkHttpMainActivity | /OkHttp |
 | module_retrofit | Retrofit | RetrofitMainActivity | /Retrofit |
-| module_rx_retrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
+| module_rxretrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
 | module_utils | 工具类 | UtilsMainActivity | /Utils |
 | module_event | 事件总线 | EventMainActivity | /Event |
@@ -296,7 +296,7 @@
 
 ---
 
-### module_rx_retrofit（Rx 动态请求与文件传输）
+### module_rxretrofit（Rx 动态请求与文件传输）
 
 集中展示 `lib_rx_request`、`lib_rx_download` 和 `lib_rx_upload` 三个 Rx 链式库。三个实际请求页均基于 `BasicResponseActivity`，传输进度在日志区原位更新。
 

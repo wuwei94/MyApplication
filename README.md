@@ -113,7 +113,7 @@ MyApplication/
     │   ├── module_ktor         # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
     │   ├── module_okhttp       # OkHttp（OkHttp 原生请求 / lib_okhttp DSL）
     │   ├── module_retrofit     # Retrofit（Call / 协程 / RxJava 调用方式）
-    │   ├── module_rx_retrofit  # Rx 动态 Retrofit 请求与上传下载示例
+    │   ├── module_rxretrofit  # Rx 动态 Retrofit 请求与上传下载示例
     │   └── module_websocket    # WebSocket 专项示例
     │
     ├── [数据存储]
@@ -285,7 +285,7 @@ HttpURLConnection、Volley 与 Ktor 对比 Demo。请求页统一使用 `BasicRe
 - `retrofit_coroutine`：Retrofit 协程挂起函数原生调用与 `lib_retrofit` DSL
 - `retrofit_rx`：RxJava 原生订阅与默认网络策略
 
-### module_rx_retrofit（Rx 动态请求与文件传输）
+### module_rxretrofit（Rx 动态请求与文件传输）
 
 - `request`：`RxRequestActivity` 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
 - `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，通过根包的 `RxDownload` / `RxDownloadManager` 展示条件断点续传与单/多文件并发下载

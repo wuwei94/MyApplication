@@ -29,7 +29,7 @@ lib_ktor -> Ktor Client + OkHttp Engine
 - 响应对象可通过工厂方法创建，`success(data)` 的 `data` 可空。泛型响应通过 `@RawValue` 实现 `Parcelable`，实际数据仍必须是 Parcel 支持的类型。
 - Token 刷新属于业务策略。OkHttp/Retrofit 使用 `Interceptor` 或 `Authenticator`，Ktor 使用 Auth Plugin 或注入的 OkHttp 配置。
 - 日志、缓存和 Cookie 默认不应携带业务状态；正式业务实例应交给 Hilt 或 ServiceLocator 管理。
-- `module_http`、`module_okhttp` 和 `module_rx_retrofit` 的实际请求页统一继承 `BasicResponseActivity`：需要页面说明时使用 `showDescription` 居中展示，离散响应与错误追加到内联日志，高频传输进度按 key 原位更新；模块入口页只负责路由导航。
+- `module_http`、`module_okhttp` 和 `module_rxretrofit` 的实际请求页统一继承 `BasicResponseActivity`：需要页面说明时使用 `showDescription` 居中展示，离散响应与错误追加到内联日志，高频传输进度按 key 原位更新；模块入口页只负责路由导航。
 
 ## lib_okhttp
 
@@ -135,7 +135,7 @@ api.login(username, password)
 
 包名为 `com.example.william.my.core.rx.request`，依赖 `lib_retrofit_rx` 复用标准 Rx Retrofit 能力。业务只使用动态请求时显式依赖该模块，标准 Retrofit Rx 调用方不需要引入它。
 
-对应示例位于 `module_rx_retrofit` 的 `RxRequestActivity`。
+对应示例位于 `module_rxretrofit` 的 `RxRequestActivity`。
 
 源码按职责分层：根包的 `RxRequest` 是稳定的对外入口，`api` 声明 Retrofit 动态请求接口，`builder` 负责链式构建，`config` 保存不可变请求快照，`method` 定义 HTTP 方法，`function` 负责响应数据转换。测试目录采用相同的职责划分。
 

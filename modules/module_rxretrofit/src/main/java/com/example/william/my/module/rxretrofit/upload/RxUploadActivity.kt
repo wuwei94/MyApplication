@@ -63,7 +63,7 @@ class RxUploadActivity : BasicResponseActivity() {
         uploadCleanupRequested = false
         val file = File(uploadDirectory, "module-rxretrofit-sample-1.txt")
         val contents = mapOf(
-            file to "module_rx_retrofit 上传示例文件 1",
+            file to "module_rxretrofit 上传示例文件 1",
         )
         try {
             contents.forEach { (target, content) ->
@@ -80,7 +80,7 @@ class RxUploadActivity : BasicResponseActivity() {
             RxUpload.builder()
                 .api(Constants.Url_Upload)
                 .retrofit(uploadRetrofit)
-                .addParam("source", "module_rx_retrofit")
+                .addParam("source", "module_rxretrofit")
                 .addFile("files", file)
                 .setProvider(this)
                 .onFinally {
@@ -123,7 +123,7 @@ class RxUploadActivity : BasicResponseActivity() {
             File(uploadDirectory, "module-rxretrofit-sample-$index.txt")
         }
         val contents = files.mapIndexed { index, file ->
-            file to "module_rx_retrofit 上传示例文件 ${index + 1}"
+            file to "module_rxretrofit 上传示例文件 ${index + 1}"
         }.toMap()
         try {
             contents.forEach { (target, content) ->
@@ -140,7 +140,7 @@ class RxUploadActivity : BasicResponseActivity() {
             RxUpload.builder()
                 .api(Constants.Url_Upload)
                 .retrofit(uploadRetrofit)
-                .addParam("source", "module_rx_retrofit")
+                .addParam("source", "module_rxretrofit")
                 .addFiles("files", files)
                 .setProvider(this)
                 .onFinally {
