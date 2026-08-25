@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.loadsir
+package com.example.william.my.module.loadsir.callback
 
 import android.content.Context
 import android.view.View
@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.example.william.my.basic.basic_shared.R
 import com.kingja.loadsir.callback.Callback
 
-class DefaultCallback : Callback() {
+class ErrorCallback : Callback() {
 
     //填充布局
     override fun onCreateView(): Int {
@@ -16,7 +16,7 @@ class DefaultCallback : Callback() {
     //当前Callback的点击事件，如果返回true则覆盖注册时的onReload()，如果返回false则两者都执行，先执行onReloadEvent()。
     override fun onReloadEvent(context: Context, view: View): Boolean {
         val response: TextView = view.findViewById(R.id.basics_response)
-        response.text = "DefaultCallback"
+        response.text = "ErrorCallback"
         return true
     }
 

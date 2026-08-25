@@ -96,6 +96,7 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_utils"))
             "implementation"(project(":modules:module_event"))
             "implementation"(project(":modules:module_open_source"))
+            "implementation"(project(":modules:module_loadsir"))
             "implementation"(project(":modules:module_imageloader"))
             "implementation"(project(":modules:module_widget_thirdparty"))
 

@@ -11,8 +11,6 @@
         <activity android:name=".activity.utils.PermissionXActivity" />
 
         <activity android:name=".activity.utils.RxJavaActivity" />
-
-        <activity android:name=".activity.loadsir.LoadSirActivity" />
     </application>
 
 </manifest>

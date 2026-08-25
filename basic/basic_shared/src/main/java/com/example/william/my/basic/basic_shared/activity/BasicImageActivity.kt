@@ -1,7 +1,7 @@
 package com.example.william.my.basic.basic_shared.activity
 
 import android.graphics.Bitmap
-import com.example.william.my.basic.basic_shared.databinding.SharedLayoutImageRecyclerBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerImageBinding
 
 /**
  * 图片/动画类示例 Activity 基类。
@@ -17,10 +17,10 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutImageRe
  */
 abstract class BasicImageActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutImageRecyclerBinding
+    protected lateinit var mBinding: SharedLayoutRecyclerImageBinding
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutImageRecyclerBinding.inflate(layoutInflater)
+        mBinding = SharedLayoutRecyclerImageBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mRecycler = mBinding.basicsRecycler
     }

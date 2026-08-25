@@ -166,6 +166,8 @@ include(":modules:module_utils")
 include(":modules:module_event")
 // 第三方库
 include(":modules:module_open_source")
+// 多状态页面
+include(":modules:module_loadsir")
 // 图片加载
 include(":modules:module_imageloader")
 

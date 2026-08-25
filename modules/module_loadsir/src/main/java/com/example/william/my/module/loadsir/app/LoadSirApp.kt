@@ -1,11 +1,11 @@
-package com.example.william.my.module.opensource.app
+package com.example.william.my.module.loadsir.app
 
 import com.example.william.my.core.base.app.BaseAppInit
-import com.example.william.my.module.opensource.loadsir.DefaultCallback
-import com.example.william.my.module.opensource.loadsir.ErrorCallback
+import com.example.william.my.module.loadsir.callback.DefaultCallback
+import com.example.william.my.module.loadsir.callback.ErrorCallback
 import com.kingja.loadsir.core.LoadSir
 
-class OpenSourceApp : BaseAppInit() {
+class LoadSirApp : BaseAppInit() {
 
     override fun init() {
         super.init()

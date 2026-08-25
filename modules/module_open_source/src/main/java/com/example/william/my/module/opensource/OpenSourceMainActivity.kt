@@ -25,9 +25,6 @@ class OpenSourceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("PermissionX", RouterPath.OpenSource.PermissionX))
         routerItems.add(RouterItem("RxJava", RouterPath.OpenSource.RxJava))
 
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("── 多状态页面 ──", ""))
-        routerItems.add(RouterItem("LoadSir", RouterPath.OpenSource.LoadSir))
         return routerItems
     }
 }

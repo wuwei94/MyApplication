@@ -5,32 +5,25 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/basics_response_container"
+        android:id="@+id/basics_image_container"
         android:layout_width="0dp"
         android:layout_height="@dimen/shared_dp_response_size"
-        android:layout_marginStart="@dimen/shared_dp_8"
-        android:layout_marginEnd="@dimen/shared_dp_8"
+        android:layout_margin="@dimen/shared_dp_8"
         android:background="@drawable/shared_bg_container_border"
+        app:layout_constraintBottom_toTopOf="@+id/basics_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
+        <ImageView
+            android:id="@+id/basics_image"
+            android:layout_width="@dimen/shared_dp_image_size"
+            android:layout_height="@dimen/shared_dp_image_size"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/basics_response"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-        </androidx.core.widget.NestedScrollView>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -41,6 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/basics_response_container" />
+        app:layout_constraintTop_toBottomOf="@id/basics_image_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

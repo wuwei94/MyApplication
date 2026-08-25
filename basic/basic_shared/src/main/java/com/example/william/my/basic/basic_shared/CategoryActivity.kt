@@ -192,6 +192,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         val items = arrayListOf<RouterItem>()
         items.add(RouterItem("── OpenSource ──", ""))
         items.add(RouterItem("OpenSource", RouterPath.OpenSource.Main))
+        items.add(RouterItem("LoadSir", RouterPath.LoadSir.Main))
         items.add(RouterItem("── AndroidUtils ──", ""))
         items.add(RouterItem("AndroidUtils", RouterPath.Utils.Main))
         return items

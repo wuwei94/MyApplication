@@ -1,7 +1,7 @@
-package com.example.william.my.module.opensource.hilt
+package com.example.william.my.module.loadsir.hilt
 
 import com.example.william.my.core.base.hilt.interfaces.IAppInit
-import com.example.william.my.core.base.hilt.qualifier.OpenSourceInit
+import com.example.william.my.core.base.hilt.qualifier.LoadSirInit
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -9,9 +9,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class OpenSourceModule {
+abstract class LoadSirModule {
 
-    @OpenSourceInit
+    @LoadSirInit
     @Binds
-    abstract fun init(appInit: OpenSourceInitImpl): IAppInit
+    abstract fun init(appInit: LoadSirInitImpl): IAppInit
 }

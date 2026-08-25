@@ -34,6 +34,7 @@
 │   └── Compose、Flutter
 ├── OpenSource
 │   ├── OpenSource：第三方库
+│   ├── LoadSir：多状态页面
 │   └── AndroidUtils：工具类
 └── Other
     └── 技术示例、业务功能
@@ -64,6 +65,7 @@
 | module_utils | 工具类 | UtilsMainActivity | /Utils |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
+| module_loadsir | 多状态页面 | LoadSirMainActivity | /LoadSir |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
@@ -357,7 +359,7 @@
 
 ### module_open_source（第三方库）
 
-演示第三方开源库的使用。模块内部按类别组织：`selector`（选择器）/ `utils`（工具）/ `loadsir`（多状态页面），入口列表也按此分组展示。
+演示第三方开源库的使用。模块内部按类别组织：`selector`（选择器）/ `utils`（工具），入口列表也按此分组展示。
 
 | Activity | 功能 |
 |----------|------|
@@ -366,7 +368,18 @@
 | PictureSelectorActivity | PictureSelector 图片选择器 |
 | PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |
-| LoadSirActivity | LoadSir 加载状态页 |
+
+---
+
+### module_loadsir（多状态页面）
+
+演示 LoadSir 多状态页面管理框架。
+
+| Activity | 功能 |
+|----------|------|
+| LoadSirMainActivity | 模块入口，导航到 LoadSir 示例页面 |
+| LoadSirActivity | LoadSir 加载状态页（加载中 / 错误重试 / 成功内容切换） |
+| LoadSirFragmentActivity | LoadSir Fragment 示例（BaseFragmentActivity 承载 LoadSirFragment，复用 shared_layout_recycler_layout + 成功内容布局） |
 
 ---
 

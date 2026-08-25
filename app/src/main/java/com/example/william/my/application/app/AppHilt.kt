@@ -7,8 +7,7 @@ import com.example.william.my.core.base.hilt.qualifier.BaseInit
 import com.example.william.my.core.base.hilt.qualifier.EventInit
 import com.example.william.my.core.base.hilt.qualifier.FlutterInit
 import com.example.william.my.core.base.hilt.qualifier.MavericksInit
-import com.example.william.my.core.base.hilt.qualifier.OpenSourceInit
-import com.example.william.my.core.base.hilt.qualifier.WidgetThirdpartyInit
+import com.example.william.my.core.base.hilt.qualifier.LoadSirInit
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -27,17 +26,13 @@ class AppHilt : Application() {
     @Inject
     lateinit var eventInit: IAppInit
 
-    @WidgetThirdpartyInit
-    @Inject
-    lateinit var widgetThirdpartyInit: IAppInit
-
     @MavericksInit
     @Inject
     lateinit var mavericksInit: IAppInit
 
-    @OpenSourceInit
+    @LoadSirInit
     @Inject
-    lateinit var openSourceInit: IAppInit
+    lateinit var loadSirInit: IAppInit
 
     @FlutterInit
     @Inject
@@ -53,8 +48,7 @@ class AppHilt : Application() {
 
         eventInit.init(this)
         mavericksInit.init(this)
-        widgetThirdpartyInit.init(this)
-        openSourceInit.init(this)
+        loadSirInit.init(this)
 
         flutterInit.init(this) // FlutterEngine
     }

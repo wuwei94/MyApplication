@@ -289,9 +289,16 @@ object RouterPath {
         // ── 工具 ──
         const val PermissionX = "${OpenSource}/PermissionX"
         const val RxJava = "${OpenSource}/RxJava"
+    }
 
-        // ── 多状态页面 ──
-        const val LoadSir = "${OpenSource}/LoadSir"
+    // 多状态页面
+    object LoadSir {
+        private const val PATH = "/LoadSir"
+
+        const val Main = "${PATH}/Main"
+
+        const val LoadSir = "${PATH}/LoadSir"
+        const val LoadSirFragment = "${PATH}/LoadSirFragment"
     }
 
     // 图片加载

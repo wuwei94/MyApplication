@@ -3,7 +3,7 @@ package com.example.william.my.basic.basic_shared.activity
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.william.my.basic.basic_shared.databinding.SharedLayoutLayoutRecyclerBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerLayoutBinding
 
 /**
  * 布局/视图容器类示例 Activity 基类。
@@ -19,11 +19,11 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutLayoutR
  */
 abstract class BasicLayoutActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutLayoutRecyclerBinding
+    protected lateinit var mBinding: SharedLayoutRecyclerLayoutBinding
     protected lateinit var mContainer: ConstraintLayout
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutLayoutRecyclerBinding.inflate(layoutInflater)
+        mBinding = SharedLayoutRecyclerLayoutBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mRecycler = mBinding.basicsRecycler
         mContainer = mBinding.basicsResponseContainer

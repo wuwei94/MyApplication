@@ -7,7 +7,7 @@
     android:padding="@dimen/shared_dp_16">
 
     <TextView
-        android:id="@+id/open_loadsir_title"
+        android:id="@+id/loadsir_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="✨ 成功加载：Android 架构模式与最佳实践"
@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/open_loadsir_desc"
+        android:id="@+id/loadsir_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/shared_dp_8"

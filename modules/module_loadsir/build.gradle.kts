@@ -6,23 +6,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.opensource"
-    buildFeatures {
-        buildConfig = true
-    }
+    namespace = "com.example.william.my.module.loadsir"
+    resourcePrefix("loadsir_")
 }
 
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
 
-    implementation(libs.citypicker)
-    implementation(libs.pickerview)
-    implementation(libs.pictureselector)
-
-    implementation(libs.glide)
-
-    implementation(libs.permission)
-
-    implementation(libs.rxandroid)
+    implementation(libs.loadsir)
 }

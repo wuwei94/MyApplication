@@ -8,7 +8,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.example.william.my.basic.basic_shared.R
-import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseRecyclerBinding
+import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerResponseBinding
 import com.example.william.my.basic.basic_shared.utils.JsonFormatter
 
 /**
@@ -27,13 +27,13 @@ import com.example.william.my.basic.basic_shared.utils.JsonFormatter
  */
 abstract class BasicResponseActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutResponseRecyclerBinding
+    protected lateinit var mBinding: SharedLayoutRecyclerResponseBinding
 
     private val mLog = SpannableStringBuilder()
     private val mUpdatingLogs = linkedMapOf<String, String>()
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutResponseRecyclerBinding.inflate(layoutInflater)
+        mBinding = SharedLayoutRecyclerResponseBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mRecycler = mBinding.basicsRecycler
     }

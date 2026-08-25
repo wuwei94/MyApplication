@@ -56,13 +56,12 @@
 已接入两套方案的模块（`@XxxInit` 与 `registerAppInit` 一一对应）：
 
 - `module_event`：`EventApp`（手动）/ `EventInitImpl` + `EventModule`（Hilt）
-- `module_open_source`：`OpenSourceApp` / `OpenSourceInitImpl` + `OpenSourceModule`
+- `module_loadsir`：`LoadSirApp` / `LoadSirInitImpl` + `LoadSirModule`
 - `module_flutter`：`FlutterApp` / `FlutterInitImpl` + `FlutterModule`
 - `module_mavericks`：`MavericksApp` / `MavericksInitImpl` + `MavericksModule`
-- `module_arch`：无三方库初始化需求，仅保留 Hilt 方案示例外壳 `ArchInitImpl` + `ArchModule`
 
-> 手动方案在 `App.initApp()` 中注册 `EventApp / MavericksApp / OpenSourceApp / FlutterApp`；
-> Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → archInit → eventInit → mavericksInit → openSourceInit → flutterInit` 顺序调用。
+> 手动方案在 `App.initApp()` 中注册 `EventApp / MavericksApp / LoadSirApp / FlutterApp`；
+> Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → eventInit → mavericksInit → loadSirInit → flutterInit` 顺序调用。
 
 ---
 
@@ -143,7 +142,8 @@ MyApplication/
     │   └── module_flutter      # Flutter 子工程
     │
     ├── [OpenSource & AndroidUtils]
-    │   ├── module_open_source  # 第三方库（RxJava / LoadSir）
+    │   ├── module_open_source  # 第三方库（RxJava / PermissionX / PictureSelector / CityPicker / PickerView）
+    │   ├── module_loadsir      # 多状态页面（LoadSir）
     │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
     └── [Sample & Feature]
@@ -327,7 +327,13 @@ WebSocket 专项功能演示。
 
 - 选择器：PictureSelector / CityPicker / PickerView
 - 工具：RxJava / PermissionX
-- 多状态页：LoadSir
+
+### module_loadsir（多状态页面）
+
+LoadSir 多状态页面管理框架独立模块（已从 module_open_source 拆出）。
+
+- 多状态页：LoadSir（加载中 / 错误重试 / 成功内容切换）
+- Fragment 多状态页：LoadSirFragment（BaseFragmentActivity 承载，复用 shared_layout_recycler_layout + 成功内容布局）
 
 ### module_imageloader（图片加载）
 
