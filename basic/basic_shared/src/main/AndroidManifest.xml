@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".DirectoryActivity" />
-        <activity android:name=".CategoryActivity" />
+        <activity android:name=".category.DirectoryActivity" />
+        <activity android:name=".category.CategoryActivity" />
     </application>
 
 </manifest>
