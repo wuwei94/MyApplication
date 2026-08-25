@@ -21,8 +21,8 @@ class DirectoryActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
 
-        // UI交互
-        routerItems.add(RouterItem("UI交互", getCategoryPath("ui"), getCategoryParams("ui")))
+        // UI 交互
+        routerItems.add(RouterItem("UI 交互", getCategoryPath("ui"), getCategoryParams("ui")))
 
         // 网络通信
         routerItems.add(RouterItem("网络通信", getCategoryPath("network"), getCategoryParams("network")))

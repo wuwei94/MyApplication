@@ -8,12 +8,11 @@
 
 ```
 目录页面 (DirectoryActivity)
-├── UI 组件
+├── UI 交互
 │   ├── 系统原生：标准控件、Tab 导航、动画
 │   ├── 自定义：自定义控件
-│   └── 第三方：UI 库、第三方动画库
-├── 图片加载
-│   └── Coil、Glide、lib_imageloader
+│   ├── 第三方：UI 库、第三方动画库
+│   └── 图片加载：Coil、Glide、lib_imageloader
 ├── 网络通信
 │   ├── HTTP 请求：HTTP（基础）、OkHttp、Retrofit、Ktor、RxRetrofit
 │   └── 长连接：WebSocket
@@ -39,7 +38,7 @@
 │   └── Jetpack 组件
 ├── Compose & Flutter
 │   └── Compose、Flutter
-└── Other
+└── Sample & Feature
     └── 技术示例、业务功能
 ```
 
@@ -78,6 +77,7 @@
 | module_storage | 存储 | StorageMainActivity | /Storage |
 | module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
+| module_mavericks | Mavericks 架构 | MavericksMainActivity | /Mavericks |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
 
@@ -460,7 +460,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | Activity | 功能 |
 |----------|------|
 | PagingActivity | Paging3 分页加载 |
-| ArticleActivity | ViewModel 多种创建方式（默认 / 标准 Factory / DSL Factory，含 Fragment 作用域共享） |
+| ViewModelActivity | ViewModel 多种创建方式（默认 / 标准 Factory / DSL Factory，含 Fragment 作用域共享） |
 
 ---
 

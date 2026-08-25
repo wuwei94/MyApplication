@@ -11,7 +11,7 @@ import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 
 /**
- * ArticleViewModel — ViewModel 自定义工厂构建演示
+ * FactoryViewModel — ViewModel 自定义工厂构建演示
  *
  * 演示 Lifecycle 2.5.0+ 引入的 [CreationExtras] 机制与有参 ViewModel 的现代工厂创建方式：
  *
@@ -20,7 +20,7 @@ import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
  * 2. 状态恢复集成：通过 `extras.createSavedStateHandle()` 直接创建 [SavedStateHandle]，彻底取代旧的 `AbstractSavedStateViewModelFactory`；
  * 3. DSL 构建：支持官方推荐的 [viewModelFactory] 与 [initializer] 声明式 DSL 构建语法。
  */
-class ArticleViewModel(
+class FactoryViewModel(
     private val repository: ArticleRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -45,7 +45,7 @@ class ArticleViewModel(
 
                 // 3. 通过服务定位器获取数据仓库
                 val repository = ServiceLocator.provideArticleRepository(application)
-                return ArticleViewModel(
+                return FactoryViewModel(
                     repository = repository,
                     savedStateHandle = savedStateHandle
                 ) as T
@@ -67,7 +67,7 @@ class ArticleViewModel(
 
                 // 3. 构造 ViewModel 实例并返回
                 val repository = ServiceLocator.provideArticleRepository(application)
-                ArticleViewModel(
+                FactoryViewModel(
                     repository = repository,
                     savedStateHandle = savedStateHandle
                 )

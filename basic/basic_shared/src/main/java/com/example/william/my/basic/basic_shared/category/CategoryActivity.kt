@@ -26,7 +26,7 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     private fun getCategoryTitle(): String {
         return when (category) {
-            "ui" -> "UI 与交互"
+            "ui" -> "UI 交互"
             "network" -> "网络通信"
             "storage" -> "数据存储"
             "system" -> "系统能力"
@@ -36,7 +36,6 @@ class CategoryActivity : RouterRecyclerActivity() {
             "kotlin_jetpack" -> "Kotlin & Jetpack"
             "compose_flutter" -> "Compose & Flutter"
             "sample_feature" -> "Sample & Feature"
-            "other" -> "Other"
             else -> "模块列表"
         }
     }
@@ -52,13 +51,13 @@ class CategoryActivity : RouterRecyclerActivity() {
             "engineering" -> buildEngineeringCategory()
             "kotlin_jetpack" -> buildKotlinJetpackCategory()
             "compose_flutter" -> buildComposeFlutterCategory()
-            "sample_feature" -> buildOtherCategory()
+            "sample_feature" -> buildSampleFeatureCategory()
             else -> arrayListOf()
         }
     }
 
     /**
-     * UI 与交互
+     * UI 交互
      * - 控件：官方控件（Widget）/ 自定义控件（WidgetCustom）/ 第三方控件（WidgetThirdparty）
      * - 导航：Tab
      * - 动画：Anim
@@ -189,7 +188,7 @@ class CategoryActivity : RouterRecyclerActivity() {
     /**
      * Kotlin & Jetpack
      * - 语言特性：Kotlin (Coroutines, Flow, Channel, Concurrency, Delegate, Inline, Syntax)
-     * - Jetpack 组件：Jetpack (Paging)
+     * - Jetpack 组件：Jetpack (Paging, ViewModel)
      */
     private fun buildKotlinJetpackCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -217,10 +216,10 @@ class CategoryActivity : RouterRecyclerActivity() {
     }
 
     /**
-     * Other
+     * Sample & Feature
      * - 示例：Sample, Feature
      */
-    private fun buildOtherCategory(): ArrayList<RouterItem> {
+    private fun buildSampleFeatureCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
         items.add(RouterItem("── 示例 ──", ""))
         items.add(RouterItem("技术示例", RouterPath.Sample.Main))
