@@ -359,14 +359,10 @@
 
 ### module_open_source（第三方库）
 
-演示第三方开源库的使用。模块内部按类别组织：`selector`（选择器）/ `utils`（工具），入口列表也按此分组展示。
+演示第三方开源库的使用。模块内按类别组织：`utils`（工具）。
 
 | Activity | 功能 |
 |----------|------|
-| CityPickerActivity | CityPicker 城市选择器 |
-| PickerViewActivity | PickerView 选择器 |
-| PictureSelectorActivity | PictureSelector 图片选择器 |
-| PermissionXActivity | PermissionX 权限请求 |
 | RxJavaActivity | RxJava3 响应式编程 |
 
 ---
@@ -410,6 +406,9 @@
 | ShadowLayoutActivity | ShadowLayout 阴影布局 |
 | SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
 | RealtimeBlurViewActivity | RealtimeBlurView 实时模糊 |
+| CityPickerActivity | CityPicker 城市选择器 |
+| PickerViewActivity | Android-PickerView 滚动选择器 |
+| PictureSelectorActivity | PictureSelector 图片选择器 |
 
 ---
 

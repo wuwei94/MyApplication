@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.activity.selector
+package com.example.william.my.module.widget_thirdparty.activity
 
 import android.content.Context
 import android.os.Bundle
@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
-import com.example.william.my.module.opensource.adapter.PictureSelectorAdapter
-import com.example.william.my.module.opensource.databinding.OpenActivityPictureSelectorBinding
-import com.example.william.my.module.opensource.engine.GlideEngine
+import com.example.william.my.module.widget_thirdparty.adapter.PictureSelectorAdapter
+import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityPictureSelectorBinding
+import com.example.william.my.module.widget_thirdparty.engine.GlideEngine
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -48,13 +48,13 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener
  *
  * https://github.com/LuckSiege/PictureSelector
  */
-@Route(path = RouterPath.OpenSource.PictureSelector)
-class PictureSelectorActivity : BaseVBActivity<OpenActivityPictureSelectorBinding>() {
+@Route(path = RouterPath.WidgetThirdparty.PictureSelector)
+class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSelectorBinding>() {
 
     private lateinit var mAdapter: PictureSelectorAdapter
 
-    override fun getViewBinding(): OpenActivityPictureSelectorBinding {
-        return OpenActivityPictureSelectorBinding.inflate(layoutInflater)
+    override fun getViewBinding(): WidgetThirdpartyActivityPictureSelectorBinding {
+        return WidgetThirdpartyActivityPictureSelectorBinding.inflate(layoutInflater)
     }
 
     override fun initView(savedInstanceState: Bundle?) {

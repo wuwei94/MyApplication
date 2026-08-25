@@ -20,4 +20,11 @@ dependencies {
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
     implementation(libs.blurview)
+
+    // 第三方选择器 / 多媒体选择控件
+    implementation(libs.citypicker)
+    implementation(libs.pickerview)
+    implementation(libs.pictureselector)
+
+    implementation(libs.glide)
 }

@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.data
+package com.example.william.my.module.widget_thirdparty.data
 
 import androidx.annotation.Keep
 import com.contrarywind.interfaces.IPickerViewData

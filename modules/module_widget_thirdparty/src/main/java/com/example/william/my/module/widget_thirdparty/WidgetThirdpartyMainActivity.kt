@@ -21,6 +21,11 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ShadowLayout", RouterPath.WidgetThirdparty.ShadowLayout))
         routerItems.add(RouterItem("SwipeLayout", RouterPath.WidgetThirdparty.SwipeLayout))
 
+        routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("CityPicker", RouterPath.WidgetThirdparty.CityPicker))
+        routerItems.add(RouterItem("PickerView", RouterPath.WidgetThirdparty.PickerView))
+        routerItems.add(RouterItem("PictureSelector", RouterPath.WidgetThirdparty.PictureSelector))
+
         return routerItems
     }
 }

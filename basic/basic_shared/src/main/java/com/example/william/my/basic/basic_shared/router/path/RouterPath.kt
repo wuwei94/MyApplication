@@ -281,13 +281,7 @@ object RouterPath {
 
         const val Main = "${OpenSource}/Main"
 
-        // ── 选择器 ──
-        const val CityPicker = "${OpenSource}/CityPicker"
-        const val PickerView = "${OpenSource}/PickerView"
-        const val PictureSelector = "${OpenSource}/PictureSelector"
-
         // ── 工具 ──
-        const val PermissionX = "${OpenSource}/PermissionX"
         const val RxJava = "${OpenSource}/RxJava"
     }
 
@@ -325,6 +319,11 @@ object RouterPath {
         const val RealtimeBlurView = "${WidgetThirdparty}/RealtimeBlurView"
         const val ShadowLayout = "${WidgetThirdparty}/ShadowLayout"
         const val SwipeLayout = "${WidgetThirdparty}/SwipeLayout"
+
+        // ── 选择器 / 多媒体选择 ──
+        const val CityPicker = "${WidgetThirdparty}/CityPicker"
+        const val PickerView = "${WidgetThirdparty}/PickerView"
+        const val PictureSelector = "${WidgetThirdparty}/PictureSelector"
     }
 
     // ═══════════════════════════════════════════

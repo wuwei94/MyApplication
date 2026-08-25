@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.engine;
+package com.example.william.my.module.widget_thirdparty.engine;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.example.william.my.module.opensource.R;
+import com.example.william.my.module.widget_thirdparty.R;
 import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
 

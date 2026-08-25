@@ -10,6 +10,10 @@
         <activity android:name=".activity.ShadowLayoutActivity" />
         <activity android:name=".activity.SwipeLayoutActivity" />
         <activity android:name=".activity.RealtimeBlurViewActivity" />
+
+        <activity android:name=".activity.CityPickerActivity" />
+        <activity android:name=".activity.PickerViewActivity" />
+        <activity android:name=".activity.PictureSelectorActivity" />
     </application>
 
 </manifest>

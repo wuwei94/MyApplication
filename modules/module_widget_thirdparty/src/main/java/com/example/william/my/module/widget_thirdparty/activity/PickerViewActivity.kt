@@ -1,5 +1,6 @@
-package com.example.william.my.module.opensource.activity.selector
+package com.example.william.my.module.widget_thirdparty.activity
 
+import android.R
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -12,8 +13,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.ResourceUtilsService
-import com.example.william.my.module.opensource.R
-import com.example.william.my.module.opensource.data.ProvinceData
+import com.example.william.my.module.widget_thirdparty.data.ProvinceData
 import com.google.gson.Gson
 import org.json.JSONArray
 import java.text.SimpleDateFormat
@@ -56,7 +56,7 @@ import java.util.Locale
  *
  * https://github.com/Bigkoo/Android-PickerView
  */
-@Route(path = RouterPath.OpenSource.PickerView)
+@Route(path = RouterPath.WidgetThirdparty.PickerView)
 class PickerViewActivity : BasicResponseActivity() {
 
     private var isLoaded = false

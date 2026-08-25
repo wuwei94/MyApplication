@@ -4,12 +4,6 @@
     <application>
         <activity android:name=".OpenSourceMainActivity" />
 
-        <activity android:name=".activity.selector.CityPickerActivity" />
-        <activity android:name=".activity.selector.PickerViewActivity" />
-        <activity android:name=".activity.selector.PictureSelectorActivity" />
-
-        <activity android:name=".activity.utils.PermissionXActivity" />
-
         <activity android:name=".activity.utils.RxJavaActivity" />
     </application>
 

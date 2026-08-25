@@ -1,4 +1,4 @@
-package com.example.william.my.module.opensource.adapter
+package com.example.william.my.module.widget_thirdparty.adapter
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.william.my.module.opensource.R
-import com.example.william.my.module.opensource.databinding.OpenItemPictureSelectorBinding
+import com.example.william.my.module.widget_thirdparty.R
+import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyItemPictureSelectorBinding
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 
@@ -19,7 +19,7 @@ class PictureSelectorAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
-            OpenItemPictureSelectorBinding.inflate(
+            WidgetThirdpartyItemPictureSelectorBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         return ViewHolder(binding)
@@ -68,7 +68,7 @@ class PictureSelectorAdapter(
         }
     }
 
-    class ViewHolder(val binding: OpenItemPictureSelectorBinding) :
+    class ViewHolder(val binding: WidgetThirdpartyItemPictureSelectorBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun getItemViewType(position: Int): Int {

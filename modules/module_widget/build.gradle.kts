@@ -12,7 +12,6 @@ dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
 
-    //TODO
     implementation(project(":libs:lib_widget"))
     implementation(libs.google.flexBox)
 }

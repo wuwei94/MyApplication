@@ -105,7 +105,7 @@ MyApplication/
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
     │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition / PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
-    │   ├── module_widget_thirdparty   # UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView）
+    │   ├── module_widget_thirdparty   # UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector）
     │   └── module_imageloader  # 图片加载（Coil / Glide / lib_imageloader）
     │
     ├── [网络通信]
@@ -142,7 +142,7 @@ MyApplication/
     │   └── module_flutter      # Flutter 子工程
     │
     ├── [OpenSource & AndroidUtils]
-    │   ├── module_open_source  # 第三方库（RxJava / PermissionX / PictureSelector / CityPicker / PickerView）
+    │   ├── module_open_source  # 第三方库（RxJava）
     │   ├── module_loadsir      # 多状态页面（LoadSir）
     │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
@@ -325,8 +325,7 @@ WebSocket 专项功能演示。
 
 第三方开源框架集成 Demo。
 
-- 选择器：PictureSelector / CityPicker / PickerView
-- 工具：RxJava / PermissionX
+- 工具：RxJava
 
 ### module_loadsir（多状态页面）
 
@@ -354,6 +353,7 @@ LoadSir 多状态页面管理框架独立模块（已从 module_open_source 拆�
 - 阴影：ShadowLayout
 - 侧滑：SwipeLayout
 - 模糊：RealtimeBlurView
+- 选择器 / 多媒体：CityPicker（城市选择器）/ PickerView（滚动选择器）/ PictureSelector（图片选择器）
 
 ### module_kotlin（Kotlin 语言特性）
 

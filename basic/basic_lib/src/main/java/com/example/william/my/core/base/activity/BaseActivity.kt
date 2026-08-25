@@ -1,12 +1,17 @@
 package com.example.william.my.core.base.activity
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.Utils
 import com.gyf.immersionbar.ImmersionBar
+import com.permissionx.guolindev.PermissionX
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -80,10 +85,41 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
-    protected open fun initStatusBar() {
+    private fun initStatusBar() {
         if (enableTransparentStatusBar()) {
             transparentStatusBar()
         }
+    }
+
+    protected open fun initPermission() {
+        PermissionX.init(this)
+            .permissions(
+                Manifest.permission.POST_NOTIFICATIONS,
+            )
+            //.explainReasonBeforeRequest()
+            .onExplainRequestReason { scope, deniedList ->
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    "PermissionX需要您同意以下权限才能正常使用",
+                    "Allow",
+                    "Deny"
+                )
+            }
+            .onForwardToSettings { scope, deniedList ->
+                scope.showForwardToSettingsDialog(
+                    deniedList,
+                    "您需要手动在“设置”中允许必要的权限",
+                    "OK",
+                    "Cancel"
+                )
+            }
+            .request { allGranted, grantedList, deniedList ->
+                if (allGranted) {
+                    LogUtils.e("全部权限已授予: $grantedList")
+                } else {
+                    LogUtils.e("权限被拒绝: $deniedList")
+                }
+            }
     }
 
     protected open fun transparentStatusBar() {
