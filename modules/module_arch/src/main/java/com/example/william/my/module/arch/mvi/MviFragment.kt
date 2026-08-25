@@ -13,7 +13,6 @@ import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect
 import com.example.william.my.module.arch.mvi.data.ArticleViewState
 import com.example.william.my.module.arch.mvi.viewmodel.ArticleStateFlowViewModel
-import com.example.william.my.module.arch.mvvm.factory.ViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
@@ -25,7 +24,7 @@ import kotlinx.coroutines.launch
 class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
     private val mViewModel: ArticleStateFlowViewModel by viewModels {
-        ViewModelFactory.getInstance(requireActivity().application)
+        ArticleStateFlowViewModel.Factory
     }
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {

@@ -1,7 +1,11 @@
 package com.example.william.my.module.arch.mvi.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
@@ -62,6 +66,22 @@ class ArticleStateFlowViewModel(private val repository: ArticleRepository) :
                         }
                     }
                 }
+        }
+    }
+
+    companion object {
+        /**
+         * 工厂：通过 [viewModelFactory] DSL 从 [CreationExtras] 获取 Application 并注入仓库
+         */
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = checkNotNull(
+                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
+                )
+                ArticleStateFlowViewModel(
+                    ServiceLocator.provideArticleRepository(application)
+                )
+            }
         }
     }
 }

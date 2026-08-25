@@ -420,6 +420,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | Activity | 功能 |
 |----------|------|
 | PagingActivity | Paging3 分页加载 |
+| ArticleActivity | ViewModel 多种创建方式（默认 / 标准 Factory / DSL Factory，含 Fragment 作用域共享） |
 
 ---
 

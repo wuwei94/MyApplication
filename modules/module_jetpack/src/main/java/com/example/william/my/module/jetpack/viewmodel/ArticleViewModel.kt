@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.sample
+package com.example.william.my.module.jetpack.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -20,7 +20,6 @@ import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
  * 2. 状态恢复集成：通过 `extras.createSavedStateHandle()` 直接创建 [SavedStateHandle]，彻底取代旧的 `AbstractSavedStateViewModelFactory`；
  * 3. DSL 构建：支持官方推荐的 [viewModelFactory] 与 [initializer] 声明式 DSL 构建语法。
  */
-@Deprecated("ViewModel 自定义工厂构建演示示例")
 class ArticleViewModel(
     private val repository: ArticleRepository,
     private val savedStateHandle: SavedStateHandle

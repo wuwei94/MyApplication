@@ -372,6 +372,7 @@ object RouterPath {
         const val Main = "${Jetpack}/Main"
 
         const val Paging = "${Jetpack}/Paging"
+        const val ViewModel = "${Jetpack}/ViewModel"
     }
 
     // 数据库

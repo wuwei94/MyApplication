@@ -4,6 +4,7 @@
     <application>
         <activity android:name=".JetpackMainActivity" />
         <activity android:name=".activity.PagingActivity" />
+        <activity android:name=".viewmodel.ArticleActivity" />
     </application>
 
 </manifest>

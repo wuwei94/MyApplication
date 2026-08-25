@@ -3,8 +3,12 @@ package com.example.william.my.module.arch.mvvm.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.william.my.basic.basic_repo.bean.ArticleData
+import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.exception.ExceptionHandler
 import com.example.william.my.core.retrofit.response.RetrofitResponse
@@ -90,5 +94,21 @@ class ArticleLiveDataViewModel(
         super.onCleared()
         articleUseCase.clear()
         compositeDisposable.clear()
+    }
+
+    companion object {
+        /**
+         * 工厂：通过 [viewModelFactory] DSL 从 [CreationExtras] 获取 Application 并注入仓库
+         */
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = checkNotNull(
+                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
+                )
+                ArticleLiveDataViewModel(
+                    ServiceLocator.provideArticleRepository(application)
+                )
+            }
+        }
     }
 }

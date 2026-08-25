@@ -137,7 +137,7 @@ MyApplication/
     │
     ├── [Kotlin & Jetpack]
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
-    │   └── module_jetpack      # Jetpack 组件（Paging）
+    │   └── module_jetpack      # Jetpack 组件（Paging / ViewModel）
     │
     ├── [Compose & Flutter]
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
@@ -361,6 +361,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 Jetpack 组件库 Demo。
 
 - **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
+- **ViewModel**：ViewModel / ViewModelProvider.Factory 多种创建方式（标准 Factory、DSL viewModelFactory、SavedStateHandle 与 Fragment 作用域共享）
 
 ### module_storage（存储）
 
