@@ -164,8 +164,6 @@ include(":modules:module_websocket")
 include(":modules:module_utils")
 // 事件总线
 include(":modules:module_event")
-// 第三方库
-include(":modules:module_open_source")
 // 多状态页面
 include(":modules:module_loadsir")
 // 图片加载
@@ -173,6 +171,8 @@ include(":modules:module_imageloader")
 
 // Kotlin 特性
 include(":modules:module_kotlin")
+// 响应式编程（Flow / RxJava 操作符对照）
+include(":modules:module_reactive")
 // Jetpack 组件库
 include(":modules:module_jetpack")
 // 数据库

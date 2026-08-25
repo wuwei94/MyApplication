@@ -135,14 +135,14 @@ MyApplication/
     │
     ├── [Kotlin & Jetpack]
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
+    │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
     │   └── module_jetpack      # Jetpack 组件（Paging）
     │
     ├── [Compose & Flutter]
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
     │   └── module_flutter      # Flutter 子工程
     │
-    ├── [OpenSource & AndroidUtils]
-    │   ├── module_open_source  # 第三方库（RxJava）
+    ├── [AndroidUtils & 三方库]
     │   ├── module_loadsir      # 多状态页面（LoadSir）
     │   └── module_utils        # AndroidUtils 工具库示例（AdaptScreenUtils / FileIOUtils / PermissionUtils / ThreadUtils）
     │
@@ -321,15 +321,9 @@ WebSocket 专项功能演示。
 | LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
 | FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
 
-### module_open_source（第三方库）
-
-第三方开源框架集成 Demo。
-
-- 工具：RxJava
-
 ### module_loadsir（多状态页面）
 
-LoadSir 多状态页面管理框架独立模块（已从 module_open_source 拆出）。
+LoadSir 多状态页面管理框架独立模块。
 
 - 多状态页：LoadSir（加载中 / 错误重试 / 成功内容切换）
 - Fragment 多状态页：LoadSirFragment（BaseFragmentActivity 承载，复用 shared_layout_recycler_layout + 成功内容布局）
@@ -366,6 +360,13 @@ Kotlin 语言特性在 Android 上的实践。
 - **Delegate 委托机制**：类委托（by base）、自定义 ReadWriteProperty、by lazy 延迟初始化、observable 变更监听、vetoable 条件拦截、Map 映射委托、属性别名重定向与 notNull 非空校验
 - **Inline 内联函数**：作用域函数对比（with/let/run/also/apply）、reified 泛型实化与 JSON 解析、自定义内联高阶扩展、noinline 与 crossinline 修饰符
 - **Syntax 现代语法与 DSL**：操作符重载（+/*/[ ]/in/invoke）、中缀函数（infix fun）、解构声明（Data Class 与 componentN）、密封接口（Sealed Interface）when 编译器穷举与 @DslMarker 类型安全 DSL 构建器
+
+### module_reactive（响应式编程）
+
+Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，便于对比学习。
+
+- **Flow 操作符**：flowOf/asFlow 创建、map/flatMapConcat/buffer 变换、filter/take/distinct 过滤、zip/combine 组合、catch 错误降级
+- **RxJava 3 操作符**：just/range 创建、map/flatMap/buffer 变换、filter/take/distinct 过滤、zip/concat 组合、onErrorReturn 错误恢复
 
 ### module_jetpack（Jetpack 组件库）
 

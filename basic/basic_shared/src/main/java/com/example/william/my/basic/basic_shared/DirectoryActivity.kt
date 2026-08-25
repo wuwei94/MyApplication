@@ -39,8 +39,8 @@ class DirectoryActivity : RouterRecyclerActivity() {
         // Compose & Flutter
         routerItems.add(RouterItem("Compose & Flutter", getCategoryPath("compose_flutter"), getCategoryParams("compose_flutter")))
 
-        // 第三方开源库
-        routerItems.add(RouterItem("OpenSource & AndroidUtils", getCategoryPath("open_source_android_utils"), getCategoryParams("open_source_android_utils")))
+        // AndroidUtils & 三方库
+        routerItems.add(RouterItem("AndroidUtils & 三方库", getCategoryPath("android_utils"), getCategoryParams("android_utils")))
 
         // 其他
         routerItems.add(RouterItem("Sample & Feature", getCategoryPath("sample_feature"), getCategoryParams("sample_feature")))

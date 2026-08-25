@@ -33,7 +33,7 @@ class CategoryActivity : RouterRecyclerActivity() {
             "arch" -> "架构模式"
             "kotlin_jetpack" -> "Kotlin & Jetpack"
             "compose_flutter" -> "Compose & Flutter"
-            "open_source" -> "OpenSource"
+            "android_utils" -> "AndroidUtils & 三方库"
             "other" -> "Other"
             else -> "模块列表"
         }
@@ -48,7 +48,7 @@ class CategoryActivity : RouterRecyclerActivity() {
             "arch" -> buildArchCategory()
             "kotlin_jetpack" -> buildKotlinJetpackCategory()
             "compose_flutter" -> buildComposeFlutterCategory()
-            "open_source_android_utils" -> buildOpenSourceCategory()
+            "android_utils" -> buildAndroidUtilsCategory()
             "sample_feature" -> buildOtherCategory()
             else -> arrayListOf()
         }
@@ -184,14 +184,12 @@ class CategoryActivity : RouterRecyclerActivity() {
     }
 
     /**
-     * OpenSource
-     * - OpenSource：第三方库
+     * AndroidUtils & 三方库
+     * - LoadSir：多状态页面
      * - AndroidUtils：工具类
      */
-    private fun buildOpenSourceCategory(): ArrayList<RouterItem> {
+    private fun buildAndroidUtilsCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("── OpenSource ──", ""))
-        items.add(RouterItem("OpenSource", RouterPath.OpenSource.Main))
         items.add(RouterItem("LoadSir", RouterPath.LoadSir.Main))
         items.add(RouterItem("── AndroidUtils ──", ""))
         items.add(RouterItem("AndroidUtils", RouterPath.Utils.Main))

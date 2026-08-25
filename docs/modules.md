@@ -32,8 +32,7 @@
 │   └── Jetpack 组件
 ├── Compose & Flutter
 │   └── Compose、Flutter
-├── OpenSource
-│   ├── OpenSource：第三方库
+├── AndroidUtils & 三方库
 │   ├── LoadSir：多状态页面
 │   └── AndroidUtils：工具类
 └── Other
@@ -64,10 +63,10 @@
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
 | module_utils | 工具类 | UtilsMainActivity | /Utils |
 | module_event | 事件总线 | EventMainActivity | /Event |
-| module_open_source | 第三方库 | OpenSourceMainActivity | /OpenSource |
 | module_loadsir | 多状态页面 | LoadSirMainActivity | /LoadSir |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
+| module_reactive | 响应式编程 | ReactiveMainActivity | /Reactive |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
 | module_database | 数据库 | DatabaseMainActivity | /Database |
 | module_storage | 存储 | StorageMainActivity | /Storage |
@@ -357,16 +356,6 @@
 
 ---
 
-### module_open_source（第三方库）
-
-演示第三方开源库的使用。模块内按类别组织：`utils`（工具）。
-
-| Activity | 功能 |
-|----------|------|
-| RxJavaActivity | RxJava3 响应式编程 |
-
----
-
 ### module_loadsir（多状态页面）
 
 演示 LoadSir 多状态页面管理框架。
@@ -425,6 +414,17 @@
 | MyDelegateActivity | Kotlin 委托机制（类委托、自定义 ReadWriteProperty、by lazy、observable、vetoable、by map、属性重定向与 notNull） |
 | MyInlineActivity | Kotlin 内联函数（作用域函数 with/let/run/also/apply、reified 泛型实化、自定义扩展、noinline 与 crossinline） |
 | MySyntaxActivity | Kotlin 现代语法与 DSL（操作符重载 +/*/[ ]/in/invoke、中缀函数 infix fun、解构声明、密封接口 Sealed Interface 穷举与类型安全 DSL 构建器） |
+
+---
+
+### module_reactive（响应式编程）
+
+Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，便于对比学习。
+
+| Activity | 功能 |
+|----------|------|
+| FlowOperatorsActivity | Kotlin Flow 操作符（flowOf/asFlow 创建、map/flatMapConcat/buffer 变换、filter/take/distinct 过滤、zip/combine 组合、catch 错误降级） |
+| RxJavaOperatorsActivity | RxJava 3 操作符（just/range 创建、map/flatMap/buffer 变换、filter/take/distinct 过滤、zip/concat 组合、onErrorReturn 错误恢复） |
 
 ---
 

@@ -275,16 +275,6 @@ object RouterPath {
         const val NettyWebSocketClientRx = "${PATH}/NettyWebSocketClientRx"
     }
 
-    // 第三方库
-    object OpenSource {
-        private const val OpenSource = "/OpenSource"
-
-        const val Main = "${OpenSource}/Main"
-
-        // ── 工具 ──
-        const val RxJava = "${OpenSource}/RxJava"
-    }
-
     // 多状态页面
     object LoadSir {
         private const val PATH = "/LoadSir"
@@ -375,6 +365,16 @@ object RouterPath {
         const val Delegate = "${Kotlin}/Delegate"
         const val Inline = "${Kotlin}/Inline"
         const val Syntax = "${Kotlin}/Syntax"
+    }
+
+    // 响应式编程（Flow / RxJava 操作符对照）
+    object Reactive {
+        private const val Reactive = "/Reactive"
+
+        const val Main = "${Reactive}/Main"
+
+        const val FlowOperators = "${Reactive}/FlowOperators"
+        const val RxJavaOperators = "${Reactive}/RxJavaOperators"
     }
 
     // Jetpack 组件
