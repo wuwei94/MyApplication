@@ -24,7 +24,7 @@ import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 
 /**
- * 文章数据仓库接口（服务于 module_arch 的 MVP / MVVM / MVI 与 module_mavericks 的 Mavericks 架构模式教学对比演示）。
+ * 文章数据仓库接口（服务于 module_arch 的 MVP / MVVM / MVI 与 Mavericks 架构模式教学对比演示）。
  *
  * 架构对应关系：
  * 1. MVP       -> 传统回调 API ([getArticleCallback])

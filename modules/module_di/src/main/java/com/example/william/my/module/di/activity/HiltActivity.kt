@@ -40,7 +40,7 @@ import javax.inject.Inject
  * - @HiltViewModel：标注 Jetpack ViewModel 支持构造函数依赖注入
  * - @EntryPoint：定义入口点接口，用于非标准组件获取容器中的依赖
  */
-@Route(path = RouterPath.DI.Hilt)
+@Route(path = RouterPath.Di.Hilt)
 @AndroidEntryPoint
 class HiltActivity : BasicResponseActivity() {
 

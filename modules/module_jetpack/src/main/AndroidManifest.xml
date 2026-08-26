@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name=".JetpackMainActivity" />
+        <activity android:name=".activity.LifecycleActivity" />
         <activity android:name=".activity.PagingActivity" />
         <activity android:name=".activity.ViewModelActivity" />
     </application>

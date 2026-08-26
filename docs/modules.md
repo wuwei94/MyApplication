@@ -9,29 +9,25 @@
 ```
 目录页面 (DirectoryActivity)
 ├── UI 交互
-│   ├── 系统原生：标准控件、Tab 导航、动画
-│   ├── 自定义：自定义控件
-│   ├── 第三方：UI 库、第三方动画库
+│   ├── 控件：标准控件、自定义控件、第三方控件
+│   ├── 导航：Tab 导航
+│   ├── 动画：原生动画与第三方动画库（PAG、Lottie、SVGA）
 │   └── 图片加载：Coil、Glide、lib_imageloader
 ├── 网络通信
-│   ├── HTTP 请求：HTTP（基础）、OkHttp、Retrofit、Ktor、RxRetrofit
+│   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   └── 长连接：WebSocket
 ├── 数据存储
 │   ├── 数据库：Room、ObjectBox
 │   └── 键值存储：DataStore、MMKV
 ├── 系统能力
 │   ├── 系统原生：异步处理、任务调度、组件交互、系统服务
+│   ├── 多媒体：相机、图片裁剪
 │   └── 跨进程通信：AIDL、Messenger
-├── 多媒体
-│   └── 相机、图片裁剪
-├── 架构模式
-│   ├── 自实现：MVP、MVVM、MVI
-│   └── 第三方：Mavericks
-├── 工程实践
+├── 架构与工程
+│   ├── 架构模式：MVP、MVVM、MVI、Mavericks
 │   ├── 依赖注入：Hilt、Koin
 │   ├── 事件通信：事件总线
 │   ├── 响应式编程：Reactive（Flow / RxJava 操作符对照）
-│   ├── 页面状态：多状态页面（LoadSir）
 │   └── 性能优化
 ├── Kotlin & Jetpack
 │   ├── 语言特性：Kotlin
@@ -48,10 +44,9 @@
 |------|------|--------------|---------|
 | module_widget | 标准控件 | WidgetMainActivity | /Widget |
 | module_tab | Tab 导航 | TabMainActivity | /Tab |
-| module_anim | 动画 | AnimMainActivity | /Anim |
-| module_anim_thirdparty | 第三方动画库 | AnimThirdpartyMainActivity | /AnimThirdparty |
+| module_anim | 动画（原生与第三方） | AnimMainActivity | /Anim |
 | module_widget_custom | 自定义控件 | WidgetCustomMainActivity | /WidgetCustom |
-| module_widget_thirdparty | UI 库 | WidgetThirdpartyMainActivity | /WidgetThirdparty |
+| module_widget_thirdparty | 第三方 UI 库 | WidgetThirdpartyMainActivity | /WidgetThirdparty |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
@@ -61,14 +56,9 @@
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
-| module_http_basic | HTTP 客户端（基础） | HttpBasicMainActivity | /HttpBasic |
-| module_ktor | Ktor | KtorMainActivity | /Ktor |
-| module_okhttp | OkHttp | OkHttpMainActivity | /OkHttp |
-| module_retrofit | Retrofit | RetrofitMainActivity | /Retrofit |
-| module_rxretrofit | Rx 动态请求与文件传输 | RxRetrofitMainActivity | /RxRetrofit |
+| module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
 | module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
 | module_event | 事件总线 | EventMainActivity | /Event |
-| module_loadsir | 多状态页面 | LoadSirMainActivity | /LoadSir |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_reactive | 响应式编程 | ReactiveMainActivity | /Reactive |
@@ -77,7 +67,6 @@
 | module_storage | 存储 | StorageMainActivity | /Storage |
 | module_di | 依赖注入 | DiMainActivity | /DI |
 | module_arch | 架构模式 | ArchMainActivity | /Arch |
-| module_mavericks | Mavericks 架构 | MavericksMainActivity | /Mavericks |
 | module_compose | Compose UI | ComposeMainActivity | /Compose |
 | module_flutter | Flutter 集成 | FlutterMainActivity | /Flutter |
 
@@ -122,10 +111,11 @@
 
 ### module_anim（动画）
 
-演示 Android 原生动画机制。
+演示 Android 原生动画机制与第三方动画库（PAG、Lottie、SVGA）。
 
 | Activity | 功能 |
 |----------|------|
+| AnimMainActivity | 模块入口，导航到原生动画与第三方动画库页面 |
 | ObjectAnimatorActivity | ObjectAnimator 属性动画（透明度/旋转/缩放/平移） |
 | AnimatorSetActivity | AnimatorSet 动画组合（顺序/同时/Builder 编排） |
 | ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
@@ -133,16 +123,6 @@
 | TransitionSecondActivity | 视图过渡动画目标页 |
 | RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
 | RenderScriptActivity | RenderScript 图像处理（已废弃） |
-
----
-
-### module_anim_thirdparty（第三方动画库）
-
-演示第三方动画库，与 module_anim（系统原生动画）形成对照。
-
-| Activity | 功能 |
-|----------|------|
-| AnimThirdpartyMainActivity | 模块入口，导航到 PAG、Lottie、SVGA 示例页面 |
 | PagActivity | PAG 动画播放器 |
 | LottieActivity | Lottie 动画播放器 |
 | SvgaPlayerActivity | SVGA 动画播放器 |
@@ -194,7 +174,7 @@
 
 ### module_component（组件交互）
 
-演示 Android 四大组件间的交互机制。
+演示 Android 原生四大组件与 Jetpack 现代交互契约机制（原生四大组件：Broadcast / Service；Jetpack 交互契约：ActivityResultContracts / OnBackPressedDispatcher）。
 
 | Activity | 功能 |
 |----------|------|
@@ -220,23 +200,24 @@
 
 ### module_system_service（系统服务）
 
-演示 Android 系统级服务调用。
+演示 Android 系统级服务与底层安全密钥机制。
 
 | Activity | 功能 |
 |----------|------|
-| SystemServiceMainActivity | 模块入口，导航到系统服务示例页面 |
+| SystemServiceMainActivity | 模块入口，导航到系统服务与安全密钥示例页面 |
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
 | PermissionActivity | 运行时权限批量申请 |
-| SecureKeyActivity | Android Keystore 安全密钥创建与签名 |
+| SecureKeyActivity | Android Keystore 安全密钥创建与签名（硬件保护与 ECDSA 签名） |
 
 ---
 
 ### module_sample（技术示例）
 
-演示零散的技术技巧，不属于完整业务场景。
+**定位：技术技巧与底层探索**。收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码（如 Hook 反射、自定义 Typeface 等），保持轻量独立，不污染通用架构模块。
 
 | Activity | 功能 |
 |----------|------|
+| SampleMainActivity | 模块入口，导航到技术技巧示例页面 |
 | HookActivity | View Hook 反射技术 |
 | TypefaceActivity | 自定义字体加载（Typeface.createFromAsset） |
 
@@ -260,10 +241,11 @@
 
 ### module_feature（业务功能）
 
-演示完整的业务场景。
+**定位：实战业务场景脱敏**。收纳从公司真实商业项目中抽离、脱敏出的典型复合业务场景（如抽奖转盘、麦位动画等），展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。
 
 | Activity | 功能 |
 |----------|------|
+| FeatureMainActivity | 模块入口，导航到抽奖转盘与麦位动画示例页面 |
 | TurntableActivity | 转盘抽奖（旋转动画） |
 | MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
 
@@ -271,7 +253,7 @@
 
 ### module_media（多媒体）
 
-演示 Android 多媒体能力，按用例（UseCase）拆分为独立示例页。
+演示 Android 原生底层多媒体能力（硬件/系统 API），按用例（UseCase）拆分为独立示例页。第三方图片选择器（如 PictureSelector）归入 `module_widget_thirdparty`。
 
 | Activity | 功能 |
 |----------|------|
@@ -282,67 +264,27 @@
 
 ---
 
-### module_http_basic（HTTP 客户端 · 基础）
+### module_http（HTTP 网络请求）
 
-演示 HttpURLConnection 和 Volley 基础客户端。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
+集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call/协程/RxJava）以及 Rx 动态请求与文件传输。实际请求页统一基于 `BasicResponseActivity` 内联展示响应、日志与原位更新进度。
 
 | Activity | 功能 |
 |----------|------|
-| HttpBasicMainActivity | 模块入口，导航到各个 HTTP 客户端示例页面 |
+| HttpMainActivity | 模块入口，导航到各个 HTTP 请求示例页面 |
 | HttpURLActivity | HttpURLConnection 原生网络请求 |
 | VolleyActivity | Volley HTTP 请求 |
-
----
-
-### module_ktor（Ktor）
-
-演示 Ktor 原生客户端和项目级 Ktor Client 封装。实际请求页统一基于 `BasicResponseActivity` 内联展示响应与错误。
-
-| Activity | 功能 |
-|----------|------|
-| KtorMainActivity | 模块入口，导航到 Ktor 示例页面 |
-| KtorActivity | Ktor 原生 HTTP 客户端，区分成功与非 2xx 响应 |
-| KtorClientActivity | 项目级 Ktor Client 封装，区分业务失败与传输失败 |
-
----
-
-### module_okhttp（OkHttp）
-
-演示 OkHttp 原生请求和 `lib_okhttp` DSL 封装。实际请求页统一基于 `BasicResponseActivity` 累积展示响应与错误。
-
-| Activity | 功能 |
-|----------|------|
-| OkHttpMainActivity | 模块入口，导航到 OkHttp 示例页面 |
 | OkHttpActivity | `lib_okhttp` DSL 与 OkHttp 原生请求示例 |
-
----
-
-### module_retrofit（Retrofit）
-
-按封装方式分类演示 Retrofit 的 Call、协程和 RxJava 调用方式。实际请求页统一基于 `BasicResponseActivity` 累积展示响应与错误。
-
-| Activity | 功能 |
-|----------|------|
-| RetrofitMainActivity | 模块入口，导航到 Retrofit 示例页面 |
 | RetrofitCallActivity | Retrofit 原生 `Call` 请求示例 |
 | RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
 | RetrofitCoroutineActivity | Retrofit 协程挂起函数原生调用示例 |
 | RetrofitCoroutineDslActivity | `lib_retrofit` DSL 与协程挂起函数示例 |
 | RetrofitRxActivity | Retrofit RxJava 原生订阅与页面销毁释放示例 |
 | RetrofitRxDslActivity | `lib_retrofit_rx` 标准接口与默认策略示例 |
-
----
-
-### module_rxretrofit（Rx 动态请求与文件传输）
-
-集中展示 `lib_rx_request`、`lib_rx_download` 和 `lib_rx_upload` 三个 Rx 链式库。三个实际请求页均基于 `BasicResponseActivity`，传输进度在日志区原位更新。
-
-| Activity | 功能 |
-|----------|------|
-| RxRetrofitMainActivity | 模块入口，导航到动态请求、下载和上传页面 |
 | RxRequestActivity | 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求 |
 | RxDownloadActivity | 基于 `BasicResponseActivity` 直接展示单任务 Builder、并发队列 Builder、统一 `RxDownloadCallback`、原位更新进度和 `File` 目录清理 |
 | RxUploadActivity | 基于 `BasicResponseActivity` 直接展示 `addFile` / `addFiles` 单多文件 Multipart 上传、`RxUploadCallback`、同步创建少量示例文件和 `File` 目录清理 |
+| KtorActivity | Ktor 原生请求（POST 多部分表单与挂起函数） |
+| KtorClientActivity | 基于 `lib_ktor` 的项目级 Ktor 客户端封装（`postFormResponse`） |
 
 ---
 
@@ -381,25 +323,13 @@
 
 ---
 
-### module_loadsir（多状态页面）
-
-演示 LoadSir 多状态页面管理框架。
-
-| Activity | 功能 |
-|----------|------|
-| LoadSirMainActivity | 模块入口，导航到 LoadSir 示例页面 |
-| LoadSirActivity | LoadSir 加载状态页（加载中 / 错误重试 / 成功内容切换） |
-| LoadSirFragmentActivity | LoadSir Fragment 示例（BaseFragmentActivity 承载 LoadSirFragment，复用 shared_layout_recycler_layout + 成功内容布局） |
-
----
-
 ### module_imageloader（图片加载）
 
-图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 统一封装。
+图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 网络图片管道与加载引擎封装（图片手势缩放 UI 控件 PhotoView 归入 `module_widget_thirdparty`）。
 
 | Activity | 功能 |
 |----------|------|
-| ImageLoaderMainActivity | 模块入口，导航到 Coil、Glide、ImageLoader 示例页面 |
+| ImageLoaderMainActivity | 模块入口，导航到各个图片加载器示例页面 |
 | CoilActivity | Coil 3 原生加载（基础 / crossfade / placeholder / error） |
 | GlideActivity | Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade） |
 | ImageLoaderActivity | `lib_imageloader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
@@ -408,7 +338,7 @@
 
 ### module_widget_thirdparty（UI 库）
 
-演示第三方 UI 控件库。集中展示可复用的 View/ViewGroup 控件库。
+演示第三方 UI 控件库。集中展示可复用的 View/ViewGroup 控件、复合 UI 选择器库（如 PhotoView 图片手势缩放 View、PictureSelector 图片选择器）以及第三方页面多状态管理框架（LoadSir）。
 
 | Activity | 功能 |
 |----------|------|
@@ -423,6 +353,8 @@
 | CityPickerActivity | CityPicker 城市选择器 |
 | PickerViewActivity | Android-PickerView 滚动选择器 |
 | PictureSelectorActivity | PictureSelector 图片选择器 |
+| LoadSirActivity | LoadSir 多状态页面管理（Loading / Error / Success 切换与点击重试） |
+| LoadSirFragmentActivity | LoadSir 在 Fragment 场景下的多状态管理与布局复用 |
 
 ---
 
@@ -455,10 +387,20 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_jetpack（Jetpack 组件）
 
-演示 Jetpack 官方组件库。
+承载未被具体业务/技术领域大类吸纳的**通用 Jetpack 架构与生命周期数据流组件**（不包含 UI 控件）。
+
+> **说明**：具备明确主题的 Jetpack 组件均按「主题优先」归入对应业务/技术模块：
+> - `Room` → `module_database`（数据存储）
+> - `DataStore` → `module_storage`（键值存储）
+> - `CameraX` → `module_media`（多媒体底层能力）
+> - `Hilt` → `module_di`（依赖注入）
+> - `WorkManager` → `module_scheduler`（后台任务调度）
+> - `AsyncLayoutInflater` / `ConcatAdapter` / `DiffUtil` → `module_performance`（布局解析与渲染性能优化）
 
 | Activity | 功能 |
 |----------|------|
+| JetpackMainActivity | 模块入口，导航到 Lifecycle、Paging3 与 ViewModel 示例页面 |
+| LifecycleActivity | Lifecycle 生命周期感知（DefaultLifecycleObserver、ProcessLifecycleOwner 全局前后台、repeatOnLifecycle / flowWithLifecycle 安全数据流收集） |
 | PagingActivity | Paging3 分页加载 |
 | ViewModelActivity | ViewModel 多种创建方式（默认 / 标准 Factory / DSL Factory，含 Fragment 作用域共享） |
 
@@ -502,25 +444,15 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_arch（架构模式）
 
-演示 Android 架构模式。
+演示 Android 主流架构模式（MVP、MVVM、MVI 与 Airbnb Mavericks）。各架构模式在 `module_arch` 下分包并列管理。
 
 | Activity | 功能 |
 |----------|------|
-| MvpActivity | MVP 架构模式 |
-| MvvmActivity | MVVM 架构模式 |
-| MviActivity | MVI 架构模式 |
-
----
-
-### module_mavericks（Mavericks 架构）
-
-基于 Airbnb Mavericks 框架的 MVI 架构独立模块（已从 module_arch 拆出）。
-
-| Activity | 功能 |
-|----------|------|
-| MavericksMainActivity | 模块入口，导航到 Counter、Mavericks 示例 |
-| CounterActivity | Mavericks 计数器示例 |
-| MavericksActivity | Mavericks 文章列表示例 |
+| ArchMainActivity | 模块入口，导航到 MVP / MVVM / MVI / Mavericks 架构模式示例 |
+| MvpActivity | MVP 架构模式（ArticleContract + ArticlePresenter） |
+| MvvmActivity | MVVM 架构模式（ArticleLiveDataViewModel + UseCase） |
+| MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect） |
+| MavericksActivity | Mavericks 架构模式（Airbnb MVI，MavericksState + MavericksViewModel + MavericksRepository） |
 
 ---
 

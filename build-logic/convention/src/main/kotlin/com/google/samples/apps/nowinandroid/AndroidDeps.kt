@@ -75,7 +75,6 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_widget"))
             "implementation"(project(":modules:module_tab"))
             "implementation"(project(":modules:module_anim"))
-            "implementation"(project(":modules:module_anim_thirdparty"))
             "implementation"(project(":modules:module_widget_custom"))
 
             "implementation"(project(":modules:module_async"))
@@ -89,15 +88,10 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_feature"))
             "implementation"(project(":modules:module_performance"))
 
-            "implementation"(project(":modules:module_http_basic"))
-            "implementation"(project(":modules:module_ktor"))
-            "implementation"(project(":modules:module_okhttp"))
-            "implementation"(project(":modules:module_retrofit"))
-            "implementation"(project(":modules:module_rxretrofit"))
+            "implementation"(project(":modules:module_http"))
             "implementation"(project(":modules:module_websocket"))
 
             "implementation"(project(":modules:module_event"))
-            "implementation"(project(":modules:module_loadsir"))
             "implementation"(project(":modules:module_imageloader"))
             "implementation"(project(":modules:module_widget_thirdparty"))
 
@@ -108,7 +102,6 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_storage"))
             "implementation"(project(":modules:module_di"))
             "implementation"(project(":modules:module_arch"))
-            "implementation"(project(":modules:module_mavericks"))
 
             "implementation"(project(":modules:module_compose"))
             "implementation"(project(":modules:module_flutter"))

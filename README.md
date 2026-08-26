@@ -56,9 +56,9 @@
 已接入两套方案的模块（`@XxxInit` 与 `registerAppInit` 一一对应）：
 
 - `module_event`：`EventApp`（手动）/ `EventInitImpl` + `EventModule`（Hilt）
-- `module_loadsir`：`LoadSirApp` / `LoadSirInitImpl` + `LoadSirModule`
+- `module_widget_thirdparty`：`LoadSirApp` / `LoadSirInitImpl` + `LoadSirModule`
 - `module_flutter`：`FlutterApp` / `FlutterInitImpl` + `FlutterModule`
-- `module_mavericks`：`MavericksApp` / `MavericksInitImpl` + `MavericksModule`
+- `module_arch`：`MavericksApp` / `MavericksInitImpl` + `MavericksModule`
 
 > 手动方案在 `App.initApp()` 中注册 `EventApp / MavericksApp / LoadSirApp / FlutterApp`；
 > Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → eventInit → mavericksInit → loadSirInit → flutterInit` 顺序调用。
@@ -103,18 +103,13 @@ MyApplication/
     ├── [UI 组件]
     │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView / FloatWindow）
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
-    │   ├── module_anim         # 动画（ObjectAnimator / AnimatorSet / ValueAnimator / RenderEffect / RenderScript / Transition）
-    │   ├── module_anim_thirdparty  # 第三方动画库（PAG / Lottie / SVGA）
+    │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
-    │   ├── module_widget_thirdparty   # UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector）
+    │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   └── module_imageloader  # 图片加载（Coil / Glide / lib_imageloader）
     │
     ├── [网络通信]
-    │   ├── module_http_basic   # HTTP 客户端 · 基础（HttpURLConnection / Volley）
-    │   ├── module_ktor         # Ktor（Ktor 原生客户端 / 项目级 Ktor Client 封装）
-    │   ├── module_okhttp       # OkHttp（OkHttp 原生请求 / lib_okhttp DSL）
-    │   ├── module_retrofit     # Retrofit（Call / 协程 / RxJava 调用方式）
-    │   ├── module_rxretrofit  # Rx 动态 Retrofit 请求与上传下载示例
+    │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
     │   └── module_websocket    # WebSocket 专项示例
     │
     ├── [数据存储]
@@ -125,26 +120,20 @@ MyApplication/
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread）
     │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
-    │   ├── module_ipc          # 跨进程通信（AIDL / Messenger）
-    │   └── module_system_service  # 系统服务（Notification / Permission / SecureKey）
+    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / Android Keystore 安全密钥）
+    │   ├── module_media        # 多媒体（CameraX 拍照 / 录像 / 图片裁剪）
+    │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
-    ├── [多媒体]
-    │   └── module_media        # 多媒体（CameraX 拍照 / 录像 / 图片裁剪）
-    │
-    ├── [架构模式]
-    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI）
-    │   └── module_mavericks    # Mavericks 架构（Airbnb MVI 框架独立模块）
-    │
-    ├── [工程实践]
+    ├── [架构与工程]
+    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Mavericks 并列分包）
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
-    │   ├── module_loadsir      # 多状态页面（LoadSir）
     │   └── module_performance  # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     │
     ├── [Kotlin & Jetpack]
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
-    │   └── module_jetpack      # Jetpack 组件（Paging / ViewModel）
+    │   └── module_jetpack      # Jetpack 组件（Lifecycle / Paging / ViewModel）
     │
     ├── [Compose & Flutter]
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）
@@ -181,7 +170,7 @@ MyApplication/
 
 ### module_anim（动画）
 
-演示 Android 原生动画机制。
+演示 Android 原生动画机制与第三方动画库。
 
 - ObjectAnimator 属性动画（透明度/旋转/缩放/平移）
 - AnimatorSet 动画组合（顺序/同时/Builder 编排）
@@ -190,11 +179,6 @@ MyApplication/
 - RenderEffect 渲染效果（Android 12+）
 - RenderScript 图像处理（已废弃）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
-
-### module_anim_thirdparty（第三方动画库）
-
-演示第三方动画库，与 module_anim（系统原生动画）形成对照。
-
 - PAG 动画播放器（腾讯 libpag）
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
@@ -249,11 +233,10 @@ MyApplication/
 
 - NotificationChannel 通知渠道创建与通知发送
 - 运行时权限批量申请
-- Android Keystore 安全密钥创建与签名
 
 ### module_sample（技术示例）
 
-演示零散的技术技巧，不属于完整业务场景。
+技术技巧与底层探索。收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码，保持轻量独立，不污染通用架构模块。
 
 - **View Hook**：反射技术（动态代理替换 OnClickListener）
 - **自定义字体**：字体加载（Typeface.createFromAsset）
@@ -279,38 +262,25 @@ MyApplication/
 
 ### module_feature（业务功能）
 
-业务功能 Demo。
+实战业务场景脱敏。收纳从公司真实商业项目中抽离、脱敏出的典型复合业务场景，展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。
 
 - 转盘抽奖（旋转动画）
 - 麦位动画（自定义 LayoutManager）
+- Android Keystore 安全密钥创建与签名
 
-### module_http_basic（HTTP 客户端 · 基础）
+### module_http（HTTP 网络请求）
 
-HttpURLConnection 与 Volley 基础 HTTP 客户端 Demo。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加成功、HTTP/业务失败和传输异常；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)。
+集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call / 协程 / RxJava）以及 Rx 动态请求与文件传输。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加响应、日志与原位更新进度；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)，上传、下载与并发约定详见 [文件上传与下载](docs/transfer.md)。
 
-- HttpURLConnection / Volley 基础请求
-
-### module_okhttp（OkHttp）
-
-演示 OkHttp 原生请求和 `lib_okhttp` DSL 封装。
-
+- `httpurl`：HttpURLConnection 原生网络请求
+- `volley`：Volley 基础请求
 - `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
-
-### module_retrofit（Retrofit）
-
-按封装方式分类演示 Retrofit 的 Call、协程和 RxJava 调用方式。
-
 - `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
 - `retrofit_coroutine`：Retrofit 协程挂起函数原生调用与 `lib_retrofit` DSL
 - `retrofit_rx`：RxJava 原生订阅与默认网络策略
-
-### module_rxretrofit（Rx 动态请求与文件传输）
-
 - `request`：`RxRequestActivity` 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
-- `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，通过根包的 `RxDownload` / `RxDownloadManager` 展示条件断点续传与单/多文件并发下载
+- `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，展示条件断点续传与单/多文件并发下载
 - `upload`：`RxUploadActivity` 复用页面级 Rx Retrofit 和统一 `RxUploadCallback`，展示单/多文件 POST Multipart 上传
-
-上传、下载、断点续传和并发约定详见 [文件上传与下载](docs/transfer.md)。
 
 ### module_websocket（WebSocket 专项示例）
 
@@ -331,13 +301,6 @@ WebSocket 专项功能演示。
 | LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
 | FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
 
-### module_loadsir（多状态页面）
-
-LoadSir 多状态页面管理框架独立模块。
-
-- 多状态页：LoadSir（加载中 / 错误重试 / 成功内容切换）
-- Fragment 多状态页：LoadSirFragment（BaseFragmentActivity 承载，复用 shared_layout_recycler_layout + 成功内容布局）
-
 ### module_imageloader（图片加载）
 
 图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 统一封装。
@@ -348,7 +311,7 @@ LoadSir 多状态页面管理框架独立模块。
 
 ### module_widget_thirdparty（UI 库）
 
-第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件。
+第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件、复合 UI 选择器与第三方页面多状态管理。
 
 - 轮播：Banner
 - 倒计时：CountdownView
@@ -358,6 +321,7 @@ LoadSir 多状态页面管理框架独立模块。
 - 侧滑：SwipeLayout
 - 模糊：RealtimeBlurView
 - 选择器 / 多媒体：CityPicker（城市选择器）/ PickerView（滚动选择器）/ PictureSelector（图片选择器）
+- 多状态管理：LoadSir（Activity / Fragment 多状态管理、Loading / Error / Success 切换与点击重试）
 
 ### module_kotlin（Kotlin 语言特性）
 
@@ -403,22 +367,14 @@ Jetpack 组件库 Demo。
 
 ### module_arch（架构模式）
 
-架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。
+架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。各架构在模块内按 `mvp`、`mvvm`、`mvi`、`mavericks` 分包并列管理。
 
 | 模式 | 说明 |
 |------|------|
 | MVP | Presenter 持有 View 引用，手动桥接 |
 | MVVM | LiveData + ViewModel，UseCase 封装单一业务逻辑 |
 | MVI | 单向数据流：State → UI → Intent → ViewModel → State |
-
-> Mavericks 已拆分为独立模块 `module_mavericks`。
-
-### module_mavericks（Mavericks 架构）
-
-基于 Airbnb [Mavericks](https://airbnb.io/mavericks/) 框架的 MVI 架构独立模块（已从 module_arch 拆出），覆盖不可变状态、状态持久化与异步请求。
-
-- **Counter**：基础 State 的绑定与更新（setState / withState）
-- **Mavericks（文章列表）**：异步请求 + 分页列表数据绑定，演示 MavericksViewModel / MavericksState / MavericksView 协作
+| Mavericks | 基于 Airbnb [Mavericks](https://airbnb.io/mavericks/) 框架的 MVI 实现，包含不可变状态、状态持久化与异步请求 |
 
 ### module_compose（Compose 示例）
 

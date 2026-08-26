@@ -33,14 +33,8 @@ class DirectoryActivity : RouterRecyclerActivity() {
         // 系统能力
         routerItems.add(RouterItem("系统能力", getCategoryPath("system"), getCategoryParams("system")))
 
-        // 多媒体
-        routerItems.add(RouterItem("多媒体", getCategoryPath("media"), getCategoryParams("media")))
-
-        // 架构模式
-        routerItems.add(RouterItem("架构模式", getCategoryPath("arch"), getCategoryParams("arch")))
-
-        // 工程实践
-        routerItems.add(RouterItem("工程实践", getCategoryPath("engineering"), getCategoryParams("engineering")))
+        // 架构与工程
+        routerItems.add(RouterItem("架构与工程", getCategoryPath("engineering"), getCategoryParams("engineering")))
 
         // Kotlin & Jetpack
         routerItems.add(RouterItem("Kotlin & Jetpack", getCategoryPath("kotlin_jetpack"), getCategoryParams("kotlin_jetpack")))

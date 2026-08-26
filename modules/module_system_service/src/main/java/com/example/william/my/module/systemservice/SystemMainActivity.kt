@@ -12,7 +12,7 @@ class SystemServiceMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Notification", RouterPath.SystemService.Notification))
         routerItems.add(RouterItem("Permission", RouterPath.SystemService.Permission))
-        routerItems.add(RouterItem("SecureKey", RouterPath.SystemService.SecureKey))
+        routerItems.add(RouterItem("SecureKey (Android Keystore)", RouterPath.SystemService.SecureKey))
         return routerItems
     }
 }

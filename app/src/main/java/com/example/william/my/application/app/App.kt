@@ -6,10 +6,10 @@ import com.example.william.my.core.base.app.BaseApp
 import com.example.william.my.core.base.eventbus.EventBusHelper
 import com.example.william.my.core.base.utils.CrashUtils
 import com.example.william.my.core.base.utils.FileSDCardUtil
-import com.example.william.my.module.mavericks.app.MavericksApp
+import com.example.william.my.module.arch.app.MavericksApp
 import com.example.william.my.module.event.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp
-import com.example.william.my.module.loadsir.app.LoadSirApp
+import com.example.william.my.module.widget_thirdparty.app.LoadSirApp
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 
 /**

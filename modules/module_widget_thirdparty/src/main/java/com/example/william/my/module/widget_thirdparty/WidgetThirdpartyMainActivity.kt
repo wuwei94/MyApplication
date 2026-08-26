@@ -26,6 +26,10 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("PickerView", RouterPath.WidgetThirdparty.PickerView))
         routerItems.add(RouterItem("PictureSelector", RouterPath.WidgetThirdparty.PictureSelector))
 
+        routerItems.add(RouterItem(" ", ""))
+        routerItems.add(RouterItem("LoadSir", RouterPath.WidgetThirdparty.LoadSir))
+        routerItems.add(RouterItem("LoadSirFragment", RouterPath.WidgetThirdparty.LoadSirFragment))
+
         return routerItems
     }
 }

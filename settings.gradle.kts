@@ -122,10 +122,8 @@ include(":libs:lib_ninepatch")
 
 // Tab 导航
 include(":modules:module_tab")
-// 动画特效
+// 动画（原生动画 + 第三方动画库）
 include(":modules:module_anim")
-// 第三方动画库
-include(":modules:module_anim_thirdparty")
 // UI 控件
 include(":modules:module_widget")
 // 自定义控件
@@ -153,23 +151,13 @@ include(":modules:module_performance")
 // 多媒体
 include(":modules:module_media")
 
-// HTTP（基础）
-include(":modules:module_http_basic")
-// Ktor
-include(":modules:module_ktor")
-// OkHttp
-include(":modules:module_okhttp")
-// Retrofit
-include(":modules:module_retrofit")
-// RxJava 动态请求 / 文件传输
-include(":modules:module_rxretrofit")
+// HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
+include(":modules:module_http")
 // WebSocket
 include(":modules:module_websocket")
 
 // 事件总线
 include(":modules:module_event")
-// 多状态页面
-include(":modules:module_loadsir")
 // 图片加载
 include(":modules:module_imageloader")
 
@@ -185,10 +173,8 @@ include(":modules:module_database")
 include(":modules:module_storage")
 // 依赖注入
 include(":modules:module_di")
-// MVP，MVI，MVVM 架构
+// MVP，MVI，MVVM，Mavericks 架构
 include(":modules:module_arch")
-// Mavericks 架构
-include(":modules:module_mavericks")
 
 // Compose
 include(":modules:module_compose")

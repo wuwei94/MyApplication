@@ -29,7 +29,7 @@ lib_ktor -> Ktor Client + OkHttp Engine
 - 响应对象可通过工厂方法创建，`success(data)` 的 `data` 可空。泛型响应通过 `@RawValue` 实现 `Parcelable`，实际数据仍必须是 Parcel 支持的类型。
 - Token 刷新属于业务策略。OkHttp/Retrofit 使用 `Interceptor` 或 `Authenticator`，Ktor 使用 Auth Plugin 或注入的 OkHttp 配置。
 - 日志、缓存和 Cookie 默认不应携带业务状态；正式业务实例应交给 Hilt 或 ServiceLocator 管理。
-- `module_http`、`module_okhttp` 和 `module_rxretrofit` 的实际请求页统一继承 `BasicResponseActivity`：需要页面说明时使用 `showDescription` 居中展示，离散响应与错误追加到内联日志，高频传输进度按 key 原位更新；模块入口页只负责路由导航。
+- `module_http` 的实际请求页统一继承 `BasicResponseActivity`：需要页面说明时使用 `showDescription` 居中展示，离散响应与错误追加到内联日志，高频传输进度按 key 原位更新；模块入口页只负责路由导航。
 
 ## lib_okhttp
 
@@ -135,7 +135,7 @@ api.login(username, password)
 
 包名为 `com.example.william.my.core.rx.request`，依赖 `lib_retrofit_rx` 复用标准 Rx Retrofit 能力。业务只使用动态请求时显式依赖该模块，标准 Retrofit Rx 调用方不需要引入它。
 
-对应示例位于 `module_rxretrofit` 的 `RxRequestActivity`。
+对应示例位于 `module_http` 的 `RxRequestActivity`。
 
 源码按职责分层：根包的 `RxRequest` 是稳定的对外入口，`api` 声明 Retrofit 动态请求接口，`builder` 负责链式构建，`config` 保存不可变请求快照，`method` 定义 HTTP 方法，`function` 负责响应数据转换。测试目录采用相同的职责划分。
 
@@ -242,7 +242,7 @@ Ktor 日志默认关闭，启用后默认记录 Header，并脱敏认证与 Cook
 |---|---|---|---|---|
 | **`ArticleApi`** | **业务架构层（协程标准 API）** | 纯净挂起函数<br>(基于 `createApi`，未装配 Rx Adapter) | `module_arch`<br>`module_jetpack` | 专为协程、Flow 与 Paging 3 协程组件（`ArticlePagingSource`, `ArticleRemoteMediator`）提供挂起请求；统一由 `ServiceLocator.provideArticleApi()` 提供。 |
 | **`ArticleRxApi`** | **业务架构层（Rx 响应式 API）** | RxJava 响应式流<br>(基于 `createRxApi`，装配 `RxJava3CallAdapterFactory`) | `module_arch`<br>`module_jetpack` | 专为 MVP 回调、RxJava 响应式流与 Paging 3 Rx 组件（`ArticleRxPagingSource`, `ArticleRxRemoteMediator`）提供 Single 请求；统一由 `ServiceLocator.provideArticleRxApi()` 提供。 |
-| **`NetworkApi`** | **网络通信原语层** | 裸 Retrofit 注解接口<br>(无 Repository 包装) | `module_okhttp`<br>`module_kotlin` | 专为 OkHttp/Retrofit/Rx/协程/Flow 演示底层请求能力（Call、Single、Suspend、Multipart 上传、下载）；由各演示页面动态创建调用。 |
+| **`NetworkApi`** | **网络通信原语层** | 裸 Retrofit 注解接口<br>(无 Repository 包装) | `module_http`<br>`module_kotlin` | 专为 OkHttp/Retrofit/Rx/协程/Flow 演示底层请求能力（Call、Single、Suspend、Multipart 上传、下载）；由各演示页面动态创建调用。 |
 
 ## 验证命令
 

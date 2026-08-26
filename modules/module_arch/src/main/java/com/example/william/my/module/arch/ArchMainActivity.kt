@@ -13,6 +13,7 @@ class ArchMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("MVP", RouterPath.Arch.MVP))
         routerItems.add(RouterItem("MVVM", RouterPath.Arch.MVVM))
         routerItems.add(RouterItem("MVI", RouterPath.Arch.MVI))
+        routerItems.add(RouterItem("Mavericks (Airbnb MVI)", RouterPath.Arch.Mavericks))
         return routerItems
     }
 }

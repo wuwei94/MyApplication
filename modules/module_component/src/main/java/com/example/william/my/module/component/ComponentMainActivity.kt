@@ -9,11 +9,14 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 class ComponentMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
-        return arrayListOf(
-            RouterItem("Broadcast", RouterPath.Component.Broadcast),
-            RouterItem("Service", RouterPath.Component.Service),
-            RouterItem("ActivityResult", RouterPath.Component.ActivityResult),
-            RouterItem("OnBackPressed", RouterPath.Component.OnBackPressed)
-        )
+        val routerItems: ArrayList<RouterItem> = arrayListOf()
+        routerItems.add(RouterItem("── 原生四大组件 ──", ""))
+        routerItems.add(RouterItem("Broadcast", RouterPath.Component.Broadcast))
+        routerItems.add(RouterItem("Service", RouterPath.Component.Service))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── Jetpack 交互契约 ──", ""))
+        routerItems.add(RouterItem("ActivityResult", RouterPath.Component.ActivityResult))
+        routerItems.add(RouterItem("OnBackPressed", RouterPath.Component.OnBackPressed))
+        return routerItems
     }
 }

@@ -26,5 +26,8 @@ dependencies {
     implementation(libs.pickerview)
     implementation(libs.pictureselector)
 
+    // 第三方状态页管理
+    implementation(libs.loadsir)
+
     implementation(libs.glide)
 }

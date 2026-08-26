@@ -16,14 +16,28 @@
 - 资源前缀：`<模块名>_`
 - 依赖：必须依赖 `basic_lib` 和 `basic_shared`
 
-## 分类判据
+## 分类判据与模块边界
 
-示例模块的归类遵循「主题优先、来源标注」原则，新增模块或示例页前先按此判据确定归属：
+示例模块的归类遵循「主题优先、来源标注、职责分明」原则，新增模块或示例页前先按此判据确定归属：
 
-- **一级按技术主题**：模块挂到 `DirectoryActivity` 的某个技术领域分组（UI 交互 / 网络通信 / 数据存储 / 系统能力 / 多媒体 / 架构模式 / 工程实践 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature）。
+- **一级按技术主题**：模块挂到 `DirectoryActivity` 的 8 大技术领域分组（UI 交互 / 网络通信 / 数据存储 / 系统能力 / 架构与工程 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature）。
 - **二级按技术来源**：分组内用「系统原生 / Jetpack / 第三方」标注示例来源，便于横向对比。
-- **Jetpack 组件按主题归位**：有明确主题的 Jetpack 组件归入对应主题模块（如 Room → 数据存储、CameraX → 多媒体、Hilt → 依赖注入），不堆进 `module_jetpack`；仅无明确主题的架构组件（ViewModel、Paging 等）才进入 `module_jetpack`。
-- **Sample / Feature 边界**：`module_sample` 收纳零散技术技巧；`module_feature` 收纳从工作项目抽离的业务示例。业务示例沉淀出通用能力时，应升级到对应主题模块。
+- **底层能力 vs 第三方 UI 控件**：
+  - `module_media`：聚焦系统原生 API 与硬件能力（CameraX 拍照/录像、Intent 系统裁剪）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
+  - `module_imageloader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_imageloader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
+  - `module_widget_thirdparty`：集中收纳第三方可复用 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
+- **Jetpack 组件按主题归位原则**：
+  - `module_jetpack` 专门承载**未被具体技术领域模块吸纳的通用 Jetpack 架构与生命周期数据流组件**（如 Lifecycle、Paging、ViewModel 等），且**不包含 UI 控件**。
+  - 具有明确技术领域的 Jetpack 组件必须归入对应主题模块：
+    - `Room` → `module_database`（数据存储）
+    - `DataStore` → `module_storage`（键值存储）
+    - `CameraX` → `module_media`（多媒体硬件能力）
+    - `Hilt` → `module_di`（依赖注入）
+    - `WorkManager` → `module_scheduler`（后台任务调度）
+    - `AsyncLayoutInflater`、`ConcatAdapter`、`DiffUtil` → `module_performance`（布局解析与列表渲染性能优化）
+- **探索与实战模块边界（Sample & Feature）**：
+  - `module_sample`（技术技巧与底层探索）：收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码（如 Hook 反射、自定义 Typeface 等）。保持轻量独立，不污染通用架构模块。
+  - `module_feature`（实战业务场景脱敏）：收纳从公司真实项目中抽离、脱敏出的典型复合业务场景（如抽奖转盘、麦位动画等）。展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。
 
 ## 全局依赖（build-logic/convention）
 

@@ -44,7 +44,7 @@ import org.koin.core.qualifier.named
  * - get()：即时获取依赖对象
  * - parametersOf(...)：在解析时传递动态运行时参数
  */
-@Route(path = RouterPath.DI.Koin)
+@Route(path = RouterPath.Di.Koin)
 class KoinActivity : BasicResponseActivity() {
 
     // 1. 懒加载注入单例与工厂对象

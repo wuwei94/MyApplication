@@ -10,5 +10,8 @@
         <activity android:name=".activity.TransitionSecondActivity" />
         <activity android:name=".activity.RenderEffectActivity" />
         <activity android:name=".activity.RenderScriptActivity" />
+        <activity android:name=".activity.PagActivity" />
+        <activity android:name=".activity.LottieActivity" />
+        <activity android:name=".activity.SvgaPlayerActivity" />
     </application>
 </manifest>

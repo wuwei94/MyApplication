@@ -4,7 +4,7 @@
 
 两个库的根包分别为 `com.example.william.my.core.rx.download` 和 `com.example.william.my.core.rx.upload`。
 
-`module_rxretrofit` 按 `request/download/upload` 拆分示例，文件传输页面分别为 `RxDownloadActivity` 和 `RxUploadActivity`。两个页面都继承 `BasicResponseActivity`，并像 `RxRequestActivity` 一样让每个列表项直接对应一个 API 示例方法，只使用 `CompositeDisposable` 管理取消。下载页分别在方法内展示单任务 `RxDownload.builder()` 和批量 `RxDownloadManager.builder()`，两者注入同一个页面级 Retrofit；上传页分别展示 `addFile()` 与 `addFiles()`。为突出传输 API，上传页使用 `File.writeText()` 准备少量文本示例文件，两个页面直接使用 `File` API 清理示例目录；生产业务的大文件 I/O 应调度到后台线程。进度通过 `updateLog()` 原位更新，完成和失败结果通过 `appendLog()` 追加。
+`module_http` 中的 Rx 动态请求与文件传输按 `request/download/upload` 拆分示例，文件传输页面分别为 `RxDownloadActivity` 和 `RxUploadActivity`。两个页面都继承 `BasicResponseActivity`，并像 `RxRequestActivity` 一样让每个列表项直接对应一个 API 示例方法，只使用 `CompositeDisposable` 管理取消。下载页分别在方法内展示单任务 `RxDownload.builder()` 和批量 `RxDownloadManager.builder()`，两者注入同一个页面级 Retrofit；上传页分别展示 `addFile()` 与 `addFiles()`。为突出传输 API，上传页使用 `File.writeText()` 准备少量文本示例文件，两个页面直接使用 `File` API 清理示例目录；生产业务的大文件 I/O 应调度到后台线程。进度通过 `updateLog()` 原位更新，完成和失败结果通过 `appendLog()` 追加。
 
 ## 目录结构
 

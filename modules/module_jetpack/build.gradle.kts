@@ -15,6 +15,9 @@ dependencies {
 
     implementation(project(":basic:basic_repo"))
 
+    //lifecycle
+    implementation(libs.androidx.lifecycle.process)
+
     //paging
     implementation(libs.autodispose)
     implementation(libs.androidx.paging.runtime)

@@ -16,40 +16,6 @@ import com.example.william.my.module.systemservice.utils.SecureKeyDemoUtils
  * 2. 设备绑定：密钥与设备绑定，无法迁移到其他设备
  * 3. 安全签名：支持 ECDSA、RSA 等签名算法
  * 4. 防重放：支持 challenge-response 机制，防止重放攻击
- *
- * 密钥类型：
- * 1. EC P-256：椭圆曲线密钥，安全性高，性能好
- * 2. RSA：RSA 密钥，兼容性好
- * 3. AES：对称密钥，用于数据加密
- *
- * 基本用法：
- * ```kotlin
- * // 生成密钥对
- * val keyPairGenerator = KeyPairGenerator.getInstance(
- *     KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore"
- * )
- * keyPairGenerator.initialize(
- *     KeyGenParameterSpec.Builder(
- *         "key_alias",
- *         KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
- *     )
- *     .setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
- *     .build()
- * )
- * val keyPair = keyPairGenerator.generateKeyPair()
- *
- * // 使用私钥签名
- * val signature = Signature.getInstance("SHA256withECDSA")
- * signature.initSign(keyPair.private)
- * signature.update(data)
- * val signedData = signature.sign()
- * ```
- *
- * 适用场景：
- * - 设备绑定、身份验证
- * - 安全签名、防篡改
- * - challenge-response 防重放
- * - 生物识别认证
  */
 @Route(path = RouterPath.SystemService.SecureKey)
 class SecureKeyActivity : BasicResponseActivity() {

@@ -17,4 +17,6 @@ dependencies {
     implementation(project(":basic:basic_shared"))
 
     implementation(project(":basic:basic_repo"))
+
+    implementation(libs.mavericks)
 }
