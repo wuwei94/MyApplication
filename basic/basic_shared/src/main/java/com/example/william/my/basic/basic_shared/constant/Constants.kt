@@ -11,6 +11,12 @@ object Constants {
 
     const val Url_WebSocket = "wss://echo.websocket.org"
 
+    // MQTT（EMQX 公共 Broker，无需账号）
+    const val Mqtt_Broker = "tcp://broker.emqx.io:1883"
+    const val Mqtt_Host = "broker.emqx.io"
+    const val Mqtt_Port = 1883
+    const val Mqtt_Topic = "mqtt/example"
+
     const val Url_Ludo = "https://gamfunfile.gamfun.com/ludo/zip/ludo.zip"
     const val Url_BombCat = "https://gamfunfile.gamfun.com/bombcat/zip/cat.zip"
 

@@ -90,6 +90,7 @@ internal fun Project.configureFeatureAndroid(
 
             "implementation"(project(":modules:module_http"))
             "implementation"(project(":modules:module_websocket"))
+            "implementation"(project(":modules:module_mqtt"))
 
             "implementation"(project(":modules:module_event"))
             "implementation"(project(":modules:module_imageloader"))

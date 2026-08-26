@@ -8,7 +8,7 @@
 
 - **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
-- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
+- **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
 - **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / Provider / GetX / BloC。
@@ -29,7 +29,7 @@
 | Architecture| MVP · MVVM · MVI · Mavericks |
 | DI          | Hilt · Koin |
 | Navigation  | ARouter · Navigation Component |
-| Network     | OkHttp · Retrofit · Ktor · Volley · WebSocket · Netty · NanoHTTPD |
+| Network     | OkHttp · Retrofit · Ktor · Volley · WebSocket · Netty · MQTT · NanoHTTPD |
 | Persistence | Room · ObjectBox · DataStore |
 | Image       | Glide · Coil |
 | Reactive    | Coroutines · Flow · RxJava 3 · LiveData |
@@ -93,6 +93,9 @@ MyApplication/
 │   ├── lib_rx_download         # Retrofit + Rx 下载（统一回调、条件续传、物理终止并发屏障与聚合进度）
 │   ├── lib_rx_upload           # Retrofit + Rx 链式 POST Multipart 上传（单/多文件、UploadResult 与进度）
 │   ├── lib_netty               # Netty TCP 封装
+│   ├── lib_mqtt                # MQTT 各客户端复用回调接口（MqttClientListener）
+│   ├── lib_mqtt_hivemq         # MQTT 客户端封装（HiveMQ 异步 API，复用 lib_mqtt 回调接口）
+│   ├── lib_mqtt_paho_service   # MQTT 客户端封装（Paho Android Service fork，MqttAndroidClient）
 │   ├── lib_nanohttpd           # NanoHTTPD 服务器封装
 │   ├── lib_eventbus            # EventBus 事件总线封装
 │   ├── lib_imageloader         # Glide / Coil 图片加载封装（IImageLoader 接口 + 内核可切换）
@@ -110,7 +113,8 @@ MyApplication/
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
-    │   └── module_websocket    # WebSocket 专项示例
+    │   ├── module_websocket    # WebSocket 专项示例
+    │   └── module_mqtt         # MQTT 发布 / 订阅专项示例
     │
     ├── [数据存储]
     │   ├── module_database     # 数据库（Room / ObjectBox）
@@ -292,6 +296,15 @@ WebSocket 与 Netty TCP Socket 专项功能演示。
 - **OkHttp WebSocket**：OkHttp 原生连接与 RxJava 封装
 - **Java-WebSocket**：Java-WebSocket 客户端、RxJava 封装与内置本地服务端（Port 5566）
 - **Netty TCP Socket**：Netty TCP 客户端、RxJava 封装与内置本地服务端（Port 5567）
+
+### module_mqtt（MQTT 发布 / 订阅）
+
+MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供两种客户端实现对比。
+
+- **HiveMQ MQTT Client**：`lib_mqtt_hivemq` 封装，异步 API（流式 Builder + CompletableFuture 回调），依赖 Netty
+- **Eclipse Paho Android Service**：`lib_mqtt_paho_service` 封装，MqttAndroidClient 绑定 MqttService（BroadcastReceiver + Service 通信）；采用 hannesa2 维护 fork（官方 1.1.1 已停更，在 targetSdk 34+ 上会因 Receiver 注册缺少导出标志崩溃）
+
+两者均覆盖：连接、订阅、发布（QoS 0/1/2）与断开。
 
 ### module_event（事件总线）
 

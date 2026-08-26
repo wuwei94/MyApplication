@@ -107,6 +107,11 @@ include(":libs:lib_websocket_okhttp")
 include(":libs:lib_websocket_java")
 include(":libs:lib_netty")
 
+// MQTT 消息队列遥测传输
+include(":libs:lib_mqtt")
+include(":libs:lib_mqtt_hivemq")
+include(":libs:lib_mqtt_paho_service")
+
 // 服务端
 include(":libs:lib_nanohttpd")
 
@@ -155,6 +160,8 @@ include(":modules:module_media")
 include(":modules:module_http")
 // WebSocket
 include(":modules:module_websocket")
+// MQTT
+include(":modules:module_mqtt")
 
 // 事件总线
 include(":modules:module_event")

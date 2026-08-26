@@ -18,6 +18,9 @@
 | `lib_websocket_okhttp` | OkHttp WebSocket 客户端 | OkHttp WebSocket | - |
 | `lib_websocket_java` | Java-WebSocket 客户端与服务端 | Java-WebSocket | - |
 | `lib_netty` | Netty TCP 客户端与服务端 | Netty | - |
+| `lib_mqtt` | MQTT 各客户端复用的回调接口（`MqttClientListener`） | - | - |
+| `lib_mqtt_hivemq` | MQTT 客户端封装（HiveMQ 异步 API，复用 `lib_mqtt` 回调接口） | HiveMQ MQTT Client、Netty | - |
+| `lib_mqtt_paho_service` | MQTT 客户端封装（Paho Android Service fork，MqttAndroidClient） | hannesa2 Paho Android Service、Paho MQTT | - |
 | `lib_nanohttpd` | 嵌入式 HTTP Server | NanoHTTPD | - |
 | `lib_imageloader` | 图片加载封装 | Glide、Coil | - |
 | `lib_eventbus` | 事件总线封装 | EventBus | - |
@@ -85,11 +88,14 @@ com.example.william.my.core.rx.request/
 
 通过 `RxUpload.builder()` 创建固定使用 Retrofit `POST @Body` 的不可变 Multipart 上传请求，支持通过 `addFile()` 或 `addFiles()` 添加单/多文件、表单字段、Header 和整体请求体进度，成功结果统一为 `UploadResult`。`RxUploadCallback` 与下载回调一样只描述业务状态，由请求对象负责适配 RxJava 订阅；库会为上传派生关闭连接失败重试的 Retrofit，其他可能重放请求的机制由调用方控制。详细调用与行为约束见[文件上传与下载](transfer.md)。
 
-### WebSocket、TCP 与 HTTP Server
+### WebSocket、TCP、MQTT 与 HTTP Server
 
 - `lib_websocket_okhttp`：使用 OkHttp 实现 WebSocket 客户端。
 - `lib_websocket_java`：使用 Java-WebSocket 实现客户端和服务端。
 - `lib_netty`：提供 Netty TCP 通信示例。
+- `lib_mqtt`：提供 MQTT 各客户端复用的回调接口 `MqttClientListener`（无第三方依赖）。
+- `lib_mqtt_hivemq`：使用 HiveMQ MQTT Client 异步 API 实现客户端，复用 `lib_mqtt` 的 `MqttClientListener` 回调接口；依赖 Netty，已排除其传递的模块化 Netty 以避免与 `lib_netty` 重复类冲突。
+- `lib_mqtt_paho_service`：使用 Paho Android Service（MqttAndroidClient）实现客户端，绑定 `MqttService`。采用 hannesa2 维护 fork（`com.github.hannesa2:paho.mqtt.android`，包名 `info.mqtt.android.service`）：官方 `org.eclipse.paho` 1.1.1 已停更，其 `AlarmPingSender` 注册 Receiver 缺少导出标志，在 targetSdk 34+ 上连接成功即抛 `SecurityException`。fork 的 AAR 已自带 Service 声明与 `WAKE_LOCK` 等权限，无需手动注册。
 - `lib_nanohttpd`：提供 `NanoHttpServer`、`NanoHttpLogger`、`ServerConfig` 和 `ServerLifecycle`。
 
 ### UI 与通用能力

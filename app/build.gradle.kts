@@ -72,6 +72,9 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // Netty 各模块 jar 均携带 INDEX.LIST / io.netty.versions.properties，合并时会重复冲突
+            excludes += "/META-INF/INDEX.LIST"
+            excludes += "/META-INF/io.netty.versions.properties"
         }
     }
 

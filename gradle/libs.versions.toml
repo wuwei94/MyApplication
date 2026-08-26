@@ -76,9 +76,16 @@ volley = "1.2.1"
 okhttp = "5.1.0"
 retrofit = "3.0.0"
 slf4j = "2.0.17"
-netty = "4.1.65.Final"
+netty = "4.1.122.Final"
 nanohttpd = "2.3.1"
 websocket = "1.6.0"
+hivemq = "1.3.7"
+# hannesa2 维护的 Paho Android Service fork（原 org.eclipse.paho 1.1.1 已停更，
+# 其 AlarmPingSender 在 targetSdk 34+ 上注册 Receiver 缺少导出标志会触发 SecurityException）
+# https://github.com/hannesa2/paho.mqtt.android
+pahoAndroidService = "4.5"
+# https://github.com/eclipse-paho/paho.mqtt.java
+mqtt = "1.2.5"
 # ##################################################################################################
 pag = "4.5.12"
 lottie = "6.6.7"
@@ -301,6 +308,12 @@ netty = { group = "io.netty", name = "netty-all", version.ref = "netty" }
 nanohttpd = { group = "org.nanohttpd", name = "nanohttpd", version.ref = "nanohttpd" }
 # https://github.com/TooTallNate/Java-WebSocket
 websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
+# https://github.com/eclipse-paho/paho.mqtt.java
+mqtt = { group = "org.eclipse.paho", name = "org.eclipse.paho.client.mqttv3", version.ref = "mqtt" }
+# https://github.com/hannesa2/paho.mqtt.android（JitPack，包名 info.mqtt.android.service）
+paho-android-service = { group = "com.github.hannesa2", name = "paho.mqtt.android", version.ref = "pahoAndroidService" }
+# https://github.com/hivemq/hivemq-mqtt-client
+hivemq = { group = "com.hivemq", name = "hivemq-mqtt-client", version.ref = "hivemq" }
 # ##################################################################################################
 # https://github.com/Tencent/libpag
 pag = { group = "com.tencent.tav", name = "libpag", version.ref = "pag" }

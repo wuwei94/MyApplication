@@ -81,6 +81,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * 网络通信
      * - HTTP 请求（请求-响应）：HTTP 网络请求（基础 / OkHttp / Retrofit / RxRetrofit / Ktor）
      * - 长连接：WebSocket
+     * - 消息队列：MQTT（发布 / 订阅）
      */
     private fun buildNetworkCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -89,6 +90,9 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("", ""))
         items.add(RouterItem("── Socket ──", ""))
         items.add(RouterItem("WebSocket & TCP Socket", RouterPath.WebSocket.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 消息队列 ──", ""))
+        items.add(RouterItem("MQTT", RouterPath.Mqtt.Main))
         return items
     }
 

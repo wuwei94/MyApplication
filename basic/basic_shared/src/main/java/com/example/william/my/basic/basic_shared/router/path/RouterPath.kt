@@ -305,6 +305,15 @@ object RouterPath {
         const val NettyWebSocketClientRx = "${PATH}/NettyWebSocketClientRx"
     }
 
+    // MQTT 模块
+    object Mqtt {
+        private const val PATH = "/Mqtt"
+
+        const val Main = "${PATH}/Main"
+        const val HiveMqClient = "${PATH}/HiveMqClient"
+        const val PahoServiceClient = "${PATH}/PahoServiceClient"
+    }
+
     // ═══════════════════════════════════════════
     // 架构 / 语言 / 框架
     // ═══════════════════════════════════════════

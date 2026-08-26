@@ -15,7 +15,8 @@
 │   └── 图片加载：Coil、Glide、lib_imageloader
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
-│   └── Socket 通信：WebSocket & TCP Socket
+│   ├── Socket 通信：WebSocket & TCP Socket
+│   └── 消息队列：MQTT（发布 / 订阅）
 ├── 数据存储
 │   ├── 数据库：Room、ObjectBox
 │   └── 键值存储：DataStore、MMKV
@@ -58,6 +59,7 @@
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
 | module_websocket | WebSocket & TCP Socket | WebSocketMainActivity | /WebSocket |
+| module_mqtt | MQTT 发布 / 订阅 | MqttMainActivity | /Mqtt |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
@@ -310,6 +312,18 @@
 |---------|------|----------|
 | JavaWebSocketServerService | Java-WebSocket 服务端 | 5566 |
 | NettyWebSocketServerService | Netty TCP 服务端 | 5567 |
+
+---
+
+### module_mqtt（MQTT 发布 / 订阅）
+
+演示 MQTT（Message Queuing Telemetry Transport）发布/订阅消息队列协议，使用 EMQX 公共 Broker，提供两种客户端实现对比。
+
+| Activity | 功能 |
+|----------|------|
+| MqttMainActivity | 模块入口，导航到两个 MQTT 客户端示例页面 |
+| HiveMqClientActivity | HiveMQ MQTT Client 异步 API：连接、订阅、发布（QoS 0/1/2）与断开连接 |
+| PahoServiceClientActivity | Eclipse Paho Android Service（MqttAndroidClient，绑定 MqttService）：连接、订阅、发布（QoS 0/1/2）与断开连接 |
 
 ---
 
