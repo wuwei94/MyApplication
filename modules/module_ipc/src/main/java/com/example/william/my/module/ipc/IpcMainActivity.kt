@@ -16,8 +16,8 @@ class IpcMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         return arrayListOf(
-            RouterItem("AIDL", RouterPath.Ipc.AIDL),
-            RouterItem("Messenger", RouterPath.Ipc.Messenger)
+            RouterItem("AIDL（标准 Binder 跨进程接口）", RouterPath.Ipc.AIDL),
+            RouterItem("Messenger（轻量级跨进程消息传递）", RouterPath.Ipc.Messenger)
         )
     }
 }

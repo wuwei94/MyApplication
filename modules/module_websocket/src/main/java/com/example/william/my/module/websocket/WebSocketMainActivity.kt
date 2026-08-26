@@ -19,13 +19,18 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 class WebSocketMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
-        return arrayListOf(
-            RouterItem("OkHttpWebSocketClient", RouterPath.WebSocket.OkHttpWebSocketClient),
-            RouterItem("OkHttpWebSocketClientRx", RouterPath.WebSocket.OkHttpWebSocketClientRx),
-            RouterItem("JavaWebSocketClient", RouterPath.WebSocket.JavaWebSocketClient),
-            RouterItem("JavaWebSocketClientRx", RouterPath.WebSocket.JavaWebSocketClientRx),
-            RouterItem("NettyWebSocketClient", RouterPath.WebSocket.NettyWebSocketClient),
-            RouterItem("NettyWebSocketClientRx", RouterPath.WebSocket.NettyWebSocketClientRx),
-        )
+        val routerItems = arrayListOf<RouterItem>()
+        routerItems.add(RouterItem("── OkHttp ──", ""))
+        routerItems.add(RouterItem("OkHttp WebSocket", RouterPath.WebSocket.OkHttpWebSocketClient))
+        routerItems.add(RouterItem("OkHttp WebSocket (RxJava 封装)", RouterPath.WebSocket.OkHttpWebSocketClientRx))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── Java-WebSocket ──", ""))
+        routerItems.add(RouterItem("Java-WebSocket（内置本地服务端）", RouterPath.WebSocket.JavaWebSocketClient))
+        routerItems.add(RouterItem("Java-WebSocket (RxJava 封装)", RouterPath.WebSocket.JavaWebSocketClientRx))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── Netty TCP ──", ""))
+        routerItems.add(RouterItem("Netty TCP Socket（内置本地服务端）", RouterPath.WebSocket.NettyWebSocketClient))
+        routerItems.add(RouterItem("Netty TCP Socket (RxJava 封装)", RouterPath.WebSocket.NettyWebSocketClientRx))
+        return routerItems
     }
 }

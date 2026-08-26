@@ -13,9 +13,9 @@ class MediaMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("拍照 (ImageCapture)", RouterPath.Media.Photo))
-        routerItems.add(RouterItem("录像 (VideoCapture)", RouterPath.Media.Video))
-        routerItems.add(RouterItem("图片裁剪", RouterPath.Media.Crop))
+        routerItems.add(RouterItem("CameraX 拍照（ImageCapture 用例）", RouterPath.Media.Photo))
+        routerItems.add(RouterItem("CameraX 录像（VideoCapture 用例）", RouterPath.Media.Video))
+        routerItems.add(RouterItem("图片裁剪（Intent 调用系统裁剪）", RouterPath.Media.Crop))
         return routerItems
     }
 }

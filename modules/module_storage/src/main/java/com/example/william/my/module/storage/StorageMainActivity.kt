@@ -13,8 +13,8 @@ class StorageMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("DataStore (Jetpack)", RouterPath.Storage.DataStore))
-        routerItems.add(RouterItem("MMKV (高性能键值存储)", RouterPath.Storage.MMKV))
+        routerItems.add(RouterItem("DataStore（Jetpack 响应式键值存储）", RouterPath.Storage.DataStore))
+        routerItems.add(RouterItem("MMKV（Tencent 高性能键值存储）", RouterPath.Storage.MMKV))
         return routerItems
     }
 }

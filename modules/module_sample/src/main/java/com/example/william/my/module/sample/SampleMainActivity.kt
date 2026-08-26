@@ -12,8 +12,8 @@ class SampleMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
 
         // 业务技巧与系统特性
-        routerItems.add(RouterItem("Hook", RouterPath.Sample.Hook))
-        routerItems.add(RouterItem("Typeface", RouterPath.Sample.Typeface))
+        routerItems.add(RouterItem("Hook（View Hook 反射机制）", RouterPath.Sample.Hook))
+        routerItems.add(RouterItem("Typeface（自定义字体加载与应用）", RouterPath.Sample.Typeface))
 
         return routerItems
     }

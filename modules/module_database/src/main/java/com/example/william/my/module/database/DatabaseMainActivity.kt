@@ -13,8 +13,8 @@ class DatabaseMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("Room (关系型数据库)", RouterPath.Database.Room))
-        routerItems.add(RouterItem("ObjectBox (NoSQL 对象数据库)", RouterPath.Database.ObjectBox))
+        routerItems.add(RouterItem("Room（关系型数据库）", RouterPath.Database.Room))
+        routerItems.add(RouterItem("ObjectBox（NoSQL 对象数据库）", RouterPath.Database.ObjectBox))
         return routerItems
     }
 }

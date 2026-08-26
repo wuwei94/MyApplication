@@ -10,9 +10,9 @@ class JetpackMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("Lifecycle", RouterPath.Jetpack.Lifecycle))
-        routerItems.add(RouterItem("Paging", RouterPath.Jetpack.Paging))
-        routerItems.add(RouterItem("ViewModel", RouterPath.Jetpack.ViewModel))
+        routerItems.add(RouterItem("Lifecycle（生命周期感知与安全数据流收集）", RouterPath.Jetpack.Lifecycle))
+        routerItems.add(RouterItem("Paging3（大数据集分页加载）", RouterPath.Jetpack.Paging))
+        routerItems.add(RouterItem("ViewModel（多种创建模式与伴生 Factory）", RouterPath.Jetpack.ViewModel))
         return routerItems
     }
 }

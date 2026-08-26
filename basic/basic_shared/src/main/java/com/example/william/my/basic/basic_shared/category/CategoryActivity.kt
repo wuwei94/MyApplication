@@ -84,11 +84,11 @@ class CategoryActivity : RouterRecyclerActivity() {
      */
     private fun buildNetworkCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
-        items.add(RouterItem("── HTTP 请求 ──", ""))
+        items.add(RouterItem("── HTTP ──", ""))
         items.add(RouterItem("HTTP 网络请求", RouterPath.Http.Main))
         items.add(RouterItem("", ""))
-        items.add(RouterItem("── 长连接 ──", ""))
-        items.add(RouterItem("WebSocket", RouterPath.WebSocket.Main))
+        items.add(RouterItem("── Socket ──", ""))
+        items.add(RouterItem("WebSocket & TCP Socket", RouterPath.WebSocket.Main))
         return items
     }
 

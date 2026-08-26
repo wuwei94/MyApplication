@@ -19,40 +19,19 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 class DirectoryActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
-        val routerItems: ArrayList<RouterItem> = arrayListOf()
-
-        // UI 交互
-        routerItems.add(RouterItem("UI 交互", getCategoryPath("ui"), getCategoryParams("ui")))
-
-        // 网络通信
-        routerItems.add(RouterItem("网络通信", getCategoryPath("network"), getCategoryParams("network")))
-
-        // 数据存储
-        routerItems.add(RouterItem("数据存储", getCategoryPath("storage"), getCategoryParams("storage")))
-
-        // 系统能力
-        routerItems.add(RouterItem("系统能力", getCategoryPath("system"), getCategoryParams("system")))
-
-        // 架构与工程
-        routerItems.add(RouterItem("架构与工程", getCategoryPath("engineering"), getCategoryParams("engineering")))
-
-        // Kotlin & Jetpack
-        routerItems.add(RouterItem("Kotlin & Jetpack", getCategoryPath("kotlin_jetpack"), getCategoryParams("kotlin_jetpack")))
-
-        // Compose & Flutter
-        routerItems.add(RouterItem("Compose & Flutter", getCategoryPath("compose_flutter"), getCategoryParams("compose_flutter")))
-
-        // Sample & Feature
-        routerItems.add(RouterItem("Sample & Feature", getCategoryPath("sample_feature"), getCategoryParams("sample_feature")))
-
-        return routerItems
+        return arrayListOf(
+            createCategoryItem("UI 交互", "ui"),
+            createCategoryItem("网络通信", "network"),
+            createCategoryItem("数据存储", "storage"),
+            createCategoryItem("系统能力", "system"),
+            createCategoryItem("架构与工程", "engineering"),
+            createCategoryItem("Kotlin & Jetpack", "kotlin_jetpack"),
+            createCategoryItem("Compose & Flutter", "compose_flutter"),
+            createCategoryItem("Sample & Feature", "sample_feature")
+        )
     }
 
-    private fun getCategoryPath(category: String): String {
-        return RouterPath.Category_Main
-    }
-
-    private fun getCategoryParams(category: String): HashMap<String, String> {
-        return hashMapOf("category" to category)
+    private fun createCategoryItem(title: String, category: String): RouterItem {
+        return RouterItem(title, RouterPath.Category_Main, hashMapOf("category" to category))
     }
 }

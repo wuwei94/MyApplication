@@ -11,17 +11,17 @@ class AnimMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("── 系统原生 ──", ""))
-        routerItems.add(RouterItem("ValueAnimator", RouterPath.Anim.ValueAnimator))
-        routerItems.add(RouterItem("ObjectAnimator", RouterPath.Anim.ObjectAnimator))
-        routerItems.add(RouterItem("AnimatorSet", RouterPath.Anim.AnimatorSet))
-        routerItems.add(RouterItem("Transition", RouterPath.Anim.Transition))
-        routerItems.add(RouterItem("RenderEffect", RouterPath.Anim.RenderEffect))
-        routerItems.add(RouterItem("RenderScript", RouterPath.Anim.RenderScript))
+        routerItems.add(RouterItem("ValueAnimator（属性值动画）", RouterPath.Anim.ValueAnimator))
+        routerItems.add(RouterItem("ObjectAnimator（对象属性动画）", RouterPath.Anim.ObjectAnimator))
+        routerItems.add(RouterItem("AnimatorSet（组合动画集合）", RouterPath.Anim.AnimatorSet))
+        routerItems.add(RouterItem("Transition（转场过渡动画）", RouterPath.Anim.Transition))
+        routerItems.add(RouterItem("RenderEffect（Android 12+ 渲染特效）", RouterPath.Anim.RenderEffect))
+        routerItems.add(RouterItem("RenderScript（底层模糊与图形计算）", RouterPath.Anim.RenderScript))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 第三方动画库 ──", ""))
-        routerItems.add(RouterItem("PAG", RouterPath.Anim.Pag))
-        routerItems.add(RouterItem("Lottie", RouterPath.Anim.Lottie))
-        routerItems.add(RouterItem("SVGAPlayer", RouterPath.Anim.SvgaPlayer))
+        routerItems.add(RouterItem("PAG（Tencent 动效文件渲染）", RouterPath.Anim.Pag))
+        routerItems.add(RouterItem("Lottie（Airbnb 矢量 JSON 动画）", RouterPath.Anim.Lottie))
+        routerItems.add(RouterItem("SVGAPlayer（SVGA 高性能动画）", RouterPath.Anim.SvgaPlayer))
         return routerItems
     }
 }

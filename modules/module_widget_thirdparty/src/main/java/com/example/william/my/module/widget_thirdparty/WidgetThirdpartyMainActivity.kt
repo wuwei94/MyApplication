@@ -13,22 +13,31 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("Banner", RouterPath.WidgetThirdparty.Banner))
-        routerItems.add(RouterItem("CountdownView", RouterPath.WidgetThirdparty.CountdownView))
-        routerItems.add(RouterItem("EasyFloat", RouterPath.WidgetThirdparty.EasyFloat))
-        routerItems.add(RouterItem("PhotoView", RouterPath.WidgetThirdparty.PhotoView))
-        routerItems.add(RouterItem("RealtimeBlurView", RouterPath.WidgetThirdparty.RealtimeBlurView))
-        routerItems.add(RouterItem("ShadowLayout", RouterPath.WidgetThirdparty.ShadowLayout))
-        routerItems.add(RouterItem("SwipeLayout", RouterPath.WidgetThirdparty.SwipeLayout))
 
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("CityPicker", RouterPath.WidgetThirdparty.CityPicker))
-        routerItems.add(RouterItem("PickerView", RouterPath.WidgetThirdparty.PickerView))
-        routerItems.add(RouterItem("PictureSelector", RouterPath.WidgetThirdparty.PictureSelector))
+        // 1. 基础与动效控件
+        routerItems.add(RouterItem("── 基础与动效控件 ──", ""))
+        routerItems.add(RouterItem("Banner（轮播图）", RouterPath.WidgetThirdparty.Banner))
+        routerItems.add(RouterItem("CountdownView（倒计时）", RouterPath.WidgetThirdparty.CountdownView))
+        routerItems.add(RouterItem("EasyFloat（全局/应用内悬浮窗）", RouterPath.WidgetThirdparty.EasyFloat))
+        routerItems.add(RouterItem("PhotoView（手势缩放图片）", RouterPath.WidgetThirdparty.PhotoView))
+        routerItems.add(RouterItem("RealtimeBlurView（实时动态高斯模糊）", RouterPath.WidgetThirdparty.RealtimeBlurView))
+        routerItems.add(RouterItem("ShadowLayout（万能阴影与圆角布局）", RouterPath.WidgetThirdparty.ShadowLayout))
+        routerItems.add(RouterItem("SwipeLayout（侧滑操作菜单）", RouterPath.WidgetThirdparty.SwipeLayout))
 
-        routerItems.add(RouterItem(" ", ""))
-        routerItems.add(RouterItem("LoadSir", RouterPath.WidgetThirdparty.LoadSir))
-        routerItems.add(RouterItem("LoadSirFragment", RouterPath.WidgetThirdparty.LoadSirFragment))
+        routerItems.add(RouterItem("", ""))
+
+        // 2. 选择器与拾取器
+        routerItems.add(RouterItem("── 选择器 ──", ""))
+        routerItems.add(RouterItem("CityPicker（三级城市选择器）", RouterPath.WidgetThirdparty.CityPicker))
+        routerItems.add(RouterItem("PickerView（时间与条件滚轮选择器）", RouterPath.WidgetThirdparty.PickerView))
+        routerItems.add(RouterItem("PictureSelector（图片/多媒体选择器）", RouterPath.WidgetThirdparty.PictureSelector))
+
+        routerItems.add(RouterItem("", ""))
+
+        // 3. 页面状态管理
+        routerItems.add(RouterItem("── 页面状态管理 ──", ""))
+        routerItems.add(RouterItem("LoadSir（多状态页面管理）", RouterPath.WidgetThirdparty.LoadSir))
+        routerItems.add(RouterItem("LoadSir Fragment（Fragment 状态管理）", RouterPath.WidgetThirdparty.LoadSirFragment))
 
         return routerItems
     }

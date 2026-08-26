@@ -15,10 +15,10 @@ class EventMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems = ArrayList<RouterItem>()
-        routerItems.add(RouterItem("EventBus", RouterPath.Event.EventBus))
-        routerItems.add(RouterItem("RxEventBus", RouterPath.Event.RxEventBus))
-        routerItems.add(RouterItem("LiveEventBus", RouterPath.Event.LiveEventBus))
-        routerItems.add(RouterItem("FlowEventBus", RouterPath.Event.FlowEventBus))
+        routerItems.add(RouterItem("EventBus（GreenRobot 经典发布/订阅总线）", RouterPath.Event.EventBus))
+        routerItems.add(RouterItem("RxEventBus（基于 RxJava 响应式流实现）", RouterPath.Event.RxEventBus))
+        routerItems.add(RouterItem("LiveEventBus（基于 LiveData 生命周期感知实现）", RouterPath.Event.LiveEventBus))
+        routerItems.add(RouterItem("FlowEventBus（基于 Kotlin Flow 现代事件总线）", RouterPath.Event.FlowEventBus))
         return routerItems
     }
 }

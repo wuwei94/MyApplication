@@ -10,8 +10,8 @@ class AsyncMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("AsyncTask", RouterPath.Async.AsyncTask))
-        routerItems.add(RouterItem("HandlerThread", RouterPath.Async.HandlerThread))
+        routerItems.add(RouterItem("AsyncTask（经典异步任务）", RouterPath.Async.AsyncTask))
+        routerItems.add(RouterItem("HandlerThread（Handler + Thread 循环机制）", RouterPath.Async.HandlerThread))
         return routerItems
     }
 }

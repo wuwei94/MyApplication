@@ -10,8 +10,8 @@ class FeatureMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("Turntable", RouterPath.Feature.Turntable))
-        routerItems.add(RouterItem("MicAnimation", RouterPath.Feature.MicAnimation))
+        routerItems.add(RouterItem("Turntable（幸运大转盘实战）", RouterPath.Feature.Turntable))
+        routerItems.add(RouterItem("MicAnimation（麦位光波音量动画）", RouterPath.Feature.MicAnimation))
         return routerItems
     }
 }

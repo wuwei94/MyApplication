@@ -15,8 +15,8 @@ class DiMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems = ArrayList<RouterItem>()
-        routerItems.add(RouterItem("Hilt (编译期依赖注入)", RouterPath.Di.Hilt))
-        routerItems.add(RouterItem("Koin (Kotlin DSL 运行时依赖注入)", RouterPath.Di.Koin))
+        routerItems.add(RouterItem("Hilt（编译期依赖注入）", RouterPath.Di.Hilt))
+        routerItems.add(RouterItem("Koin（Kotlin DSL 运行时依赖注入）", RouterPath.Di.Koin))
         return routerItems
     }
 }

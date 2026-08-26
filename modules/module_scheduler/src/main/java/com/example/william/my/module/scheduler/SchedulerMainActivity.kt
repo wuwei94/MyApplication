@@ -16,8 +16,8 @@ class SchedulerMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         return arrayListOf(
-            RouterItem("JobScheduler", RouterPath.Scheduler.JobScheduler),
-            RouterItem("WorkManager", RouterPath.Scheduler.WorkManager)
+            RouterItem("JobScheduler（系统原生后台任务调度）", RouterPath.Scheduler.JobScheduler),
+            RouterItem("WorkManager（Jetpack 可靠后台任务与前台加急）", RouterPath.Scheduler.WorkManager)
         )
     }
 }

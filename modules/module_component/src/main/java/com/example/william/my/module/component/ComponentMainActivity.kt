@@ -11,12 +11,12 @@ class ComponentMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("── 原生四大组件 ──", ""))
-        routerItems.add(RouterItem("Broadcast", RouterPath.Component.Broadcast))
-        routerItems.add(RouterItem("Service", RouterPath.Component.Service))
+        routerItems.add(RouterItem("Broadcast（广播接收与动态注册）", RouterPath.Component.Broadcast))
+        routerItems.add(RouterItem("Service（绑定服务与前台服务）", RouterPath.Component.Service))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── Jetpack 交互契约 ──", ""))
-        routerItems.add(RouterItem("ActivityResult", RouterPath.Component.ActivityResult))
-        routerItems.add(RouterItem("OnBackPressed", RouterPath.Component.OnBackPressed))
+        routerItems.add(RouterItem("ActivityResult（新版结果回调契约）", RouterPath.Component.ActivityResult))
+        routerItems.add(RouterItem("OnBackPressed（返回键分发与拦截）", RouterPath.Component.OnBackPressed))
         return routerItems
     }
 }

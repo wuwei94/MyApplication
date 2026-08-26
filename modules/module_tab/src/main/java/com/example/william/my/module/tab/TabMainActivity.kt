@@ -10,12 +10,21 @@ class TabMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
-        routerItems.add(RouterItem("TabHost", RouterPath.Tab.TabHost))
-        routerItems.add(RouterItem("FrameLayoutTab", RouterPath.Tab.FrameLayoutTab))
-        routerItems.add(RouterItem("ViewPagerTab", RouterPath.Tab.ViewPagerTab))
-        routerItems.add(RouterItem("ViewPager2Tab", RouterPath.Tab.ViewPager2Tab))
-        routerItems.add(RouterItem("BottomNav", RouterPath.Tab.BottomNav))
-        routerItems.add(RouterItem("FlycoTabLayout", RouterPath.Tab.FlycoTabLayout))
+
+        // 1. 系统原生与常规联动
+        routerItems.add(RouterItem("── 原生与标准联动 ──", ""))
+        routerItems.add(RouterItem("TabHost（经典选项卡）", RouterPath.Tab.TabHost))
+        routerItems.add(RouterItem("FrameLayout + RadioGroup", RouterPath.Tab.FrameLayoutTab))
+        routerItems.add(RouterItem("ViewPager + RadioGroup", RouterPath.Tab.ViewPagerTab))
+        routerItems.add(RouterItem("ViewPager2 + RadioGroup", RouterPath.Tab.ViewPager2Tab))
+        routerItems.add(RouterItem("BottomNavigationView + Fragment", RouterPath.Tab.BottomNav))
+
+        routerItems.add(RouterItem("", ""))
+
+        // 2. 第三方 Tab 库
+        routerItems.add(RouterItem("── 第三方库 ──", ""))
+        routerItems.add(RouterItem("FlycoTabLayout（Sliding / Common / Segment 样式）", RouterPath.Tab.FlycoTabLayout))
+
         return routerItems
     }
 }
