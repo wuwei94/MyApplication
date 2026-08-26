@@ -11,17 +11,27 @@ class PerformanceMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
 
-        // 1. 性能优化与异步调度
-        routerItems.add(RouterItem("LruCache", RouterPath.Performance.LruCache))
-        routerItems.add(RouterItem("IdleHandler", RouterPath.Performance.IdleHandler))
+        // 1. 启动与初始化优化
+        routerItems.add(RouterItem("── 启动与初始化优化 ──", ""))
+        routerItems.add(RouterItem("ContentProvider 自动初始化", RouterPath.Performance.ContentProvider))
+        routerItems.add(RouterItem("App Startup", RouterPath.Performance.Startup))
+        routerItems.add(RouterItem("Baseline Profiles", RouterPath.Performance.BaselineProfiles))
+        routerItems.add(RouterItem("IdleHandler 空闲调度", RouterPath.Performance.IdleHandler))
+
+        routerItems.add(RouterItem("", ""))
+
+        // 2. 布局与渲染优化
+        routerItems.add(RouterItem("── 布局与渲染优化 ──", ""))
         routerItems.add(RouterItem("AsyncLayoutInflater", RouterPath.Performance.AsyncLayoutInflater))
 
         routerItems.add(RouterItem("", ""))
 
-        // 2. RecyclerView 架构与复用优化
-        routerItems.add(RouterItem("ConcatAdapter", RouterPath.Performance.ConcatAdapter))
-        routerItems.add(RouterItem("RecycledViewPool", RouterPath.Performance.RecycledViewPool))
-        routerItems.add(RouterItem("DiffUtil", RouterPath.Performance.DiffUtil))
+        // 3. 内存与列表优化
+        routerItems.add(RouterItem("── 内存与列表优化 ──", ""))
+        routerItems.add(RouterItem("LruCache 内存缓存", RouterPath.Performance.LruCache))
+        routerItems.add(RouterItem("ConcatAdapter 模块化列表", RouterPath.Performance.ConcatAdapter))
+        routerItems.add(RouterItem("RecycledViewPool 共享视图池", RouterPath.Performance.RecycledViewPool))
+        routerItems.add(RouterItem("DiffUtil 差量刷新", RouterPath.Performance.DiffUtil))
 
         return routerItems
     }

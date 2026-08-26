@@ -129,11 +129,11 @@ MyApplication/
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
-    │   └── module_performance  # 性能优化（AsyncLayoutInflater / IdleHandler / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
+    │   └── module_performance  # 性能优化（ContentProvider / App Startup / Baseline Profiles / IdleHandler / AsyncLayoutInflater / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     │
     ├── [Kotlin & Jetpack]
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
-    │   └── module_jetpack      # Jetpack 组件（Lifecycle / Paging / ViewModel）
+    │   └── module_jetpack      # Jetpack 基础架构（Lifecycle / Paging / ViewModel）
     │
     ├── [Compose & Flutter]
     │   ├── module_compose      # Compose 示例（Navigation / 手势 / 拖拽 / SmartRefresh）

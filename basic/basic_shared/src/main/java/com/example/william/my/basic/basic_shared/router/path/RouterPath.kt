@@ -221,10 +221,17 @@ object RouterPath {
 
         const val Main = "${PATH}/Main"
 
-        const val AsyncLayoutInflater = "${PATH}/AsyncLayoutInflater"
+        // 启动与初始化优化
+        const val ContentProvider = "${PATH}/ContentProvider"
+        const val Startup = "${PATH}/Startup"
+        const val BaselineProfiles = "${PATH}/BaselineProfiles"
         const val IdleHandler = "${PATH}/IdleHandler"
-        const val LruCache = "${PATH}/LruCache"
 
+        // 布局与渲染优化
+        const val AsyncLayoutInflater = "${PATH}/AsyncLayoutInflater"
+
+        // 内存与列表优化
+        const val LruCache = "${PATH}/LruCache"
         const val ConcatAdapter = "${PATH}/ConcatAdapter"
         const val RecycledViewPool = "${PATH}/RecycledViewPool"
         const val DiffUtil = "${PATH}/DiffUtil"
@@ -390,8 +397,6 @@ object RouterPath {
         const val Hilt = "${PATH}/Hilt"
         const val Koin = "${PATH}/Koin"
     }
-
-    val DI = Di
 
     // ═══════════════════════════════════════════
     // 新范式

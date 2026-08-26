@@ -34,7 +34,7 @@
     - `CameraX` → `module_media`（多媒体硬件能力）
     - `Hilt` → `module_di`（依赖注入）
     - `WorkManager` → `module_scheduler`（后台任务调度）
-    - `AsyncLayoutInflater`、`ConcatAdapter`、`DiffUtil` → `module_performance`（布局解析与列表渲染性能优化）
+    - `App Startup`、`Baseline Profiles`、`AsyncLayoutInflater`、`ConcatAdapter`、`DiffUtil` → `module_performance`（启动、布局解析与列表渲染性能优化）
 - **探索与实战模块边界（Sample & Feature）**：
   - `module_sample`（技术技巧与底层探索）：收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码（如 Hook 反射、自定义 Typeface 等）。保持轻量独立，不污染通用架构模块。
   - `module_feature`（实战业务场景脱敏）：收纳从公司真实项目中抽离、脱敏出的典型复合业务场景（如抽奖转盘、麦位动画等）。展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。

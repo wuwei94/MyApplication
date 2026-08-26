@@ -14,4 +14,8 @@ dependencies {
     implementation(project(":basic:basic_shared"))
 
     implementation(libs.androidx.asyncLayoutInflater)
+
+    // Startup & Baseline Profiles
+    implementation(libs.androidx.startup)
+    implementation(libs.androidx.profileinstaller)
 }

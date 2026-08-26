@@ -4,12 +4,37 @@
     <application>
         <activity android:name=".PerformanceMainActivity" />
 
-        <activity android:name=".activity.AsyncLayoutInflaterActivity" />
+        <!-- 启动与初始化优化 -->
+        <activity android:name=".activity.ContentProviderActivity" />
+        <activity android:name=".activity.StartupActivity" />
+        <activity android:name=".activity.BaselineProfilesActivity" />
         <activity android:name=".activity.IdleHandlerActivity" />
-        <activity android:name=".activity.LruCacheActivity" />
 
+        <!-- 布局与渲染优化 -->
+        <activity android:name=".activity.AsyncLayoutInflaterActivity" />
+
+        <!-- 内存与列表优化 -->
+        <activity android:name=".activity.LruCacheActivity" />
         <activity android:name=".activity.ConcatAdapterActivity" />
         <activity android:name=".activity.DiffUtilActivity" />
         <activity android:name=".activity.RecycledViewPoolActivity" />
+
+        <!-- 演示 ContentProvider 自动初始化与冷启动开销 -->
+        <provider
+            android:name=".provider.AutoInitProvider"
+            android:authorities="com.example.william.my.module.performance.autoinit"
+            android:exported="false"
+            android:multiprocess="false" />
+
+        <!-- App Startup 自动初始化声明（InitializationProvider 聚合托管） -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            android:multiprocess="false">
+            <meta-data
+                android:name="com.example.william.my.module.performance.startup.SecuritySdkInitializer"
+                android:value="androidx.startup" />
+        </provider>
     </application>
 </manifest>
