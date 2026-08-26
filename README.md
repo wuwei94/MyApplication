@@ -229,10 +229,11 @@ MyApplication/
 
 ### module_system_service（系统服务）
 
-演示 Android 系统级服务调用。
+演示 Android 系统级服务与底层安全密钥机制。
 
 - NotificationChannel 通知渠道创建与通知发送
 - 运行时权限批量申请
+- Android Keystore 安全密钥创建与 ECDSA 硬件签名
 
 ### module_sample（技术示例）
 
@@ -243,10 +244,13 @@ MyApplication/
 
 ### module_performance（性能优化）
 
-演示 Android 性能优化与深度调度机制。
+演示 Android 启动与初始化、布局解析与列表渲染等多维度的性能优化与深度调度机制。
 
-- **AsyncLayoutInflater**：异步布局解析与 ViewPreloadManager 视图预加载池（0ms 秒开）
+- **ContentProvider**：启动早期无侵入自动初始化时序机制与冷启动多 Provider 耗时分析
+- **App Startup**：Jetpack 应用初始化组件（单个 InitializationProvider 聚合托管与 DAG 依赖拓扑排序）
+- **Baseline Profiles**：Jetpack 基线配置文件（ART 运行时 AOT 预编译提速与 ProfileInstaller 诊断）
 - **IdleHandler**：主线程空闲调度（单次/持续监听与延迟初始化）
+- **AsyncLayoutInflater**：异步布局解析与 ViewPreloadManager 视图预加载池（0ms 秒开）
 - **LruCache**：内存缓存设计模式（Cache-Aside 回源与容量淘汰）
 - **ConcatAdapter**：模块化列表组合与 ViewType 隔离刷新
 - **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
@@ -266,7 +270,6 @@ MyApplication/
 
 - 转盘抽奖（旋转动画）
 - 麦位动画（自定义 LayoutManager）
-- Android Keystore 安全密钥创建与签名
 
 ### module_http（HTTP 网络请求）
 
@@ -282,13 +285,13 @@ MyApplication/
 - `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，展示条件断点续传与单/多文件并发下载
 - `upload`：`RxUploadActivity` 复用页面级 Rx Retrofit 和统一 `RxUploadCallback`，展示单/多文件 POST Multipart 上传
 
-### module_websocket（WebSocket 专项示例）
+### module_websocket（WebSocket & TCP Socket）
 
-WebSocket 专项功能演示。
+WebSocket 与 Netty TCP Socket 专项功能演示。
 
-- OkHttp WebSocket 实现
-- Java WebSocket 实现
-- Netty WebSocket 实现
+- **OkHttp WebSocket**：OkHttp 原生连接与 RxJava 封装
+- **Java-WebSocket**：Java-WebSocket 客户端、RxJava 封装与内置本地服务端（Port 5566）
+- **Netty TCP Socket**：Netty TCP 客户端、RxJava 封装与内置本地服务端（Port 5567）
 
 ### module_event（事件总线）
 
@@ -344,18 +347,24 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_jetpack（Jetpack 组件库）
 
-Jetpack 组件库 Demo。
+Jetpack 通用基础架构与生命周期数据流组件。
 
+- **Lifecycle**：生命周期感知（DefaultLifecycleObserver、ProcessLifecycleOwner 全局前后台、repeatOnLifecycle / flowWithLifecycle 安全数据流收集）
 - **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
 - **ViewModel**：ViewModel / ViewModelProvider.Factory 多种创建方式（标准 Factory、DSL viewModelFactory、SavedStateHandle 与 Fragment 作用域共享）
 
-### module_storage（存储）
+### module_database（数据库）
 
-移动端主流数据持久化方案对比与实战。
+结构化与对象型数据库方案。
 
 - **Room**：Jetpack 官方数据库持久化框架，演示 CRUD、Flow 响应式数据流、RxJava Single 异步查询及批量事务操作
 - **ObjectBox**：高性能 NoSQL/对象数据库，演示实体存储、Box CRUD 与对象查询
-- **DataStore**：Preferences / Proto 两种存储
+
+### module_storage（存储）
+
+轻量级键值数据持久化方案。
+
+- **DataStore**：Jetpack 现代化键值存储（Preferences / Proto 两种存储）
 - **MMKV**：腾讯开源高性能键值存储，基于 mmap 内存映射
 
 ### module_di（依赖注入）

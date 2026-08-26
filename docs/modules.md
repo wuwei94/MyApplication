@@ -15,7 +15,7 @@
 │   └── 图片加载：Coil、Glide、lib_imageloader
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
-│   └── 长连接：WebSocket
+│   └── Socket 通信：WebSocket & TCP Socket
 ├── 数据存储
 │   ├── 数据库：Room、ObjectBox
 │   └── 键值存储：DataStore、MMKV
@@ -57,7 +57,7 @@
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
-| module_websocket | WebSocket 示例 | WebSocketMainActivity | /WebSocket |
+| module_websocket | WebSocket & TCP Socket | WebSocketMainActivity | /WebSocket |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
@@ -291,7 +291,7 @@
 
 ---
 
-### module_websocket（WebSocket 示例）
+### module_websocket（WebSocket & TCP Socket）
 
 演示 WebSocket/TCP 通信库的使用，包含 OkHttp WebSocket、Java-WebSocket 和 Netty TCP 三种方案。
 
