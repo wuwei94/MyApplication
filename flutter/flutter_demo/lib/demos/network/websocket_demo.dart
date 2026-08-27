@@ -1,9 +1,8 @@
-import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/constants/urls.dart';
-import 'package:web_socket_channel/status.dart' as status;
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:lib_websocket/lib_websocket.dart';
 
 /// WebSocket
 /// https://pub.dev/packages/web_socket_channel
@@ -73,32 +72,27 @@ class _LogRecord {
   }
 }
 
-class _WebSocketDemoViewState extends State<WebSocketDemoView> {
+class _WebSocketDemoViewState extends State<WebSocketDemoView>
+    implements WebSocketClientListener {
   final TextEditingController _urlController = TextEditingController(
     text: Urls.websocketEcho,
   );
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
-  WebSocketChannel? _channel;
-  StreamSubscription<dynamic>? _subscription;
+  final WebSocketClient _client = WebSocketClient.instance;
   _ConnectionState _connectionState = _ConnectionState.disconnected;
   final List<_LogRecord> _logs = <_LogRecord>[];
 
+  String get _url => _urlController.text.trim();
+
   @override
   void dispose() {
-    _cleanupChannel();
+    _client.close(_url);
     _urlController.dispose();
     _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _cleanupChannel() {
-    _subscription?.cancel();
-    _subscription = null;
-    _channel?.sink.close(status.normalClosure);
-    _channel = null;
   }
 
   void _addLog(_RecordType type, String content) {
@@ -129,65 +123,12 @@ class _WebSocketDemoViewState extends State<WebSocketDemoView> {
       return;
     }
 
-    _cleanupChannel();
-
     setState(() {
       _connectionState = _ConnectionState.connecting;
     });
     _addLog(_RecordType.status, '正在连接至 $url ...');
 
-    try {
-      final WebSocketChannel channel = WebSocketChannel.connect(uri);
-      _channel = channel;
-
-      await channel.ready;
-
-      if (!mounted) {
-        return;
-      }
-
-      setState(() {
-        _connectionState = _ConnectionState.connected;
-      });
-      _addLog(_RecordType.status, 'WebSocket 连接成功');
-
-      _subscription = channel.stream.listen(
-        (dynamic message) {
-          _addLog(_RecordType.received, message.toString());
-        },
-        onError: (Object error) {
-          if (!mounted) return;
-          setState(() {
-            _connectionState = _ConnectionState.error;
-          });
-          _addLog(_RecordType.error, '通信异常: $error');
-        },
-        onDone: () {
-          if (!mounted) return;
-          setState(() {
-            _connectionState = _ConnectionState.disconnected;
-          });
-          final int? closeCode = channel.closeCode;
-          final String? closeReason = channel.closeReason;
-          final String reasonInfo =
-              closeReason != null && closeReason.isNotEmpty
-              ? ' ($closeReason)'
-              : '';
-          _addLog(
-            _RecordType.status,
-            'WebSocket 连接已关闭: Code ${closeCode ?? "未知"}$reasonInfo',
-          );
-        },
-      );
-    } catch (error) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _connectionState = _ConnectionState.error;
-      });
-      _addLog(_RecordType.error, '连接失败: $error');
-    }
+    await _client.connect(url: url, listener: this);
   }
 
   void _disconnect() {
@@ -196,7 +137,7 @@ class _WebSocketDemoViewState extends State<WebSocketDemoView> {
     }
 
     _addLog(_RecordType.status, '正在主动断开连接...');
-    _cleanupChannel();
+    _client.close(_url);
 
     setState(() {
       _connectionState = _ConnectionState.disconnected;
@@ -205,7 +146,7 @@ class _WebSocketDemoViewState extends State<WebSocketDemoView> {
   }
 
   void _sendMessage([String? customMessage]) {
-    if (_connectionState != _ConnectionState.connected || _channel == null) {
+    if (_connectionState != _ConnectionState.connected) {
       _addLog(_RecordType.error, '无法发送消息：WebSocket 未连接');
       return;
     }
@@ -215,15 +156,58 @@ class _WebSocketDemoViewState extends State<WebSocketDemoView> {
       return;
     }
 
-    try {
-      _channel?.sink.add(text);
+    if (_client.send(_url, text)) {
       _addLog(_RecordType.sent, text);
       if (customMessage == null) {
         _messageController.clear();
       }
-    } catch (error) {
-      _addLog(_RecordType.error, '发送消息失败: $error');
+    } else {
+      _addLog(_RecordType.error, '发送消息失败：连接已断开');
     }
+  }
+
+  @override
+  void onOpen() {
+    if (!mounted) return;
+    setState(() {
+      _connectionState = _ConnectionState.connected;
+    });
+    _addLog(_RecordType.status, 'WebSocket 连接成功');
+  }
+
+  @override
+  void onMessage(String message) {
+    _addLog(_RecordType.received, message);
+  }
+
+  @override
+  void onMessageBytes(Uint8List bytes) {
+    _addLog(_RecordType.received, '二进制消息（${bytes.length} 字节）');
+  }
+
+  @override
+  void onClose(int? code, String? reason) {
+    if (!mounted) return;
+    setState(() {
+      _connectionState = _ConnectionState.disconnected;
+    });
+    final String reasonInfo =
+        reason != null && reason.isNotEmpty ? ' ($reason)' : '';
+    _addLog(
+      _RecordType.status,
+      'WebSocket 连接已关闭: Code ${code ?? "未知"}$reasonInfo',
+    );
+  }
+
+  @override
+  void onError(String message) {
+    if (!mounted) return;
+    if (_connectionState == _ConnectionState.connecting) {
+      setState(() {
+        _connectionState = _ConnectionState.error;
+      });
+    }
+    _addLog(_RecordType.error, message);
   }
 
   void _clearLogs() {

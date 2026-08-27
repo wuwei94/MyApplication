@@ -1362,6 +1362,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  lib_websocket:
+    dependency: "direct main"
+    description:
+      path: "../flutter_libs/lib_websocket"
+      relative: true
+    source: path
+    version: "0.1.0"
   linkify:
     dependency: transitive
     description:

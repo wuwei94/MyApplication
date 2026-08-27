@@ -80,6 +80,9 @@ dependencies:
   # lib/demos/network — MQTT 本地 package（持有 mqtt_client 依赖）
   lib_mqtt:
     path: ../flutter_libs/lib_mqtt
+  # lib/demos/network — WebSocket 本地 package（持有 web_socket_channel 依赖）
+  lib_websocket:
+    path: ../flutter_libs/lib_websocket
 
   # lib/demos/storage — KV 键值存储
   # 原生示例直接使用以下三个三方包；lib_storage 封装示例使用本地 package
