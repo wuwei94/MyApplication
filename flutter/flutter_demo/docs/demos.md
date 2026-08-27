@@ -13,6 +13,7 @@
 | storage | 本地存储示例 | 8 |
 | image | 图片加载与选择示例 | 9 |
 | animation | 动画资源和播放示例 | 4 |
+| engine | Flutter 引擎层特性深度示例 | 8 |
 | video | 视频播放示例 | 2 |
 | packages | 常用三方包示例 | 大量 |
 | showcase | 杂项展示类示例 | 少量 |
@@ -113,6 +114,21 @@
 | pag | PAG 动画播放 |
 | svg | SVG 图片渲染 |
 | svga | SVGA 动画播放 |
+
+### engine（引擎层特性）
+
+Flutter 引擎层原生特性深度示例：自绘渲染、动画与布局协议。
+
+| 示例 | 说明 |
+|------|------|
+| particle_system | CustomPainter + Ticker 触摸粒子系统（飞溅 / 重力 / 边界反弹 / 淡出） |
+| signature_pad | 贝塞尔平滑手写板（撤销 / 重做 + RepaintBoundary 离屏导出 PNG） |
+| ring_layout | 自定义 RenderObject 环形布局（performLayout + ParentData） |
+| staggered_animation | AnimationController + Interval 交错进场动画 |
+| fragment_shader | GLSL 片段着色器运行时编译（波纹扩散） |
+| path_animation | PathMetric 路径测量 + 切线驱动的沿路径动画 |
+| flip_card | Matrix4 透视投影 + rotateY 3D 翻转卡片 |
+| custom_gesture | 手写 GestureRecognizer 识别双指缩放旋转（手势竞技场） |
 
 ### video（视频播放）
 

@@ -282,6 +282,11 @@ flutter:
     - assets/anim/pag/
     - assets/anim/svga/
 
+  # 自定义片段着色器（.frag）必须在 shaders 段声明，
+  # Flutter 才会把它编译成对应后端格式并作为运行时元数据打包。
+  shaders:
+    - assets/shaders/water_ripple.frag
+
   fonts:
     - family: Juice
       fonts:

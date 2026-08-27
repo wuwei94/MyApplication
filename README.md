@@ -422,6 +422,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **图片加载**：`lib_image_loader` 本地 package（`IImageLoader` 接口 + `ImageLoader` 门面），默认内核 cached_network_image，切换内核调用方零改动，与 Android `lib_imageloader` 结构对齐
 - **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
 - **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
+- **引擎层特性**：CustomPainter 粒子系统、贝塞尔签名板、自定义 RenderObject 环形布局、交错动画、GLSL 片段着色器、沿路径动画、3D 翻转卡片、双指缩放旋转手势识别
 
 ---
 

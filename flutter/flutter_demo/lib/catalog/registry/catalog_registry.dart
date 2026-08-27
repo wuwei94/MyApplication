@@ -2,6 +2,7 @@ import 'package:flutter_demo/catalog/models/catalog_entry.dart';
 import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/animation/catalog.dart';
 import 'package:flutter_demo/demos/basics/catalog.dart';
+import 'package:flutter_demo/demos/engine/catalog.dart';
 import 'package:flutter_demo/demos/image/catalog.dart';
 import 'package:flutter_demo/demos/layout/catalog.dart';
 import 'package:flutter_demo/demos/network/catalog.dart';
@@ -23,6 +24,7 @@ final List<CatalogSection> catalogSections = <CatalogSection>[
   storageCatalog,
   imageCatalog,
   animationCatalog,
+  engineCatalog,
   videoCatalog,
   packagesCatalog,
   showcaseCatalog,
