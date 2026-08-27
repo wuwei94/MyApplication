@@ -3,6 +3,7 @@ import 'package:flutter_demo/catalog/models/catalog_entry.dart';
 import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/network/dio_demo.dart';
 import 'package:flutter_demo/demos/network/http_demo.dart';
+import 'package:flutter_demo/demos/network/mqtt_demo.dart';
 import 'package:flutter_demo/demos/network/websocket_demo.dart';
 
 /// Network 模块
@@ -42,6 +43,12 @@ class NetworkCatalog extends CatalogSection {
       subtitle: 'WebSocket 连接、消息收发与连接状态管理',
       pageBuilder: (BuildContext context) =>
           const WebSocketDemoPage(title: 'WebSocket'),
+    ),
+    CatalogEntry.page(
+      path: 'mqtt',
+      title: 'MQTT',
+      subtitle: 'MQTT 连接、订阅、发布（QoS 0/1/2）与消息接收',
+      pageBuilder: (BuildContext context) => const MqttDemoPage(title: 'MQTT'),
     ),
   ];
 }

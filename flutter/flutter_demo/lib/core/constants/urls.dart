@@ -21,4 +21,13 @@ class Urls {
 
   /// WebSocket Echo 测试服务
   static const String websocketEcho = 'wss://echo.websocket.org';
+
+  /// MQTT 公共 Broker 主机（EMQX，无需账号）
+  static const String mqttHost = 'broker.emqx.io';
+
+  /// MQTT 公共 Broker 端口
+  static const int mqttPort = 1883;
+
+  /// MQTT 默认主题
+  static const String mqttTopic = 'mqtt/example';
 }

@@ -1334,6 +1334,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  lib_mqtt:
+    dependency: "direct main"
+    description:
+      path: "../flutter_libs/lib_mqtt"
+      relative: true
+    source: path
+    version: "0.1.0"
   lib_network_dio:
     dependency: "direct main"
     description:
@@ -1435,6 +1442,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+  mqtt_client:
+    dependency: transitive
+    description:
+      name: mqtt_client
+      sha256: "41c8edd3bc8efc80c1c8ebfb40081c24d12d13085faca96b9280a624eca2d893"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "10.11.11"
   native_toolchain_c:
     dependency: transitive
     description:

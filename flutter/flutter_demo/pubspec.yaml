@@ -72,10 +72,14 @@ dependencies:
   async: ^2.13.0
   # https://pub.dev/packages/web_socket_channel
   web_socket_channel: ^3.0.3
+
   lib_network_dio:
     path: ../flutter_libs/lib_network_dio
   lib_network_http:
     path: ../flutter_libs/lib_network_http
+  # lib/demos/network — MQTT 本地 package（持有 mqtt_client 依赖）
+  lib_mqtt:
+    path: ../flutter_libs/lib_mqtt
 
   # lib/demos/storage — KV 键值存储
   # 原生示例直接使用以下三个三方包；lib_storage 封装示例使用本地 package
