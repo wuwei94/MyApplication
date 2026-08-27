@@ -1,5 +1,6 @@
 package com.example.william.my.module.performance.startup
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.startup.Initializer
 import com.example.william.my.basic.basic_shared.utils.Utils
@@ -69,7 +70,11 @@ class SecuritySdkInitializer : Initializer<SecuritySdk> {
  *
  * 在 AndroidManifest.xml 中不显式暴露给 InitializationProvider（或通过 tools:node="remove" 禁用自动初始化），
  * 仅在业务真正需要时通过 AppInitializer.getInstance(context).initializeComponent(ManualLazyInitializer::class.java) 触发。
+ *
+ * 注意：本类故意不在 AndroidManifest.xml 中声明 <meta-data>（避免自动初始化），
+ * 因此需要抑制 EnsureInitializerMetadata 这条 lint 检查。
  */
+@SuppressLint("EnsureInitializerMetadata")
 class ManualLazyInitializer : Initializer<ManualLazySdk> {
 
     override fun create(context: Context): ManualLazySdk {
