@@ -9,26 +9,80 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/shared_dp_response_size"
         android:layout_margin="@dimen/shared_dp_8"
-        android:background="@drawable/shared_bg_container_border"
+        android:background="@drawable/shared_bg_response_console"
         app:layout_constraintBottom_toTopOf="@+id/basics_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/basics_response_header"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="32dp"
+            android:background="@drawable/shared_bg_response_console_header"
+            android:paddingHorizontal="@dimen/shared_dp_12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/basics_response_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="控制台日志"
+                android:textColor="@color/shared_color_console_desc"
+                android:textSize="@dimen/shared_sp_12"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/basics_response_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/shared_dp_4"
+                android:text="清空"
+                android:textColor="@color/shared_color_console_accent"
+                android:textSize="@dimen/shared_sp_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/basics_response_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/shared_color_console_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/basics_response_header" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/basics_response_scroll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:padding="@dimen/shared_dp_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/basics_response_divider">
+
+            <TextView
                 android:id="@+id/basics_response"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:textColor="@color/shared_color_console_text"
+                android:textSize="@dimen/shared_sp_12"
+                android:typeface="monospace" />
 
         </androidx.core.widget.NestedScrollView>
 

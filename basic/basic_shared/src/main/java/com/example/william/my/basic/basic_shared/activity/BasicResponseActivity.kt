@@ -13,19 +13,25 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+import android.os.Bundle
+
 /**
  * 通信/调度类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：TextView 内联日志/响应展示区（[mBinding.basicsResponse]）
+ * - 上方展示：暗色终端控制台风格日志/响应展示区（[mBinding.basicsResponse] + [mBinding.basicsResponseScroll]）
  * - 下方列表：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
  * 1. 禁止点击上方 TextView 触发操作，所有演示行为必须由下方列表项触发。
  * 2. 页面初始说明使用 [showDescription] 居中展示。
- * 3. 离散事件（开始、成功、失败、取消等）使用 [appendLog] 追加单行日志（不覆盖历史）。
+ * 3. 离散事件（开始、成功、失败、取消等）使用 [appendLog] 追加单行日志（自动携带时间戳，支持高亮与自动滚底）。
  * 4. 高频进度或运行状态使用 [updateLog] 原位更新对应 key，避免频繁刷屏。
- * 5. 底部列表末尾自动附加“清空日志”选项，点击可清空展示区日志。
+ * 5. 控制台顶部内置 Header 工具栏，点击右上角“清空”可就近清空展示区日志。
  */
 abstract class BasicResponseActivity : BasicControlActivity() {
 
@@ -40,20 +46,10 @@ abstract class BasicResponseActivity : BasicControlActivity() {
         mRecycler = mBinding.basicsRecycler
     }
 
-    override fun buildRecyclerList(): ArrayList<String> {
-        val list = ArrayList(buildList())
-        if (list.none { it.contains(ACTION_CLEAR_LOG) }) {
-            list.add(ACTION_CLEAR_LOG)
-        }
-        return list
-    }
-
-    override fun onClick(adapter: BaseQuickAdapter<String, *>, view: View, position: Int) {
-        val item = adapter.items.getOrNull(position)
-        if (item == ACTION_CLEAR_LOG) {
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        mBinding.basicsResponseClear.setOnClickListener {
             clearLog()
-        } else {
-            super.onClick(adapter, view, position)
         }
     }
 
@@ -66,17 +62,17 @@ abstract class BasicResponseActivity : BasicControlActivity() {
         runOnUiThread {
             mBinding.basicsResponse.text = description
             mBinding.basicsResponse.gravity = Gravity.CENTER
+            mBinding.basicsResponse.setTextColor(
+                ContextCompat.getColor(this, R.color.shared_color_console_desc)
+            )
         }
     }
 
     /**
-     * 追加单行日志到展示区（默认颜色）。
+     * 追加单行日志到展示区（自动携带时间戳，默认浅色控制台字体）。
      */
     protected fun appendLog(message: String) {
-        runOnUiThread {
-            mLog.appendLine(message)
-            renderLogs()
-        }
+        appendLog(message, ContextCompat.getColor(this, R.color.shared_color_console_text))
     }
 
     /**
@@ -87,15 +83,25 @@ abstract class BasicResponseActivity : BasicControlActivity() {
     }
 
     /**
-     * 追加指定颜色的单行日志到展示区。
+     * 追加指定颜色的单行日志到展示区（自动携带时间戳前缀）。
      */
     protected fun appendLog(message: String, color: Int) {
         runOnUiThread {
-            val start = mLog.length
+            val timePrefix = "[${formatTimestamp()}] "
+            val timeStart = mLog.length
+            mLog.append(timePrefix)
+            mLog.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.shared_color_console_time)),
+                timeStart,
+                mLog.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            val msgStart = mLog.length
             mLog.appendLine(message)
             mLog.setSpan(
                 ForegroundColorSpan(color),
-                start,
+                msgStart,
                 mLog.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
@@ -108,7 +114,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      */
     protected fun updateLog(key: String, message: String) {
         runOnUiThread {
-            mUpdatingLogs[key] = message
+            mUpdatingLogs[key] = "[${formatTimestamp()}] $message"
             renderLogs()
         }
     }
@@ -134,10 +140,10 @@ abstract class BasicResponseActivity : BasicControlActivity() {
     }
 
     /**
-     * 追加强调色 (accent) 的单行日志到展示区。
+     * 追加强调色 (Sky Accent) 的单行日志到展示区。
      */
     protected fun appendLogAccent(message: String) {
-        appendLog(message, ContextCompat.getColor(this, R.color.shared_color_accent))
+        appendLog(message, ContextCompat.getColor(this, R.color.shared_color_console_accent))
     }
 
     /**
@@ -156,11 +162,16 @@ abstract class BasicResponseActivity : BasicControlActivity() {
         mUpdatingLogs.values.forEach { message -> content.appendLine(message) }
         mBinding.basicsResponse.text = content
         mBinding.basicsResponse.gravity = Gravity.TOP
+        mBinding.basicsResponseScroll.post {
+            mBinding.basicsResponseScroll.fullScroll(View.FOCUS_DOWN)
+        }
+    }
+
+    private fun formatTimestamp(): String {
+        return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
     }
 
     companion object {
-        private const val ACTION_CLEAR_LOG = "清空日志"
-
         private val gson = GsonBuilder()
             .setPrettyPrinting()
             .create()
