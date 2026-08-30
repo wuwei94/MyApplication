@@ -15,7 +15,8 @@
     <RadioGroup
         android:id="@+id/navigate"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dp_64"
+        android:layout_height="@dimen/shared_dp_tab_height"
+        android:background="?android:attr/windowBackground"
         android:orientation="horizontal">
 
         <RadioButton
@@ -23,10 +24,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:button="@null"
+            android:drawablePadding="@dimen/shared_dp_4"
             android:gravity="center"
             android:minHeight="0dp"
+            android:paddingTop="@dimen/shared_dp_12"
+            android:paddingBottom="@dimen/shared_dp_12"
             android:textSize="@dimen/shared_sp_12" />
 
         <RadioButton
@@ -34,10 +38,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:button="@null"
+            android:drawablePadding="@dimen/shared_dp_4"
             android:gravity="center"
             android:minHeight="0dp"
+            android:paddingTop="@dimen/shared_dp_12"
+            android:paddingBottom="@dimen/shared_dp_12"
             android:textSize="@dimen/shared_sp_12" />
 
         <RadioButton
@@ -45,10 +52,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:button="@null"
+            android:drawablePadding="@dimen/shared_dp_4"
             android:gravity="center"
             android:minHeight="0dp"
+            android:paddingTop="@dimen/shared_dp_12"
+            android:paddingBottom="@dimen/shared_dp_12"
             android:textSize="@dimen/shared_sp_12" />
 
         <RadioButton
@@ -56,10 +66,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:button="@null"
+            android:drawablePadding="@dimen/shared_dp_4"
             android:gravity="center"
             android:minHeight="0dp"
+            android:paddingTop="@dimen/shared_dp_12"
+            android:paddingBottom="@dimen/shared_dp_12"
             android:textSize="@dimen/shared_sp_12" />
 
     </RadioGroup>

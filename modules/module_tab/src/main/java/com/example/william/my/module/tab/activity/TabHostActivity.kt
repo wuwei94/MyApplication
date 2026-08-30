@@ -1,5 +1,6 @@
 package com.example.william.my.module.tab.activity
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -82,6 +83,7 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
     private fun initTab() {
         mBinding.tabhost.setup(this, supportFragmentManager, android.R.id.tabcontent)
         mBinding.tabhost.setOnTabChangedListener {
+            updateTabTextBold(it)
             switchTab(it)
         }
 
@@ -89,6 +91,16 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
             val tabView = getTabView(i)
             val tabSpec = mBinding.tabhost.newTabSpec(mTitles[i]).setIndicator(tabView)
             mBinding.tabhost.addTab(tabSpec, mFragments[i], null)
+        }
+        updateTabTextBold(mTitles[0])
+    }
+
+    private fun updateTabTextBold(selectedTag: String) {
+        for (i in mFragments.indices) {
+            val tabView = mBinding.tabs.getChildTabViewAt(i)
+            val textView = tabView?.findViewById<TextView>(R.id.item_tab_text)
+            val isSelected = mTitles[i] == selectedTag
+            textView?.typeface = if (isSelected) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
         }
     }
 

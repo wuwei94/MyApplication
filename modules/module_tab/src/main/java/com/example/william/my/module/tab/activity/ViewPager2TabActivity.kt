@@ -1,5 +1,6 @@
 package com.example.william.my.module.tab.activity
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -131,7 +132,10 @@ class ViewPager2TabActivity : BaseVBActivity<TabActivityViewPager2TabBinding>(),
 
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
         for (i in 0 until mBinding.navigate.childCount) {
-            if (mBinding.navigate.getChildAt(i).id == checkedId) {
+            val child = mBinding.navigate.getChildAt(i) as? RadioButton
+            val isChecked = child?.id == checkedId
+            child?.typeface = if (isChecked) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
+            if (isChecked) {
                 switchTab(i)
                 switchFragment(i)
             }

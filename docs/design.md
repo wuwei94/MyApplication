@@ -17,15 +17,17 @@
 | 16dp | `shared_dp_16` | 页面标准边距、列表项间距 |
 | 24dp | `shared_dp_24` | 大间距、区块间距 |
 | 32dp | `shared_dp_32` | 区块间大间距 |
-| 48dp | `shared_dp_48` | 最小触摸区域、BottomNav 默认高度 |
-| 56dp | `shared_dp_56` | AppBar 默认高度、BottomNav 高度 |
-| 64dp | `shared_dp_64` | BottomNav 高度（4-5项带文字） |
+| 48dp | `shared_dp_48` | 最小触摸区域 |
+| 56dp | `shared_dp_56` | 列表项高度、输入框高度 |
+| 64dp | `shared_dp_64` | AppBar / Toolbar 默认高度（M3 标准）、大间距 |
 | 72dp | `shared_dp_72` | 列表项高度（带头像/图标） |
 
 ### 通用尺寸（dp）
 
 | 尺寸 | 资源名 | 用途 |
 |------|--------|------|
+| 64dp | `shared_dp_toolbar_height` | 顶部应用栏 / Toolbar 默认高度（Material 3 标准） |
+| 80dp | `shared_dp_tab_height` | 底部导航栏 / Tab 高度（Material 3 标准） |
 | 200dp | `shared_dp_image_size` | 正方形图片尺寸 |
 | 300dp | `shared_dp_response_size` | 响应展示区尺寸 |
 | 80dp | `shared_dp_avatar_size` | 头像、大图标尺寸 |
@@ -64,11 +66,12 @@
 
 | 尺寸 | 资源名 | 用途 |
 |------|--------|------|
-| 4dp | `shared_dp_corner_4` | 小按钮、Chip、标签 |
-| 8dp | `shared_dp_corner_8` | 卡片、对话框、加载弹窗背景、输入框 |
-| 12dp | `shared_dp_corner_12` | 大卡片、底部弹窗 |
-| 16dp | `shared_dp_corner_16` | 浮动按钮、大圆角容器 |
-| 28dp | `shared_dp_corner_28` | 完全圆角（FAB、胶囊按钮） |
+| 4dp | `shared_dp_corner_4` | Extra Small：小标签、输入框下边缘 |
+| 8dp | `shared_dp_corner_8` | Small：Chip、Tooltip 提示框、小型弹窗背景 |
+| 12dp | `shared_dp_corner_12` | Medium：卡片（CardView / MaterialCardView）、Small FAB |
+| 16dp | `shared_dp_corner_16` | Large：FAB 浮动操作按钮（M3 标准）、侧边栏容器 |
+| 24dp | `shared_dp_corner_24` | Full：标准按钮全圆角胶囊（48dp 按钮标准） |
+| 28dp | `shared_dp_corner_28` | Extra Large：对话框（AlertDialog）、底部弹窗（BottomSheet 顶部圆角） |
 
 ## 使用规范
 

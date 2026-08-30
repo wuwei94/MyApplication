@@ -25,7 +25,8 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/shared_dp_64" />
+                android:layout_height="@dimen/shared_dp_tab_height"
+                android:background="?android:attr/windowBackground" />
 
         </LinearLayout>
 

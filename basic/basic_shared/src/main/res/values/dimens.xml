@@ -22,9 +22,16 @@
     <dimen name="shared_dp_corner_8">8dp</dimen>
     <dimen name="shared_dp_corner_12">12dp</dimen>
     <dimen name="shared_dp_corner_16">16dp</dimen>
+    <dimen name="shared_dp_corner_24">24dp</dimen>
     <dimen name="shared_dp_corner_28">28dp</dimen>
 
     <!-- 通用尺寸（dp） -->
+    <!-- 顶部应用栏 / Toolbar 高度（Material 3 标准高度为 64dp） -->
+    <dimen name="shared_dp_toolbar_height">64dp</dimen>
+
+    <!-- 底部导航栏 / Tab 高度（Material 3 标准高度为 80dp） -->
+    <dimen name="shared_dp_tab_height">80dp</dimen>
+
     <!-- 图片 / 响应展示区 -->
     <dimen name="shared_dp_image_size">200dp</dimen>
     <dimen name="shared_dp_response_size">300dp</dimen>

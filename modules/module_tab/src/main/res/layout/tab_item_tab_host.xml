@@ -8,7 +8,11 @@
     <TextView
         android:id="@+id/item_tab_text"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dp_64"
+        android:layout_height="@dimen/shared_dp_tab_height"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:drawablePadding="@dimen/shared_dp_4"
         android:gravity="center"
+        android:paddingTop="@dimen/shared_dp_12"
+        android:paddingBottom="@dimen/shared_dp_12"
         android:textSize="@dimen/shared_sp_12" />
 </LinearLayout>

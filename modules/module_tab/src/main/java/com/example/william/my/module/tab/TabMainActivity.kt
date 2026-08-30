@@ -23,7 +23,7 @@ class TabMainActivity : RouterRecyclerActivity() {
 
         // 2. 第三方 Tab 库
         routerItems.add(RouterItem("── 第三方库 ──", ""))
-        routerItems.add(RouterItem("FlycoTabLayout（Sliding / Common / Segment 样式）", RouterPath.Tab.FlycoTabLayout))
+        routerItems.add(RouterItem("FlycoTabLayout", RouterPath.Tab.FlycoTabLayout))
 
         return routerItems
     }
