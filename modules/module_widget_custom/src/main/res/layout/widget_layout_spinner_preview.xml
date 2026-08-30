@@ -18,7 +18,7 @@
     <!-- 下拉选择框（作为 showAsDropDown 的真实锚点） -->
     <LinearLayout
         android:id="@+id/widget_spinner_anchor"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/shared_dp_48"
         android:layout_marginTop="@dimen/shared_dp_16"
         android:background="@drawable/shared_bg_container_border"

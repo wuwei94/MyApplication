@@ -24,14 +24,19 @@
 
 ### 通用尺寸（dp）
 
-| 尺寸 | 资源名 | 用途         |
-|------|--------|------------|
-| 200dp | `shared_dp_image_size` | 正方形图片尺寸    |
-| 300dp | `shared_dp_response_size` | 响应展示区尺寸    |
-| 280dp | `shared_dp_dialog_width` | 对话框宽度      |
-| 168dp | `shared_dp_dialog_height` | 对话框高度      |
-| 328dp | `shared_dp_button_width` | 标准按钮宽度      |
-| 48dp | `shared_dp_button_height` | 标准按钮高度     |
+| 尺寸 | 资源名 | 用途 |
+|------|--------|------|
+| 200dp | `shared_dp_image_size` | 正方形图片尺寸 |
+| 300dp | `shared_dp_response_size` | 响应展示区尺寸 |
+| 80dp | `shared_dp_avatar_size` | 头像、大图标尺寸 |
+| 96dp | `shared_dp_float_window_size` | 悬浮窗图标尺寸 |
+| 120dp | `shared_dp_loading_size` | 加载弹窗边长 |
+| 312dp | `shared_dp_dialog_width` | 对话框宽度（= 360dp 基准屏 − 2×24dp 边距） |
+| 200dp | `shared_dp_dialog_height` | 对话框高度 |
+| 328dp | `shared_dp_button_width` | 标准按钮宽度 |
+| 48dp | `shared_dp_button_height` | 标准按钮高度 |
+| 56dp | `shared_dp_item_height` | 标准列表项高度 |
+| 1dp | `shared_dp_divider` | 分割线 |
 | 1080dp | `shared_dp_fragment_height` | Fragment 内容高度 |
 
 ### 文字大小（sp）
@@ -40,8 +45,7 @@
 |------|--------|------|
 | 12sp | `shared_sp_12` | Caption、Tab 文字、辅助文字 |
 | 14sp | `shared_sp_14` | Body2、列表次要文字 |
-| 16sp | `shared_sp_16` | Body1、页面正文 |
-| 20sp | `shared_sp_20` | Subtitle1、列表标题 |
+| 16sp | `shared_sp_16` | Body1、页面正文、对话框标题 |
 | 24sp | `shared_sp_24` | H6、页面标题 |
 
 ### 图标大小（dp）
@@ -61,7 +65,7 @@
 | 尺寸 | 资源名 | 用途 |
 |------|--------|------|
 | 4dp | `shared_dp_corner_4` | 小按钮、Chip、标签 |
-| 8dp | `shared_dp_corner_8` | 卡片、对话框、输入框 |
+| 8dp | `shared_dp_corner_8` | 卡片、对话框、加载弹窗背景、输入框 |
 | 12dp | `shared_dp_corner_12` | 大卡片、底部弹窗 |
 | 16dp | `shared_dp_corner_16` | 浮动按钮、大圆角容器 |
 | 28dp | `shared_dp_corner_28` | 完全圆角（FAB、胶囊按钮） |

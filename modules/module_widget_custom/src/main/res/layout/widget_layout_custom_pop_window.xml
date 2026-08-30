@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/shared_color_primary"
     android:orientation="vertical">
@@ -10,17 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/shared_dp_48"
         android:gravity="center"
+        android:paddingHorizontal="@dimen/shared_dp_24"
         android:text="菜单项 1"
         android:textColor="#FFFFFF"
-        android:textSize="14sp" />
+        android:textSize="@dimen/shared_sp_14" />
 
     <TextView
         android:id="@+id/widget_item_two"
         android:layout_width="match_parent"
         android:layout_height="@dimen/shared_dp_48"
         android:gravity="center"
+        android:paddingHorizontal="@dimen/shared_dp_24"
         android:text="菜单项 2"
         android:textColor="#FFFFFF"
-        android:textSize="14sp" />
+        android:textSize="@dimen/shared_sp_14" />
 
 </LinearLayout>

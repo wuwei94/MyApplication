@@ -6,36 +6,36 @@
 
     <!-- 左上角 View -->
     <View
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/shared_dp_avatar_size"
+        android:layout_height="@dimen/shared_dp_avatar_size"
+        android:layout_margin="@dimen/shared_dp_16"
         android:background="@color/shared_color_primary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 右上角 View -->
     <View
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/shared_dp_avatar_size"
+        android:layout_height="@dimen/shared_dp_avatar_size"
+        android:layout_margin="@dimen/shared_dp_16"
         android:background="@color/shared_color_accent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 左下角 View -->
     <View
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/shared_dp_avatar_size"
+        android:layout_height="@dimen/shared_dp_avatar_size"
+        android:layout_margin="@dimen/shared_dp_16"
         android:background="@color/shared_color_primary_dark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <!-- 右下角 View -->
     <View
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/shared_dp_avatar_size"
+        android:layout_height="@dimen/shared_dp_avatar_size"
+        android:layout_margin="@dimen/shared_dp_16"
         android:background="@color/shared_color_accent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

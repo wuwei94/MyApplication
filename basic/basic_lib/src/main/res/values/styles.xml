@@ -1,22 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="base_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="base_AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/base_purple_500</item>
-        <item name="colorPrimaryVariant">@color/base_purple_700</item>
         <item name="colorOnPrimary">@color/base_white</item>
+        <item name="colorPrimaryContainer">@color/base_purple_200</item>
+        <item name="colorOnPrimaryContainer">@color/base_black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/base_teal_200</item>
-        <item name="colorSecondaryVariant">@color/base_teal_700</item>
         <item name="colorOnSecondary">@color/base_black</item>
+        <item name="colorSecondaryContainer">@color/base_teal_200</item>
+        <item name="colorOnSecondaryContainer">@color/base_black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <!-- 在 Android 15（API 35）中，系统默认启用了 edge-to-edge 无边框设计 -->
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
     </style>
 
-    <style name="base_SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="base_SplashScreen" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -61,11 +63,11 @@
         <item name="android:scrollbars">none</item>
     </style>
 
-    <style name="base_CustomBottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+    <style name="base_CustomBottomSheetDialogTheme" parent="Theme.Material3.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/base_CustomBottomSheetStyle</item>
     </style>
 
-    <style name="base_CustomBottomSheetStyle" parent="@style/Widget.Design.BottomSheet.Modal">
+    <style name="base_CustomBottomSheetStyle" parent="@style/Widget.Material3.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

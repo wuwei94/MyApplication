@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_swipe_swipeLayout"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/shared_dp_item_height"
     android:orientation="vertical"
     app:clickToClose="true"
     app:drag_edge="right">
 
     <Button
         android:id="@+id/item_swipe_button"
-        android:layout_width="60dp"
+        android:layout_width="@dimen/shared_dp_64"
         android:layout_height="match_parent" />
 
     <TextView

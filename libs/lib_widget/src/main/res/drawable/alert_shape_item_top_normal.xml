@@ -2,8 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:topLeftRadius="16dp"
-        android:topRightRadius="16dp" />
+        android:topLeftRadius="@dimen/shared_dp_corner_16"
+        android:topRightRadius="@dimen/shared_dp_corner_16" />
     <solid android:color="@color/colorAlertBackground" />
 
 </shape>

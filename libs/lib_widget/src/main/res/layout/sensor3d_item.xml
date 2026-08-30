@@ -6,7 +6,7 @@
     <com.example.william.my.core.widget.sensor3d.SensorLayout
         android:id="@+id/sensorbackground"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/shared_dp_image_size"
         android:layout_gravity="center">
 
         <ImageView
@@ -22,7 +22,7 @@
     <com.example.william.my.core.widget.sensor3d.SensorLayout
         android:id="@+id/sensormid"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/shared_dp_image_size"
         android:layout_gravity="center">
 
         <ImageView
@@ -35,7 +35,7 @@
     <com.example.william.my.core.widget.sensor3d.SensorLayout
         android:id="@+id/sensorforeground"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/shared_dp_image_size"
         android:layout_gravity="center">
 
         <ImageView

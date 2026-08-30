@@ -6,8 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/blur_frame"
-        android:layout_width="360dp"
-        android:layout_height="360dp"
+        android:layout_width="@dimen/shared_dp_image_size"
+        android:layout_height="@dimen/shared_dp_image_size"
         android:layout_gravity="center">
 
         <ImageView

@@ -9,7 +9,7 @@
     <com.example.william.my.core.widget.sensor3d.Sensor3DView
         android:id="@+id/sensor3D"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/shared_dp_image_size"
         app:backgroundAccelerateRatio="-2.0"
         app:backgrounddrawable="@drawable/demo_sensor_background"
         app:foregroundAccelerateRatio="4.0"

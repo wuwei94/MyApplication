@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/icon_float"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="@dimen/shared_dp_float_window_size"
+        android:layout_height="@dimen/shared_dp_float_window_size"
         android:src="@drawable/shared_ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

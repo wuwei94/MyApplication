@@ -1,5 +1,5 @@
 <resources>
-    <!-- 间距（dp） -->
+    <!-- 间距（dp）：基于 4dp 网格系统 -->
     <dimen name="shared_dp_4">4dp</dimen>
     <dimen name="shared_dp_8">8dp</dimen>
     <dimen name="shared_dp_12">12dp</dimen>
@@ -11,23 +11,10 @@
     <dimen name="shared_dp_64">64dp</dimen>
     <dimen name="shared_dp_72">72dp</dimen>
 
-    <!-- 通用尺寸（dp） -->
-    <dimen name="shared_dp_image_size">200dp</dimen>
-    <dimen name="shared_dp_response_size">300dp</dimen>
-    
-    <dimen name="shared_dp_dialog_width">380dp</dimen>
-    <dimen name="shared_dp_dialog_height">200dp</dimen>
-
-    <dimen name="shared_dp_button_width">328dp</dimen>
-    <dimen name="shared_dp_button_height">48dp</dimen>
-
-    <dimen name="shared_dp_fragment_height">1080dp</dimen>
-
     <!-- 文字大小（sp） -->
     <dimen name="shared_sp_12">12sp</dimen>
     <dimen name="shared_sp_14">14sp</dimen>
     <dimen name="shared_sp_16">16sp</dimen>
-    <dimen name="shared_sp_20">20sp</dimen>
     <dimen name="shared_sp_24">24sp</dimen>
 
     <!-- 圆角（dp） -->
@@ -36,4 +23,35 @@
     <dimen name="shared_dp_corner_12">12dp</dimen>
     <dimen name="shared_dp_corner_16">16dp</dimen>
     <dimen name="shared_dp_corner_28">28dp</dimen>
+
+    <!-- 通用尺寸（dp） -->
+    <!-- 图片 / 响应展示区 -->
+    <dimen name="shared_dp_image_size">200dp</dimen>
+    <dimen name="shared_dp_response_size">300dp</dimen>
+
+    <!-- 头像 / 大图标 -->
+    <dimen name="shared_dp_avatar_size">80dp</dimen>
+
+    <!-- 悬浮窗 -->
+    <dimen name="shared_dp_float_window_size">96dp</dimen>
+
+    <!-- 加载弹窗 -->
+    <dimen name="shared_dp_loading_size">120dp</dimen>
+
+    <!-- 对话框 -->
+    <dimen name="shared_dp_dialog_width">312dp</dimen>
+    <dimen name="shared_dp_dialog_height">200dp</dimen>
+
+    <!-- 按钮 -->
+    <dimen name="shared_dp_button_width">328dp</dimen>
+    <dimen name="shared_dp_button_height">48dp</dimen>
+
+    <!-- 列表项 -->
+    <dimen name="shared_dp_item_height">56dp</dimen>
+
+    <!-- 分割线 -->
+    <dimen name="shared_dp_divider">1dp</dimen>
+
+    <!-- Fragment 内容高度 -->
+    <dimen name="shared_dp_fragment_height">1080dp</dimen>
 </resources>

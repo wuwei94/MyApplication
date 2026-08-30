@@ -10,8 +10,8 @@
         android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_primary"
         android:gravity="center_vertical"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp" />
+        android:paddingEnd="@dimen/shared_dp_16"
+        android:paddingStart="@dimen/shared_dp_16" />
 
     <TextView
         android:id="@+id/item_marquee_accent"
@@ -19,7 +19,7 @@
         android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_primary_dark"
         android:gravity="center_vertical"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp" />
+        android:paddingEnd="@dimen/shared_dp_16"
+        android:paddingStart="@dimen/shared_dp_16" />
 
 </LinearLayout>

@@ -2,14 +2,14 @@ package com.example.william.my.core.base.activity
 
 import android.Manifest
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.Utils
+import com.example.william.my.core.base.utils.DensityAdaptUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
 
@@ -154,5 +154,9 @@ open class BaseActivity : AppCompatActivity() {
         for (fragment in supportFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun getResources(): Resources {
+        return DensityAdaptUtils.adaptWidth(super.getResources(), 360f)
     }
 }

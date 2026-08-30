@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/shared_dp_48"
         android:gravity="center_vertical"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp" />
+        android:paddingStart="@dimen/shared_dp_8"
+        android:paddingEnd="@dimen/shared_dp_8" />
 
 </LinearLayout>

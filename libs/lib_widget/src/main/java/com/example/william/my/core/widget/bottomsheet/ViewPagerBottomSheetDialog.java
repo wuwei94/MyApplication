@@ -281,7 +281,7 @@ public class ViewPagerBottomSheetDialog extends AppCompatDialog {
                 themeId = outValue.resourceId;
             } else {
                 // bottomSheetDialogTheme is not provided; we default to our light theme
-                themeId = R.style.Theme_Design_Light_BottomSheetDialog;
+                themeId = R.style.Theme_Material3_Light_BottomSheetDialog;
             }
         }
         return themeId;

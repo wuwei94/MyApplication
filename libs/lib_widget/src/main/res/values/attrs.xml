@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--IosAlertDialogStyle-->
-    <style name="IosAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="IosAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <!--IosItemAlertDialogStyle-->
-    <style name="IosItemAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="IosItemAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 

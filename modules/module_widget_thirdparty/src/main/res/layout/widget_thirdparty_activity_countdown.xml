@@ -27,8 +27,8 @@
         app:suffixMinute="分"
         app:suffixSecond="秒"
         app:suffixTextColor="#000000"
-        app:suffixTextSize="12sp"
+        app:suffixTextSize="@dimen/shared_sp_12"
         app:timeTextColor="#000000"
-        app:timeTextSize="22sp" />
+        app:timeTextSize="@dimen/shared_sp_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
