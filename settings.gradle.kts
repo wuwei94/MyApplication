@@ -162,6 +162,8 @@ include(":modules:module_http")
 include(":modules:module_websocket")
 // MQTT
 include(":modules:module_mqtt")
+// 蓝牙通信
+include(":modules:module_bluetooth")
 
 // 事件总线
 include(":modules:module_event")

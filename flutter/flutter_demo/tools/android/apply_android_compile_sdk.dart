@@ -4,13 +4,14 @@
 // 避免 AAR metadata 不兼容。
 // 运行: dart tools/android/apply_android_compile_sdk.dart
 
+import 'dart:convert';
 import 'dart:io';
 
 const String _plugin = 'flutter_keyboard_visibility';
 const String _marker = '// compileSdk patched by apply_android_compile_sdk.dart';
 
 /// 需要对齐的最低 compileSdkVersion
-const int _minCompileSdk = 34;
+const int _minCompileSdk = 37;
 
 /// 需要排除的平台子包后缀
 const _excludeSuffixes = [
@@ -23,13 +24,7 @@ const _excludeSuffixes = [
 ];
 
 void main() {
-  final pubCache = _findPubCache();
-  if (pubCache == null) {
-    err('无法定位 PUB_CACHE');
-    return;
-  }
-
-  final pluginDir = _findPluginDir(pubCache);
+  final pluginDir = _findPluginDir();
   if (pluginDir == null) {
     err('未找到 $_plugin 插件目录，请先 flutter pub get');
     return;
@@ -44,8 +39,22 @@ void main() {
   final content = file.readAsStringSync();
 
   if (content.contains(_marker)) {
-    out('已修补,跳过');
-    return;
+    final pinnedPattern = RegExp(r'(\d+)\s+' + RegExp.escape(_marker));
+    final match = pinnedPattern.firstMatch(content);
+    if (match != null) {
+      final pinnedVer = int.tryParse(match.group(1)!) ?? 0;
+      if (pinnedVer < _minCompileSdk) {
+        final updated = content.replaceAll(
+          pinnedPattern,
+          '$_minCompileSdk $_marker',
+        );
+        file.writeAsStringSync(updated);
+        out('已将 compileSdkVersion 从 $pinnedVer 更新到 $_minCompileSdk (${file.path})');
+      } else {
+        out('已修补,跳过');
+      }
+      return;
+    }
   }
 
   // 匹配 compileSdk 或 compileSdkVersion 行并替换值
@@ -74,8 +83,31 @@ void main() {
   out('已将 compileSdkVersion 从 $currentSdk 提升到 $_minCompileSdk (${file.path})');
 }
 
-/// 在 pub cache 中查找插件目录（支持带版本号后缀）
-Directory? _findPluginDir(Directory pubCache) {
+/// 解析插件实际使用的目录：优先读取 .flutter-plugins-dependencies，回退到扫描 PUB_CACHE
+Directory? _findPluginDir() {
+  final depsFile = File('.flutter-plugins-dependencies');
+  if (depsFile.existsSync()) {
+    try {
+      final json =
+          jsonDecode(depsFile.readAsStringSync()) as Map<String, dynamic>;
+      final android =
+          ((json['plugins'] as Map<String, dynamic>?)?['android'] as List?)
+              ?.cast<dynamic>() ??
+          const <dynamic>[];
+      for (final p in android) {
+        if (p is Map<String, dynamic> && p['name'] == _plugin) {
+          final dir = Directory(p['path'] as String);
+          if (dir.existsSync()) return dir;
+        }
+      }
+    } catch (_) {
+      // 解析失败时回退到缓存扫描
+    }
+  }
+
+  final pubCache = _findPubCache();
+  if (pubCache == null) return null;
+
   final hosted = Directory('${pubCache.path}${Platform.pathSeparator}hosted');
   if (!hosted.existsSync()) return null;
 
@@ -98,6 +130,24 @@ Directory? _findPubCache() {
   if (env != null) {
     final dir = Directory(env);
     if (dir.existsSync()) return dir;
+  }
+
+  // 检查 local.properties 中的 Flutter SDK 路径下的 cache/hosted
+  final localProperties = File('.android/local.properties');
+  if (localProperties.existsSync()) {
+    for (final line in localProperties.readAsLinesSync()) {
+      if (line.startsWith('flutter.sdk=')) {
+        final flutterSdk = line
+            .substring('flutter.sdk='.length)
+            .trim()
+            .replaceAll(r'\\', r'/')
+            .replaceAll(r'\', r'/');
+        final dir = Directory('$flutterSdk/bin/cache/pkg');
+        if (dir.existsSync()) return Directory('$flutterSdk/bin/cache');
+        final hostedDir = Directory('$flutterSdk/cache/hosted');
+        if (hostedDir.existsSync()) return Directory('$flutterSdk/cache');
+      }
+    }
   }
 
   final home = Platform.environment['HOME'] ??

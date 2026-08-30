@@ -29,7 +29,7 @@
 | Architecture| MVP · MVVM · MVI · Mavericks |
 | DI          | Hilt · Koin |
 | Navigation  | ARouter · Navigation Component |
-| Network     | OkHttp · Retrofit · Ktor · Volley · WebSocket · Netty · MQTT · NanoHTTPD |
+| Network     | OkHttp · Retrofit · Ktor · Volley · WebSocket · Netty · MQTT · Bluetooth BLE · NanoHTTPD |
 | Persistence | Room · ObjectBox · DataStore |
 | Image       | Glide · Coil |
 | Reactive    | Coroutines · Flow · RxJava 3 · LiveData |
@@ -72,7 +72,7 @@ MyApplication/
 ├── app                         # 壳工程（Hilt + ARouter 入口）
 ├── build-logic                 # Convention Plugin，统一插件配置
 ├── gradle/libs.versions.toml   # 统一版本目录
-├── docs                        # 文档（modules / libs / di / event / network / transfer / build-logic / conventions）
+├── docs                        # 文档（modules / libs / di / event / network / transfer / bluetooth / build-logic / conventions）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_shared            # 通用 Bus、Router、内联日志 UI 脚手架与 JSON 格式化
@@ -80,7 +80,7 @@ MyApplication/
 │   ├── basic_server            # 服务端基础模块
 ├── flutter                     # Flutter 层（add-to-app 集成）
 │   ├── flutter_demo            # Flutter Demo Catalog 子工程（Flutter module）
-│   └── flutter_libs            # Flutter 本地库（lib_network_dio / lib_network_http 独立封装、lib_image_loader 内核可切换封装、lib_event_bus 事件总线封装、lib_storage 键值存储封装）
+│   └── flutter_libs            # Flutter 本地库（lib_network_dio / lib_network_http 独立封装、lib_image_loader 内核可切换封装、lib_event_bus 事件总线封装、lib_storage 键值存储封装、lib_bluetooth 蓝牙通信封装）
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp              # OkHttp 封装（DSL、多实例及缓存生命周期、安全日志、OkHttp 控制 Header、上传下载进度）
 │   ├── lib_retrofit            # Retrofit 封装（DSL、Gson 响应转换、可空 Parcelable 响应、加载状态 View）
@@ -114,7 +114,8 @@ MyApplication/
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
     │   ├── module_websocket    # WebSocket 专项示例
-    │   └── module_mqtt         # MQTT 发布 / 订阅专项示例
+    │   ├── module_mqtt         # MQTT 发布 / 订阅专项示例
+    │   └── module_bluetooth    # 蓝牙通信（BLE 客户端：原生 SDK 方案 + Nordic 官方库方案）
     │
     ├── [数据存储]
     │   ├── module_database     # 数据库（Room / ObjectBox）

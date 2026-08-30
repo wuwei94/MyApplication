@@ -72,6 +72,17 @@
 | dio | 业务 data decoder、完整业务响应展示、原生 LogInterceptor 和 CancelToken；当前示例不输出 Header/Body |
 | http | 业务 data decoder、完整业务响应展示、AbortableRequest 与原样请求日志；日志不脱敏 |
 | websocket | WebSocket 建立连接、消息双向收发、Echo 回显与连接生命周期状态展示 |
+| mqtt | MQTT 连接、订阅、发布（QoS 0/1/2）与消息接收 |
+
+### bluetooth（低功耗蓝牙）
+
+低功耗蓝牙（BLE）客户端示例。使用 `flutter_blue_plus` 实现设备扫描、GATT 服务发现、特征值读写、Notify 数据流监听与分包流控。
+
+| 示例 | 说明 |
+|------|------|
+| scan | 蓝牙开关状态监听、动态权限检查、扫描启停与 RSSI 实时更新 |
+| device | 设备连接/断开、MTU 协商、GATT 树浏览、特征读写与 Notify 订阅 |
+| transfer | MTU 协商扩容、大数据切片分包发送（Chunking）与拼包组装 |
 
 ### storage（本地存储）
 

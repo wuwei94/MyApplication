@@ -21,6 +21,12 @@ void main() {
     '    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>',
     '    <uses-permission android:name="android.permission.CAMERA"/>',
     '    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>',
+    '    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>',
+    '    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>',
+    '    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>',
+    '    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>',
+    '    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>',
+    '    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>',
   ];
 
   final List<String> missingPermissions = permissions

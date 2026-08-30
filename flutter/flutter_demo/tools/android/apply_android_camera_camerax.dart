@@ -134,6 +134,24 @@ Directory? _findPubCache() {
     if (dir.existsSync()) return dir;
   }
 
+  // 检查 local.properties 中的 Flutter SDK 路径下的 cache/hosted
+  final localProperties = File('.android/local.properties');
+  if (localProperties.existsSync()) {
+    for (final line in localProperties.readAsLinesSync()) {
+      if (line.startsWith('flutter.sdk=')) {
+        final flutterSdk = line
+            .substring('flutter.sdk='.length)
+            .trim()
+            .replaceAll(r'\\', r'/')
+            .replaceAll(r'\', r'/');
+        final dir = Directory('$flutterSdk/bin/cache/pkg');
+        if (dir.existsSync()) return Directory('$flutterSdk/bin/cache');
+        final hostedDir = Directory('$flutterSdk/cache/hosted');
+        if (hostedDir.existsSync()) return Directory('$flutterSdk/cache');
+      }
+    }
+  }
+
   final home = Platform.environment['HOME'] ??
       Platform.environment['USERPROFILE'];
   if (home != null) {

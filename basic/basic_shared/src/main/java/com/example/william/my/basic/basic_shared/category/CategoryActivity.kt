@@ -93,6 +93,9 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 消息队列 ──", ""))
         items.add(RouterItem("MQTT", RouterPath.Mqtt.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 蓝牙通信 ──", ""))
+        items.add(RouterItem("蓝牙（BLE 客户端）", RouterPath.Bluetooth.Main))
         return items
     }
 

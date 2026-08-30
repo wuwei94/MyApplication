@@ -35,7 +35,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             apply(plugin = "kotlin-parcelize")
             apply(plugin = "nowinandroid.android.lint")
             extensions.configure<LibraryExtension> {
-                compileSdk = 36
+                compileSdk = 37
                 defaultConfig.minSdk = 24
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 testOptions.animationsDisabled = true

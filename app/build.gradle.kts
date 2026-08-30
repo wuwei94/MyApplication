@@ -16,7 +16,7 @@ plugins {
 
 android {
     namespace = "com.example.william.my.application"
-    compileSdk = 36
+    compileSdk = 37
     defaultConfig {
         applicationId = "com.example.william.my.application"
         versionCode = 1

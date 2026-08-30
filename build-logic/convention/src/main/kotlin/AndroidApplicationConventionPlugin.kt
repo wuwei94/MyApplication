@@ -35,9 +35,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             apply(plugin = "kotlin-parcelize")
             apply(plugin = "nowinandroid.android.lint")
             extensions.configure<ApplicationExtension> {
-                compileSdk = 36
+                compileSdk = 37
                 defaultConfig.minSdk = 24
-                defaultConfig.targetSdk = 36
+                defaultConfig.targetSdk = 37
                 testOptions.animationsDisabled = true
                 configureKotlinAndroid(this)
                 configureFlavors(this)

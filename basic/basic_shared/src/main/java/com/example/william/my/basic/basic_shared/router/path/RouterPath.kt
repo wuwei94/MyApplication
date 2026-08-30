@@ -314,6 +314,31 @@ object RouterPath {
         const val PahoServiceClient = "${PATH}/PahoServiceClient"
     }
 
+    // 蓝牙通信模块
+    object Bluetooth {
+        private const val PATH = "/Bluetooth"
+
+        const val Main = "${PATH}/Main"
+
+        // 原生 SDK 方案
+        const val NativeScan = "${PATH}/NativeScan"
+        const val NativeConnect = "${PATH}/NativeConnect"
+        const val NativeQueue = "${PATH}/NativeQueue"
+
+        // Nordic BLE 方案
+        const val NordicScan = "${PATH}/NordicScan"
+        const val NordicConnect = "${PATH}/NordicConnect"
+        const val NordicTransfer = "${PATH}/NordicTransfer"
+
+        // FastBle 方案
+        const val FastScan = "${PATH}/FastScan"
+        const val FastConnect = "${PATH}/FastConnect"
+
+        // RxAndroidBle 方案
+        const val RxScan = "${PATH}/RxScan"
+        const val RxConnect = "${PATH}/RxConnect"
+    }
+
     // ═══════════════════════════════════════════
     // 架构 / 语言 / 框架
     // ═══════════════════════════════════════════

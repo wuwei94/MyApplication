@@ -46,7 +46,7 @@ build-logic/convention/src/main/kotlin/
 - 测试：`junit`、`androidx-test-ext`、`androidx-test-espresso`
 
 **功能模块依赖**（通过 `configureFeatureAndroid`）：
-- App 模块自动依赖所有功能模块（共 27 个）
+- App 模块自动依赖所有功能模块（共 29 个）
 
 ### AndroidKotlin.kt
 
@@ -81,7 +81,7 @@ build-logic/convention/src/main/kotlin/
 
 为 Library 模块提供统一配置：
 - 应用插件：`com.android.library`、`kotlin-android`、`kotlin-kapt`、`kotlin-parcelize`、`lint`
-- 构建配置：`compileSdk = 36`、`minSdk = 24`
+- 构建配置：`compileSdk = 37`、`minSdk = 24`
 - 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`
 - 资源前缀：根据模块路径自动生成
 
@@ -89,7 +89,7 @@ build-logic/convention/src/main/kotlin/
 
 为 Application 模块提供统一配置：
 - 应用插件：`com.android.application`、`kotlin-android`、`kotlin-kapt`、`kotlin-parcelize`、`lint`
-- 构建配置：`compileSdk = 36`、`minSdk = 24`、`targetSdk = 36`
+- 构建配置：`compileSdk = 37`、`minSdk = 24`、`targetSdk = 37`
 - 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`、`configureFeatureAndroid`
 
 ---

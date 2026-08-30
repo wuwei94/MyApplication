@@ -15,17 +15,18 @@ import 'dart:io';
 
 const String _marker = '// compileSdk pinned by apply_android_flutter_compile_sdk.dart';
 
-/// 解析 Flutter SDK 失败时使用的回退值
-/// （与 Flutter 3.47.0 的 FlutterExtension.compileSdkVersion 保持一致）
-const int _fallbackCompileSdk = 36;
+/// 目标 compileSdkVersion（升级到 37 适配高版本插件）
+const int _targetCompileSdk = 37;
+const int _targetCompileSdkMinor = 2;
 
 void main() {
   final compileSdk = _resolveCompileSdk();
-  if (compileSdk == null) {
-    err('无法解析 compileSdkVersion，请先 flutter pub get');
-    return;
-  }
   out('目标 compileSdkVersion: $compileSdk');
+
+  // 同步更新 .android/app/build.gradle 和 .android/Flutter/build.gradle 中的 compileSdk
+  _syncGradleCompileSdk(File('.android/app/build.gradle'), compileSdk, _targetCompileSdkMinor);
+  _syncGradleCompileSdk(File('.android/Flutter/build.gradle'), compileSdk, _targetCompileSdkMinor);
+
 
   final depsFile = File('.flutter-plugins-dependencies');
   if (!depsFile.existsSync()) {
@@ -58,7 +59,26 @@ void main() {
       final file = File('${pluginDir.path}${Platform.pathSeparator}$buildFile');
       if (!file.existsSync()) continue;
       final content = file.readAsStringSync();
-      if (content.contains(_marker)) continue;
+
+      if (content.contains(_marker)) {
+        final pinnedPattern = RegExp(r'(\d+)\s+' + RegExp.escape(_marker));
+        final match = pinnedPattern.firstMatch(content);
+        if (match != null) {
+          final pinnedVer = int.tryParse(match.group(1)!) ?? 0;
+          if (pinnedVer < compileSdk) {
+            file.writeAsStringSync(
+              content.replaceAll(
+                pinnedPattern,
+                '$compileSdk $_marker',
+              ),
+            );
+            out('已更新 compileSdkVersion $pinnedVer -> $compileSdk ($name/$buildFile)');
+            patched++;
+          }
+        }
+        continue;
+      }
+
       if (!content.contains('flutter.compileSdkVersion')) continue;
       file.writeAsStringSync(
         content.replaceAll(
@@ -76,10 +96,10 @@ void main() {
   }
 }
 
-/// 从当前 Flutter SDK 的 FlutterExtension.kt 解析默认 compileSdkVersion
-int? _resolveCompileSdk() {
+/// 解析目标 compileSdkVersion（优先使用 _targetCompileSdk，若 Flutter SDK 更高则取更大值）
+int _resolveCompileSdk() {
   final localProperties = File('.android/local.properties');
-  if (!localProperties.existsSync()) return null;
+  if (!localProperties.existsSync()) return _targetCompileSdk;
 
   String? flutterSdk;
   for (final line in localProperties.readAsLinesSync()) {
@@ -89,16 +109,49 @@ int? _resolveCompileSdk() {
       break;
     }
   }
-  if (flutterSdk == null) return null;
+  if (flutterSdk == null) return _targetCompileSdk;
 
   final extensionFile = File(
     '$flutterSdk/packages/flutter_tools/gradle/src/main/kotlin/FlutterExtension.kt',
   );
-  if (!extensionFile.existsSync()) return _fallbackCompileSdk;
+  if (!extensionFile.existsSync()) return _targetCompileSdk;
 
   final match = RegExp(r'val compileSdkVersion: Int = (\d+)')
       .firstMatch(extensionFile.readAsStringSync());
-  return match == null ? _fallbackCompileSdk : int.tryParse(match.group(1)!);
+  final sdkFromFlutter = match == null ? null : int.tryParse(match.group(1)!);
+  if (sdkFromFlutter != null && sdkFromFlutter > _targetCompileSdk) {
+    return sdkFromFlutter;
+  }
+  return _targetCompileSdk;
+}
+
+void _syncGradleCompileSdk(File gradleFile, int compileSdk, int? compileSdkMinor) {
+  if (!gradleFile.existsSync()) return;
+  var content = gradleFile.readAsStringSync();
+
+  final sdkPattern = RegExp(
+    r'(^\s*(?:compileSdk|compileSdkVersion)\s*[=]?\s*)(\d+|flutter\.compileSdkVersion)',
+    multiLine: true,
+  );
+  final match = sdkPattern.firstMatch(content);
+  if (match != null) {
+    final currentVal = match.group(2)!;
+    final currentSdk = int.tryParse(currentVal) ?? 0;
+    if (currentSdk < compileSdk || currentVal == 'flutter.compileSdkVersion') {
+      content = content.replaceFirst(
+        sdkPattern,
+        '${match.group(1)}$compileSdk',
+      );
+      if (compileSdkMinor != null && !content.contains('compileSdkMinor')) {
+        content = content.replaceFirst(
+          '${match.group(1)}$compileSdk',
+          '${match.group(1)}$compileSdk\n    compileSdkMinor = $compileSdkMinor',
+        );
+      }
+      gradleFile.writeAsStringSync(content);
+      out('已同步 ${gradleFile.path} compileSdk -> $compileSdk (minor: $compileSdkMinor)');
+    }
+  }
 }
 
 void out(String s) => print('[apply_android_flutter_compile_sdk] $s');

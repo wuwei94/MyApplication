@@ -37,12 +37,12 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
 
   _DemoImageData? _sourceImage;
   _DemoImageData? _compressedImage;
-  _LubanModeOption _mode = _LubanModeOption.auto;
+  int _numberOfColors = 128;
+  int? _targetWidth;
+  bool _toRgb = true;
   bool _useCache = false;
   bool _isPicking = false;
   bool _isCompressing = false;
-  int _quality = 80;
-  int _step = 6;
   String _statusMessage = '先选择一张 JPG 或 PNG 图片，再体验 flutter_luban 的智能压缩算法。';
 
   bool get _isBusy => _isPicking || _isCompressing;
@@ -129,12 +129,12 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
   Widget _buildSettingsSection() {
     return _DemoSectionCard(
       title: '压缩参数',
-      subtitle: '`quality` 是初始质量，`step` 控制质量搜索步长，模式决定从大到小或从小到大逼近目标体积。',
+      subtitle: '`numberOfColors` 控制色彩数量，`targetWidth` 可限制最大宽度，支持 RGB 转换与缓存复用。',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '压缩模式',
+            '色彩数量 (numberOfColors)',
             style: Theme.of(
               context,
             ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
@@ -143,11 +143,11 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: _LubanModeOption.values
+            children: <int>[32, 64, 128, 256, 512]
                 .map(
-                  (_LubanModeOption mode) => ChoiceChip(
-                    label: Text(mode.label),
-                    selected: _mode == mode,
+                  (int count) => ChoiceChip(
+                    label: Text('$count 色'),
+                    selected: _numberOfColors == count,
                     onSelected: _isBusy
                         ? null
                         : (bool selected) {
@@ -155,7 +155,7 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
                               return;
                             }
                             setState(() {
-                              _mode = mode;
+                              _numberOfColors = count;
                             });
                           },
                   ),
@@ -163,43 +163,56 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
                 .toList(),
           ),
           const SizedBox(height: 20),
-          _SliderTile(
-            label: '初始质量',
-            valueLabel: '$_quality%',
-            value: _quality.toDouble(),
-            min: 40,
-            max: 100,
-            divisions: 12,
-            onChanged: _isBusy
-                ? null
-                : (double value) {
-                    setState(() {
-                      _quality = value.round();
-                    });
-                  },
+          Text(
+            '目标宽度限制 (targetWidth)',
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 12),
-          _SliderTile(
-            label: '搜索步长',
-            valueLabel: '$_step',
-            value: _step.toDouble(),
-            min: 1,
-            max: 12,
-            divisions: 11,
-            onChanged: _isBusy
-                ? null
-                : (double value) {
-                    setState(() {
-                      _step = value.round();
-                    });
-                  },
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: <int?>[null, 720, 1080, 1440, 1920]
+                .map(
+                  (int? width) => ChoiceChip(
+                    label: Text(width == null ? '自适应' : '${width}px'),
+                    selected: _targetWidth == width,
+                    onSelected: _isBusy
+                        ? null
+                        : (bool selected) {
+                            if (!selected) {
+                              return;
+                            }
+                            setState(() {
+                              _targetWidth = width;
+                            });
+                          },
+                  ),
+                )
+                .toList(),
           ),
           const SizedBox(height: 12),
           SwitchListTile.adaptive(
             contentPadding: EdgeInsets.zero,
+            value: _toRgb,
+            activeThumbColor: _accentColor,
+            title: const Text('转为 RGB 格式 (toRgb)'),
+            subtitle: const Text('针对 JPG 格式转为 RGB 色彩空间进行处理。'),
+            onChanged: _isBusy
+                ? null
+                : (bool value) {
+                    setState(() {
+                      _toRgb = value;
+                    });
+                  },
+          ),
+          const SizedBox(height: 4),
+          SwitchListTile.adaptive(
+            contentPadding: EdgeInsets.zero,
             value: _useCache,
             activeThumbColor: _accentColor,
-            title: const Text('复用同名缓存'),
+            title: const Text('复用同名缓存 (useCache)'),
             subtitle: const Text('开启后相同原图文件名会直接返回已有 luban 输出文件。'),
             onChanged: _isBusy
                 ? null
@@ -265,8 +278,13 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
                 accentColor: _accentColor,
               ),
               _SummaryStatChip(
-                label: '模式',
-                value: _mode.label,
+                label: '色彩数',
+                value: '$_numberOfColors 色',
+                accentColor: _accentColor,
+              ),
+              _SummaryStatChip(
+                label: '宽度限制',
+                value: _targetWidth != null ? '${_targetWidth}px' : '自适应',
                 accentColor: _accentColor,
               ),
             ],
@@ -368,7 +386,8 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
 
     setState(() {
       _isCompressing = true;
-      _statusMessage = '正在使用 ${_mode.label} 模式压缩，初始质量 $_quality%，步长 $_step...';
+      _statusMessage =
+          '正在压缩中，色彩数 $_numberOfColors，目标宽度 ${_targetWidth != null ? '${_targetWidth}px' : '自适应'}...';
     });
 
     try {
@@ -379,17 +398,17 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
       await outputDirectory.create(recursive: true);
 
       final CompressObject compressObject = CompressObject(
-        imageFile: File(sourceImage.path),
+        imageXFile: img_picker.XFile(sourceImage.path),
         targetPath: outputDirectory.path,
-        mode: _mode.compressMode,
+        targetWidth: _targetWidth,
         useCache: _useCache,
-        quality: _quality,
-        step: _step,
-        autoRatio: true,
+        toRgb: _toRgb,
+        numberOfColors: _numberOfColors,
       );
 
-      final String? outputPath = await Luban.compressImage(compressObject);
-      if (outputPath == null || outputPath.isEmpty) {
+      final img_picker.XFile? outputXFile =
+          await Luban.compressImage(compressObject);
+      if (outputXFile == null || outputXFile.path.isEmpty) {
         _setStateIfMounted(() {
           _isCompressing = false;
           _statusMessage = '压缩没有返回结果文件，请换一张图片再试。';
@@ -398,8 +417,8 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
       }
 
       final _DemoImageData image = await _createImageData(
-        path: outputPath,
-        name: _fileNameOf(outputPath),
+        path: outputXFile.path,
+        name: _fileNameOf(outputXFile.path),
       );
       final int savedBytes = sourceImage.sizeInBytes - image.sizeInBytes;
 
@@ -492,17 +511,6 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
     }
     setState(fn);
   }
-}
-
-enum _LubanModeOption {
-  auto('Auto', CompressMode.AUTO),
-  large2Small('Large2Small', CompressMode.LARGE2SMALL),
-  small2Large('Small2Large', CompressMode.SMALL2LARGE);
-
-  const _LubanModeOption(this.label, this.compressMode);
-
-  final String label;
-  final CompressMode compressMode;
 }
 
 class _LubanHeroCard extends StatelessWidget {
@@ -689,63 +697,6 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-class _SliderTile extends StatelessWidget {
-  const _SliderTile({
-    required this.label,
-    required this.valueLabel,
-    required this.value,
-    required this.min,
-    required this.max,
-    required this.divisions,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String valueLabel;
-  final double value;
-  final double min;
-  final double max;
-  final int divisions;
-  final ValueChanged<double>? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                label,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            Text(
-              valueLabel,
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: const Color(0xFF2F6F9F),
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ],
-        ),
-        Slider(
-          value: value,
-          min: min,
-          max: max,
-          divisions: divisions,
-          label: valueLabel,
-          onChanged: onChanged,
-        ),
-      ],
-    );
-  }
-}
 
 class _PreviewCard extends StatelessWidget {
   const _PreviewCard({

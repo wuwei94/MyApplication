@@ -74,7 +74,7 @@
 
 宿主工程（Gradle 9 + AGP 9，`android.newDsl=true`）以 add-to-app 方式构建时，部分插件（如 `camera_android_camerax`、`flutter_plugin_android_lifecycle`、`image_picker_android` 等）的 `android/build.gradle.kts` 在配置阶段无法解析 `flutter.compileSdkVersion`，报 `Unresolved reference 'compileSdkVersion'`；模块独立构建（`flutter build apk/aar`）不受影响。
 
-由 `tools/android/apply_android_flutter_compile_sdk.dart` 在 `flutter pub get` 之后统一处理：扫描 `.flutter-plugins-dependencies` 中实际参与构建的插件，把 `flutter.compileSdkVersion` 替换为从当前 Flutter SDK `FlutterExtension.kt` 解析出的字面值（当前为 36，与宿主工程 `compileSdk = 36` 一致），已注册进 `dart tools/apply_android_fixes.dart`。
+由 `tools/android/apply_android_flutter_compile_sdk.dart` 在 `flutter pub get` 之后统一处理：扫描 `.flutter-plugins-dependencies` 中实际参与构建的插件，把 `flutter.compileSdkVersion` 替换为从当前 Flutter SDK `FlutterExtension.kt` 解析出的字面值（当前为 37，与宿主工程 `compileSdk = 37` 一致），已注册进 `dart tools/apply_android_fixes.dart`。
 
 > Flutter 升级后 `compileSdkVersion` 默认值变化时，重新执行一次该脚本即可；上游修复插件脚本后按 `apply_android_fixes.dart` 中的注释清理对应注册。
 
@@ -98,6 +98,14 @@
 - [Auto Size Text](https://pub.dev/packages/auto_size_text) — 自动缩放文本
 - [ConstraintLayout](https://pub.dev/packages/flutter_constraintlayout) — 约束布局
 - [Google Fonts](https://pub.dev/packages/google_fonts) — Google 字体
+
+## 蓝牙通信（本地 package）
+
+低功耗蓝牙（BLE）能力由 `../flutter_libs/lib_bluetooth` 本地 package 提供，与 Android `module_bluetooth` 结构对齐：
+
+- [lib_bluetooth](../flutter_libs/lib_bluetooth) — `package:lib_bluetooth/lib_bluetooth.dart`，`BleClient` 门面 + `BleSession` 会话封装；持有 flutter_blue_plus 依赖，内置大包自动切片分包（`writeChunked`）、流式通知监听与 Hex/CRC 编解码工具
+
+主 `flutter_demo` 通过 path 依赖接入该 package，不再直接依赖 flutter_blue_plus。
 
 ## 平台能力
 

@@ -60,6 +60,7 @@
 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
 | module_websocket | WebSocket & TCP Socket | WebSocketMainActivity | /WebSocket |
 | module_mqtt | MQTT 发布 / 订阅 | MqttMainActivity | /Mqtt |
+| module_bluetooth | 蓝牙通信（BLE 客户端） | BluetoothMainActivity | /Bluetooth |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
@@ -324,6 +325,26 @@
 | MqttMainActivity | 模块入口，导航到两个 MQTT 客户端示例页面 |
 | HiveMqClientActivity | HiveMQ MQTT Client 异步 API：连接、订阅、发布（QoS 0/1/2）与断开连接 |
 | PahoServiceClientActivity | Eclipse Paho Android Service（MqttAndroidClient，绑定 MqttService）：连接、订阅、发布（QoS 0/1/2）与断开连接 |
+
+---
+
+### module_bluetooth（蓝牙通信）
+
+演示低功耗蓝牙（Bluetooth Low Energy, BLE）客户端开发，包含原生 SDK、Nordic 官方库、FastBle 链式封装与 RxAndroidBle 响应式流四套方案对比。
+
+| Activity | 功能 |
+|----------|------|
+| BluetoothMainActivity | 模块入口，导航到四大技术方案页面 |
+| BleNativeScanActivity | 原生 BLE 扫描（动态权限、扫描模式、RSSI 实时更新与广播数据解析） |
+| BleNativeConnectActivity | 原生 BLE 连接与 GATT 交互（服务发现、MTU 协商、读写特征与 Notify 订阅） |
+| BleNativeQueueActivity | 原生 BLE 协程队列与分包传输（解决并发冲突、Channel 串行排队与大包 Chunking） |
+| BleNordicScanActivity | Nordic BLE 扫描与设备发现（UART 服务过滤与扫描最佳实践） |
+| BleNordicConnectActivity | Nordic BLE 连接与挂起调用（BleManager 工业级架构、自动重试与 suspend 读写） |
+| BleNordicTransferActivity | Nordic BLE 大数据流式传输（.split() 自动分包切割与 .merge() 流式拼包） |
+| BleFastScanActivity | FastBle 链式扫描与规则过滤（BleScanRuleConfig 配置与单例扫描） |
+| BleFastConnectActivity | FastBle 链式连接与读写回调（BleGattCallback、UUID 驱动读写与 Notify） |
+| BleRxScanActivity | RxAndroidBle 响应式扫描与过滤（Observable 数据流、RxJava 操作符流控） |
+| BleRxConnectActivity | RxAndroidBle 响应式连接与流控（establishConnection 管道、flatMap 串联与自动释放） |
 
 ---
 

@@ -19,7 +19,7 @@ basic/                        # 基础层
 └── basic_repo/               # 数据仓库层
 flutter/                      # Flutter 层
 ├── flutter_demo/             # Flutter Demo Catalog 子工程（Flutter module，add-to-app 集成）
-└── flutter_libs/             # Flutter 本地库（lib_network_dio / lib_network_http / lib_image_loader / lib_event_bus / lib_storage 独立封装）
+└── flutter_libs/             # Flutter 本地库（lib_network_dio / lib_network_http / lib_image_loader / lib_event_bus / lib_storage / lib_bluetooth 独立封装）
 libs/                         # 库封装层（无 Activity，仅提供 API 封装）
 modules/                      # 功能模块层（每个模块有独立入口 Activity）
 build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配置）
@@ -30,12 +30,13 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 
 | 文档 | 内容 |
 |------|------|
-| docs/modules.md | 功能模块详情（27 个模块，每个模块的 Activity 列表） |
+| docs/modules.md | 功能模块详情（29 个模块，每个模块的 Activity 列表） |
 | docs/libs.md | 库封装层职责索引 |
 | docs/di.md | 依赖注入方案对比（Hilt vs Koin 原理、语法、作用域与选型） |
 | docs/event.md | 事件总线方案对比（EventBus / RxEventBus / LiveEventBus / FlowEventBus 特性与选型） |
 | docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
 | docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |
+| docs/bluetooth.md | 低功耗蓝牙（BLE 客户端）开发指南、8 大核心功能与三方库对比 |
 | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
 | docs/conventions.md | 关键约定（路由、模块结构、示例页面、Activity 基类、构建命令） |
 | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
