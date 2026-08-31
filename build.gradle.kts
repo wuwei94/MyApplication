@@ -34,3 +34,11 @@ plugins {
 
     //alias(libs.plugins.flutter.gradle.plugin) apply false
 }
+
+subprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
+    }
+}

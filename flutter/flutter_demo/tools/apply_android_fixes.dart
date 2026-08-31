@@ -14,6 +14,7 @@ void main() {
     'tools/android/apply_android_compile_sdk.dart',
     'tools/android/apply_android_flutter_compile_sdk.dart',
     'tools/android/apply_android_camera_camerax.dart',
+    'tools/android/apply_android_tflite_flutter.dart',
   ];
 
   for (final String script in scripts) {

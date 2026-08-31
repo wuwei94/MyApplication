@@ -32,14 +32,14 @@
 
 ---
 
-## 二、 4 大核心功能模块详解
+## 二、 4 大核心功能模块详解（原生 Android & Flutter 双端对照）
 
-| 模块名称 | 路由路径 | 核心技术点 | 场景与价值 |
+| 功能模块 | Android 原生实现 (`:modules:module_ml`) | Flutter 跨平台实现 (`flutter_demo/demos/ml`) | 核心技术点 |
 | :--- | :--- | :--- | :--- |
-| **MNIST 手写数字实时识别** | `/Ml/DigitClassifier` | • 自定义 `FingerDrawView` 触控画板<br>• 28×28 灰度通道归一化 (`FP32`)<br>• Softmax 概率分布与柱状图 | 演示触控手势到神经网络张量的端到端实时前向推理。 |
-| **MobileNet 图像物体分类** | `/Ml/ImageClassification` | • 4:3 黄金比例无黑边自适应容器<br>• Center-Crop 居中等比裁剪防拉伸<br>• ImageNet 1000 类别纯中文标签<br>• Top-5 Monospace 严格对齐排版 | 演示真实摄影照片（相册/实物）的高精度物体识别与标签映射。 |
-| **CPU 多核 vs GPU 性能跑分** | `/Ml/GpuDelegate` | • `CompatibilityList` 硬件探测<br>• 2×3 经典科学控制变量法对照矩阵<br>• 首帧 Warm-up、稳态均值、P95 与 FPS 吞吐量 | 深度对比纯单核、单核+XNN、多核并发、多核+XNN 与 GPU 显卡的算力阶梯。 |
-| **张量底层操作与内存架构** | `/Ml/TensorBasics` | • FlatBuffers `mmap` 零拷贝文件映射<br>• Direct Memory 原生字节序排布<br>• 动态张量尺寸调整 (`resizeInput`)<br>• 多输入多输出 (MIMO) 调度 | 剖析 TFLite 的 C++ 底层通信协议与 JVM 堆外内存管理规范。 |
+| **MNIST 手写识别** | `TFLiteDigitClassifierActivity.kt` (`/Ml/DigitClassifier`) | `ml_digit_classifier_demo.dart` (`ml/digit_classifier`) | • 自定义 `FingerDrawView` / `CustomPainter` 画板<br>• 28×28 灰度通道归一化 (`FP32`)<br>• Softmax 概率分布与柱状图 |
+| **MobileNet 图像分类** | `TFLiteImageClassificationActivity.kt` (`/Ml/ImageClassification`) | `ml_image_classification_demo.dart` (`ml/image_classification`) | • 4:3 黄金比例无黑边自适应容器<br>• Center-Crop 居中等比裁剪防拉伸<br>• ImageNet 1000 类别纯中文标签<br>• Top-5 Monospace 严格对齐排版 |
+| **硬件加速跑分实测** | `TFLiteGpuDelegateActivity.kt` (`/Ml/GpuDelegate`) | `ml_gpu_benchmark_demo.dart` (`ml/gpu_benchmark`) | • `GpuDelegateV2` 硬件探测与加速<br>• 2×3 经典科学控制变量法对照矩阵<br>• 首帧 Warm-up、稳态均值、P95 与 FPS |
+| **张量底层与内存架构** | `TFLiteTensorBasicsActivity.kt` (`/Ml/TensorBasics`) | `ml_tensor_basics_demo.dart` (`ml/tensor_basics`) | • FlatBuffers `mmap` 零拷贝文件映射<br>• Direct Memory 原生字节序排布<br>• 动态张量尺寸调整 (`resizeInput`)<br>• 多输入多输出 (MIMO) 调度 |
 
 ---
 

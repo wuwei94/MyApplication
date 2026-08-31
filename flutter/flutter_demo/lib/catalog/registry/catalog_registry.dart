@@ -6,6 +6,7 @@ import 'package:flutter_demo/demos/bluetooth/catalog.dart';
 import 'package:flutter_demo/demos/engine/catalog.dart';
 import 'package:flutter_demo/demos/image/catalog.dart';
 import 'package:flutter_demo/demos/layout/catalog.dart';
+import 'package:flutter_demo/demos/ml/catalog.dart';
 import 'package:flutter_demo/demos/network/catalog.dart';
 import 'package:flutter_demo/demos/packages/catalog.dart';
 import 'package:flutter_demo/demos/showcase/catalog.dart';
@@ -28,6 +29,7 @@ final List<CatalogSection> catalogSections = <CatalogSection>[
   animationCatalog,
   engineCatalog,
   videoCatalog,
+  mlCatalog,
   packagesCatalog,
   showcaseCatalog,
 ];

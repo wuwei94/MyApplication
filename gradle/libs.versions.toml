@@ -97,7 +97,7 @@ pag = "4.5.12"
 lottie = "6.6.7"
 svgaPlayer = "2.6.1"
 gpuimage = "2.1.0"
-tensorflowLite = "2.16.1"
+tensorflowLite = "1.4.0"
 # ##################################################################################################
 banner = "2.2.3"
 blurview = "1.2.1"
@@ -337,10 +337,10 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 svgaPlayer = { group = "com.github.yyued", name = "SVGAPlayer-Android", version.ref = "svgaPlayer" }
 # https://github.com/cats-oss/android-gpuimage
 gpuimage = { module = "jp.co.cyberagent.android:gpuimage", version.ref = "gpuimage" }
-# https://github.com/tensorflow/tensorflow
-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tensorflowLite" }
-tensorflow-lite-gpu = { group = "org.tensorflow", name = "tensorflow-lite-gpu", version.ref = "tensorflowLite" }
-tensorflow-lite-gpu-api = { group = "org.tensorflow", name = "tensorflow-lite-gpu-api", version.ref = "tensorflowLite" }
+# https://ai.google.dev/edge/litert
+tensorflow-lite = { group = "com.google.ai.edge.litert", name = "litert", version.ref = "tensorflowLite" }
+tensorflow-lite-gpu = { group = "com.google.ai.edge.litert", name = "litert-gpu", version.ref = "tensorflowLite" }
+tensorflow-lite-gpu-api = { group = "com.google.ai.edge.litert", name = "litert-gpu-api", version.ref = "tensorflowLite" }
 # ##################################################################################################
 # https://github.com/youth5201314/banner
 banner = { group = "io.github.youth5201314", name = "banner", version.ref = "banner" }

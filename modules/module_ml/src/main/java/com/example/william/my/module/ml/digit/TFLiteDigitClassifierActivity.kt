@@ -100,43 +100,45 @@ class TFLiteDigitClassifierActivity : BaseVBActivity<MlActivityDigitClassificati
         }
 
         lifecycleScope.launch {
-            val (resultProbabilities, elapsedMs) = withContext(Dispatchers.Default) {
-                val inputBuffer = TFLiteModelHelper.convertBitmapToDigitByteBuffer(bitmap, 28, 28)
-                val outputBuffer = ByteBuffer.allocateDirect(10 * 4).apply {
-                    order(ByteOrder.nativeOrder())
-                    rewind()
+            try {
+                val (resultProbabilities, elapsedMs) = withContext(Dispatchers.Default) {
+                    val inputBuffer = TFLiteModelHelper.convertBitmapToDigitByteBuffer(bitmap, 28, 28)
+                    val outputBuffer = ByteBuffer.allocateDirect(10 * 4).apply {
+                        order(ByteOrder.nativeOrder())
+                        rewind()
+                    }
+
+                    val time = measureNanoTime {
+                        currentInterpreter.run(inputBuffer, outputBuffer)
+                    }
+
+                    outputBuffer.rewind()
+                    val rawOutputs = FloatArray(10) { outputBuffer.float }
+                    val probabilities = TFLiteModelHelper.softmax(rawOutputs)
+                    Pair(probabilities, time / 1_000_000.0)
                 }
 
-                val time = measureNanoTime {
-                    currentInterpreter.run(inputBuffer, outputBuffer)
+                // 获取最高置信度
+                val predictedDigit = resultProbabilities.indices.maxByOrNull { resultProbabilities[it] } ?: 0
+                val confidence = resultProbabilities[predictedDigit] * 100
+
+                mBinding.tvPrediction.text = "识别结果: 【 $predictedDigit 】 (置信度: ${"%.1f".format(confidence)}%)"
+                mBinding.tvLatency.text = "推理耗时: ${"%.2f".format(elapsedMs)} ms (CPU + XNNPACK)"
+
+                // 构建 0~9 概率分布条形图效果
+                val sb = StringBuilder()
+                for (i in 0..9) {
+                    val prob = resultProbabilities[i]
+                    val percent = "%.1f".format(prob * 100).padStart(5, ' ')
+                    val barLength = (prob * 15).toInt().coerceIn(0, 15)
+                    val bar = "█".repeat(barLength).padEnd(15, '░')
+                    val isTop = if (i == predictedDigit) " 👈 (Top)" else ""
+                    sb.append("数字 $i: $bar $percent%$isTop\n")
                 }
-
-                outputBuffer.rewind()
-                val rawOutputs = FloatArray(10) { outputBuffer.float }
-                val probabilities = TFLiteModelHelper.softmax(rawOutputs)
-                Pair(probabilities, time / 1_000_000.0)
+                mBinding.tvDistribution.text = sb.toString().trimEnd()
+            } catch (e: Exception) {
+                mBinding.tvPrediction.text = "识别异常: ${e.message}"
             }
-
-            // 获取最高置信度
-            val predictedDigit = resultProbabilities.indices.maxByOrNull { resultProbabilities[it] } ?: 0
-            val confidence = resultProbabilities[predictedDigit] * 100
-
-            mBinding.tvPrediction.text = "识别结果: 【 $predictedDigit 】 (置信度: ${"%.1f".format(confidence)}%)"
-            mBinding.tvLatency.text = "推理耗时: ${"%.2f".format(elapsedMs)} ms (CPU + XNNPACK)"
-
-            // 构建 0~9 概率分布条形图效果
-            val sb = StringBuilder()
-            for (i in 0..9) {
-                val prob = resultProbabilities[i]
-                val percent = "%.1f".format(prob * 100).padStart(5, ' ')
-                val barLength = (prob * 15).toInt().coerceIn(0, 15)
-                val bar = "█".repeat(barLength).padEnd(15, '░')
-                val isTop = if (i == predictedDigit) " 👈 (Top)" else ""
-                sb.append("数字 $i: $bar $percent%$isTop\n")
-            }
-            mBinding.tvDistribution.text = sb.toString().trimEnd()
-
-            bitmap.recycle()
         }
     }
 

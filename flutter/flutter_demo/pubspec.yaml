@@ -227,6 +227,8 @@ dependencies:
     path: ../flutter_libs/lib_event_bus
   # https://pub.dev/packages/uuid
   uuid: ^4.5.3
+  tflite_flutter: ^0.12.1
+  image: ^4.9.2
 
 
 dev_dependencies:
@@ -285,6 +287,7 @@ flutter:
     - assets/anim/lottie/
     - assets/anim/pag/
     - assets/anim/svga/
+    - assets/ml/
 
   # 自定义片段着色器（.frag）必须在 shaders 段声明，
   # Flutter 才会把它编译成对应后端格式并作为运行时元数据打包。

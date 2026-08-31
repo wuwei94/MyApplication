@@ -21,14 +21,30 @@ object TFLiteModelHelper {
     /**
      * 通过 AssetFileDescriptor 以零拷贝方式（Zero-copy mmap）内存映射加载 TFLite 模型文件
      */
+    /**
+     * 通过 AssetFileDescriptor 以零拷贝方式（Zero-copy mmap）内存映射加载 TFLite 模型文件。
+     * 若遇到压缩 Asset 或系统 openFd 限制，自动降级为 Direct ByteBuffer 安全加载。
+     */
     @Throws(Exception::class)
-    fun loadModelFile(context: Context, modelPath: String): MappedByteBuffer {
-        val fileDescriptor: AssetFileDescriptor = context.assets.openFd(modelPath)
-        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
-        val fileChannel: FileChannel = inputStream.channel
-        val startOffset: Long = fileDescriptor.startOffset
-        val declaredLength: Long = fileDescriptor.declaredLength
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+    fun loadModelFile(context: Context, modelPath: String): ByteBuffer {
+        return try {
+            val fileDescriptor: AssetFileDescriptor = context.assets.openFd(modelPath)
+            val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
+            val fileChannel: FileChannel = inputStream.channel
+            val startOffset: Long = fileDescriptor.startOffset
+            val declaredLength: Long = fileDescriptor.declaredLength
+            fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+        } catch (e: Exception) {
+            context.assets.open(modelPath).use { inputStream ->
+                val bytes = inputStream.readBytes()
+                val buffer = ByteBuffer.allocateDirect(bytes.size).apply {
+                    order(ByteOrder.nativeOrder())
+                    put(bytes)
+                    rewind()
+                }
+                buffer
+            }
+        }
     }
 
     /**
@@ -98,10 +114,6 @@ object TFLiteModelHelper {
             byteBuffer.putFloat(gray)
         }
 
-        if (scaled != bitmap) {
-            scaled.recycle()
-        }
-
         byteBuffer.rewind()
         return byteBuffer
     }
@@ -159,13 +171,6 @@ object TFLiteModelHelper {
                 byteBuffer.putFloat((g - 127.5f) / 127.5f)
                 byteBuffer.putFloat((b - 127.5f) / 127.5f)
             }
-        }
-
-        if (cropped != bitmap) {
-            cropped.recycle()
-        }
-        if (scaled != cropped && scaled != bitmap) {
-            scaled.recycle()
         }
 
         byteBuffer.rewind()
