@@ -23,7 +23,8 @@
 ├── 系统能力
 │   ├── 系统原生：异步处理、任务调度、组件交互、系统服务
 │   ├── 多媒体：相机、图片裁剪
-│   └── 跨进程通信：AIDL、Messenger
+│   ├── 跨进程通信：AIDL、Messenger
+│   └── 机器学习：TensorFlow Lite、LiteRT
 ├── 架构与工程
 │   ├── 架构模式：MVP、MVVM、MVI、Mavericks
 │   ├── 依赖注入：Hilt、Koin
@@ -54,6 +55,7 @@
 | module_ipc | 跨进程通信 | IpcMainActivity | /Ipc |
 | module_system_service | 系统服务 | SystemServiceMainActivity | /SystemService |
 | module_media | 多媒体 | MediaMainActivity | /Media |
+| module_ml | 机器学习（TFLite / LiteRT） | MlMainActivity | /Ml |
 | module_sample | 技术示例 | SampleMainActivity | /Sample |
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
@@ -267,6 +269,20 @@
 | MediaPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
 | MediaVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
 | CropActivity | 图片裁剪（Intent 调用系统裁剪，支持图库选择与拍照） |
+
+---
+
+### module_ml（机器学习 / AI）
+
+演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、真实模型推理、硬件加速与落地实践。详细技术指南参见 [docs/ml.md](file:///E:/StudioProjects/MyApplication/docs/ml.md)。
+
+| Activity | 功能 |
+|----------|------|
+| MlMainActivity | 模块入口，导航到 MNIST 手写识别、MobileNet 图像分类、GPU 硬件加速与张量底层操作页面 |
+| TFLiteDigitClassifierActivity | MNIST 手写数字实时识别（自定义 FingerDrawView 画板涂鸦、28x28 灰度提取、实时 TFLite 推理与 0~9 置信度条形图） |
+| TFLiteImageClassificationActivity | MobileNet 图像物体分类（4:3 黄金比例无黑边、Center-Crop 等比裁剪、1000 类别纯中文标签、Top-5 识别结果与 CPU/GPU 切换） |
+| TFLiteGpuDelegateActivity | CPU 多核 vs GPU 硬件加速跑分实测（2×3 对照矩阵：单核 1T、单核+XNN、多核 4T、多核+XNN、GPU Delegate 30 轮真实性能实测） |
+| TFLiteTensorBasicsActivity | TFLite 张量底层操作与内存架构（FlatBuffers 零拷贝 mmap、Direct ByteBuffer 内存排布、动态张量调整与 Native 资源防泄漏） |
 
 ---
 

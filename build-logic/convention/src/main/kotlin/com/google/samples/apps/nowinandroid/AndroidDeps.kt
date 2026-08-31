@@ -83,6 +83,7 @@ internal fun Project.configureFeatureAndroid(
             "implementation"(project(":modules:module_ipc"))
             "implementation"(project(":modules:module_system_service"))
             "implementation"(project(":modules:module_media"))
+            "implementation"(project(":modules:module_ml"))
 
             "implementation"(project(":modules:module_sample"))
             "implementation"(project(":modules:module_feature"))

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".MlMainActivity" />
+        <activity android:name=".digit.TFLiteDigitClassifierActivity" />
+        <activity android:name=".image.TFLiteImageClassificationActivity" />
+        <activity android:name=".gpu.TFLiteGpuDelegateActivity" />
+        <activity android:name=".tensor.TFLiteTensorBasicsActivity" />
+    </application>
+
+</manifest>

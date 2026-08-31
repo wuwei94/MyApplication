@@ -155,6 +155,8 @@ include(":modules:module_feature")
 include(":modules:module_performance")
 // 多媒体
 include(":modules:module_media")
+// 机器学习 / AI (TFLite / LiteRT)
+include(":modules:module_ml")
 
 // HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 include(":modules:module_http")

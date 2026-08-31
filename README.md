@@ -34,6 +34,7 @@
 | Image       | Glide · Coil |
 | Reactive    | Coroutines · Flow · RxJava 3 · LiveData |
 | Messaging   | EventBus · RxEventBus · LiveEventBus · FlowEventBus |
+| ML / AI     | TensorFlow Lite · LiteRT · GPU Delegate |
 | Others      | WorkManager · Paging 3 · SplashScreen · MMKV |
 | Performance | DiffUtil · LruCache · Dispatcher 调度优化 |
 | Quality     | Dependency Guard（已接入） |
@@ -127,6 +128,7 @@ MyApplication/
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
     │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / Android Keystore 安全密钥）
     │   ├── module_media        # 多媒体（CameraX 拍照 / 录像 / 图片裁剪）
+    │   ├── module_ml           # 机器学习（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速与端侧 AI）
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
     ├── [架构与工程]
@@ -268,6 +270,15 @@ MyApplication/
 - **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
 - **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
 - **图片裁剪**：Intent 调用系统裁剪（图库选择 / 拍照裁剪）
+
+### module_ml（机器学习）
+
+演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、硬件加速与落地实践。
+
+- **基础张量与数值回归**：Direct ByteBuffer 内存映射、连续函数数值拟合与批量推理延迟测试
+- **图像预处理与分类**：Bitmap 裁剪缩放、RGB 像素归一化、Softmax 分布与 Top-K 置信度标签解析
+- **GPU 硬件加速与 Benchmark**：CompatibilityList 兼容性检查、CPU 单/多线程 vs GPU Delegate 多轮基准性能对比
+- **LiteRT 架构演进**：从 TFLite 到 LiteRT 演进、FlatBuffers 零拷贝 mmap、模型量化收益与端侧大模型 SLM 落地架构
 
 ### module_feature（业务功能）
 

@@ -133,6 +133,9 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 跨进程通信 ──", ""))
         items.add(RouterItem("跨进程通信", RouterPath.Ipc.Main))
+        items.add(RouterItem("", ""))
+        items.add(RouterItem("── 机器学习 ──", ""))
+        items.add(RouterItem("机器学习（TFLite / LiteRT）", RouterPath.Ml.Main))
         return items
     }
 

@@ -257,6 +257,17 @@ object RouterPath {
         const val Crop = "${PATH}/Crop"
     }
 
+    // 机器学习 / AI (TensorFlow Lite / 端侧推理)
+    object Ml {
+        private const val PATH = "/Ml"
+
+        const val Main = "${PATH}/Main"
+        const val DigitClassifier = "${PATH}/DigitClassifier"
+        const val ImageClassification = "${PATH}/ImageClassification"
+        const val GpuDelegate = "${PATH}/GpuDelegate"
+        const val TensorBasics = "${PATH}/TensorBasics"
+    }
+
     // ═══════════════════════════════════════════
     // 网络通信
     // ═══════════════════════════════════════════
