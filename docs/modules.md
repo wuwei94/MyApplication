@@ -503,14 +503,15 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_arch（架构模式）
 
-演示 Android 主流架构模式（MVP、MVVM、MVI 与 Airbnb Mavericks）。各架构模式在 `module_arch` 下分包并列管理。
+演示 Android 主流架构模式（MVP、MVVM、MVI、Compose MVI 与 Airbnb Mavericks）。各架构模式在 `module_arch` 下分包并列管理。
 
 | Activity | 功能 |
 |----------|------|
-| ArchMainActivity | 模块入口，导航到 MVP / MVVM / MVI / Mavericks 架构模式示例 |
+| ArchMainActivity | 模块入口，导航到 MVP / MVVM / MVI / Compose MVI / Mavericks 架构模式示例 |
 | MvpActivity | MVP 架构模式（ArticleContract + ArticlePresenter） |
 | MvvmActivity | MVVM 架构模式（ArticleLiveDataViewModel + UseCase） |
 | MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect） |
+| ComposeMviActivity | Compose MVI 架构模式（Jetpack Compose + StateFlow + SmartRefresh Compose） |
 | MavericksActivity | Mavericks 架构模式（Airbnb MVI，MavericksState + MavericksViewModel + MavericksRepository） |
 
 ---

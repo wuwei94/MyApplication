@@ -6,8 +6,8 @@ import com.example.william.my.core.base.R
 
 abstract class BaseFragmentActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initViewBinding() {
+        super.initViewBinding()
         setContentView(R.layout.base_activity_fragment)
     }
 

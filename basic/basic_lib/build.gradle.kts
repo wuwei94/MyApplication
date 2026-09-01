@@ -21,9 +21,6 @@ dependencies {
     implementation(libs.utils)
     //Permission
     implementation(libs.permission)
-    //ImmersionBar
-    implementation(libs.immersionbar)
-    implementation(libs.immersionbar.ktx)
     //LifecycleProvider
     implementation(libs.rxlifecycle)
 }

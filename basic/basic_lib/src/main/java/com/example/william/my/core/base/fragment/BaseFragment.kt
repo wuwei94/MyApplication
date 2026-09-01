@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.william.my.core.base.eventbus.EventBusHelper
-import com.gyf.immersionbar.ImmersionBar
 
 /**
  * add show hide
@@ -84,8 +83,6 @@ open class BaseFragment(layout: Int = 0) : NewLazyFragment(layout) {
     override fun onResume() {
         super.onResume()
         println("onResume")
-
-        initStatusBar()
     }
 
     override fun onStart() {
@@ -96,37 +93,6 @@ open class BaseFragment(layout: Int = 0) : NewLazyFragment(layout) {
     override fun onStop() {
         super.onStop()
         EventBusHelper.unregister(this)
-    }
-
-    protected open fun initStatusBar() {
-        if (enableTransparentStatusBar()) {
-            transparentStatusBar()
-        }
-    }
-
-    protected open fun transparentStatusBar() {
-        ImmersionBar.with(this)
-            .transparentStatusBar()  //透明状态栏，不写默认透明色
-            .fitsSystemWindows(fitsSystemWindows()) //解决状态栏和布局重叠问题
-            .statusBarDarkFont(statusBarDarkFont()) //状态栏字体是深色，不写默认为亮色
-            .keyboardEnable(keyboardEnable()) // 解决软键盘与底部输入框冲突问题，默认为false
-            .init()
-    }
-
-    protected open fun enableTransparentStatusBar(): Boolean {
-        return false
-    }
-
-    protected open fun fitsSystemWindows(): Boolean {
-        return false
-    }
-
-    protected open fun statusBarDarkFont(): Boolean {
-        return false
-    }
-
-    protected open fun keyboardEnable(): Boolean {
-        return false
     }
 
     private fun println(msg: String) {

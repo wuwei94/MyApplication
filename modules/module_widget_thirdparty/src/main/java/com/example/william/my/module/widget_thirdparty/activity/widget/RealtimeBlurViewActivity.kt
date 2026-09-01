@@ -46,15 +46,14 @@ class RealtimeBlurViewActivity : BaseVBActivity<WidgetThirdpartyActivityBlurView
         return WidgetThirdpartyActivityBlurViewBinding.inflate(layoutInflater)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.widget_thirdparty_activity_blur_view)
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
 
         mBinding.realtimeBlurView.setBlurRadius(
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 10f,
-                getResources().displayMetrics
+                resources.displayMetrics
             )
         )
     }

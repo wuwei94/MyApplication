@@ -11,8 +11,9 @@
         <item name="colorOnSecondary">@color/base_black</item>
         <item name="colorSecondaryContainer">@color/base_teal_200</item>
         <item name="colorOnSecondaryContainer">@color/base_black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Status bar and navigation bar color. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <!-- Customize your theme here. -->
         <!-- 在 Android 15（API 35）中，系统默认启用了 edge-to-edge 无边框设计 -->
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>

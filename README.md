@@ -133,7 +133,7 @@ MyApplication/
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
     ├── [架构与工程]
-    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Mavericks 并列分包）
+    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Compose MVI / Mavericks 并列分包）
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
@@ -402,13 +402,14 @@ Jetpack 通用基础架构与生命周期数据流组件。
 
 ### module_arch（架构模式）
 
-架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。各架构在模块内按 `mvp`、`mvvm`、`mvi`、`mavericks` 分包并列管理。
+架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。各架构在模块内按 `mvp`、`mvvm`、`mvi`、`compose`、`mavericks` 分包并列管理。
 
 | 模式 | 说明 |
 |------|------|
 | MVP | Presenter 持有 View 引用，手动桥接 |
 | MVVM | LiveData + ViewModel，UseCase 封装单一业务逻辑 |
 | MVI | 单向数据流：State → UI → Intent → ViewModel → State |
+| Compose MVI | Jetpack Compose + MVI 单向数据流 + SmartRefresh 下拉刷新与分页 |
 | Mavericks | 基于 Airbnb [Mavericks](https://airbnb.io/mavericks/) 框架的 MVI 实现，包含不可变状态、状态持久化与异步请求 |
 
 ### module_compose（Compose 示例）

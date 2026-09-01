@@ -371,6 +371,7 @@ object RouterPath {
         const val MVVM = "${PATH}/MVVM"
         const val MVI = "${PATH}/MVI"
         const val Mavericks = "${PATH}/Mavericks"
+        const val ComposeMVI = "${PATH}/ComposeMVI"
     }
 
     // 事件总线

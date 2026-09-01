@@ -9,7 +9,6 @@ import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.alibaba.android.arouter.launcher.ARouter
-import com.gyf.immersionbar.ImmersionBar
 
 /**
  * onAttach -> onCreateDialog -> onCreateView -> onViewCreated -> onStart
@@ -45,7 +44,6 @@ abstract class BaseDialogFragment(
         super.onViewCreated(view, savedInstanceState)
 
         initDialog()
-        initStatusBar()
 
         initView(view, savedInstanceState)
 
@@ -71,21 +69,6 @@ abstract class BaseDialogFragment(
                 window.setBackgroundDrawableResource(android.R.color.transparent)
             }
         }
-    }
-
-    protected open fun initStatusBar() {
-        if (enableTransparentStatusBar()) {
-            transparentStatusBar()
-        }
-    }
-
-    protected open fun transparentStatusBar() {
-        ImmersionBar.with(this)
-            .transparentStatusBar()  //透明状态栏，不写默认透明色
-            .fitsSystemWindows(fitsSystemWindows()) //解决状态栏和布局重叠问题
-            .statusBarDarkFont(statusBarDarkFont()) //状态栏字体是深色，不写默认为亮色
-            .keyboardEnable(keyboardEnable()) // 解决软键盘与底部输入框冲突问题，默认为false
-            .init()
     }
 
     /**
@@ -130,21 +113,5 @@ abstract class BaseDialogFragment(
         params.height = WindowManager.LayoutParams.WRAP_CONTENT
         params.gravity = Gravity.CENTER
         params.dimAmount = 0.0f
-    }
-
-    protected open fun enableTransparentStatusBar(): Boolean {
-        return false
-    }
-
-    protected open fun fitsSystemWindows(): Boolean {
-        return false
-    }
-
-    protected open fun statusBarDarkFont(): Boolean {
-        return false
-    }
-
-    protected open fun keyboardEnable(): Boolean {
-        return false
     }
 }

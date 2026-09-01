@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
+    alias(libs.plugins.nowinandroid.android.library.compose)
     alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
@@ -19,4 +20,5 @@ dependencies {
     implementation(project(":basic:basic_repo"))
 
     implementation(libs.mavericks)
+    implementation(libs.smartrefresh.compose)
 }
