@@ -11,6 +11,11 @@
         <activity android:name=".activity.basic.ImageActivity" />
         <activity android:name=".activity.basic.CanvasActivity" />
         <activity android:name=".activity.basic.EffectActivity" />
+        <activity android:name=".activity.chart.ComposeLineChartActivity" />
+        <activity android:name=".activity.chart.ComposeBarChartActivity" />
+        <activity android:name=".activity.chart.ComposePieChartActivity" />
+        <activity android:name=".activity.chart.ComposeRadarChartActivity" />
+        <activity android:name=".activity.chart.ComposeChartLinkageActivity" />
 
         <activity android:name=".activity.basic.ConstraintLayoutActivity" />
         <activity android:name=".activity.basic.HorizontalPagerActivity" />

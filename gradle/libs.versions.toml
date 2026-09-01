@@ -110,6 +110,7 @@ pickerview = "4.1.9"
 pictureselector = "v3.11.2"
 shadowlayout = "3.3.2"
 swipelayout = "1.2.0"
+mpandroidchart = "v3.1.0"
 # ##################################################################################################
 junit = "4.13.2"
 androidxTestExt = "1.3.0"
@@ -364,6 +365,8 @@ pictureselector = { group = "io.github.lucksiege", name = "pictureselector", ver
 shadowlayout = { group = "com.github.lihangleo2", name = "ShadowLayout", version.ref = "shadowlayout" }
 # https://github.com/daimajia/AndroidSwipeLayout
 swipelayout = { group = "com.daimajia.swipelayout", name = "library", version.ref = "swipelayout" }
+# https://github.com/PhilJay/MPAndroidChart
+mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
 # ##################################################################################################
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }

@@ -127,6 +127,13 @@ object RouterPath {
         const val ShadowLayout = "${PATH}/ShadowLayout"
         const val SwipeLayout = "${PATH}/SwipeLayout"
 
+        // ── 数据可视化图表 (MPAndroidChart) ──
+        const val MPLineChart = "${PATH}/MPLineChart"
+        const val MPBarChart = "${PATH}/MPBarChart"
+        const val MPPieChart = "${PATH}/MPPieChart"
+        const val MPRadarChart = "${PATH}/MPRadarChart"
+        const val MPChartLinkage = "${PATH}/MPChartLinkage"
+
         // ── 选择器 / 多媒体选择 ──
         const val CityPicker = "${PATH}/CityPicker"
         const val PickerView = "${PATH}/PickerView"
@@ -487,6 +494,13 @@ object RouterPath {
         const val SmartRefresh = "${PATH}/SmartRefresh"
 
         const val ScrollableTab = "${PATH}/ScrollableTab"
+
+        // ── 数据可视化图表 (Compose Canvas) ──
+        const val LineChart = "${PATH}/LineChart"
+        const val BarChart = "${PATH}/BarChart"
+        const val PieChart = "${PATH}/PieChart"
+        const val RadarChart = "${PATH}/RadarChart"
+        const val ChartLinkage = "${PATH}/ChartLinkage"
     }
 
     // Flutter

@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.shadowlayout)
     implementation(libs.swipelayout)
     implementation(libs.blurview)
+    implementation(libs.mpandroidchart)
 
     // 第三方选择器 / 多媒体选择控件
     implementation(libs.citypicker)

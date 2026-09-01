@@ -8,8 +8,8 @@
 
 - **Demo Catalog First 架构**：`app` 负责壳层和路由，`catalog` 负责目录树和解析，`demos` 负责示例内容
 - **双路由支持**：同时支持 `GoRouter` 和 `AutoRoute`，通过常量切换路由实现
-- **10 个顶层分组**：basics / layout / state_management / network / storage / image / animation / video / packages / showcase
-- **94 个叶子示例页面**：覆盖 Flutter 开发的绝大部分常见场景
+- **14 个顶层分组**：basics / layout / state_management / network / bluetooth / storage / image / animation / engine / video / ml / chart / packages / showcase
+- **100+ 个叶子示例页面**：覆盖 Flutter 与端侧现代开发绝大部分核心与深度场景
 - **add-to-app 集成**：保留 Flutter module 能力，可用于原生宿主 App 的集成
 
 ## 目录结构
@@ -19,7 +19,7 @@ lib/
 ├── main.dart                          # 应用入口
 ├── app/                               # App 壳层、首页、导航与路由配置
 ├── catalog/                           # Catalog 模型、目录页、注册表、路由工厂、路径解析
-├── demos/                             # 所有示例内容（10 个分组）
+├── demos/                             # 所有示例内容（14 个分组）
 ├── core/                              # 通用工具能力：网络、日志、存储、UI 辅助等
 ├── l10n/                              # 多语言与字符串资源
 └── boost/                             # add-to-app / Boost 相关桥接代码
@@ -29,7 +29,7 @@ lib/
 
 | 文档 | 内容 |
 |------|------|
-| docs/demos.md | 示例分组详情（10 个分组，94 个叶子页面） |
+| docs/demos.md | 示例分组详情（14 个分组，130+ 个叶子页面） |
 | docs/dependencies.md | 依赖清单（按分类列出所有三方包） |
 | docs/conventions.md | 开发约定（Catalog 设计、路由模式、编码规范） |
 

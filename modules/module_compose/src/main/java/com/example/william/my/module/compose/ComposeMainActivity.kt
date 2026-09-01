@@ -79,6 +79,12 @@ class ComposeMainActivity : ComponentActivity() {
         routerItems.add(RouterItem("SmartRefresh", RouterPath.Compose.SmartRefresh))
 
         routerItems.add(RouterItem("ScrollableTab", RouterPath.Compose.ScrollableTab))
+
+        routerItems.add(RouterItem("LineChart（Compose 贝塞尔折线图）", RouterPath.Compose.LineChart))
+        routerItems.add(RouterItem("BarChart（Compose 分组圆角柱状图）", RouterPath.Compose.BarChart))
+        routerItems.add(RouterItem("PieChart（Compose 环形甜甜圈图）", RouterPath.Compose.PieChart))
+        routerItems.add(RouterItem("RadarChart（Compose 六维雷达图）", RouterPath.Compose.RadarChart))
+        routerItems.add(RouterItem("ChartLinkage（Compose 多图表全景看板）", RouterPath.Compose.ChartLinkage))
     }
 
 

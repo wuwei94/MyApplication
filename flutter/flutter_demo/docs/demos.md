@@ -9,12 +9,15 @@
 | basics | 基础示例与完整小型应用 | 2 |
 | layout | 布局与交互类示例 | 14 个子目录 |
 | state_management | 状态管理示例 | 4 |
-| network | 网络请求示例 | 3 |
+| network | 网络请求示例 | 4 |
+| bluetooth | 低功耗蓝牙示例 | 3 |
 | storage | 本地存储示例 | 8 |
 | image | 图片加载与选择示例 | 9 |
 | animation | 动画资源和播放示例 | 4 |
 | engine | Flutter 引擎层特性深度示例 | 8 |
 | video | 视频播放示例 | 2 |
+| ml | 端侧机器学习与 GPU 加速 | 4 |
+| chart | 复杂图表与触摸 Tooltip 联动 | 5 |
 | packages | 常用三方包示例 | 大量 |
 | showcase | 杂项展示类示例 | 少量 |
 
@@ -149,6 +152,29 @@ Flutter 引擎层原生特性深度示例：自绘渲染、动画与布局协议
 |------|------|
 | video_player | VideoPlayer 视频播放 |
 | chewie_video_player | Chewie 视频播放器 |
+
+### ml（机器学习 / AI）
+
+TensorFlow Lite 端侧推理与 GPU 加速示例。
+
+| 示例 | 说明 |
+|------|------|
+| digit_classifier | MNIST 手写数字实时识别（自定义手写板涂鸦与 Softmax 置信度条形图） |
+| image_classification | MobileNet 图像物体分类（4:3 无黑边容器与 1000 类纯中文 Top-5 排序） |
+| gpu_benchmark | CPU 多核 vs GPU 硬件加速跑分（2×3 对照矩阵：单核/多核/XNN/GPU Delegate） |
+| tensor_basics | TFLite 张量底层操作与内存架构（FlatBuffers 零拷贝与 Direct ByteData） |
+
+### chart（复杂图表）
+
+基于 `fl_chart` 的多维图表与触摸手势联动示例。
+
+| 示例 | 说明 |
+|------|------|
+| line_chart | 折线图与面积渐变联动（多曲线对比、平滑贝塞尔、渐变填充与触摸十字线联动指标卡） |
+| bar_chart | 分组与正负收益柱状图（多维对比、正负收支柱状图与触摸高亮联动面板） |
+| pie_chart | 动态环形饼图与扇区放大（甜甜圈/实心切换、触摸扇区凸起动画与双向图例联动） |
+| radar_chart | 多维能力雷达图与评级（六维技术能力模型、双数据集对比与触摸维度评定联动） |
+| chart_linkage | 商业看板多图表深度联动（折线 + 柱状 + 饼图联合联动：主控时间轴驱动部门与渠道数据实时刷新） |
 
 ### packages（三方包）
 

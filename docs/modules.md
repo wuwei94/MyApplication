@@ -409,6 +409,11 @@
 | PictureSelectorActivity | PictureSelector 图片选择器 |
 | LoadSirActivity | LoadSir 多状态页面管理（Loading / Error / Success 切换与点击重试） |
 | LoadSirFragmentActivity | LoadSir 在 Fragment 场景下的多状态管理与布局复用 |
+| MPLineChartActivity | MPAndroidChart 折线图（双曲线收支对比、Cubic 贝塞尔平滑、渐变面积填充与 MarkerView 联动） |
+| MPBarChartActivity | MPAndroidChart 柱状图（季度目标 vs 实际销售额分组柱状图、柱顶圆角与达成率联动） |
+| MPPieChartActivity | MPAndroidChart 饼图（成本预算环形甜甜圈图、中心总额标注与扇区触控外扩动画） |
+| MPRadarChartActivity | MPAndroidChart 雷达图（六维技术能力评估模型、双数据集半透明覆盖与顶点评级） |
+| MPChartLinkageActivity | MPAndroidChart 多图表全景联动看板（时间轴主控折线图联动部门柱状图与渠道饼图） |
 
 ---
 
@@ -539,6 +544,11 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | AnchoredDraggableActivity | 锚定拖拽 |
 | SmartRefreshActivity | 下拉刷新 |
 | ScrollableTabActivity | 可滚动标签页 |
+| ComposeLineChartActivity | Compose Canvas 折线图（贝塞尔平滑曲线、渐变面积填充与 pointerInput 十字吸附 Tooltip） |
+| ComposeBarChartActivity | Compose Canvas 柱状图（drawRoundRect 分组圆角矩形柱、触控高亮与达成率分析） |
+| ComposePieChartActivity | Compose Canvas 环形饼图（drawArc 甜甜圈图、animateFloatAsState 扇区外扩动画与中心数字） |
+| ComposeRadarChartActivity | Compose Canvas 雷达图（4 层蛛网正多边形自绘、双数据集对比与能力等级评估） |
+| ComposeChartLinkageActivity | Compose Canvas 多图表联动看板（主控时间轴状态提升、跨组件数据流与实时重组） |
 
 ---
 

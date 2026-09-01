@@ -132,3 +132,7 @@
 - [Json Serializable](https://pub.dev/packages/json_serializable) — JSON 序列化
 - [Flutter Linkify](https://pub.dev/packages/flutter_linkify) — 链接识别
 - [Time Machine](https://pub.dev/packages/time_machine) — 时间处理
+
+## 图表库
+
+- [fl_chart](https://pub.dev/packages/fl_chart) — 强大的 Flutter 数据可视化图表库（支持折线图、柱状图、饼图、雷达图、散点图与触摸 Tooltip 联动）

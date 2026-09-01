@@ -3,6 +3,7 @@ import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/animation/catalog.dart';
 import 'package:flutter_demo/demos/basics/catalog.dart';
 import 'package:flutter_demo/demos/bluetooth/catalog.dart';
+import 'package:flutter_demo/demos/chart/catalog.dart';
 import 'package:flutter_demo/demos/engine/catalog.dart';
 import 'package:flutter_demo/demos/image/catalog.dart';
 import 'package:flutter_demo/demos/layout/catalog.dart';
@@ -30,6 +31,7 @@ final List<CatalogSection> catalogSections = <CatalogSection>[
   engineCatalog,
   videoCatalog,
   mlCatalog,
+  chartCatalog,
   packagesCatalog,
   showcaseCatalog,
 ];

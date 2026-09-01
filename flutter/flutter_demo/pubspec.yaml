@@ -229,6 +229,7 @@ dependencies:
   uuid: ^4.5.3
   tflite_flutter: ^0.12.1
   image: ^4.9.2
+  fl_chart: ^1.2.0
 
 
 dev_dependencies:

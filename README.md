@@ -13,8 +13,8 @@
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
 - **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / Provider / GetX / BloC。
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
-- **自定义 View**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等。
-- **Compose**：Navigation、BackHandler、手势 / 拖拽 / `rememberSaveable`、SmartRefresh 等原生能力示例。
+- **自定义 View & 图表**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等；MPAndroidChart 折线/柱状/饼图/雷达图与多图表全景看板联动。
+- **Compose**：Navigation、BackHandler、手势 / 拖拽 / `rememberSaveable`、SmartRefresh、Canvas 自绘贝塞尔折线/分组圆角柱状/甜甜圈/雷达图等多图表联动。
 - **性能优化**：DiffUtil 差量刷新、LRU 内存缓存策略、协程 Dispatcher 调度性能对比。
 
 ---
@@ -26,6 +26,7 @@
 | Language    | Kotlin |
 | Build       | Gradle Kotlin DSL · Version Catalogs · Convention Plugin |
 | UI          | Android Views · Jetpack Compose · Material3 · Flutter |
+| Charts      | MPAndroidChart · Compose Canvas · Flutter fl_chart |
 | Architecture| MVP · MVVM · MVI · Mavericks |
 | DI          | Hilt · Koin |
 | Navigation  | ARouter · Navigation Component |

@@ -39,6 +39,16 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("LoadSir（多状态页面管理）", RouterPath.WidgetThirdparty.LoadSir))
         routerItems.add(RouterItem("LoadSir Fragment（Fragment 状态管理）", RouterPath.WidgetThirdparty.LoadSirFragment))
 
+        routerItems.add(RouterItem("", ""))
+
+        // 4. 数据可视化图表 (MPAndroidChart)
+        routerItems.add(RouterItem("── 数据可视化图表 ──", ""))
+        routerItems.add(RouterItem("LineChart（折线图 & 触摸 Tooltip）", RouterPath.WidgetThirdparty.MPLineChart))
+        routerItems.add(RouterItem("BarChart（柱状图 & 目标达成对比）", RouterPath.WidgetThirdparty.MPBarChart))
+        routerItems.add(RouterItem("PieChart（饼图/环形图 & 触控外扩）", RouterPath.WidgetThirdparty.MPPieChart))
+        routerItems.add(RouterItem("RadarChart（雷达图 & 能力评估模型）", RouterPath.WidgetThirdparty.MPRadarChart))
+        routerItems.add(RouterItem("ChartLinkage（多图表全景联动看板）", RouterPath.WidgetThirdparty.MPChartLinkage))
+
         return routerItems
     }
 }
