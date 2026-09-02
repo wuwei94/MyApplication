@@ -9,7 +9,7 @@
         android:layout_width="@dimen/shared_dp_button_width"
         android:layout_height="@dimen/shared_dp_button_height"
         android:text="Explode（分解）"
-        app:layout_constraintBottom_toTopOf="@+id/transition_slide"
+        app:layout_constraintBottom_toTopOf="@id/transition_slide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,20 +20,20 @@
         android:layout_width="@dimen/shared_dp_button_width"
         android:layout_height="@dimen/shared_dp_button_height"
         android:text="Slide（滑动）"
-        app:layout_constraintBottom_toTopOf="@+id/transition_fade"
+        app:layout_constraintBottom_toTopOf="@id/transition_fade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transition_explode" />
+        app:layout_constraintTop_toBottomOf="@id/transition_explode" />
 
     <Button
         android:id="@+id/transition_fade"
         android:layout_width="@dimen/shared_dp_button_width"
         android:layout_height="@dimen/shared_dp_button_height"
         android:text="Fade（淡入）"
-        app:layout_constraintBottom_toTopOf="@+id/transition_share"
+        app:layout_constraintBottom_toTopOf="@id/transition_share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transition_slide" />
+        app:layout_constraintTop_toBottomOf="@id/transition_slide" />
 
     <Button
         android:id="@+id/transition_share"
@@ -43,6 +43,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transition_fade" />
+        app:layout_constraintTop_toBottomOf="@id/transition_fade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

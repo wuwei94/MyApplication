@@ -33,7 +33,7 @@
         android:textSize="@dimen/shared_sp_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ios_dialog_tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/ios_dialog_tv_title" />
 
     <View
         android:id="@+id/ios_dialog_line_vertical"
@@ -41,7 +41,7 @@
         android:layout_height="@dimen/shared_dp_divider"
         android:layout_marginTop="@dimen/shared_dp_16"
         android:background="@color/colorAlertLine"
-        app:layout_constraintTop_toBottomOf="@+id/ios_dialog_tv_msg" />
+        app:layout_constraintTop_toBottomOf="@id/ios_dialog_tv_msg" />
 
     <TextView
         android:id="@+id/ios_dialog_btn_left"
@@ -51,18 +51,18 @@
         android:gravity="center"
         android:textColor="@color/colorAlertMessage"
         android:textSize="@dimen/shared_sp_16"
-        app:layout_constraintEnd_toStartOf="@+id/ios_dialog_line_horizontal"
+        app:layout_constraintEnd_toStartOf="@id/ios_dialog_line_horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ios_dialog_line_vertical" />
+        app:layout_constraintTop_toBottomOf="@id/ios_dialog_line_vertical" />
 
     <View
         android:id="@+id/ios_dialog_line_horizontal"
         android:layout_width="@dimen/shared_dp_divider"
         android:layout_height="@dimen/shared_dp_button_height"
         android:background="@color/colorAlertLine"
-        app:layout_constraintEnd_toStartOf="@+id/ios_dialog_btn_right"
+        app:layout_constraintEnd_toStartOf="@id/ios_dialog_btn_right"
         app:layout_constraintStart_toEndOf="@id/ios_dialog_btn_left"
-        app:layout_constraintTop_toBottomOf="@+id/ios_dialog_line_vertical" />
+        app:layout_constraintTop_toBottomOf="@id/ios_dialog_line_vertical" />
 
     <TextView
         android:id="@+id/ios_dialog_btn_right"
@@ -74,6 +74,6 @@
         android:textSize="@dimen/shared_sp_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ios_dialog_line_horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/ios_dialog_line_vertical" />
+        app:layout_constraintTop_toBottomOf="@id/ios_dialog_line_vertical" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

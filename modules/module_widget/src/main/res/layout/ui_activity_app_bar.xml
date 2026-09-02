@@ -18,7 +18,7 @@
             android:layout_height="@dimen/shared_dp_image_size"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@id/toolbar">
 
             <!--<ImageView-->
             <!--    android:id="@+id/image"-->

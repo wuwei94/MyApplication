@@ -22,7 +22,7 @@
         android:background="@color/shared_color_primary_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sliding_tab" />
+        app:layout_constraintTop_toBottomOf="@id/sliding_tab" />
 
     <com.flyco.tablayout.SegmentTabLayout
         android:id="@+id/segment_Tab"
@@ -31,7 +31,7 @@
         android:background="@color/shared_color_accent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/common_tab" />
+        app:layout_constraintTop_toBottomOf="@id/common_tab" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -40,6 +40,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/segment_Tab" />
+        app:layout_constraintTop_toBottomOf="@id/segment_Tab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

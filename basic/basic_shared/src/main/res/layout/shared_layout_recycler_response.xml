@@ -10,7 +10,7 @@
         android:layout_height="@dimen/shared_dp_response_size"
         android:layout_margin="@dimen/shared_dp_8"
         android:background="@drawable/shared_bg_response_console"
-        app:layout_constraintBottom_toTopOf="@+id/basics_recycler"
+        app:layout_constraintBottom_toTopOf="@id/basics_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
