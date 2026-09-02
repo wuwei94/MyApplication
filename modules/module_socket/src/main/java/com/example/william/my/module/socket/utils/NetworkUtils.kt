@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.utils
+package com.example.william.my.module.socket.utils
 
 import java.net.InetAddress
 import java.net.NetworkInterface

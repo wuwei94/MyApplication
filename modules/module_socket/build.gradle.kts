@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.william.my.module.websocket"
+    namespace = "com.example.william.my.module.socket"
 }
 
 dependencies {

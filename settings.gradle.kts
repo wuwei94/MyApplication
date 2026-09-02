@@ -160,8 +160,8 @@ include(":modules:module_ml")
 
 // HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 include(":modules:module_http")
-// WebSocket
-include(":modules:module_websocket")
+// Socket 长连接（WebSocket & TCP Socket）
+include(":modules:module_socket")
 // MQTT
 include(":modules:module_mqtt")
 // 蓝牙通信

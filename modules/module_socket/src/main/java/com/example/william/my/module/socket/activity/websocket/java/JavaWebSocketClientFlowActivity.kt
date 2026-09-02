@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.javaws
+package com.example.william.my.module.socket.activity.websocket.java
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * 演示使用 JavaWebSocketClientFlow 进行 WebSocket 通信
  * 使用 Kotlin Coroutines Flow 收集 WebSocket 事件
  */
-@Route(path = RouterPath.WebSocket.JavaWebSocketClientFlow)
+@Route(path = RouterPath.Socket.JavaWebSocketClientFlow)
 class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

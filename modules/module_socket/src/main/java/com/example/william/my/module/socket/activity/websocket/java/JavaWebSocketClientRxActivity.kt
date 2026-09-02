@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.javaws
+package com.example.william.my.module.socket.activity.websocket.java
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -14,7 +14,7 @@ import org.java_websocket.client.WebSocketClient
  *
  * 演示使用 JavaWebSocketClientRx + JavaWebSocketRxObserver 进行 WebSocket 通信
  */
-@Route(path = RouterPath.WebSocket.JavaWebSocketClientRx)
+@Route(path = RouterPath.Socket.JavaWebSocketClientRx)
 class JavaWebSocketClientRxActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

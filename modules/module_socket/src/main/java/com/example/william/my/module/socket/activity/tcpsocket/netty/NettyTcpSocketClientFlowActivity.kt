@@ -1,32 +1,36 @@
-package com.example.william.my.module.websocket.activity.netty
+package com.example.william.my.module.socket.activity.tcpsocket.netty
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.netty.client.NettyClientRx
-import com.example.william.my.core.netty.client.NettyClientRxObserver
+import com.example.william.my.core.netty.NettyClientInfo
+import com.example.william.my.core.netty.client.NettyClientFlow
 import com.example.william.my.core.netty.server.NettyServer
 import com.example.william.my.core.server.ServerManager
-import com.example.william.my.module.websocket.utils.NetworkUtils
+import com.example.william.my.module.socket.utils.NetworkUtils
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
- * Netty RxJava 封装示例
+ * Netty Coroutines Flow 封装示例（TCP Socket）
  *
- * 演示使用 NettyClientRx + NettyClientRxObserver 进行 TCP 通信
- * 使用 RxJava Observable 方式处理事件
+ * 演示使用 NettyClientFlow 进行 TCP 通信
+ * 使用 Kotlin Coroutines Flow 收集 TCP 事件
  * 需要先启动本地服务端
  */
-@Route(path = RouterPath.WebSocket.NettyWebSocketClientRx)
-class NettyWebSocketClientRxActivity : BasicResponseActivity() {
+@Route(path = RouterPath.Socket.NettyTcpSocketClientFlow)
+class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
 
     private val host: String get() = NetworkUtils.getIPAddress(true)
     private val port: Int = 5567
     private val serverUrl: String get() = "$host:$port"
+    private var connectJob: Job? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Netty TCP】RxJava 封装\n地址：$serverUrl\n需要先启动本地服务端")
+        showDescription("【Netty TCP】Coroutines Flow 封装\n地址：$serverUrl\n需要先启动本地服务端")
     }
 
     override fun buildList(): ArrayList<String> {
@@ -52,7 +56,8 @@ class NettyWebSocketClientRxActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        NettyClientRx.close(host, port)
+        connectJob?.cancel()
+        NettyClientFlow.close(host, port)
         ServerManager.stopNettyServer(this)
     }
 
@@ -72,46 +77,40 @@ class NettyWebSocketClientRxActivity : BasicResponseActivity() {
             return
         }
 
+        connectJob?.cancel()
         appendLog("【连接】正在连接 $serverUrl ...")
-        NettyClientRx
-            .createConnection(host, port)
-            .subscribe(object : NettyClientRxObserver() {
-                override fun onConnected(host: String, port: Int) {
-                    runOnUiThread {
-                        appendLog("【连接】已连接到 $host:$port")
-                        NettyClientRx.send(host, port, "heart")
+        connectJob = lifecycleScope.launch {
+            NettyClientFlow
+                .createConnection(host, port)
+                .collect { info ->
+                    when (info) {
+                        is NettyClientInfo.Open -> {
+                            appendLog("【连接】已连接到 ${info.host}:${info.port}")
+                            NettyClientFlow.send(host, port, "heart")
+                        }
+                        is NettyClientInfo.TextMessage -> {
+                            appendLog("【消息】收到：${info.message}")
+                        }
+                        is NettyClientInfo.Closed -> {
+                            appendLog("【关闭】已关闭：${info.reason}")
+                        }
+                        is NettyClientInfo.Error -> {
+                            appendLog("【错误】${info.exception.message}")
+                        }
                     }
                 }
-
-                override fun onMessage(message: String) {
-                    runOnUiThread {
-                        appendLog("【消息】收到：$message")
-                    }
-                }
-
-                override fun onClosed(reason: String) {
-                    runOnUiThread {
-                        appendLog("【关闭】已关闭：$reason")
-                    }
-                }
-
-                override fun onError(exception: Exception) {
-                    runOnUiThread {
-                        appendLog("【错误】${exception.message}")
-                    }
-                }
-            })
+        }
     }
 
     private fun sendMessage() {
-        val channel = NettyClientRx.getChannel(host, port)
+        val channel = NettyClientFlow.getChannel(host, port)
         if (channel == null || !channel.isActive) {
             appendLog("【状态】未连接，无法发送消息")
             return
         }
 
-        val message = "Hello from Client!"
-        val success = NettyClientRx.send(host, port, message)
+        val message = "Hello from Client (Flow)!"
+        val success = NettyClientFlow.send(host, port, message)
         if (success) {
             appendLog("【发送】$message")
         } else {
@@ -120,7 +119,8 @@ class NettyWebSocketClientRxActivity : BasicResponseActivity() {
     }
 
     private fun disconnect() {
-        NettyClientRx.close(host, port)
+        connectJob?.cancel()
+        NettyClientFlow.close(host, port)
         appendLog("【断开】已断开连接")
     }
 }

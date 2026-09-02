@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.okhttpws
+package com.example.william.my.module.socket.activity.websocket.okhttp
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * 演示使用 OkHttpWebSocketClientFlow 进行 WebSocket 通信
  * 使用 Kotlin Coroutines Flow 收集 WebSocket 事件
  */
-@Route(path = RouterPath.WebSocket.OkHttpWebSocketClientFlow)
+@Route(path = RouterPath.Socket.OkHttpWebSocketClientFlow)
 class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

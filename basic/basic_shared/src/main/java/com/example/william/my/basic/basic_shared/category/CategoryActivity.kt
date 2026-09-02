@@ -89,7 +89,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("HTTP 网络请求", RouterPath.Http.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── Socket ──", ""))
-        items.add(RouterItem("WebSocket & TCP Socket", RouterPath.WebSocket.Main))
+        items.add(RouterItem("WebSocket & TCP Socket", RouterPath.Socket.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 消息队列 ──", ""))
         items.add(RouterItem("MQTT", RouterPath.Mqtt.Main))

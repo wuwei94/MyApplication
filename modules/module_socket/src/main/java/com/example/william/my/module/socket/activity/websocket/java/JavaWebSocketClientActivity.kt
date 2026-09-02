@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.javaws
+package com.example.william.my.module.socket.activity.websocket.java
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -58,7 +58,7 @@ import org.java_websocket.handshake.ServerHandshake
  *
  * https://github.com/TooTallNate/Java-WebSocket
  */
-@Route(path = RouterPath.WebSocket.JavaWebSocketClient)
+@Route(path = RouterPath.Socket.JavaWebSocketClient)
 class JavaWebSocketClientActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

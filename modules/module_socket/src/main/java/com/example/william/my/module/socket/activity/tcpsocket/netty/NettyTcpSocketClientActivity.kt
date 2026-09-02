@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.netty
+package com.example.william.my.module.socket.activity.tcpsocket.netty
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -8,10 +8,10 @@ import com.example.william.my.core.netty.client.NettyClient
 import com.example.william.my.core.netty.client.NettyClientHandler
 import com.example.william.my.core.netty.server.NettyServer
 import com.example.william.my.core.server.ServerManager
-import com.example.william.my.module.websocket.utils.NetworkUtils
+import com.example.william.my.module.socket.utils.NetworkUtils
 
 /**
- * Netty — 高性能网络框架
+ * Netty — 高性能网络框架（TCP Socket 客户端）
  *
  * Netty 是一个高性能的异步事件驱动的网络应用框架。
  *
@@ -28,25 +28,25 @@ import com.example.william.my.module.websocket.utils.NetworkUtils
  *     host = "192.168.1.100",
  *     port = 8080,
  *     listener = object : NettyClientHandler.OnMessageListener {
- *         override fun onConnected(remoteAddress: String) {
+ *         override fun onOpen(host: String, port: Int) {
  *             // 连接成功
  *         }
  *         override fun onMessage(message: String) {
  *             // 收到消息
  *         }
- *         override fun onDisconnected() {
- *             // 连接断开
+ *         override fun onClosed(reason: String) {
+ *             // 连接关闭
  *         }
- *         override fun onError(throwable: Throwable) {
+ *         override fun onError(exception: Exception) {
  *             // 发生错误
  *         }
  *     }
  * )
  *
  * // 发送消息
- * NettyClient.sendMessage("Hello")
+ * NettyClient.send("Hello")
  *
- * // 断开连接
+ * // 关闭连接
  * NettyClient.disconnect()
  * ```
  *
@@ -58,8 +58,8 @@ import com.example.william.my.module.websocket.utils.NetworkUtils
  *
  * https://github.com/netty/netty
  */
-@Route(path = RouterPath.WebSocket.NettyWebSocketClient)
-class NettyWebSocketClientActivity : BasicResponseActivity() {
+@Route(path = RouterPath.Socket.NettyTcpSocketClient)
+class NettyTcpSocketClientActivity : BasicResponseActivity() {
 
     private val host: String get() = NetworkUtils.getIPAddress(true)
     private val port: Int = 5567

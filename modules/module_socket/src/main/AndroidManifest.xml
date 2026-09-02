@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application>
+        <activity android:name=".SocketMainActivity" />
+        <activity android:name=".activity.websocket.okhttp.OkHttpWebSocketClientActivity" />
+        <activity android:name=".activity.websocket.okhttp.OkHttpWebSocketClientRxActivity" />
+        <activity android:name=".activity.websocket.okhttp.OkHttpWebSocketClientFlowActivity" />
+        <activity android:name=".activity.websocket.java.JavaWebSocketClientActivity" />
+        <activity android:name=".activity.websocket.java.JavaWebSocketClientRxActivity" />
+        <activity android:name=".activity.websocket.java.JavaWebSocketClientFlowActivity" />
+        <activity android:name=".activity.tcpsocket.netty.NettyTcpSocketClientActivity" />
+        <activity android:name=".activity.tcpsocket.netty.NettyTcpSocketClientRxActivity" />
+        <activity android:name=".activity.tcpsocket.netty.NettyTcpSocketClientFlowActivity" />
+    </application>
+
+</manifest>

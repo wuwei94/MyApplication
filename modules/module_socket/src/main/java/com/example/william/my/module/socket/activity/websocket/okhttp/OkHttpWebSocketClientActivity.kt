@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.okhttpws
+package com.example.william.my.module.socket.activity.websocket.okhttp
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -27,7 +27,7 @@ import okhttp3.WebSocket
  * 本示例使用 OkHttpWebSocketClient 封装进行 WebSocket 通信，
  * 演示连接、发送消息、断开连接的基本操作。
  */
-@Route(path = RouterPath.WebSocket.OkHttpWebSocketClient)
+@Route(path = RouterPath.Socket.OkHttpWebSocketClient)
 class OkHttpWebSocketClientActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

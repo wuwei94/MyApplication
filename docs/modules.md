@@ -60,7 +60,7 @@
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
-| module_websocket | WebSocket & TCP Socket | WebSocketMainActivity | /WebSocket |
+| module_socket | WebSocket & TCP Socket | SocketMainActivity | /Socket |
 | module_mqtt | MQTT 发布 / 订阅 | MqttMainActivity | /Mqtt |
 | module_bluetooth | 蓝牙通信（BLE 客户端） | BluetoothMainActivity | /Bluetooth |
 | module_event | 事件总线 | EventMainActivity | /Event |
@@ -310,7 +310,7 @@
 
 ---
 
-### module_websocket（WebSocket & TCP Socket）
+### module_socket（WebSocket & TCP Socket）
 
 演示 WebSocket/TCP 通信库的使用，包含 OkHttp WebSocket、Java-WebSocket 和 Netty TCP 三种方案。
 
@@ -322,9 +322,9 @@
 | JavaWebSocketClientActivity | Java-WebSocket 普通版本（启动本地服务端 + 连接） |
 | JavaWebSocketClientRxActivity | Java-WebSocket RxJava 封装版本 |
 | JavaWebSocketClientFlowActivity | Java-WebSocket Coroutines Flow 封装版本 |
-| NettyWebSocketClientActivity | Netty TCP 普通版本（启动本地服务端 + 连接） |
-| NettyWebSocketClientRxActivity | Netty TCP RxJava 封装版本 |
-| NettyWebSocketClientFlowActivity | Netty TCP Coroutines Flow 封装版本 |
+| NettyTcpSocketClientActivity | Netty TCP 普通版本（启动本地服务端 + 连接） |
+| NettyTcpSocketClientRxActivity | Netty TCP RxJava 封装版本 |
+| NettyTcpSocketClientFlowActivity | Netty TCP Coroutines Flow 封装版本 |
 
 服务端 Service：
 

@@ -310,9 +310,9 @@ object RouterPath {
         const val KtorClient = "${PATH}/KtorClient"
     }
 
-    // Socket 模块
-    object WebSocket {
-        private const val PATH = "/WebSocket"
+    // Socket 长连接通信模块（WebSocket & TCP Socket）
+    object Socket {
+        private const val PATH = "/Socket"
 
         const val Main = "${PATH}/Main"
         const val OkHttpWebSocketClient = "${PATH}/OkHttpWebSocketClient"
@@ -321,9 +321,9 @@ object RouterPath {
         const val JavaWebSocketClient = "${PATH}/JavaWebSocketClient"
         const val JavaWebSocketClientRx = "${PATH}/JavaWebSocketClientRx"
         const val JavaWebSocketClientFlow = "${PATH}/JavaWebSocketClientFlow"
-        const val NettyWebSocketClient = "${PATH}/NettyWebSocketClient"
-        const val NettyWebSocketClientRx = "${PATH}/NettyWebSocketClientRx"
-        const val NettyWebSocketClientFlow = "${PATH}/NettyWebSocketClientFlow"
+        const val NettyTcpSocketClient = "${PATH}/NettyTcpSocketClient"
+        const val NettyTcpSocketClientRx = "${PATH}/NettyTcpSocketClientRx"
+        const val NettyTcpSocketClientFlow = "${PATH}/NettyTcpSocketClientFlow"
     }
 
     // MQTT 模块

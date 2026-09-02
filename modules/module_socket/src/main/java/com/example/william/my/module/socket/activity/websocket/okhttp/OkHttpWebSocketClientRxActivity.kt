@@ -1,4 +1,4 @@
-package com.example.william.my.module.websocket.activity.okhttpws
+package com.example.william.my.module.socket.activity.websocket.okhttp
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -15,7 +15,7 @@ import okhttp3.WebSocket
  * 演示使用 OkHttpWebSocketClientRx + OkHttpWebSocketObserver 进行 WebSocket 通信
  * 连接到 echo.websocket.org 服务器
  */
-@Route(path = RouterPath.WebSocket.OkHttpWebSocketClientRx)
+@Route(path = RouterPath.Socket.OkHttpWebSocketClientRx)
 class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket
