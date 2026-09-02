@@ -60,6 +60,7 @@
 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
 | module_feature | 业务功能 | FeatureMainActivity | /Feature |
 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
+| module_sse | SSE 流式推送 | SseMainActivity | /SSE |
 | module_socket | WebSocket & TCP Socket | SocketMainActivity | /Socket |
 | module_mqtt | MQTT 发布 / 订阅 | MqttMainActivity | /Mqtt |
 | module_bluetooth | 蓝牙通信（BLE 客户端） | BluetoothMainActivity | /Bluetooth |
@@ -211,7 +212,8 @@
 |----------|------|
 | SystemServiceMainActivity | 模块入口，导航到系统服务与安全密钥示例页面 |
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
-| PermissionActivity | 运行时权限批量申请 |
+| PermissionActivity | 运行时权限申请（Jetpack ActivityResult 契约模式） |
+| PermissionXActivity | 运行时权限申请（PermissionX 链式开源库模式） |
 | SecureKeyActivity | Android Keystore 安全密钥创建与签名（硬件保护与 ECDSA 签名） |
 
 ---
@@ -307,6 +309,20 @@
 | RxUploadActivity | 基于 `BasicResponseActivity` 直接展示 `addFile` / `addFiles` 单多文件 Multipart 上传、`RxUploadCallback`、同步创建少量示例文件和 `File` 目录清理 |
 | KtorActivity | Ktor 原生请求（POST 多部分表单与挂起函数） |
 | KtorClientActivity | 基于 `lib_ktor` 的项目级 Ktor 客户端封装（`postFormResponse`） |
+
+---
+
+### module_sse（SSE 流式传输 / DeepSeek AI 对话）
+
+演示 Server-Sent Events (SSE) 协议在现代 AI 大模型（DeepSeek 官方 API）对话场景下的单次流式请求与响应落地，包含 OkHttp SSE（普通版本、RxJava 封装版本、Coroutines Flow 封装版本）与 Ktor SSE（普通版本、Coroutines Flow 封装版本）。
+
+| Activity | 功能 |
+|----------|------|
+| OkHttpSseClientActivity | OkHttp SSE 原始回调版本（DeepSeek POST Prompt $\rightarrow$ 逐 Token 流式输出 $\rightarrow$ 收到 `[DONE]` 结束） |
+| OkHttpSseClientRxActivity | OkHttp SSE RxJava 封装版本（DeepSeek POST Observable 流 $\rightarrow$ 收到 `[DONE]` 触发 `onComplete()`） |
+| OkHttpSseClientFlowActivity | OkHttp SSE Coroutines Flow 封装版本（DeepSeek POST Flow $\rightarrow$ 协程生命周期感知与逐字打字机效果） |
+| KtorSseClientActivity | Ktor SSE 原始回调版本（DeepSeek POST Prompt $\rightarrow$ KtorSseListener 主线程回调） |
+| KtorSseClientFlowActivity | Ktor SSE Coroutines Flow 封装版本（Ktor Client + SSE Plugin 发起 DeepSeek POST 大模型流式请求） |
 
 ---
 

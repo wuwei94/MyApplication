@@ -209,6 +209,7 @@ object RouterPath {
 
         const val Notification = "${PATH}/Notification"
         const val Permission = "${PATH}/Permission"
+        const val PermissionX = "${PATH}/PermissionX"
         const val SecureKey = "${PATH}/SecureKey"
     }
 
@@ -324,6 +325,18 @@ object RouterPath {
         const val NettyTcpSocketClient = "${PATH}/NettyTcpSocketClient"
         const val NettyTcpSocketClientRx = "${PATH}/NettyTcpSocketClientRx"
         const val NettyTcpSocketClientFlow = "${PATH}/NettyTcpSocketClientFlow"
+    }
+
+    // SSE 流式推送模块
+    object SSE {
+        private const val PATH = "/SSE"
+
+        const val Main = "${PATH}/Main"
+        const val OkHttpSseClient = "${PATH}/OkHttpSseClient"
+        const val OkHttpSseClientRx = "${PATH}/OkHttpSseClientRx"
+        const val OkHttpSseClientFlow = "${PATH}/OkHttpSseClientFlow"
+        const val KtorSseClient = "${PATH}/KtorSseClient"
+        const val KtorSseClientFlow = "${PATH}/KtorSseClientFlow"
     }
 
     // MQTT 模块

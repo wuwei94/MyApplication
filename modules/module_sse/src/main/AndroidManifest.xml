@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".SseMainActivity" />
+        <activity android:name=".activity.okhttp.OkHttpSseClientActivity" />
+        <activity android:name=".activity.okhttp.OkHttpSseClientRxActivity" />
+        <activity android:name=".activity.okhttp.OkHttpSseClientFlowActivity" />
+        <activity android:name=".activity.ktor.KtorSseClientActivity" />
+        <activity android:name=".activity.ktor.KtorSseClientFlowActivity" />
+    </application>
+
+</manifest>

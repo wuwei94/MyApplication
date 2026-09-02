@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
     alias(libs.plugins.nowinandroid.android.arouter)
+    alias(libs.plugins.nowinandroid.android.eventbus)
 }
 
 val localProperties = Properties().apply {
@@ -16,8 +17,7 @@ val deepseekApiKey: String = localProperties.getProperty("deepseek.api.key")
     ?: ""
 
 android {
-    namespace = "com.example.william.my.basic.basic_shared"
-    resourcePrefix("shared_")
+    namespace = "com.example.william.my.module.sse"
 
     buildFeatures {
         buildConfig = true
@@ -30,6 +30,8 @@ android {
 
 dependencies {
     implementation(project(":basic:basic_lib"))
+    implementation(project(":basic:basic_shared"))
 
-    implementation(libs.utils)
+    implementation(project(":libs:lib_sse_okhttp"))
+    implementation(project(":libs:lib_sse_ktor"))
 }

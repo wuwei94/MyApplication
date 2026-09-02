@@ -18,6 +18,8 @@
 | `lib_websocket_okhttp` | OkHttp WebSocket 客户端 | OkHttp WebSocket | - |
 | `lib_websocket_java` | Java-WebSocket 客户端与服务端 | Java-WebSocket | - |
 | `lib_netty` | Netty TCP 客户端与服务端 | Netty | - |
+| `lib_sse_okhttp` | OkHttp SSE 客户端封装 | OkHttp SSE、Coroutines Flow、RxJava | - |
+| `lib_sse_ktor` | Ktor SSE 客户端封装 | Ktor Client SSE、Coroutines Flow | - |
 | `lib_mqtt` | MQTT 各客户端复用的回调接口（`MqttClientListener`） | - | - |
 | `lib_mqtt_hivemq` | MQTT 客户端封装（HiveMQ 异步 API，复用 `lib_mqtt` 回调接口） | HiveMQ MQTT Client、Netty | - |
 | `lib_mqtt_paho_service` | MQTT 客户端封装（Paho Android Service fork，MqttAndroidClient） | hannesa2 Paho Android Service、Paho MQTT | - |

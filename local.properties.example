@@ -1,0 +1,6 @@
+﻿## This file is an example template for local configurations.
+## Copy this file as local.properties and fill in your own sensitive keys.
+## local.properties is ignored by Git and will never be committed.
+
+## DeepSeek 大模型 API Key (sk-...)
+deepseek.api.key=

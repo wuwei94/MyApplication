@@ -107,6 +107,10 @@ include(":libs:lib_websocket_okhttp")
 include(":libs:lib_websocket_java")
 include(":libs:lib_netty")
 
+// 流式推送 / SSE
+include(":libs:lib_sse_okhttp")
+include(":libs:lib_sse_ktor")
+
 // MQTT 消息队列遥测传输
 include(":libs:lib_mqtt")
 include(":libs:lib_mqtt_hivemq")
@@ -160,6 +164,8 @@ include(":modules:module_ml")
 
 // HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 include(":modules:module_http")
+// 流式推送 / SSE
+include(":modules:module_sse")
 // Socket 长连接（WebSocket & TCP Socket）
 include(":modules:module_socket")
 // MQTT

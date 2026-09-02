@@ -1,5 +1,7 @@
 package com.example.william.my.basic.basic_shared.constant
 
+import com.example.william.my.basic.basic_shared.BuildConfig
+
 object Constants {
     const val Url_Base = "https://www.wanandroid.com/"
     const val Url_Login = Url_Base + "user/login"
@@ -10,6 +12,12 @@ object Constants {
         "https://d1.mosi.126.net/dmusic/NeteaseCloudMusic_Moyi_netease1_1.2.0.1597393004.apk"
 
     const val Url_WebSocket = "wss://echo.websocket.org"
+    const val Url_DeepSeek = "https://api.deepseek.com/chat/completions"
+
+    /**
+     * DeepSeek API Key（从 local.properties 动态注入，不入库）
+     */
+    val DeepSeek_ApiKey: String get() = BuildConfig.DEEPSEEK_API_KEY
 
     // MQTT（EMQX 公共 Broker，无需账号）
     const val Mqtt_Broker = "tcp://broker.emqx.io:1883"

@@ -301,6 +301,7 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 # https://github.com/square/okhttp
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-sse = { group = "com.squareup.okhttp3", name = "okhttp-sse", version.ref = "okhttp" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 # https://github.com/square/retrofit
