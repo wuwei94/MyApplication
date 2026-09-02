@@ -358,7 +358,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 原生高性能 Markdown 渲染、Prism4j 多语言代码高亮、打字机流控与大模型 AI 聊天流式交互。
 
 - **Markwon 基础与扩展渲染**：基于 AST 解析的高性能原生 Spannable 渲染、GFM 表格、任务清单、HTML 标签、Glide 图片与自定义主题样式
-- **Prism4j 代码高亮**（演进中）：Kotlin / Java / Python / JS / SQL 多语言语法着色
+- **Prism4j 多语言代码高亮**：Kotlin / Java / Python / JS / SQL / Shell / C++ 多语言词法分析语法着色、Darkula 暗黑与 Light 明亮主题定制、协程后台异步染色优化
 - **流式打字机**（演进中）：动态自适应 Buffer 队列、未闭合语法自动补齐与光标闪烁动效
 - **AI 聊天实战**（演进中）：RecyclerView Payload 局部增量刷新与智能吸底跟随
 

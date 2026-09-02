@@ -113,6 +113,8 @@ swipelayout = "1.2.0"
 mpandroidchart = "v3.1.0"
 # https://github.com/noties/Markwon
 markwon = "4.6.2"
+# https://github.com/noties/Prism4j
+prism4j = "2.0.0"
 # ##################################################################################################
 junit = "4.13.2"
 androidxTestExt = "1.3.0"
@@ -378,6 +380,8 @@ markwon-ext-strikethrough = { group = "io.noties.markwon", name = "ext-strikethr
 markwon-html = { group = "io.noties.markwon", name = "html", version.ref = "markwon" }
 markwon-image = { group = "io.noties.markwon", name = "image", version.ref = "markwon" }
 markwon-image-glide = { group = "io.noties.markwon", name = "image-glide", version.ref = "markwon" }
+markwon-syntax-highlight = { group = "io.noties.markwon", name = "syntax-highlight", version.ref = "markwon" }
+prism4j = { group = "io.noties", name = "prism4j", version.ref = "prism4j" }
 # ##################################################################################################
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }

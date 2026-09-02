@@ -24,7 +24,7 @@ class MarkdownMainActivity : RouterRecyclerActivity() {
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 代码高亮与主题 ──", ""))
-        routerItems.add(RouterItem("Prism4j 多语言代码高亮（待接入）", ""))
+        routerItems.add(RouterItem("Prism4j 多语言代码高亮", RouterPath.Markdown.MarkwonHighlight))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 流式打字机 ──", ""))

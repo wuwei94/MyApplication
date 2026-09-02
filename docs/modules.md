@@ -445,6 +445,7 @@
 |----------|------|
 | MarkdownMainActivity | 模块入口，导航到 Markdown 渲染与 AI 交互各示例页面 |
 | MarkwonBasicActivity | Markwon 原生高性能 Markdown 渲染（基础排版、GFM 表格、任务清单、HTML、图片与自定义主题） |
+| MarkwonHighlightActivity | Prism4j 多语言代码语法高亮（Kotlin / Java / Python / JS / SQL / Shell / C++、Darkula 与 Light 主题、协程异步高亮） |
 
 ---
 

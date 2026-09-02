@@ -4,6 +4,7 @@
     <application>
         <activity android:name=".MarkdownMainActivity" />
         <activity android:name=".activity.MarkwonBasicActivity" />
+        <activity android:name=".activity.MarkwonHighlightActivity" />
     </application>
 
 </manifest>
