@@ -30,4 +30,7 @@ class Urls {
 
   /// MQTT 默认主题
   static const String mqttTopic = 'mqtt/example';
+
+  /// DeepSeek AI 流式对话接口
+  static const String deepSeek = 'https://api.deepseek.com/chat/completions';
 }

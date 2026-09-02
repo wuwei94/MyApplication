@@ -4,11 +4,12 @@ import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/network/dio_demo.dart';
 import 'package:flutter_demo/demos/network/http_demo.dart';
 import 'package:flutter_demo/demos/network/mqtt_demo.dart';
+import 'package:flutter_demo/demos/network/sse_demo.dart';
 import 'package:flutter_demo/demos/network/websocket_demo.dart';
 
 /// Network 模块
 ///
-/// 包含：Dio、Http、WebSocket 等网络请求与通信示例
+/// 包含：Dio、Http、SSE、WebSocket 等网络请求与通信示例
 class NetworkCatalog extends CatalogSection {
   const NetworkCatalog._();
 
@@ -36,6 +37,12 @@ class NetworkCatalog extends CatalogSection {
       title: 'Http',
       subtitle: '基础 POST 请求与统一响应结果展示',
       pageBuilder: (BuildContext context) => const HttpDemoPage(title: 'Http'),
+    ),
+    CatalogEntry.page(
+      path: 'sse',
+      title: 'SSE',
+      subtitle: '服务端推送流式传输与 AI 大模型 (DeepSeek) 对话',
+      pageBuilder: (BuildContext context) => const SseDemoPage(title: 'SSE'),
     ),
     CatalogEntry.page(
       path: 'websocket',
