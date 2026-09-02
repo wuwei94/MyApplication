@@ -166,6 +166,8 @@ include(":modules:module_ml")
 include(":modules:module_http")
 // 流式推送 / SSE
 include(":modules:module_sse")
+// Markdown 渲染 / 代码高亮 / 流式打字机 / AI 聊天
+include(":modules:module_markdown")
 // Socket 长连接（WebSocket & TCP Socket）
 include(":modules:module_socket")
 // MQTT

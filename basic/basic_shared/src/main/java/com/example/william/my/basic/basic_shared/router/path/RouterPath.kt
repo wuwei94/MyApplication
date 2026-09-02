@@ -341,6 +341,17 @@ object RouterPath {
         const val KtorSseClientFlow = "${PATH}/KtorSseClientFlow"
     }
 
+    // Markdown 富文本渲染与 AI 流式交互模块
+    object Markdown {
+        private const val PATH = "/Markdown"
+
+        const val Main = "${PATH}/Main"
+        const val MarkwonBasic = "${PATH}/MarkwonBasic"
+        const val MarkwonHighlight = "${PATH}/MarkwonHighlight"
+        const val StreamTypewriter = "${PATH}/StreamTypewriter"
+        const val AiChat = "${PATH}/AiChat"
+    }
+
     // MQTT 模块
     object Mqtt {
         private const val PATH = "/Mqtt"

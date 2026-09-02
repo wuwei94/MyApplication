@@ -49,6 +49,7 @@
 | module_anim | 动画（原生与第三方） | AnimMainActivity | /Anim |
 | module_widget_custom | 自定义控件 | WidgetCustomMainActivity | /WidgetCustom |
 | module_widget_thirdparty | 第三方 UI 库 | WidgetThirdpartyMainActivity | /WidgetThirdparty |
+| module_markdown | Markdown 渲染与 AI 流式交互 | MarkdownMainActivity | /Markdown |
 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | module_component | 组件交互 | ComponentMainActivity | /Component |
@@ -433,6 +434,17 @@
 | MPPieChartActivity | MPAndroidChart 饼图（成本预算环形甜甜圈图、中心总额标注与扇区触控外扩动画） |
 | MPRadarChartActivity | MPAndroidChart 雷达图（六维技术能力评估模型、双数据集半透明覆盖与顶点评级） |
 | MPChartLinkageActivity | MPAndroidChart 多图表全景联动看板（时间轴主控折线图联动部门柱状图与渠道饼图） |
+
+---
+
+### module_markdown（Markdown 渲染与 AI 流式交互）
+
+演示原生高性能 Markdown 渲染、Prism4j 多语言代码高亮、打字机流控与大模型 AI 聊天流式交互。
+
+| Activity | 功能 |
+|----------|------|
+| MarkdownMainActivity | 模块入口，导航到 Markdown 渲染与 AI 交互各示例页面 |
+| MarkwonBasicActivity | Markwon 原生高性能 Markdown 渲染（基础排版、GFM 表格、任务清单、HTML、图片与自定义主题） |
 
 ---
 

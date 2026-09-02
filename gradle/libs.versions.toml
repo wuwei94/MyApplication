@@ -111,6 +111,8 @@ pictureselector = "v3.11.2"
 shadowlayout = "3.3.2"
 swipelayout = "1.2.0"
 mpandroidchart = "v3.1.0"
+# https://github.com/noties/Markwon
+markwon = "4.6.2"
 # ##################################################################################################
 junit = "4.13.2"
 androidxTestExt = "1.3.0"
@@ -368,6 +370,14 @@ shadowlayout = { group = "com.github.lihangleo2", name = "ShadowLayout", version
 swipelayout = { group = "com.daimajia.swipelayout", name = "library", version.ref = "swipelayout" }
 # https://github.com/PhilJay/MPAndroidChart
 mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
+# https://github.com/noties/Markwon
+markwon-core = { group = "io.noties.markwon", name = "core", version.ref = "markwon" }
+markwon-ext-tables = { group = "io.noties.markwon", name = "ext-tables", version.ref = "markwon" }
+markwon-ext-tasklist = { group = "io.noties.markwon", name = "ext-tasklist", version.ref = "markwon" }
+markwon-ext-strikethrough = { group = "io.noties.markwon", name = "ext-strikethrough", version.ref = "markwon" }
+markwon-html = { group = "io.noties.markwon", name = "html", version.ref = "markwon" }
+markwon-image = { group = "io.noties.markwon", name = "image", version.ref = "markwon" }
+markwon-image-glide = { group = "io.noties.markwon", name = "image-glide", version.ref = "markwon" }
 # ##################################################################################################
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }

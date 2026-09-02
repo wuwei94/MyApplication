@@ -65,6 +65,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("官方控件", RouterPath.Widget.Main))
         items.add(RouterItem("自定义控件", RouterPath.WidgetCustom.Main))
         items.add(RouterItem("第三方 UI 库", RouterPath.WidgetThirdparty.Main))
+        items.add(RouterItem("Markdown 渲染与 AI 流式交互", RouterPath.Markdown.Main))
         items.add(RouterItem("", ""))
         items.add(RouterItem("── 导航 ──", ""))
         items.add(RouterItem("Tab 导航", RouterPath.Tab.Main))
