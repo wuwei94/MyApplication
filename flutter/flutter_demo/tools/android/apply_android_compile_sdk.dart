@@ -38,8 +38,9 @@ void main() {
 
   final content = file.readAsStringSync();
 
-  if (content.contains(_marker)) {
-    final pinnedPattern = RegExp(r'(\d+)\s+' + RegExp.escape(_marker));
+  if (content.contains(_marker) ||
+      content.contains('// compileSdk pinned by apply_android_flutter_compile_sdk.dart')) {
+    final pinnedPattern = RegExp(r'(\d+)\s+// compileSdk (?:patched|pinned) by apply_android_.*\.dart');
     final match = pinnedPattern.firstMatch(content);
     if (match != null) {
       final pinnedVer = int.tryParse(match.group(1)!) ?? 0;
@@ -57,6 +58,12 @@ void main() {
     }
   }
 
+  // 若已使用 flutter.compileSdkVersion，后续会由 apply_android_flutter_compile_sdk.dart 统一固定
+  if (content.contains('flutter.compileSdkVersion')) {
+    out('插件已使用 flutter.compileSdkVersion，交由通用脚本处理，跳过');
+    return;
+  }
+
   // 匹配 compileSdk 或 compileSdkVersion 行并替换值
   // 支持: compileSdkVersion 31 / compileSdk = 31 / compileSdk 31
   final sdkPattern = RegExp(
@@ -65,7 +72,7 @@ void main() {
   );
   final match = sdkPattern.firstMatch(content);
   if (match == null) {
-    err('未找到 compileSdk/compileSdkVersion 声明');
+    out('未检测到需要提升的硬编码 compileSdk/compileSdkVersion，跳过');
     return;
   }
 
