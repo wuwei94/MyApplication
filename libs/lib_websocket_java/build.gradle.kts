@@ -11,4 +11,7 @@ dependencies {
     api(libs.websocket)
     // RxJava — Observable/Disposable 属于公开 API 类型
     api(libs.rxandroid)
+    // Coroutines Flow — Flow 属于公开 API 类型
+    api(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.coroutines.android)
 }

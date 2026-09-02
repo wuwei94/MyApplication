@@ -317,10 +317,13 @@ object RouterPath {
         const val Main = "${PATH}/Main"
         const val OkHttpWebSocketClient = "${PATH}/OkHttpWebSocketClient"
         const val OkHttpWebSocketClientRx = "${PATH}/OkHttpWebSocketClientRx"
+        const val OkHttpWebSocketClientFlow = "${PATH}/OkHttpWebSocketClientFlow"
         const val JavaWebSocketClient = "${PATH}/JavaWebSocketClient"
         const val JavaWebSocketClientRx = "${PATH}/JavaWebSocketClientRx"
+        const val JavaWebSocketClientFlow = "${PATH}/JavaWebSocketClientFlow"
         const val NettyWebSocketClient = "${PATH}/NettyWebSocketClient"
         const val NettyWebSocketClientRx = "${PATH}/NettyWebSocketClientRx"
+        const val NettyWebSocketClientFlow = "${PATH}/NettyWebSocketClientFlow"
     }
 
     // MQTT 模块

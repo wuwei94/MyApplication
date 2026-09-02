@@ -18,4 +18,7 @@ dependencies {
     implementation(libs.slf4j)
     // RxJava
     api(libs.rxandroid)
+    // Coroutines Flow — Flow 属于公开 API 类型
+    api(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.coroutines.android)
 }

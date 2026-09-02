@@ -318,10 +318,13 @@
 |----------|------|
 | OkHttpWebSocketClientActivity | OkHttp WebSocket 普通版本（连接外部服务器） |
 | OkHttpWebSocketClientRxActivity | OkHttp WebSocket RxJava 封装版本 |
+| OkHttpWebSocketClientFlowActivity | OkHttp WebSocket Coroutines Flow 封装版本 |
 | JavaWebSocketClientActivity | Java-WebSocket 普通版本（启动本地服务端 + 连接） |
 | JavaWebSocketClientRxActivity | Java-WebSocket RxJava 封装版本 |
+| JavaWebSocketClientFlowActivity | Java-WebSocket Coroutines Flow 封装版本 |
 | NettyWebSocketClientActivity | Netty TCP 普通版本（启动本地服务端 + 连接） |
 | NettyWebSocketClientRxActivity | Netty TCP RxJava 封装版本 |
+| NettyWebSocketClientFlowActivity | Netty TCP Coroutines Flow 封装版本 |
 
 服务端 Service：
 
