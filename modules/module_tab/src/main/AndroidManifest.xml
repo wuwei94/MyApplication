@@ -10,4 +10,5 @@
         <activity android:name=".activity.BottomNavActivity" />
         <activity android:name=".activity.FlycoTabLayoutActivity" />
     </application>
+
 </manifest>

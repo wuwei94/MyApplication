@@ -3,7 +3,6 @@
 
     <application>
         <activity android:name=".WidgetCustomMainActivity" />
-
         <activity android:name=".activity.AlertDialogActivity" />
         <activity android:name=".activity.CustomPopWindowActivity" />
         <activity android:name=".activity.BlurViewActivity" />
@@ -14,6 +13,6 @@
         <activity android:name=".activity.TitleBarActivity" />
         <activity android:name=".activity.VerifyCodeActivity" />
         <activity android:name=".activity.NinePatchActivity" />
-
     </application>
+
 </manifest>

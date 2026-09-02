@@ -5,6 +5,8 @@
         <activity android:name=".SystemServiceMainActivity" />
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.PermissionActivity" />
+        <activity android:name=".activity.PermissionXActivity" />
         <activity android:name=".activity.SecureKeyActivity" />
     </application>
+
 </manifest>

@@ -15,4 +15,5 @@
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.FloatWindowActivity" />
     </application>
+
 </manifest>

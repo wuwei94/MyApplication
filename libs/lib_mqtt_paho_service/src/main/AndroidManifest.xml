@@ -1,7 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    hannesa2 fork 的 AAR 已在自身 manifest 中声明
-    info.mqtt.android.service.MqttService 及所需权限
-    （INTERNET / ACCESS_NETWORK_STATE / WAKE_LOCK），无需在此显式注册。
--->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" />

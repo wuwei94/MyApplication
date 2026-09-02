@@ -15,11 +15,9 @@
         <activity android:name=".activity.chart.MPPieChartActivity" />
         <activity android:name=".activity.chart.MPRadarChartActivity" />
         <activity android:name=".activity.chart.MPChartLinkageActivity" />
-
         <activity android:name=".activity.picker.CityPickerActivity" />
         <activity android:name=".activity.picker.PickerViewActivity" />
         <activity android:name=".activity.picker.PictureSelectorActivity" />
-
         <activity android:name=".activity.loadsir.LoadSirActivity" />
         <activity android:name=".activity.loadsir.LoadSirFragmentActivity" />
     </application>

@@ -6,4 +6,5 @@
         <activity android:name=".activity.AsyncTaskActivity" />
         <activity android:name=".activity.HandlerThreadActivity" />
     </application>
+
 </manifest>

@@ -3,7 +3,6 @@
 
     <application>
         <activity android:name=".KotlinMainActivity" />
-
         <activity android:name=".activity.CoroutinesActivity" />
         <activity android:name=".activity.FlowActivity" />
         <activity android:name=".activity.ChannelActivity" />
@@ -12,4 +11,5 @@
         <activity android:name=".activity.MyInlineActivity" />
         <activity android:name=".activity.MySyntaxActivity" />
     </application>
+
 </manifest>

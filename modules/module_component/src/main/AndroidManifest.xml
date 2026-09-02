@@ -17,4 +17,5 @@
             android:name=".service.MyForegroundService"
             android:foregroundServiceType="specialUse" />
     </application>
+
 </manifest>

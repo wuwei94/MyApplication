@@ -6,4 +6,5 @@
         <activity android:name=".activity.HookActivity" />
         <activity android:name=".activity.TypefaceActivity" />
     </application>
+
 </manifest>

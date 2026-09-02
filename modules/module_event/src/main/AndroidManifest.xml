@@ -8,4 +8,5 @@
         <activity android:name=".activity.LiveEventBusActivity" />
         <activity android:name=".activity.FlowEventBusActivity" />
     </application>
+
 </manifest>

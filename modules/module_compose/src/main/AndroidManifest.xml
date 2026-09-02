@@ -5,7 +5,6 @@
         <activity android:name=".activity.ComposeActivity" />
         <activity android:name=".activity.ComposeViewActivity" />
         <activity android:name=".ComposeMainActivity" />
-
         <activity android:name=".activity.basic.TextActivity" />
         <activity android:name=".activity.basic.ButtonActivity" />
         <activity android:name=".activity.basic.ImageActivity" />
@@ -16,32 +15,20 @@
         <activity android:name=".activity.chart.ComposePieChartActivity" />
         <activity android:name=".activity.chart.ComposeRadarChartActivity" />
         <activity android:name=".activity.chart.ComposeChartLinkageActivity" />
-
         <activity android:name=".activity.basic.ConstraintLayoutActivity" />
         <activity android:name=".activity.basic.HorizontalPagerActivity" />
-
         <activity android:name=".activity.basic.CompositionLocalActivity" />
-
         <activity android:name=".activity.coordinator.CoordinatorLayoutActivity" />
-
         <activity android:name=".activity.draggable.DraggableActivity" />
         <activity android:name=".activity.draggable.DragGesturesActivity" />
-
         <activity android:name=".activity.dragging.GuaguaCardActivity" />
-
         <activity android:name=".activity.backhandler.BackHandlerActivity" />
-
         <activity android:name=".activity.navhost.NavHostActivity" />
-
         <activity android:name=".activity.navigation.BottomNavigationActivity" />
         <activity android:name=".activity.navigation.NavigationBarActivity" />
-
         <activity android:name=".activity.remember.RememberActivity" />
-
         <activity android:name=".activity.swipeable.AnchoredDraggableActivity" />
-
         <activity android:name=".activity.smartrefresh.SmartRefreshActivity" />
-
         <activity android:name=".activity.tab.ScrollableTabActivity" />
     </application>
 

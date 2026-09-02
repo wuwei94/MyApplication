@@ -9,4 +9,5 @@
         <activity android:name=".compose.ComposeMviActivity" />
         <activity android:name=".mavericks.MavericksActivity" />
     </application>
+
 </manifest>

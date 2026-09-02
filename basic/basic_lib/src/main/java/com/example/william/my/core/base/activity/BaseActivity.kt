@@ -13,9 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.alibaba.android.arouter.launcher.ARouter
-import com.blankj.utilcode.util.LogUtils
 import com.example.william.my.core.base.utils.DensityAdaptUtils
-import com.permissionx.guolindev.PermissionX
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -123,37 +121,6 @@ open class BaseActivity : AppCompatActivity() {
 
     private fun initEventBus() {
 
-    }
-
-    protected open fun initPermission() {
-        PermissionX.init(this)
-            .permissions(
-                Manifest.permission.POST_NOTIFICATIONS,
-            )
-            //.explainReasonBeforeRequest()
-            .onExplainRequestReason { scope, deniedList ->
-                scope.showRequestReasonDialog(
-                    deniedList,
-                    "PermissionX需要您同意以下权限才能正常使用",
-                    "Allow",
-                    "Deny"
-                )
-            }
-            .onForwardToSettings { scope, deniedList ->
-                scope.showForwardToSettingsDialog(
-                    deniedList,
-                    "您需要手动在“设置”中允许必要的权限",
-                    "OK",
-                    "Cancel"
-                )
-            }
-            .request { allGranted, grantedList, deniedList ->
-                if (allGranted) {
-                    LogUtils.e("全部权限已授予: $grantedList")
-                } else {
-                    LogUtils.e("权限被拒绝: $deniedList")
-                }
-            }
     }
 
     /**

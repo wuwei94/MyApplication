@@ -11,7 +11,8 @@ class SystemServiceMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Notification（通知渠道与前台通知）", RouterPath.SystemService.Notification))
-        routerItems.add(RouterItem("Permission（运行时权限批量申请）", RouterPath.SystemService.Permission))
+        routerItems.add(RouterItem("Permission（运行时权限 Jetpack 契约）", RouterPath.SystemService.Permission))
+        routerItems.add(RouterItem("PermissionX（运行时权限 链式开源库）", RouterPath.SystemService.PermissionX))
         routerItems.add(RouterItem("SecureKey（Android Keystore 硬件级安全密钥）", RouterPath.SystemService.SecureKey))
         return routerItems
     }

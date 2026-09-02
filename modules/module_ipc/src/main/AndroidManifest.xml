@@ -9,4 +9,5 @@
         <service android:name=".service.MyAIDLService" />
         <service android:name=".service.MyMessageService" />
     </application>
+
 </manifest>
