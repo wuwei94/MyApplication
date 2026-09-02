@@ -1,6 +1,7 @@
 package com.example.william.my.module.performance.manager
 
 import androidx.recyclerview.widget.RecyclerView
+import com.example.william.my.module.performance.manager.RecycledViewPoolManager.clear
 
 /**
  * 全局 RecyclerView 视图复用池管理器（RecycledViewPool Manager）

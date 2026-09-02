@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_shared.router.service
+package com.example.william.my.basic.basic_shared.router.service.utils
 
 import com.alibaba.android.arouter.facade.template.IProvider
 import java.io.File

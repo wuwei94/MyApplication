@@ -6,8 +6,8 @@ import com.example.william.my.core.base.hilt.qualifier.AppInit
 import com.example.william.my.core.base.hilt.qualifier.BaseInit
 import com.example.william.my.core.base.hilt.qualifier.EventInit
 import com.example.william.my.core.base.hilt.qualifier.FlutterInit
-import com.example.william.my.core.base.hilt.qualifier.MavericksInit
 import com.example.william.my.core.base.hilt.qualifier.LoadSirInit
+import com.example.william.my.core.base.hilt.qualifier.MavericksInit
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

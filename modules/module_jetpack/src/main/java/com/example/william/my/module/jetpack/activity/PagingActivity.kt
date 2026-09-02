@@ -1,5 +1,6 @@
 package com.example.william.my.module.jetpack.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +13,6 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.jetpack.paging.adapter.PagingAdapter
 import com.example.william.my.module.jetpack.paging.adapter.PagingStateAdapter
 import com.example.william.my.module.jetpack.paging.viewmodel.PagingViewModel
-import android.annotation.SuppressLint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers

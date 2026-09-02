@@ -1,6 +1,5 @@
 package com.example.william.my.core.base.activity
 
-import android.Manifest
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle

@@ -11,7 +11,7 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.router.service.ResourceUtilsService
+import com.example.william.my.basic.basic_shared.router.service.utils.ResourceUtilsService
 import com.example.william.my.module.widget_thirdparty.data.ProvinceData
 import com.google.gson.Gson
 import org.json.JSONArray

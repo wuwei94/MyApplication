@@ -11,7 +11,6 @@ android {
 dependencies {
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
-    implementation(project(":basic:basic_server"))
 
     implementation(project(":libs:lib_websocket_java"))
     implementation(project(":libs:lib_websocket_okhttp"))

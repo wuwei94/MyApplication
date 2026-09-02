@@ -1,23 +1,20 @@
 package com.example.william.my.basic.basic_shared.activity
 
+import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.chad.library.adapter4.BaseQuickAdapter
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerResponseBinding
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
-
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-import android.os.Bundle
 
 /**
  * 通信/调度类示例 Activity 基类。

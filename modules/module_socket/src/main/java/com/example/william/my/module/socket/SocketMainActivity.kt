@@ -23,7 +23,7 @@ class SocketMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("OkHttp WebSocket (Flow 封装)", RouterPath.Socket.OkHttpWebSocketClientFlow))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── Java-WebSocket ──", ""))
-        routerItems.add(RouterItem("Java-WebSocket（内置本地服务端）", RouterPath.Socket.JavaWebSocketClient))
+        routerItems.add(RouterItem("Java-WebSocket", RouterPath.Socket.JavaWebSocketClient))
         routerItems.add(RouterItem("Java-WebSocket (RxJava 封装)", RouterPath.Socket.JavaWebSocketClientRx))
         routerItems.add(RouterItem("Java-WebSocket (Flow 封装)", RouterPath.Socket.JavaWebSocketClientFlow))
         routerItems.add(RouterItem("", ""))

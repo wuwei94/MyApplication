@@ -1,13 +1,14 @@
 package com.example.william.my.module.socket.activity.tcpsocket.netty
 
 import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.basic.basic_shared.router.service.server.NettyServerService
 import com.example.william.my.core.netty.client.NettyClient
 import com.example.william.my.core.netty.client.NettyClientHandler
 import com.example.william.my.core.netty.server.NettyServer
-import com.example.william.my.core.server.ServerManager
 import com.example.william.my.module.socket.utils.NetworkUtils
 
 /**
@@ -61,6 +62,10 @@ import com.example.william.my.module.socket.utils.NetworkUtils
 @Route(path = RouterPath.Socket.NettyTcpSocketClient)
 class NettyTcpSocketClientActivity : BasicResponseActivity() {
 
+    @JvmField
+    @Autowired
+    var nettyServerService: NettyServerService? = null
+
     private val host: String get() = NetworkUtils.getIPAddress(true)
     private val port: Int = 5567
     private val serverUrl: String get() = "$host:$port"
@@ -94,16 +99,16 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         NettyClient.disconnect()
-        ServerManager.stopNettyServer(this)
+        nettyServerService?.stopServer(this)
     }
 
     private fun startServer() {
-        ServerManager.startNettyServer(this)
+        nettyServerService?.startServer(this)
         appendLog("【服务端】已启动，地址：$serverUrl")
     }
 
     private fun stopServer() {
-        ServerManager.stopNettyServer(this)
+        nettyServerService?.stopServer(this)
         appendLog("【服务端】已停止")
     }
 

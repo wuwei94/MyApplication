@@ -36,6 +36,8 @@ object RouterPath {
         private const val PATH = "/Server"
 
         const val Nano = "${PATH}/Nano"
+        const val JavaWebSocket = "${PATH}/JavaWebSocket"
+        const val Netty = "${PATH}/Netty"
     }
 
     // ═══════════════════════════════════════════

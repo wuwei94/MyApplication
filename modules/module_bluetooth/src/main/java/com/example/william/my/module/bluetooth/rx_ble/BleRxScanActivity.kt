@@ -10,7 +10,6 @@ import com.polidea.rxandroidble3.scan.ScanResult
 import com.polidea.rxandroidble3.scan.ScanSettings
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.concurrent.TimeUnit
 
 /**
  * RxAndroidBle 响应式扫描与过滤示例

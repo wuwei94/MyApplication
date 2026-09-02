@@ -12,7 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.router.service.ImageUtilsService
+import com.example.william.my.basic.basic_shared.router.service.utils.ImageUtilsService
 import com.example.william.my.basic.basic_shared.utils.Utils
 import java.io.File
 

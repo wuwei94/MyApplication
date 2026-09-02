@@ -1,12 +1,11 @@
-package com.example.william.my.basic.basic_shared.router.service.impl
+package com.example.william.my.basic.basic_shared.router.service.utils.impl
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ImageUtils
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.basic.basic_shared.router.service.ImageUtilsService
+import com.example.william.my.basic.basic_shared.router.service.utils.ImageUtilsService
 import java.io.File
 
 /**
@@ -15,11 +14,11 @@ import java.io.File
 @Route(path = RouterPath.Service.ImageUtilsService)
 class ImageUtilsServiceImpl : ImageUtilsService {
 
-    override fun save(bitmap: Bitmap, filePath: String, format: CompressFormat): Boolean {
+    override fun save(bitmap: Bitmap, filePath: String, format: Bitmap.CompressFormat): Boolean {
         return ImageUtils.save(bitmap, filePath, format)
     }
 
-    override fun save(bitmap: Bitmap, file: File, format: CompressFormat): Boolean {
+    override fun save(bitmap: Bitmap, file: File, format: Bitmap.CompressFormat): Boolean {
         return ImageUtils.save(bitmap, file, format)
     }
 

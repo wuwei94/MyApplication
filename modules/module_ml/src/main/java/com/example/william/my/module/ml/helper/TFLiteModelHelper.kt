@@ -3,13 +3,11 @@ package com.example.william.my.module.ml.helper
 import android.content.Context
 import android.content.res.AssetFileDescriptor
 import android.graphics.Bitmap
-import android.graphics.Color
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import kotlin.math.exp
 
