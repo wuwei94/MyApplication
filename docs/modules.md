@@ -111,7 +111,7 @@
 | FrameLayoutTabActivity | FrameLayout + RadioGroup Tab |
 | ViewPagerTabActivity | ViewPager + NoScrollViewPager + RadioGroup 联动 |
 | ViewPager2TabActivity | ViewPager2 + RadioGroup 联动 |
-| BottomNavActivity | BottomNavigationView + Fragment（底部导航栏） |
+| BottomNavigationActivity | BottomNavigation + Fragment（底部导航栏） |
 | FlycoTabLayoutActivity | FlycoTabLayout 标签页（Sliding / Common / Segment 三种样式） |
 
 ---

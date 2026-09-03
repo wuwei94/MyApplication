@@ -73,7 +73,7 @@ object RouterPath {
         const val FrameLayoutTab = "${PATH}/FrameLayoutTab"
         const val ViewPagerTab = "${PATH}/ViewPagerTab"
         const val ViewPager2Tab = "${PATH}/ViewPager2Tab"
-        const val BottomNav = "${PATH}/BottomNav"
+        const val BottomNavigation = "${PATH}/BottomNavigation"
         const val FlycoTabLayout = "${PATH}/FlycoTabLayout"
     }
 

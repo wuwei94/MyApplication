@@ -8,7 +8,7 @@ import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
-import com.example.william.my.module.tab.databinding.TabActivityBottomNavBinding
+import com.example.william.my.module.tab.databinding.TabActivityBottomNavigationBinding
 import com.example.william.my.module.tab.utils.FragmentUtils
 
 /**
@@ -45,11 +45,11 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  * - 多 Tab 页面切换
  * - 底部导航栏
  */
-@Route(path = RouterPath.Tab.BottomNav)
-class BottomNavActivity : BaseVBActivity<TabActivityBottomNavBinding>() {
+@Route(path = RouterPath.Tab.BottomNavigation)
+class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBinding>() {
 
-    override fun getViewBinding(): TabActivityBottomNavBinding {
-        return TabActivityBottomNavBinding.inflate(layoutInflater)
+    override fun getViewBinding(): TabActivityBottomNavigationBinding {
+        return TabActivityBottomNavigationBinding.inflate(layoutInflater)
     }
 
     private val mTitles by lazy {

@@ -174,7 +174,7 @@ MyApplication/
 - FragmentTabHost + TabWidget
 - RadioGroup + FrameLayout Tab
 - ViewPager + RadioGroup 联动
-- BottomNavigationView + Fragment（底部导航栏）
+- BottomNavigation + Fragment（底部导航栏）
 - FlycoTabLayout（Sliding / Common / Segment 三种样式）
 
 ### module_anim（动画）

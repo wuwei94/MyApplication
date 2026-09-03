@@ -17,7 +17,7 @@ class TabMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("FrameLayout + RadioGroup", RouterPath.Tab.FrameLayoutTab))
         routerItems.add(RouterItem("ViewPager + RadioGroup", RouterPath.Tab.ViewPagerTab))
         routerItems.add(RouterItem("ViewPager2 + RadioGroup", RouterPath.Tab.ViewPager2Tab))
-        routerItems.add(RouterItem("BottomNavigationView + Fragment", RouterPath.Tab.BottomNav))
+        routerItems.add(RouterItem("BottomNavigation + Fragment", RouterPath.Tab.BottomNavigation))
 
         routerItems.add(RouterItem("", ""))
 

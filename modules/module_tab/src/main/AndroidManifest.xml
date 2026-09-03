@@ -7,7 +7,7 @@
         <activity android:name=".activity.FrameLayoutTabActivity" />
         <activity android:name=".activity.ViewPagerTabActivity" />
         <activity android:name=".activity.ViewPager2TabActivity" />
-        <activity android:name=".activity.BottomNavActivity" />
+        <activity android:name=".activity.BottomNavigationActivity" />
         <activity android:name=".activity.FlycoTabLayoutActivity" />
     </application>
 
