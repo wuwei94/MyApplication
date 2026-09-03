@@ -86,5 +86,5 @@ dart format lib test tools
 
 ## Android/iOS 修复脚本
 
-- **Android**：`dart tools/apply_android_fixes.dart` — 自动补齐权限、Java 8+ API 兼容、compileSdk、相机插件依赖
+- **Android**：`dart tools/apply_android_fixes.dart` — 自动补齐权限、Java 8+ API 兼容、compileSdk、相机插件依赖、TFLite Kotlin JVM 目标对齐
 - **iOS**：`dart tools/apply_ios_fixes.dart` — 自动补齐 geolocator 定位权限（Info.plist 用途说明 + Podfile 编译宏）

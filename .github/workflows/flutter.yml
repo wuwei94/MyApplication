@@ -53,10 +53,7 @@ jobs:
         run: flutter pub get
 
       - name: Apply Android patches
-        run: |
-          dart tools/android/apply_android_compile_sdk.dart
-          dart tools/android/apply_android_flutter_compile_sdk.dart
-          dart tools/android/apply_android_camera_camerax.dart
+        run: dart tools/apply_android_fixes.dart
 
       - name: Build Flutter Android module
         run: flutter build aar --no-pub

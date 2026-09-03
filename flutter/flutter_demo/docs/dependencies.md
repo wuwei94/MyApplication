@@ -78,6 +78,12 @@
 
 > Flutter 升级后 `compileSdkVersion` 默认值变化时，重新执行一次该脚本即可；上游修复插件脚本后按 `apply_android_fixes.dart` 中的注释清理对应注册。
 
+## TFLite Flutter 插件 JVM 目标兼容修复
+
+`tflite_flutter` 插件的 `android/build.gradle` 声明了 `compileOptions { sourceCompatibility 11; targetCompatibility 11 }`，但未配置 `kotlinOptions.jvmTarget`。在 JDK 17/21+ 环境下，Kotlin Gradle Plugin 默认继承更高 JVM Target，导致 Kotlin 与 Java 编译目标不一致（报 `Inconsistent JVM Target Compatibility Between Java and Kotlin Tasks: compileDebugJavaWithJavac (11) and compileDebugKotlin (17)`）。
+
+由 `tools/android/apply_android_tflite_flutter.dart` 在 `flutter pub get` 之后对 pub cache 中的 `tflite_flutter` 补全 `kotlinOptions { jvmTarget = "11" }`（已注册进 `dart tools/apply_android_fixes.dart`）。
+
 ## 动画与多媒体
 
 - [Flutter SVG](https://pub.dev/packages/flutter_svg) — SVG 渲染
