@@ -17,63 +17,49 @@ object FileSDCardUtil {
 
     private val TAG = this.javaClass.simpleName
 
-    fun isSDCardEnableByEnvironment(): Boolean {
-        return Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
-    }
+    fun isSDCardEnableByEnvironment(): Boolean = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
 
     /**
      * @return /storage/emulated/0/Android/data/包名/cache
      */
-    fun getCacheDir(context: Context): File? {
-        return if (isSDCardEnableByEnvironment()) {
-            //外部存储可用
-            context.applicationContext.externalCacheDir
-        } else {
-            //外部存储不可用
-            context.applicationContext.cacheDir
-        }
+    fun getCacheDir(context: Context): File? = if (isSDCardEnableByEnvironment()) {
+        // 外部存储可用
+        context.applicationContext.externalCacheDir
+    } else {
+        // 外部存储不可用
+        context.applicationContext.cacheDir
     }
 
-    fun getCacheDirPath(context: Context): String {
-        return if (isSDCardEnableByEnvironment()) {
-            //外部存储可用
-            context.applicationContext.externalCacheDir?.path ?: ""
-        } else {
-            //外部存储不可用
-            context.applicationContext.cacheDir?.path ?: ""
-        }
+    fun getCacheDirPath(context: Context): String = if (isSDCardEnableByEnvironment()) {
+        // 外部存储可用
+        context.applicationContext.externalCacheDir?.path ?: ""
+    } else {
+        // 外部存储不可用
+        context.applicationContext.cacheDir?.path ?: ""
     }
 
     /**
      * @return /storage/emulated/0/Android/data/包名/files
      */
-    fun getFileDir(context: Context, type: String): File? {
-        return if (isSDCardEnableByEnvironment()) {
-            //外部存储可用
-            context.applicationContext.getExternalFilesDir(type)
-        } else {
-            //外部存储不可用
-            context.applicationContext.filesDir
-        }
+    fun getFileDir(context: Context, type: String): File? = if (isSDCardEnableByEnvironment()) {
+        // 外部存储可用
+        context.applicationContext.getExternalFilesDir(type)
+    } else {
+        // 外部存储不可用
+        context.applicationContext.filesDir
     }
 
-    fun getFileDirPath(context: Context, type: String): String {
-        return if (isSDCardEnableByEnvironment()) {
-            //外部存储可用
-            context.applicationContext.getExternalFilesDir(type)?.path ?: ""
-        } else {
-            //外部存储不可用
-            context.applicationContext.filesDir?.path ?: ""
-        }
+    fun getFileDirPath(context: Context, type: String): String = if (isSDCardEnableByEnvironment()) {
+        // 外部存储可用
+        context.applicationContext.getExternalFilesDir(type)?.path ?: ""
+    } else {
+        // 外部存储不可用
+        context.applicationContext.filesDir?.path ?: ""
     }
 
-    fun getPicDir(): File {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-    }
+    fun getPicDir(): File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
 
-    fun getPicDirPath(): String {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).path
-    }
+    fun getPicDirPath(): String = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).path
 
     fun isSpace(s: String?): Boolean {
         if (s == null) return true
@@ -88,15 +74,13 @@ object FileSDCardUtil {
         return true
     }
 
-    fun getFileByPath(filePath: String): File? {
-        return if (isSpace(filePath)) null else File(filePath)
-    }
+    fun getFileByPath(filePath: String): File? = if (isSpace(filePath)) null else File(filePath)
 
-    //fun createOrExistsDir(file: File?): Boolean {
+    // fun createOrExistsDir(file: File?): Boolean {
     //    return file != null && if (file.exists()) file.isDirectory else file.mkdirs()
-    //}
+    // }
 
-    //fun createOrExistsFile(file: File?): Boolean {
+    // fun createOrExistsFile(file: File?): Boolean {
     //    if (file == null) return false
     //    if (file.exists()) return file.isFile
     //    return if (!createOrExistsDir(file.parentFile)) false else try {
@@ -105,5 +89,5 @@ object FileSDCardUtil {
     //        e.printStackTrace()
     //        false
     //    }
-    //}
+    // }
 }

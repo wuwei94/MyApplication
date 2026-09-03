@@ -8,12 +8,13 @@ import android.view.View
 
 object StringUtils {
 
-    fun List<String>?.toString(separator: String): String {
-        return this?.joinToString(separator) ?: ""
-    }
+    fun List<String>?.toString(separator: String): String = this?.joinToString(separator) ?: ""
 
     fun SpannableString.setTextColor(
-        text: String, highlight: String, color: Int, onClick: () -> Unit
+        text: String,
+        highlight: String,
+        color: Int,
+        onClick: () -> Unit,
     ): SpannableString {
         val startIndex = text.indexOf(highlight)
         if (startIndex >= 0) {
@@ -30,7 +31,7 @@ object StringUtils {
                 },
                 startIndex,
                 startIndex + highlight.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
         }
         return this

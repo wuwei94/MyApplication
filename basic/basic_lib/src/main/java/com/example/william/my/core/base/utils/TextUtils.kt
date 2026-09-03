@@ -30,7 +30,7 @@ class TextUtils {
             0f,
             ContextCompat.getColor(this.context, startColor),
             ContextCompat.getColor(this.context, endColor),
-            Shader.TileMode.CLAMP
+            Shader.TileMode.CLAMP,
         )
     }
 
@@ -46,7 +46,7 @@ class TextUtils {
                 ContextCompat.getColor(this.context, endColor),
             ),
             null,
-            Shader.TileMode.CLAMP
+            Shader.TileMode.CLAMP,
         )
     }
 }

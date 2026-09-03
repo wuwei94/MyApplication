@@ -12,7 +12,10 @@ class RItemDecorationItemSpacing(
 ) : RItemDecoration() {
 
     override fun getItemOffsets(
-        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State,
     ) {
         val position = parent.getChildAdapterPosition(view)
         if (position == RecyclerView.NO_POSITION) return
@@ -22,7 +25,7 @@ class RItemDecorationItemSpacing(
         if (spanCount <= 0) return
 
         val column = position % spanCount // 第几列
-        val row = position / spanCount  // 第几行
+        val row = position / spanCount // 第几行
 
         if (includeEdge) {
             outRect.left = spacing - column * spacing / spanCount

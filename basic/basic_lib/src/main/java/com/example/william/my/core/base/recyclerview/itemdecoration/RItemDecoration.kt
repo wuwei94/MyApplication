@@ -16,7 +16,7 @@ open class RItemDecoration : RecyclerView.ItemDecoration() {
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         super.getItemOffsets(outRect, view, parent, state)
     }
@@ -35,9 +35,7 @@ open class RItemDecoration : RecyclerView.ItemDecoration() {
         super.onDrawOver(c, parent, state)
     }
 
-    fun getItemCount(parent: RecyclerView): Int {
-        return parent.layoutManager?.itemCount ?: 0
-    }
+    fun getItemCount(parent: RecyclerView): Int = parent.layoutManager?.itemCount ?: 0
 
     fun getSpanCount(parent: RecyclerView): Int {
         val spanCount = when (parent.layoutManager) {

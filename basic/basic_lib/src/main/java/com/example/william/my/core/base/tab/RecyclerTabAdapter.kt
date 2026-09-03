@@ -9,12 +9,12 @@ abstract class RecyclerTabAdapter<T : Any> : BaseQuickAdapter<T, QuickViewHolder
     protected var lastSelectPosition = 0
 
     fun setSelectPosition(currentSelectPosition: Int) {
-        //items[lastSelectPosition].setTabSelected(false)
+        // items[lastSelectPosition].setTabSelected(false)
         if (lastSelectPosition > -1) {
             notifyItemChanged(lastSelectPosition, false)
         }
 
-        //items[currentSelectPosition].setTabSelected(true)
+        // items[currentSelectPosition].setTabSelected(true)
         if (currentSelectPosition > -1) {
             notifyItemChanged(currentSelectPosition, true)
         }

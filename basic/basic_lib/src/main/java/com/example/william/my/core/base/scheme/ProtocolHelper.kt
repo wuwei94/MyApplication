@@ -19,7 +19,7 @@ object ProtocolHelper {
     fun handleProtocolEvent(
         activity: Activity?,
         url: String?,
-        extraMap: Map<String?, Any?>? = null
+        extraMap: Map<String?, Any?>? = null,
     ) {
         if (activity == null || url.isNullOrBlank()) {
             return

@@ -100,19 +100,15 @@ object ActivityManagerUtil {
             }
 
             override fun onActivityStarted(activity: Activity) {
-
             }
 
             override fun onActivityResumed(activity: Activity) {
-
             }
 
             override fun onActivityPaused(activity: Activity) {
-
             }
 
             override fun onActivityStopped(activity: Activity) {
-
             }
 
             override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}

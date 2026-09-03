@@ -14,7 +14,6 @@ object DeflaterUtils {
      * 压缩
      */
     fun zipString(unzipString: String): String {
-
         /*
          *     https://www.yiibai.com/javazip/javazip_deflater.html#article-start
          *     0 ~ 9 压缩等级 低到高
@@ -31,20 +30,20 @@ object DeflaterUtils {
          *     public static final int SYNC_FLUSH = 2;                  用于清除所有未决输出的压缩刷新模式; 可能会降低某些压缩算法的压缩率。
          */
 
-        //使用指定的压缩级别创建一个新的压缩器。
+        // 使用指定的压缩级别创建一个新的压缩器。
         val deflater = Deflater(Deflater.BEST_COMPRESSION)
-        //设置压缩输入数据。
+        // 设置压缩输入数据。
         deflater.setInput(unzipString.toByteArray())
-        //当被调用时，表示压缩应该以输入缓冲区的当前内容结束。
+        // 当被调用时，表示压缩应该以输入缓冲区的当前内容结束。
         deflater.finish()
         val bytes = ByteArray(256)
         val outputStream = ByteArrayOutputStream(256)
         while (!deflater.finished()) {
-            //压缩输入数据并用压缩数据填充指定的缓冲区。
+            // 压缩输入数据并用压缩数据填充指定的缓冲区。
             val length = deflater.deflate(bytes)
             outputStream.write(bytes, 0, length)
         }
-        //关闭压缩器并丢弃任何未处理的输入。
+        // 关闭压缩器并丢弃任何未处理的输入。
         deflater.end()
         return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_PADDING)
     }
@@ -54,16 +53,16 @@ object DeflaterUtils {
      */
     fun unzipString(zipString: String?): String? {
         val decode = Base64.decode(zipString, Base64.NO_PADDING)
-        //创建一个新的解压缩器  https://www.yiibai.com/javazip/javazip_inflater.html
+        // 创建一个新的解压缩器  https://www.yiibai.com/javazip/javazip_inflater.html
         val inflater = Inflater()
-        //设置解压缩的输入数据。
+        // 设置解压缩的输入数据。
         inflater.setInput(decode)
         val bytes = ByteArray(256)
         val outputStream = ByteArrayOutputStream(256)
         try {
-            //finished() 如果已到达压缩数据流的末尾，则返回true。
+            // finished() 如果已到达压缩数据流的末尾，则返回true。
             while (!inflater.finished()) {
-                //将字节解压缩到指定的缓冲区中。
+                // 将字节解压缩到指定的缓冲区中。
                 val length = inflater.inflate(bytes)
                 outputStream.write(bytes, 0, length)
             }
@@ -71,7 +70,7 @@ object DeflaterUtils {
             e.printStackTrace()
             return null
         } finally {
-            //关闭解压缩器并丢弃任何未处理的输入。
+            // 关闭解压缩器并丢弃任何未处理的输入。
             inflater.end()
         }
         return outputStream.toString()

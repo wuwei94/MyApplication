@@ -37,14 +37,14 @@ object AudioPlayer {
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
 
-    //Record
+    // Record
 
     fun startRecord(context: Context, callback: Callback) {
         mRecordCallback = callback
         try {
             mAudioRecordPath =
                 context.applicationContext.externalCacheDir.toString() + File.separator +
-                        "auto_" + System.currentTimeMillis() + ".m4a"
+                "auto_" + System.currentTimeMillis() + ".m4a"
             mRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 MediaRecorder(context)
             } else {
@@ -88,7 +88,7 @@ object AudioPlayer {
         isRecorded = false
     }
 
-    //Play
+    // Play
 
     fun startPlay(filePath: String?, callback: Callback) {
         mAudioRecordPath = filePath

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseVBBottomSheetDialogFragment<VB : ViewBinding?>(
-    windowAnimationsRes: Int = 0
+    windowAnimationsRes: Int = 0,
 ) : BaseBottomSheetDialogFragment(
     layout = 0,
-    windowAnimationsRes = windowAnimationsRes
+    windowAnimationsRes = windowAnimationsRes,
 ) {
 
     private var _binding: VB? = null
@@ -21,7 +21,7 @@ abstract class BaseVBBottomSheetDialogFragment<VB : ViewBinding?>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = getViewBinding()
         return mBinding.root

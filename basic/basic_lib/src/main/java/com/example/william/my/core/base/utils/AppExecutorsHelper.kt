@@ -37,28 +37,20 @@ object AppExecutorsHelper {
      * 定时任务线程池
      */
     private val scheduledExecutor: ScheduledExecutorService = Executors.newScheduledThreadPool(
-        Runtime.getRuntime().availableProcessors() * 3 + 2
+        Runtime.getRuntime().availableProcessors() * 3 + 2,
     )
 
-    fun main(): Executor {
-        return mMain
-    }
+    fun main(): Executor = mMain
 
-    fun diskIO(): ExecutorService {
-        return mDiskIO
-    }
+    fun diskIO(): ExecutorService = mDiskIO
 
-    fun networkIO(): ExecutorService {
-        return mNetworkIO
-    }
+    fun networkIO(): ExecutorService = mNetworkIO
 
     /**
      * 定时(延时)任务线程池
      * 替代Timer,执行定时任务,延时任务
      */
-    fun scheduledExecutor(): ScheduledExecutorService {
-        return scheduledExecutor
-    }
+    fun scheduledExecutor(): ScheduledExecutorService = scheduledExecutor
 
     /**
      * MainThreadExecutor

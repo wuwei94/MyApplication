@@ -57,9 +57,7 @@ object FileIOUtils {
         }
     }
 
-    fun writeFileFromString(uri: Uri?, content: String?, append: Boolean): Boolean {
-        return false
-    }
+    fun writeFileFromString(uri: Uri?, content: String?, append: Boolean): Boolean = false
 
     fun writeFileFromIS(filePath: String, inputStream: InputStream?, append: Boolean): Boolean {
         val file: File? = FileSDCardUtil.getFileByPath(filePath)
@@ -86,10 +84,8 @@ object FileIOUtils {
         } finally {
             try {
                 inputStream.close()
-
             } catch (e: IOException) {
                 e.printStackTrace()
-
             }
             try {
                 os?.close()

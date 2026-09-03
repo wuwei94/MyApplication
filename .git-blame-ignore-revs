@@ -1,0 +1,7 @@
+# Git Blame Ignore Revisions
+# This file contains the commit hashes of bulk code formatting commits (e.g. Spotless / ktlint)
+# that should be ignored by git blame to preserve the original authorship history.
+#
+# Configure locally: git config blame.ignoreRevsFile .git-blame-ignore-revs
+# Configure globally: git config --global blame.ignoreRevsFile .git-blame-ignore-revs
+#

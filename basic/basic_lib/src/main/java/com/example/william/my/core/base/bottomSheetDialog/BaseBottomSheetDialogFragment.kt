@@ -19,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  */
 abstract class BaseBottomSheetDialogFragment(
     val layout: Int = 0,
-    private val windowAnimationsRes: Int = 0
+    private val windowAnimationsRes: Int = 0,
 ) : BottomSheetDialogFragment() {
 
     protected var behavior: BottomSheetBehavior<FrameLayout>? = null
@@ -43,10 +43,8 @@ abstract class BaseBottomSheetDialogFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(layout, container, false)
-    }
+        savedInstanceState: Bundle?,
+    ): View? = inflater.inflate(layout, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,10 +59,10 @@ abstract class BaseBottomSheetDialogFragment(
 
     private fun initDialog() {
         dialog?.let { dialog ->
-            //解决Dialog内存泄漏
-            //X，显示过后的Dialog在Activity回到后台再重新进入后会重新显示
-            //dialog.setOnDismissListener(null)
-            //dialog.setOnCancelListener(null)
+            // 解决Dialog内存泄漏
+            // X，显示过后的Dialog在Activity回到后台再重新进入后会重新显示
+            // dialog.setOnDismissListener(null)
+            // dialog.setOnCancelListener(null)
 
             behavior = (dialog as BottomSheetDialog).behavior
             dialog.dismissWithAnimation = true
@@ -74,7 +72,7 @@ abstract class BaseBottomSheetDialogFragment(
                 if (windowAnimationsRes > 0) {
                     window.setWindowAnimations(windowAnimationsRes)
                 }
-                //Android 5.0以上自定义Dialog时发现无法横向铺满屏幕
+                // Android 5.0以上自定义Dialog时发现无法横向铺满屏幕
                 window.decorView.setPadding(0, 0, 0, 0)
                 window.setBackgroundDrawableResource(android.R.color.transparent)
             }
@@ -85,27 +83,24 @@ abstract class BaseBottomSheetDialogFragment(
      * 在此方法内初始化控件
      */
     open fun initView(view: View?, state: Bundle?) {
-
     }
 
     /**
      * 在此方法内初始化ViewModel
      */
     open fun initViewModel() {
-
     }
 
     /**
      * 在此方法内监听ViewModel
      */
     open fun observeViewModel() {
-
     }
 
     override fun show(manager: FragmentManager, tag: String?) {
         try {
             val transaction = manager.beginTransaction()
-            //在每个add事务前增加一个remove事务，防止连续的add
+            // 在每个add事务前增加一个remove事务，防止连续的add
             transaction.remove(this)
             // commit()方法换成了commitAllowingStateLoss()
             // 解决Can not perform this action after onSaveInstanceState with DialogFragment

@@ -7,8 +7,7 @@ import com.example.william.my.core.base.viewmodel.BaseViewModel
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseVMFragment<VB : ViewBinding?, VM : BaseViewModel>(layout: Int = 0) :
-    BaseVBFragment<VB>(layout) {
+abstract class BaseVMFragment<VB : ViewBinding?, VM : BaseViewModel>(layout: Int = 0) : BaseVBFragment<VB>(layout) {
 
     private var _viewModel: VM? = null
     protected val mViewModel get() = _viewModel!!

@@ -18,14 +18,14 @@ abstract class BaseFragmentActivity : BaseActivity() {
     }
 
     private fun initFragment() {
-        //创建FragmentManager对象
+        // 创建FragmentManager对象
         val manager = supportFragmentManager
-        //创建FragmentTransaction事务对象
+        // 创建FragmentTransaction事务对象
         val fragmentTransaction = manager.beginTransaction()
-        //使用replace（将要替换位置的i的，替换的页面）方法实现页面的替换
+        // 使用replace（将要替换位置的i的，替换的页面）方法实现页面的替换
         val fragment = setFragment()
         fragmentTransaction.replace(R.id.fragment, fragment)
-        //提交事务
+        // 提交事务
         fragmentTransaction.commitAllowingStateLoss()
     }
 

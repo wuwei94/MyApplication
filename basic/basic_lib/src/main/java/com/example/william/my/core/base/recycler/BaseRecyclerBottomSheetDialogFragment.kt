@@ -23,9 +23,7 @@ abstract class BaseRecyclerBottomSheetDialogFragment<T : Any> :
 
     private lateinit var recyclerHandler: BaseRecyclerHandler<T>
 
-    override fun getViewBinding(): BaseFragmentRecyclerViewBinding {
-        return BaseFragmentRecyclerViewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): BaseFragmentRecyclerViewBinding = BaseFragmentRecyclerViewBinding.inflate(layoutInflater)
 
     override fun initView(view: View?, state: Bundle?) {
         super.initView(view, state)

@@ -43,7 +43,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         initEdgeToEdge()
         super.onCreate(savedInstanceState)
-        //setTheme(R.style.base_WindowAnimTheme_Slide)
+        // setTheme(R.style.base_WindowAnimTheme_Slide)
 
         initARouter()
         initEventBus()
@@ -63,12 +63,12 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //EventBusHelper.register(this)
+        // EventBusHelper.register(this)
     }
 
     override fun onStop() {
         super.onStop()
-        //EventBusHelper.unregister(this)
+        // EventBusHelper.unregister(this)
     }
 
     @Suppress("DEPRECATION")
@@ -184,9 +184,7 @@ open class BaseActivity : AppCompatActivity() {
      *
      * @return true 表示在 onCreate 自动调用 [androidx.activity.enableEdgeToEdge]，透明化状态栏与导航栏并延伸布局到系统栏下方；false 则保持系统默认窗口行为
      */
-    protected open fun enableEdgeToEdge(): Boolean {
-        return true
-    }
+    protected open fun enableEdgeToEdge(): Boolean = true
 
     /**
      * 是否自动为根视图应用系统栏安全内边距（防状态栏/导航栏遮挡内容）
@@ -194,48 +192,38 @@ open class BaseActivity : AppCompatActivity() {
      * @return true（默认）表示由 [applyEdgeToEdgeInsets] 自动根据 SystemBars 动态设置 padding 留出安全区域；
      *         false 表示不添加 padding，内容直接贯穿到状态栏/导航栏下方（如相机全屏预览、视频播放等场景）
      */
-    protected open fun fitsSystemWindows(): Boolean {
-        return true
-    }
+    protected open fun fitsSystemWindows(): Boolean = true
 
     /**
      * 是否避让顶部状态栏
      * 仅在 [fitsSystemWindows] 为 true 时生效，默认 true
      */
-    protected open fun fitsStatusBar(): Boolean {
-        return true
-    }
+    protected open fun fitsStatusBar(): Boolean = true
 
     /**
      * 是否避让底部导航栏（小白条）
      * 仅在 [fitsSystemWindows] 为 true 时生效，默认 true
      */
-    protected open fun fitsNavigationBar(): Boolean {
-        return true
-    }
+    protected open fun fitsNavigationBar(): Boolean = true
 
     /**
      * 是否自动避让输入法软键盘（IME）高度
      * 仅在 [fitsSystemWindows] 为 true 时生效，默认 true
      */
-    protected open fun fitsIme(): Boolean {
-        return true
-    }
+    protected open fun fitsIme(): Boolean = true
 
     /**
      * 获取 Edge-to-Edge 状态栏样式
      *
      * 默认根据 [statusBarDarkFont] 返回浅色模式（黑色文字）或深色模式（白色文字）样式。
      */
-    protected open fun getStatusBarStyle(): SystemBarStyle {
-        return if (statusBarDarkFont()) {
-            SystemBarStyle.light(
-                android.graphics.Color.TRANSPARENT,
-                android.graphics.Color.TRANSPARENT
-            )
-        } else {
-            SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
-        }
+    protected open fun getStatusBarStyle(): SystemBarStyle = if (statusBarDarkFont()) {
+        SystemBarStyle.light(
+            android.graphics.Color.TRANSPARENT,
+            android.graphics.Color.TRANSPARENT,
+        )
+    } else {
+        SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
     }
 
     /**
@@ -243,17 +231,13 @@ open class BaseActivity : AppCompatActivity() {
      *
      * @return true 表示状态栏为深色字体（适合白色/浅色背景页面），false 表示白色字体（适合深色/全屏媒体页面）
      */
-    protected open fun statusBarDarkFont(): Boolean {
-        return true
-    }
+    protected open fun statusBarDarkFont(): Boolean = true
 
     /**
      * 底部导航栏（小白条）图标与文字颜色是否为深色（黑色）
      * 默认跟随 [statusBarDarkFont] 保持一致
      */
-    protected open fun navigationBarDarkIcon(): Boolean {
-        return statusBarDarkFont()
-    }
+    protected open fun navigationBarDarkIcon(): Boolean = statusBarDarkFont()
 
     /**
      * 软键盘高度动态变化回调（单位：px）
@@ -358,7 +342,5 @@ open class BaseActivity : AppCompatActivity() {
     // 7. 屏幕与系统底层适配
     // ==============================================================================
 
-    override fun getResources(): Resources {
-        return DensityAdaptUtils.adaptWidth(super.getResources(), 360f)
-    }
+    override fun getResources(): Resources = DensityAdaptUtils.adaptWidth(super.getResources(), 360f)
 }

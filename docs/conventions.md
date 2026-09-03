@@ -90,12 +90,17 @@
 
 ## 构建与质量维护
 
-- `./gradlew assembleDebug` — 全量构建
+- `./gradlew assembleDebug` — 全量构建（Spotless 不在此流程中阻塞构建）
 - `./gradlew :modules:<模块名>:assembleDebug` — 单模块构建
 - `./gradlew generateModulesGraph` — 自动分析全工程模块依赖并生成/更新各模块 `README.md` 中的 Mermaid 依赖拓扑图
-- `./gradlew spotlessCheck` — 执行 Spotless + ktlint 格式规范静态检查
-- `./gradlew spotlessApply` — 自动修复并格式化全工程 Kotlin / KTS 代码风格
+- `./gradlew spotlessCheck` — 执行全工程 Spotless + ktlint 格式规范静态检查
+- `./gradlew :<模块路径>:spotlessCheck` — 执行指定单模块的 Spotless 检查（如 `./gradlew :basic:basic_lib:spotlessCheck`）
+- `./gradlew spotlessApply` — 自动修复并格式化全工程 Kotlin / KTS 代码风格（统一换行符为 LF）
+- `./gradlew :<模块路径>:spotlessApply` — 自动修复并格式化指定单模块代码风格
 - `./gradlew :benchmarks:connectedCheck` — 运行 Benchmark 基准测试与生成 Baseline Profile 基线配置文件
+- **代码规范保护机制**：
+  - 全工程遵循 `.editorconfig` 与 `.gitattributes`（统一换行符为 LF、4 格缩进、UTF-8 字符集）；
+  - 为避免全量格式化污染提交历史，请在本地执行 `git config blame.ignoreRevsFile .git-blame-ignore-revs`，让 `git blame` 自动忽略格式化重构提交；
 - 使用 `--configure-on-demand` 加速构建
 
 ## 快速查找

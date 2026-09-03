@@ -18,7 +18,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  * LayoutManager -> Adapter -> ItemDecoration -> OnScrollListener
  */
 class BaseRecyclerHandler<T : Any>(
-    private val host: RecyclerViewHost<T>
+    private val host: RecyclerViewHost<T>,
 ) : BaseQuickAdapter.OnItemClickListener<T>,
     BaseQuickAdapter.OnItemChildClickListener<T>,
     BaseQuickAdapter.OnItemLongClickListener<T>,
@@ -176,16 +176,12 @@ class BaseRecyclerHandler<T : Any>(
     override fun onLongClick(
         adapter: BaseQuickAdapter<T, *>,
         view: View,
-        position: Int
-    ): Boolean {
-        return host.onLongClick(adapter, view, position)
-    }
+        position: Int,
+    ): Boolean = host.onLongClick(adapter, view, position)
 
     override fun onItemLongClick(
         adapter: BaseQuickAdapter<T, *>,
         view: View,
-        position: Int
-    ): Boolean {
-        return host.onItemLongClick(adapter, view, position)
-    }
+        position: Int,
+    ): Boolean = host.onItemLongClick(adapter, view, position)
 }

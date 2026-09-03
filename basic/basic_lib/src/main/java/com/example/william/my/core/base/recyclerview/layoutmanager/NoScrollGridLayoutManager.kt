@@ -10,15 +10,10 @@ class NoScrollGridLayoutManager(
     context: Context?,
     spanCount: Int = 1,
     private val horizontally: Boolean = false,
-    private val vertically: Boolean = false
-) :
-    GridLayoutManager(context, spanCount) {
+    private val vertically: Boolean = false,
+) : GridLayoutManager(context, spanCount) {
 
-    override fun canScrollHorizontally(): Boolean {
-        return horizontally
-    }
+    override fun canScrollHorizontally(): Boolean = horizontally
 
-    override fun canScrollVertically(): Boolean {
-        return vertically
-    }
+    override fun canScrollVertically(): Boolean = vertically
 }

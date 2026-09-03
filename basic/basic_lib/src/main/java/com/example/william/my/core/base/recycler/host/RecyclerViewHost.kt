@@ -48,9 +48,7 @@ interface RecyclerViewHost<T : Any> :
     /**
      * 初始化RecyclerView的LayoutManager
      */
-    fun initRecyclerManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(getHostContext())
-    }
+    fun initRecyclerManager(): RecyclerView.LayoutManager = LinearLayoutManager(getHostContext())
 
     /**
      * 初始化单类型Adapter
@@ -136,9 +134,7 @@ interface RecyclerViewHost<T : Any> :
     /**
      * item长按事件
      */
-    override fun onLongClick(adapter: BaseQuickAdapter<T, *>, view: View, position: Int): Boolean {
-        return false
-    }
+    override fun onLongClick(adapter: BaseQuickAdapter<T, *>, view: View, position: Int): Boolean = false
 
     /**
      * item子view长按事件
@@ -146,16 +142,12 @@ interface RecyclerViewHost<T : Any> :
     override fun onItemLongClick(
         adapter: BaseQuickAdapter<T, *>,
         view: View,
-        position: Int
-    ): Boolean {
-        return false
-    }
+        position: Int,
+    ): Boolean = false
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-
     }
 }

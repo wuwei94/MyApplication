@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 class RItemDecorationEdgeTop(
-    private val marginTop: Int
+    private val marginTop: Int,
 ) : RItemDecoration() {
 
     /**
@@ -15,14 +15,14 @@ class RItemDecorationEdgeTop(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         val itemCount = getItemCount(parent)
         val spanCount = getSpanCount(parent)
 
         val position = parent.getChildAdapterPosition(view)
         val column = position % spanCount // 第几列
-        val row = position / spanCount  // 第几行
+        val row = position / spanCount // 第几行
 
         if (position == RecyclerView.NO_POSITION) return
 

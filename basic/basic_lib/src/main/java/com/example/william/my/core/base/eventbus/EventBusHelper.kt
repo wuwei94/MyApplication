@@ -47,9 +47,7 @@ class EventBusHelper private constructor() {
             return this
         }
 
-        fun isRegistered(subscriber: Any): Boolean {
-            return EventBus.getDefault().isRegistered(subscriber)
-        }
+        fun isRegistered(subscriber: Any): Boolean = EventBus.getDefault().isRegistered(subscriber)
 
         /**
          * 注册 EventBus
@@ -73,17 +71,15 @@ class EventBusHelper private constructor() {
             }
         }
 
-        //终止事件继续传递
+        // 终止事件继续传递
         fun cancelDelivery(event: Any) {
             EventBus.getDefault().cancelEventDelivery(event)
         }
 
-        //获取保存起来的粘性事件
-        fun <T> getStickyEvent(classType: Class<T>): T {
-            return EventBus.getDefault().getStickyEvent(classType)
-        }
+        // 获取保存起来的粘性事件
+        fun <T> getStickyEvent(classType: Class<T>): T = EventBus.getDefault().getStickyEvent(classType)
 
-        //删除保存中的粘性事件
+        // 删除保存中的粘性事件
         fun removeStickyEvent(event: Any) {
             EventBus.getDefault().removeStickyEvent(event)
         }
@@ -127,7 +123,7 @@ class EventBusHelper private constructor() {
         private fun canSubscribeEvent(
             subscriber: Any,
             subscriberInfo: SubscriberInfoIndex,
-            subscriberInfoMap: MutableMap<String, Boolean>
+            subscriberInfoMap: MutableMap<String, Boolean>,
         ): Boolean {
             var clazz: Class<*>? = subscriber.javaClass
             var result: Boolean? = subscriberInfoMap[subscriber.javaClass.simpleName]

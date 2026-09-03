@@ -15,7 +15,7 @@ abstract class NewLazyFragment(private val layout: Int = 0) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //增加了Fragment是否可见的判断
+        // 增加了Fragment是否可见的判断
         if (!isLoaded && !isHidden) {
             isLoaded = true
             lazyInit()
@@ -25,13 +25,11 @@ abstract class NewLazyFragment(private val layout: Int = 0) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return if (layout != 0) {
-            inflater.inflate(layout, container, false)
-        } else {
-            super.onCreateView(inflater, container, savedInstanceState)
-        }
+        savedInstanceState: Bundle?,
+    ): View? = if (layout != 0) {
+        inflater.inflate(layout, container, false)
+    } else {
+        super.onCreateView(inflater, container, savedInstanceState)
     }
 
     /**

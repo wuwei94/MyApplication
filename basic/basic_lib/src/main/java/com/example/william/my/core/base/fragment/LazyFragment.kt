@@ -70,13 +70,13 @@ abstract class LazyFragment(private val layout: Int = 0) : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return if (layout != 0) {
-            inflater.inflate(layout, container, false)
-        } else {
-            super.onCreateView(inflater, container, savedInstanceState)
-        }
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? = if (layout != 0) {
+        inflater.inflate(layout, container, false)
+    } else {
+        super.onCreateView(inflater, container, savedInstanceState)
     }
 
     /**

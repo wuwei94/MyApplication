@@ -7,7 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.alibaba.android.arouter.launcher.ARouter
 
 abstract class BaseAndroidViewModel(app: Application) :
-    AndroidViewModel(app), DefaultLifecycleObserver {
+    AndroidViewModel(app),
+    DefaultLifecycleObserver {
 
     var error: MutableLiveData<Throwable> = MutableLiveData()
 

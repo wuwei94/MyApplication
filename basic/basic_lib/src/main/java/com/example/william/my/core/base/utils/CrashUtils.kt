@@ -62,25 +62,26 @@ object CrashUtils {
             if (crashDirPath.endsWith(FILE_SEP!!)) crashDirPath else crashDirPath + FILE_SEP
         }
         Thread.setDefaultUncaughtExceptionHandler(
-            getUncaughtExceptionHandler(dirPath, onCrashListener)
+            getUncaughtExceptionHandler(dirPath, onCrashListener),
         )
     }
 
     private fun getUncaughtExceptionHandler(
-        dirPath: String, onCrashListener: OnCrashListener?
-    ): Thread.UncaughtExceptionHandler {
-        return Thread.UncaughtExceptionHandler { t, e ->
-            val time = SimpleDateFormat("yyyy_MM_dd-HH_mm_ss", Locale.CHINA).format(Date())
-            val crashInfo = CrashInfo(time, e)
-            val crashFile = "$dirPath$time.txt"
-            FileIOUtils.writeFileFromString(crashFile, crashInfo.toString(), true)
-            onCrashListener?.onCrash(crashInfo)
-            DEFAULT_UNCAUGHT_EXCEPTION_HANDLER?.uncaughtException(t, e)
-        }
+        dirPath: String,
+        onCrashListener: OnCrashListener?,
+    ): Thread.UncaughtExceptionHandler = Thread.UncaughtExceptionHandler { t, e ->
+        val time = SimpleDateFormat("yyyy_MM_dd-HH_mm_ss", Locale.CHINA).format(Date())
+        val crashInfo = CrashInfo(time, e)
+        val crashFile = "$dirPath$time.txt"
+        FileIOUtils.writeFileFromString(crashFile, crashInfo.toString(), true)
+        onCrashListener?.onCrash(crashInfo)
+        DEFAULT_UNCAUGHT_EXCEPTION_HANDLER?.uncaughtException(t, e)
     }
 
-    private fun getAppVersionName(app: Application): String {
-        return if (app.packageName.isNullOrBlank()) "" else try {
+    private fun getAppVersionName(app: Application): String = if (app.packageName.isNullOrBlank()) {
+        ""
+    } else {
+        try {
             val pi = app.packageManager.getPackageInfo(app.packageName, 0)
             pi?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
@@ -89,8 +90,10 @@ object CrashUtils {
         }
     }
 
-    private fun getAppVersionCode(app: Application): Long {
-        return if (app.packageName.isNullOrBlank()) -1 else try {
+    private fun getAppVersionCode(app: Application): Long = if (app.packageName.isNullOrBlank()) {
+        -1
+    } else {
+        try {
             val pi = app.packageManager.getPackageInfo(app.packageName, 0)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 pi?.longVersionCode ?: -1
@@ -256,8 +259,6 @@ object CrashUtils {
             mFileHeadProvider.append(key, value)
         }
 
-        override fun toString(): String {
-            return mFileHeadProvider.toString() + getFullStackTrace(throwable)
-        }
+        override fun toString(): String = mFileHeadProvider.toString() + getFullStackTrace(throwable)
     }
 }

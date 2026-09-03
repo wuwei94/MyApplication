@@ -13,7 +13,7 @@ object ImageUtils {
         res: Resources?,
         resId: Int,
         reqWidth: Int,
-        reqHeight: Int
+        reqHeight: Int,
     ): Bitmap {
         // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
         val options = BitmapFactory.Options()
@@ -41,7 +41,7 @@ object ImageUtils {
     private fun calculateInSampleSize(
         options: BitmapFactory.Options,
         reqWidth: Int,
-        reqHeight: Int
+        reqHeight: Int,
     ): Int {
         // 源图片的高度和宽度
         val height = options.outHeight

@@ -12,7 +12,7 @@ object SpannableUtils {
         highlight: String,
         color: Int,
         isUnderlineText: Boolean = false,
-        onClick: () -> Unit = {}
+        onClick: () -> Unit = {},
     ): SpannableStringBuilder {
         val startIndex = this.indexOf(highlight)
         if (startIndex >= 0) {
@@ -29,7 +29,7 @@ object SpannableUtils {
                 },
                 startIndex,
                 startIndex + highlight.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
         }
         return this

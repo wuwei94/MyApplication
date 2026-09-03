@@ -14,7 +14,9 @@ build-logic/convention/src/main/kotlin/
 │   ├── NiaBuildType.kt                 # 构建类型（debug/release）
 │   ├── ProjectExtensions.kt            # Project 扩展属性
 │   ├── PrintTestApks.kt                # 打印测试 APK 路径
-│   └── AndroidInstrumentedTests.kt     # 禁用空测试模块
+│   ├── AndroidInstrumentedTests.kt     # 禁用空测试模块
+│   ├── Graph.kt                        # 依赖拓扑图生成逻辑
+│   └── Spotless.kt                     # Spotless + ktlint 代码格式化配置
 ├── AndroidLibraryConventionPlugin.kt           # Library 模块插件
 ├── AndroidApplicationConventionPlugin.kt       # Application 模块插件
 ├── AndroidFeatureConventionPlugin.kt           # Feature 业务功能模块插件
@@ -31,7 +33,8 @@ build-logic/convention/src/main/kotlin/
 ├── AndroidObjectBoxConventionPlugin.kt         # ObjectBox 数据库插件
 ├── AndroidLibraryComposeConventionPlugin.kt    # Library Compose 插件
 ├── AndroidApplicationComposeConventionPlugin.kt # Application Compose 插件
-└── AndroidTestConventionPlugin.kt              # 测试模块插件
+├── AndroidTestConventionPlugin.kt              # 测试模块插件
+└── RootPlugin.kt                               # 根工程全局管理插件（拓扑图与 Spotless）
 ```
 
 ---
@@ -84,7 +87,7 @@ build-logic/convention/src/main/kotlin/
 为 Library 模块提供统一配置：
 - 应用插件：`com.android.library`、`kotlin-android`、`kotlin-kapt`、`kotlin-parcelize`、`lint`
 - 构建配置：`compileSdk = 37`、`minSdk = 24`
-- 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`
+- 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`、`configureSpotlessForAndroid`
 - 资源前缀：根据模块路径自动生成
 
 ### AndroidApplicationConventionPlugin.kt
@@ -92,7 +95,7 @@ build-logic/convention/src/main/kotlin/
 为 Application 模块提供统一配置：
 - 应用插件：`com.android.application`、`kotlin-android`、`kotlin-kapt`、`kotlin-parcelize`、`lint`
 - 构建配置：`compileSdk = 37`、`minSdk = 24`、`targetSdk = 37`
-- 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`、`configureFeatureAndroid`
+- 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`、`configureFeatureAndroid`、`configureSpotlessForAndroid`
 
 ### AndroidFeatureConventionPlugin.kt
 
@@ -110,8 +113,15 @@ build-logic/convention/src/main/kotlin/
 
 为纯 Kotlin/JVM 模块提供配置（无 Android SDK 开销）：
 - 应用插件：`org.jetbrains.kotlin.jvm`、`nowinandroid.android.lint`
+- 构建调用：`configureSpotlessForJvm`
 - 编译目标：Java 17 / JVM 17
 - 基础测试依赖：`junit`、`kotlinx-coroutines-core`
+
+### AndroidTestConventionPlugin.kt
+
+为 Benchmark / UI 自动化测试模块提供统一配置：
+- 应用插件：`com.android.test`、`kotlin-android`
+- 调用：`configureKotlinAndroid`、`configureSpotlessForAndroid`
 
 ---
 
@@ -183,6 +193,20 @@ build-logic/convention/src/main/kotlin/
 
 禁用没有 `androidTest` 源文件的模块的仪器化测试，避免空测试编译。
 
+### Spotless.kt
+
+为全工程统一提供 Spotless + ktlint 代码格式化与规范检查：
+- 换行符基准：跨平台统一声明 `lineEndings = LineEnding.UNIX`；
+- ktlint 规则配置：接入 ktlint 1.4.0 并通过 `editorConfigOverride` 适配 Composable 大驼峰命名规则；
+- 目标与过滤：扫描 `src/**/*.kt` 与 `*.kts`，排除 `build/` 等编译器派生目录；
+- 分层配置：分别提供 `configureSpotlessForRootProject`、`configureSpotlessForAndroid` 与 `configureSpotlessForJvm`。
+
+### RootPlugin.kt
+
+根工程全局管理插件，负责：
+- 注册 `generateModulesGraph` 任务自动生成 Mermaid 模块依赖拓扑图；
+- 注册根工程全局 Spotless 任务。
+
 ### AndroidGreenDaoConventionPlugin.kt
 
 GreenDao ORM 配置（当前已禁用，所有代码已注释）。
@@ -220,4 +244,12 @@ dependencies {
 根目录下的 `compose_compiler_config.conf` 由 `AndroidCompose.kt` 自动注入 Compose 编译器扩展：
 - 将常用 Java 时间类型（`java.time.*`）、Kotlin 集合类型以及通用基础模型（如 `RouterItem`）显式标记为 `@Stable`；
 - 避免 Compose 编译器因无法推断外部类稳定性而产生无意义的重组，提升列表与复杂页面的滑动流畅度。
+
+### 4. Spotless + ktlint 代码风格统一规范与跨平台根因治理
+
+第三阶段工程效能治理落地：
+- **换行符治理**：工程根目录配置 `.gitattributes`（`* text=auto eol=lf`）与 `.editorconfig`（`end_of_line = lf`），配合 `Spotless.kt` 强制 `lineEndings = LineEnding.UNIX`，彻底杜绝 Windows 与 Linux/macOS 跨平台换行符假阳性报错；
+- **全工程覆盖**：在 `AndroidLibraryConventionPlugin`、`AndroidApplicationConventionPlugin`、`JvmLibraryConventionPlugin` 与 `AndroidTestConventionPlugin` 中统一接入 Spotless；
+- **构建效能解耦**：`spotlessCheck` 作为独立代码质量检查任务挂载，不阻塞日常 `assembleDebug` 调试构建；
+- **Git Blame 历史保护**：配置根目录 `.git-blame-ignore-revs`，团队通过 `git config blame.ignoreRevsFile .git-blame-ignore-revs` 即可完全跳过全量格式化提交，保留原始作者代码演进历史。
 

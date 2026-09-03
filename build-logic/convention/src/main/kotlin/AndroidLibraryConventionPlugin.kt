@@ -20,6 +20,7 @@ import com.google.samples.apps.nowinandroid.configureDepsAndroid
 import com.google.samples.apps.nowinandroid.configureFlavors
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
 import com.google.samples.apps.nowinandroid.configurePrintApksTask
+import com.google.samples.apps.nowinandroid.configureSpotlessForAndroid
 import com.google.samples.apps.nowinandroid.disableUnnecessaryAndroidTests
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -34,6 +35,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             apply(plugin = "kotlin-kapt")
             apply(plugin = "kotlin-parcelize")
             apply(plugin = "nowinandroid.android.lint")
+            configureSpotlessForAndroid()
             extensions.configure<LibraryExtension> {
                 compileSdk = 37
                 defaultConfig.minSdk = 24

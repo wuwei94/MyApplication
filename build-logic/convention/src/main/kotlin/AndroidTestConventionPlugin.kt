@@ -16,6 +16,7 @@
 
 import com.android.build.api.dsl.TestExtension
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
+import com.google.samples.apps.nowinandroid.configureSpotlessForAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -26,6 +27,7 @@ class AndroidTestConventionPlugin : Plugin<Project> {
         with(target) {
             apply(plugin = "com.android.test")
             apply(plugin = "kotlin-android")
+            configureSpotlessForAndroid()
 
             extensions.configure<TestExtension> {
                 compileSdk = 37

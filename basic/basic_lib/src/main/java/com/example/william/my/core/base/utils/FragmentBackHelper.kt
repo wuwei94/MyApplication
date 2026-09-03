@@ -50,9 +50,7 @@ object FragmentBackHelper {
      *
      * @return 如果处理了back键则返回 **true**
      */
-    fun handleBackPress(fragment: Fragment): Boolean {
-        return handleBackPress(fragment.childFragmentManager)
-    }
+    fun handleBackPress(fragment: Fragment): Boolean = handleBackPress(fragment.childFragmentManager)
 
     /**
      * 将back事件分发给Activity中的子Fragment,
@@ -60,21 +58,21 @@ object FragmentBackHelper {
      *
      * @return 如果处理了back键则返回 **true**
      */
-    fun handleBackPress(fragmentActivity: FragmentActivity): Boolean {
-        return handleBackPress(fragmentActivity.supportFragmentManager)
-    }
+    fun handleBackPress(fragmentActivity: FragmentActivity): Boolean = handleBackPress(fragmentActivity.supportFragmentManager)
 
     /**
      * 判断Fragment是否处理了Back键
      *
      * @return 如果处理了back键则返回 **true**
      */
-    fun isFragmentBackHandled(fragment: Fragment?): Boolean {
-        return (fragment != null && fragment.isVisible
-                && fragment.userVisibleHint //for ViewPager
-                && fragment is FragmentBackHandler
-                && (fragment as FragmentBackHandler).onBackPressed())
-    }
+    fun isFragmentBackHandled(fragment: Fragment?): Boolean = (
+        fragment != null &&
+            fragment.isVisible &&
+            fragment.userVisibleHint &&
+            // for ViewPager
+            fragment is FragmentBackHandler &&
+            (fragment as FragmentBackHandler).onBackPressed()
+        )
 
     interface FragmentBackHandler {
         /**

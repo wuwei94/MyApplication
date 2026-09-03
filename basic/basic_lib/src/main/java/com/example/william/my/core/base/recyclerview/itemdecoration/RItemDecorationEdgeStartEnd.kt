@@ -15,7 +15,7 @@ class RItemDecorationEdgeStartEnd(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         val position = parent.getChildAdapterPosition(view)
         if (position == RecyclerView.NO_POSITION) return
@@ -24,7 +24,7 @@ class RItemDecorationEdgeStartEnd(
         val spanCount = getSpanCount(parent)
 
         val column = position % spanCount // 第几列
-        val row = position / spanCount  // 第几行
+        val row = position / spanCount // 第几行
 
         if (position == 0) {
             outRect.left = space

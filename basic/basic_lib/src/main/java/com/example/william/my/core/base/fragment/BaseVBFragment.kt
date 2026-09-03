@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 
-
-abstract class BaseVBFragment<VB : ViewBinding?>(layout: Int = 0) :
-    BaseFragment(layout) {
+abstract class BaseVBFragment<VB : ViewBinding?>(layout: Int = 0) : BaseFragment(layout) {
 
     private var _binding: VB? = null
     protected val mBinding get() = _binding!!
@@ -18,7 +16,7 @@ abstract class BaseVBFragment<VB : ViewBinding?>(layout: Int = 0) :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = getViewBinding()
         return mBinding.root

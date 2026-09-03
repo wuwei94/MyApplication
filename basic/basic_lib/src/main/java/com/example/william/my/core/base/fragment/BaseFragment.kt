@@ -56,21 +56,18 @@ open class BaseFragment(layout: Int = 0) : NewLazyFragment(layout) {
      * 在此方法内初始化控件
      */
     open fun initView(view: View?, state: Bundle?) {
-
     }
 
     /**
      * 在此方法内初始化ViewModel
      */
     open fun initViewModel() {
-
     }
 
     /**
      * 在此方法内监听ViewModel
      */
     open fun observeViewModel() {
-
     }
 
     /**

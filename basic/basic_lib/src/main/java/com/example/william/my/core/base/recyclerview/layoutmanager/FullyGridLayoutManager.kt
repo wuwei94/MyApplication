@@ -21,7 +21,10 @@ class FullyGridLayoutManager(
     private val mRecyclerViewState = RecyclerView.State()
 
     override fun onMeasure(
-        recycler: RecyclerView.Recycler, state: RecyclerView.State, widthSpec: Int, heightSpec: Int
+        recycler: RecyclerView.Recycler,
+        state: RecyclerView.State,
+        widthSpec: Int,
+        heightSpec: Int,
     ) {
         val widthSize = View.MeasureSpec.getSize(widthSpec)
         val heightSize = View.MeasureSpec.getSize(heightSpec)
@@ -36,7 +39,7 @@ class FullyGridLayoutManager(
                 position,
                 View.MeasureSpec.makeMeasureSpec(position, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(position, View.MeasureSpec.UNSPECIFIED),
-                mMeasuredDimension
+                mMeasuredDimension,
             )
             if (orientation == HORIZONTAL) {
                 if (position % span == 0) {
@@ -62,11 +65,9 @@ class FullyGridLayoutManager(
             }
 
             View.MeasureSpec.AT_MOST -> {
-
             }
 
             View.MeasureSpec.UNSPECIFIED -> {
-
             }
         }
         when (heightMode) {
@@ -75,11 +76,9 @@ class FullyGridLayoutManager(
             }
 
             View.MeasureSpec.AT_MOST -> {
-
             }
 
             View.MeasureSpec.UNSPECIFIED -> {
-
             }
         }
         setMeasuredDimension(width, height)
@@ -90,18 +89,22 @@ class FullyGridLayoutManager(
         position: Int,
         widthSpec: Int,
         heightSpec: Int,
-        measuredDimension: IntArray
+        measuredDimension: IntArray,
     ) {
         if (position < itemCount) {
             try {
                 val view = recycler.getViewForPosition(0)
                 val params = view.layoutParams as RecyclerView.LayoutParams
                 val childWidthSpec = ViewGroup.getChildMeasureSpec(
-                    widthSpec, paddingLeft + paddingRight, params.width
+                    widthSpec,
+                    paddingLeft + paddingRight,
+                    params.width,
                 )
                 println("widthSpec $widthSpec params.width ${params.width} childWidthSpec $childWidthSpec")
                 val childHeightSpec = ViewGroup.getChildMeasureSpec(
-                    heightSpec, paddingTop + paddingBottom, params.height
+                    heightSpec,
+                    paddingTop + paddingBottom,
+                    params.height,
                 )
                 println("heightSpec $heightSpec params.height ${params.height} childHeightSpec $childHeightSpec")
                 view.measure(childWidthSpec, childHeightSpec)

@@ -77,7 +77,10 @@ object LocationManagerUtils {
         // 1秒更新一次，或最小位移变化超过1米更新一次；
         // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置
         mLocationManager?.requestLocationUpdates(
-            mBestProvider, minTimeMs, minDistanceM, locationListener
+            mBestProvider,
+            minTimeMs,
+            minDistanceM,
+            locationListener,
         )
     }
 
@@ -99,13 +102,17 @@ object LocationManagerUtils {
                 val geocoder = Geocoder(context.applicationContext, Locale.getDefault())
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     geocoder.getFromLocation(
-                        it.latitude, it.longitude, 1
+                        it.latitude,
+                        it.longitude,
+                        1,
                     ) { addresses ->
                         result = addresses
                     }
                 } else {
                     result = geocoder.getFromLocation(
-                        it.latitude, it.longitude, 1
+                        it.latitude,
+                        it.longitude,
+                        1,
                     )
                 }
             }
@@ -123,7 +130,7 @@ object LocationManagerUtils {
         val result = getAddress(context, location)
         var city: String? = ""
         city = if (!result.isNullOrEmpty()) {
-            result[0].locality //获取城市
+            result[0].locality // 获取城市
         } else {
             "获取不到城市信息"
         }
@@ -138,7 +145,7 @@ object LocationManagerUtils {
         val result = getAddress(context, location)
         var address: String? = ""
         address = if (!result.isNullOrEmpty()) {
-            result[0].getAddressLine(0) //获取详细地址
+            result[0].getAddressLine(0) // 获取详细地址
         } else {
             "获取不到详细地址信息"
         }
@@ -153,13 +160,9 @@ object LocationManagerUtils {
         return mLocation
     }
 
-    fun getLocalCity(context: Context): String {
-        return getLocalCity(context, mLocation) ?: ""
-    }
+    fun getLocalCity(context: Context): String = getLocalCity(context, mLocation) ?: ""
 
-    fun getAddressStr(context: Context): String {
-        return getAddressStr(context, mLocation) ?: ""
-    }
+    fun getAddressStr(context: Context): String = getAddressStr(context, mLocation) ?: ""
 
     fun addCallback(callback: LocationCallback?) {
         mLocationCallback = callback
@@ -188,7 +191,6 @@ object LocationManagerUtils {
             super.onFirstFix(ttffMillis)
             println("第一次定位")
         }
-
     }
 
     private val listener = GpsStatus.Listener { event ->
@@ -198,7 +200,6 @@ object LocationManagerUtils {
             }
 
             GpsStatus.GPS_EVENT_SATELLITE_STATUS -> {
-
             }
 
             GpsStatus.GPS_EVENT_STARTED -> {
@@ -213,13 +214,13 @@ object LocationManagerUtils {
 
     // 位置监听
     private val locationListener: LocationListener = object : LocationListener {
-        //位置信息变化时触发
+        // 位置信息变化时触发
         override fun onLocationChanged(location: Location) {
             mLocation = location
             mLocationCallback?.locationSuccess(location)
         }
 
-        //GPS状态变化时触发
+        // GPS状态变化时触发
         @Deprecated("Deprecated in Java")
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
             when (status) {
@@ -237,12 +238,12 @@ object LocationManagerUtils {
             }
         }
 
-        //GPS开启时触发
+        // GPS开启时触发
         override fun onProviderEnabled(provider: String) {
             mLocation = mLocationManager?.getLastKnownLocation(provider)
         }
 
-        //GPS禁用时触发
+        // GPS禁用时触发
         override fun onProviderDisabled(provider: String) {
             mLocation = null
         }

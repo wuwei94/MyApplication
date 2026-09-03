@@ -120,10 +120,10 @@ object NetworkChangeHelper {
 
         override fun onCapabilitiesChanged(
             network: Network,
-            networkCapabilities: NetworkCapabilities
+            networkCapabilities: NetworkCapabilities,
         ) {
             super.onCapabilitiesChanged(network, networkCapabilities)
-            //网络变化时，这个方法会回调多次
+            // 网络变化时，这个方法会回调多次
             if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
                 if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     Log.i(TAG, "onCapabilitiesChanged: 网络类型为wifi")

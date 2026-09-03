@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alibaba.android.arouter.launcher.ARouter
 
-abstract class BaseViewModel : ViewModel(), DefaultLifecycleObserver {
+abstract class BaseViewModel :
+    ViewModel(),
+    DefaultLifecycleObserver {
 
     var error: MutableLiveData<Throwable> = MutableLiveData()
 
