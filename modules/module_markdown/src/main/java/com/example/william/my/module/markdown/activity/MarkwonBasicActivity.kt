@@ -16,6 +16,7 @@ import io.noties.markwon.core.CorePlugin
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
 import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.ext.tasklist.TaskListPlugin
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.glide.GlideImagesPlugin
@@ -62,10 +63,18 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
     }
 
     private fun initMarkwon() {
+        val tableTheme = TableTheme.Builder()
+            .tableBorderWidth(dpToPx(1))
+            .tableBorderColor(0x33888888.toInt())
+            .tableCellPadding(dpToPx(8))
+            .tableHeaderRowBackgroundColor(0x18888888.toInt())
+            .tableEvenRowBackgroundColor(0x08888888.toInt())
+            .build()
+
         // 1. 标准全功能 Markwon（核心 + 表格 + 任务清单 + 删除线 + HTML + Glide 图片 + 链接拦截）
         mDefaultMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
-            .usePlugin(TablePlugin.create(this))
+            .usePlugin(TablePlugin.create(tableTheme))
             .usePlugin(TaskListPlugin.create(this))
             .usePlugin(StrikethroughPlugin.create())
             .usePlugin(HtmlPlugin.create())
@@ -82,7 +91,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
         // 2. 自定义主题 Markwon（定制引用条颜色、代码块背景、列表样式）
         mCustomThemeMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
-            .usePlugin(TablePlugin.create(this))
+            .usePlugin(TablePlugin.create(tableTheme))
             .usePlugin(TaskListPlugin.create(this))
             .usePlugin(StrikethroughPlugin.create())
             .usePlugin(HtmlPlugin.create())
@@ -99,6 +108,10 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
                 }
             })
             .build()
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density + 0.5f).toInt()
     }
 
     override fun buildList(): ArrayList<String> {

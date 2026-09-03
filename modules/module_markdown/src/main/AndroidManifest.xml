@@ -5,6 +5,7 @@
         <activity android:name=".MarkdownMainActivity" />
         <activity android:name=".activity.MarkwonBasicActivity" />
         <activity android:name=".activity.MarkwonHighlightActivity" />
+        <activity android:name=".activity.StreamTypewriterActivity" />
     </application>
 
 </manifest>

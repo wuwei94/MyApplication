@@ -1,6 +1,7 @@
 package com.example.william.my.module.markdown.activity
 
 import android.os.Bundle
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.example.william.my.module.markdown.grammar.MyGrammarLocator
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.CorePlugin
 import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.syntax.Prism4jThemeDarkula
 import io.noties.markwon.syntax.Prism4jThemeDefault
 import io.noties.markwon.syntax.SyntaxHighlightPlugin
@@ -61,11 +63,19 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
     private fun initPrism4j() {
         mPrism4j = Prism4j(MyGrammarLocator())
 
+        val tableTheme = TableTheme.Builder()
+            .tableBorderWidth(dpToPx(1))
+            .tableBorderColor(0x33888888.toInt())
+            .tableCellPadding(dpToPx(8))
+            .tableHeaderRowBackgroundColor(0x18888888.toInt())
+            .tableEvenRowBackgroundColor(0x08888888.toInt())
+            .build()
+
         // 1. Darkula 暗黑代码主题
         val darkulaTheme = Prism4jThemeDarkula.create()
         mDarkulaMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
-            .usePlugin(TablePlugin.create(this))
+            .usePlugin(TablePlugin.create(tableTheme))
             .usePlugin(SyntaxHighlightPlugin.create(mPrism4j, darkulaTheme))
             .build()
 
@@ -73,9 +83,13 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
         val defaultTheme = Prism4jThemeDefault.create()
         mLightMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
-            .usePlugin(TablePlugin.create(this))
+            .usePlugin(TablePlugin.create(tableTheme))
             .usePlugin(SyntaxHighlightPlugin.create(mPrism4j, defaultTheme))
             .build()
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density + 0.5f).toInt()
     }
 
     override fun buildList(): ArrayList<String> {
@@ -449,7 +463,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
 
         lifecycleScope.launch {
             var parseTime: Long
-            var spanned: CharSequence
+            var spanned: Spanned
 
             val totalTime = measureTimeMillis {
                 // 1. 在后台线程执行 CPU 密集型解析与 Prism4j 正则高亮
@@ -463,7 +477,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             }
 
             // 2. 主线程极速渲染
-            mTextView.text = spanned
+            mDarkulaMarkwon.setParsedMarkdown(mTextView, spanned)
 
             Toast.makeText(
                 this@MarkwonHighlightActivity,

@@ -28,7 +28,7 @@ class MarkdownMainActivity : RouterRecyclerActivity() {
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 流式打字机 ──", ""))
-        routerItems.add(RouterItem("流式打字机与语法容错（待接入）", ""))
+        routerItems.add(RouterItem("流式打字机与语法容错", RouterPath.Markdown.StreamTypewriter))
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── AI 聊天实战 ──", ""))
