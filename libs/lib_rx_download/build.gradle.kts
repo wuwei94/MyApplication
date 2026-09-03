@@ -9,6 +9,5 @@ android {
 dependencies {
     api(project(":libs:lib_retrofit_rx"))
     implementation(libs.rxlifecycle)
-
-    testImplementation(libs.okhttp.mockwebserver)
 }
+

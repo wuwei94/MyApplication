@@ -38,13 +38,16 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 compileSdk = 37
                 defaultConfig.minSdk = 24
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                if (file("consumer-rules.pro").exists()) {
+                    defaultConfig.consumerProguardFiles("consumer-rules.pro")
+                }
                 testOptions.animationsDisabled = true
                 configureKotlinAndroid(this)
                 configureFlavors(this)
                 configureDepsAndroid(this)
                 // The resource prefix is derived from the module name,
                 // so resources inside ":core:module1" must be prefixed with "core_module1_"
-                //resourcePrefix =
+                // resourcePrefix =
                 //    path.split("""\W""".toRegex()).drop(1).distinct().joinToString(separator = "_")
                 //        .lowercase() + "_"
             }

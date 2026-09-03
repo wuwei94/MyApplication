@@ -24,7 +24,7 @@
 - **二级按技术来源**：分组内用「系统原生 / Jetpack / 第三方」标注示例来源，便于横向对比。
 - **底层能力 vs 第三方 UI 控件**：
   - `module_media`：聚焦系统原生 API 与硬件能力（CameraX 拍照/录像、Intent 系统裁剪）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
-  - `module_imageloader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_imageloader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
+  - `module_image_loader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_image_loader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
   - `module_widget_thirdparty`：集中收纳第三方可复用 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
 - **Jetpack 组件按主题归位原则**：
   - `module_jetpack` 专门承载**未被具体技术领域模块吸纳的通用 Jetpack 架构与生命周期数据流组件**（如 Lifecycle、Paging、ViewModel 等），且**不包含 UI 控件**。
@@ -88,10 +88,14 @@
   - 严禁采用强行截断、启发式猜测或伪数据拼接掩盖解析器与渲染器的底层缺陷；
   - 严禁通过粗暴的异常空捕获或空兜底绕过根本逻辑设计不当。
 
-## 构建
+## 构建与质量维护
 
 - `./gradlew assembleDebug` — 全量构建
 - `./gradlew :modules:<模块名>:assembleDebug` — 单模块构建
+- `./gradlew generateModulesGraph` — 自动分析全工程模块依赖并生成/更新各模块 `README.md` 中的 Mermaid 依赖拓扑图
+- `./gradlew spotlessCheck` — 执行 Spotless + ktlint 格式规范静态检查
+- `./gradlew spotlessApply` — 自动修复并格式化全工程 Kotlin / KTS 代码风格
+- `./gradlew :benchmarks:connectedCheck` — 运行 Benchmark 基准测试与生成 Baseline Profile 基线配置文件
 - 使用 `--configure-on-demand` 加速构建
 
 ## 快速查找

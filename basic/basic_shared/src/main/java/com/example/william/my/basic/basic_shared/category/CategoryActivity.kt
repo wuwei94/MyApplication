@@ -57,7 +57,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * - 控件：官方控件（Widget）/ 自定义控件（WidgetCustom）/ 第三方控件（WidgetThirdparty）
      * - 导航：Tab
      * - 动画：Anim（原生动画 + 第三方动画库）
-     * - 图片加载：ImageLoader（Coil / Glide / lib_imageloader）
+     * - 图片加载：ImageLoader（Coil / Glide / lib_image_loader）
      */
     private fun buildUiCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()

@@ -1,5 +1,5 @@
 name: lib_image_loader
-description: Flutter image loading wrapper with a swappable kernel, aligned with Android lib_imageloader.
+description: Flutter image loading wrapper with a swappable kernel, aligned with Android lib_image_loader.
 version: 0.1.0
 publish_to: none
 

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:lib_image_loader/src/cached_network_image_loader.dart';
 import 'package:lib_image_loader/src/i_image_loader.dart';
 
-/// 图片加载统一门面，与 Android lib_imageloader 对齐。
+/// 图片加载统一门面，与 Android lib_image_loader 对齐。
 /// 业务侧只依赖 [ImageLoader]，切换内核仅需替换 [kernel]，调用方零改动。
 class ImageLoader {
   ImageLoader._();

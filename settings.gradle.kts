@@ -120,7 +120,7 @@ include(":libs:lib_mqtt_paho_service")
 include(":libs:lib_nanohttpd")
 
 // 图片加载
-include(":libs:lib_imageloader")
+include(":libs:lib_image_loader")
 
 // 消息总线
 include(":libs:lib_eventbus")
@@ -178,7 +178,7 @@ include(":modules:module_bluetooth")
 // 事件总线
 include(":modules:module_event")
 // 图片加载
-include(":modules:module_imageloader")
+include(":modules:module_image_loader")
 
 // Kotlin 特性
 include(":modules:module_kotlin")
@@ -198,12 +198,15 @@ include(":modules:module_arch")
 // Compose
 include(":modules:module_compose")
 
+// 性能优化基线与基准测试 (Macrobenchmark & Baseline Profile)
+include(":benchmarks")
+
 val enableFlutter = providers.gradleProperty("enableFlutter")
     .orElse("true")
     .get()
     .toBoolean()
 if (enableFlutter) {
-    apply("flutter.gradle.kts")
+    apply(from = "flutter.gradle.kts")
 }
 include(":modules:module_flutter")
 

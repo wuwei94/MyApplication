@@ -1,6 +1,6 @@
 # lib_image_loader
 
-MyApplication 的 Flutter Demo Catalog 使用的图片加载封装库，与 Android `lib_imageloader` 结构对齐。
+MyApplication 的 Flutter Demo Catalog 使用的图片加载封装库，与 Android `lib_image_loader` 结构对齐。
 
 公共 API 从 `package:lib_image_loader/image_loader.dart` 导出，不依赖 `flutter_demo`。
 

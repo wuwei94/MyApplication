@@ -37,9 +37,10 @@ internal fun Project.configureAndroidCompose(
         dependencies {
             val bom = libs.findLibrary("androidx-compose-bom").get()
             "implementation"(platform(bom))
-            "androidTestImplementation"(platform(bom))
+            if (projectDir.resolve("src/androidTest").exists()) {
+                "androidTestImplementation"(platform(bom))
+            }
 
-            "implementation"(libs.findLibrary("androidx-material").get())
             "implementation"(libs.findLibrary("androidx-material3").get())
 
             "implementation"(libs.findLibrary("androidx-activity-compose").get())

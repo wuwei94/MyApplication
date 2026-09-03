@@ -15,6 +15,5 @@ dependencies {
     // 功能模块
     api(libs.ktor.client.logging)
     api(libs.ktor.serialization.gson)
-
-    testImplementation(libs.okhttp.mockwebserver)
 }
+

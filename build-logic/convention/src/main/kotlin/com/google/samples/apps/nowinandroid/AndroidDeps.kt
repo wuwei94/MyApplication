@@ -21,95 +21,39 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
 /**
- * Configure base Dependencies with Android options
+ * 为所有 Android 模块配置基础依赖（核心协程与基础单元测试）
  */
 internal fun Project.configureDepsAndroid(
     commonExtension: CommonExtension,
 ) {
-    // Exclude deprecated kotlin-android-extensions-runtime to avoid conflict with kotlin-parcelize-runtime
-    // This is needed when upgrading to Kotlin 2.3.0+
-    configurations.all {
-        exclude(
-            mapOf(
-                "group" to "org.jetbrains.kotlin",
-                "module" to "kotlin-android-extensions-runtime"
-            )
-        )
-    }
-
     commonExtension.apply {
         dependencies {
             "implementation"(libs.findLibrary("kotlinx-coroutines-core").get())
             "implementation"(libs.findLibrary("kotlinx-coroutines-android").get())
 
-            "implementation"(libs.findLibrary("google-gson").get())
-            "implementation"(libs.findLibrary("google-guava").get())
-            "implementation"(libs.findLibrary("google-material").get())
-
-            "implementation"(libs.findLibrary("androidx-core-ktx").get())
-            "implementation"(libs.findLibrary("androidx-activity-ktx").get())
-            "implementation"(libs.findLibrary("androidx-fragment-ktx").get())
-
-            "implementation"(libs.findLibrary("androidx-appCompat").get())
-            "implementation"(libs.findLibrary("androidx-constraintLayout").get())
-            "implementation"(libs.findLibrary("androidx-recyclerView").get())
-            "implementation"(libs.findLibrary("androidx-viewPager2").get())
-
-            "implementation"(libs.findLibrary("brvah").get())
-            "implementation"(libs.findLibrary("smartrefresh-layout").get())
-            "implementation"(libs.findLibrary("smartrefresh-header").get())
-            "implementation"(libs.findLibrary("smartrefresh-footer").get())
-
             "testImplementation"(libs.findLibrary("junit").get())
-            "androidTestImplementation"(libs.findLibrary("androidx-test-ext").get())
-            "androidTestImplementation"(libs.findLibrary("androidx-test-espresso").get())
+
+            if (projectDir.resolve("src/androidTest").exists()) {
+                "androidTestImplementation"(libs.findLibrary("androidx-test-ext").get())
+                "androidTestImplementation"(libs.findLibrary("androidx-test-espresso").get())
+            }
         }
     }
 }
 
+/**
+ * 动态为 App 入口模块注入所有 :modules: 功能模块
+ */
 internal fun Project.configureFeatureAndroid(
     commonExtension: CommonExtension,
 ) {
     commonExtension.apply {
         dependencies {
-            "implementation"(project(":modules:module_widget"))
-            "implementation"(project(":modules:module_tab"))
-            "implementation"(project(":modules:module_anim"))
-            "implementation"(project(":modules:module_widget_custom"))
-
-            "implementation"(project(":modules:module_async"))
-            "implementation"(project(":modules:module_scheduler"))
-            "implementation"(project(":modules:module_component"))
-            "implementation"(project(":modules:module_ipc"))
-            "implementation"(project(":modules:module_system_service"))
-            "implementation"(project(":modules:module_media"))
-            "implementation"(project(":modules:module_ml"))
-
-            "implementation"(project(":modules:module_sample"))
-            "implementation"(project(":modules:module_feature"))
-            "implementation"(project(":modules:module_performance"))
-
-            "implementation"(project(":modules:module_http"))
-            "implementation"(project(":modules:module_sse"))
-            "implementation"(project(":modules:module_markdown"))
-            "implementation"(project(":modules:module_socket"))
-            "implementation"(project(":modules:module_mqtt"))
-            "implementation"(project(":modules:module_bluetooth"))
-
-            "implementation"(project(":modules:module_event"))
-            "implementation"(project(":modules:module_imageloader"))
-            "implementation"(project(":modules:module_widget_thirdparty"))
-
-            "implementation"(project(":modules:module_kotlin"))
-            "implementation"(project(":modules:module_reactive"))
-            "implementation"(project(":modules:module_jetpack"))
-            "implementation"(project(":modules:module_database"))
-            "implementation"(project(":modules:module_storage"))
-            "implementation"(project(":modules:module_di"))
-            "implementation"(project(":modules:module_arch"))
-
-            "implementation"(project(":modules:module_compose"))
-            "implementation"(project(":modules:module_flutter"))
+            rootProject.subprojects.forEach { subproject ->
+                if (subproject.path.startsWith(":modules:module_")) {
+                    "implementation"(project(subproject.path))
+                }
+            }
         }
     }
 }

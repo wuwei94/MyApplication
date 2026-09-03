@@ -47,6 +47,10 @@ internal fun Project.configureKotlinAndroid(
 
     configureKotlin<KotlinAndroidProjectExtension>()
 
+    configurations.configureEach {
+        exclude(mapOf("group" to "org.jetbrains.kotlin", "module" to "kotlin-android-extensions-runtime"))
+    }
+
     dependencies {
         add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
     }
@@ -96,7 +100,7 @@ private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() =
              * The binary signature changes. The error on the declaration is no longer reported.
              * '-Xconsistent-data-class-copy-visibility' compiler flag and ConsistentCopyVisibility annotation are now unnecessary.
              */
-            "-Xconsistent-data-class-copy-visibility"
+            "-Xconsistent-data-class-copy-visibility",
         )
     }
 }

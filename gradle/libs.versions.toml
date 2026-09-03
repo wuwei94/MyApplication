@@ -1,438 +1,852 @@
 [versions]
-versionCode = "100"
-versionName = "1.0.0" # X.Y.Z; X = Major, Y = minor, Z = Patch level
-# ##################################################################################################
-# https://mvnrepository.com/artifact/com.android.tools/desugar_jdk_libs
+# ==============================================================================
+# 0. 应用语义化版本定义 (SemVer: Major.Minor.Patch)
+# ==============================================================================
+# versionCode 与 versionName 由 Gradle 自动计算合成 (versionCode = Major * 10000 + Minor * 100 + Patch)
+version-major = "1"
+version-minor = "0"
+version-patch = "0"
+
+# ==============================================================================
+# 1. 核心运行时与 Kotlin 基础设施
+# ==============================================================================
+# Java 8+ API 脱糖支持库（让低版本 Android 支持现代 Java API）
+# 文档: https://developer.android.google.cn/studio/write/java8-support-table
 androidDesugarJdkLibs = "2.1.5"
-# https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
+# Kotlin 官方协程库（异步编程与流式处理）
+# GitHub: https://github.com/Kotlin/kotlinx.coroutines
 kotlinxCoroutines = "1.10.2"
 
+# ==============================================================================
+# 2. Google 核心基础库与 Material Design
+# ==============================================================================
+# Google 高性能 JSON 序列化/反序列化库
+# GitHub: https://github.com/google/gson
 googleGson = "2.13.1"
+# Google 核心 Java/Android 工具集（集合、并发、缓存等）
+# GitHub: https://github.com/google/guava
 googleGuava = "33.5.0-android"
+# Google 跨语言结构化数据协议 Protocol Buffers
+# 官网: https://protobuf.dev/
+# GitHub: https://github.com/protocolbuffers/protobuf
 googleProtobuf = "4.33.4"
-# https://github.com/firebase/snippets-android
+# Google 弹性盒流式布局
+# GitHub: https://github.com/google/flexbox-layout
 googleFlexbox = "3.0.0"
+# Material Components 现代化 Android UI 设计组件库
+# 官网: https://m3.material.io/
+# GitHub: https://github.com/material-components/material-components-android
 googleMaterial = "1.13.0"
-# ##################################################################################################
-androidxCore = "1.17.0"
-androidxActivity = "1.12.3"
-androidxFragment = "1.8.9"
-androidxSplashscreen = "1.2.0"
 
+# ==============================================================================
+# 3. AndroidX 核心组件与基础 UI 控件
+# ==============================================================================
+# AndroidX 核心 KTX 扩展
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/core
+androidxCore = "1.17.0"
+# AndroidX Activity KTX
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/activity
+androidxActivity = "1.12.3"
+# AndroidX Fragment KTX
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/fragment
+androidxFragment = "1.8.9"
+# Android 12+ 启动动画与 Splash 兼容库
+# 文档: https://developer.android.google.cn/develop/ui/views/launch/splash-screen
+androidxSplashscreen = "1.2.0"
+# AndroidX 兼容基础包
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.7.1"
+# 约束布局 ConstraintLayout
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/constraintlayout
 androidxConstraintLayout = "2.2.1"
+# 高效列表组件 RecyclerView
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/recyclerview
 androidxRecyclerView = "1.4.0"
+# 页面滑动组件 ViewPager2
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/viewpager2
 androidxViewPager2 = "1.1.0"
+# 异步布局加载器（UI 性能优化）
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/asynclayoutinflater
 androidxAsyncLayoutInflater = "1.0.0"
 
+# ==============================================================================
+# 4. AndroidX 架构组件与依赖注入 (Jetpack Architecture)
+# ==============================================================================
+# 生命周期组件 Lifecycle (ViewModel, LiveData, ProcessLifecycle)
+# 文档: https://developer.android.google.cn/topic/libraries/architecture/lifecycle
 androidxLifecycle = "2.10.0"
+# 分页加载组件 Paging 3
+# 文档: https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
 androidxPaging = "3.3.6"
+# 现代化轻量键值与对象存储 DataStore
+# 文档: https://developer.android.google.cn/topic/libraries/architecture/datastore
 androidxDataStore = "1.2.0"
+# 确定性后台任务调度框架 WorkManager
+# 文档: https://developer.android.google.cn/topic/libraries/architecture/workmanager
 androidxWorkManager = "2.11.1"
+# 应用内导航架构 Navigation
+# 文档: https://developer.android.google.cn/guide/navigation
 androidxNavigation = "2.9.7"
+# 应用启动初始化框架 App Startup
+# 文档: https://developer.android.google.cn/topic/libraries/app-startup
 androidxStartup = "1.2.0"
+# 基线配置文件安装器 ProfileInstaller（优化冷启动速度）
+# 文档: https://developer.android.google.cn/topic/performance/baselineprofiles/overview
 androidxProfileInstaller = "1.4.1"
-androidxCamera = "1.3.0"
-
-# https://mvnrepository.com/artifact/com.google.dagger/hilt-android
+# Google 官方依赖注入框架 Hilt
+# 文档: https://developer.android.google.cn/training/dependency-injection/hilt-android
 androidxHilt = "2.58"
-# https://mvnrepository.com/artifact/io.insert-koin/koin-android
+# Kotlin 实用轻量级依赖注入框架 Koin
+# 官网: https://insert-koin.io/
+# GitHub: https://github.com/InsertKoinIO/koin
 koin = "4.0.2"
-# https://mvnrepository.com/artifact/androidx.room/room-runtime
+# 官方 SQLite ORM 数据库框架 Room
+# 文档: https://developer.android.google.cn/training/data-storage/room
 androidxRoom = "2.8.4"
 
-# Compose 与 Kotlin 的兼容性对应关系
-# https://developer.android.com/jetpack/androidx/releases/compose-kotlin?hl=zh-cn
+# ==============================================================================
+# 5. Jetpack Compose 现代化声明式 UI
+# ==============================================================================
+# Compose 与 Kotlin 编译器的兼容性映射关系
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/compose-kotlin
 androidxComposeCompiler = "1.5.15"
+# Compose 物料清单 BOM（统一管理 Compose 各模块版本）
+# 文档: https://developer.android.google.cn/jetpack/compose/bom
 androidxComposeBom = "2026.01.01"
+# Compose LiveData 响应式绑定扩展
 androidxLiveDataCompose = "1.10.2"
+# Compose ConstraintLayout 约束布局
 androidxConstraintLayoutCompose = "1.1.1"
+# Compose 版 SmartRefreshLayout 下拉刷新
+# GitHub: https://github.com/loren-moon/ComposeSmartRefresh
 smartRefreshcCompose = "2.1.0"
-# ##################################################################################################
-mmkv = "2.3.0"
-upgrade = "2.2.0"
-utils = "1.31.1"
-permission = "1.8.1"
-immersionbar = "3.2.2"
-# ##################################################################################################
-brvah = "4.3.2"
-smartrefresh = "2.1.1"
-loadsir = "1.3.8"
-mavericks = "3.0.10"
-# ##################################################################################################
-arouter = "1.5.2"
-eventbus = "3.3.1"
-rxandroid = "3.0.2"
-rxlifecycle = "4.0.2"
-autodispose = "2.2.1"
-greendao = "3.3.0"
-objectbox = "5.1.0"
-# ##################################################################################################
-coil = "3.1.0"
-ktor = "3.2.3"
 
-glide = "4.16.0"
-volley = "1.2.1"
-okhttp = "5.1.0"
-retrofit = "3.0.0"
-slf4j = "2.0.17"
-netty = "4.1.122.Final"
-nanohttpd = "2.3.1"
-websocket = "1.6.0"
-hivemq = "1.3.7"
-# hannesa2 维护的 Paho Android Service fork（原 org.eclipse.paho 1.1.1 已停更，
-# 其 AlarmPingSender 在 targetSdk 34+ 上注册 Receiver 缺少导出标志会触发 SecurityException）
-# https://github.com/hannesa2/paho.mqtt.android
-pahoAndroidService = "4.5"
-# https://github.com/eclipse-paho/paho.mqtt.java
-mqtt = "1.2.5"
-# https://github.com/NordicSemiconductor/Android-BLE-Library
+# ==============================================================================
+# 6. 系统硬件、多媒体与边缘智能 (Camera, Bluetooth, LiteRT)
+# ==============================================================================
+# 官方现代化相机开发套件 CameraX
+# 文档: https://developer.android.google.cn/jetpack/androidx/releases/camera
+androidxCamera = "1.3.0"
+# Nordic 官方低功耗蓝牙（BLE）通信开发库
+# GitHub: https://github.com/NordicSemiconductor/Android-BLE-Library
 nordicBle = "2.9.0"
-# https://github.com/Jasonchenlijian/FastBle
+# 经典 Android BLE 快速开发框架 FastBle
+# GitHub: https://github.com/Jasonchenlijian/FastBle
 fastBle = "2.4.0"
-# https://github.com/dariuszseweryn/RxAndroidBle
+# 基于 RxJava 的反应式低功耗蓝牙库 RxAndroidBle
+# GitHub: https://github.com/dariuszseweryn/RxAndroidBle
 rxAndroidBle = "1.18.1"
-# ##################################################################################################
-pag = "4.5.12"
-lottie = "6.6.7"
-svgaPlayer = "2.6.1"
+# 基于 OpenGL 的实时图像/滤镜处理库 GPUImage
+# GitHub: https://github.com/cats-oss/android-gpuimage
 gpuimage = "2.1.0"
+# Google 官方端侧 AI 推理引擎 LiteRT (原 TensorFlow Lite)
+# 文档: https://ai.google.dev/edge/litert
 tensorflowLite = "1.4.0"
-# ##################################################################################################
+
+# ==============================================================================
+# 7. 网络通信、传输协议与服务端 (HTTP, WebSocket, MQTT, Netty)
+# ==============================================================================
+# Square 工业级 HTTP/HTTP2 客户端 OkHttp
+# 官网: https://square.github.io/okhttp/
+# GitHub: https://github.com/square/okhttp
+okhttp = "5.1.0"
+# Square 类型安全的 HTTP REST API 请求库 Retrofit
+# 官网: https://square.github.io/retrofit/
+# GitHub: https://github.com/square/retrofit
+retrofit = "3.0.0"
+# JetBrains 官方跨平台异步网络框架 Ktor
+# 官网: https://ktor.io/
+ktor = "3.2.3"
+# Google 传统轻量网络请求库 Volley
+# 文档: https://developer.android.google.cn/training/volley
+volley = "1.2.1"
+# 高性能异步事件驱动网络通信框架 Netty
+# 官网: https://netty.io/
+netty = "4.1.122.Final"
+# 嵌入式轻量级 HTTP/Web 服务器 NanoHTTPD
+# GitHub: https://github.com/NanoHttpd/nanohttpd
+nanohttpd = "2.3.1"
+# Java WebSocket 全双工通信客户端与服务端
+# GitHub: https://github.com/TooTallNate/Java-WebSocket
+websocket = "1.6.0"
+# Eclipse 官方 Paho MQTT Java 核心客户端
+# GitHub: https://github.com/eclipse-paho/paho.mqtt.java
+mqtt = "1.2.5"
+# hannesa2 维护的 Paho Android Service 现代化 Fork
+# 背景说明：原官方 org.eclipse.paho 1.1.1 已停更，其 AlarmPingSender 在 targetSdk 34+ 上
+# 注册 Receiver 缺少导出标志会导致运行时抛出 SecurityException，本 fork 解决了该安全崩溃
+# GitHub: https://github.com/hannesa2/paho.mqtt.android
+pahoAndroidService = "4.5"
+# HiveMQ 高吞吐、响应式 MQTT 客户端
+# GitHub: https://github.com/hivemq/hivemq-mqtt-client
+hivemq = "1.3.7"
+# Java 统一日志门面 SLF4J
+# 官网: https://www.slf4j.org/
+slf4j = "2.0.17"
+
+# ==============================================================================
+# 8. 图片加载与处理体系
+# ==============================================================================
+# Google 推荐的成熟图片加载与缓存库 Glide
+# GitHub: https://github.com/bumptech/glide
+glide = "4.16.0"
+# 基于 Kotlin 协程的新一代轻量异步图片加载库 Coil
+# 官网: https://coil-kt.github.io/coil/
+# GitHub: https://github.com/coil-kt/coil
+coil = "3.1.0"
+
+# ==============================================================================
+# 9. 本地持久化与高性能数据存储
+# ==============================================================================
+# 腾讯基于 mmap 的高性能通用 Key-Value 键值存储组件 MMKV
+# GitHub: https://github.com/Tencent/MMKV
+mmkv = "2.3.0"
+# 超高性能 NoSQL 嵌入式对象数据库 ObjectBox
+# 官网: https://objectbox.io/
+# GitHub: https://github.com/objectbox/objectbox-java
+objectbox = "5.1.0"
+# 经典 SQLite ORM 框架 GreenDAO (本项目目前已全面转向 Room)
+# GitHub: https://github.com/greenrobot/greenDAO
+greendao = "3.3.0"
+
+# ==============================================================================
+# 10. 响应式编程与组件间通信 (Reactive & Routing)
+# ==============================================================================
+# 阿里巴巴组件化路由框架 ARouter
+# GitHub: https://github.com/alibaba/ARouter
+arouter = "1.5.2"
+# 经典发布-订阅事件总线 EventBus
+# GitHub: https://github.com/greenrobot/EventBus
+eventbus = "3.3.1"
+# RxJava 3 Android 线程调度扩展
+# GitHub: https://github.com/ReactiveX/RxAndroid
+rxandroid = "3.0.2"
+# RxJava 结合 Android 生命周期的自动解绑工具
+# GitHub: https://github.com/trello/RxLifecycle
+rxlifecycle = "4.0.2"
+# Uber 出品基于 Android 生命周期的响应式流自动注销框架
+# GitHub: https://github.com/uber/AutoDispose
+autodispose = "2.2.1"
+
+# ==============================================================================
+# 11. 动效、动画与矢量渲染引擎
+# ==============================================================================
+# 腾讯开源通用跨平台动效渲染组件 PAG
+# 官网: https://pag.art/
+# GitHub: https://github.com/Tencent/libpag
+pag = "4.5.12"
+# Airbnb 出品 Adobe After Effects 矢量动画渲染库 Lottie
+# 官网: https://airbnb.io/lottie/
+# GitHub: https://github.com/airbnb/lottie-android
+lottie = "6.6.7"
+# 移动端高性能矢量动画播放器 SVGAPlayer
+# GitHub: https://github.com/svga/SVGAPlayer-Android
+svgaPlayer = "2.6.1"
+
+# ==============================================================================
+# 12. 常用实用工具与第三方 UI 增强库
+# ==============================================================================
+# BRVAH: 强大灵活的 RecyclerView 适配器辅助库 (v4)
+# GitHub: https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+brvah = "4.3.2"
+# 经典下拉刷新与上拉加载框架 SmartRefreshLayout (v2)
+# GitHub: https://github.com/scwang90/SmartRefreshLayout
+smartrefresh = "2.1.1"
+# 页面多状态管理框架（加载中/空数据/错误态切换）LoadSir
+# GitHub: https://github.com/KingJA/LoadSir
+loadsir = "1.3.8"
+# Airbnb 现代化 MVI 状态驱动架构框架 Mavericks
+# 官网: https://airbnb.io/mavericks/
+# GitHub: https://github.com/airbnb/mavericks
+mavericks = "3.0.10"
+# Blankj 经典 Android 常用工具类集合 UtilCode
+# GitHub: https://github.com/Blankj/AndroidUtilCode
+utils = "1.31.1"
+# 郭霖出品链式调用权限请求框架 PermissionX
+# GitHub: https://github.com/guolindev/PermissionX
+permission = "1.8.1"
+# 腾讯 Bugly 应用内更新与热更新组件
+# GitHub: https://github.com/BuglyDevTeam/BuglyBetaUploader
+upgrade = "2.2.0"
+# 经典轮播图控件 Banner
+# GitHub: https://github.com/youth5201314/banner
 banner = "2.2.3"
+# 实时模糊视图 BlurView
+# GitHub: https://github.com/mmin18/RealtimeBlurView
 blurview = "1.2.1"
+# 仿美团/京东城市选择器 CityPicker
+# GitHub: https://github.com/zaaach/CityPicker
 citypicker = "2.0.3"
+# 灵活高效倒计时控件 CountdownView
+# GitHub: https://github.com/iwgang/CountdownView
 countdownview = "2.1.6"
+# 全局悬浮窗框架 EasyFloat
+# GitHub: https://github.com/princekin-f/EasyFloat
 easyfloat = "2.0.4"
+# 扩展 TabLayout 导航库 FlycoTabLayout
+# GitHub: https://github.com/H07000223/FlycoTabLayout
 tablayout = "3.0.0"
+# 支持手势缩放平移的 ImageView 扩展库 PhotoView
+# GitHub: https://github.com/chrisbanes/PhotoView
 photoview = "2.3.0"
+# 时间与条件滚动选择器 PickerView
+# GitHub: https://github.com/Bigkoo/Android-PickerView
 pickerview = "4.1.9"
+# 强大易用的相册多媒体图片选择器 PictureSelector
+# GitHub: https://github.com/LuckSiege/PictureSelector
 pictureselector = "v3.11.2"
+# 万能阴影布局 ShadowLayout
+# GitHub: https://github.com/lihangleo2/ShadowLayout
 shadowlayout = "3.3.2"
+# 滑动侧滑菜单布局 SwipeLayout
+# GitHub: https://github.com/daimajia/AndroidSwipeLayout
 swipelayout = "1.2.0"
+# 经典图表统计库 MPAndroidChart
+# GitHub: https://github.com/PhilJay/MPAndroidChart
 mpandroidchart = "v3.1.0"
-# https://github.com/noties/Markwon
+# Markdown 原生渲染引擎 Markwon
+# GitHub: https://github.com/noties/Markwon
 markwon = "4.6.2"
-# https://github.com/noties/Prism4j
+# 代码语法高亮排版引擎 Prism4j
+# GitHub: https://github.com/noties/Prism4j
 prism4j = "2.0.0"
-# ##################################################################################################
+
+# ==============================================================================
+# 13. 单元测试与仪器化测试 (Testing)
+# ==============================================================================
+# Java 单元测试标准框架 JUnit 4
+# 官网: https://junit.org/junit4/
 junit = "4.13.2"
+# AndroidX 单元测试扩展 JUnit KTX
+# 文档: https://developer.android.google.cn/training/testing
 androidxTestExt = "1.3.0"
+# 官方 UI 自动化测试框架 Espresso
+# 文档: https://developer.android.google.cn/training/testing/espresso
 androidxTestEspresso = "3.7.0"
-# ##################################################################################################
-# https://mvnrepository.com/artifact/com.android.tools.build/gradle
+# AndroidX Macrobenchmark (冷启动、流畅度与基准配置文件生成)
+# 文档: https://developer.android.google.cn/topic/performance/benchmarking/macrobenchmark-overview
+androidxMacroBenchmark = "1.3.3"
+# UI Automator 与测试运行套件
+androidxUiAutomator = "2.3.0"
+androidxTestRules = "1.6.1"
+androidxTestRunner = "1.6.2"
+
+# Spotless 代码格式化 Gradle 插件与 ktlint
+# GitHub: https://github.com/diffplug/spotless
+spotless = "7.0.2"
+ktlint = "1.4.0"
+
+# ==============================================================================
+# 14. Gradle 编译插件与依赖管理工具
+# ==============================================================================
+# Android Gradle Plugin (AGP) 构建工具
+# 发行注记: https://developer.android.google.cn/studio/releases/gradle-plugin
 gradlePluginAndroid = "9.1.0"
-# https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
+# Kotlin Gradle 编译插件
+# 发行注记: https://kotlinlang.org/docs/releases.html
 gradlePluginKotlin = "2.2.20"
+# Google Protocol Buffers Gradle 插件
 gradlePluginProtobuf = "0.9.6"
+# 阿里 ARouter 路由自动注册插件
 gradlePluginArouter = "1.0.2"
+# GreenDAO Gradle 插件
 gradlePluginGreenDao = "3.3.1"
+# ObjectBox 字节码编织 Gradle 插件
 gradlePluginObjectBox = "5.1.0"
+# Kotlin Symbol Processing (KSP) 插件
+# GitHub: https://github.com/google/ksp
 gradlePluginKsp = "2.2.20-2.0.4"
-
-# https://mvnrepository.com/artifact/com.dropbox.dependency-guard/dependency-guard
+# Dropbox 出品依赖守卫插件（监控和检测发版依赖树异常变动）
+# GitHub: https://github.com/dropbox/dependency-guard
 dependencyGuard = "0.5.0"
-# ##################################################################################################
+
+
 [libraries]
+# ==============================================================================
+# 1. 核心运行时与 Kotlin 基础设施
+# ==============================================================================
+# Java 8+ API 脱糖运行时支持
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+# Kotlin 协程核心库
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+# Kotlin 协程 Android 调度器与主线程调度
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+# Kotlin 协程与 RxJava 3 互操作扩展
 kotlinx-coroutines-rx3 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-rx3", version.ref = "kotlinxCoroutines" }
-# ##################################################################################################
-# https://github.com/google/gson
+
+# ==============================================================================
+# 2. Google 核心基础库与 Material Design
+# ==============================================================================
+# Google Gson JSON 序列化库
 google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "googleGson" }
-# https://github.com/google/guava
+# Google Guava 核心工具包
 google-guava = { group = "com.google.guava", name = "guava", version.ref = "googleGuava" }
-# https://github.com/protocolbuffers/protobuf
+# Protobuf 编译器
 google-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "googleProtobuf" }
+# Protobuf JavaLite 移动端精简运行时
 google-protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "googleProtobuf" }
-# https://github.com/google/flexbox-layout
+# Google 弹性盒流式布局
 google-flexBox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "googleFlexbox" }
-# https://github.com/material-components/material-components-android
+# Material Design 控件库
 google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
-# ##################################################################################################
-# https://developer.android.google.cn/jetpack/androidx/releases/core
+
+# ==============================================================================
+# 3. AndroidX 核心组件与基础 UI 控件
+# ==============================================================================
+# AndroidX 核心 KTX
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
-# https://developer.android.google.cn/jetpack/androidx/releases/activity
+# Activity KTX 扩展
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
-# https://developer.android.google.cn/jetpack/androidx/releases/fragment
+# Fragment KTX 扩展
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidxFragment" }
-# https://developer.android.google.cn/develop/ui/views/launch/splash-screen/migrate?hl=zh-cn
+# Android 12+ 启动画面的官方向下兼容库
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxSplashscreen" }
-# ##################################################################################################
+# AppCompat 兼容框架
 androidx-appCompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
+# ConstraintLayout 约束布局
 androidx-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidxConstraintLayout" }
+# RecyclerView 列表控件
 androidx-recyclerView = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidxRecyclerView" }
+# ViewPager2 滑动分页控件
 androidx-viewPager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "androidxViewPager2" }
+# 异步布局加载器 AsyncLayoutInflater
 androidx-asyncLayoutInflater = { group = "androidx.asynclayoutinflater", name = "asynclayoutinflater", version.ref = "androidxAsyncLayoutInflater" }
-# ##################################################################################################
-# 架构组件 - 界面层库
-# https://developer.android.google.cn/topic/libraries/architecture/lifecycle
-# lifecycle
+
+# ==============================================================================
+# 4. AndroidX 架构组件与依赖注入 (Jetpack Architecture)
+# ==============================================================================
+# Lifecycle 运行时 KTX
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+# Lifecycle ViewModel KTX
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
+# Lifecycle 与 Compose 联动扩展
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+# Lifecycle LiveData KTX
 androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
-# lifecycle optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+# 进程级生命周期监听 ProcessLifecycleOwner
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
-# 架构组件 - 界面层库
-# https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
+# Paging 3 分页运行时
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "androidxPaging" }
+# Paging 3 与 RxJava 3 互操作
 androidx-paging-rxjava3 = { group = "androidx.paging", name = "paging-rxjava3", version.ref = "androidxPaging" }
-# 架构组件 - 数据层库
-# https://developer.android.google.cn/topic/libraries/architecture/datastore
+# DataStore Preferences 运行时
 androidx-datastore-preferences-runtime = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
+# DataStore Preferences RxJava 3 互操作
 androidx-datastore-preferences-rxjava3 = { group = "androidx.datastore", name = "datastore-preferences-rxjava3", version.ref = "androidxDataStore" }
+# DataStore Proto 原型存储运行时
 androidx-datastore-runtime = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+# DataStore Proto RxJava 3 互操作
 androidx-datastore-rxjava3 = { group = "androidx.datastore", name = "datastore-rxjava3", version.ref = "androidxDataStore" }
-# https://developer.android.google.cn/topic/libraries/architecture/workmanager
+# WorkManager 任务调度 KTX
 androidx-workmanager-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWorkManager" }
-# 应用导航
-# https://developer.android.google.cn/guide/navigation
+# Navigation Fragment 导航扩展
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "androidxNavigation" }
+# Navigation UI 导航界面联动
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "androidxNavigation" }
-# 依赖项注入
-# https://developer.android.google.cn/training/dependency-injection/hilt-android
+# Hilt Android 运行时
 androidx-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "androidxHilt" }
+# Hilt 注解编译器
 androidx-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "androidxHilt" }
-# Koin
-# https://insert-koin.io/
+# Koin 核心核心库
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+# Koin Android 扩展库
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-# 应用启动
-# https://developer.android.google.cn/topic/libraries/app-startup
+# App Startup 启动初始化框架
 androidx-startup = { group = "androidx.startup", name = "startup-runtime", version.ref = "androidxStartup" }
-# 基线配置文件安装器
-# https://developer.android.google.cn/topic/performance/baselineprofiles/overview
+# ProfileInstaller 基线配置文件安装器
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileInstaller" }
-
-# CameraX
-# https://developer.android.google.cn/jetpack/androidx/releases/camera
-androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "androidxCamera" }
-androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "androidxCamera" }
-androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "androidxCamera" }
-androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "androidxCamera" }
-androidx-camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "androidxCamera" }
-
-# https://developer.android.com/training/data-storage/room
+# Room SQLite 运行时
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
+# Room Kotlin 扩展与协程支持
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoom" }
+# Room RxJava 3 响应式查询支持
 androidx-room-rxjava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "androidxRoom" }
+# Room 与 Paging 3 联动支持
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "androidxRoom" }
+# Room 注解编译器
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 
-
-# Compose
-androidx-material = { group = "androidx.compose.material", name = "material" }
+# ==============================================================================
+# 5. Jetpack Compose 现代化声明式 UI
+# ==============================================================================
+# Compose Material 3 现代化设计组件
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-
+# Activity 与 Compose 绑定扩展
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
+# Compose Navigation 页面路由与导航
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
-
+# LiveData 在 Compose 中的状态绑定
 androidx-livedata-compose = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "androidxLiveDataCompose" }
+# ConstraintLayout 在 Compose 中的约束布局实现
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidxConstraintLayoutCompose" }
-
+# Compose 物料清单 BOM
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
-
+# Compose UI 核心库
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+# Compose 图形绘制与渲染
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+# Compose 预览工具支持
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+# Compose 调试与开发阶段诊断工具
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+# Compose 测试清单配置
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-
+# Material Design 核心矢量图标
 androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+# Material Design 扩展矢量图标集
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-
+# Compose 版 SmartRefreshLayout 下拉刷新控件
 smartrefresh-compose = { group = "io.github.loren-moon", name = "composesmartrefresh", version.ref = "smartRefreshcCompose" }
-# ##################################################################################################
-# https://github.com/Tencent/MMKV
-mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
-# https://github.com/BuglyDevTeam/BuglyBetaUploader
-upgrade = { group = "com.tencent.shiply", name = "upgrade", version.ref = "upgrade" }
-upgrade-ui = { group = "com.tencent.shiply", name = "upgrade-ui", version.ref = "upgrade" }
-# https://github.com/Blankj/AndroidUtilCode
-utils = { group = "com.blankj", name = "utilcodex", version.ref = "utils" }
-# https://github.com/guolindev/PermissionX
-permission = { group = "com.guolindev.permissionx", name = "permissionx", version.ref = "permission" }
-# https://github.com/gyf-dev/ImmersionBar
-immersionbar = { group = "com.geyifeng.immersionbar", name = "immersionbar", version.ref = "immersionbar" }
-immersionbar-ktx = { group = "com.geyifeng.immersionbar", name = "immersionbar-ktx", version.ref = "immersionbar" }
-# ##################################################################################################
-# https://github.com/CymChad/BaseRecyclerViewAdapterHelper
-brvah = { group = "io.github.cymchad", name = "BaseRecyclerViewAdapterHelper4", version.ref = "brvah" }
-# https://github.com/scwang90/SmartRefreshLayout
-smartrefresh-layout = { group = "io.github.scwang90", name = "refresh-layout-kernel", version.ref = "smartrefresh" }
-smartrefresh-header = { group = "io.github.scwang90", name = "refresh-header-classics", version.ref = "smartrefresh" }
-smartrefresh-footer = { group = "io.github.scwang90", name = "refresh-footer-classics", version.ref = "smartrefresh" }
-# https://github.com/KingJA/LoadSir
-loadsir = { group = "com.kingja.loadsir", name = "loadsir", version.ref = "loadsir" }
-# https://github.com/airbnb/mavericks
-mavericks = { group = "com.airbnb.android", name = "mavericks", version.ref = "mavericks" }
-# ##################################################################################################
-# https://github.com/alibaba/ARouter
-arouter = { group = "com.alibaba", name = "arouter-api", version.ref = "arouter" }
-arouter-compiler = { group = "com.alibaba", name = "arouter-compiler", version.ref = "arouter" }
-# https://github.com/greenrobot/EventBus
-eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
-eventbus-processor = { group = "org.greenrobot", name = "eventbus-annotation-processor", version.ref = "eventbus" }
-# https://github.com/ReactiveX/RxAndroid # 线程调度工具
-rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
-# https://github.com/trello/RxLifecycle # 生命周期管理工具
-rxlifecycle = { group = "com.trello.rxlifecycle4", name = "rxlifecycle-android-lifecycle", version.ref = "rxlifecycle" }
-# https://github.com/uber/AutoDispose # 生命周期管理工具
-autodispose = { group = "com.uber.autodispose2", name = "autodispose-androidx-lifecycle", version.ref = "autodispose" }
-# https://github.com/greenrobot/greenDAO
-greendao = { group = "org.greenrobot", name = "greendao", version.ref = "greendao" }
-# https://github.com/objectbox/objectbox-java
-objectbox = { group = "io.objectbox", name = "objectbox-kotlin", version.ref = "objectbox" }
-# ##################################################################################################
-# https://github.com/coil-kt/coil
-coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
-coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
-coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
-coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version.ref = "coil" }
-coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
-# https://ktor.io/
-ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 
-ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-ktor-serialization-gson = { group = "io.ktor", name = "ktor-serialization-gson", version.ref = "ktor" }
-ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-# https://github.com/bumptech/glide
-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
-# https://github.com/google/volley
-volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
-# https://github.com/square/okhttp
-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-okhttp-sse = { group = "com.squareup.okhttp3", name = "okhttp-sse", version.ref = "okhttp" }
-okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
-okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
-# https://github.com/square/retrofit
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
-retrofit-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
-# https://github.com/qos-ch/slf4j
-slf4j = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
-# https://github.com/netty/netty
-netty = { group = "io.netty", name = "netty-all", version.ref = "netty" }
-# https://github.com/NanoHttpd/nanohttpd
-nanohttpd = { group = "org.nanohttpd", name = "nanohttpd", version.ref = "nanohttpd" }
-# https://github.com/TooTallNate/Java-WebSocket
-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
-# https://github.com/eclipse-paho/paho.mqtt.java
-mqtt = { group = "org.eclipse.paho", name = "org.eclipse.paho.client.mqttv3", version.ref = "mqtt" }
-# https://github.com/hannesa2/paho.mqtt.android（JitPack，包名 info.mqtt.android.service）
-paho-android-service = { group = "com.github.hannesa2", name = "paho.mqtt.android", version.ref = "pahoAndroidService" }
-# https://github.com/hivemq/hivemq-mqtt-client
-hivemq = { group = "com.hivemq", name = "hivemq-mqtt-client", version.ref = "hivemq" }
-# https://github.com/NordicSemiconductor/Android-BLE-Library
+# ==============================================================================
+# 6. 系统硬件、多媒体与边缘智能 (Camera, Bluetooth, LiteRT)
+# ==============================================================================
+# CameraX 核心 API
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "androidxCamera" }
+# CameraX 基于 Camera2 底层驱动实现
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "androidxCamera" }
+# CameraX 绑定 Lifecycle 生命周期
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "androidxCamera" }
+# CameraX 界面取景控件 View (PreviewView)
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "androidxCamera" }
+# CameraX 视频录制扩展
+androidx-camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "androidxCamera" }
+# Nordic BLE 蓝牙核心库
 nordic-ble = { group = "no.nordicsemi.android", name = "ble", version.ref = "nordicBle" }
+# Nordic BLE Kotlin 协程与 Flow 扩展
 nordic-ble-ktx = { group = "no.nordicsemi.android", name = "ble-ktx", version.ref = "nordicBle" }
-# https://github.com/Jasonchenlijian/FastBle
+# FastBle Android 蓝牙快速开发框架
 fastble = { group = "com.github.Jasonchenlijian", name = "FastBle", version.ref = "fastBle" }
-# https://github.com/dariuszseweryn/RxAndroidBle
+# RxAndroidBle 基于 RxJava 的蓝牙响应式框架
 rxandroidble = { group = "com.polidea.rxandroidble3", name = "rxandroidble", version.ref = "rxAndroidBle" }
-# ##################################################################################################
-# https://github.com/Tencent/libpag
-pag = { group = "com.tencent.tav", name = "libpag", version.ref = "pag" }
-# https://github.com/airbnb/lottie-android
-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
-# https://github.com/svga/SVGAPlayer-Android
-svgaPlayer = { group = "com.github.yyued", name = "SVGAPlayer-Android", version.ref = "svgaPlayer" }
-# https://github.com/cats-oss/android-gpuimage
+# GPUImage 实时图像与相机滤镜库
 gpuimage = { module = "jp.co.cyberagent.android:gpuimage", version.ref = "gpuimage" }
-# https://ai.google.dev/edge/litert
+# LiteRT 端侧 AI 推理运行时
 tensorflow-lite = { group = "com.google.ai.edge.litert", name = "litert", version.ref = "tensorflowLite" }
+# LiteRT GPU 硬件加速推理支持
 tensorflow-lite-gpu = { group = "com.google.ai.edge.litert", name = "litert-gpu", version.ref = "tensorflowLite" }
+# LiteRT GPU API
 tensorflow-lite-gpu-api = { group = "com.google.ai.edge.litert", name = "litert-gpu-api", version.ref = "tensorflowLite" }
-# ##################################################################################################
-# https://github.com/youth5201314/banner
+
+# ==============================================================================
+# 7. 网络通信、传输协议与服务端 (HTTP, WebSocket, MQTT, Netty)
+# ==============================================================================
+# OkHttp 网络请求客户端
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+# OkHttp Server-Sent Events (SSE) 流式传输扩展（用于 AI 流式打字机交互）
+okhttp-sse = { group = "com.squareup.okhttp3", name = "okhttp-sse", version.ref = "okhttp" }
+# OkHttp 网络请求日志拦截器
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+# OkHttp 本地模拟 HTTP 服务端（用于网络单元测试）
+okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
+# Retrofit RESTful API 客户端
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+# Retrofit Gson 转换器
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+# Retrofit String 标量文本转换器
+retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+# Retrofit RxJava 3 响应式适配器
+retrofit-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
+# Ktor 客户端核心库
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+# Ktor 基于 OkHttp 引擎驱动
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+# Ktor 内容协商与数据转换插件
+ktor-client-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+# Ktor 请求与响应日志插件
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+# Ktor Gson 序列化解析
+ktor-serialization-gson = { group = "io.ktor", name = "ktor-serialization-gson", version.ref = "ktor" }
+# Ktor Kotlinx Serialization JSON 官方序列化解析
+ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+# Google Volley 异步 HTTP 库
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+# Netty 异步网络全双工通信套件
+netty = { group = "io.netty", name = "netty-all", version.ref = "netty" }
+# NanoHTTPD 嵌入式 HTTP Server
+nanohttpd = { group = "org.nanohttpd", name = "nanohttpd", version.ref = "nanohttpd" }
+# Java-WebSocket 客户端与服务端通信库
+websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
+# Paho MQTT 核心客户端
+mqtt = { group = "org.eclipse.paho", name = "org.eclipse.paho.client.mqttv3", version.ref = "mqtt" }
+# hannesa2 维护的 Paho Android Service（解决 targetSdk 34 崩溃，包名 info.mqtt.android.service）
+paho-android-service = { group = "com.github.hannesa2", name = "paho.mqtt.android", version.ref = "pahoAndroidService" }
+# HiveMQ 反应式高性能 MQTT 客户端
+hivemq = { group = "com.hivemq", name = "hivemq-mqtt-client", version.ref = "hivemq" }
+# SLF4J 无操作空日志实现（消除 Netty 等第三方库的缺少 Logger 警告）
+slf4j = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
+
+# ==============================================================================
+# 8. 图片加载与处理体系
+# ==============================================================================
+# Glide 图片加载框架核心库
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+# Glide 注解处理器
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+# Coil 3 协程图片加载核心库
+coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
+# Coil GIF 动图解码扩展
+coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
+# Coil SVG 矢量图解码扩展
+coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
+# Coil 视频首帧解码扩展
+coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version.ref = "coil" }
+# Coil Jetpack Compose 绑定扩展 (AsyncImage)
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+
+# ==============================================================================
+# 9. 本地持久化与高性能数据存储
+# ==============================================================================
+# 腾讯 MMKV 键值存储组件
+mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
+# ObjectBox 嵌入式对象数据库 Kotlin 支持库
+objectbox = { group = "io.objectbox", name = "objectbox-kotlin", version.ref = "objectbox" }
+# GreenDAO 实体 ORM 核心库
+greendao = { group = "org.greenrobot", name = "greendao", version.ref = "greendao" }
+
+# ==============================================================================
+# 10. 响应式编程与组件间通信 (Reactive & Routing)
+# ==============================================================================
+# 阿里 ARouter 核心 API
+arouter = { group = "com.alibaba", name = "arouter-api", version.ref = "arouter" }
+# 阿里 ARouter 注解编译器
+arouter-compiler = { group = "com.alibaba", name = "arouter-compiler", version.ref = "arouter" }
+# EventBus 事件总线核心库
+eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
+# EventBus 编译期注解索引生成器
+eventbus-processor = { group = "org.greenrobot", name = "eventbus-annotation-processor", version.ref = "eventbus" }
+# RxAndroid 线程切换调度器
+rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+# RxLifecycle 结合生命周期的防内存泄露绑定
+rxlifecycle = { group = "com.trello.rxlifecycle4", name = "rxlifecycle-android-lifecycle", version.ref = "rxlifecycle" }
+# AutoDispose 自动处置订阅框架
+autodispose = { group = "com.uber.autodispose2", name = "autodispose-androidx-lifecycle", version.ref = "autodispose" }
+
+# ==============================================================================
+# 11. 动效、动画与矢量渲染引擎
+# ==============================================================================
+# 腾讯 PAG 动画渲染库
+pag = { group = "com.tencent.tav", name = "libpag", version.ref = "pag" }
+# Airbnb Lottie 矢量动画解析与播放
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+# SVGAPlayer 动效播放器
+svgaPlayer = { group = "com.github.yyued", name = "SVGAPlayer-Android", version.ref = "svgaPlayer" }
+
+# ==============================================================================
+# 12. 常用实用工具与第三方 UI 增强库
+# ==============================================================================
+# BRVAH 4 强大的通用 RecyclerView 适配器
+brvah = { group = "io.github.cymchad", name = "BaseRecyclerViewAdapterHelper4", version.ref = "brvah" }
+# SmartRefreshLayout 下拉刷新核心内核
+smartrefresh-layout = { group = "io.github.scwang90", name = "refresh-layout-kernel", version.ref = "smartrefresh" }
+# SmartRefreshLayout 经典样式下拉 Header
+smartrefresh-header = { group = "io.github.scwang90", name = "refresh-header-classics", version.ref = "smartrefresh" }
+# SmartRefreshLayout 经典样式上拉 Footer
+smartrefresh-footer = { group = "io.github.scwang90", name = "refresh-footer-classics", version.ref = "smartrefresh" }
+# LoadSir 页面多状态切换框架
+loadsir = { group = "com.kingja.loadsir", name = "loadsir", version.ref = "loadsir" }
+# Airbnb Mavericks MVI 架构框架
+mavericks = { group = "com.airbnb.android", name = "mavericks", version.ref = "mavericks" }
+# UtilCode Android 全能开发工具包
+utils = { group = "com.blankj", name = "utilcodex", version.ref = "utils" }
+# PermissionX 动态权限申请工具
+permission = { group = "com.guolindev.permissionx", name = "permissionx", version.ref = "permission" }
+# 腾讯 Bugly 应用升级更新核心库
+upgrade = { group = "com.tencent.shiply", name = "upgrade", version.ref = "upgrade" }
+# 腾讯 Bugly 应用升级 UI 弹窗扩展
+upgrade-ui = { group = "com.tencent.shiply", name = "upgrade-ui", version.ref = "upgrade" }
+# Banner 图片与内容轮播控件
 banner = { group = "io.github.youth5201314", name = "banner", version.ref = "banner" }
-# https://github.com/mmin18/RealtimeBlurView
+# RealtimeBlurView 实时模糊 View
 blurview = { group = "com.github.mmin18", name = "realtimeblurview", version.ref = "blurview" }
-# https://github.com/zaaach/CityPicker
+# CityPicker 城市选择控件
 citypicker = { group = "com.zaaach", name = "citypicker", version.ref = "citypicker" }
-# https://github.com/iwgang/CountdownView
+# CountdownView 动画倒计时控件
 countdownview = { group = "com.github.iwgang", name = "countdownview", version.ref = "countdownview" }
-# https://github.com/princekin-f/EasyFloat
+# EasyFloat 应用级与全局悬浮窗控件
 easyfloat = { group = "com.github.princekin-f", name = "EasyFloat", version.ref = "easyfloat" }
-# https://github.com/H07000223/FlycoTabLayout
+# FlycoTabLayout 丰富的自定义 Tab 切换栏
 tablayout = { group = "io.github.h07000223", name = "flycoTabLayout", version.ref = "tablayout" }
-# https://github.com/chrisbanes/PhotoView
+# PhotoView 支持双指缩放与手势的图片展示控件
 photoview = { group = "com.github.chrisbanes", name = "PhotoView", version.ref = "photoview" }
-# https://github.com/Bigkoo/Android-PickerView
+# Android-PickerView 滚动轮盘选择器（时间/地区/条件）
 pickerview = { group = "com.contrarywind", name = "Android-PickerView", version.ref = "pickerview" }
-# https://github.com/LuckSiege/PictureSelector
+# PictureSelector 强大的相册图片与视频选择器
 pictureselector = { group = "io.github.lucksiege", name = "pictureselector", version.ref = "pictureselector" }
-# https://github.com/lihangleo2/ShadowLayout
+# ShadowLayout 万能可调圆角阴影布局
 shadowlayout = { group = "com.github.lihangleo2", name = "ShadowLayout", version.ref = "shadowlayout" }
-# https://github.com/daimajia/AndroidSwipeLayout
+# SwipeLayout 滑动展示操作菜单的布局控件
 swipelayout = { group = "com.daimajia.swipelayout", name = "library", version.ref = "swipelayout" }
-# https://github.com/PhilJay/MPAndroidChart
+# MPAndroidChart 专业的数据图表绘制库（折线图、柱状图、饼图、雷达图）
 mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
-# https://github.com/noties/Markwon
+# Markwon Markdown 核心渲染库
 markwon-core = { group = "io.noties.markwon", name = "core", version.ref = "markwon" }
+# Markwon 表格排版扩展
 markwon-ext-tables = { group = "io.noties.markwon", name = "ext-tables", version.ref = "markwon" }
+# Markwon 任务待办列表扩展
 markwon-ext-tasklist = { group = "io.noties.markwon", name = "ext-tasklist", version.ref = "markwon" }
+# Markwon 删除线排版扩展
 markwon-ext-strikethrough = { group = "io.noties.markwon", name = "ext-strikethrough", version.ref = "markwon" }
+# Markwon HTML 标签解析扩展
 markwon-html = { group = "io.noties.markwon", name = "html", version.ref = "markwon" }
+# Markwon 图片加载基类扩展
 markwon-image = { group = "io.noties.markwon", name = "image", version.ref = "markwon" }
+# Markwon 基于 Glide 的图片异步加载扩展
 markwon-image-glide = { group = "io.noties.markwon", name = "image-glide", version.ref = "markwon" }
+# Markwon 代码语法高亮扩展
 markwon-syntax-highlight = { group = "io.noties.markwon", name = "syntax-highlight", version.ref = "markwon" }
+# Prism4j Java/Android 语法着色引擎
 prism4j = { group = "io.noties", name = "prism4j", version.ref = "prism4j" }
-# ##################################################################################################
+
+# ==============================================================================
+# 13. 单元测试与仪器化测试 (Testing)
+# ==============================================================================
+# JUnit 4 单元测试框架
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+# AndroidX JUnit 仪器化测试 KTX 扩展
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
+# Espresso UI 自动化测试核心库
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxTestEspresso" }
-# ##################################################################################################
-# Dependencies of the included build-logic
-# https://developer.android.google.cn/studio/releases/gradle-plugin
+# AndroidX Macrobenchmark 核心测试库
+androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "androidxMacroBenchmark" }
+# UI Automator 跨进程 UI 驱动与测试规则
+androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "androidxUiAutomator" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
+
+# ==============================================================================
+# 14. Gradle 编译插件与依赖管理工具 (Included Build-logic 依赖)
+# ==============================================================================
+# Android Gradle Plugin 构件
 gradlePlugin-android = { group = "com.android.tools.build", name = "gradle", version.ref = "gradlePluginAndroid" }
+# Kotlin Gradle Plugin 构件
 gradlePlugin-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "gradlePluginKotlin" }
+# Kotlin Compose 编译器 Gradle 插件构件
 gradlePlugin-compose = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "gradlePluginKotlin" }
+# Protobuf Gradle 插件构件
 gradlePlugin-protobuf = { group = "com.google.protobuf", name = "protobuf-gradle-plugin", version.ref = "gradlePluginProtobuf" }
-
+# ARouter 注册插件构件
 gradlePlugin-arouter = { group = "com.alibaba", name = "arouter-register", version.ref = "gradlePluginArouter" }
+# GreenDAO Gradle 插件构件
 gradlePlugin-greendao = { group = "org.greenrobot", name = "greendao-gradle-plugin", version.ref = "gradlePluginGreenDao" }
+# ObjectBox Gradle 插件构件
 gradlePlugin-objectbox = { group = "io.objectbox", name = "objectbox-gradle-plugin", version.ref = "gradlePluginObjectBox" }
-
+# KSP Gradle 插件构件
 gradlePlugin-ksp = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "gradlePluginKsp" }
+# Hilt Gradle 插件构件
 gradlePlugin-hilt = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "androidxHilt" }
+# Room Gradle 插件构件
 gradlePlugin-room = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "androidxRoom" }
+# Spotless 格式化 Gradle 插件构件
+gradlePlugin-spotless = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
 
 [plugins]
+# ==============================================================================
+# 官方与第三方标准 Gradle 插件
+# ==============================================================================
+# Android Application 插件
 android-application = { id = "com.android.application", version.ref = "gradlePluginAndroid" }
+# Android Library 插件
 android-library = { id = "com.android.library", version.ref = "gradlePluginAndroid" }
+# Kotlin Android 插件
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "gradlePluginKotlin" }
+# Kotlin KAPT 注解处理器插件
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "gradlePluginKotlin" }
+# Android Lint 静态代码检查插件
 android-lint = { id = "com.android.lint", version.ref = "gradlePluginAndroid" }
+# Android Test 独立测试插件
 android-test = { id = "com.android.test", version.ref = "gradlePluginAndroid" }
 
+# Kotlin Parcelize 序列化代码生成插件
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "gradlePluginKotlin" }
+# Kotlin Compose 编译器插件 (Kotlin 2.0+)
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "gradlePluginKotlin" }
 
+# Google KSP (Kotlin Symbol Processing) 注解处理插件
 android-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePluginKsp" }
+# Google Hilt 依赖注入插件
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androidxHilt" }
+# AndroidX Room 架构插件
 android-room = { id = "androidx.room", version.ref = "androidxRoom" }
 
-# https://github.com/flutter/flutter/issues/188339
+# Flutter Gradle 集成插件 (https://github.com/flutter/flutter/issues/188339)
 flutter-gradle-plugin = { id = "dev.flutter.flutter-gradle-plugin", version = "1.0.0" }
-
-# https://github.com/dropbox/dependency-guard
+# Dropbox 依赖安全与版本漂移守卫插件
 dependency-guard = { id = "com.dropbox.dependency-guard", version.ref = "dependencyGuard" }
-# Plugins defined by this project
+# Spotless 代码格式化与规范检查插件
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+# AndroidX Baseline Profile 基准配置文件插件
+baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidxMacroBenchmark" }
+
+# ==============================================================================
+# 本工程 Convention 约定插件 (定义于 build-logic/convention)
+# ==============================================================================
+# 1. 基础构建插件
 nowinandroid-android-application = { id = "nowinandroid.android.application" }
 nowinandroid-android-application-compose = { id = "nowinandroid.android.application.compose" }
 nowinandroid-android-library = { id = "nowinandroid.android.library" }
 nowinandroid-android-library-compose = { id = "nowinandroid.android.library.compose" }
-nowinandroid-android-lint = { id = "nowinandroid.android.lint" }
-nowinandroid-android-test = { id = "nowinandroid.android.test" }
+nowinandroid-jvm-library = { id = "nowinandroid.jvm.library" }
+
+# 2. 业务 Feature 聚合插件
+nowinandroid-android-feature = { id = "nowinandroid.android.feature" }
+nowinandroid-android-feature-compose = { id = "nowinandroid.android.feature.compose" }
+
+# 3. 架构与中间件插件
 nowinandroid-android-arouter = { id = "nowinandroid.android.arouter" }
 nowinandroid-android-eventbus = { id = "nowinandroid.android.eventbus" }
 nowinandroid-android-protobuf = { id = "nowinandroid.android.protobuf" }
 nowinandroid-android-hilt = { id = "nowinandroid.android.hilt" }
+nowinandroid-android-ksp = { id = "nowinandroid.android.ksp" }
+
+# 4. 数据存储插件
 nowinandroid-android-room = { id = "nowinandroid.android.room" }
-nowinandroid-android-greendao = { id = "nowinandroid.android.greendao" }
 nowinandroid-android-objectbox = { id = "nowinandroid.android.objectbox" }
+nowinandroid-android-greendao = { id = "nowinandroid.android.greendao" }
+
+# 5. 代码质量与测试插件
+nowinandroid-android-lint = { id = "nowinandroid.android.lint" }
+nowinandroid-android-test = { id = "nowinandroid.android.test" }
+
+# 6. 根工程全局管理插件 (依赖拓扑图与 Spotless 统一规范)
+nowinandroid-root = { id = "nowinandroid.root" }
+
+
+[bundles]
+# ==============================================================================
+# 依赖套件成组 (Dependency Bundles - 参考 Now in Android 实践)
+# 便于子模块一行引入高频强关联依赖组，减少样板代码并统一版本
+# ==============================================================================
+# Jetpack Compose 核心基础组件套件（UI 基础、图形渲染、预览工具、Material 3）
+androidx-compose = [
+    "androidx-compose-ui",
+    "androidx-compose-ui-graphics",
+    "androidx-compose-ui-tooling-preview",
+    "androidx-material3"
+]
+
+# AndroidX Lifecycle 架构组件套件（运行时生命周期感知 + ViewModel 数据流模型）
+androidx-lifecycle = [
+    "androidx-lifecycle-runtime",
+    "androidx-lifecycle-viewmodel"
+]
+
+# SmartRefresh 下拉刷新套件（核心库 + 默认 ClassicsHeader + 默认 ClassicsFooter）
+smartrefresh = [
+    "smartrefresh-layout",
+    "smartrefresh-header",
+    "smartrefresh-footer"
+]
+
+# 单元测试基础套件（JUnit 4 运行环境 + 协程测试核心库）
+testing-unit = [
+    "junit",
+    "kotlinx-coroutines-core"
+]
+
+# 仪器化 UI 测试基础套件（JUnit KTX 运行时 + Espresso 核心事件断言库）
+testing-android = [
+    "androidx-test-ext",
+    "androidx-test-espresso"
+]

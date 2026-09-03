@@ -12,7 +12,7 @@
 │   ├── 控件：标准控件、自定义控件、第三方控件
 │   ├── 导航：Tab 导航
 │   ├── 动画：原生动画与第三方动画库（PAG、Lottie、SVGA）
-│   └── 图片加载：Coil、Glide、lib_imageloader
+│   └── 图片加载：Coil、Glide、lib_image_loader
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -66,7 +66,7 @@
 | module_mqtt | MQTT 发布 / 订阅 | MqttMainActivity | /Mqtt |
 | module_bluetooth | 蓝牙通信（BLE 客户端） | BluetoothMainActivity | /Bluetooth |
 | module_event | 事件总线 | EventMainActivity | /Event |
-| module_imageloader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
+| module_image_loader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_reactive | 响应式编程 | ReactiveMainActivity | /Reactive |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
@@ -397,16 +397,16 @@
 
 ---
 
-### module_imageloader（图片加载）
+### module_image_loader（图片加载）
 
-图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 网络图片管道与加载引擎封装（图片手势缩放 UI 控件 PhotoView 归入 `module_widget_thirdparty`）。
+图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_image_loader` 网络图片管道与加载引擎封装（图片手势缩放 UI 控件 PhotoView 归入 `module_widget_thirdparty`）。
 
 | Activity | 功能 |
 |----------|------|
 | ImageLoaderMainActivity | 模块入口，导航到各个图片加载器示例页面 |
 | CoilActivity | Coil 3 原生加载（基础 / crossfade / placeholder / error） |
 | GlideActivity | Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade） |
-| ImageLoaderActivity | `lib_imageloader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
+| ImageLoaderActivity | `lib_image_loader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
 
 ---
 
@@ -573,8 +573,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | GuaguaCardActivity | 刮刮卡效果 |
 | BackHandlerActivity | BackHandler |
 | NavHostActivity | Navigation NavHost |
-| BottomNavigationActivity | BottomNavigation（Material） |
-| NavigationBarActivity | NavigationBar（Material3） |
+| NavigationBarActivity | NavigationBar（Material 3 底部导航栏） |
 | RememberActivity | 状态管理（remember） |
 | AnchoredDraggableActivity | 锚定拖拽 |
 | SmartRefreshActivity | 下拉刷新 |

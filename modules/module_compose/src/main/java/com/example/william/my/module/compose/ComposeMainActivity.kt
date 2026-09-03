@@ -66,8 +66,7 @@ class ComposeMainActivity : ComponentActivity() {
 
         routerItems.add(RouterItem("NavHost", RouterPath.Compose.NavHost))
 
-        routerItems.add(RouterItem("BottomNavigation", RouterPath.Compose.BottomNavigation))
-        routerItems.add(RouterItem("NavigationBar", RouterPath.Compose.NavigationBar))
+        routerItems.add(RouterItem("NavigationBar (Material 3 底部导航栏)", RouterPath.Compose.NavigationBar))
 
         routerItems.add(RouterItem("Remember", RouterPath.Compose.Remember))
 

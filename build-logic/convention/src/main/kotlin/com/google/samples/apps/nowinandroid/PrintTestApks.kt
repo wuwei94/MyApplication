@@ -30,7 +30,10 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
 internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtension<*, *, *>) {
@@ -45,12 +48,14 @@ internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtensio
                 javaSources.zip(kotlinSources) { javaDirs, kotlinDirs ->
                     javaDirs + kotlinDirs
                 }
-            } else javaSources ?: kotlinSources
+            } else {
+                javaSources ?: kotlinSources
+            }
 
             if (artifact != null && testSources != null) {
                 tasks.register(
                     "${variant.name}PrintTestApk",
-                    PrintApkLocationTask::class.java
+                    PrintApkLocationTask::class.java,
                 ) {
                     apkFolder.set(artifact)
                     builtArtifactsLoader.set(loader)
@@ -62,10 +67,13 @@ internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtensio
     }
 }
 
+@DisableCachingByDefault(because = "Prints output to console")
 internal abstract class PrintApkLocationTask : DefaultTask() {
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     @get:InputDirectory
     abstract val apkFolder: DirectoryProperty
 
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     @get:InputFiles
     abstract val sources: ListProperty<Directory>
 
@@ -90,8 +98,9 @@ internal abstract class PrintApkLocationTask : DefaultTask() {
 
         val builtArtifacts = builtArtifactsLoader.get().load(apkFolder.get())
             ?: throw RuntimeException("Cannot load APKs")
-        if (builtArtifacts.elements.size != 1)
+        if (builtArtifacts.elements.size != 1) {
             throw RuntimeException("Expected one APK !")
+        }
         val apk = File(builtArtifacts.elements.single().outputFile).toPath()
         println("==========")
         println(apk)

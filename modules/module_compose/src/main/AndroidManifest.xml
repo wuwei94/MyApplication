@@ -24,7 +24,6 @@
         <activity android:name=".activity.dragging.GuaguaCardActivity" />
         <activity android:name=".activity.backhandler.BackHandlerActivity" />
         <activity android:name=".activity.navhost.NavHostActivity" />
-        <activity android:name=".activity.navigation.BottomNavigationActivity" />
         <activity android:name=".activity.navigation.NavigationBarActivity" />
         <activity android:name=".activity.remember.RememberActivity" />
         <activity android:name=".activity.swipeable.AnchoredDraggableActivity" />

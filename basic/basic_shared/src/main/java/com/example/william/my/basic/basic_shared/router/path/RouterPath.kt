@@ -514,7 +514,6 @@ object RouterPath {
 
         const val NavHost = "${PATH}/NavHost"
 
-        const val BottomNavigation = "${PATH}/BottomNavigation"
         const val NavigationBar = "${PATH}/NavigationBar"
 
         const val Remember = "${PATH}/Remember"

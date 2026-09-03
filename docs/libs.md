@@ -24,7 +24,7 @@
 | `lib_mqtt_hivemq` | MQTT 客户端封装（HiveMQ 异步 API，复用 `lib_mqtt` 回调接口） | HiveMQ MQTT Client、Netty | - |
 | `lib_mqtt_paho_service` | MQTT 客户端封装（Paho Android Service fork，MqttAndroidClient） | hannesa2 Paho Android Service、Paho MQTT | - |
 | `lib_nanohttpd` | 嵌入式 HTTP Server | NanoHTTPD | - |
-| `lib_imageloader` | 图片加载封装 | Glide、Coil | - |
+| `lib_image_loader` | 图片加载封装 | Glide、Coil | - |
 | `lib_eventbus` | 事件总线封装 | EventBus | - |
 | `lib_widget` | 自定义 Widget 集合 | Android View | - |
 | `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
@@ -102,7 +102,7 @@ com.example.william.my.core.rx.request/
 
 ### UI 与通用能力
 
-- `lib_imageloader`：图片加载封装（IImageLoader 接口 + Glide / Coil 内核）。
+- `lib_image_loader`：图片加载封装（IImageLoader 接口 + Glide / Coil 内核）。
 - `lib_eventbus`：EventBus 注册、注销和事件发送。
 - `lib_widget`：项目自定义 View。
 - `lib_ninepatch`：NinePatch 图片处理工具。

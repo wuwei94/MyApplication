@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 /// 图片加载统一接口
-/// 与 Android lib_imageloader 的 IImageLoader 对齐：业务侧只依赖接口，
+/// 与 Android lib_image_loader 的 IImageLoader 对齐：业务侧只依赖接口，
 /// 内核实现可以整体替换。
 abstract class IImageLoader {
   /// 基础网络图片

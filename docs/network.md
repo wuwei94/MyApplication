@@ -244,14 +244,3 @@ Ktor 日志默认关闭，启用后默认记录 Header，并脱敏认证与 Cook
 | **`ArticleRxApi`** | **业务架构层（Rx 响应式 API）** | RxJava 响应式流<br>(基于 `createRxApi`，装配 `RxJava3CallAdapterFactory`) | `module_arch`<br>`module_jetpack` | 专为 MVP 回调、RxJava 响应式流与 Paging 3 Rx 组件（`ArticleRxPagingSource`, `ArticleRxRemoteMediator`）提供 Single 请求；统一由 `ServiceLocator.provideArticleRxApi()` 提供。 |
 | **`NetworkApi`** | **网络通信原语层** | 裸 Retrofit 注解接口<br>(无 Repository 包装) | `module_http`<br>`module_kotlin` | 专为 OkHttp/Retrofit/Rx/协程/Flow 演示底层请求能力（Call、Single、Suspend、Multipart 上传、下载）；由各演示页面动态创建调用。 |
 
-## 验证命令
-
-```powershell
-.\gradlew.bat :libs:lib_okhttp:testDemoDebugUnitTest
-.\gradlew.bat :libs:lib_retrofit:testDemoDebugUnitTest
-.\gradlew.bat :libs:lib_retrofit_rx:testDemoDebugUnitTest
-.\gradlew.bat :libs:lib_rx_request:testDemoDebugUnitTest
-.\gradlew.bat :libs:lib_ktor:testDemoDebugUnitTest
-```
-
-网络契约测试使用 MockWebServer。修改响应转换、错误处理、缓存、Cookie、重定向或资源所有权时，应同步补充对应模块的契约测试。

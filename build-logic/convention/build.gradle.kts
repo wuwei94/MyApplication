@@ -47,6 +47,7 @@ dependencies {
     compileOnly(libs.gradlePlugin.ksp)
     compileOnly(libs.gradlePlugin.hilt)
     compileOnly(libs.gradlePlugin.room)
+    compileOnly(libs.gradlePlugin.spotless)
 }
 
 tasks {
@@ -58,6 +59,9 @@ tasks {
 
 gradlePlugin {
     plugins {
+        // =========================================================================
+        // 1. 基础模块插件 (Base Module Plugins)
+        // =========================================================================
         register("androidApplication") {
             id = libs.plugins.nowinandroid.android.application.asProvider().get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
@@ -74,8 +78,66 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.library.compose.get().pluginId
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+        register("jvmLibrary") {
+            id = libs.plugins.nowinandroid.jvm.library.get().pluginId
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
 
-        //
+        // =========================================================================
+        // 2. 业务功能模块插件 (Feature Module Plugins)
+        // =========================================================================
+        register("androidFeature") {
+            id = libs.plugins.nowinandroid.android.feature.asProvider().get().pluginId
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
+        register("androidFeatureCompose") {
+            id = libs.plugins.nowinandroid.android.feature.compose.get().pluginId
+            implementationClass = "AndroidFeatureComposeConventionPlugin"
+        }
+
+        // =========================================================================
+        // 3. 架构与中间件插件 (Architecture & Framework Plugins)
+        // =========================================================================
+        register("androidHilt") {
+            id = libs.plugins.nowinandroid.android.hilt.get().pluginId
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("androidARouter") {
+            id = libs.plugins.nowinandroid.android.arouter.get().pluginId
+            implementationClass = "AndroidARouterConventionPlugin"
+        }
+        register("androidEventBus") {
+            id = libs.plugins.nowinandroid.android.eventbus.get().pluginId
+            implementationClass = "AndroidEventBusConventionPlugin"
+        }
+        register("androidKsp") {
+            id = libs.plugins.nowinandroid.android.ksp.get().pluginId
+            implementationClass = "AndroidKspConventionPlugin"
+        }
+
+        // =========================================================================
+        // 4. 数据存储与持久化插件 (Data & Persistence Plugins)
+        // =========================================================================
+        register("androidRoom") {
+            id = libs.plugins.nowinandroid.android.room.get().pluginId
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
+        register("androidProtobuf") {
+            id = libs.plugins.nowinandroid.android.protobuf.get().pluginId
+            implementationClass = "AndroidProtobufConventionPlugin"
+        }
+        register("androidObjectBox") {
+            id = libs.plugins.nowinandroid.android.objectbox.get().pluginId
+            implementationClass = "AndroidObjectBoxConventionPlugin"
+        }
+        register("androidGreenDao") {
+            id = libs.plugins.nowinandroid.android.greendao.get().pluginId
+            implementationClass = "AndroidGreenDaoConventionPlugin"
+        }
+
+        // =========================================================================
+        // 5. 质量分析与测试插件 (Quality & Testing Plugins)
+        // =========================================================================
         register("androidLint") {
             id = libs.plugins.nowinandroid.android.lint.get().pluginId
             implementationClass = "AndroidLintConventionPlugin"
@@ -85,40 +147,12 @@ gradlePlugin {
             implementationClass = "AndroidTestConventionPlugin"
         }
 
-        //
-        register("androidARouter") {
-            id = libs.plugins.nowinandroid.android.arouter.get().pluginId
-            implementationClass = "AndroidARouterConventionPlugin"
-        }
-        register("androidEventBus") {
-            id = libs.plugins.nowinandroid.android.eventbus.get().pluginId
-            implementationClass = "AndroidEventBusConventionPlugin"
-        }
-
-        //
-        register("androidProtobuf") {
-            id = libs.plugins.nowinandroid.android.protobuf.get().pluginId
-            implementationClass = "AndroidProtobufConventionPlugin"
-        }
-
-        //
-        register("androidHilt") {
-            id = libs.plugins.nowinandroid.android.hilt.get().pluginId
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
-        register("androidRoom") {
-            id = libs.plugins.nowinandroid.android.room.get().pluginId
-            implementationClass = "AndroidRoomConventionPlugin"
-        }
-
-        //
-        register("androidGreenDao") {
-            id = libs.plugins.nowinandroid.android.greendao.get().pluginId
-            implementationClass = "AndroidGreenDaoConventionPlugin"
-        }
-        register("androidObjectBox") {
-            id = libs.plugins.nowinandroid.android.objectbox.get().pluginId
-            implementationClass = "AndroidObjectBoxConventionPlugin"
+        // =========================================================================
+        // 6. 根工程管理插件 (Root Management Plugin: Graph & Spotless)
+        // =========================================================================
+        register("root") {
+            id = libs.plugins.nowinandroid.root.get().pluginId
+            implementationClass = "RootPlugin"
         }
     }
 }

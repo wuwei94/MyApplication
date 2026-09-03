@@ -16,6 +16,4 @@ dependencies {
     implementation(libs.google.gson)
     api(libs.okhttp)
     api(libs.okhttp.logging)
-
-    testImplementation(libs.okhttp.mockwebserver)
 }

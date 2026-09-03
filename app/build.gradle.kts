@@ -3,8 +3,6 @@ import com.google.samples.apps.nowinandroid.NiaBuildType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-//apply(file("../.signing/configs-signing.gradle"))
-
 plugins {
     alias(libs.plugins.nowinandroid.android.application)
     alias(libs.plugins.nowinandroid.android.application.compose)
@@ -12,17 +10,22 @@ plugins {
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
     alias(libs.plugins.dependency.guard)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
     namespace = "com.example.william.my.application"
-    compileSdk = 37
+
     defaultConfig {
         applicationId = "com.example.william.my.application"
-        versionCode = 1
-        versionName = "1.0.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        // 语义化版本自动联动 (读取 libs.versions.toml 中的 version-major/minor/patch)
+        val vMajor = libs.versions.version.major.get().toInt()
+        val vMinor = libs.versions.version.minor.get().toInt()
+        val vPatch = libs.versions.version.patch.get().toInt()
+        versionCode = vMajor * 10000 + vMinor * 100 + vPatch // 例：1.0.0 -> 10000
+        versionName = "$vMajor.$vMinor.$vPatch"               // 例："1.0.0"
 
-        // Custom test runner to set up Hilt dependency graph
+        // 测试 Runner
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables {
@@ -30,24 +33,22 @@ android {
         }
 
         ndk {
-            // armeabi：万金油架构平台（占用率：0%）
-            // armeabi-v7a：曾经主流的架构平台（占用率：10%）
-            // arm64-v8a：目前主流架构平台（占用率：90%）
-            //abiFilters 'armeabi-v7a', 'arm64-v8a' // , 'x86', 'x86_64'
+            // 支持的主流 CPU 架构
             abiFilters.addAll(arrayOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
         }
 
+        // 统一打包产物命名规范：MyApplication_版本_渠道_构建日期.apk
         applicationVariants.all {
             outputs.all {
                 val outputImpl = this as BaseVariantOutputImpl
                 val createTime =
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"))
                 outputImpl.outputFileName =
-                    "MyApplication" + "_${versionName}_${baseName}_$createTime.apk"
+                    "MyApplication_${versionName}_${baseName}_$createTime.apk"
             }
         }
 
-        addManifestPlaceholders(mutableMapOf("APP_NAME" to "My Application")) // 配置主包的应用名称
+        addManifestPlaceholders(mutableMapOf("APP_NAME" to "My Application"))
     }
 
     buildTypes {
@@ -55,16 +56,17 @@ android {
             applicationIdSuffix = NiaBuildType.DEBUG.applicationIdSuffix
         }
         getByName("release") {
+            // 启用 R8 代码混淆与代码缩减（剔除无用代码）
             isMinifyEnabled = true
+            // 启用资源缩减（剔除无用资源文件，如未引用的图片、布局等，需配合 isMinifyEnabled 一起使用）
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
             applicationIdSuffix = NiaBuildType.RELEASE.applicationIdSuffix
 
-            // To publish on the Play store a private signing key is required, but to allow anyone
-            // who clones the code to sign and run the release variant, use the debug signing key.
-            // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
+            // 本地发布使用 debug 签名作为默认凭证
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -72,7 +74,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            // Netty 各模块 jar 均携带 INDEX.LIST / io.netty.versions.properties，合并时会重复冲突
+            // Netty 各模块 jar 均携带 INDEX.LIST / io.netty.versions.properties，合并时防止重复冲突
             excludes += "/META-INF/INDEX.LIST"
             excludes += "/META-INF/io.netty.versions.properties"
         }
@@ -86,22 +88,23 @@ android {
 }
 
 dependencies {
+    // 基础公共层
     implementation(project(":basic:basic_lib"))
     implementation(project(":basic:basic_shared"))
 
+    // 应用启动与启动页
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.startup)
 }
 
 dependencyGuard {
-    // 生产环境 Release 配置 - 建议监控此配置以了解生产构建中包含的内容
-    configuration("prodReleaseRuntimeClasspath") {
-        // 可选：添加允许规则，例如禁止测试依赖进入生产环境
-        // allowedFilter = { !it.contains("junit") }
-    }
+    // 生产环境 Release 配置 - 监控依赖树变更以防止依赖膨胀
+    configuration("prodReleaseRuntimeClasspath")
     // 生产环境 Debug 配置
-    configuration("prodDebugRuntimeClasspath") {
-        // 可选：添加允许规则
-        // allowedFilter = { !it.contains("junit") }
-    }
+    configuration("prodDebugRuntimeClasspath")
+}
+
+baselineProfile {
+    // 允许使用已有基线配置文件进行 AOT 优化打包，常规构建无需连接设备实时生成
+    automaticGenerationDuringBuild = false
 }

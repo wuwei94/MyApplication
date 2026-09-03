@@ -29,10 +29,10 @@ class AndroidEventBusConventionPlugin : Plugin<Project> {
             apply(plugin = "kotlin-kapt")
             extensions.configure<KaptExtension> {
                 val eventBusClassPath = "com.example.william.my" +
-                        project.path.replace(":", ".")
+                    project.path.replace(":", ".")
                 val eventBusClassName = "My" +
-                        project.name.substringAfter("_", project.name)
-                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } + "EventBusIndex"
+                    project.name.substringAfter("_", project.name)
+                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } + "EventBusIndex"
                 println("eventBusClassPath : $eventBusClassPath")
                 println("eventBusClassName : $eventBusClassName")
                 arguments {

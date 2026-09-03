@@ -6,7 +6,8 @@
 
 ## Highlights
 
-- **工程化**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin，ARouter 模块通信，Hilt 多模块初始化，GitHub Actions CI（lint + assemble）。
+- **工程化与规范**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin（完全对齐 [Now in Android](https://github.com/android/nowinandroid)），多模块 Mermaid 依赖拓扑图自动化生成（`./gradlew generateModulesGraph`），Spotless + ktlint 统一代码规范格式化（`./gradlew spotlessApply`），Compose Compiler 稳定性配置（`compose_compiler_config.conf`）。
+- **性能优化与基准测试**：Jetpack Macrobenchmark + Baseline Profile 基准配置文件体系，AOT 预编译冷启动提速（30%+）与列表防掉帧，DiffUtil 差量刷新、LRU 缓存、协程 Dispatcher 性能对比。
 - **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
 - **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
@@ -15,7 +16,6 @@
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
 - **自定义 View & 图表**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等；MPAndroidChart 折线/柱状/饼图/雷达图与多图表全景看板联动。
 - **Compose**：Navigation、BackHandler、手势 / 拖拽 / `rememberSaveable`、SmartRefresh、Canvas 自绘贝塞尔折线/分组圆角柱状/甜甜圈/雷达图等多图表联动。
-- **性能优化**：DiffUtil 差量刷新、LRU 内存缓存策略、协程 Dispatcher 调度性能对比。
 
 ---
 
@@ -24,7 +24,7 @@
 | Layer       | Tech |
 |-------------|------|
 | Language    | Kotlin |
-| Build       | Gradle Kotlin DSL · Version Catalogs · Convention Plugin |
+| Build       | Gradle Kotlin DSL · Version Catalogs · Convention Plugin · Spotless (ktlint) |
 | UI          | Android Views · Jetpack Compose · Material3 · Flutter |
 | Charts      | MPAndroidChart · Compose Canvas · Flutter fl_chart |
 | Architecture| MVP · MVVM · MVI · Mavericks |
@@ -37,8 +37,8 @@
 | Messaging   | EventBus · RxEventBus · LiveEventBus · FlowEventBus |
 | ML / AI     | TensorFlow Lite · LiteRT · GPU Delegate |
 | Others      | WorkManager · Paging 3 · SplashScreen · MMKV |
-| Performance | DiffUtil · LruCache · Dispatcher 调度优化 |
-| Quality     | Dependency Guard（已接入） |
+| Performance | Jetpack Macrobenchmark · Baseline Profile · Compose Compiler Stability · DiffUtil · LruCache |
+| Quality     | Spotless · ktlint · Dependency Guard · Android Lint |
 | CI/CD       | GitHub Actions（lint + assemble） |
 
 > 各库版本详见 `gradle/libs.versions.toml`。
@@ -74,7 +74,7 @@ MyApplication/
 ├── app                         # 壳工程（Hilt + ARouter 入口）
 ├── build-logic                 # Convention Plugin，统一插件配置
 ├── gradle/libs.versions.toml   # 统一版本目录
-├── docs                        # 文档（modules / libs / di / event / network / transfer / bluetooth / build-logic / conventions）
+├── docs                        # 文档（modules / libs / di / event / network / transfer / bluetooth / build-logic / conventions / modularization）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_shared            # 通用 Bus、Router、内联日志 UI 脚手架与 JSON 格式化
@@ -100,7 +100,7 @@ MyApplication/
 │   ├── lib_mqtt_paho_service   # MQTT 客户端封装（Paho Android Service fork，MqttAndroidClient）
 │   ├── lib_nanohttpd           # NanoHTTPD 服务器封装
 │   ├── lib_eventbus            # EventBus 事件总线封装
-│   ├── lib_imageloader         # Glide / Coil 图片加载封装（IImageLoader 接口 + 内核可切换）
+│   ├── lib_image_loader        # Glide / Coil 图片加载封装（IImageLoader 接口 + 内核可切换）
 │   ├── lib_ninepatch           # NinePatch 图片处理工具
 │   └── lib_widget              # 自定义 Widget 控件集合
 └── modules                     # Feature 模块（按技术领域分组）
@@ -112,7 +112,7 @@ MyApplication/
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   ├── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
-    │   └── module_imageloader  # 图片加载（Coil / Glide / lib_imageloader）
+    │   └── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
@@ -331,13 +331,13 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 | LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
 | FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
 
-### module_imageloader（图片加载）
+### module_image_loader（图片加载）
 
-图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_imageloader` 统一封装。
+图片加载专项模块，集中展示 Coil、Glide 以及项目级 `lib_image_loader` 统一封装。
 
 - Coil：Coil 3 原生加载（基础 / crossfade / placeholder / error）
 - Glide：Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade）
-- ImageLoader：`lib_imageloader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换）
+- ImageLoader：`lib_image_loader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换）
 
 ### module_widget_thirdparty（UI 库）
 
@@ -427,7 +427,7 @@ Jetpack 通用基础架构与生命周期数据流组件。
 Jetpack Compose 示例，覆盖声明式 UI 核心能力。
 
 - 基础组件：Text / Image / Button / Canvas / ConstraintLayout / CompositionLocal / LazyColumn
-- Navigation：NavHost / BottomNavigation / NavigationBar
+- Navigation：NavHost / NavigationBar（Material 3 底部导航栏）
 - 手势：Draggable / DragGestureDetector / AnchoredDraggable / GuaguaCard
 - 状态：remember / rememberSaveable / SmartRefresh（下拉刷新）
 - 布局：ScrollableTab / HorizontalPager / CoordinatorLayout
@@ -443,7 +443,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **功能型**：LayoutBuilder / GestureDetector / PopScope / InheritedWidget / FutureBuilder / StreamBuilder
 - **其他**：Animation / Dialog / Isolate
 - **网络请求**：`lib_network_dio`（DioClient）与 `lib_network_http`（HttpClient）两个独立本地 package，与 Retrofit 共享 `code/message/data` 业务响应和 `code/message/cause` 异常契约，并统一常用 HTTP 方法、请求体和请求取消；支持 SSE（Server-Sent Events）流式传输与 AI 大模型（DeepSeek）打字机对话；日志沿用各自实现且不做脱敏
-- **图片加载**：`lib_image_loader` 本地 package（`IImageLoader` 接口 + `ImageLoader` 门面），默认内核 cached_network_image，切换内核调用方零改动，与 Android `lib_imageloader` 结构对齐
+- **图片加载**：`lib_image_loader` 本地 package（`IImageLoader` 接口 + `ImageLoader` 门面），默认内核 cached_network_image，切换内核调用方零改动，与 Android `lib_image_loader` 结构对齐
 - **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
 - **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
 - **引擎层特性**：CustomPainter 粒子系统、贝塞尔签名板、自定义 RenderObject 环形布局、交错动画、GLSL 片段着色器、沿路径动画、3D 翻转卡片、双指缩放旋转手势识别

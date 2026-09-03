@@ -1,35 +1,24 @@
-## okio
-# https://github.com/square/okio/blob/master/okio/src/jvmMain/resources/META-INF/proguard/okio.pro
-# ==================================================================================================
+# ==============================================================================
+# OkHttp 3 & Okio 混淆保护规则 (lib_okhttp)
+# ==============================================================================
 
-# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+# ------------------------------------------------------------------------------
+# Okio
+# ------------------------------------------------------------------------------
+# Animal Sniffer compileOnly 兼容性告警忽略
 -dontwarn org.codehaus.mojo.animal_sniffer.*
 
-## okhttp
-# https://raw.githubusercontent.com/square/okhttp/master/okhttp/src/jvmMain/resources/META-INF/proguard/okhttp3.pro
-# ==================================================================================================
-
-# JSR 305 annotations are for embedding nullability information.
+# ------------------------------------------------------------------------------
+# OkHttp 3
+# ------------------------------------------------------------------------------
+# JSR 305 空安全注解告警忽略
 -dontwarn javax.annotation.**
 
-# A resource is loaded with a relative path so the package of this class must be preserved.
+# 公共后缀资源相对路径保留
 -adaptresourcefilenames okhttp3/internal/publicsuffix/PublicSuffixDatabase.gz
 
-# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
--dontwarn org.codehaus.mojo.animal_sniffer.*
-
-# OkHttp platform used only on JVM and when Conscrypt and other security providers are available.
+# 可选加密平台适配实现（Conscrypt, BouncyCastle, OpenJSSE 等平台非必需）
 -dontwarn okhttp3.internal.platform.**
 -dontwarn org.conscrypt.**
 -dontwarn org.bouncycastle.**
 -dontwarn org.openjsse.**
-
-## Gson
--keepattributes Signature
--keepattributes *Annotation*
--keep class * implements com.google.gson.TypeAdapterFactory
--keep class * implements com.google.gson.JsonSerializer
--keep class * implements com.google.gson.JsonDeserializer
--keepclassmembers,allowobfuscation class * {
-    @com.google.gson.annotations.SerializedName <fields>;
-}

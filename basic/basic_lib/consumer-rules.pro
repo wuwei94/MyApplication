@@ -1,86 +1,67 @@
-# Gson
-# https://github.com/google/gson/blob/main/examples/android-proguard-example/proguard.cfg
-# ==================================================================================================
-# Gson uses generic type information stored in a class file when working with fields. Proguard
-# removes such information by default, so configure it to keep all of it.
--keepattributes Signature
+# ==============================================================================
+# 基础公共库全局混淆规则 (basic_lib - 自动传递给所有上层业务模块)
+# ==============================================================================
 
-# For using GSON @Expose annotation
+# ------------------------------------------------------------------------------
+# 1. Google Gson 序列化保护
+# ------------------------------------------------------------------------------
+# 保留泛型签名（Gson 反射泛型字段必须）
+-keepattributes Signature
+# 保留注解
 -keepattributes *Annotation*
 
-# Gson specific classes
 -dontwarn sun.misc.**
-#-keep class com.google.gson.stream.** { *; }
 
-# Application classes that will be serialized/deserialized over Gson
--keep class com.google.gson.examples.android.model.** { <fields>; }
-
-# Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
-# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+# 保持 TypeAdapter 与 Serializer 实现类
 -keep class * extends com.google.gson.TypeAdapter
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
-# Prevent R8 from leaving Data object members always null
+# 保持带 @SerializedName 注解的字段名称与结构
 -keepclassmembers,allowobfuscation class * {
-  @com.google.gson.annotations.SerializedName <fields>;
+    @com.google.gson.annotations.SerializedName <fields>;
 }
 
-# Retain generic signatures of TypeToken and its subclasses with R8 version 3.0 and higher.
+# 保留 TypeToken 泛型签名
 -keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
 -keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 
-# Arouter
-# https://github.com/alibaba/ARouter/blob/master/README_CN.md
-# ==================================================================================================
+# ------------------------------------------------------------------------------
+# 2. 阿里巴巴 ARouter 路由组件保护
+# ------------------------------------------------------------------------------
+-keep public class com.alibaba.android.arouter.routes.** { *; }
+-keep public class com.alibaba.android.arouter.facade.** { *; }
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe { *; }
 
--keep public class com.alibaba.android.arouter.routes.**{*;}
--keep public class com.alibaba.android.arouter.facade.**{*;}
--keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
-
-# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
+# 保护 IProvider 接口与实现类
 -keep interface * implements com.alibaba.android.arouter.facade.template.IProvider
-
-# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
 -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
 
-# ARouter Autowired
+# 保护 @Autowired 注入字段
 -keepclasseswithmembers class * {
     @com.alibaba.android.arouter.facade.annotation.Autowired <fields>;
 }
 
-# Eventbus
-# https://github.com/greenrobot/EventBus/blob/master/eventbus-android/consumer-rules.pro
-# ==================================================================================================
-
--keepattributes *Annotation*
+# ------------------------------------------------------------------------------
+# 3. GreenRobot EventBus 事件总线保护
+# ------------------------------------------------------------------------------
 -keepclassmembers class * {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
-# If using AsyncExecutord, keep required constructor of default event used.
-# Adjust the class name if a custom failure event type is used.
 -keepclassmembers class org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }
-
-# Accessed via reflection, avoid renaming or removal
 -keep class org.greenrobot.eventbus.android.AndroidComponentsImpl
 
-# GreenDAO
-# https://github.com/greenrobot/greenDAO
-# ==================================================================================================
+# ------------------------------------------------------------------------------
+# 4. GreenDAO ORM 数据库保护
+# ------------------------------------------------------------------------------
 -keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
-public static java.lang.String TABLENAME;
+    public static java.lang.String TABLENAME;
 }
 -keep class **$Properties { *; }
-
-# If you DO use SQLCipher:
 -keep class org.greenrobot.greendao.database.SqlCipherEncryptedHelper { *; }
-
-# If you do NOT use SQLCipher:
 -dontwarn net.sqlcipher.database.**
-# If you do NOT use RxJava:
 -dontwarn rx.**

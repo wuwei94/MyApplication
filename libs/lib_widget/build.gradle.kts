@@ -10,8 +10,13 @@ android {
 }
 
 dependencies {
-    //Utils
+    // Android UI 基础组件
+    api(libs.androidx.appCompat)
+    api(libs.google.material)
+    api(libs.androidx.recyclerView)
+
+    // Utils
     implementation(libs.utils)
-    //PAG
+    // PAG
     implementation(libs.pag)
 }

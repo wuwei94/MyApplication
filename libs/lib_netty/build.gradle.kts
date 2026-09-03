@@ -4,21 +4,16 @@ plugins {
 
 android {
     namespace = "com.example.william.my.core.netty"
-    //Netty
-    //packaging {
-    //    resources.excludes.add("META-INF/INDEX.LIST")
-    //    resources.excludes.add("META-INF/io.netty.versions.properties")
-    //}
 }
 
 dependencies {
-    // Netty
+    // Netty 网络通信框架核心库
     api(libs.netty)
-    // SLF4J (Netty logging)
+    // SLF4J (Netty 内部日志门面)
     implementation(libs.slf4j)
-    // RxJava
+    // 响应式扩展 RxJava 3
     api(libs.rxandroid)
-    // Coroutines Flow — Flow 属于公开 API 类型
+    // Kotlin 协程与 Flow（Flow 属于公共 API 暴露类型）
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
 }

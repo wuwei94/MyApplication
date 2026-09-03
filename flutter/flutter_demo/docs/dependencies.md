@@ -47,7 +47,7 @@
 
 ## 图片加载（本地 package）
 
-网络图片加载由 `../flutter_libs/lib_image_loader` 本地 package 提供，与 Android `lib_imageloader` 结构对齐：
+网络图片加载由 `../flutter_libs/lib_image_loader` 本地 package 提供，与 Android `lib_image_loader` 结构对齐：
 
 - [lib_image_loader](../flutter_libs/lib_image_loader) — `package:lib_image_loader/image_loader.dart`，`IImageLoader` 接口 + `ImageLoader` 门面，内核为 `CachedNetworkImageLoader`，负责常规网络图加载、缓存、占位图与错误态；持有 cached_network_image 依赖，切换内核只需替换 `ImageLoader.kernel`，调用方零改动
 

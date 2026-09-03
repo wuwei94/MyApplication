@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.invoke
 
 @Suppress("EnumEntryName")
 enum class FlavorDimension {
-    contentType
+    contentType,
 }
 
 // The content for the app can either come from local static data which is useful for demo

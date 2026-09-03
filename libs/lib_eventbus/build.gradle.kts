@@ -10,10 +10,11 @@ android {
 }
 
 dependencies {
-    //RxEventBus
+    // RxEventBus
     api(libs.rxandroid)
-    //FlowEventBus viewModelScope
+    // FlowEventBus & LiveEventBus Lifecycle & Fragment 支持
+    api(libs.androidx.fragment.ktx)
+    api(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.runtime)
-    //FlowEventBus ProcessLifecycleOwner
     implementation(libs.androidx.lifecycle.process)
 }
