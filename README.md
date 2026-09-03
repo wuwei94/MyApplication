@@ -360,7 +360,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 - **Markwon 基础与扩展渲染**：基于 AST 解析的高性能原生 Spannable 渲染、GFM 表格、任务清单、HTML 标签、Glide 图片与自定义主题样式
 - **Prism4j 多语言代码高亮**：Kotlin / Java / Python / JS / SQL / Shell / C++ 多语言词法分析语法着色、Darkula 暗黑与 Light 明亮主题定制、协程后台异步染色优化
 - **流式打字机与语法容错**：`TypewriterEngine` 动态自适应时钟流控（积压自适应调速 + 标点呼吸停顿 + 暂停/跳过）、`MarkdownStreamFixer` 未闭合代码块与行内标签虚拟自动补全、呼吸闪烁光标
-- **AI 聊天实战**（演进中）：RecyclerView Payload 局部增量刷新与智能吸底跟随
+- **AI 流式对话完整实战**：`RecyclerView Payload` 局部细粒度增量刷新（0 掉帧、0 重绘闪烁）、智能吸底滚动与手势打断识别、悬浮“回到最新内容”按钮、多轮对话管理、一键复制代码与多场景大模型推流联调
 
 ### module_kotlin（Kotlin 语言特性）
 

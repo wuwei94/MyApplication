@@ -171,24 +171,20 @@ class TypewriterEngine {
                         currentDelayMs = 20
                     }
                 } else {
-                    // 自适应出字算法（匹配屏幕刷新率，避免过高频调度造成卡顿）
+                    // 自适应出字算法（轻快自然：约 33~45 字/秒，节奏明快利落且清晰可见）
                     val step: Int
                     when {
-                        currentBacklog > 120 -> {
-                            step = 6
-                            currentDelayMs = 16
-                        }
-                        currentBacklog > 60 -> {
-                            step = 3
-                            currentDelayMs = 18
-                        }
-                        currentBacklog > 20 -> {
+                        currentBacklog > 80 -> {
                             step = 2
-                            currentDelayMs = 24
+                            currentDelayMs = 20 // 积压追赶模式：约 100 字/秒
+                        }
+                        currentBacklog > 30 -> {
+                            step = 1
+                            currentDelayMs = 22 // 适度加速：约 45 字/秒
                         }
                         else -> {
                             step = 1
-                            currentDelayMs = 36
+                            currentDelayMs = 30 // 基础轻快出字：约 33 字/秒（流畅自然，不拖沓）
                         }
                     }
 
@@ -203,8 +199,8 @@ class TypewriterEngine {
                     if (lastChar != null) {
                         val pauseMs = getPunctuationPause(lastChar)
                         if (pauseMs > 0) {
-                            currentDelayMs = if (currentBacklog > 60) {
-                                currentDelayMs + pauseMs / 2
+                            currentDelayMs = if (currentBacklog > 50) {
+                                currentDelayMs + pauseMs / 3
                             } else {
                                 pauseMs
                             }
@@ -231,13 +227,13 @@ class TypewriterEngine {
 
     /**
      * 根据标点符号级别计算呼吸停顿毫秒数：
-     * - 句末重标点（句号、感叹号、问号、换行）：停顿 280ms（深度思考停顿）
-     * - 句中轻标点（逗号、顿号、分号、冒号）：停顿 150ms（自然换气停顿）
+     * - 句末重标点（句号、感叹号、问号、换行）：停顿 160ms（轻快思考停顿）
+     * - 句中轻标点（逗号、顿号、分号、冒号）：停顿 80ms（自然换气停顿）
      */
     private fun getPunctuationPause(c: Char): Long {
         return when (c) {
-            '。', '！', '？', '.', '!', '?', '\n' -> 280L
-            '，', '、', '；', '：', ',', ';', ':' -> 150L
+            '。', '！', '？', '.', '!', '?', '\n' -> 160L
+            '，', '、', '；', '：', ',', ';', ':' -> 80L
             else -> 0L
         }
     }

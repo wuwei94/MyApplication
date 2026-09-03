@@ -65,10 +65,10 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
 
         val tableTheme = TableTheme.Builder()
             .tableBorderWidth(dpToPx(1))
-            .tableBorderColor(0x33888888.toInt())
+            .tableBorderColor(0x33888888)
             .tableCellPadding(dpToPx(8))
-            .tableHeaderRowBackgroundColor(0x18888888.toInt())
-            .tableEvenRowBackgroundColor(0x08888888.toInt())
+            .tableHeaderRowBackgroundColor(0x18888888)
+            .tableEvenRowBackgroundColor(0x08888888)
             .build()
 
         // 1. Darkula 暗黑代码主题

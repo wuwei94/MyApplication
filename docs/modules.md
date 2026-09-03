@@ -447,6 +447,7 @@
 | MarkwonBasicActivity | Markwon 原生高性能 Markdown 渲染（基础排版、GFM 表格、任务清单、HTML、图片与自定义主题） |
 | MarkwonHighlightActivity | Prism4j 多语言代码语法高亮（Kotlin / Java / Python / JS / SQL / Shell / C++、Darkula 与 Light 主题、协程异步高亮） |
 | StreamTypewriterActivity | 流式 Markdown 打字机与未闭合语法容错（TypewriterEngine 自适应时钟、MarkdownStreamFixer 自动补齐、呼吸光标与突发推流） |
+| AiChatActivity | AI 流式对话完整实战（RecyclerView Payload 局部增量刷新、智能吸底滚动、手势打断与悬浮回底、多轮对话与代码复制） |
 
 ---
 

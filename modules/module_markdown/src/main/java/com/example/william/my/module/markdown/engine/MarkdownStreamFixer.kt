@@ -18,7 +18,7 @@ import java.util.ArrayDeque
  */
 object MarkdownStreamFixer {
 
-    private const val CURSOR_SYMBOL = " ▍"
+    private const val CURSOR_SYMBOL = "▍"
 
     /**
      * 对流式 Markdown 文本进行未闭合语法修复并可选追加光标
@@ -128,20 +128,28 @@ object MarkdownStreamFixer {
             i++
         }
 
-        val sb = StringBuilder(rawText)
-
-        // 追加光标
-        if (appendCursor) {
-            sb.append(CURSOR_SYMBOL)
-        }
-
         // 6. 如果在多行代码块中，闭合代码块
         if (inCodeBlock) {
+            val sb = StringBuilder(rawText)
+            if (appendCursor) {
+                sb.append(CURSOR_SYMBOL)
+            }
             if (!sb.endsWith("\n")) {
                 sb.append("\n")
             }
             sb.append("```")
             return sb.toString()
+        }
+
+        val lastNewLine = rawText.lastIndexOf('\n')
+        val lastLine = (if (lastNewLine != -1) rawText.substring(lastNewLine + 1) else rawText).trim()
+        val isTableLine = lastLine.startsWith("|")
+
+        val sb = StringBuilder(rawText)
+
+        // 仅在非表格语法行时追加光标，避免光标字符破坏 GFM 表格分隔行（如 | :--- |）导致 AST 树反复坍塌
+        if (appendCursor && !isTableLine) {
+            sb.append(CURSOR_SYMBOL)
         }
 
         // 7. 如果在行内代码中，闭合反引号
@@ -152,13 +160,6 @@ object MarkdownStreamFixer {
         // 8. 按照栈的 LIFO 顺序，逆序闭合所有未闭合的行内样式标签
         while (syntaxStack.isNotEmpty()) {
             sb.append(syntaxStack.pop())
-        }
-
-        // 9. 检查流式表格中的未闭合行 (以 | 开头但尚未以 | 结尾)
-        val lastNewLine = sb.lastIndexOf('\n')
-        val lastLine = (if (lastNewLine != -1) sb.substring(lastNewLine + 1) else sb.toString()).trim()
-        if (lastLine.startsWith("|") && !lastLine.endsWith("|")) {
-            sb.append(" |")
         }
 
         return sb.toString()

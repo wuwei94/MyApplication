@@ -53,3 +53,4 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 7. 修改代码时必须同步更新 `README.md` 和相关文档，详见 `docs/conventions.md`
 8. 代码注释与文档默认使用中文（标识符、类型名与必要的专有术语除外）
 9. 默认不为极少数、违约或纯理论输入增加校验、分支、异常类型或公共 API，详见 `docs/conventions.md`
+10. 问题治理必须深入底层机理从根源解决，严禁使用补丁式、兜底式手段掩盖问题，详见 `docs/conventions.md`

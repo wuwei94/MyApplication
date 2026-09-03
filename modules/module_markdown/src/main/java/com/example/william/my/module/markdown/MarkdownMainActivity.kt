@@ -32,7 +32,7 @@ class MarkdownMainActivity : RouterRecyclerActivity() {
 
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── AI 聊天实战 ──", ""))
-        routerItems.add(RouterItem("AI 流式对话完整界面（待接入）", ""))
+        routerItems.add(RouterItem("AI 流式对话完整实战界面", RouterPath.Markdown.AiChat))
         return routerItems
     }
 }

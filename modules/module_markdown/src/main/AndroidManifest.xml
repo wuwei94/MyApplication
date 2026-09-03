@@ -6,6 +6,9 @@
         <activity android:name=".activity.MarkwonBasicActivity" />
         <activity android:name=".activity.MarkwonHighlightActivity" />
         <activity android:name=".activity.StreamTypewriterActivity" />
+        <activity
+            android:name=".activity.AiChatActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

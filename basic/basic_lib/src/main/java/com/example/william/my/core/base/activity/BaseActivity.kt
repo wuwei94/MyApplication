@@ -70,9 +70,10 @@ open class BaseActivity : AppCompatActivity() {
     protected open fun applyEdgeToEdgeInsets(view: View?) {
         if (view != null && fitsSystemWindows()) {
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-                // 获取状态栏、导航栏等系统栏（SystemBars）的安全边距
-                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                // 获取状态栏、导航栏与输入法软键盘（SystemBars + IME）的安全边距
+                val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+                val barsAndIme = insets.getInsets(insetsType)
+                v.setPadding(barsAndIme.left, barsAndIme.top, barsAndIme.right, barsAndIme.bottom)
                 insets
             }
         }

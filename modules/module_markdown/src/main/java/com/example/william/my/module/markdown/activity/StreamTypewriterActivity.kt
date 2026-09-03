@@ -13,9 +13,10 @@ import com.example.william.my.module.markdown.databinding.MarkdownActivityTypewr
 import com.example.william.my.module.markdown.engine.MarkdownStreamFixer
 import com.example.william.my.module.markdown.engine.TypewriterEngine
 import com.example.william.my.module.markdown.grammar.MyGrammarLocator
-import com.example.william.my.module.markdown.engine.StreamTablePlugin
+import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.CorePlugin
+import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
 import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.ext.tasklist.TaskListPlugin
@@ -36,8 +37,7 @@ import kotlinx.coroutines.withContext
  * 1. TypewriterEngine：动态自适应出字速率控制（积压加速 + 标点呼吸停顿 + 暂停/跳过）；
  * 2. MarkdownStreamFixer：实时检测未闭合的 ``` 代码块与行内富文本标签，虚拟闭合防止界面跳动闪烁；
  * 3. Prism4j + Markwon：代码块语法着色与原生 Spannable 高性能渲染；
- * 4. StreamTablePlugin：第一轮布局 Pass 即刻精确计算表格单元格真实高度与内边距，0 延迟、0 突变、0 闪烁；
- * 5. Channel.CONFLATED 顺序流控：保证单调递增渲染与丝滑吸底。
+ * 4. Channel.CONFLATED 顺序流控：保证单调递增渲染与丝滑吸底。
  */
 @Route(path = RouterPath.Markdown.StreamTypewriter)
 class StreamTypewriterActivity : BasicLayoutActivity() {
@@ -82,12 +82,28 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             .tableEvenRowBackgroundColor(0x08888888.toInt())
             .build()
 
+        val tableWidthProvider: () -> Int = {
+            if (mTextView.width > 0) {
+                mTextView.width - mTextView.paddingLeft - mTextView.paddingRight
+            } else {
+                resources.displayMetrics.widthPixels - dpToPx(32)
+            }
+        }
+
         mMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
-            .usePlugin(StreamTablePlugin.create(tableTheme) { mTextView })
+            .usePlugin(com.example.william.my.module.markdown.plugin.GfmTablePlugin.create(tableTheme, tableWidthProvider))
             .usePlugin(TaskListPlugin.create(this))
             .usePlugin(StrikethroughPlugin.create())
             .usePlugin(SyntaxHighlightPlugin.create(prism4j, darkulaTheme))
+            .usePlugin(object : AbstractMarkwonPlugin() {
+                override fun configureTheme(builder: MarkwonTheme.Builder) {
+                    builder
+                        .codeBlockBackgroundColor(0xFF282C34.toInt()) // 多行代码块暗黑底色
+                        .codeBackgroundColor(0x14000000) // 行内代码浅色背景
+                        .codeTextColor(0xFFD81B60.toInt()) // 行内代码高亮粉红色
+                }
+            })
             .build()
     }
 
@@ -106,7 +122,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
                 val node = mMarkwon.parse(fixedMarkdown)
                 val spanned = mMarkwon.render(node)
 
-                // 3. 提交主线程渲染（StreamTablePlugin 保证第一轮 measurement 即可精准算出真实表格高度与 10dp 内边距）
+                // 3. 提交主线程渲染
                 withContext(Dispatchers.Main) {
                     mTextView.text = spanned
                     // 4. 吸底滚动（直接计算位移，避免 fullScroll 动画打断引起震颤）
