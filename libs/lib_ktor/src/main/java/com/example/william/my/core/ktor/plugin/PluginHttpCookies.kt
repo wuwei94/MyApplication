@@ -14,7 +14,7 @@ internal object PluginHttpCookies {
 
     fun <T : HttpClientEngineConfig> install(
         clientConfig: HttpClientConfig<T>,
-        storage: CookiesStorage?
+        storage: CookiesStorage?,
     ) {
         storage ?: return
         clientConfig.install(HttpCookies) {

@@ -23,13 +23,11 @@ class RxRequestActivity : BasicResponseActivity() {
         showDescription("RxRequest 动态请求示例（支持表单、JSON 与 Multipart）")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "RxRequest Post postForm",
-            "RxRequest Post postJson",
-            "RxRequest Post multipart",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "RxRequest Post postForm",
+        "RxRequest Post postJson",
+        "RxRequest Post multipart",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -51,7 +49,7 @@ class RxRequestActivity : BasicResponseActivity() {
     private fun postForm(username: String, password: String) {
         val params = mutableMapOf(
             Constants.Key_Username to username,
-            Constants.Key_Password to password
+            Constants.Key_Password to password,
         )
 
         RxRequest.builder<JsonElement>()
@@ -105,7 +103,7 @@ class RxRequestActivity : BasicResponseActivity() {
                 mapOf(
                     Constants.Key_Username to username,
                     Constants.Key_Password to password,
-                )
+                ),
             )
             .setProvider(this)
             .buildSingle()

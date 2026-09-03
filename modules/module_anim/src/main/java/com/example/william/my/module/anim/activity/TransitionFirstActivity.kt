@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+﻿package com.example.william.my.module.anim.activity
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.core.util.Pair
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.anim.R
 import com.example.william.my.module.anim.databinding.AnimActivityTransitionFirstBinding
 

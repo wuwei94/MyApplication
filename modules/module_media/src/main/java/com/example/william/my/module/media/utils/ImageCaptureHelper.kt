@@ -16,7 +16,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.core.base.utils.AppExecutorsHelper
 
 /**
  * CameraX 拍照辅助类
@@ -26,10 +25,10 @@ import com.example.william.my.core.base.utils.AppExecutorsHelper
  */
 class ImageCaptureHelper(
     private val activity: FragmentActivity,
-    private val preview: PreviewView
+    private val preview: PreviewView,
 ) {
 
-    private val main = AppExecutorsHelper.main()
+    private val main = ContextCompat.getMainExecutor(activity)
 
     private var cameraProvider: ProcessCameraProvider? = null
     private var previewUseCase: Preview? = null
@@ -50,8 +49,8 @@ class ImageCaptureHelper(
                         .setAspectRatioStrategy(
                             AspectRatioStrategy(
                                 AspectRatio.RATIO_16_9,
-                                AspectRatioStrategy.FALLBACK_RULE_AUTO
-                            )
+                                AspectRatioStrategy.FALLBACK_RULE_AUTO,
+                            ),
                         )
                         .build()
 
@@ -72,7 +71,7 @@ class ImageCaptureHelper(
                         activity,
                         CameraSelector.DEFAULT_BACK_CAMERA,
                         previewUseCase,
-                        imageCaptureUseCase
+                        imageCaptureUseCase,
                     )
                 } catch (e: Exception) {
                     Utils.logcat(TAG, "setupCamera error: ${e.message}")
@@ -99,7 +98,7 @@ class ImageCaptureHelper(
                     Utils.logcat(TAG, "captureImage error: ${exception.message}")
                     Utils.toast("拍照失败: ${exception.message}")
                 }
-            }
+            },
         )
     }
 
@@ -116,7 +115,7 @@ class ImageCaptureHelper(
 
     private fun processImage(
         imageProxy: ImageProxy,
-        processComplete: (bitmap: Bitmap) -> Unit
+        processComplete: (bitmap: Bitmap) -> Unit,
     ) {
         val rotationDegrees = imageProxy.imageInfo.rotationDegrees
         val rawBitmap = imageProxy.toBitmap()

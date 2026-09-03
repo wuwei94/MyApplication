@@ -23,7 +23,7 @@ import io.ktor.http.parameters
 suspend inline fun <reified T> KtorClient.getResult(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<T> = resultOf {
     get(url) {
         url { params.forEach { (key, value) -> parameters.append(key, value) } }
@@ -35,7 +35,7 @@ suspend inline fun <reified T> KtorClient.getResult(
 suspend inline fun <reified T> KtorClient.getResponse(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<KtorResponse<T>> = resultOf {
     get(url) {
         url { params.forEach { (key, value) -> parameters.append(key, value) } }
@@ -46,53 +46,53 @@ suspend inline fun <reified T> KtorClient.getResponse(
 suspend inline fun <reified T> KtorClient.postFormResult(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<T> = formRequest(url, HttpMethod.Post, params, headers)
 
 /** POST Form 业务响应。 */
 suspend inline fun <reified T> KtorClient.postFormResponse(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<KtorResponse<T>> = formResponseRequest(url, HttpMethod.Post, params, headers)
 
 suspend inline fun <reified T> KtorClient.putFormResult(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<T> = formRequest(url, HttpMethod.Put, params, headers)
 
 /** PUT Form 业务响应。 */
 suspend inline fun <reified T> KtorClient.putFormResponse(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<KtorResponse<T>> = formResponseRequest(url, HttpMethod.Put, params, headers)
 
 suspend inline fun <reified T> KtorClient.patchFormResult(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<T> = formRequest(url, HttpMethod.Patch, params, headers)
 
 /** PATCH Form 业务响应。 */
 suspend inline fun <reified T> KtorClient.patchFormResponse(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<KtorResponse<T>> = formResponseRequest(url, HttpMethod.Patch, params, headers)
 
 suspend inline fun <reified T> KtorClient.deleteFormResult(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<T> = formRequest(url, HttpMethod.Delete, params, headers)
 
 /** DELETE Form 业务响应。 */
 suspend inline fun <reified T> KtorClient.deleteFormResponse(
     url: String,
     params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<KtorResponse<T>> = formResponseRequest(url, HttpMethod.Delete, params, headers)
 
 suspend inline fun <reified T> KtorClient.requestBodyResult(
@@ -100,7 +100,7 @@ suspend inline fun <reified T> KtorClient.requestBodyResult(
     method: HttpMethod,
     body: Any,
     mediaType: ContentType? = null,
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<T> = resultOf {
     request(url) {
         this.method = method
@@ -116,7 +116,7 @@ suspend inline fun <reified T> KtorClient.requestBodyResponse(
     method: HttpMethod,
     body: Any,
     mediaType: ContentType? = null,
-    headers: Map<String, String> = emptyMap()
+    headers: Map<String, String> = emptyMap(),
 ): Result<KtorResponse<T>> = resultOf {
     request(url) {
         this.method = method
@@ -131,7 +131,7 @@ internal suspend inline fun <reified T> KtorClient.formRequest(
     url: String,
     method: HttpMethod,
     params: Map<String, String>,
-    headers: Map<String, String>
+    headers: Map<String, String>,
 ): Result<T> = resultOf {
     when (method) {
         HttpMethod.Post -> post(url) {
@@ -159,7 +159,7 @@ internal suspend inline fun <reified T> KtorClient.formResponseRequest(
     url: String,
     method: HttpMethod,
     params: Map<String, String>,
-    headers: Map<String, String>
+    headers: Map<String, String>,
 ): Result<KtorResponse<T>> = resultOf {
     request(url) {
         this.method = method
@@ -169,24 +169,22 @@ internal suspend inline fun <reified T> KtorClient.formResponseRequest(
 }
 
 @PublishedApi
-internal fun formBody(params: Map<String, String>): FormDataContent {
-    return FormDataContent(parameters {
+internal fun formBody(params: Map<String, String>): FormDataContent = FormDataContent(
+    parameters {
         params.forEach { (key, value) -> append(key, value) }
-    })
-}
+    },
+)
 
 @PublishedApi
 internal fun io.ktor.client.request.HttpRequestBuilder.appendHeaders(
-    values: Map<String, String>
+    values: Map<String, String>,
 ) {
     values.forEach { (key, value) -> header(key, value) }
 }
 
 @PublishedApi
-internal suspend fun <T> resultOf(block: suspend () -> T): Result<T> {
-    return try {
-        Result.success(block())
-    } catch (error: Exception) {
-        Result.failure(ExceptionHandler.handleException(error))
-    }
+internal suspend fun <T> resultOf(block: suspend () -> T): Result<T> = try {
+    Result.success(block())
+} catch (error: Exception) {
+    Result.failure(ExceptionHandler.handleException(error))
 }

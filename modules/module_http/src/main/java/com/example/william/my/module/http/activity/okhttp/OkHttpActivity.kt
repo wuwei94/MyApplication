@@ -73,12 +73,10 @@ class OkHttpActivity : BasicResponseActivity() {
         showDescription("OkHttp 基础示例：支持 FormBody 与 MultipartBody 请求体")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "OkHttp Posting a FormBody",
-            "OkHttp Posting a MultipartBody",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "OkHttp Posting a FormBody",
+        "OkHttp Posting a MultipartBody",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

@@ -36,9 +36,11 @@ object RxEventBus {
             val event = mStickyBus[eventType]
             val observable = mRxEventBus.ofType(eventType)
             return if (event != null) {
-                observable.mergeWith(Observable.create { subscriber: ObservableEmitter<T> ->
-                    subscriber.onNext(eventType.cast(event)!!)
-                })
+                observable.mergeWith(
+                    Observable.create { subscriber: ObservableEmitter<T> ->
+                        subscriber.onNext(eventType.cast(event)!!)
+                    },
+                )
             } else {
                 observable
             }

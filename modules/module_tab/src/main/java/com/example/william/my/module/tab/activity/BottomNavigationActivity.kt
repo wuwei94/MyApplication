@@ -1,4 +1,4 @@
-package com.example.william.my.module.tab.activity
+﻿package com.example.william.my.module.tab.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityBottomNavigationBinding
 import com.example.william.my.module.tab.utils.FragmentUtils

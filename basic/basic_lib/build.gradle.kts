@@ -29,6 +29,11 @@ dependencies {
     api(libs.brvah)
     api(libs.bundles.smartrefresh)
 
+    // Kotlin 协程核心与生命周期
+    api(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.coroutines.android)
+    api(libs.bundles.androidx.lifecycle)
+
     // 通用工具与 Rx
     api(libs.utils)
     api(libs.google.gson)

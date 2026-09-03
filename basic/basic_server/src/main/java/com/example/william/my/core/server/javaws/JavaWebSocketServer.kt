@@ -14,36 +14,37 @@ class JavaWebSocketServer {
     }
 
     fun start(port: Int = DEFAULT_PORT) {
-        CoreJavaWebSocketServer.start(port, object : JavaWebSocketServerListener() {
-            override fun onStart() {
-                listener?.onStart()
-            }
+        CoreJavaWebSocketServer.start(
+            port,
+            object : JavaWebSocketServerListener() {
+                override fun onStart() {
+                    listener?.onStart()
+                }
 
-            override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
-                listener?.onClientConnected(conn.remoteSocketAddress.toString())
-            }
+                override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
+                    listener?.onClientConnected(conn.remoteSocketAddress.toString())
+                }
 
-            override fun onMessage(conn: WebSocket, message: String) {
-                listener?.onMessage(conn.remoteSocketAddress.toString(), message)
-            }
+                override fun onMessage(conn: WebSocket, message: String) {
+                    listener?.onMessage(conn.remoteSocketAddress.toString(), message)
+                }
 
-            override fun onClose(conn: WebSocket, code: Int, reason: String?, remote: Boolean) {
-                listener?.onClientDisconnected(conn.remoteSocketAddress.toString())
-            }
+                override fun onClose(conn: WebSocket, code: Int, reason: String?, remote: Boolean) {
+                    listener?.onClientDisconnected(conn.remoteSocketAddress.toString())
+                }
 
-            override fun onError(conn: WebSocket?, ex: Exception) {
-                listener?.onError(ex)
-            }
-        })
+                override fun onError(conn: WebSocket?, ex: Exception) {
+                    listener?.onError(ex)
+                }
+            },
+        )
     }
 
     fun stop() {
         CoreJavaWebSocketServer.stop()
     }
 
-    fun isRunning(): Boolean {
-        return CoreJavaWebSocketServer.isRunning()
-    }
+    fun isRunning(): Boolean = CoreJavaWebSocketServer.isRunning()
 
     fun broadcast(message: String) {
         CoreJavaWebSocketServer.broadcast(message)

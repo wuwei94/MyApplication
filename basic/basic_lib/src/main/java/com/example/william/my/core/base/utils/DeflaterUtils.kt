@@ -7,7 +7,10 @@ import java.util.zip.Deflater
 import java.util.zip.Inflater
 
 /**
- * DeflaterUtils 压缩字符串
+ * DeflaterUtils 纯内存字符串压缩与解压工具类
+ *
+ * 基于 JDK 原生 [Deflater] / [Inflater] 字节流算法与 Base64 编码，
+ * 适用于无需落地磁盘文件的内存大文本、私有二进制协议数据压缩。
  */
 object DeflaterUtils {
     /**

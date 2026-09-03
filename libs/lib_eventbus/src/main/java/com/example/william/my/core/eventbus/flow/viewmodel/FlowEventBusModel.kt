@@ -16,27 +16,25 @@ import kotlinx.coroutines.launch
 
 class FlowEventBusModel : ViewModel() {
 
-    //正常事件
+    // 正常事件
     private val eventFlows: HashMap<String, MutableSharedFlow<Any>> = HashMap()
 
-    //粘性事件
+    // 粘性事件
     private val stickyEventFlows: HashMap<String, MutableSharedFlow<Any>> = HashMap()
 
-    private fun getEventFlow(eventName: String, isSticky: Boolean): MutableSharedFlow<Any> {
-        return if (isSticky) {
-            stickyEventFlows[eventName]
+    private fun getEventFlow(eventName: String, isSticky: Boolean): MutableSharedFlow<Any> = if (isSticky) {
+        stickyEventFlows[eventName]
+    } else {
+        eventFlows[eventName]
+    } ?: MutableSharedFlow<Any>(
+        replay = if (isSticky) 1 else 0, // 重放数据个数
+        extraBufferCapacity = Int.MAX_VALUE, // 额外缓存容量，避免挂起导致数据发送失败
+        onBufferOverflow = BufferOverflow.SUSPEND, // 缓存溢出策略
+    ).also {
+        if (isSticky) {
+            stickyEventFlows[eventName] = it
         } else {
-            eventFlows[eventName]
-        } ?: MutableSharedFlow<Any>(
-            replay = if (isSticky) 1 else 0, // 重放数据个数
-            extraBufferCapacity = Int.MAX_VALUE, // 额外缓存容量，避免挂起导致数据发送失败
-            onBufferOverflow = BufferOverflow.SUSPEND // 缓存溢出策略
-        ).also {
-            if (isSticky) {
-                stickyEventFlows[eventName] = it
-            } else {
-                eventFlows[eventName] = it
-            }
+            eventFlows[eventName] = it
         }
     }
 
@@ -46,24 +44,22 @@ class FlowEventBusModel : ViewModel() {
         dispatcher: CoroutineDispatcher,
         eventName: String,
         isSticky: Boolean,
-        onReceived: (T) -> Unit
-    ): Job {
-        return lifecycleOwner.lifecycleScope.launch {
-            lifecycleOwner.lifecycle.repeatOnLifecycle(minState) {
-                getEventFlow(eventName, isSticky)
-                    .collect { value ->
-                        this.launch(dispatcher) {
-                            invokeReceived(value, onReceived)
-                        }
+        onReceived: (T) -> Unit,
+    ): Job = lifecycleOwner.lifecycleScope.launch {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(minState) {
+            getEventFlow(eventName, isSticky)
+                .collect { value ->
+                    this.launch(dispatcher) {
+                        invokeReceived(value, onReceived)
                     }
-            }
+                }
         }
     }
 
     suspend fun <T : Any> observeEvent(
         eventName: String,
         isSticky: Boolean,
-        onReceived: (T) -> Unit
+        onReceived: (T) -> Unit,
     ) {
         getEventFlow(eventName, isSticky).collect { value ->
             invokeReceived(value, onReceived)

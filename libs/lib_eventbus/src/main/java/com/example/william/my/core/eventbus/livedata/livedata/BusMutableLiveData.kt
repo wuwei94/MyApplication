@@ -40,7 +40,7 @@ class BusMutableLiveData<T> : MutableLiveData<T>() {
 
     @Throws(Exception::class)
     private fun hook(observer: Observer<in T>) {
-        //get wrapper's version
+        // get wrapper's version
         val clazz = LiveData::class
         val fieldObservers = clazz.java.getDeclaredField("mObservers")
         fieldObservers.isAccessible = true
@@ -59,11 +59,11 @@ class BusMutableLiveData<T> : MutableLiveData<T>() {
         val classObserverWrapper: Class<in Any> = objectWrapper.javaClass.superclass!!
         val fieldLastVersion = classObserverWrapper.getDeclaredField("mLastVersion")
         fieldLastVersion.isAccessible = true
-        //get livedata's version
+        // get livedata's version
         val fieldVersion = clazz.java.getDeclaredField("mVersion")
         fieldVersion.isAccessible = true
         val objectVersion = fieldVersion[this]
-        //set wrapper's version
+        // set wrapper's version
         fieldLastVersion[objectWrapper] = objectVersion
     }
 }

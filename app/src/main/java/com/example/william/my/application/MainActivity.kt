@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             .build(RouterPath.Directory_Main)
             .withTransition(
                 R.anim.base_anim_slide_in_left,
-                R.anim.base_anim_slide_out_right
+                R.anim.base_anim_slide_out_right,
             )
             .withString("param_key", "param_value")
             .navigation()

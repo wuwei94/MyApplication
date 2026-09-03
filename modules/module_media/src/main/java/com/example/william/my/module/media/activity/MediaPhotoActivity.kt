@@ -1,4 +1,4 @@
-package com.example.william.my.module.media.activity
+﻿package com.example.william.my.module.media.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -12,7 +12,7 @@ import androidx.core.view.isVisible
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.media.databinding.MediaActivityPhotoBinding
 import com.example.william.my.module.media.utils.ImageCaptureHelper
 
@@ -20,14 +20,16 @@ import com.example.william.my.module.media.utils.ImageCaptureHelper
  * 拍照示例 — 基于 CameraX 的 ImageCapture 用例，演示预览取景与单张照片捕获。
  */
 @Route(path = RouterPath.Media.Photo)
-class MediaPhotoActivity : BaseVBActivity<MediaActivityPhotoBinding>(), View.OnClickListener {
+class MediaPhotoActivity :
+    BaseVBActivity<MediaActivityPhotoBinding>(),
+    View.OnClickListener {
 
     private val imageCaptureHelper by lazy {
         ImageCaptureHelper(this, mBinding.previewView)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { granted ->
         if (granted) {
             imageCaptureHelper.setupCamera()
@@ -36,9 +38,7 @@ class MediaPhotoActivity : BaseVBActivity<MediaActivityPhotoBinding>(), View.OnC
         }
     }
 
-    override fun getViewBinding(): MediaActivityPhotoBinding {
-        return MediaActivityPhotoBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): MediaActivityPhotoBinding = MediaActivityPhotoBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -48,16 +48,19 @@ class MediaPhotoActivity : BaseVBActivity<MediaActivityPhotoBinding>(), View.OnC
         mBinding.btnCapture.setOnClickListener(this)
         mBinding.btnClosePreview.setOnClickListener(this)
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (mBinding.layoutPreview.isVisible) {
-                    closePreview()
-                } else {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (mBinding.layoutPreview.isVisible) {
+                        closePreview()
+                    } else {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
                 }
-            }
-        })
+            },
+        )
     }
 
     override fun onClick(v: View?) {
@@ -77,7 +80,7 @@ class MediaPhotoActivity : BaseVBActivity<MediaActivityPhotoBinding>(), View.OnC
     private fun checkAndRequestPermission() {
         val hasCamera = ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (hasCamera) {
@@ -97,9 +100,7 @@ class MediaPhotoActivity : BaseVBActivity<MediaActivityPhotoBinding>(), View.OnC
         mBinding.previewImage.setImageBitmap(null)
     }
 
-    override fun fitsSystemWindows(): Boolean {
-        return false
-    }
+    override fun fitsSystemWindows(): Boolean = false
 
     override fun onDestroy() {
         imageCaptureHelper.release()

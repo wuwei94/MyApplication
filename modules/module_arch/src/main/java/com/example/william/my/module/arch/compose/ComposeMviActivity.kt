@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.compose
+﻿package com.example.william.my.module.arch.compose
 
 import android.os.Bundle
 import android.widget.Toast
@@ -45,7 +45,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseActivity
+import com.example.william.my.core.base.ui.activity.BaseActivity
 import com.example.william.my.module.arch.compose.data.ArticleComposeIntent
 import com.example.william.my.module.arch.compose.data.ArticleComposeUiEffect
 import com.example.william.my.module.arch.compose.viewmodel.ArticleComposeViewModel

@@ -1,9 +1,9 @@
-package com.example.william.my.module.arch.mvp
+﻿package com.example.william.my.module.arch.mvp
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseFragmentActivity
+import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 
 /**
  * MVP — Model-View-Presenter 架构模式

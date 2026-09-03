@@ -11,9 +11,7 @@ class NanoServerService : Service() {
 
     private var nanoServer: NanoServer? = null
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -38,9 +36,7 @@ class NanoServerService : Service() {
         }
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        return START_STICKY
-    }
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int = START_STICKY
 
     private fun println(msg: String) {
         Utils.logcat(TAG, msg)

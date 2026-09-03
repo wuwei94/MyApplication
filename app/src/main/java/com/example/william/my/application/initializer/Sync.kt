@@ -27,9 +27,7 @@ class SyncInitializer : Initializer<Sync> {
         return Sync
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        return listOf(StartupInitializer::class.java)
-    }
+    override fun dependencies(): List<Class<out Initializer<*>>> = listOf(StartupInitializer::class.java)
 }
 
 class StartupInitializer : Initializer<String> {

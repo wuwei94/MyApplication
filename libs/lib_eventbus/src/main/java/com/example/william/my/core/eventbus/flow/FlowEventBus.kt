@@ -35,9 +35,9 @@ object FlowEventBus {
         FlowEventBus.app = app
     }
 
-//_______________________________________
+// _______________________________________
 //          observe event
-//_______________________________________
+// _______________________________________
 
     /**
      * 监听 App Scope 事件
@@ -47,18 +47,16 @@ object FlowEventBus {
         dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
         minState: Lifecycle.State = Lifecycle.State.STARTED,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return FlowEventBusProvider[FlowEventBusModel::class.java]
-            .observeEvent(
-                ProcessLifecycleOwner.get(),
-                minState,
-                dispatcher,
-                T::class.java.name,
-                isSticky,
-                onReceived
-            )
-    }
+        noinline onReceived: (T) -> Unit,
+    ): Job = FlowEventBusProvider[FlowEventBusModel::class.java]
+        .observeEvent(
+            ProcessLifecycleOwner.get(),
+            minState,
+            dispatcher,
+            T::class.java.name,
+            isSticky,
+            onReceived,
+        )
 
     /**
      * 监听 Activity Scope 事件
@@ -69,11 +67,9 @@ object FlowEventBus {
         dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
         minState: Lifecycle.State = Lifecycle.State.STARTED,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return ViewModelProvider(owner)[FlowEventBusModel::class.java]
-            .observeEvent(owner, minState, dispatcher, T::class.java.name, isSticky, onReceived)
-    }
+        noinline onReceived: (T) -> Unit,
+    ): Job = ViewModelProvider(owner)[FlowEventBusModel::class.java]
+        .observeEvent(owner, minState, dispatcher, T::class.java.name, isSticky, onReceived)
 
     /**
      * 监听 Fragment Scope 事件
@@ -84,11 +80,9 @@ object FlowEventBus {
         dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
         minState: Lifecycle.State = Lifecycle.State.STARTED,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return ViewModelProvider(owner)[FlowEventBusModel::class.java]
-            .observeEvent(owner, minState, dispatcher, T::class.java.name, isSticky, onReceived)
-    }
+        noinline onReceived: (T) -> Unit,
+    ): Job = ViewModelProvider(owner)[FlowEventBusModel::class.java]
+        .observeEvent(owner, minState, dispatcher, T::class.java.name, isSticky, onReceived)
 
     /**
      * 监听 App CoroutineScope 事件
@@ -97,12 +91,10 @@ object FlowEventBus {
     inline fun <reified T> observeEvent(
         coroutineScope: CoroutineScope,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return coroutineScope.launch {
-            FlowEventBusProvider[FlowEventBusModel::class.java]
-                .observeEvent(T::class.java.name, isSticky, onReceived)
-        }
+        noinline onReceived: (T) -> Unit,
+    ): Job = coroutineScope.launch {
+        FlowEventBusProvider[FlowEventBusModel::class.java]
+            .observeEvent(T::class.java.name, isSticky, onReceived)
     }
 
     /**
@@ -113,17 +105,15 @@ object FlowEventBus {
         owner: ViewModelStoreOwner,
         coroutineScope: CoroutineScope,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return coroutineScope.launch {
-            ViewModelProvider(owner)[FlowEventBusModel::class.java]
-                .observeEvent(T::class.java.name, isSticky, onReceived)
-        }
+        noinline onReceived: (T) -> Unit,
+    ): Job = coroutineScope.launch {
+        ViewModelProvider(owner)[FlowEventBusModel::class.java]
+            .observeEvent(T::class.java.name, isSticky, onReceived)
     }
 
-//_______________________________________
+// _______________________________________
 //          post event
-//_______________________________________
+// _______________________________________
 
     /**
      * Application范围的事件
@@ -141,22 +131,18 @@ object FlowEventBus {
             .postEvent(T::class.java.name, event!!, timeMillis)
     }
 
-//_______________________________________
+// _______________________________________
 //          get event
-//_______________________________________
+// _______________________________________
 
-    //获取事件
-    inline fun <reified T> getEventObserverCount(event: Class<T>): Int {
-        return FlowEventBusProvider[FlowEventBusModel::class.java]
-            .getEventObserverCount(event.name)
-    }
+    // 获取事件
+    inline fun <reified T> getEventObserverCount(event: Class<T>): Int = FlowEventBusProvider[FlowEventBusModel::class.java]
+        .getEventObserverCount(event.name)
 
-    inline fun <reified T> getEventObserverCount(scope: ViewModelStoreOwner, event: Class<T>): Int {
-        return ViewModelProvider(scope)[FlowEventBusModel::class.java]
-            .getEventObserverCount(event.name)
-    }
+    inline fun <reified T> getEventObserverCount(scope: ViewModelStoreOwner, event: Class<T>): Int = ViewModelProvider(scope)[FlowEventBusModel::class.java]
+        .getEventObserverCount(event.name)
 
-    //移除事件
+    // 移除事件
     inline fun <reified T> removeStickyEvent(event: Class<T>) {
         FlowEventBusProvider[FlowEventBusModel::class.java]
             .removeStickEvent(event.name)

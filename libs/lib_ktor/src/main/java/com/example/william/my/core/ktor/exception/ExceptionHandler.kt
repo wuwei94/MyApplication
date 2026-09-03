@@ -58,12 +58,10 @@ object ExceptionHandler {
         }
     }
 
-    private suspend fun extractErrorBody(e: ResponseException): String? {
-        return try {
-            e.response.bodyAsText()
-        } catch (_: Exception) {
-            null
-        }
+    private suspend fun extractErrorBody(e: ResponseException): String? = try {
+        e.response.bodyAsText()
+    } catch (_: Exception) {
+        null
     }
 
     private fun extractErrorMessage(body: String?): String? {

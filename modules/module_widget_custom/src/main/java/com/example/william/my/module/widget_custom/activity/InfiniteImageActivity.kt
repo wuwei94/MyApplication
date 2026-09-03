@@ -1,8 +1,8 @@
-package com.example.william.my.module.widget_custom.activity
+﻿package com.example.william.my.module.widget_custom.activity
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_custom.databinding.DemoActivityInfiniteImageBinding
 
 /**

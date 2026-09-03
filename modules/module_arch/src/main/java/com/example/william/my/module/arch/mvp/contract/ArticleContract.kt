@@ -1,8 +1,8 @@
-package com.example.william.my.module.arch.mvp.contract
+﻿package com.example.william.my.module.arch.mvp.contract
 
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.core.base.presenter.IBasePresenter
-import com.example.william.my.core.base.view.IBaseView
+import com.example.william.my.core.base.arch.mvp.IBasePresenter
+import com.example.william.my.core.base.arch.mvp.IBaseView
 
 /**
  * 文章业务契约接口

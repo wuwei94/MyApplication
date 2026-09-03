@@ -1,10 +1,10 @@
-package com.example.william.my.basic.basic_shared.router.activity
+﻿package com.example.william.my.basic.basic_shared.router.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.william.my.basic.basic_shared.router.fragment.RouterRecyclerFragment
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
-import com.example.william.my.core.base.activity.BaseFragmentActivity
+import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 
 abstract class RouterRecyclerActivity : BaseFragmentActivity() {
 

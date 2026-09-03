@@ -32,19 +32,17 @@ object ImageLoader : IImageLoader {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var imageLoader: ImageLoader? = null
 
-    private fun getImageLoader(context: Context): ImageLoader {
-        return imageLoader ?: ImageLoader.Builder(context.applicationContext)
-            .components {
-                add(GifDecoder.Factory())
-            }
-            .diskCache {
-                DiskCache.Builder()
-                    .directory(context.cacheDir.resolve("image_cache").toOkioPath())
-                    .build()
-            }
-            .build()
-            .also { imageLoader = it }
-    }
+    private fun getImageLoader(context: Context): ImageLoader = imageLoader ?: ImageLoader.Builder(context.applicationContext)
+        .components {
+            add(GifDecoder.Factory())
+        }
+        .diskCache {
+            DiskCache.Builder()
+                .directory(context.cacheDir.resolve("image_cache").toOkioPath())
+                .build()
+        }
+        .build()
+        .also { imageLoader = it }
 
     override fun pauseRequests(context: Context?) {
         scope.coroutineContext.cancelChildren()
@@ -77,7 +75,7 @@ object ImageLoader : IImageLoader {
         context: Context?,
         url: String?,
         options: ImageOptions?,
-        onComplete: (() -> Unit)?
+        onComplete: (() -> Unit)?,
     ) {
         load(url) {
             if (options != null) {
@@ -87,16 +85,19 @@ object ImageLoader : IImageLoader {
                         ImageOptions.CacheStrategy.NONE -> CachePolicy.DISABLED
                         ImageOptions.CacheStrategy.DATA -> CachePolicy.ENABLED
                         ImageOptions.CacheStrategy.RESOURCE -> CachePolicy.ENABLED
-                    }
+                    },
                 )
                 memoryCachePolicy(
-                    if (options.skipMemoryCache) CachePolicy.DISABLED
-                    else CachePolicy.ENABLED
+                    if (options.skipMemoryCache) {
+                        CachePolicy.DISABLED
+                    } else {
+                        CachePolicy.ENABLED
+                    },
                 )
             }
             listener(
                 onSuccess = { _, _ -> onComplete?.invoke() },
-                onError = { _, _ -> onComplete?.invoke() }
+                onError = { _, _ -> onComplete?.invoke() },
             )
         }
     }

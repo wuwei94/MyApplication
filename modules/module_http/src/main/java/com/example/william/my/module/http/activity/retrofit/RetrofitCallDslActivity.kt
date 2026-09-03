@@ -53,11 +53,9 @@ import retrofit2.Response
 @Route(path = RouterPath.Http.RetrofitCallDsl)
 class RetrofitCallDslActivity : BasicResponseActivity() {
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Retrofit DSL loginCall",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Retrofit DSL loginCall",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -80,7 +78,7 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
                 } else {
                     appendFormatLog(
                         "Retrofit DSL 失败（HTTP ${response.code()}）：",
-                        response.errorBody()?.string().orEmpty()
+                        response.errorBody()?.string().orEmpty(),
                     )
                 }
             }

@@ -8,14 +8,16 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 
 /**
- * App全局线程池
+ * App 全局线程池
  * Global executor pools for the whole application.
  *
- *
- * 避免内存不足影响，例如磁盘读取不会延迟网络请求
- * Grouping tasks like this avoids the effects of task starvation
- * (e.g. disk reads don't wait behind webservice requests).
+ * 避免任务饥饿，例如磁盘读取不会延迟网络请求。
+ * 演示 Google Architecture Components 经典的单例并发执行器编排设计模式。
  */
+@Deprecated(
+    message = "仅作为并发执行器编排教学示例保留。现代开发推荐使用 Kotlin 协程 @Dispatcher 限定符注入（如 Dispatchers.IO），或使用 Blankj 的 ThreadUtils",
+    replaceWith = ReplaceWith("ThreadUtils", "com.blankj.utilcode.util.ThreadUtils"),
+)
 object AppExecutorsHelper {
 
     /**

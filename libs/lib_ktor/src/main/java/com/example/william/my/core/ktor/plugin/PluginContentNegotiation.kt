@@ -17,7 +17,7 @@ internal object PluginContentNegotiation {
 
     fun <T : HttpClientEngineConfig> install(
         clientConfig: HttpClientConfig<T>,
-        gson: Gson
+        gson: Gson,
     ) {
         clientConfig.install(ContentNegotiation) {
             register(ContentType.Application.Json, GsonConverter(gson))

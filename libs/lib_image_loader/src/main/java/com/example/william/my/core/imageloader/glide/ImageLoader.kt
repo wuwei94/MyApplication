@@ -54,7 +54,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImage(
         context: Context?,
-        bitmap: Bitmap?
+        bitmap: Bitmap?,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -83,7 +83,7 @@ object ImageLoader : IImageLoader {
         context: Context?,
         url: String?,
         options: ImageOptions?,
-        onComplete: (() -> Unit)?
+        onComplete: (() -> Unit)?,
     ) {
         context?.let {
             val request = GlideApp.with(it)
@@ -97,7 +97,7 @@ object ImageLoader : IImageLoader {
                         e: GlideException?,
                         model: Any?,
                         target: Target<Drawable?>,
-                        isFirstResource: Boolean
+                        isFirstResource: Boolean,
                     ): Boolean {
                         onComplete.invoke()
                         return false
@@ -108,7 +108,7 @@ object ImageLoader : IImageLoader {
                         model: Any,
                         target: Target<Drawable?>?,
                         dataSource: DataSource,
-                        isFirstResource: Boolean
+                        isFirstResource: Boolean,
                     ): Boolean {
                         onComplete.invoke()
                         return false
@@ -121,7 +121,8 @@ object ImageLoader : IImageLoader {
     }
 
     override fun ImageView.loadImageRound(
-        context: Context?, resourceId: Int
+        context: Context?,
+        resourceId: Int,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -133,7 +134,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImageRound(
         context: Context?,
-        bitmap: Bitmap?
+        bitmap: Bitmap?,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -162,7 +163,8 @@ object ImageLoader : IImageLoader {
     }
 
     override fun ImageView.loadImageRound(
-        context: Context?, url: String?
+        context: Context?,
+        url: String?,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -173,7 +175,9 @@ object ImageLoader : IImageLoader {
     }
 
     override fun ImageView.loadImageRadius(
-        context: Context?, resourceId: Int, radius: Int
+        context: Context?,
+        resourceId: Int,
+        radius: Int,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -186,7 +190,7 @@ object ImageLoader : IImageLoader {
     override fun ImageView.loadImageRadius(
         context: Context?,
         bitmap: Bitmap?,
-        radius: Int
+        radius: Int,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -215,7 +219,9 @@ object ImageLoader : IImageLoader {
     }
 
     override fun ImageView.loadImageRadius(
-        context: Context?, url: String?, radius: Int,
+        context: Context?,
+        url: String?,
+        radius: Int,
     ) {
         context?.let {
             GlideApp.with(it)
@@ -246,7 +252,7 @@ object ImageLoader : IImageLoader {
     override fun getImageDrawable(
         context: Context?,
         url: String?,
-        onResourceReady: ((drawable: Drawable) -> Unit)
+        onResourceReady: ((drawable: Drawable) -> Unit),
     ) {
         if (url.isNullOrEmpty()) {
             return
@@ -257,7 +263,7 @@ object ImageLoader : IImageLoader {
                 .into(object : CustomTarget<Drawable>() {
                     override fun onResourceReady(
                         resource: Drawable,
-                        transition: Transition<in Drawable>?
+                        transition: Transition<in Drawable>?,
                     ) {
                         onResourceReady(resource)
                     }
@@ -271,7 +277,7 @@ object ImageLoader : IImageLoader {
     override fun getImageBitmap(
         context: Context?,
         url: String?,
-        onResourceReady: ((bitmap: Bitmap?) -> Unit)
+        onResourceReady: ((bitmap: Bitmap?) -> Unit),
     ) {
         if (url.isNullOrEmpty()) {
             return
@@ -283,7 +289,7 @@ object ImageLoader : IImageLoader {
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
                         resource: Bitmap,
-                        transition: Transition<in Bitmap>?
+                        transition: Transition<in Bitmap>?,
                     ) {
                         onResourceReady(resource)
                     }

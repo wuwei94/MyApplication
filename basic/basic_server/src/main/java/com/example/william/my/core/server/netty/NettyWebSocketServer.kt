@@ -30,7 +30,7 @@ class NettyWebSocketServer {
                 override fun onError(remoteAddress: String, throwable: Throwable) {
                     listener?.onError(remoteAddress, throwable)
                 }
-            }
+            },
         )
     }
 
@@ -38,9 +38,7 @@ class NettyWebSocketServer {
         NettyServer.stop()
     }
 
-    fun isRunning(): Boolean {
-        return NettyServer.isRunning()
-    }
+    fun isRunning(): Boolean = NettyServer.isRunning()
 
     fun broadcast(message: String) {
         NettyServer.broadcast(message)

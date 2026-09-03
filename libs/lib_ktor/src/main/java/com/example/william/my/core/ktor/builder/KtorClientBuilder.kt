@@ -72,8 +72,10 @@ class KtorClientBuilder {
         require(
             parsed?.isAbsolute == true &&
                 parsed.host != null &&
-                (parsed.scheme.equals("http", ignoreCase = true) ||
-                    parsed.scheme.equals("https", ignoreCase = true))
+                (
+                    parsed.scheme.equals("http", ignoreCase = true) ||
+                        parsed.scheme.equals("https", ignoreCase = true)
+                    ),
         ) {
             "baseUrl must be an absolute http or https URL"
         }
@@ -124,7 +126,7 @@ class KtorClientBuilder {
     fun cache(
         app: Application,
         dirName: String = "ktor-cache",
-        maxSize: Long = DEFAULT_CACHE_SIZE
+        maxSize: Long = DEFAULT_CACHE_SIZE,
     ) {
         cache(File(app.cacheDir, dirName), maxSize)
     }
@@ -140,7 +142,7 @@ class KtorClientBuilder {
      */
     fun logging(
         level: LogLevel = LogLevel.HEADERS,
-        sensitiveHeaders: Set<String> = PluginLogging.defaultSensitiveHeaders
+        sensitiveHeaders: Set<String> = PluginLogging.defaultSensitiveHeaders,
     ) {
         logLevel = level
         sanitizedHeaders = sensitiveHeaders
@@ -204,7 +206,7 @@ class KtorClientBuilder {
             clientConfig = this,
             requestTimeoutSeconds = requestTimeoutSeconds,
             connectTimeoutSeconds = connectTimeoutSeconds,
-            socketTimeoutSeconds = socketTimeoutSeconds
+            socketTimeoutSeconds = socketTimeoutSeconds,
         )
         PluginHttpCookies.install(this, cookieStorage)
         PluginDefaultRequest.install(this, baseUrl, defaultHeaders)

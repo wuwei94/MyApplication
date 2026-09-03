@@ -2,10 +2,10 @@ package com.example.william.my.module.http.activity.httpurl
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.ThreadUtils
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.utils.AppExecutorsHelper
 import com.example.william.my.core.httpurl.HttpURLUtils
 import org.json.JSONObject
 
@@ -54,24 +54,22 @@ class HttpURLActivity : BasicResponseActivity() {
         showDescription("HttpURLConnection 示例：支持 POST Form 与 POST JSON")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "HttpURL postForm（表单提交）",
-            "HttpURL postJson（JSON 提交）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "HttpURL postForm（表单提交）",
+        "HttpURL postJson（JSON 提交）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> {
-                AppExecutorsHelper.networkIO().execute {
+                ThreadUtils.getIoPool().execute {
                     postForm(Constants.Value_Username, Constants.Value_Password)
                 }
             }
 
             1 -> {
-                AppExecutorsHelper.networkIO().execute {
+                ThreadUtils.getIoPool().execute {
                     postJson(Constants.Value_Username, Constants.Value_Password)
                 }
             }
@@ -81,17 +79,19 @@ class HttpURLActivity : BasicResponseActivity() {
     private fun postForm(username: String, password: String) {
         val params = mutableMapOf(
             Constants.Key_Username to username,
-            Constants.Key_Password to password
+            Constants.Key_Password to password,
         )
 
         HttpURLUtils.postForm(
-            Constants.Url_Login, params,
+            Constants.Url_Login,
+            params,
             listener = {
                 appendLog("【postForm】成功：$it")
             },
             errorListener = {
                 appendLog("【postForm】失败：${it?.message}")
-            })
+            },
+        )
     }
 
     private fun postJson(username: String, password: String) {
@@ -100,12 +100,14 @@ class HttpURLActivity : BasicResponseActivity() {
             .put(Constants.Key_Password, password)
 
         HttpURLUtils.postJson(
-            Constants.Url_Login, jsonObject,
+            Constants.Url_Login,
+            jsonObject,
             listener = {
                 appendLog("【postJson】成功：$it")
             },
             errorListener = {
                 appendLog("【postJson】失败：${it?.message}")
-            })
+            },
+        )
     }
 }

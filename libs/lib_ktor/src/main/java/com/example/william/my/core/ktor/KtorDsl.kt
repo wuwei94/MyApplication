@@ -15,6 +15,4 @@ import com.example.william.my.core.ktor.client.KtorClient
  * }
  * ```
  */
-fun ktorClient(init: KtorClientBuilder.() -> Unit): KtorClient {
-    return KtorClientBuilder().apply(init).build()
-}
+fun ktorClient(init: KtorClientBuilder.() -> Unit): KtorClient = KtorClientBuilder().apply(init).build()

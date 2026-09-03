@@ -14,7 +14,7 @@ internal object PluginDefaultRequest {
     fun <T : HttpClientEngineConfig> install(
         clientConfig: HttpClientConfig<T>,
         baseUrl: String?,
-        defaultHeaders: Map<String, String>
+        defaultHeaders: Map<String, String>,
     ) {
         if (baseUrl == null && defaultHeaders.isEmpty()) return
 

@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.mvi
+﻿package com.example.william.my.module.arch.mvi
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -7,7 +7,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.core.base.recycler.BaseRecyclerFragment
+import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect

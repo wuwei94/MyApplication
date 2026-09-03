@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_shared.activity
+﻿package com.example.william.my.basic.basic_shared.activity
 
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.chad.library.adapter4.QuickAdapterHelper
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerBinding
-import com.example.william.my.core.base.activity.BaseActivity
+import com.example.william.my.core.base.ui.activity.BaseActivity
 
 /**
  * 纯操作/控制列表类示例 Activity 基类。

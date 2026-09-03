@@ -1,8 +1,8 @@
-package com.example.william.my.module.arch.mvvm.usecase
+﻿package com.example.william.my.module.arch.mvvm.usecase
 
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
-import com.example.william.my.core.base.usecase.SingleObserverUseCase
+import com.example.william.my.core.base.arch.rx.SingleObserverUseCase
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 

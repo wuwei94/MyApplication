@@ -1,7 +1,7 @@
 package com.example.william.my.module.flutter.hilt
 
 import android.app.Application
-import com.example.william.my.core.base.hilt.interfaces.IAppInit
+import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import javax.inject.Inject
 
 class FlutterInitImpl @Inject constructor() : IAppInit {

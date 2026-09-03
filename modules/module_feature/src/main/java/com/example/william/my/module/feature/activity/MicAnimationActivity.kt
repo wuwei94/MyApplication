@@ -1,4 +1,4 @@
-package com.example.william.my.module.feature.activity
+﻿package com.example.william.my.module.feature.activity
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.feature.databinding.FeatureActivityMicAnimationBinding
 import com.example.william.my.module.feature.layoutmanager.MicLayoutManager
 

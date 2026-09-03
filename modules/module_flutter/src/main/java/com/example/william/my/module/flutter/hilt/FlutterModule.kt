@@ -1,7 +1,7 @@
 package com.example.william.my.module.flutter.hilt
 
-import com.example.william.my.core.base.hilt.interfaces.IAppInit
-import com.example.william.my.core.base.hilt.qualifier.FlutterInit
+import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
+import com.example.william.my.core.base.app.hilt.qualifier.FlutterInit
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

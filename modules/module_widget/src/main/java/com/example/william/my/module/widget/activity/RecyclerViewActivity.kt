@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget.activity
+﻿package com.example.william.my.module.widget.activity
 
 import android.os.Bundle
 import android.view.animation.AnimationUtils
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.R
 import com.example.william.my.module.widget.adapter.RecyclerAdapter
 import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBinding

@@ -21,12 +21,16 @@ object HttpURLUtils {
         listener: Listener<String>,
         errorListener: ErrorListener,
         connectTimeout: Int = DEFAULT_TIMEOUT,
-        readTimeout: Int = DEFAULT_TIMEOUT
+        readTimeout: Int = DEFAULT_TIMEOUT,
     ) {
-        val finalUrl = if (params.isEmpty()) url else buildString {
-            append(url)
-            append(if (url.contains("?")) "&" else "?")
-            append(encodedParams(params))
+        val finalUrl = if (params.isEmpty()) {
+            url
+        } else {
+            buildString {
+                append(url)
+                append(if (url.contains("?")) "&" else "?")
+                append(encodedParams(params))
+            }
         }
         request(finalUrl, "GET", null, null, listener, errorListener, connectTimeout, readTimeout)
     }
@@ -37,7 +41,7 @@ object HttpURLUtils {
         listener: Listener<String>,
         errorListener: ErrorListener,
         connectTimeout: Int = DEFAULT_TIMEOUT,
-        readTimeout: Int = DEFAULT_TIMEOUT
+        readTimeout: Int = DEFAULT_TIMEOUT,
     ) {
         request(url, "POST", CONTENT_TYPE_FORM, encodedParams(params).toByteArray(), listener, errorListener, connectTimeout, readTimeout)
     }
@@ -48,7 +52,7 @@ object HttpURLUtils {
         listener: Listener<String>,
         errorListener: ErrorListener,
         connectTimeout: Int = DEFAULT_TIMEOUT,
-        readTimeout: Int = DEFAULT_TIMEOUT
+        readTimeout: Int = DEFAULT_TIMEOUT,
     ) {
         request(url, "POST", CONTENT_TYPE_JSON, json.toString().toByteArray(), listener, errorListener, connectTimeout, readTimeout)
     }
@@ -61,7 +65,7 @@ object HttpURLUtils {
         listener: Listener<String>,
         errorListener: ErrorListener,
         connectTimeout: Int,
-        readTimeout: Int
+        readTimeout: Int,
     ) {
         var conn: HttpURLConnection? = null
         try {
@@ -104,14 +108,12 @@ object HttpURLUtils {
         }
     }
 
-    private fun encodedParams(params: Map<String, String>): String {
-        return buildString {
-            for ((key, value) in params) {
-                if (isNotEmpty()) append('&')
-                append(URLEncoder.encode(key, "UTF-8"))
-                append('=')
-                append(URLEncoder.encode(value, "UTF-8"))
-            }
+    private fun encodedParams(params: Map<String, String>): String = buildString {
+        for ((key, value) in params) {
+            if (isNotEmpty()) append('&')
+            append(URLEncoder.encode(key, "UTF-8"))
+            append('=')
+            append(URLEncoder.encode(value, "UTF-8"))
         }
     }
 

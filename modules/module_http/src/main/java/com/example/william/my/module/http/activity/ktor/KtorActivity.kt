@@ -35,11 +35,9 @@ import kotlinx.coroutines.launch
 @Route(path = RouterPath.Http.Ktor)
 class KtorActivity : BasicResponseActivity() {
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "ktor post",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "ktor post",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -71,7 +69,8 @@ class KtorActivity : BasicResponseActivity() {
                             formData {
                                 append(Constants.Key_Username, Constants.Value_Username)
                                 append(Constants.Key_Password, Constants.Value_Password)
-                            })
+                            },
+                        ),
                     )
                 }
                 val body = response.bodyAsText()

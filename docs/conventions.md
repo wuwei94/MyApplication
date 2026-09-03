@@ -59,6 +59,18 @@
 - `BaseFragmentActivity` — Fragment 宿主
 - `RouterRecyclerActivity` — RecyclerView 列表（带路由项）
 
+## 协程调度器与作用域约定（对齐 NiA）
+
+1. **禁止在业务层硬编码调度器**：
+   - 不得在 Repository、UseCase、ViewModel 或 Service 中直接使用硬编码的 `Dispatchers.IO` 或 `Dispatchers.Default` 进行线程切换；
+   - 必须通过 `@Dispatcher(AppDispatchers.IO)` 或 `@Dispatcher(AppDispatchers.Default)` 经构造函数由 Hilt 注入，确保单元测试时可无缝替换为 `StandardTestDispatcher`。
+2. **全局作用域受控暴露**：
+   - 跨生命周期、不可被页面关闭取消的后台任务（如埋点上传、离线同步、全局状态监听），统一注入 `@ApplicationScope private val externalScope: CoroutineScope`；
+   - 严禁在全局作用域中启动无休止的业务任务，且严禁使用未受控的 `GlobalScope`。
+3. **UI 层安全收集 Flow**：
+   - 在 Activity / Fragment 观察 Flow 时，必须使用 `basic_lib` 提供的 `collectWithLifecycle` 或 `launchAndRepeatWithLifecycle(Lifecycle.State.STARTED)`，避免应用切到后台时继续收集造成 UI 异常与资源浪费。
+
+
 ## 示例页面
 
 示例页面的首要目标是让读者快速看清库的入口、参数、返回值和回调，而不是展示一套页面级任务编排器。

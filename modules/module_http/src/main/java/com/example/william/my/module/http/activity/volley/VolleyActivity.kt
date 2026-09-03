@@ -55,12 +55,10 @@ class VolleyActivity : BasicResponseActivity() {
         showDescription("Volley 示例：支持 POST Form 与 POST JSON")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Volley postForm（表单提交）",
-            "Volley postJson（JSON 提交）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Volley postForm（表单提交）",
+        "Volley postJson（JSON 提交）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -78,7 +76,7 @@ class VolleyActivity : BasicResponseActivity() {
     private fun postForm(username: String, password: String) {
         val params = mutableMapOf(
             Constants.Key_Username to username,
-            Constants.Key_Password to password
+            Constants.Key_Password to password,
         )
 
         VolleyBuilder<LoginData>()
@@ -86,15 +84,18 @@ class VolleyActivity : BasicResponseActivity() {
             .clazz(LoginData::class.java)
             .addParams(params)
             .post()
-            .build(this, object : VolleyListener<LoginData>() {
-                override fun onResponse(response: LoginData?) {
-                    appendLog("【postForm】成功：${response?.let(JsonUtils::toJson)}")
-                }
+            .build(
+                this,
+                object : VolleyListener<LoginData>() {
+                    override fun onResponse(response: LoginData?) {
+                        appendLog("【postForm】成功：${response?.let(JsonUtils::toJson)}")
+                    }
 
-                override fun onErrorResponse(error: VolleyError?) {
-                    appendLog("【postForm】失败：${error?.message}")
-                }
-            })
+                    override fun onErrorResponse(error: VolleyError?) {
+                        appendLog("【postForm】失败：${error?.message}")
+                    }
+                },
+            )
     }
 
     private fun postJson(username: String, password: String) {
@@ -107,14 +108,17 @@ class VolleyActivity : BasicResponseActivity() {
             .clazz(LoginData::class.java)
             .addJsonObject(jsonObject)
             .post()
-            .build(this, object : VolleyListener<LoginData>() {
-                override fun onResponse(response: LoginData?) {
-                    appendLog("【postJson】成功：${response?.let(JsonUtils::toJson)}")
-                }
+            .build(
+                this,
+                object : VolleyListener<LoginData>() {
+                    override fun onResponse(response: LoginData?) {
+                        appendLog("【postJson】成功：${response?.let(JsonUtils::toJson)}")
+                    }
 
-                override fun onErrorResponse(error: VolleyError?) {
-                    appendLog("【postJson】失败：${error?.message}")
-                }
-            })
+                    override fun onErrorResponse(error: VolleyError?) {
+                        appendLog("【postJson】失败：${error?.message}")
+                    }
+                },
+            )
     }
 }

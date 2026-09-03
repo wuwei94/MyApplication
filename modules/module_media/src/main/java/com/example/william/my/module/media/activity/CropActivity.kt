@@ -60,7 +60,7 @@ class CropActivity : BasicImageActivity() {
 
     // 1. 图库选择 Launcher
     private val albumLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val sourceUri = result.data?.data
@@ -74,13 +74,15 @@ class CropActivity : BasicImageActivity() {
 
     // 2. 缩略图拍照 Launcher
     private val cameraThumbLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val extras = result.data?.extras
             val bitmap = if (extras != null) {
                 androidx.core.os.BundleCompat.getParcelable(extras, "data", Bitmap::class.java)
-            } else null
+            } else {
+                null
+            }
             val sourceUri = saveBitmap2Uri(bitmap)
             if (sourceUri != null) {
                 startCrop(sourceUri)
@@ -92,7 +94,7 @@ class CropActivity : BasicImageActivity() {
 
     // 3. 高清原图拍照 Launcher
     private val cameraFullLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             photoCaptureUri?.let { uri ->
@@ -103,20 +105,18 @@ class CropActivity : BasicImageActivity() {
 
     // 4. 图片裁剪 Launcher
     private val cropLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             loadCroppedImage()
         }
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "从图库选择并裁剪",
-            "拍摄照片并裁剪（缩略图）",
-            "拍摄高清照片并裁剪（原图）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "从图库选择并裁剪",
+        "拍摄照片并裁剪（缩略图）",
+        "拍摄高清照片并裁剪（原图）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -171,7 +171,7 @@ class CropActivity : BasicImageActivity() {
         val destinationUri = FileProvider.getUriForFile(
             this,
             "$packageName.fileProvider",
-            destinationFile
+            destinationFile,
         )
         this.cropDestinationUri = destinationUri
 
@@ -193,7 +193,7 @@ class CropActivity : BasicImageActivity() {
         // 兼容性授权：为响应裁剪动作的应用授予 URI 临时访问权限
         val resolveInfos = packageManager.queryIntentActivities(
             intent,
-            PackageManager.MATCH_DEFAULT_ONLY
+            PackageManager.MATCH_DEFAULT_ONLY,
         )
         for (resolveInfo in resolveInfos) {
             val targetPkg = resolveInfo.activityInfo.packageName
@@ -201,7 +201,7 @@ class CropActivity : BasicImageActivity() {
             grantUriPermission(
                 targetPkg,
                 destinationUri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
             )
         }
 

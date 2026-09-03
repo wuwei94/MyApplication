@@ -1,11 +1,11 @@
-package com.example.william.my.module.anim.activity
+﻿package com.example.william.my.module.anim.activity
 
 import android.net.http.HttpResponseCache
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.anim.databinding.AnimActivitySvgaBinding
 import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAParser

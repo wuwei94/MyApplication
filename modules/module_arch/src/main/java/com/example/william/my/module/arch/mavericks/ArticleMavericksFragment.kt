@@ -1,11 +1,11 @@
-package com.example.william.my.module.arch.mavericks
+﻿package com.example.william.my.module.arch.mavericks
 
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.core.base.recycler.BaseRecyclerFragment
+import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
 import com.example.william.my.module.arch.mavericks.data.ArticleMavericksState
 import com.example.william.my.module.arch.mavericks.viewmodel.ArticleMavericksViewModel

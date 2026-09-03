@@ -33,7 +33,9 @@ open class NanoHttpServer(
 
     fun loadHtml(filename: String, mimeType: String): Response {
         val assetManager = context?.assets ?: return newFixedLengthResponse(
-            Response.Status.INTERNAL_ERROR, MIME_HTML, "Context not available"
+            Response.Status.INTERNAL_ERROR,
+            MIME_HTML,
+            "Context not available",
         )
         val response = StringBuilder()
         try {
@@ -53,7 +55,9 @@ open class NanoHttpServer(
 
     fun loadBinary(filename: String, mimeType: String): Response {
         val assetManager = context?.assets ?: return newFixedLengthResponse(
-            Response.Status.INTERNAL_ERROR, MIME_HTML, "Context not available"
+            Response.Status.INTERNAL_ERROR,
+            MIME_HTML,
+            "Context not available",
         )
         return try {
             val isr = assetManager.open(filename)
@@ -68,29 +72,23 @@ open class NanoHttpServer(
 
     // region 标准 HTTP 响应
 
-    fun responseNotFound(): Response {
-        return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_HTML, "NOT_FOUND")
-    }
+    fun responseNotFound(): Response = newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_HTML, "NOT_FOUND")
 
-    fun responseBadRequest(message: String = "请求参数错误"): Response {
-        return newFixedLengthResponse(Response.Status.BAD_REQUEST, MIME_HTML, message)
-    }
+    fun responseBadRequest(message: String = "请求参数错误"): Response = newFixedLengthResponse(Response.Status.BAD_REQUEST, MIME_HTML, message)
 
     // endregion
 
     // region MIME 类型检测
 
-    fun getMimeType(filename: String): Pair<String, Boolean> {
-        return when {
-            filename.contains(".html") || filename.contains(".htm") -> "text/html" to true
-            filename.contains(".js") -> "text/javascript" to true
-            filename.contains(".css") -> "text/css" to true
-            filename.contains(".gif") -> "image/gif" to false
-            filename.contains(".jpeg") || filename.contains(".jpg") -> "image/jpeg" to false
-            filename.contains(".png") -> "image/png" to false
-            filename.contains(".svg") -> "image/svg+xml" to false
-            else -> "text/html" to true
-        }
+    fun getMimeType(filename: String): Pair<String, Boolean> = when {
+        filename.contains(".html") || filename.contains(".htm") -> "text/html" to true
+        filename.contains(".js") -> "text/javascript" to true
+        filename.contains(".css") -> "text/css" to true
+        filename.contains(".gif") -> "image/gif" to false
+        filename.contains(".jpeg") || filename.contains(".jpg") -> "image/jpeg" to false
+        filename.contains(".png") -> "image/png" to false
+        filename.contains(".svg") -> "image/svg+xml" to false
+        else -> "text/html" to true
     }
 
     // endregion

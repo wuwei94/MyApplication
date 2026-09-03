@@ -41,14 +41,12 @@ class RxDownloadActivity : BasicResponseActivity() {
         showDescription("单文件与批量并发下载示例，进度在下方日志区原位更新")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "单文件下载",
-            "多文件下载",
-            "取消当前下载",
-            "清理下载文件",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "单文件下载",
+        "多文件下载",
+        "取消当前下载",
+        "清理下载文件",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -101,8 +99,8 @@ class RxDownloadActivity : BasicResponseActivity() {
                             removeUpdatingLog(DOWNLOAD_PROGRESS_KEY)
                             appendLog("下载失败：${error.message}")
                         }
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -148,18 +146,18 @@ class RxDownloadActivity : BasicResponseActivity() {
                             response.successes.forEach { success ->
                                 appendLog(
                                     "${success.task.id} 已保存到：" +
-                                        success.result.file.absolutePath
+                                        success.result.file.absolutePath,
                                 )
                             }
                             response.failures.forEach { failure ->
                                 appendLog(
                                     "${failure.task.id} 下载失败：" +
-                                        failure.error.message
+                                        failure.error.message,
                                 )
                             }
                             appendLog(
                                 "下载完成：成功 ${response.successes.size}，" +
-                                    "失败 ${response.failures.size}"
+                                    "失败 ${response.failures.size}",
                             )
                         }
 
@@ -167,8 +165,8 @@ class RxDownloadActivity : BasicResponseActivity() {
                             removeUpdatingLog(DOWNLOAD_PROGRESS_KEY)
                             appendLog("下载队列失败：${error.message}")
                         }
-                    }
-                )
+                    },
+                ),
         )
     }
 
@@ -206,7 +204,7 @@ class RxDownloadActivity : BasicResponseActivity() {
         val failedFiles = files.filter { !it.delete() }
         appendLog(
             "下载文件清理完成：已删除 " +
-                "${files.size - failedFiles.size}/${files.size}"
+                "${files.size - failedFiles.size}/${files.size}",
         )
         if (failedFiles.isNotEmpty()) {
             appendLog("未能删除：${failedFiles.joinToString { it.name }}")
@@ -240,9 +238,7 @@ class RxDownloadActivity : BasicResponseActivity() {
     }
 
     /** 将字节数格式化为适合日志显示的文本。 */
-    private fun formatBytes(bytes: Long): String {
-        return Formatter.formatFileSize(this, bytes.coerceAtLeast(0L))
-    }
+    private fun formatBytes(bytes: Long): String = Formatter.formatFileSize(this, bytes.coerceAtLeast(0L))
 
     override fun onDestroy() {
         downloadOperationId++

@@ -18,13 +18,13 @@ internal object PluginLogging {
         "Authorization",
         "Proxy-Authorization",
         "Cookie",
-        "Set-Cookie"
+        "Set-Cookie",
     )
 
     fun <T : HttpClientEngineConfig> install(
         clientConfig: HttpClientConfig<T>,
         logLevel: LogLevel,
-        sanitizedHeaders: Set<String>
+        sanitizedHeaders: Set<String>,
     ) {
         if (logLevel == LogLevel.NONE) return
 

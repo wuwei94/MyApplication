@@ -1,10 +1,10 @@
-package com.example.william.my.basic.basic_shared.dialog
+﻿package com.example.william.my.basic.basic_shared.dialog
 
 import android.os.Bundle
 import android.view.View
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutDialogBinding
 import com.example.william.my.core.base.R
-import com.example.william.my.core.base.dialog.BaseVBDialogFragment
+import com.example.william.my.core.base.ui.dialog.BaseVBDialogFragment
 
 class BasicDialogFragment :
     BaseVBDialogFragment<SharedLayoutDialogBinding>(R.style.base_Dialog_Translate_Slide_Alpha) {

@@ -53,11 +53,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Route(path = RouterPath.Http.RetrofitCoroutine)
 class RetrofitCoroutineActivity : BasicResponseActivity() {
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Retrofit loginSuspend",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Retrofit loginSuspend",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -84,7 +82,7 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
                 } else {
                     appendLog(
                         "Retrofit Coroutine 业务失败（${response.code}）：" +
-                            response.message.ifBlank { "未知错误" }
+                            response.message.ifBlank { "未知错误" },
                     )
                 }
             } catch (e: Exception) {

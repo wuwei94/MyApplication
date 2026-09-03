@@ -15,7 +15,7 @@ internal object PluginHttpTimeout {
         clientConfig: HttpClientConfig<T>,
         requestTimeoutSeconds: Long,
         connectTimeoutSeconds: Long,
-        socketTimeoutSeconds: Long
+        socketTimeoutSeconds: Long,
     ) {
         clientConfig.install(HttpTimeout) {
             requestTimeoutMillis = requestTimeoutSeconds * 1000

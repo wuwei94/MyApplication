@@ -10,9 +10,7 @@ class JavaWebSocketServerService : Service() {
 
     private var server: JavaWebSocketServer? = null
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -56,9 +54,7 @@ class JavaWebSocketServerService : Service() {
         }
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        return START_STICKY
-    }
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int = START_STICKY
 
     private fun logcat(msg: String) {
         Utils.logcat(TAG, msg)

@@ -43,7 +43,7 @@ internal inline fun <reified T> KtorClient.convertKtorResponseBody(body: String)
         return KtorResponse.of(
             KtorResponse.SUCCESS,
             "",
-            gson.fromJson(root, object : TypeToken<T>() {}.type)
+            gson.fromJson(root, object : TypeToken<T>() {}.type),
         )
     }
 

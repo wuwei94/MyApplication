@@ -20,19 +20,23 @@ interface IImageLoader {
     )
 
     fun ImageView.loadImage(
-        context: Context?, @RawRes @DrawableRes resourceId: Int,
+        context: Context?,
+        @RawRes @DrawableRes resourceId: Int,
     )
 
     fun ImageView.loadImage(
-        context: Context?, bitmap: Bitmap?,
+        context: Context?,
+        bitmap: Bitmap?,
     )
 
     fun ImageView.loadImage(
-        context: Context?, uri: Uri,
+        context: Context?,
+        uri: Uri,
     )
 
     fun ImageView.loadImage(
-        context: Context?, file: File,
+        context: Context?,
+        file: File,
     )
 
     fun ImageView.loadImage(
@@ -43,51 +47,68 @@ interface IImageLoader {
     )
 
     fun ImageView.loadImageRound(
-        context: Context?, @RawRes @DrawableRes resourceId: Int,
+        context: Context?,
+        @RawRes @DrawableRes resourceId: Int,
     )
 
     fun ImageView.loadImageRound(
-        context: Context?, bitmap: Bitmap?
+        context: Context?,
+        bitmap: Bitmap?,
     )
 
     fun ImageView.loadImageRound(
-        context: Context?, uri: Uri,
+        context: Context?,
+        uri: Uri,
     )
 
     fun ImageView.loadImageRound(
-        context: Context?, file: File,
+        context: Context?,
+        file: File,
     )
 
     fun ImageView.loadImageRound(
-        context: Context?, url: String?,
+        context: Context?,
+        url: String?,
     )
 
     fun ImageView.loadImageRadius(
-        context: Context?, @RawRes @DrawableRes resourceId: Int, radius: Int,
+        context: Context?,
+        @RawRes @DrawableRes resourceId: Int,
+        radius: Int,
     )
 
     fun ImageView.loadImageRadius(
-        context: Context?, bitmap: Bitmap?, radius: Int,
+        context: Context?,
+        bitmap: Bitmap?,
+        radius: Int,
     )
 
     fun ImageView.loadImageRadius(
-        context: Context?, uri: Uri, radius: Int,
+        context: Context?,
+        uri: Uri,
+        radius: Int,
     )
 
     fun ImageView.loadImageRadius(
-        context: Context?, file: File, radius: Int,
+        context: Context?,
+        file: File,
+        radius: Int,
     )
 
     fun ImageView.loadImageRadius(
-        context: Context?, url: String?, radius: Int,
+        context: Context?,
+        url: String?,
+        radius: Int,
     )
 
     fun ImageView.loadGif(
-        context: Context?, resourceId: Int,
+        context: Context?,
+        resourceId: Int,
     )
 
     fun ImageView.loadGif(
-        context: Context?, url: String?,
+        context: Context?,
+        url: String?,
     )
 
     fun getImageDrawable(context: Context?, url: String?, onResourceReady: (Drawable) -> Unit)

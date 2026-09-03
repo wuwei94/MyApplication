@@ -28,11 +28,9 @@ class RetrofitRxActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "RetrofitRx login",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "RetrofitRx login",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -65,7 +63,7 @@ class RetrofitRxActivity : BasicResponseActivity() {
                     override fun onError(e: Throwable) {
                         appendLog("Retrofit Rx 失败：${e.message ?: "未知错误"}")
                     }
-                })
+                }),
         )
     }
 

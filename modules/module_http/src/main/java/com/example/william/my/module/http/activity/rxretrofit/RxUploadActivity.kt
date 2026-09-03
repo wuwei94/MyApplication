@@ -36,14 +36,12 @@ class RxUploadActivity : BasicResponseActivity() {
         showDescription("单文件与批量并发上传示例，进度在下方日志区原位更新")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "单文件上传",
-            "多文件上传",
-            "取消当前上传",
-            "清理上传临时文件",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "单文件上传",
+        "多文件上传",
+        "取消当前上传",
+        "清理上传临时文件",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -109,7 +107,7 @@ class RxUploadActivity : BasicResponseActivity() {
                         removeUpdatingLog(UPLOAD_PROGRESS_KEY)
                         appendLog("上传失败：${error.message}")
                     }
-                })
+                }),
         )
     }
 
@@ -169,7 +167,7 @@ class RxUploadActivity : BasicResponseActivity() {
                         removeUpdatingLog(UPLOAD_PROGRESS_KEY)
                         appendLog("上传失败：${error.message}")
                     }
-                })
+                }),
         )
     }
 
@@ -207,7 +205,7 @@ class RxUploadActivity : BasicResponseActivity() {
         val failedFiles = files.filter { !it.delete() }
         appendLog(
             "上传临时文件清理完成：已删除 " +
-                "${files.size - failedFiles.size}/${files.size}"
+                "${files.size - failedFiles.size}/${files.size}",
         )
         if (failedFiles.isNotEmpty()) {
             appendLog("未能删除：${failedFiles.joinToString { it.name }}")
@@ -220,14 +218,12 @@ class RxUploadActivity : BasicResponseActivity() {
         updateLog(
             UPLOAD_PROGRESS_KEY,
             "上传进度：${formatBytes(progress.currentBytes)} / " +
-                "${formatBytes(progress.totalBytes)}（$percent%）"
+                "${formatBytes(progress.totalBytes)}（$percent%）",
         )
     }
 
     /** 将字节数格式化为适合日志显示的文本。 */
-    private fun formatBytes(bytes: Long): String {
-        return Formatter.formatFileSize(this, bytes.coerceAtLeast(0L))
-    }
+    private fun formatBytes(bytes: Long): String = Formatter.formatFileSize(this, bytes.coerceAtLeast(0L))
 
     override fun onDestroy() {
         uploadOperationId++

@@ -37,7 +37,7 @@ import java.util.Locale
  */
 class VideoCaptureHelper(
     private val activity: FragmentActivity,
-    private val preview: PreviewView
+    private val preview: PreviewView,
 ) {
 
     private var isRecording = false
@@ -66,8 +66,8 @@ class VideoCaptureHelper(
                         .setAspectRatioStrategy(
                             AspectRatioStrategy(
                                 AspectRatio.RATIO_16_9,
-                                AspectRatioStrategy.FALLBACK_RULE_AUTO
-                            )
+                                AspectRatioStrategy.FALLBACK_RULE_AUTO,
+                            ),
                         )
                         .build()
 
@@ -80,7 +80,7 @@ class VideoCaptureHelper(
                     // 录像配置：配置带回退的多级分辨率，防止部分机型/模拟器不支持 HIGHEST 崩溃
                     val qualitySelector = QualitySelector.fromOrderedList(
                         listOf(Quality.FHD, Quality.HD, Quality.SD),
-                        FallbackStrategy.lowerQualityOrHigherThan(Quality.SD)
+                        FallbackStrategy.lowerQualityOrHigherThan(Quality.SD),
                     )
                     val recorder = Recorder.Builder()
                         .setQualitySelector(qualitySelector)
@@ -92,7 +92,7 @@ class VideoCaptureHelper(
                         activity,
                         CameraSelector.DEFAULT_BACK_CAMERA,
                         previewUseCase,
-                        videoCaptureUseCase
+                        videoCaptureUseCase,
                     )
                 } catch (e: Exception) {
                     Utils.logcat(TAG, "setupCamera error: ${e.message}")
@@ -130,7 +130,7 @@ class VideoCaptureHelper(
 
             if (ContextCompat.checkSelfPermission(
                     activity,
-                    Manifest.permission.RECORD_AUDIO
+                    Manifest.permission.RECORD_AUDIO,
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 try {
@@ -210,12 +210,12 @@ class VideoCaptureHelper(
             storageDir.mkdirs()
         }
         return try {
-            val file = File(storageDir, "VID_${timeStamp}.mp4")
+            val file = File(storageDir, "VID_$timeStamp.mp4")
             Utils.logcat(TAG, "预设视频路径: ${file.absolutePath}")
             file
         } catch (e: Exception) {
             Utils.logcat(TAG, "创建文件路径失败: ${e.message}")
-            File(context.cacheDir, "VID_${timeStamp}.mp4")
+            File(context.cacheDir, "VID_$timeStamp.mp4")
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.william.my.module.media.activity
+﻿package com.example.william.my.module.media.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -17,7 +17,7 @@ import androidx.core.view.isVisible
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.core.base.activity.BaseVBActivity
+import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.media.R
 import com.example.william.my.module.media.databinding.MediaActivityVideoBinding
 import com.example.william.my.module.media.utils.VideoCaptureHelper
@@ -27,7 +27,9 @@ import java.io.File
  * 录像示例 — 基于 CameraX 的 VideoCapture 用例，演示预览取景、录像与视频回放。
  */
 @Route(path = RouterPath.Media.Video)
-class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnClickListener {
+class MediaVideoActivity :
+    BaseVBActivity<MediaActivityVideoBinding>(),
+    View.OnClickListener {
 
     private var mediaPlayer: MediaPlayer? = null
     private var currentVideoFile: File? = null
@@ -37,7 +39,7 @@ class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnC
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
+        ActivityResultContracts.RequestMultiplePermissions(),
     ) { permissions ->
         val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
         if (cameraGranted) {
@@ -47,9 +49,7 @@ class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnC
         }
     }
 
-    override fun getViewBinding(): MediaActivityVideoBinding {
-        return MediaActivityVideoBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): MediaActivityVideoBinding = MediaActivityVideoBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -81,16 +81,19 @@ class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnC
             override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
         }
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (mBinding.layoutPreview.isVisible) {
-                    closePreview()
-                } else {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (mBinding.layoutPreview.isVisible) {
+                        closePreview()
+                    } else {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
                 }
-            }
-        })
+            },
+        )
     }
 
     override fun onClick(v: View?) {
@@ -129,11 +132,11 @@ class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnC
     private fun checkAndRequestPermissions() {
         val hasCamera = ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
         ) == PackageManager.PERMISSION_GRANTED
         val hasAudio = ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.RECORD_AUDIO
+            Manifest.permission.RECORD_AUDIO,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (hasCamera && hasAudio) {
@@ -142,8 +145,8 @@ class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnC
             requestPermissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO
-                )
+                    Manifest.permission.RECORD_AUDIO,
+                ),
             )
         }
     }
@@ -267,9 +270,7 @@ class MediaVideoActivity : BaseVBActivity<MediaActivityVideoBinding>(), View.OnC
         mBinding.previewTexture.setTransform(Matrix())
     }
 
-    override fun fitsSystemWindows(): Boolean {
-        return false
-    }
+    override fun fitsSystemWindows(): Boolean = false
 
     override fun onDestroy() {
         closePreview()

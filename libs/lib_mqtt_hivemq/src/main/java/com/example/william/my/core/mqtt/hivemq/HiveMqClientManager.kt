@@ -46,7 +46,7 @@ object HiveMqClientManager {
         clientId: String = "android_" + System.currentTimeMillis(),
         cleanSession: Boolean = true,
         keepAliveInterval: Int = 60,
-        listener: MqttClientListener? = null
+        listener: MqttClientListener? = null,
     ) {
         this.listener = listener
         connected = false
@@ -139,11 +139,9 @@ object HiveMqClientManager {
      */
     fun isConnected(): Boolean = connected
 
-    private fun toQos(qos: Int): MqttQos {
-        return when (qos) {
-            0 -> MqttQos.AT_MOST_ONCE
-            2 -> MqttQos.EXACTLY_ONCE
-            else -> MqttQos.AT_LEAST_ONCE
-        }
+    private fun toQos(qos: Int): MqttQos = when (qos) {
+        0 -> MqttQos.AT_MOST_ONCE
+        2 -> MqttQos.EXACTLY_ONCE
+        else -> MqttQos.AT_LEAST_ONCE
     }
 }

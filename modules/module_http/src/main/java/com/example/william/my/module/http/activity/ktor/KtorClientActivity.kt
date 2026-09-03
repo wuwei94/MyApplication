@@ -33,9 +33,7 @@ class KtorClientActivity : BasicResponseActivity() {
     }
     private val client by clientDelegate
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("Ktor Client POST")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("Ktor Client POST")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -47,7 +45,7 @@ class KtorClientActivity : BasicResponseActivity() {
     private fun ktorPost(username: String, password: String) {
         val params = mapOf(
             Constants.Key_Username to username,
-            Constants.Key_Password to password
+            Constants.Key_Password to password,
         )
 
         lifecycleScope.launch {
@@ -58,7 +56,7 @@ class KtorClientActivity : BasicResponseActivity() {
                 } else {
                     appendLog(
                         "Ktor Client 业务失败（${response.code}）：" +
-                            response.message.ifBlank { "未知错误" }
+                            response.message.ifBlank { "未知错误" },
                     )
                 }
             }

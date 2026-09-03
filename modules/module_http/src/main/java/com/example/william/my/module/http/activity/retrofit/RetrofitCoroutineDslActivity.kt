@@ -22,11 +22,9 @@ import kotlinx.coroutines.launch
 @Route(path = RouterPath.Http.RetrofitCoroutineDsl)
 class RetrofitCoroutineDslActivity : BasicResponseActivity() {
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Retrofit DSL loginSuspend",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Retrofit DSL loginSuspend",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -49,7 +47,7 @@ class RetrofitCoroutineDslActivity : BasicResponseActivity() {
                 } else {
                     appendLog(
                         "Retrofit Coroutine DSL 业务失败（${response.code}）：" +
-                            response.message.ifBlank { "未知错误" }
+                            response.message.ifBlank { "未知错误" },
                     )
                 }
             } catch (e: Exception) {

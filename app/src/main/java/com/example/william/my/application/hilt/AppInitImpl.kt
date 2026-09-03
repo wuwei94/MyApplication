@@ -1,12 +1,11 @@
-package com.example.william.my.application.hilt
+﻿package com.example.william.my.application.hilt
 
 import android.app.Application
+import com.blankj.utilcode.util.CrashUtils
 import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
 import com.example.william.my.basic.basic_shared.utils.Utils
+import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.eventbus.EventBusHelper
-import com.example.william.my.core.base.hilt.interfaces.IAppInit
-import com.example.william.my.core.base.utils.CrashUtils
-import com.example.william.my.core.base.utils.FileSDCardUtil
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 import javax.inject.Inject
 
@@ -22,18 +21,12 @@ class AppInitImpl @Inject constructor() : IAppInit {
         initEventBus()
     }
 
-    override fun getApp(): Application {
-        return mApp
-    }
+    override fun getApp(): Application = mApp
 
     private fun initCrash(app: Application) {
-        CrashUtils.init(
-            app, FileSDCardUtil.getCacheDirPath(app.applicationContext),
-            object : CrashUtils.OnCrashListener {
-                override fun onCrash(crashInfo: CrashUtils.CrashInfo) {
-                    Utils.logcat("CrashUtils", crashInfo.throwable.message.toString())
-                }
-            })
+        CrashUtils.init { crashInfo ->
+            Utils.logcat("CrashUtils", crashInfo.throwable.message.toString())
+        }
     }
 
     private fun initEventBus() {

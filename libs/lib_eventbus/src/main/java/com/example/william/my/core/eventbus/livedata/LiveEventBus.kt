@@ -10,9 +10,9 @@ import kotlinx.coroutines.Job
 
 object LiveEventBus {
 
-//_______________________________________
+// _______________________________________
 //          observe event
-//_______________________________________
+// _______________________________________
 
     /**
      * 监听 Activity Scope 事件
@@ -21,11 +21,9 @@ object LiveEventBus {
     inline fun <reified T> observeEvent(
         owner: FragmentActivity,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return ViewModelProvider(owner)[LiveEventBusModel::class.java]
-            .observeEvent(owner, T::class.java.name, isSticky, onReceived)
-    }
+        noinline onReceived: (T) -> Unit,
+    ): Job = ViewModelProvider(owner)[LiveEventBusModel::class.java]
+        .observeEvent(owner, T::class.java.name, isSticky, onReceived)
 
     /**
      * 监听 Fragment Scope 事件
@@ -34,15 +32,13 @@ object LiveEventBus {
     inline fun <reified T> observeEvent(
         owner: Fragment,
         isSticky: Boolean = false,
-        noinline onReceived: (T) -> Unit
-    ): Job {
-        return ViewModelProvider(owner)[LiveEventBusModel::class.java]
-            .observeEvent(owner, T::class.java.name, isSticky, onReceived)
-    }
+        noinline onReceived: (T) -> Unit,
+    ): Job = ViewModelProvider(owner)[LiveEventBusModel::class.java]
+        .observeEvent(owner, T::class.java.name, isSticky, onReceived)
 
-//_______________________________________
+// _______________________________________
 //          post event
-//_______________________________________
+// _______________________________________
 
     /**
      * 限定范围的事件
@@ -52,10 +48,9 @@ object LiveEventBus {
             .postEvent(T::class.java.name, event!!)
     }
 
-//_______________________________________
+// _______________________________________
 //          get event
-//_______________________________________
-
+// _______________________________________
 
     inline fun <reified T> removeStickyEvent(scope: ViewModelStoreOwner, event: Class<T>) {
         ViewModelProvider(scope)[LiveEventBusModel::class.java]

@@ -1,11 +1,10 @@
 package com.example.william.my.application.app
 
+import com.blankj.utilcode.util.CrashUtils
 import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.app.BaseApp
 import com.example.william.my.core.base.eventbus.EventBusHelper
-import com.example.william.my.core.base.utils.CrashUtils
-import com.example.william.my.core.base.utils.FileSDCardUtil
 import com.example.william.my.module.arch.app.MavericksApp
 import com.example.william.my.module.event.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp
@@ -35,13 +34,9 @@ class App : BaseApp() {
     }
 
     private fun initCrash() {
-        CrashUtils.init(
-            this, FileSDCardUtil.getCacheDirPath(this.applicationContext),
-            object : CrashUtils.OnCrashListener {
-                override fun onCrash(crashInfo: CrashUtils.CrashInfo) {
-                    Utils.logcat("CrashUtils", crashInfo.throwable.message.toString())
-                }
-            })
+        CrashUtils.init { crashInfo ->
+            Utils.logcat("CrashUtils", crashInfo.throwable.message.toString())
+        }
     }
 
     private fun initEventBus() {

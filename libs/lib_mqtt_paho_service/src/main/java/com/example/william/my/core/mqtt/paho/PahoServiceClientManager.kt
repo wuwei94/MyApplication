@@ -56,7 +56,7 @@ object PahoServiceClientManager {
         cleanSession: Boolean = true,
         autoReconnect: Boolean = true,
         keepAliveInterval: Int = 60,
-        listener: MqttClientListener? = null
+        listener: MqttClientListener? = null,
     ) {
         this.listener = listener
         val newClient = MqttAndroidClient(context.applicationContext, broker, clientId)
@@ -89,17 +89,21 @@ object PahoServiceClientManager {
             connectionTimeout = 10
             this.keepAliveInterval = keepAliveInterval
         }
-        newClient.connect(options, null, object : IMqttActionListener {
-            override fun onSuccess(asyncActionToken: IMqttToken) {
-                // 连接成功由 connectComplete 回调统一处理
-            }
-
-            override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
-                mainHandler.post {
-                    this@PahoServiceClientManager.listener?.onError(exception.message ?: "connect failed")
+        newClient.connect(
+            options,
+            null,
+            object : IMqttActionListener {
+                override fun onSuccess(asyncActionToken: IMqttToken) {
+                    // 连接成功由 connectComplete 回调统一处理
                 }
-            }
-        })
+
+                override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
+                    mainHandler.post {
+                        this@PahoServiceClientManager.listener?.onError(exception.message ?: "connect failed")
+                    }
+                }
+            },
+        )
     }
 
     /**
@@ -107,17 +111,22 @@ object PahoServiceClientManager {
      */
     fun subscribe(topic: String, qos: Int = 1) {
         val current = client ?: return
-        current.subscribe(topic, qos, null, object : IMqttActionListener {
-            override fun onSuccess(asyncActionToken: IMqttToken) {
-                // 订阅成功，忽略
-            }
-
-            override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
-                mainHandler.post {
-                    this@PahoServiceClientManager.listener?.onError(exception.message ?: "subscribe failed")
+        current.subscribe(
+            topic,
+            qos,
+            null,
+            object : IMqttActionListener {
+                override fun onSuccess(asyncActionToken: IMqttToken) {
+                    // 订阅成功，忽略
                 }
-            }
-        })
+
+                override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
+                    mainHandler.post {
+                        this@PahoServiceClientManager.listener?.onError(exception.message ?: "subscribe failed")
+                    }
+                }
+            },
+        )
     }
 
     /**
@@ -129,17 +138,22 @@ object PahoServiceClientManager {
             this.qos = qos
             isRetained = retained
         }
-        current.publish(topic, message, null, object : IMqttActionListener {
-            override fun onSuccess(asyncActionToken: IMqttToken) {
-                // 发布成功，忽略
-            }
-
-            override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
-                mainHandler.post {
-                    this@PahoServiceClientManager.listener?.onError(exception.message ?: "publish failed")
+        current.publish(
+            topic,
+            message,
+            null,
+            object : IMqttActionListener {
+                override fun onSuccess(asyncActionToken: IMqttToken) {
+                    // 发布成功，忽略
                 }
-            }
-        })
+
+                override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
+                    mainHandler.post {
+                        this@PahoServiceClientManager.listener?.onError(exception.message ?: "publish failed")
+                    }
+                }
+            },
+        )
     }
 
     /**
@@ -148,15 +162,18 @@ object PahoServiceClientManager {
     fun disconnect() {
         val current = client ?: return
         try {
-            current.disconnect(null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken) {
-                    // 忽略
-                }
+            current.disconnect(
+                null,
+                object : IMqttActionListener {
+                    override fun onSuccess(asyncActionToken: IMqttToken) {
+                        // 忽略
+                    }
 
-                override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
-                    // 忽略
-                }
-            })
+                    override fun onFailure(asyncActionToken: IMqttToken, exception: Throwable) {
+                        // 忽略
+                    }
+                },
+            )
             current.close()
         } catch (_: Exception) {
             // ignore

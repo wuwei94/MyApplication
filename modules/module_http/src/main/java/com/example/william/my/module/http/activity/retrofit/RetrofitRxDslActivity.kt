@@ -22,11 +22,9 @@ import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 @Route(path = RouterPath.Http.RetrofitRxDsl)
 class RetrofitRxDslActivity : BasicResponseActivity() {
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Retrofit Rx DSL login",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Retrofit Rx DSL login",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -52,7 +50,7 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
                     super.onResponse(response)
                     appendFormatLog(
                         "Retrofit Rx DSL 响应：",
-                        response?.let(JsonUtils::toJson).orEmpty()
+                        response?.let(JsonUtils::toJson).orEmpty(),
                     )
                 }
 

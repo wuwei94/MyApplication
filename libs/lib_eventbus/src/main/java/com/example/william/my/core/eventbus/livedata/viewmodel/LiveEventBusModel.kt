@@ -11,21 +11,19 @@ import kotlinx.coroutines.launch
 
 class LiveEventBusModel : ViewModel() {
 
-    //正常事件
+    // 正常事件
     private val eventLiveData: MutableMap<String, BusMutableLiveData<Any>> = HashMap()
 
-    //粘性事件
+    // 粘性事件
     private val stickyEventLiveData: MutableMap<String, MutableLiveData<Any>> = HashMap()
 
-    private fun getEventLiveData(eventName: String, isSticky: Boolean): MutableLiveData<Any> {
-        return if (isSticky) {
-            stickyEventLiveData[eventName] ?: MutableLiveData<Any>().also {
-                stickyEventLiveData[eventName] = it
-            }
-        } else {
-            eventLiveData[eventName] ?: BusMutableLiveData<Any>().also {
-                eventLiveData[eventName] = it
-            }
+    private fun getEventLiveData(eventName: String, isSticky: Boolean): MutableLiveData<Any> = if (isSticky) {
+        stickyEventLiveData[eventName] ?: MutableLiveData<Any>().also {
+            stickyEventLiveData[eventName] = it
+        }
+    } else {
+        eventLiveData[eventName] ?: BusMutableLiveData<Any>().also {
+            eventLiveData[eventName] = it
         }
     }
 
@@ -33,13 +31,14 @@ class LiveEventBusModel : ViewModel() {
         owner: LifecycleOwner,
         eventName: String,
         isSticky: Boolean = false,
-        onReceived: (T) -> Unit
-    ): Job {
-        return owner.lifecycleScope.launch {
-            getEventLiveData(eventName, isSticky).observe(owner, Observer { value ->
+        onReceived: (T) -> Unit,
+    ): Job = owner.lifecycleScope.launch {
+        getEventLiveData(eventName, isSticky).observe(
+            owner,
+            Observer { value ->
                 invokeReceived(value, onReceived)
-            })
-        }
+            },
+        )
     }
 
     fun postEvent(eventName: String, value: Any) {
