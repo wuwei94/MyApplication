@@ -138,7 +138,7 @@ MyApplication/
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
-    │   └── module_performance  # 性能优化（ContentProvider / App Startup / Baseline Profiles / IdleHandler / AsyncLayoutInflater / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
+    │   └── module_performance  # 性能优化（ContentProvider / App Startup / Baseline Profiles / JankStats+Tracing / IdleHandler / AsyncLayoutInflater / LruCache / DiffUtil / RecycledViewPool / ConcatAdapter）
     │
     ├── [Kotlin & Jetpack]
     │   ├── module_kotlin       # Kotlin 语言特性（Coroutines / Flow）
@@ -264,6 +264,7 @@ MyApplication/
 - **ConcatAdapter**：模块化列表组合与 ViewType 隔离刷新
 - **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
 - **DiffUtil**：列表差量计算与 Payload 细粒度局部刷新
+- **JankStats + Tracing**：JankStats 运行时卡顿采集、PerformanceMetricsState UI 状态归因、自定义 trace section，可在 System Trace / Perfetto 中对齐查看
 
 ### module_media（多媒体）
 

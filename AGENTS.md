@@ -42,6 +42,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
 | docs/comments.md | 代码注释规范（语言、KDoc 格式、内容层次） |
 | docs/modularization.md | 现代组件化架构演进与技术选型（ARouter 停更原因、大厂主流方案、API-Impl 与 TheRouter） |
+| docs/nia-adoption.md | Now in Android 落地评估（能力落差对照、12 项落地方案与推进顺序、不建议照搬清单） |
 
 ## 不变量
 

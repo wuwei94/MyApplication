@@ -4,6 +4,7 @@
 本模块遵循 Google 官方 `Now in Android` 与 AndroidX 性能优化最佳实践，基于 **Jetpack Macrobenchmark** 与 **Baseline Profile** 体系构建：
 1. **BaselineProfileGenerator**：自动生成 `baseline-prof.txt` 基线配置文件，供应用打包时做 AOT 预编译，显著优化冷启动时间（30%+）与消除界面滑动掉帧。
 2. **StartupBenchmark**：量化评估应用冷启动性能，对比开启与未开启 Baseline Profile 下的启动耗时差异。
+3. **ScrollBenchmark**：量化评估首页列表滚动时的帧耗时分布（`FrameTimingMetric`），对比 `CompilationMode.None` 与 `CompilationMode.Partial` 两档预编译强度，与 `StartupBenchmark` 配合定位「冷启动是否变慢」「滑动是否更卡」两类回归。
 
 ---
 
@@ -20,6 +21,38 @@
 ```bash
 ./gradlew :benchmarks:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=com.example.william.my.benchmarks.StartupBenchmark
 ```
+
+### 3. 执行列表滚动帧耗时基准测试
+```bash
+./gradlew :benchmarks:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=com.example.william.my.benchmarks.ScrollBenchmark
+```
+
+> 上述命令每次只跑指定类，跑全部基准可省略 `-Pandroid.testInstrumentationRunnerArguments.class=...`。
+
+## 报告生成
+
+基准测试结束后，`Macrobenchmark` 会把原始数据写入 `benchmarks/build/outputs/connected_check/<device>/benchmarkData.json`。直接打开 JSON 难以阅读，可用 `tools/benchmark-report.py` 汇总成 Markdown 报告。
+
+### 基本用法
+```bash
+# 1. 按项目默认 glob 自动检索全部 benchmarkData.json
+./tools/benchmark-report.py
+
+# 2. 显式指定目录或文件
+./tools/benchmark-report.py benchmarks/build/outputs/connected_check
+./tools/benchmark-report.py path/to/run1/benchmarkData.json path/to/run2/benchmarkData.json
+
+# 3. 输出到文件（推荐 PR 场景，附在 CI 产物里）
+./tools/benchmark-report.py -o reports/benchmark.md
+```
+
+### 报告结构
+- 按 `className`（基准测试类）分组；
+- 每组内按 `params`（`compilationMode`/`iterations`/`startupMode`/`targetPackage`）再分小节；
+- 每个基准按 `metrics` 字段展开，统计值字段优先级：`minimum → median → mean → stdDev → p50/p90/p95/p99 → maximum`；
+- 顶部列出数据来源（运行目录相对项目根的路径），便于交叉对比不同设备/不同 PR 的结果。
+
+> 脚本仅依赖 Python 3.10+ 标准库，无第三方依赖。
 
 <!--region graph-->
 ```mermaid

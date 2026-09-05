@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+#
+# Git pre-push 门禁
+#
+# 推送前依次执行：
+#   1. spotlessCheck —— 全工程 Kotlin / KTS 格式规范检查（ktlint）
+#   2. lintProdDebug —— 仅对本次推送涉及变更的模块执行 Android Lint
+#
+# 安装：./tools/install-git-hooks.sh
+# 临时跳过：git push --no-verify     或     PRE_PUSH_DISABLE=1 git push
+#
+# 钩子由 Git 调用：stdin 按行传入 <local ref> <local sha> <remote ref> <remote sha>。
+# 退出码非 0 会中止本次推送。
+
+set -uo pipefail
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if [[ "${PRE_PUSH_DISABLE:-0}" == "1" ]]; then
+    echo "pre-push: PRE_PUSH_DISABLE=1，跳过全部检查"
+    exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# 1. 采集本次推送涉及的变更文件
+# ---------------------------------------------------------------------------
+
+# 新分支/新标签没有远端基线，退化为与远端默认分支求 merge-base
+resolve_remote_base() {
+    local remote_name="$1"
+    local candidate
+    candidate="$(git symbolic-ref --quiet --short "refs/remotes/${remote_name}/HEAD" 2>/dev/null)"
+    if [[ -z "$candidate" ]]; then
+        for candidate in "${remote_name}/main" "${remote_name}/master"; do
+            if git rev-parse --verify --quiet "refs/remotes/${candidate}" >/dev/null; then
+                break
+            fi
+            candidate=""
+        done
+    fi
+    printf '%s' "$candidate"
+}
+
+# 输出：一个 commit 区间内新增/修改/重命名（排除删除）的文件
+changed_files_for_range() {
+    local local_sha="$1" remote_sha="$2" remote_ref="$3"
+    # local_sha 全 0 表示本地分支将被远端删除，没有需要检查的内容
+    if [[ "$local_sha" =~ ^0+$ ]]; then
+        return 0
+    fi
+    # remote_sha 全 0 表示新分支首次推送，需要与远端默认分支求 merge-base 取得基线
+    if [[ "$remote_sha" =~ ^0+$ ]]; then
+        local base merge_base
+        base="$(resolve_remote_base "${remote_ref%%/*}")"
+        if [[ -z "$base" ]]; then
+            echo "pre-push: 无法确定远端基线，跳过增量 Lint（仍执行 spotlessCheck）" >&2
+            return 0
+        fi
+        merge_base="$(git merge-base "$base" "$local_sha" 2>/dev/null)"
+        [[ -z "$merge_base" ]] && return 0
+        git diff --name-only --diff-filter=ACMR "$merge_base" "$local_sha"
+    else
+        git diff --name-only --diff-filter=ACMR "$remote_sha" "$local_sha"
+    fi
+}
+
+mapfile -t changed_files < <(
+    while read -r _local_ref local_sha _remote_ref remote_sha; do
+        [[ -z "${local_sha:-}" || -z "${remote_sha:-}" ]] && continue
+        changed_files_for_range "$local_sha" "$remote_sha" "${_remote_ref:-}"
+    done | sort -u
+)
+
+if [[ ${#changed_files[@]} -eq 0 ]]; then
+    echo "pre-push: 未检测到需要检查的变更，跳过"
+    exit 0
+fi
+
+echo "pre-push: 本次推送涉及 ${#changed_files[@]} 个变更文件"
+
+# ---------------------------------------------------------------------------
+# 2. 全工程格式规范检查
+# ---------------------------------------------------------------------------
+
+echo ""
+echo "──▶ [1/2] spotlessCheck（全工程格式规范）"
+if ! ./gradlew spotlessCheck --console=plain --quiet; then
+    echo ""
+    echo "pre-push: 格式检查未通过。执行 ./gradlew spotlessApply 自动修复后重新提交。"
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# 3. 变更模块的 Android Lint
+# ---------------------------------------------------------------------------
+
+# settings.gradle.kts 中声明的 Gradle 工程路径集合
+mapfile -t included_projects < <(
+    sed -n 's/^[[:space:]]*include("\([^"]*\)").*/\1/p' settings.gradle.kts
+)
+
+# 不提供 lintProdDebug 任务的工程：
+#   :benchmarks —— com.android.test 模块，未应用 Android Lint 插件
+#   :flutter    —— 由 Flutter Gradle 插件托管的外部模块
+lint_excluded=(":benchmarks" ":flutter")
+
+is_in() {
+    local needle="$1"
+    shift
+    local item
+    for item in "$@"; do
+        [[ "$item" == "$needle" ]] && return 0
+    done
+    return 1
+}
+
+# 变更文件向上回溯到最近的构建脚本，得到所属 Gradle 工程路径
+project_of_file() {
+    local dir
+    dir="$(dirname "$1")"
+    while [[ "$dir" != "." && "$dir" != "/" ]]; do
+        if [[ -f "$dir/build.gradle.kts" || -f "$dir/build.gradle" ]]; then
+            printf ':%s' "${dir//\//:}"
+            return 0
+        fi
+        dir="$(dirname "$dir")"
+    done
+    return 1
+}
+
+lint_targets=()
+for file in "${changed_files[@]}"; do
+    project="$(project_of_file "$file")" || continue
+    [[ -z "$project" ]] && continue
+    is_in "$project" "${included_projects[@]:-}" || continue
+    is_in "$project" "${lint_excluded[@]}" && continue
+    is_in "${project}:lintProdDebug" "${lint_targets[@]:-}" && continue
+    lint_targets+=("${project}:lintProdDebug")
+done
+
+if [[ ${#lint_targets[@]} -eq 0 ]]; then
+    echo ""
+    echo "──▶ [2/2] 无需要 Lint 的变更模块，跳过"
+    exit 0
+fi
+
+echo ""
+echo "──▶ [2/2] lintProdDebug（${#lint_targets[@]} 个变更模块）"
+printf '    %s\n' "${lint_targets[@]}"
+if ! ./gradlew "${lint_targets[@]}" --console=plain; then
+    echo ""
+    echo "pre-push: Lint 未通过，请修复上述问题后再推送。"
+    exit 1
+fi
+
+echo ""
+echo "pre-push: 全部检查通过"

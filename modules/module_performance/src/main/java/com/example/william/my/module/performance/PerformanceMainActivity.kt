@@ -33,6 +33,12 @@ class PerformanceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("RecycledViewPool（跨列表/Tab 共享视图池）", RouterPath.Performance.RecycledViewPool))
         routerItems.add(RouterItem("DiffUtil（列表差量计算与局部刷新）", RouterPath.Performance.DiffUtil))
 
+        routerItems.add(RouterItem("", ""))
+
+        // 4. 运行时监控闭环
+        routerItems.add(RouterItem("── 运行时监控闭环 ──", ""))
+        routerItems.add(RouterItem("JankStats + Trace（运行时卡顿采集与自定义 section）", RouterPath.Performance.JankStats))
+
         return routerItems
     }
 }

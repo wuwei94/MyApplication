@@ -110,6 +110,9 @@
 - `./gradlew spotlessApply` — 自动修复并格式化全工程 Kotlin / KTS 代码风格（统一换行符为 LF）
 - `./gradlew :<模块路径>:spotlessApply` — 自动修复并格式化指定单模块代码风格
 - `./gradlew :benchmarks:connectedCheck` — 运行 Benchmark 基准测试与生成 Baseline Profile 基线配置文件
+- `./tools/install-git-hooks.sh` — 将 `tools/pre-push` 安装到 `.git/hooks/pre-push`；安装后每次推送会先执行 `spotlessCheck`，并对本次推送涉及变更的模块执行 `lintProdDebug`，未通过则阻止推送
+  - 跳过：`git push --no-verify` 或临时设置 `PRE_PUSH_DISABLE=1`
+- `./tools/benchmark-report.py [路径…] [-o 输出文件]` — 将 Macrobenchmark 输出的 `benchmarkData.json` 汇总为可读 Markdown 报告（按 className → params → metrics 分层，仅依赖 Python 3.10+ 标准库）
 - **代码规范保护机制**：
   - 全工程遵循 `.editorconfig` 与 `.gitattributes`（统一换行符为 LF、4 格缩进、UTF-8 字符集）；
   - 为避免全量格式化污染提交历史，请在本地执行 `git config blame.ignoreRevsFile .git-blame-ignore-revs`，让 `git blame` 自动忽略格式化重构提交；

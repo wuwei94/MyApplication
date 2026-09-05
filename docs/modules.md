@@ -247,6 +247,7 @@
 | ConcatAdapterActivity | ConcatAdapter 模块化列表组合与 ViewType 隔离刷新 |
 | RecycledViewPoolActivity | RecyclerView.RecycledViewPool 跨列表/Tab 共享视图池 |
 | DiffUtilActivity | DiffUtil 列表差量计算与 Payload 细粒度局部刷新 |
+| JankStatsActivity | JankStats + AndroidX Tracing 运行时监控（逐帧卡顿采集、PerformanceMetricsState UI 状态归因、自定义 trace section） |
 
 ---
 

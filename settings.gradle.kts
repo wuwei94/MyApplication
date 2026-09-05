@@ -1,3 +1,9 @@
+// 类型安全的项目访问器：dependencies 中的字符串项目路径（如 :basic:basic_lib）改为
+// projects.basic.basicLib 访问器形式，由 Gradle 在编译构建脚本时校验项目路径，
+// 拼错或模块被移除将直接编译失败，而不是等到运行期才暴露。
+// 注意：该访问器只能用于依赖声明，动态路径仍需使用 project(path)，见 AndroidDeps.kt。
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -72,7 +78,9 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "My Application"
+// 名称需匹配 [a-zA-Z]([A-Za-z0-9\-_])*，否则类型安全项目访问器无法生成（含空格的名称会直接构建失败）。
+// 该名称只用于 Gradle 工程标识，应用展示名由 app/src/main/res/values/strings.xml 的 app_name 决定。
+rootProject.name = "MyApplication"
 
 // 壳工程入口
 include(":app")

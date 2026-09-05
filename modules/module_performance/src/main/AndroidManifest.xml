@@ -12,6 +12,7 @@
         <activity android:name=".activity.ConcatAdapterActivity" />
         <activity android:name=".activity.DiffUtilActivity" />
         <activity android:name=".activity.RecycledViewPoolActivity" />
+        <activity android:name=".activity.JankStatsActivity" />
 
         <provider
             android:name=".provider.AutoInitProvider"

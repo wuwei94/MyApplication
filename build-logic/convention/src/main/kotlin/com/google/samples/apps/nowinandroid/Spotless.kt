@@ -68,6 +68,9 @@ private fun Project.configureSpotlessCommon() {
                 mapOf(
                     "android" to "true",
                     "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
+                    // 本项目允许 module 名包含下划线（如 :basic:basic_repo），package 路径随之带下划线；
+                    // ktlint 默认禁用的 package-name 规则会因此拦截全工程校验，故显式禁用。
+                    "ktlint_standard_package-name" to "disabled",
                 ),
             )
             trimTrailingWhitespace()
