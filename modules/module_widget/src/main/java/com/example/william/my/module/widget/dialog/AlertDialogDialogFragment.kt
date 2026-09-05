@@ -15,9 +15,7 @@ import com.example.william.my.basic.basic_shared.R
  */
 class AlertDialogDialogFragment : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(requireActivity()).create()
-    }
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireActivity()).create()
 
     override fun onStart() {
         super.onStart()
@@ -25,15 +23,15 @@ class AlertDialogDialogFragment : DialogFragment() {
             val view = layoutInflater.inflate(
                 R.layout.shared_layout_response,
                 dialog.window?.decorView as? ViewGroup,
-                false
+                false,
             )
             view.findViewById<TextView>(R.id.basics_response)?.setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.shared_color_primary)
+                ContextCompat.getColor(requireContext(), R.color.shared_color_primary),
             )
             dialog.setContentView(view)
             dialog.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height)
+                resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height),
             )
         }
     }

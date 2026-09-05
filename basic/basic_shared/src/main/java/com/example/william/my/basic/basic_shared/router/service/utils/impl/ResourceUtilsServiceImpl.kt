@@ -12,9 +12,7 @@ import com.example.william.my.basic.basic_shared.router.service.utils.ResourceUt
 @Route(path = RouterPath.Service.ResourceUtilsService)
 class ResourceUtilsServiceImpl : ResourceUtilsService {
 
-    override fun getAssets(assetsFilePath: String): String {
-        return ResourceUtils.readAssets2String(assetsFilePath)
-    }
+    override fun getAssets(assetsFilePath: String): String = ResourceUtils.readAssets2String(assetsFilePath)
 
     override fun init(context: Context) {}
 }

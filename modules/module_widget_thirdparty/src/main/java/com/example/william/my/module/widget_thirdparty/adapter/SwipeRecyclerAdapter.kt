@@ -8,13 +8,14 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.william.my.module.widget_thirdparty.R
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyItemSwipeBinding
 
-class SwipeRecyclerAdapter(private var data: List<String>?) :
-    RecyclerSwipeAdapter<SwipeRecyclerAdapter.ViewHolder>() {
+class SwipeRecyclerAdapter(private var data: List<String>?) : RecyclerSwipeAdapter<SwipeRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             WidgetThirdpartyItemSwipeBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
             )
         return ViewHolder(binding)
     }
@@ -33,14 +34,9 @@ class SwipeRecyclerAdapter(private var data: List<String>?) :
         }
     }
 
-    override fun getItemCount(): Int {
-        return data?.size ?: 0
-    }
+    override fun getItemCount(): Int = data?.size ?: 0
 
-    override fun getSwipeLayoutResourceId(position: Int): Int {
-        return R.id.item_swipe_swipeLayout
-    }
+    override fun getSwipeLayoutResourceId(position: Int): Int = R.id.item_swipe_swipeLayout
 
-    class ViewHolder(val binding: WidgetThirdpartyItemSwipeBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: WidgetThirdpartyItemSwipeBinding) : RecyclerView.ViewHolder(binding.root)
 }

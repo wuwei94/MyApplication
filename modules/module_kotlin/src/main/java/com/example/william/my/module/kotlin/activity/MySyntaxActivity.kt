@@ -27,15 +27,13 @@ class MySyntaxActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin 现代语法：操作符重载、中缀函数、解构声明、密封接口与 DSL 构建器")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 操作符重载（+ / * / [] / in / invoke）",
-            "2. 中缀函数（infix fun）",
-            "3. 解构声明（Data Class & componentN）",
-            "4. 密封接口与模式匹配（Sealed Interface & when）",
-            "5. 类型安全 DSL 构建器（Type-Safe Builder）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 操作符重载（+ / * / [] / in / invoke）",
+        "2. 中缀函数（infix fun）",
+        "3. 解构声明（Data Class & componentN）",
+        "4. 密封接口与模式匹配（Sealed Interface & when）",
+        "5. 类型安全 DSL 构建器（Type-Safe Builder）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -90,13 +88,9 @@ class MySyntaxActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 2. 中缀函数 (Infix Functions)
     // ─────────────────────────────────────────────
-    private infix fun Point.distanceTo(other: Point): Double {
-        return hypot((this.x - other.x).toDouble(), (this.y - other.y).toDouble())
-    }
+    private infix fun Point.distanceTo(other: Point): Double = hypot((this.x - other.x).toDouble(), (this.y - other.y).toDouble())
 
-    private infix fun String.combineWith(other: String): String {
-        return "$this ⇄ $other"
-    }
+    private infix fun String.combineWith(other: String): String = "$this ⇄ $other"
 
     private fun testInfixFunctions() {
         val p1 = Point(0, 0)
@@ -164,7 +158,7 @@ class MySyntaxActivity : BasicResponseActivity() {
             UiResult.Idle,
             UiResult.Loading,
             UiResult.Success("用户信息同步成功"),
-            UiResult.Error("HTTP 500 服务器错误")
+            UiResult.Error("HTTP 500 服务器错误"),
         )
         states.forEach { state ->
             appendLog("【Sealed Interface】${renderResult(state)}")
@@ -195,18 +189,14 @@ class MySyntaxActivity : BasicResponseActivity() {
             items.add(itemBuilder.build())
         }
 
-        fun build(): String {
-            return buildString {
-                appendLine("【DSL 菜单】$title")
-                items.forEach { appendLine(it) }
-            }.trimEnd()
-        }
+        fun build(): String = buildString {
+            appendLine("【DSL 菜单】$title")
+            items.forEach { appendLine(it) }
+        }.trimEnd()
     }
 
     // DSL 入口函数，接收带有 MenuBuilder 接收者的 Lambda
-    private fun menu(init: MenuBuilder.() -> Unit): MenuBuilder {
-        return MenuBuilder().apply(init)
-    }
+    private fun menu(init: MenuBuilder.() -> Unit): MenuBuilder = MenuBuilder().apply(init)
 
     private fun testDslBuilder() {
         val menuConfig = menu {

@@ -44,7 +44,9 @@ class MyForegroundService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                CHANNEL_ID, "前台服务", NotificationManager.IMPORTANCE_DEFAULT
+                CHANNEL_ID,
+                "前台服务",
+                NotificationManager.IMPORTANCE_DEFAULT,
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)

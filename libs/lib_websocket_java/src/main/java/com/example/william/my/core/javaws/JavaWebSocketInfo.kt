@@ -12,9 +12,7 @@ sealed class JavaWebSocketInfo {
             return webSocket == other.webSocket && bytes.contentEquals(other.bytes)
         }
 
-        override fun hashCode(): Int {
-            return 31 * webSocket.hashCode() + bytes.contentHashCode()
-        }
+        override fun hashCode(): Int = 31 * webSocket.hashCode() + bytes.contentHashCode()
     }
     data class Closed(val code: Int, val reason: String, val remote: Boolean) : JavaWebSocketInfo()
     data class Error(val exception: Exception) : JavaWebSocketInfo()

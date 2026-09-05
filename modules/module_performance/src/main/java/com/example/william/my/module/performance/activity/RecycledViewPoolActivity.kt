@@ -31,13 +31,11 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
     private var tab2CreateCount = 0
     private var tab2BindCount = 0
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "清空全局共享池 (RecycledViewPoolManager.clear())",
-            "重置创建/绑定统计计数",
-            "查看当前池状态及统计"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "清空全局共享池 (RecycledViewPoolManager.clear())",
+        "重置创建/绑定统计计数",
+        "查看当前池状态及统计",
+    )
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -65,13 +63,13 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
             onBindItem = { isTab1 ->
                 if (isTab1) tab1BindCount++ else tab2BindCount++
                 logHudStats()
-            }
+            },
         )
 
         // TabLayout 与 ViewPager2 联动
         TabLayoutMediator(
             poolBinding.performancePoolTabLayout,
-            poolBinding.performancePoolViewPager
+            poolBinding.performancePoolViewPager,
         ) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
@@ -103,7 +101,7 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
         val poolCount = RecycledViewPoolManager.getRecycledViewCount(PoolItemAdapter.VIEW_TYPE_CARD)
         val tab2ReuseCount = (tab2BindCount - tab2CreateCount).coerceAtLeast(0)
         val message = (if (prefix.isNotEmpty()) "$prefix | " else "") +
-                "池缓存数: $poolCount (上限: 15) | Tab 1 创建: $tab1CreateCount, 绑定: $tab1BindCount | Tab 2 创建: $tab2CreateCount, 绑定: $tab2BindCount (跨池复用: $tab2ReuseCount)"
+            "池缓存数: $poolCount (上限: 15) | Tab 1 创建: $tab1CreateCount, 绑定: $tab1BindCount | Tab 2 创建: $tab2CreateCount, 绑定: $tab2BindCount (跨池复用: $tab2ReuseCount)"
         Utils.logcat("RecycledViewPool", message)
     }
 

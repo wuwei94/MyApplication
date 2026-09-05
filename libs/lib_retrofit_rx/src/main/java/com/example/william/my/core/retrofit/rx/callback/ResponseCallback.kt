@@ -10,7 +10,8 @@ import io.reactivex.rxjava3.observers.DisposableSingleObserver
  * 从 [RetrofitResponse] 中提取业务数据，并统一分发成功与失败结果。
  */
 abstract class ResponseCallback<T> :
-    DisposableSingleObserver<RetrofitResponse<T>>(), RequestCallback<T> {
+    DisposableSingleObserver<RetrofitResponse<T>>(),
+    RequestCallback<T> {
 
     override fun onSuccess(t: RetrofitResponse<T>) {
         onToast(t.message)
@@ -26,18 +27,14 @@ abstract class ResponseCallback<T> :
     }
 
     override fun onLoading() {
-
     }
 
     override fun onToast(message: String?) {
-
     }
 
     override fun onResponse(response: T?) {
-
     }
 
     override fun onFailure(e: ApiException) {
-
     }
 }

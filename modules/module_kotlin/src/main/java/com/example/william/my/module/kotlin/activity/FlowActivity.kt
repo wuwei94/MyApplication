@@ -41,16 +41,14 @@ class FlowActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin Flow：冷流收集、数据变换、双流组合、防抖搜索、热流对比与异常重试")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 基础冷流登录请求与生命周期收集",
-            "2. 数据流基础变换与过滤（map / filter / take）",
-            "3. 数据流组合操作符（zip vs combine）",
-            "4. 防抖搜索与动态流切换（debounce + flatMapLatest）",
-            "5. 热流对比（StateFlow 状态持有 vs SharedFlow 事件广播）",
-            "6. 流的异常捕获与自动重试（retry + catch）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 基础冷流登录请求与生命周期收集",
+        "2. 数据流基础变换与过滤（map / filter / take）",
+        "3. 数据流组合操作符（zip vs combine）",
+        "4. 防抖搜索与动态流切换（debounce + flatMapLatest）",
+        "5. 热流对比（StateFlow 状态持有 vs SharedFlow 事件广播）",
+        "6. 流的异常捕获与自动重试（retry + catch）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

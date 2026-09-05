@@ -17,9 +17,8 @@ class FromRequest<T>(
     headers: MutableMap<String, String>?,
     private val params: MutableMap<String, String>?,
     listener: Response.Listener<T>,
-    errorListener: Response.ErrorListener
+    errorListener: Response.ErrorListener,
 ) : BaseGsonRequest<T>(method, url, clazz, headers, listener, errorListener) {
 
-    override fun getParams(): MutableMap<String, String> =
-        params ?: super.getParams() ?: mutableMapOf()
+    override fun getParams(): MutableMap<String, String> = params ?: super.getParams() ?: mutableMapOf()
 }

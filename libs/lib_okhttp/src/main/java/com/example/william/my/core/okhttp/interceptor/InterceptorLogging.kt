@@ -20,7 +20,6 @@ class InterceptorLogging(filters: List<String>) : Interceptor {
     private val mPrinter = FormatPrinterImpl(filters)
 
     override fun intercept(chain: Interceptor.Chain): Response {
-
         val request = chain.request()
 
         if (mPrinter.shouldPrint(request.url)) {
@@ -44,7 +43,7 @@ class InterceptorLogging(filters: List<String>) : Interceptor {
                     tookMs,
                     response,
                     responseContentType,
-                    FormatParser.parseResponse(response)
+                    FormatParser.parseResponse(response),
                 )
             } else {
                 mPrinter.printFileResponse(tookMs, response)
@@ -56,7 +55,9 @@ class InterceptorLogging(filters: List<String>) : Interceptor {
 
     /** 是否可安全读取并用于日志输出 */
     internal fun isSafeToLog(body: RequestBody?): Boolean {
-        if (body == null || body.isOneShot() || body.isDuplex() ||
+        if (body == null ||
+            body.isOneShot() ||
+            body.isDuplex() ||
             !body.contentType().isParseAble()
         ) {
             return false

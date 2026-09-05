@@ -44,9 +44,7 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewNe
 @Route(path = RouterPath.Widget.RecyclerViewNested)
 class RecyclerViewNestedActivity : BaseVBActivity<UiActivityRecyclerViewNestedBinding>() {
 
-    override fun getViewBinding(): UiActivityRecyclerViewNestedBinding {
-        return UiActivityRecyclerViewNestedBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityRecyclerViewNestedBinding = UiActivityRecyclerViewNestedBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

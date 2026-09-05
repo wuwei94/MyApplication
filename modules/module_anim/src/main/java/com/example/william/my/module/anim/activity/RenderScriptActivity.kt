@@ -52,11 +52,9 @@ class RenderScriptActivity : BasicImageActivity() {
         showImage(originalBitmap)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "RenderScript 高斯模糊（已废弃）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "RenderScript 高斯模糊（已废弃）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         if (isBlurred) {

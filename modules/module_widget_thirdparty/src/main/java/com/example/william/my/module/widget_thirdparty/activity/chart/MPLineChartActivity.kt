@@ -37,9 +37,7 @@ class MPLineChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpLineChartBi
     private val incomeData = listOf(28.5f, 35.2f, 31.0f, 42.8f, 48.6f, 55.0f, 51.2f, 63.4f, 59.8f, 72.0f, 68.5f, 84.2f)
     private val expenseData = listOf(18.0f, 22.4f, 26.8f, 28.0f, 34.5f, 38.2f, 35.0f, 41.5f, 39.0f, 46.2f, 44.0f, 52.6f)
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpLineChartBinding {
-        return WidgetThirdpartyActivityMpLineChartBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityMpLineChartBinding = WidgetThirdpartyActivityMpLineChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -140,11 +138,11 @@ class MPLineChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpLineChartBi
         mBinding.tvMetricsTitle.text = "选中月份数据联动 (${months[index]})"
         mBinding.tvBadgeStatus.text = if (profit >= 0) "盈利良好" else "支出预警"
         mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
-            if (profit >= 0) Color.parseColor("#10B981") else Color.parseColor("#EF4444")
+            if (profit >= 0) Color.parseColor("#10B981") else Color.parseColor("#EF4444"),
         )
 
-        mBinding.tvIncome.text = "${inc} 万"
-        mBinding.tvExpense.text = "${exp} 万"
+        mBinding.tvIncome.text = "$inc 万"
+        mBinding.tvExpense.text = "$exp 万"
         mBinding.tvProfit.text = "${if (profit > 0) "+" else ""}${String.format("%.1f", profit)} 万"
         mBinding.tvMargin.text = "${String.format("%.1f", margin)}%"
     }

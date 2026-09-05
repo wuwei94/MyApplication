@@ -38,19 +38,17 @@ class BleRxScanActivity : BasicResponseActivity() {
 
         showDescription(
             "RxAndroidBle 响应式扫描与过滤示例\n\n" +
-                    "演示将 BLE 扫描转换为 RxJava 3 Observable，结合 filter 与 throttleFirst 响应式流控\n" +
-                    "请点击下方操作项"
+                "演示将 BLE 扫描转换为 RxJava 3 Observable，结合 filter 与 throttleFirst 响应式流控\n" +
+                "请点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 开启 RxJava 响应式全量扫描 (带 100ms 节流)",
-            "2. 开启 RxJava 信号强度过滤扫描 (仅显示 RSSI > -75dBm)",
-            "3. 取消扫描 (通过 Disposable.dispose())",
-            "4. 查看 RxAndroidBle 响应式设计优势"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 开启 RxJava 响应式全量扫描 (带 100ms 节流)",
+        "2. 开启 RxJava 信号强度过滤扫描 (仅显示 RSSI > -75dBm)",
+        "3. 取消扫描 (通过 Disposable.dispose())",
+        "4. 查看 RxAndroidBle 响应式设计优势",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -88,12 +86,12 @@ class BleRxScanActivity : BasicResponseActivity() {
 
                     updateLog(
                         mac,
-                        "📡 [RxBle] $name ($mac) | RSSI: ${rssi}dBm"
+                        "📡 [RxBle] $name ($mac) | RSSI: ${rssi}dBm",
                     )
                 },
                 { throwable: Throwable ->
                     appendLog("✗ 扫描异常: ${throwable.message}")
-                }
+                },
             )
         appendLog("✓ 已订阅 ScanResult Observable 数据流")
     }

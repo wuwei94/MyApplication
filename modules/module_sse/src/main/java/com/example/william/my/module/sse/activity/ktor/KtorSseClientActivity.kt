@@ -25,12 +25,10 @@ class KtorSseClientActivity : BasicResponseActivity() {
         showDescription("【Ktor SSE】DeepSeek AI 流式对话 (Listener 回调)\n地址：$serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "发起 DeepSeek 对话（Ktor POST Stream）",
-            "中断当前生成（Cancel Stream）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "发起 DeepSeek 对话（Ktor POST Stream）",
+        "中断当前生成（Cancel Stream）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -96,7 +94,7 @@ class KtorSseClientActivity : BasicResponseActivity() {
                     removeUpdatingLog("deepseek_response")
                     appendLog("【错误】${t.message ?: "未知异常"}")
                 }
-            }
+            },
         )
     }
 

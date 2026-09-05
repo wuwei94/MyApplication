@@ -11,7 +11,7 @@ import com.example.william.my.module.performance.R
  * ConcatAdapter 子模块 3：信息流 Feed 模块
  */
 class ConcatFeedAdapter(
-    val items: MutableList<Pair<String, String>>
+    val items: MutableList<Pair<String, String>>,
 ) : RecyclerView.Adapter<ConcatFeedAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

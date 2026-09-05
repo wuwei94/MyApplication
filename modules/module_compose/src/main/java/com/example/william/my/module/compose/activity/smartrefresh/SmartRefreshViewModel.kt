@@ -36,7 +36,7 @@ class SmartRefreshViewModel : ViewModel() {
         TopicModel("Writing", RandomIcon.icon()),
         TopicModel("Religion", RandomIcon.icon()),
         TopicModel("Technology", RandomIcon.icon()),
-        TopicModel("Social sciences", RandomIcon.icon())
+        TopicModel("Social sciences", RandomIcon.icon()),
     )
 
     private var flag = true // 模拟成功失败
@@ -54,7 +54,7 @@ class SmartRefreshViewModel : ViewModel() {
                         data = topics.toMutableList().apply {
                             this[0] = this[0].copy(title = System.currentTimeMillis().toString())
                         },
-                        flag = true
+                        flag = true,
                     )
                 } else {
                     SmartRefreshStateData(
@@ -62,7 +62,7 @@ class SmartRefreshViewModel : ViewModel() {
                         data = (_smartRefreshState.value?.data ?: mutableListOf()).apply {
                             addAll(topics)
                         },
-                        flag = true
+                        flag = true,
                     )
                 }
             }.onSuccess {

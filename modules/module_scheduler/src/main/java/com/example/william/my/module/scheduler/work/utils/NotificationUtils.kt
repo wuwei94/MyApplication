@@ -19,7 +19,7 @@ import java.util.UUID
 fun createNotification(
     context: Context,
     workRequestId: UUID,
-    notificationTitle: String
+    notificationTitle: String,
 ): Notification {
     val channelId = context.getString(R.string.scheduler_notification_channel_id)
     val channelName = context.getString(R.string.scheduler_notification_channel_name)
@@ -49,12 +49,14 @@ fun createNotificationChannel(
     context: Context,
     channelId: String,
     name: String,
-    notificationImportance: Int = NotificationManager.IMPORTANCE_HIGH
+    notificationImportance: Int = NotificationManager.IMPORTANCE_HIGH,
 ): NotificationChannel {
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     return NotificationChannel(
-        channelId, name, notificationImportance
+        channelId,
+        name,
+        notificationImportance,
     ).also { channel ->
         notificationManager.createNotificationChannel(channel)
     }

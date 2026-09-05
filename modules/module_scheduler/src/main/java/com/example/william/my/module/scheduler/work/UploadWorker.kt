@@ -9,8 +9,7 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 /**
  * 示例数据上传工作者
  */
-class UploadWorker(appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams) {
+class UploadWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
 
     private val TAG = this.javaClass.simpleName
 

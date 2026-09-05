@@ -35,7 +35,7 @@ class DraggableActivity : ComponentActivity() {
     @Composable
     private fun DraggableExample() {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             var offsetX by remember { mutableFloatStateOf(0f) }
 
@@ -48,9 +48,9 @@ class DraggableActivity : ComponentActivity() {
                         orientation = Orientation.Horizontal,
                         state = rememberDraggableState { delta ->
                             offsetX += delta
-                        }
+                        },
                     ),
-                text = "Drag me!"
+                text = "Drag me!",
             )
         }
     }

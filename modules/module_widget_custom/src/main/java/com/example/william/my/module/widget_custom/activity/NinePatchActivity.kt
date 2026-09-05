@@ -41,15 +41,13 @@ class NinePatchActivity : BasicLayoutActivity() {
         setView(previewView)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 加载 Asset .9 图片背景",
-            "2. 加载 Network .9 图片背景",
-            "3. 扩充文本长度（演示不失真自动拉伸）",
-            "4. 恢复短文本内容",
-            "5. 清空背景"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 加载 Asset .9 图片背景",
+        "2. 加载 Network .9 图片背景",
+        "3. 扩充文本长度（演示不失真自动拉伸）",
+        "4. 恢复短文本内容",
+        "5. 清空背景",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

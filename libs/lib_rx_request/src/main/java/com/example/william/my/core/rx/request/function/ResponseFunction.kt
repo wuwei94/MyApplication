@@ -15,9 +15,8 @@ import java.lang.reflect.Type
  */
 internal class ResponseFunction<T>(
     private val dataType: Type,
-    private val gson: Gson = defaultGson
-) :
-    Function<RetrofitResponse<JsonElement>, RetrofitResponse<T>> {
+    private val gson: Gson = defaultGson,
+) : Function<RetrofitResponse<JsonElement>, RetrofitResponse<T>> {
 
     override fun apply(response: RetrofitResponse<JsonElement>): RetrofitResponse<T> {
         if (!response.isSuccess) {

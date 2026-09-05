@@ -42,20 +42,17 @@ abstract class ArticleDatabase : RoomDatabase() {
         @Volatile
         private var instance: ArticleDatabase? = null
 
-        fun getInstance(context: Context): ArticleDatabase =
-            instance ?: synchronized(this) {
-                instance ?: createDataBase(context).also {
-                    instance = it
-                }
+        fun getInstance(context: Context): ArticleDatabase = instance ?: synchronized(this) {
+            instance ?: createDataBase(context).also {
+                instance = it
             }
+        }
 
         /**
          * 创建并返回一个内存数据库实例，专供单元测试使用（支持主线程查询，随进程结束销毁）。
          */
         @VisibleForTesting
-        fun createInMemoryDatabase(context: Context): ArticleDatabase {
-            return createDataBase(context, inMemory = true)
-        }
+        fun createInMemoryDatabase(context: Context): ArticleDatabase = createDataBase(context, inMemory = true)
 
         /**
          * 清空并关闭数据库实例，供单元测试或重置时使用。
@@ -73,14 +70,14 @@ abstract class ArticleDatabase : RoomDatabase() {
 
         private fun createDataBase(
             context: Context,
-            inMemory: Boolean = false
+            inMemory: Boolean = false,
         ): ArticleDatabase {
             val result = if (inMemory) {
                 // 使用更快的内存中数据库进行测试
                 // Use a faster in-memory database for tests
                 Room.inMemoryDatabaseBuilder(
                     context.applicationContext,
-                    ArticleDatabase::class.java
+                    ArticleDatabase::class.java,
                 )
                     .allowMainThreadQueries()
                     .build()
@@ -89,7 +86,8 @@ abstract class ArticleDatabase : RoomDatabase() {
                 // Real database using SQLite
                 Room.databaseBuilder(
                     context.applicationContext,
-                    ArticleDatabase::class.java, DB_NAME
+                    ArticleDatabase::class.java,
+                    DB_NAME,
                 )
                     .fallbackToDestructiveMigration(true)
                     .build()

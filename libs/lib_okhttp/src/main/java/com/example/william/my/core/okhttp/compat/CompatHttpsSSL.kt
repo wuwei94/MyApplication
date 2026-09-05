@@ -62,8 +62,6 @@ object CompatHttpsSSL {
             override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
             }
 
-            override fun getAcceptedIssuers(): Array<X509Certificate> {
-                return arrayOf()
-            }
+            override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
         }
 }

@@ -30,7 +30,7 @@ object KtorSseClientFlow {
         urlString: String,
         jsonBody: String? = null,
         headers: Map<String, String> = emptyMap(),
-        httpClient: HttpClient = defaultClient
+        httpClient: HttpClient = defaultClient,
     ): Flow<KtorSseInfo> = flow {
         KtorSseLogger.debug("Ktor SSE connecting: $urlString")
         try {
@@ -46,7 +46,7 @@ object KtorSseClientFlow {
                     headers.forEach { (k, v) ->
                         this.headers.append(k, v)
                     }
-                }
+                },
             ) {
                 emit(KtorSseInfo.Open)
                 incoming.collect { sseEvent ->

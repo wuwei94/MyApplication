@@ -37,9 +37,7 @@ class MPRadarChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpRadarChart
     private val radarSelf = listOf(92f, 88f, 85f, 95f, 78f, 89f)
     private val radarTarget = listOf(85f, 80f, 90f, 85f, 75f, 80f)
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpRadarChartBinding {
-        return WidgetThirdpartyActivityMpRadarChartBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityMpRadarChartBinding = WidgetThirdpartyActivityMpRadarChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -130,13 +128,19 @@ class MPRadarChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpRadarChart
         mBinding.tvMetricsTitle.text = "维度能力评定 — $name"
         mBinding.tvBadgeStatus.text = if (diff >= 0) "达标 (+${diff.toInt()})" else "待提升 (${diff.toInt()})"
         mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
-            if (diff >= 0) Color.parseColor("#10B981") else Color.parseColor("#EF4444")
+            if (diff >= 0) Color.parseColor("#10B981") else Color.parseColor("#EF4444"),
         )
 
         mBinding.tvScore.text = "${self.toInt()} 分"
         mBinding.tvTargetScore.text = "${target.toInt()} 分"
         mBinding.tvGap.text = "${if (diff > 0) "+" else ""}${diff.toInt()} 分"
-        mBinding.tvLevel.text = if (self >= 90) "专家级别" else if (self >= 80) "熟练骨干" else "发展成长"
+        mBinding.tvLevel.text = if (self >= 90) {
+            "专家级别"
+        } else if (self >= 80) {
+            "熟练骨干"
+        } else {
+            "发展成长"
+        }
         mBinding.tvRemark.text = "维度解析：$name 评定分值为 ${self.toInt()} 分，高于岗位基准要求 ${diff.toInt()} 分。"
     }
 }

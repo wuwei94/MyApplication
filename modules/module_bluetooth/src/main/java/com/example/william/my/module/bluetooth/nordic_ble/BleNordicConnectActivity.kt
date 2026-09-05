@@ -80,19 +80,17 @@ class BleNordicConnectActivity : BasicResponseActivity() {
 
         showDescription(
             "Nordic BLE 工业级连接与挂起调用示例\n\n" +
-                    "演示 BleManager 状态机、自动重试连接、管道化初始化与 Kotlin suspend 读写\n" +
-                    "请按顺序点击下方操作项"
+                "演示 BleManager 状态机、自动重试连接、管道化初始化与 Kotlin suspend 读写\n" +
+                "请按顺序点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 扫描并使用 Nordic BleManager 连接首个设备 (带3次重试)",
-            "2. 挂起读取特征值 (suspend 协程调用)",
-            "3. 挂起写入数据 (suspend 协程调用)",
-            "4. 断开连接并清理资源"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 扫描并使用 Nordic BleManager 连接首个设备 (带3次重试)",
+        "2. 挂起读取特征值 (suspend 协程调用)",
+        "3. 挂起写入数据 (suspend 协程调用)",
+        "4. 断开连接并清理资源",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {

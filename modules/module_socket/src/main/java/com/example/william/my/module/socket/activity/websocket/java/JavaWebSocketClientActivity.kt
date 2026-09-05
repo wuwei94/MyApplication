@@ -68,13 +68,11 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
         showDescription("【Java-WebSocket】原始 API\n地址：$serverUrl")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "连接服务器（Connect）",
-            "发送消息（Send Message）",
-            "断开连接（Disconnect）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "连接服务器（Connect）",
+        "发送消息（Send Message）",
+        "断开连接（Disconnect）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -120,7 +118,7 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
                         appendLogAccent("【错误】${ex.message}")
                     }
                 }
-            }
+            },
         )
     }
 

@@ -40,9 +40,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
 @Route(path = RouterPath.WidgetThirdparty.CountdownView)
 class CountdownActivity : BaseVBActivity<WidgetThirdpartyActivityCountdownBinding>() {
 
-    override fun getViewBinding(): WidgetThirdpartyActivityCountdownBinding {
-        return WidgetThirdpartyActivityCountdownBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityCountdownBinding = WidgetThirdpartyActivityCountdownBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

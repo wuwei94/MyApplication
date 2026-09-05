@@ -22,7 +22,7 @@ class CustomViewDialogFragment : BaseDialogFragment(R.layout.shared_layout_respo
     override fun initView(view: View?, state: Bundle?) {
         super.initView(view, state)
         view?.findViewById<TextView>(R.id.basics_response)?.setBackgroundColor(
-            ContextCompat.getColor(requireContext(), R.color.shared_color_primary)
+            ContextCompat.getColor(requireContext(), R.color.shared_color_primary),
         )
     }
 }

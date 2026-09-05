@@ -33,7 +33,7 @@ class NordicBleManager(context: Context) : BleManager(context) {
     fun write(
         characteristic: BluetoothGattCharacteristic,
         data: ByteArray,
-        writeType: Int = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+        writeType: Int = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT,
     ) = writeCharacteristic(characteristic, data, writeType)
 
     private fun log(message: String) {

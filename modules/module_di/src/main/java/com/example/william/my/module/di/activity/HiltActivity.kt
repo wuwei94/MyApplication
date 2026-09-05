@@ -87,18 +87,16 @@ class HiltActivity : BasicResponseActivity() {
         showDescription("Hilt 依赖注入实战\n\n涵盖构造注入、接口绑定、第三方构建、限定符、作用域、ViewModel及入口点")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 构造函数注入 (@Inject Constructor)",
-            "2. 接口与多态绑定 (@Binds StorageService)",
-            "3. 复杂第三方对象构建 (@Provides NetworkClient)",
-            "4. 自定义限定符 (@ProdApi / @DevApi)",
-            "5. 预置上下文注入 (@ApplicationContext / @ActivityContext)",
-            "6. 作用域对比 (@Singleton vs @ActivityScoped vs 无作用域)",
-            "7. Hilt ViewModel 注入 (@HiltViewModel by viewModels)",
-            "8. 非组件动态入口点 (@EntryPoint & EntryPointAccessors)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 构造函数注入 (@Inject Constructor)",
+        "2. 接口与多态绑定 (@Binds StorageService)",
+        "3. 复杂第三方对象构建 (@Provides NetworkClient)",
+        "4. 自定义限定符 (@ProdApi / @DevApi)",
+        "5. 预置上下文注入 (@ApplicationContext / @ActivityContext)",
+        "6. 作用域对比 (@Singleton vs @ActivityScoped vs 无作用域)",
+        "7. Hilt ViewModel 注入 (@HiltViewModel by viewModels)",
+        "8. 非组件动态入口点 (@EntryPoint & EntryPointAccessors)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

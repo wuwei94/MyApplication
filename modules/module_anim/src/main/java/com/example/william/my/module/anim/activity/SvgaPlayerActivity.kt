@@ -46,9 +46,7 @@ import java.io.File
 @Route(path = RouterPath.Anim.SvgaPlayer)
 class SvgaPlayerActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
 
-    override fun getViewBinding(): AnimActivitySvgaBinding {
-        return AnimActivitySvgaBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): AnimActivitySvgaBinding = AnimActivitySvgaBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -59,17 +57,20 @@ class SvgaPlayerActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
     private fun initSVGAPlayer() {
         HttpResponseCache.install(
             File(applicationContext.cacheDir, "svg"),
-            (1024 * 1024 * 128).toLong()
+            (1024 * 1024 * 128).toLong(),
         )
         SVGAParser.shareParser().init(this)
         SVGAParser.shareParser()
-            .decodeFromAssets(Constants.Url_SVGA, object : SVGAParser.ParseCompletion {
-                override fun onError() {}
-                override fun onComplete(videoItem: SVGAVideoEntity) {
-                    val drawable = SVGADrawable(videoItem)
-                    mBinding.svgaImageView.setImageDrawable(drawable)
-                    mBinding.svgaImageView.startAnimation()
-                }
-            })
+            .decodeFromAssets(
+                Constants.Url_SVGA,
+                object : SVGAParser.ParseCompletion {
+                    override fun onError() {}
+                    override fun onComplete(videoItem: SVGAVideoEntity) {
+                        val drawable = SVGADrawable(videoItem)
+                        mBinding.svgaImageView.setImageDrawable(drawable)
+                        mBinding.svgaImageView.startAnimation()
+                    }
+                },
+            )
     }
 }

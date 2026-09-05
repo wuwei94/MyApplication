@@ -44,9 +44,7 @@ class FloatWindowActivity : BasicResponseActivity() {
         initFloatWindow()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("显示/隐藏 悬浮窗")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("显示/隐藏 悬浮窗")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -68,9 +66,11 @@ class FloatWindowActivity : BasicResponseActivity() {
         // 设置屏幕左上角为起始点
         mLayoutParams?.gravity = Gravity.START or Gravity.TOP
 
-        mLayoutParams?.flags = (WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN //覆盖状态栏
-                or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE  //不获取焦点
-                or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL) //允许window之外点击事件传递给其他在其之后的window
+        mLayoutParams?.flags = (
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN // 覆盖状态栏
+                or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE // 不获取焦点
+                or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+            ) // 允许window之外点击事件传递给其他在其之后的window
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mLayoutParams?.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -87,8 +87,8 @@ class FloatWindowActivity : BasicResponseActivity() {
             float.setOnTouchListener(
                 FloatTouchHelper(
                     windowManager = mWindowManager,
-                    layoutParams = mLayoutParams
-                )
+                    layoutParams = mLayoutParams,
+                ),
             )
 
             float.setOnClickListener {

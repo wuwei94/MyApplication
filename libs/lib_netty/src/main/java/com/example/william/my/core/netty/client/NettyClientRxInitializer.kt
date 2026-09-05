@@ -8,7 +8,7 @@ import io.netty.handler.codec.string.StringDecoder
 import io.netty.handler.codec.string.StringEncoder
 
 class NettyClientRxInitializer(
-    private val handler: NettyClientRxHandler
+    private val handler: NettyClientRxHandler,
 ) : ChannelInitializer<SocketChannel>() {
 
     override fun initChannel(ch: SocketChannel) {

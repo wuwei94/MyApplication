@@ -45,13 +45,11 @@ internal data class DownloadResumeMetadata(
         private const val WEAK_ETAG_PREFIX = "W/"
         private const val TEMPORARY_SUFFIX = ".tmp"
 
-        fun from(headers: Headers, url: String): DownloadResumeMetadata {
-            return DownloadResumeMetadata(
-                url = url,
-                etag = headers["ETag"],
-                lastModified = headers["Last-Modified"],
-            )
-        }
+        fun from(headers: Headers, url: String): DownloadResumeMetadata = DownloadResumeMetadata(
+            url = url,
+            etag = headers["ETag"],
+            lastModified = headers["Last-Modified"],
+        )
 
         fun load(file: File): DownloadResumeMetadata? {
             if (!file.isFile) return null

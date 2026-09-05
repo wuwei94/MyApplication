@@ -24,7 +24,7 @@ class StreamTableRowSpan(
     private val cells: List<Cell>,
     private val isHeader: Boolean,
     private val isOdd: Boolean,
-    private val widthProvider: () -> Int
+    private val widthProvider: () -> Int,
 ) : ReplacementSpan() {
 
     class Cell(val alignment: Layout.Alignment, val text: CharSequence)
@@ -42,7 +42,7 @@ class StreamTableRowSpan(
         text: CharSequence?,
         start: Int,
         end: Int,
-        fm: Paint.FontMetricsInt?
+        fm: Paint.FontMetricsInt?,
     ): Int {
         val targetWidth = widthProvider().coerceAtLeast(100)
         ensureLayouts(targetWidth, p)
@@ -68,7 +68,7 @@ class StreamTableRowSpan(
         top: Int,
         y: Int,
         bottom: Int,
-        p: Paint
+        p: Paint,
     ) {
         val targetWidth = widthProvider().coerceAtLeast(100)
         if (layouts.isEmpty() || measuredWidth != targetWidth) {
@@ -135,7 +135,7 @@ class StreamTableRowSpan(
                     cellLeft + halfBorder,
                     top + halfBorder,
                     cellRight - halfBorder,
-                    bottom - halfBorder
+                    bottom - halfBorder,
                 )
                 canvas.translate(cellLeft + cellPadding, verticalOffset.toFloat())
                 layout.draw(canvas)
@@ -170,7 +170,7 @@ class StreamTableRowSpan(
                 cell.alignment,
                 1.0f,
                 0.0f,
-                false
+                false,
             )
             layouts.add(layout)
             if (layout.height > maxH) {

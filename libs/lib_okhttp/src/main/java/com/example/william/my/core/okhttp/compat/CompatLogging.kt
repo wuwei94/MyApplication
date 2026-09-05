@@ -27,19 +27,19 @@ object CompatLogging {
     /** 配置 OkHttp 官方日志 */
     fun applyBasicLog(
         builder: OkHttpClient.Builder,
-        level: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BASIC
+        level: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BASIC,
     ) {
         builder.addInterceptor(
             HttpLoggingInterceptor { message ->
                 HttpLogger.debug(message)
-            }.setLevel(level)
+            }.setLevel(level),
         )
     }
 
     /** 配置自定义格式化日志，[filters] 为需要过滤（不打印）的 URL 后缀 */
     fun applyFormatLog(
         builder: OkHttpClient.Builder,
-        filters: List<String> = emptyList()
+        filters: List<String> = emptyList(),
     ) {
         builder.addInterceptor(InterceptorLogging(filters))
     }

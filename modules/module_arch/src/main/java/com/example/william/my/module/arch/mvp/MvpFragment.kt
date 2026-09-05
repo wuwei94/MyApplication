@@ -14,13 +14,13 @@ import com.example.william.my.module.arch.mvp.presenter.ArticlePresenter
  *
  * View 层仅负责 UI 渲染与用户交互响应，所有业务与数据逻辑委托给 Presenter 处理。
  */
-class MvpFragment : BaseRecyclerFragment<ArticleDetailData>(), ArticleContract.View {
+class MvpFragment :
+    BaseRecyclerFragment<ArticleDetailData>(),
+    ArticleContract.View {
 
     private var mPresenter: ArticlePresenter? = null
 
-    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {
-        return ArticleAdapter(arrayListOf())
-    }
+    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> = ArticleAdapter(arrayListOf())
 
     override fun observeViewModel() {
         super.observeViewModel()
@@ -28,7 +28,7 @@ class MvpFragment : BaseRecyclerFragment<ArticleDetailData>(), ArticleContract.V
         if (mPresenter == null) {
             mPresenter = ArticlePresenter(
                 ServiceLocator.provideArticleRepository(requireActivity().applicationContext),
-                this
+                this,
             )
         }
 

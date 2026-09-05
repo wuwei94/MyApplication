@@ -9,12 +9,11 @@ class Singleton private constructor(private var context: Application) {
 
         private var instance: Singleton? = null
 
-        fun getInstance(context: Application) =
-            instance ?: synchronized(this) {
-                instance ?: Singleton(context).also {
-                    instance = it
-                }
+        fun getInstance(context: Application) = instance ?: synchronized(this) {
+            instance ?: Singleton(context).also {
+                instance = it
             }
+        }
     }
 
     fun showToast(msg: String) {

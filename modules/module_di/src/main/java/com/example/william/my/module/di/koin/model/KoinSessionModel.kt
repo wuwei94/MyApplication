@@ -5,11 +5,9 @@ package com.example.william.my.module.di.koin.model
  */
 class KoinUserProfileSession(
     private val userId: String,
-    private val tracker: KoinAnalyticsTracker
+    private val tracker: KoinAnalyticsTracker,
 ) {
-    fun getSessionDetails(): String {
-        return "UserSession [用户ID: $userId] - ${tracker.logEvent("session_access")}"
-    }
+    fun getSessionDetails(): String = "UserSession [用户ID: $userId] - ${tracker.logEvent("session_access")}"
 }
 
 /**

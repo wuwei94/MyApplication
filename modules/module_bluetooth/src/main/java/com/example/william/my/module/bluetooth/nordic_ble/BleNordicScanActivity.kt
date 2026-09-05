@@ -55,7 +55,7 @@ class BleNordicScanActivity : BasicResponseActivity() {
 
             updateLog(
                 address,
-                "📡 [Nordic]  () | RSSI: dBm | Connectable: "
+                "📡 [Nordic]  () | RSSI: dBm | Connectable: ",
             )
         }
 
@@ -74,19 +74,17 @@ class BleNordicScanActivity : BasicResponseActivity() {
 
         showDescription(
             "Nordic BLE 扫描与设备发现示例\n\n" +
-                    "演示根据 Nordic 规范进行全量扫描、UART 服务过滤扫描与广播包解析\n" +
-                    "请点击下方操作项"
+                "演示根据 Nordic 规范进行全量扫描、UART 服务过滤扫描与广播包解析\n" +
+                "请点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 开启全量 BLE 设备扫描 (低延迟模式)",
-            "2. 开启 Nordic UART 服务过滤扫描 (0xFFE0 / 0x6E40)",
-            "3. 停止扫描",
-            "4. 查看 Nordic 广播包最佳实践说明"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 开启全量 BLE 设备扫描 (低延迟模式)",
+        "2. 开启 Nordic UART 服务过滤扫描 (0xFFE0 / 0x6E40)",
+        "3. 停止扫描",
+        "4. 查看 Nordic 广播包最佳实践说明",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -118,7 +116,7 @@ class BleNordicScanActivity : BasicResponseActivity() {
             filters.add(
                 ScanFilter.Builder()
                     .setServiceUuid(ParcelUuid(NordicBleManager.SERVICE_UUID))
-                    .build()
+                    .build(),
             )
             appendLog("正在启动 Nordic UART 服务过滤扫描 (UUID: )...")
         } else {

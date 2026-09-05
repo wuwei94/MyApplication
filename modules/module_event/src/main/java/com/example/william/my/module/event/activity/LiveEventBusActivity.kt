@@ -48,13 +48,11 @@ class LiveEventBusActivity : BasicResponseActivity() {
         showDescription("LiveEventBus 示例\n\n请点击下方按钮注册监听或发送事件")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "开启监听 (Observe)",
-            "发送普通事件 (Post Event)",
-            "发送粘性事件 (Post Sticky Event)",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "开启监听 (Observe)",
+        "发送普通事件 (Post Event)",
+        "发送粘性事件 (Post Sticky Event)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -64,14 +62,14 @@ class LiveEventBusActivity : BasicResponseActivity() {
                 appendLog("发送普通事件：GlobalEvent")
                 LiveEventBus.postEvent(
                     this,
-                    GlobalEvent("LiveEventBus post by Activity")
+                    GlobalEvent("LiveEventBus post by Activity"),
                 )
             }
             2 -> {
                 appendLog("发送粘性事件：StickyEvent")
                 LiveEventBus.postEvent(
                     this,
-                    StickyEvent("LiveEventBus postSticky by Activity")
+                    StickyEvent("LiveEventBus postSticky by Activity"),
                 )
             }
         }

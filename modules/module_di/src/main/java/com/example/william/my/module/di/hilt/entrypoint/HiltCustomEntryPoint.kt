@@ -27,7 +27,7 @@ class NonHiltComponentHelper(private val context: Context) {
         // 从 ApplicationContext 获取 EntryPoint 接口实现
         val hiltEntryPoint = EntryPointAccessors.fromApplication(
             context,
-            HiltCustomEntryPoint::class.java
+            HiltCustomEntryPoint::class.java,
         )
         val storage = hiltEntryPoint.getStorageService()
         val network = hiltEntryPoint.getNetworkClient()

@@ -50,12 +50,11 @@ import com.example.william.my.module.anim.databinding.AnimActivityTransitionFirs
  * - 共享元素连续动画
  */
 @Route(path = RouterPath.Anim.Transition)
-class TransitionFirstActivity : BaseVBActivity<AnimActivityTransitionFirstBinding>(),
+class TransitionFirstActivity :
+    BaseVBActivity<AnimActivityTransitionFirstBinding>(),
     View.OnClickListener {
 
-    override fun getViewBinding(): AnimActivityTransitionFirstBinding {
-        return AnimActivityTransitionFirstBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): AnimActivityTransitionFirstBinding = AnimActivityTransitionFirstBinding.inflate(layoutInflater)
 
     private lateinit var mIntent: Intent
 
@@ -73,7 +72,8 @@ class TransitionFirstActivity : BaseVBActivity<AnimActivityTransitionFirstBindin
         when (v.id) {
             R.id.transition_explode,
             R.id.transition_slide,
-            R.id.transition_fade -> {
+            R.id.transition_fade,
+            -> {
                 val type = when (v.id) {
                     R.id.transition_explode -> "explode"
                     R.id.transition_slide -> "slide"
@@ -82,7 +82,7 @@ class TransitionFirstActivity : BaseVBActivity<AnimActivityTransitionFirstBindin
                 mIntent.putExtra("transition", type)
                 startActivity(
                     mIntent,
-                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle(),
                 )
             }
 
@@ -93,8 +93,8 @@ class TransitionFirstActivity : BaseVBActivity<AnimActivityTransitionFirstBindin
                     .withOptionsCompat(
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                             this,
-                            Pair(mBinding.transitionShare, "shareTransition")
-                        )
+                            Pair(mBinding.transitionShare, "shareTransition"),
+                        ),
                     )
                     .navigation(this)
             }

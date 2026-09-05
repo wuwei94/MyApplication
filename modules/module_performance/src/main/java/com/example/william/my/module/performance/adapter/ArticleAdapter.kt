@@ -15,7 +15,7 @@ import com.example.william.my.module.performance.bean.ArticleItem
  */
 class ArticleAdapter(
     var dataList: MutableList<ArticleItem>,
-    private val onItemClick: ((ArticleItem) -> Unit)? = null
+    private val onItemClick: ((ArticleItem) -> Unit)? = null,
 ) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -61,21 +61,17 @@ class ArticleAdapter(
      */
     class DiffCallback(
         private val oldList: List<ArticleItem>,
-        private val newList: List<ArticleItem>
+        private val newList: List<ArticleItem>,
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size
         override fun getNewListSize(): Int = newList.size
 
         // 步骤 1：比较是否为同一个数据项（通常比较唯一主键）
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].id == newList[newItemPosition].id
-        }
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldList[oldItemPosition].id == newList[newItemPosition].id
 
         // 步骤 2：比较内容是否完全一致（若一致则无需任何重绘）
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
-        }
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldList[oldItemPosition] == newList[newItemPosition]
 
         // 步骤 3：可选，针对局部字段变化提供 Payload 标记
         override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {

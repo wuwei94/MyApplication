@@ -12,7 +12,7 @@ import java.nio.ByteBuffer
 class JavaWebSocketRxOnSubscribe(
     private val uri: URI,
     private val autoReconnect: Boolean,
-    private val reconnectInterval: Long
+    private val reconnectInterval: Long,
 ) : ObservableOnSubscribe<JavaWebSocketInfo> {
 
     override fun subscribe(emitter: ObservableEmitter<JavaWebSocketInfo>) {

@@ -52,16 +52,14 @@ class ServiceActivity : BasicResponseActivity() {
         showDescription("Service 演示\n\n点击下方按钮操作服务")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "启动 Started Service",
-            "停止 Started Service",
-            "绑定 Bound Service",
-            "解绑 Bound Service",
-            "启动前台服务",
-            "停止前台服务"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "启动 Started Service",
+        "停止 Started Service",
+        "绑定 Bound Service",
+        "解绑 Bound Service",
+        "启动前台服务",
+        "停止前台服务",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -107,7 +105,7 @@ class ServiceActivity : BasicResponseActivity() {
         val result = bindService(
             Intent(this, MyBoundService::class.java),
             mBoundConnection!!,
-            BIND_AUTO_CREATE
+            BIND_AUTO_CREATE,
         )
         appendLog("正在绑定 Bound Service...（result=$result）")
     }

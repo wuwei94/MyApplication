@@ -105,13 +105,23 @@ class VolleyBuilder<T> {
         val finalUrl = buildUrl()
         val request = if (mJsonObject != null) {
             JsonRequest(
-                mMethod, finalUrl, mClazz, mHeader,
-                mJsonObject, listener.mListener, listener.mErrorListener
+                mMethod,
+                finalUrl,
+                mClazz,
+                mHeader,
+                mJsonObject,
+                listener.mListener,
+                listener.mErrorListener,
             )
         } else {
             FromRequest(
-                mMethod, finalUrl, mClazz, mHeader,
-                mParameter, listener.mListener, listener.mErrorListener
+                mMethod,
+                finalUrl,
+                mClazz,
+                mHeader,
+                mParameter,
+                listener.mListener,
+                listener.mErrorListener,
             )
         }
         request.tag = mTag

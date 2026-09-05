@@ -13,7 +13,7 @@ import com.example.william.my.core.widget.databinding.AnimItemBinding
 class SmallAnimView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private var mListener: Animator.AnimatorListener? = null
@@ -25,7 +25,7 @@ class SmallAnimView @JvmOverloads constructor(
     }
 
     fun setImageUrl(imageUrl: String?) {
-        //mBinding.itemIvGift.loadImage(context, imageUrl)
+        // mBinding.itemIvGift.loadImage(context, imageUrl)
     }
 
     fun addListener(listener: Animator.AnimatorListener?) {
@@ -35,15 +35,24 @@ class SmallAnimView @JvmOverloads constructor(
     fun play() {
         val animatorSet = AnimatorSet()
         val mTranslationIn = ObjectAnimator.ofFloat(
-            this, "translationX", ScreenUtils.getScreenWidth().toFloat(), 0f
+            this,
+            "translationX",
+            ScreenUtils.getScreenWidth().toFloat(),
+            0f,
         )
         mTranslationIn.setDuration(1200)
         val mTranslationOut = ObjectAnimator.ofFloat(
-            this, "translationX", 0f, -ScreenUtils.getScreenWidth().toFloat()
+            this,
+            "translationX",
+            0f,
+            -ScreenUtils.getScreenWidth().toFloat(),
         )
         mTranslationOut.setDuration(1200)
         val mTranslationWait = ObjectAnimator.ofFloat(
-            this, "translationX", 0f, 0f
+            this,
+            "translationX",
+            0f,
+            0f,
         )
         mTranslationWait.setDuration(6000)
         animatorSet.playSequentially(mTranslationIn, mTranslationWait, mTranslationOut)

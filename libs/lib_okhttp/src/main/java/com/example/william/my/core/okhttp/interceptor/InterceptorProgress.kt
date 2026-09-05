@@ -12,14 +12,14 @@ import okhttp3.Response
  */
 @Deprecated(
     message = "请使用 InterceptorDownloadProgress 配合 lambda 替代",
-    replaceWith = ReplaceWith("InterceptorDownloadProgress")
+    replaceWith = ReplaceWith("InterceptorDownloadProgress"),
 )
 class InterceptorProgress(
     private val listener: ResponseProgressListener = object : ResponseProgressListener {
         override fun onProgress(url: String, currentSize: Long, totalSize: Long) {
             HttpLogger.debug("url : " + url + " , progress : " + (+currentSize * 100 / totalSize))
         }
-    }
+    },
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -31,8 +31,8 @@ class InterceptorProgress(
                 DownloadProgressResponseBody(
                     request.url.toString(),
                     body,
-                    listener::onProgress
-                )
+                    listener::onProgress,
+                ),
             )
             .build()
     }

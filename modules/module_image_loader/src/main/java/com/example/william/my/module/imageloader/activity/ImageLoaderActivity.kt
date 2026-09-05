@@ -35,16 +35,14 @@ class ImageLoaderActivity : BasicImageActivity() {
         loadImage()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "切换实现（Glide ⇄ Coil）",
-            "基础加载 loadImage",
-            "圆形加载 loadImageRound",
-            "圆角加载 loadImageRadius",
-            "清除图片 clear",
-            "异常链接（触发 error）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "切换实现（Glide ⇄ Coil）",
+        "基础加载 loadImage",
+        "圆形加载 loadImageRound",
+        "圆角加载 loadImageRadius",
+        "清除图片 clear",
+        "异常链接（触发 error）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

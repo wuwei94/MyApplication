@@ -11,11 +11,11 @@ class RecyclerCacheExtension : RecyclerView.ViewCacheExtension() {
     override fun getViewForPositionAndType(
         recycler: RecyclerView.Recycler,
         position: Int,
-        type: Int
-    ): View? {
-        return if (mViewCache.size() > position) {
-            mViewCache[position]
-        } else null
+        type: Int,
+    ): View? = if (mViewCache.size() > position) {
+        mViewCache[position]
+    } else {
+        null
     }
 
     fun addCache(position: Int, view: View) {

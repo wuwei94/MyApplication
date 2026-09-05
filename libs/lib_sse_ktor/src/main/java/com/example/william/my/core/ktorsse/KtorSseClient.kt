@@ -39,7 +39,7 @@ object KtorSseClient {
         jsonBody: String? = null,
         headers: Map<String, String> = emptyMap(),
         httpClient: HttpClient = defaultClient,
-        listener: KtorSseListener? = null
+        listener: KtorSseListener? = null,
     ): Job {
         cancel(urlString)
 
@@ -58,7 +58,7 @@ object KtorSseClient {
                         headers.forEach { (k, v) ->
                             this.headers.append(k, v)
                         }
-                    }
+                    },
                 ) {
                     mainHandler.post { listener?.onOpen() }
                     incoming.collect { sseEvent ->
@@ -92,7 +92,5 @@ object KtorSseClient {
         jobMap.clear()
     }
 
-    fun isConnected(urlString: String): Boolean {
-        return jobMap[urlString]?.isActive == true
-    }
+    fun isConnected(urlString: String): Boolean = jobMap[urlString]?.isActive == true
 }

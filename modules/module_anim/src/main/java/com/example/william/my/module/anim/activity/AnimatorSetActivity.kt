@@ -41,13 +41,11 @@ class AnimatorSetActivity : BasicImageActivity() {
         mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.shared_color_primary))
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "playSequentially（顺序播放）",
-            "playTogether（同时播放）",
-            "Builder（精细编排）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "playSequentially（顺序播放）",
+        "playTogether（同时播放）",
+        "Builder（精细编排）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -95,12 +93,9 @@ class AnimatorSetActivity : BasicImageActivity() {
         set.start()
     }
 
-    private fun createAlpha() =
-        ObjectAnimator.ofFloat(mBinding.basicsImage, "alpha", 1f, 0f, 1f).setDuration(1000)
+    private fun createAlpha() = ObjectAnimator.ofFloat(mBinding.basicsImage, "alpha", 1f, 0f, 1f).setDuration(1000)
 
-    private fun createRotation() =
-        ObjectAnimator.ofFloat(mBinding.basicsImage, "rotation", 0f, 360f).setDuration(1000)
+    private fun createRotation() = ObjectAnimator.ofFloat(mBinding.basicsImage, "rotation", 0f, 360f).setDuration(1000)
 
-    private fun createScaleX() =
-        ObjectAnimator.ofFloat(mBinding.basicsImage, "scaleX", 1f, 0.5f, 1f).setDuration(1000)
+    private fun createScaleX() = ObjectAnimator.ofFloat(mBinding.basicsImage, "scaleX", 1f, 0.5f, 1f).setDuration(1000)
 }

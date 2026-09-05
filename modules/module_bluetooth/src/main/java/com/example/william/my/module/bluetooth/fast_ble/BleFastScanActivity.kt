@@ -39,20 +39,18 @@ class BleFastScanActivity : BasicResponseActivity() {
 
         showDescription(
             "FastBle 扫描与规则过滤示例\n\n" +
-                    "演示 FastBle 的 BleScanRuleConfig 链式配置与 BleScanCallback 设备发现\n" +
-                    "请点击下方操作项"
+                "演示 FastBle 的 BleScanRuleConfig 链式配置与 BleScanCallback 设备发现\n" +
+                "请点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 配置全局扫描规则 (超时 10 秒 / 无过滤)",
-            "2. 配置带 Service UUID 过滤的规则 (0xFFE0)",
-            "3. 开启 FastBle 扫描",
-            "4. 取消/停止扫描",
-            "5. 查看 FastBle 设计特点说明"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 配置全局扫描规则 (超时 10 秒 / 无过滤)",
+        "2. 配置带 Service UUID 过滤的规则 (0xFFE0)",
+        "3. 开启 FastBle 扫描",
+        "4. 取消/停止扫描",
+        "5. 查看 FastBle 设计特点说明",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -106,7 +104,7 @@ class BleFastScanActivity : BasicResponseActivity() {
 
                 updateLog(
                     mac,
-                    "📡 [FastBle] $name ($mac) | RSSI: ${rssi}dBm"
+                    "📡 [FastBle] $name ($mac) | RSSI: ${rssi}dBm",
                 )
             }
 

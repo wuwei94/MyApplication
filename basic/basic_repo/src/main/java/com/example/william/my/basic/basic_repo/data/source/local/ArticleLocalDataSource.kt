@@ -49,20 +49,18 @@ interface ArticleLocalDataSource {
  * 本地持久化数据源实现（Room DAO 挂起函数原生 main-safe，无需额外 withContext）。
  */
 class ArticleLocalDataSourceImpl(
-    private val articleDao: ArticleDao
+    private val articleDao: ArticleDao,
 ) : ArticleLocalDataSource {
 
-    override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> {
-        return try {
-            val articles = if (page >= 0) {
-                articleDao.getArticlesByPage(page)
-            } else {
-                articleDao.getArticles()
-            }
-            NetworkResult.Success(articles)
-        } catch (e: Exception) {
-            NetworkResult.Error(e)
+    override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> = try {
+        val articles = if (page >= 0) {
+            articleDao.getArticlesByPage(page)
+        } else {
+            articleDao.getArticles()
         }
+        NetworkResult.Success(articles)
+    } catch (e: Exception) {
+        NetworkResult.Error(e)
     }
 
     override suspend fun saveArticle(article: ArticleDetailData) {

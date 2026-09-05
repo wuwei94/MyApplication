@@ -70,15 +70,13 @@ class PagingActivity : BasicRecyclerActivity() {
     private var flowJob: Job? = null
     private var rxDisposable: Disposable? = null
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Mediator (Flow 离线缓存流)",
-            "Mediator (RxJava 离线缓存流)",
-            "Network (Flow 纯网络流)",
-            "Network (RxJava 纯网络流)",
-            "刷新当前列表 (adapter.refresh())"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Mediator (Flow 离线缓存流)",
+        "Mediator (RxJava 离线缓存流)",
+        "Network (Flow 纯网络流)",
+        "Network (RxJava 纯网络流)",
+        "刷新当前列表 (adapter.refresh())",
+    )
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -102,7 +100,7 @@ class PagingActivity : BasicRecyclerActivity() {
         mDataRecycler.layoutManager = LinearLayoutManager(this)
         mDataRecycler.adapter = mAdapter.withLoadStateHeaderAndFooter(
             header = PagingStateAdapter(mAdapter::retry),
-            footer = PagingStateAdapter(mAdapter::retry)
+            footer = PagingStateAdapter(mAdapter::retry),
         )
     }
 
@@ -179,6 +177,6 @@ class PagingActivity : BasicRecyclerActivity() {
         MEDIATOR_FLOW,
         MEDIATOR_RX,
         NETWORK_FLOW,
-        NETWORK_RX
+        NETWORK_RX,
     }
 }

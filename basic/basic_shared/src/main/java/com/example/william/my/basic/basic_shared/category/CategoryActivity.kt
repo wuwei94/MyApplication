@@ -24,32 +24,28 @@ class CategoryActivity : RouterRecyclerActivity() {
         title = getCategoryTitle()
     }
 
-    private fun getCategoryTitle(): String {
-        return when (category) {
-            "ui" -> "UI 交互"
-            "network" -> "网络通信"
-            "storage" -> "数据存储"
-            "system" -> "系统能力"
-            "engineering" -> "架构与工程"
-            "kotlin_jetpack" -> "Kotlin & Jetpack"
-            "compose_flutter" -> "Compose & Flutter"
-            "sample_feature" -> "Sample & Feature"
-            else -> "模块列表"
-        }
+    private fun getCategoryTitle(): String = when (category) {
+        "ui" -> "UI 交互"
+        "network" -> "网络通信"
+        "storage" -> "数据存储"
+        "system" -> "系统能力"
+        "engineering" -> "架构与工程"
+        "kotlin_jetpack" -> "Kotlin & Jetpack"
+        "compose_flutter" -> "Compose & Flutter"
+        "sample_feature" -> "Sample & Feature"
+        else -> "模块列表"
     }
 
-    override fun buildRouter(): ArrayList<RouterItem> {
-        return when (category) {
-            "ui" -> buildUiCategory()
-            "network" -> buildNetworkCategory()
-            "storage" -> buildStorageCategory()
-            "system" -> buildSystemCategory()
-            "engineering" -> buildEngineeringCategory()
-            "kotlin_jetpack" -> buildKotlinJetpackCategory()
-            "compose_flutter" -> buildComposeFlutterCategory()
-            "sample_feature" -> buildSampleFeatureCategory()
-            else -> arrayListOf()
-        }
+    override fun buildRouter(): ArrayList<RouterItem> = when (category) {
+        "ui" -> buildUiCategory()
+        "network" -> buildNetworkCategory()
+        "storage" -> buildStorageCategory()
+        "system" -> buildSystemCategory()
+        "engineering" -> buildEngineeringCategory()
+        "kotlin_jetpack" -> buildKotlinJetpackCategory()
+        "compose_flutter" -> buildComposeFlutterCategory()
+        "sample_feature" -> buildSampleFeatureCategory()
+        else -> arrayListOf()
     }
 
     /**

@@ -38,7 +38,7 @@ object OkHttpSseClientFlow {
     fun createEventSource(
         url: String,
         jsonBody: String? = null,
-        headers: Map<String, String> = emptyMap()
+        headers: Map<String, String> = emptyMap(),
     ): Flow<OkHttpSseInfo> {
         val requestBuilder = Request.Builder()
             .url(url)
@@ -59,7 +59,7 @@ object OkHttpSseClientFlow {
     fun createEventSource(
         url: String,
         request: Request,
-        okHttpClient: OkHttpClient = defaultClient
+        okHttpClient: OkHttpClient = defaultClient,
     ): Flow<OkHttpSseInfo> = callbackFlow {
         val listener = object : EventSourceListener() {
             override fun onOpen(eventSource: EventSource, response: Response) {
@@ -72,7 +72,7 @@ object OkHttpSseClientFlow {
                 eventSource: EventSource,
                 id: String?,
                 type: String?,
-                data: String
+                data: String,
             ) {
                 OkHttpSseLogger.debug("SSE Flow onEvent: $data")
                 trySend(OkHttpSseInfo.Event(id, type, data))
@@ -88,7 +88,7 @@ object OkHttpSseClientFlow {
             override fun onFailure(
                 eventSource: EventSource,
                 t: Throwable?,
-                response: Response?
+                response: Response?,
             ) {
                 eventSourceMap.remove(url)
                 val error = t ?: Exception("SSE Error with status: ${response?.code}")
@@ -124,7 +124,5 @@ object OkHttpSseClientFlow {
         eventSourceMap.remove(url)
     }
 
-    fun isConnected(url: String): Boolean {
-        return eventSourceMap.containsKey(url)
-    }
+    fun isConnected(url: String): Boolean = eventSourceMap.containsKey(url)
 }

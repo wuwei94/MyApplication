@@ -84,13 +84,13 @@ fun ComposeRadarChartScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // 图表卡片
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("六维技术能力评估模型 (Compose Canvas)", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -106,7 +106,7 @@ fun ComposeRadarChartScreen(modifier: Modifier = Modifier) {
                     selfScores = radarSelf,
                     targetScores = radarTarget,
                     selectedIndex = selectedDimIndex,
-                    onVertexSelected = { selectedDimIndex = it }
+                    onVertexSelected = { selectedDimIndex = it },
                 )
             }
         }
@@ -119,20 +119,20 @@ fun ComposeRadarChartScreen(modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF009688).copy(alpha = 0.08f))
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF009688).copy(alpha = 0.08f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text("维度能力评定 — ${radarDims[selectedDimIndex]}", fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     Text(
                         text = if (diff >= 0) "达标 (+${diff.toInt()})" else "待提升 (${diff.toInt()})",
                         color = if (diff >= 0) Color(0xFF10B981) else Color(0xFFEF4444),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
                     )
                 }
 
@@ -153,7 +153,18 @@ fun ComposeRadarChartScreen(modifier: Modifier = Modifier) {
                     }
                     Column {
                         Text("能力评估", fontSize = 11.sp, color = Color.Gray)
-                        Text(if (self >= 90) "专家级别" else if (self >= 80) "熟练骨干" else "发展成长", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF8E24AA))
+                        Text(
+                            if (self >= 90) {
+                                "专家级别"
+                            } else if (self >= 80) {
+                                "熟练骨干"
+                            } else {
+                                "发展成长"
+                            },
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF8E24AA),
+                        )
                     }
                 }
 
@@ -161,7 +172,7 @@ fun ComposeRadarChartScreen(modifier: Modifier = Modifier) {
                 Text(
                     "维度解析：${radarDims[selectedDimIndex]} 评定分值为 ${self.toInt()} 分，高于岗位基准要求 ${diff.toInt()} 分。",
                     fontSize = 12.sp,
-                    color = Color.Gray
+                    color = Color.Gray,
                 )
             }
         }
@@ -175,7 +186,7 @@ fun ComposeRadarChartCore(
     selfScores: List<Float>,
     targetScores: List<Float>,
     selectedIndex: Int,
-    onVertexSelected: (Int) -> Unit
+    onVertexSelected: (Int) -> Unit,
 ) {
     val selfColor = Color(0xFF009688)
     val targetColor = Color(0xFFFFA000)
@@ -185,7 +196,7 @@ fun ComposeRadarChartCore(
             detectTapGestures {
                 onVertexSelected((selectedIndex + 1) % dims.size)
             }
-        }
+        },
     ) {
         val center = Offset(size.width / 2f, size.height / 2f)
         val maxRadius = minOf(size.width, size.height) / 2.6f

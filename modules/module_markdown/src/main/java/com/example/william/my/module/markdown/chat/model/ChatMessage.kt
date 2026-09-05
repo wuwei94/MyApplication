@@ -14,19 +14,19 @@ data class ChatMessage(
     val role: Role,
     var content: String,
     var status: Status = Status.COMPLETED,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
 ) {
     enum class Role {
         USER,
         ASSISTANT,
-        SYSTEM
+        SYSTEM,
     }
 
     enum class Status {
         SENDING,
         STREAMING,
         COMPLETED,
-        FAILED
+        FAILED,
     }
 
     companion object {

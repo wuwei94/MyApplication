@@ -13,14 +13,15 @@ import com.luck.picture.lib.entity.LocalMedia
 
 class PictureSelectorAdapter(
     val data: ArrayList<LocalMedia?> = arrayListOf(),
-    var maxSelect: Int = 9
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var maxSelect: Int = 9,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
             WidgetThirdpartyItemPictureSelectorBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
             )
         return ViewHolder(binding)
     }
@@ -52,7 +53,7 @@ class PictureSelectorAdapter(
                             Uri.parse(it.availablePath)
                         } else {
                             it.availablePath
-                        }
+                        },
                     )
                     .centerCrop()
                     .into(binding.itemIvPic)
@@ -60,23 +61,18 @@ class PictureSelectorAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (data.size < maxSelect) {
-            data.size + 1
-        } else {
-            data.size
-        }
+    override fun getItemCount(): Int = if (data.size < maxSelect) {
+        data.size + 1
+    } else {
+        data.size
     }
 
-    class ViewHolder(val binding: WidgetThirdpartyItemPictureSelectorBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: WidgetThirdpartyItemPictureSelectorBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun getItemViewType(position: Int): Int {
-        return if (isShowAddItem(position)) {
-            TYPE_CAMERA
-        } else {
-            TYPE_PICTURE
-        }
+    override fun getItemViewType(position: Int): Int = if (isShowAddItem(position)) {
+        TYPE_CAMERA
+    } else {
+        TYPE_PICTURE
     }
 
     private fun isShowAddItem(position: Int): Boolean {

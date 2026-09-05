@@ -49,7 +49,7 @@ class HorizontalPagerActivity : ComponentActivity() {
                     text = "Page: $page",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)
+                        .height(100.dp),
                 )
             }
 

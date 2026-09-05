@@ -66,19 +66,17 @@ import java.util.Calendar
 @Route(path = RouterPath.Widget.Dialog)
 class DialogActivity : BasicResponseActivity() {
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "普通对话框",
-            "列表对话框",
-            "单选对话框",
-            "日期对话框",
-            "时间对话框",
-            "自定义对话框 setView",
-            "自定义对话框 setContentView",
-            "AlertDialogDialogFragment",
-            "CustomViewDialogFragment",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "普通对话框",
+        "列表对话框",
+        "单选对话框",
+        "日期对话框",
+        "时间对话框",
+        "自定义对话框 setView",
+        "自定义对话框 setContentView",
+        "AlertDialogDialogFragment",
+        "CustomViewDialogFragment",
+    )
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -89,7 +87,7 @@ class DialogActivity : BasicResponseActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> {
-                //普通对话框：标题 + 内容 + 确定/取消按钮
+                // 普通对话框：标题 + 内容 + 确定/取消按钮
                 AlertDialog.Builder(this@DialogActivity)
                     .setIcon(R.drawable.shared_ic_launcher)
                     .setTitle("标题")
@@ -105,7 +103,7 @@ class DialogActivity : BasicResponseActivity() {
             }
 
             1 -> {
-                //列表对话框：点击列表项
+                // 列表对话框：点击列表项
                 val items = arrayOf("item1", "item2")
                 AlertDialog.Builder(this@DialogActivity)
                     .setIcon(R.drawable.shared_ic_launcher)
@@ -117,7 +115,7 @@ class DialogActivity : BasicResponseActivity() {
             }
 
             2 -> {
-                //单选对话框：单选列表
+                // 单选对话框：单选列表
                 val items = arrayOf("item1", "item2")
                 AlertDialog.Builder(this@DialogActivity)
                     .setSingleChoiceItems(items, 0) { _, which ->
@@ -129,51 +127,51 @@ class DialogActivity : BasicResponseActivity() {
             }
 
             3 -> {
-                //日期对话框：选择日期
+                // 日期对话框：选择日期
                 val calendar = Calendar.getInstance()
                 DatePickerDialog(
                     this@DialogActivity,
                     { _, year, month, dayOfMonth ->
-                        appendLog("【日期对话框】选择了：${year}-${month + 1}-${dayOfMonth}")
+                        appendLog("【日期对话框】选择了：$year-${month + 1}-$dayOfMonth")
                     },
                     calendar[Calendar.YEAR],
                     calendar[Calendar.MONTH],
-                    calendar[Calendar.DAY_OF_MONTH]
+                    calendar[Calendar.DAY_OF_MONTH],
                 ).show()
             }
 
             4 -> {
-                //时间对话框：选择时间
+                // 时间对话框：选择时间
                 val calendar = Calendar.getInstance()
                 TimePickerDialog(
                     this@DialogActivity,
                     { _, hourOfDay, minute ->
-                        appendLog("【时间对话框】选择了：${hourOfDay}:${minute}")
+                        appendLog("【时间对话框】选择了：$hourOfDay:$minute")
                     },
                     calendar[Calendar.HOUR_OF_DAY],
                     calendar[Calendar.MINUTE],
-                    true
+                    true,
                 ).show()
             }
 
             5 -> {
-                //自定义对话框：setView 在 show() 之前使用
+                // 自定义对话框：setView 在 show() 之前使用
                 val view = layoutInflater.inflate(
                     R.layout.shared_layout_response,
                     window.decorView as ViewGroup,
-                    false
+                    false,
                 )
-                //布局中 TextView 高度为 0dp（match_constraint），dialog 中约束不生效，需要手动设置高度
+                // 布局中 TextView 高度为 0dp（match_constraint），dialog 中约束不生效，需要手动设置高度
                 view.findViewById<TextView>(R.id.basics_response).apply {
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height)
+                        resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height),
                     )
                     setBackgroundColor(
                         ContextCompat.getColor(
                             this@DialogActivity,
-                            R.color.shared_color_primary
-                        )
+                            R.color.shared_color_primary,
+                        ),
                     )
                 }
                 val dialog = AlertDialog.Builder(this@DialogActivity)
@@ -188,7 +186,7 @@ class DialogActivity : BasicResponseActivity() {
             }
 
             6 -> {
-                //自定义对话框：setContentView 在 show() 之后使用
+                // 自定义对话框：setContentView 在 show() 之后使用
                 /*
                  * setContentView 为 Dialog 的方法，对应整个对话框窗口的 view
                  * setView 是 AlertDialog 的方法，对应的是 CustomView 的部分而不是整个窗体
@@ -196,19 +194,19 @@ class DialogActivity : BasicResponseActivity() {
                 val view = layoutInflater.inflate(
                     R.layout.shared_layout_response,
                     window.decorView as ViewGroup,
-                    false
+                    false,
                 )
-                //布局中 TextView 高度为 0dp（match_constraint），dialog 中约束不生效，需要手动设置高度
+                // 布局中 TextView 高度为 0dp（match_constraint），dialog 中约束不生效，需要手动设置高度
                 view.findViewById<TextView>(R.id.basics_response).apply {
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height)
+                        resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height),
                     )
                     setBackgroundColor(
                         ContextCompat.getColor(
                             this@DialogActivity,
-                            R.color.shared_color_primary
-                        )
+                            R.color.shared_color_primary,
+                        ),
                     )
                 }
                 val dialog = AlertDialog.Builder(this@DialogActivity)
@@ -217,20 +215,20 @@ class DialogActivity : BasicResponseActivity() {
                 dialog.setContentView(view)
                 dialog.window?.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
                 )
                 appendLog("【自定义对话框】setContentView")
             }
 
             7 -> {
-                //AlertDialogDialogFragment
+                // AlertDialogDialogFragment
                 val dialogFragment = AlertDialogDialogFragment()
                 dialogFragment.show(supportFragmentManager, dialogFragment.tag)
                 appendLog("【AlertDialogDialogFragment】重写 onCreateDialog")
             }
 
             8 -> {
-                //CustomViewDialogFragment
+                // CustomViewDialogFragment
                 val dialogFragment = CustomViewDialogFragment()
                 dialogFragment.show(supportFragmentManager, dialogFragment.tag)
                 appendLog("【CustomViewDialogFragment】重写 onCreateView")

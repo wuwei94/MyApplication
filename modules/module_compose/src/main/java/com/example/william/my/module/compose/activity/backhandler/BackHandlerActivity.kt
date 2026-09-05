@@ -32,7 +32,6 @@ class BackHandlerActivity : ComponentActivity() {
     @SuppressLint("ContextCastToActivity")
     @Composable
     fun BackHandlerExample() {
-
         val activity: Activity = LocalContext.current as Activity
         // 用于控制对话框显示的状态
         var showConfirmDialog by remember { mutableStateOf(false) }
@@ -62,12 +61,11 @@ class BackHandlerActivity : ComponentActivity() {
                     }) {
                         Text("No")
                     }
-                }
+                },
             )
         } else {
             // 你的主要内容
             Text("Press the back button to show the dialog.")
         }
     }
-
 }

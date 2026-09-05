@@ -15,7 +15,5 @@ import com.example.william.my.module.widget_thirdparty.fragment.LoadSirFragment
 @Route(path = RouterPath.WidgetThirdparty.LoadSirFragment)
 class LoadSirFragmentActivity : BaseFragmentActivity() {
 
-    override fun setFragment(): Fragment {
-        return LoadSirFragment()
-    }
+    override fun setFragment(): Fragment = LoadSirFragment()
 }

@@ -28,16 +28,13 @@ class LoginUseCase(private val defaultDispatcher: CoroutineDispatcher) {
      * 将 协程 切换到 I/O 调度，确保主线程安全
      * Move the execution of the coroutine to the I/O dispatcher
      */
-    suspend fun login(username: String, password: String): NetworkResult<LoginData> {
+    suspend fun login(username: String, password: String): NetworkResult<LoginData> = withContext(defaultDispatcher) {
+        // 打印线程
+        ThreadUtils.isMainThread("LoginUseCase login")
 
-        return withContext(defaultDispatcher) {
-            // 打印线程
-            ThreadUtils.isMainThread("LoginUseCase login")
-
-            // 阻塞网络请求
-            // Blocking network request code
-            makeLoginRequest(username, password)
-        }
+        // 阻塞网络请求
+        // Blocking network request code
+        makeLoginRequest(username, password)
     }
 
     /**

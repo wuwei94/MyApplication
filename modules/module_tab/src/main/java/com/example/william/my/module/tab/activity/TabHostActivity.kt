@@ -47,9 +47,7 @@ import com.example.william.my.module.tab.databinding.TabActivityTabHostBinding
 @Route(path = RouterPath.Tab.TabHost)
 class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
 
-    override fun getViewBinding(): TabActivityTabHostBinding {
-        return TabActivityTabHostBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TabActivityTabHostBinding = TabActivityTabHostBinding.inflate(layoutInflater)
 
     private val mTitles: ArrayList<String> by lazy {
         arrayListOf(
@@ -71,7 +69,7 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
         PrimaryFragment::class.java,
         PrimaryDarkFragment::class.java,
         PrimaryFragment::class.java,
-        PrimaryDarkFragment::class.java
+        PrimaryDarkFragment::class.java,
     )
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -111,14 +109,14 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
         textView.setTextColor(
             ContextCompat.getColorStateList(
                 this,
-                R.color.tab_selector_select_primary_dark
-            )
+                R.color.tab_selector_select_primary_dark,
+            ),
         )
         val drawable = ContextCompat.getDrawable(this, mIcons[position])?.mutate()
         drawable?.let {
             DrawableCompat.setTintList(
                 it,
-                ContextCompat.getColorStateList(this, R.color.tab_selector_select_primary_dark)
+                ContextCompat.getColorStateList(this, R.color.tab_selector_select_primary_dark),
             )
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
         }

@@ -46,7 +46,7 @@ object ViewPreloadManager {
         context: Context,
         @LayoutRes layoutResId: Int,
         count: Int = 1,
-        onComplete: ((loadedCount: Int) -> Unit)? = null
+        onComplete: ((loadedCount: Int) -> Unit)? = null,
     ) {
         if (count <= 0) {
             onComplete?.invoke(0)
@@ -86,7 +86,7 @@ object ViewPreloadManager {
         context: Context,
         @LayoutRes layoutResId: Int,
         parent: ViewGroup? = null,
-        attachToRoot: Boolean = false
+        attachToRoot: Boolean = false,
     ): View {
         val pool = viewPools[layoutResId]
         if (pool != null) {

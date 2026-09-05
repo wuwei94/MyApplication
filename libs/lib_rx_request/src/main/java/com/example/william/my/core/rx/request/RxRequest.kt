@@ -21,10 +21,8 @@ class RxRequest<T> private constructor(private val config: RequestConfig) {
 
     internal constructor(builder: RxRequestBuilder<T>) : this(builder.buildConfig())
 
-    private fun buildApi(): RequestApi {
-        return config.retrofit?.create(RequestApi::class.java)
-            ?: createRxApi(RequestApi::class.java)
-    }
+    private fun buildApi(): RequestApi = config.retrofit?.create(RequestApi::class.java)
+        ?: createRxApi(RequestApi::class.java)
 
     internal fun createResponse(): Single<RetrofitResponse<T>> {
         val source =
@@ -85,13 +83,9 @@ class RxRequest<T> private constructor(private val config: RequestConfig) {
     }
 
     companion object {
-        inline fun <reified T> builder(): RxRequestBuilder<T> {
-            return RxRequestBuilder(object : TypeToken<T>() {}.type)
-        }
+        inline fun <reified T> builder(): RxRequestBuilder<T> = RxRequestBuilder(object : TypeToken<T>() {}.type)
 
         @JvmStatic
-        fun <T> builder(dataType: Type): RxRequestBuilder<T> {
-            return RxRequestBuilder(dataType)
-        }
+        fun <T> builder(dataType: Type): RxRequestBuilder<T> = RxRequestBuilder(dataType)
     }
 }

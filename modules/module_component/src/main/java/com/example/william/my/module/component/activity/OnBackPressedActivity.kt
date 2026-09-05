@@ -55,12 +55,10 @@ class OnBackPressedActivity : BasicResponseActivity() {
         showDescription("OnBackPressedDispatcher\n\n点击下方按钮拦截返回键")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "拦截返回键",
-            "取消拦截"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "拦截返回键",
+        "取消拦截",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {

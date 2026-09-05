@@ -16,11 +16,9 @@ private val defaultRxRetrofit: Retrofit by lazy(LazyThreadSafetyMode.SYNCHRONIZE
 }
 
 /** 创建已安装 RxJava3 CallAdapter 的 Retrofit 实例。 */
-fun rxRetrofit(init: RetrofitBuilder.() -> Unit = {}): Retrofit {
-    return com.example.william.my.core.retrofit.retrofit {
-        init()
-        callAdapter(RxJava3CallAdapterFactory.create())
-    }
+fun rxRetrofit(init: RetrofitBuilder.() -> Unit = {}): Retrofit = com.example.william.my.core.retrofit.retrofit {
+    init()
+    callAdapter(RxJava3CallAdapterFactory.create())
 }
 
 /**
@@ -42,16 +40,12 @@ fun cachedRxRetrofit(
 }
 
 /** 获取已缓存的 Rx Retrofit；指定名称不存在时抛出 [NoSuchElementException]。 */
-fun getCachedRxRetrofit(name: String): Retrofit {
-    return rxRetrofitCache[name]
-        ?: throw NoSuchElementException("No cached Rx Retrofit found with name: '$name'")
-}
+fun getCachedRxRetrofit(name: String): Retrofit = rxRetrofitCache[name]
+    ?: throw NoSuchElementException("No cached Rx Retrofit found with name: '$name'")
 
 /** 移除并返回指定名称的 Rx Retrofit；不存在时返回 `null`。 */
-fun removeCachedRxRetrofit(name: String): Retrofit? {
-    return synchronized(rxRetrofitCache) {
-        rxRetrofitCache.remove(name)
-    }
+fun removeCachedRxRetrofit(name: String): Retrofit? = synchronized(rxRetrofitCache) {
+    rxRetrofitCache.remove(name)
 }
 
 /** 清空通过 [cachedRxRetrofit] 创建的所有实例，不影响内部默认实例。 */
@@ -64,13 +58,11 @@ fun clearCachedRxRetrofits() {
 /** 创建基于默认启用 Rx 的 Retrofit 实例的 API。 */
 fun <T> createRxApi(
     api: Class<T>,
-    retrofit: Retrofit = defaultRxRetrofit
+    retrofit: Retrofit = defaultRxRetrofit,
 ): T = retrofit.create(api)
 
 /** Java 兼容：按名称缓存已安装 RxJava3 CallAdapter 的 Retrofit。 */
 fun cachedRxRetrofit(
     name: String,
     init: Consumer<RetrofitBuilder>,
-): Retrofit {
-    return cachedRxRetrofit(name) { init.accept(this) }
-}
+): Retrofit = cachedRxRetrofit(name) { init.accept(this) }

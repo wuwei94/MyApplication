@@ -17,15 +17,13 @@ class LoadSirInitImpl @Inject constructor() : IAppInit {
         initLoadSir()
     }
 
-    override fun getApp(): Application {
-        return mApp
-    }
+    override fun getApp(): Application = mApp
 
     private fun initLoadSir() {
         LoadSir.beginBuilder()
             .addCallback(ErrorCallback())
             .addCallback(DefaultCallback())
-            .setDefaultCallback(DefaultCallback::class.java) //设置默认状态页
+            .setDefaultCallback(DefaultCallback::class.java) // 设置默认状态页
             .commit()
     }
 }

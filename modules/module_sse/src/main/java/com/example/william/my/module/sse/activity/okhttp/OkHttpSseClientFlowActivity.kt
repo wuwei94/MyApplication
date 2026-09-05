@@ -30,12 +30,10 @@ class OkHttpSseClientFlowActivity : BasicResponseActivity() {
         showDescription("【OkHttp SSE】DeepSeek AI 流式对话 (Coroutines Flow 封装)\n地址：$serverUrl\n模型：deepseek-chat\n特性：Flow 响应式收集 -> 逐字流式打字机 -> 协程生命周期感知自动释放")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "发起 DeepSeek 对话（POST Coroutines Flow）",
-            "中断当前生成（Cancel Job）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "发起 DeepSeek 对话（POST Coroutines Flow）",
+        "中断当前生成（Cancel Job）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

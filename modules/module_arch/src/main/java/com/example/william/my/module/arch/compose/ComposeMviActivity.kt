@@ -135,7 +135,7 @@ class ComposeMviActivity : BaseActivity() {
                             Toast.makeText(
                                 this@ComposeMviActivity,
                                 effect.message,
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_SHORT,
                             ).show()
                         }
                     }
@@ -162,15 +162,15 @@ class ComposeMviActivity : BaseActivity() {
                     footerIndicator = {
                         ClassicsRefreshFooter(displayLoadMoreFlag ?: refreshState.loadMoreFlag)
                     },
-                    contentScrollState = scrollState
+                    contentScrollState = scrollState,
                 ) {
                     CompositionLocalProvider {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            state = scrollState
+                            state = scrollState,
                         ) {
                             items(
-                                items = uiState.articles
+                                items = uiState.articles,
                             ) { item ->
                                 ArticleItemView(item = item)
                             }
@@ -187,7 +187,7 @@ class ComposeMviActivity : BaseActivity() {
     @Composable
     private fun ClassicsRefreshHeader(
         refreshFlag: SmartSwipeStateFlag,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         var updateTimeText by remember {
             mutableStateOf(SimpleDateFormat("MM-dd HH:mm", Locale.getDefault()).format(Date()))
@@ -201,7 +201,8 @@ class ComposeMviActivity : BaseActivity() {
 
         val (titleText, showProgress) = when (refreshFlag) {
             SmartSwipeStateFlag.IDLE,
-            SmartSwipeStateFlag.TIPS_DOWN -> "下拉可以刷新" to false
+            SmartSwipeStateFlag.TIPS_DOWN,
+            -> "下拉可以刷新" to false
             SmartSwipeStateFlag.TIPS_RELEASE -> "释放立即刷新" to false
             SmartSwipeStateFlag.REFRESHING -> "正在刷新..." to true
             SmartSwipeStateFlag.SUCCESS -> "刷新完成" to false
@@ -212,11 +213,11 @@ class ComposeMviActivity : BaseActivity() {
             modifier = modifier
                 .fillMaxWidth()
                 .height(66.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 if (showProgress) {
                     CircularProgressIndicator(
@@ -224,7 +225,7 @@ class ComposeMviActivity : BaseActivity() {
                             .size(18.dp)
                             .padding(2.dp),
                         color = Color(0xFF666666),
-                        strokeWidth = 2.dp
+                        strokeWidth = 2.dp,
                     )
                 } else {
                     val icon = when (refreshFlag) {
@@ -237,7 +238,7 @@ class ComposeMviActivity : BaseActivity() {
                         imageVector = icon,
                         contentDescription = null,
                         tint = Color(0xFF666666),
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(18.dp),
                     )
                 }
 
@@ -245,18 +246,18 @@ class ComposeMviActivity : BaseActivity() {
 
                 Column(
                     horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         text = titleText,
                         fontSize = 14.sp,
-                        color = Color(0xFF666666)
+                        color = Color(0xFF666666),
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
                         text = "上次更新 $updateTimeText",
                         fontSize = 11.sp,
-                        color = Color(0xFF999999)
+                        color = Color(0xFF999999),
                     )
                 }
             }
@@ -269,11 +270,12 @@ class ComposeMviActivity : BaseActivity() {
     @Composable
     private fun ClassicsRefreshFooter(
         loadMoreFlag: SmartSwipeStateFlag,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         val (titleText, showProgress) = when (loadMoreFlag) {
             SmartSwipeStateFlag.IDLE,
-            SmartSwipeStateFlag.TIPS_DOWN -> "上拉加载更多" to false
+            SmartSwipeStateFlag.TIPS_DOWN,
+            -> "上拉加载更多" to false
             SmartSwipeStateFlag.TIPS_RELEASE -> "释放立即加载" to false
             SmartSwipeStateFlag.REFRESHING -> "正在加载..." to true
             SmartSwipeStateFlag.SUCCESS -> "加载完成" to false
@@ -284,11 +286,11 @@ class ComposeMviActivity : BaseActivity() {
             modifier = modifier
                 .fillMaxWidth()
                 .height(50.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 if (showProgress) {
                     CircularProgressIndicator(
@@ -296,7 +298,7 @@ class ComposeMviActivity : BaseActivity() {
                             .size(16.dp)
                             .padding(2.dp),
                         color = Color(0xFF666666),
-                        strokeWidth = 2.dp
+                        strokeWidth = 2.dp,
                     )
                 } else {
                     val icon = when (loadMoreFlag) {
@@ -309,7 +311,7 @@ class ComposeMviActivity : BaseActivity() {
                         imageVector = icon,
                         contentDescription = null,
                         tint = Color(0xFF666666),
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(16.dp),
                     )
                 }
 
@@ -318,7 +320,7 @@ class ComposeMviActivity : BaseActivity() {
                 Text(
                     text = titleText,
                     fontSize = 14.sp,
-                    color = Color(0xFF666666)
+                    color = Color(0xFF666666),
                 )
             }
         }
@@ -332,13 +334,13 @@ class ComposeMviActivity : BaseActivity() {
                 .fillMaxWidth()
                 .height(48.dp)
                 .padding(horizontal = 16.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = item.title ?: "",
                 fontSize = 14.sp,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }

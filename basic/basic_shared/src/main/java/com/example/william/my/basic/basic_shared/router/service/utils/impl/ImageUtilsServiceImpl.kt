@@ -14,13 +14,9 @@ import java.io.File
 @Route(path = RouterPath.Service.ImageUtilsService)
 class ImageUtilsServiceImpl : ImageUtilsService {
 
-    override fun save(bitmap: Bitmap, filePath: String, format: Bitmap.CompressFormat): Boolean {
-        return ImageUtils.save(bitmap, filePath, format)
-    }
+    override fun save(bitmap: Bitmap, filePath: String, format: Bitmap.CompressFormat): Boolean = ImageUtils.save(bitmap, filePath, format)
 
-    override fun save(bitmap: Bitmap, file: File, format: Bitmap.CompressFormat): Boolean {
-        return ImageUtils.save(bitmap, file, format)
-    }
+    override fun save(bitmap: Bitmap, file: File, format: Bitmap.CompressFormat): Boolean = ImageUtils.save(bitmap, file, format)
 
     override fun init(context: Context) {}
 }

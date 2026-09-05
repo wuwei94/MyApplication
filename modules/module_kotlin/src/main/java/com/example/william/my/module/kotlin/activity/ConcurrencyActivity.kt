@@ -39,14 +39,12 @@ class ConcurrencyActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin 协程高阶并发控制：Mutex 互斥锁、Semaphore 限流、select 竞速与 NonCancellable 清理")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 协程非阻塞互斥锁（Mutex.withLock 保护共享状态）",
-            "2. 信号量限流调度（Semaphore 控制最大并发数）",
-            "3. select 多路复用选择器（异步竞速响应）",
-            "4. 不可取消资源释放（withContext(NonCancellable)）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 协程非阻塞互斥锁（Mutex.withLock 保护共享状态）",
+        "2. 信号量限流调度（Semaphore 控制最大并发数）",
+        "3. select 多路复用选择器（异步竞速响应）",
+        "4. 不可取消资源释放（withContext(NonCancellable)）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

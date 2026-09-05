@@ -51,21 +51,24 @@ class ConstraintLayoutActivity : ComponentActivity() {
                     // parent 引用可以直接用，跟 View 体系一样
                     top.linkTo(parent.top, margin = 20.dp)
                     start.linkTo(parent.start, margin = 10.dp)
-
-                }, onClick = {}) {
+                },
+                onClick = {},
+            ) {
                 Text("Button")
             }
 
+            Text(
+                text = "Text",
+                Modifier.constrainAs(text1) {
+                    top.linkTo(button1.bottom, margin = 40.dp)
 
-            Text(text = "Text", Modifier.constrainAs(text1) {
-                top.linkTo(button1.bottom, margin = 40.dp)
+                    // 将 Text 摆放在 ConstraintLayout 水平中间
+                    // centerHorizontallyTo(parent)
 
-                // 将 Text 摆放在 ConstraintLayout 水平中间
-                //centerHorizontallyTo(parent)
-
-                // 将 Text 的中心摆放在 button1 右边界的位置
-                centerAround(button1.end)
-            })
+                    // 将 Text 的中心摆放在 button1 右边界的位置
+                    centerAround(button1.end)
+                },
+            )
 
             // Barrier
             // 设置一个 button1 和 text 右边的一个栅栏，将两者放在栅栏的左侧
@@ -81,7 +84,6 @@ class ConstraintLayoutActivity : ComponentActivity() {
                 Text(text = "button2")
             }
 
-
             // Guide
             val guideline = createGuidelineFromTop(fraction = 0.5f)
 
@@ -89,7 +91,7 @@ class ConstraintLayoutActivity : ComponentActivity() {
                 text = "我距离屏幕上方约二分之一处~",
                 modifier = Modifier.constrainAs(text2) {
                     top.linkTo(guideline)
-                }
+                },
             )
 
             // Chain
@@ -101,21 +103,24 @@ class ConstraintLayoutActivity : ComponentActivity() {
                     .background(Color.Red)
                     .constrainAs(box1) {
                         top.linkTo(text1.bottom)
-                    })
+                    },
+            )
             Box(
                 modifier = Modifier
                     .size(50.dp)
                     .background(Color.Green)
                     .constrainAs(box2) {
                         top.linkTo(text1.bottom)
-                    })
+                    },
+            )
             Box(
                 modifier = Modifier
                     .size(50.dp)
                     .background(Color.Blue)
                     .constrainAs(box3) {
                         top.linkTo(text1.bottom)
-                    })
+                    },
+            )
         }
     }
 
@@ -141,7 +146,7 @@ class ConstraintLayoutActivity : ComponentActivity() {
 
                 Text(
                     text = "Text",
-                    Modifier.layoutId("text")
+                    Modifier.layoutId("text"),
                 )
             }
         }
@@ -150,31 +155,29 @@ class ConstraintLayoutActivity : ComponentActivity() {
     /**
      * ConstraintSet
      */
-    private fun decoupledConstraints(isPad: Boolean): ConstraintSet {
-        return ConstraintSet {
-            val button = createRefFor("button")
-            val text = createRefFor("text")
+    private fun decoupledConstraints(isPad: Boolean): ConstraintSet = ConstraintSet {
+        val button = createRefFor("button")
+        val text = createRefFor("text")
 
-            if (isPad) {
-                // 横屏模式
-                constrain(button) {
-                    top.linkTo(parent.top, 15.dp)
-                    start.linkTo(parent.start, 30.dp)
-                }
-                constrain(text) {
-                    top.linkTo(parent.top, 15.dp)
-                    start.linkTo(button.end, 20.dp)
-                }
-            } else {
-                // 竖屏模式
-                constrain(button) {
-                    top.linkTo(parent.top, 30.dp)
-                    start.linkTo(parent.start, 15.dp)
-                }
-                constrain(text) {
-                    top.linkTo(button.bottom, 20.dp)
-                    start.linkTo(parent.start, 15.dp)
-                }
+        if (isPad) {
+            // 横屏模式
+            constrain(button) {
+                top.linkTo(parent.top, 15.dp)
+                start.linkTo(parent.start, 30.dp)
+            }
+            constrain(text) {
+                top.linkTo(parent.top, 15.dp)
+                start.linkTo(button.end, 20.dp)
+            }
+        } else {
+            // 竖屏模式
+            constrain(button) {
+                top.linkTo(parent.top, 30.dp)
+                start.linkTo(parent.start, 15.dp)
+            }
+            constrain(text) {
+                top.linkTo(button.bottom, 20.dp)
+                start.linkTo(parent.start, 15.dp)
             }
         }
     }

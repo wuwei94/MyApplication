@@ -27,7 +27,7 @@ data class OAuth(
      * 过期时长
      */
     @ColumnInfo(name = "Expires")
-    var expires: Long = 60 * 60 * 24
+    var expires: Long = 60 * 60 * 24,
 ) {
 
     /**

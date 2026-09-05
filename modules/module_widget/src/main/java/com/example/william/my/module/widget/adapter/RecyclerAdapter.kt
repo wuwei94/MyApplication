@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.william.my.module.widget.databinding.UiItemRecyclerViewBinding
 
-class RecyclerAdapter(private val data: List<String>?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerAdapter(private val data: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = UiItemRecyclerViewBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
         )
         return ViewHolder(binding)
     }
@@ -23,10 +24,10 @@ class RecyclerAdapter(private val data: List<String>?) :
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
-        payloads: List<Any>
+        payloads: List<Any>,
     ) {
         if (payloads.isEmpty()) {
-            //会执行不带payloads参数的onBindViewHolder
+            // 会执行不带payloads参数的onBindViewHolder
             super.onBindViewHolder(holder, position, payloads)
         } else {
             val payload = payloads[0] as String
@@ -34,10 +35,7 @@ class RecyclerAdapter(private val data: List<String>?) :
         }
     }
 
-    override fun getItemCount(): Int {
-        return data?.size ?: 0
-    }
+    override fun getItemCount(): Int = data?.size ?: 0
 
-    class ViewHolder(val binding: UiItemRecyclerViewBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: UiItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 }

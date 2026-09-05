@@ -27,12 +27,10 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
         showDescription("【OkHttp SSE】DeepSeek AI 流式对话 (RxJava 响应式流)\n地址：$serverUrl\n模型：deepseek-chat\n特性：Observable 订阅 -> 逐 Token 上屏 -> onComplete() 自动完结")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "发起 DeepSeek 对话（POST Observable）",
-            "中断当前生成（Dispose Stream）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "发起 DeepSeek 对话（POST Observable）",
+        "中断当前生成（Dispose Stream）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -103,7 +101,7 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
                 },
                 {
                     appendLog("【Rx onComplete】本次 DeepSeek 流式会话已成功完结")
-                }
+                },
             )
     }
 

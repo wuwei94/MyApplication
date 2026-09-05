@@ -17,7 +17,7 @@ object NettyClient {
     fun connect(
         host: String,
         port: Int,
-        listener: NettyClientHandler.OnMessageListener? = null
+        listener: NettyClientHandler.OnMessageListener? = null,
     ) {
         workerGroup = NioEventLoopGroup()
         val handler = NettyClientHandler().apply {
@@ -68,22 +68,16 @@ object NettyClient {
         }
     }
 
-    fun getAddress(): String {
-        return channel?.remoteAddress()?.toString() ?: ""
-    }
+    fun getAddress(): String = channel?.remoteAddress()?.toString() ?: ""
 
-    fun isConnected(): Boolean {
-        return channel?.isActive == true
-    }
+    fun isConnected(): Boolean = channel?.isActive == true
 
     /**
      * 获取当前连接的 Channel
      *
      * @return Channel 实例，未连接时返回 null
      */
-    fun getChannel(): Channel? {
-        return channel
-    }
+    fun getChannel(): Channel? = channel
 
     /**
      * 获取指定地址的 Channel
@@ -94,7 +88,5 @@ object NettyClient {
      * @param port 服务器端口
      * @return Channel 实例，未连接时返回 null
      */
-    fun getChannel(host: String, port: Int): Channel? {
-        return channel
-    }
+    fun getChannel(host: String, port: Int): Channel? = channel
 }

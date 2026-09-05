@@ -32,7 +32,7 @@ internal class InterceptorCookieMerge : Interceptor {
             .orEmpty()
         val mergedHeader = listOf(
             callerCookie.value,
-            storedCookieHeader
+            storedCookieHeader,
         ).filter(String::isNotBlank).joinToString("; ")
         val mergedRequest = request.newBuilder()
             .header("Cookie", mergedHeader)

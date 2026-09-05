@@ -12,7 +12,7 @@ class FlutterMainActivity : BasicResponseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        //startWithNewEngine()
+        // startWithNewEngine()
         startWithCachedEngine()
 
         finish()
@@ -21,7 +21,7 @@ class FlutterMainActivity : BasicResponseActivity() {
     private fun startDefault() {
         startActivity(
             FlutterActivity
-                .createDefaultIntent(this)
+                .createDefaultIntent(this),
         )
     }
 
@@ -30,7 +30,7 @@ class FlutterMainActivity : BasicResponseActivity() {
             FlutterActivity
                 .withNewEngine()
                 .initialRoute("/")
-                .build(this)
+                .build(this),
         )
     }
 
@@ -38,7 +38,7 @@ class FlutterMainActivity : BasicResponseActivity() {
         startActivity(
             FlutterActivity
                 .withCachedEngine("cached_engine_id")
-                .build(this)
+                .build(this),
         )
     }
 }

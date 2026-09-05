@@ -21,22 +21,19 @@ abstract class OAuthDataBase : RoomDatabase() {
 
         private var instance: OAuthDataBase? = null
 
-        fun getInstance(context: Context) =
-            instance ?: synchronized(this) {
-                instance ?: createDataBase(context).also {
-                    instance = it
-                }
+        fun getInstance(context: Context) = instance ?: synchronized(this) {
+            instance ?: createDataBase(context).also {
+                instance = it
             }
-
-        private fun createDataBase(context: Context): OAuthDataBase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                OAuthDataBase::class.java,
-                DB_NAME
-            )
-                .fallbackToDestructiveMigration(true)
-                .build()
         }
+
+        private fun createDataBase(context: Context): OAuthDataBase = Room.databaseBuilder(
+            context.applicationContext,
+            OAuthDataBase::class.java,
+            DB_NAME,
+        )
+            .fallbackToDestructiveMigration(true)
+            .build()
 
         fun exit() {
             instance?.close()
@@ -45,5 +42,4 @@ abstract class OAuthDataBase : RoomDatabase() {
     }
 
     abstract fun getOAuthDao(): OAuthDao
-
 }

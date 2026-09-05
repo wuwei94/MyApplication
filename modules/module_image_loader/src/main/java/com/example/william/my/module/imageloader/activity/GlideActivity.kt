@@ -46,16 +46,14 @@ class GlideActivity : BasicImageActivity() {
         loadDefault()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "基础图片加载（Url_Image1）",
-            "圆形裁剪（circleCrop）",
-            "圆角变换（RoundedCorners: 48px）",
-            "居中裁剪（centerCrop）",
-            "占位图与渐变动画（crossFade）",
-            "加载异常链接（触发 error 占位图）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "基础图片加载（Url_Image1）",
+        "圆形裁剪（circleCrop）",
+        "圆角变换（RoundedCorners: 48px）",
+        "居中裁剪（centerCrop）",
+        "占位图与渐变动画（crossFade）",
+        "加载异常链接（触发 error 占位图）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

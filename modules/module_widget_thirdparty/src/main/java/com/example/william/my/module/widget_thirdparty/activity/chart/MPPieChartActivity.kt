@@ -39,12 +39,10 @@ class MPPieChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpPieChartBind
         Color.parseColor("#10B981"),
         Color.parseColor("#F59E0B"),
         Color.parseColor("#EC4899"),
-        Color.parseColor("#8B5CF6")
+        Color.parseColor("#8B5CF6"),
     )
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpPieChartBinding {
-        return WidgetThirdpartyActivityMpPieChartBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityMpPieChartBinding = WidgetThirdpartyActivityMpPieChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -119,7 +117,7 @@ class MPPieChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpPieChartBind
         mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(pieColors[index])
 
         mBinding.tvCategoryName.text = name
-        mBinding.tvAmount.text = "${amount} 万"
+        mBinding.tvAmount.text = "$amount 万"
         mBinding.tvTotal.text = "${String.format("%.1f", total)} 万"
         mBinding.tvPct.text = "${String.format("%.1f", pct)}%"
     }

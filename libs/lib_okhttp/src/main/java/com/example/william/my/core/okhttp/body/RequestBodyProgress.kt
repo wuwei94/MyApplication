@@ -12,11 +12,11 @@ import okio.BufferedSink
  */
 @Deprecated(
     message = "请使用 UploadProgressRequestBody",
-    replaceWith = ReplaceWith("UploadProgressRequestBody(requestBody, listener)")
+    replaceWith = ReplaceWith("UploadProgressRequestBody(requestBody, listener)"),
 )
 class RequestBodyProgress(
     mRequestBody: RequestBody,
-    mRequestProgressListener: RequestProgressListener?
+    mRequestProgressListener: RequestProgressListener?,
 ) : RequestBody() {
 
     private val delegate = UploadProgressRequestBody(mRequestBody) { currentBytes, totalBytes ->

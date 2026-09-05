@@ -39,9 +39,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
 @Route(path = RouterPath.WidgetThirdparty.PhotoView)
 class PhotoViewActivity : BaseVBActivity<WidgetThirdpartyActivityPhotoViewBinding>() {
 
-    override fun getViewBinding(): WidgetThirdpartyActivityPhotoViewBinding {
-        return WidgetThirdpartyActivityPhotoViewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityPhotoViewBinding = WidgetThirdpartyActivityPhotoViewBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

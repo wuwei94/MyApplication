@@ -25,7 +25,7 @@ class FlutterApp : BaseAppInit() {
         // 开始执行Dart代码来预热FlutterEngine
         // Start executing Dart code to pre-warm the FlutterEngine.
         flutterEngine.dartExecutor.executeDartEntrypoint(
-            DartExecutor.DartEntrypoint.createDefault()
+            DartExecutor.DartEntrypoint.createDefault(),
         )
 
         // 缓存FlutterActivity要使用的FlutterEngine。

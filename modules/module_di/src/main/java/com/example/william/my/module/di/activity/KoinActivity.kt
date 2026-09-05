@@ -69,16 +69,14 @@ class KoinActivity : BasicResponseActivity() {
         showDescription("Koin 依赖注入实战\n\n演示 Kotlin DSL 声明、singleOf/factoryOf、接口绑定、具名限定符、动态传参、ViewModel及Scope")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 基础注入 (singleOf 单例 vs factoryOf 工厂)",
-            "2. 具名限定符与接口绑定 (named AliPay / WeChatPay)",
-            "3. 动态运行时参数注入 (parametersOf)",
-            "4. Koin ViewModel 注入 (viewModelOf by viewModel)",
-            "5. Scope 局部作用域创建与生命周期销毁",
-            "6. 全量依赖与 Koin 容器状态验证"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 基础注入 (singleOf 单例 vs factoryOf 工厂)",
+        "2. 具名限定符与接口绑定 (named AliPay / WeChatPay)",
+        "3. 动态运行时参数注入 (parametersOf)",
+        "4. Koin ViewModel 注入 (viewModelOf by viewModel)",
+        "5. Scope 局部作用域创建与生命周期销毁",
+        "6. 全量依赖与 Koin 容器状态验证",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

@@ -33,14 +33,12 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
     private var isFooterVisible = true
     private var feedItemIndex = 1
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "上线/下架 Banner 模块",
-            "向 Feed 列表新增项 (局部插入)",
-            "局部精准更新 Feed 首条 (notifyItemChanged)",
-            "上线/下架 Footer 模块"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "上线/下架 Banner 模块",
+        "向 Feed 列表新增项 (局部插入)",
+        "局部精准更新 Feed 首条 (notifyItemChanged)",
+        "上线/下架 Footer 模块",
+    )
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -55,7 +53,7 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
         val feedList = mutableListOf(
             "推荐商品 1" to "热销爆款，限时五折优惠中",
             "推荐商品 2" to "新品首发，好评如潮，立即抢购",
-            "推荐商品 3" to "爆款数码科技，会员专属特惠价"
+            "推荐商品 3" to "爆款数码科技，会员专属特惠价",
         )
         feedAdapter = ConcatFeedAdapter(feedList)
         feedItemIndex = feedList.size + 1
@@ -74,7 +72,7 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
             headerAdapter,
             bannerAdapter,
             feedAdapter,
-            footerAdapter
+            footerAdapter,
         )
 
         mDataRecycler.apply {

@@ -6,5 +6,5 @@ package com.example.william.my.module.performance.bean
 data class ArticleItem(
     val id: Int,
     val title: String,
-    val likes: Int
+    val likes: Int,
 )

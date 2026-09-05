@@ -39,9 +39,7 @@ import com.youth.banner.indicator.CircleIndicator
 @Route(path = RouterPath.WidgetThirdparty.Banner)
 class BannerActivity : BaseVBActivity<WidgetThirdpartyActivityBannerBinding>() {
 
-    override fun getViewBinding(): WidgetThirdpartyActivityBannerBinding {
-        return WidgetThirdpartyActivityBannerBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityBannerBinding = WidgetThirdpartyActivityBannerBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -50,11 +48,13 @@ class BannerActivity : BaseVBActivity<WidgetThirdpartyActivityBannerBinding>() {
     }
 
     private fun initBanner() {
-
         mBinding.banner.setAdapter(object :
             BannerImageAdapter<String>(arrayListOf("1", "2", "3", "4")) {
             override fun onBindView(
-                holder: BannerImageHolder, data: String, position: Int, size: Int
+                holder: BannerImageHolder,
+                data: String,
+                position: Int,
+                size: Int,
             ) {
                 holder.imageView?.setImageResource(R.drawable.shared_ic_launcher)
             }

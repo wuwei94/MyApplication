@@ -26,9 +26,7 @@ private val clientCache = ConcurrentHashMap<String, OkHttpClient>()
  * }
  * ```
  */
-fun okHttpClient(init: OkHttpClientBuilder.() -> Unit): OkHttpClient {
-    return OkHttpClientBuilder().apply(init).build()
-}
+fun okHttpClient(init: OkHttpClientBuilder.() -> Unit): OkHttpClient = OkHttpClientBuilder().apply(init).build()
 
 /**
  * 按名称缓存的 OkHttpClient，同名只创建一次，后续复用。
@@ -64,21 +62,17 @@ fun cachedClient(name: String, init: OkHttpClientBuilder.() -> Unit): OkHttpClie
  * val client = getCachedClient("api") // 不存在则抛 NoSuchElementException
  * ```
  */
-fun getCachedClient(name: String): OkHttpClient {
-    return clientCache[name]
-        ?: throw NoSuchElementException("No cached client found with name: '$name'")
-}
+fun getCachedClient(name: String): OkHttpClient = clientCache[name]
+    ?: throw NoSuchElementException("No cached client found with name: '$name'")
 
 /**
  * 移除并关闭指定名称的缓存 Client。
  *
  * 返回的 Client 已关闭资源，仅用于确认或识别被移除的实例，不应继续发起请求。
  */
-fun removeCachedClient(name: String): OkHttpClient? {
-    return synchronized(clientCache) {
-        clientCache.remove(name)
-    }?.also(OkHttpClient::closeResources)
-}
+fun removeCachedClient(name: String): OkHttpClient? = synchronized(clientCache) {
+    clientCache.remove(name)
+}?.also(OkHttpClient::closeResources)
 
 /**
  * 清空并关闭所有缓存的 Client。
@@ -109,9 +103,7 @@ fun OkHttpClient.closeResources() {
  * });
  * ```
  */
-fun createClient(init: Consumer<OkHttpClientBuilder>): OkHttpClient {
-    return OkHttpClientBuilder().apply { init.accept(this) }.build()
-}
+fun createClient(init: Consumer<OkHttpClientBuilder>): OkHttpClient = OkHttpClientBuilder().apply { init.accept(this) }.build()
 
 /**
  * Java 兼容：按名称缓存的 OkHttpClient。
@@ -124,6 +116,4 @@ fun createClient(init: Consumer<OkHttpClientBuilder>): OkHttpClient {
  * });
  * ```
  */
-fun cachedClient(name: String, init: Consumer<OkHttpClientBuilder>): OkHttpClient {
-    return cachedClient(name) { init.accept(this) }
-}
+fun cachedClient(name: String, init: Consumer<OkHttpClientBuilder>): OkHttpClient = cachedClient(name) { init.accept(this) }

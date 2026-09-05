@@ -11,7 +11,7 @@ import com.example.william.my.module.performance.R
  * ConcatAdapter 子模块 4：底部 Footer 模块
  */
 class ConcatFooterAdapter(
-    var footerText: String = "— 【Footer 模块】已到达页面底部（FooterAdapter） —"
+    var footerText: String = "— 【Footer 模块】已到达页面底部（FooterAdapter） —",
 ) : RecyclerView.Adapter<ConcatFooterAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

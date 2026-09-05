@@ -32,10 +32,8 @@ object OkHttpWebSocketClient {
      */
     fun connect(
         url: String,
-        listener: OkHttpWebSocketClientListener? = null
-    ): WebSocket {
-        return connect(url, Request.Builder().get().url(url).build(), defaultClient, listener)
-    }
+        listener: OkHttpWebSocketClientListener? = null,
+    ): WebSocket = connect(url, Request.Builder().get().url(url).build(), defaultClient, listener)
 
     /**
      * 连接到 WebSocket 服务器（自定义 Request）
@@ -46,10 +44,8 @@ object OkHttpWebSocketClient {
      */
     fun connect(
         request: Request,
-        listener: OkHttpWebSocketClientListener? = null
-    ): WebSocket {
-        return connect(request.url.toString(), request, defaultClient, listener)
-    }
+        listener: OkHttpWebSocketClientListener? = null,
+    ): WebSocket = connect(request.url.toString(), request, defaultClient, listener)
 
     /**
      * 连接到 WebSocket 服务器（自定义 OkHttpClient）
@@ -62,10 +58,8 @@ object OkHttpWebSocketClient {
     fun connect(
         url: String,
         okHttpClient: OkHttpClient,
-        listener: OkHttpWebSocketClientListener? = null
-    ): WebSocket {
-        return connect(url, Request.Builder().get().url(url).build(), okHttpClient, listener)
-    }
+        listener: OkHttpWebSocketClientListener? = null,
+    ): WebSocket = connect(url, Request.Builder().get().url(url).build(), okHttpClient, listener)
 
     /**
      * 连接到 WebSocket 服务器（完整参数）
@@ -80,42 +74,45 @@ object OkHttpWebSocketClient {
         url: String,
         request: Request,
         okHttpClient: OkHttpClient,
-        listener: OkHttpWebSocketClientListener? = null
+        listener: OkHttpWebSocketClientListener? = null,
     ): WebSocket {
         // 如果已有活跃连接，直接返回
         webSocketMap[url]?.let { existing ->
             return existing
         }
 
-        val webSocket = okHttpClient.newWebSocket(request, object : WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                webSocketMap[url] = webSocket
-                mainHandler.post { listener?.onOpen(webSocket, response) }
-                OkHttpWebSocketLogger.debug("Client onOpen: $url")
-            }
+        val webSocket = okHttpClient.newWebSocket(
+            request,
+            object : WebSocketListener() {
+                override fun onOpen(webSocket: WebSocket, response: Response) {
+                    webSocketMap[url] = webSocket
+                    mainHandler.post { listener?.onOpen(webSocket, response) }
+                    OkHttpWebSocketLogger.debug("Client onOpen: $url")
+                }
 
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                mainHandler.post { listener?.onMessage(webSocket, text) }
-                OkHttpWebSocketLogger.debug("Client onMessage: $text")
-            }
+                override fun onMessage(webSocket: WebSocket, text: String) {
+                    mainHandler.post { listener?.onMessage(webSocket, text) }
+                    OkHttpWebSocketLogger.debug("Client onMessage: $text")
+                }
 
-            override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                mainHandler.post { listener?.onMessage(webSocket, bytes) }
-                OkHttpWebSocketLogger.debug("Client onMessage: $bytes")
-            }
+                override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+                    mainHandler.post { listener?.onMessage(webSocket, bytes) }
+                    OkHttpWebSocketLogger.debug("Client onMessage: $bytes")
+                }
 
-            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                webSocketMap.remove(url)
-                mainHandler.post { listener?.onClosed(webSocket, code, reason) }
-                OkHttpWebSocketLogger.debug("Client onClosed: code=$code reason=$reason")
-            }
+                override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                    webSocketMap.remove(url)
+                    mainHandler.post { listener?.onClosed(webSocket, code, reason) }
+                    OkHttpWebSocketLogger.debug("Client onClosed: code=$code reason=$reason")
+                }
 
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                webSocketMap.remove(url)
-                mainHandler.post { listener?.onFailure(webSocket, t, response) }
-                OkHttpWebSocketLogger.error("Client onFailure: ${t.message}", t)
-            }
-        })
+                override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                    webSocketMap.remove(url)
+                    mainHandler.post { listener?.onFailure(webSocket, t, response) }
+                    OkHttpWebSocketLogger.error("Client onFailure: ${t.message}", t)
+                }
+            },
+        )
 
         webSocketMap[url] = webSocket
         return webSocket
@@ -209,7 +206,5 @@ object OkHttpWebSocketClient {
      * @param url WebSocket 地址
      * @return 是否已连接
      */
-    fun isConnected(url: String): Boolean {
-        return webSocketMap.containsKey(url)
-    }
+    fun isConnected(url: String): Boolean = webSocketMap.containsKey(url)
 }

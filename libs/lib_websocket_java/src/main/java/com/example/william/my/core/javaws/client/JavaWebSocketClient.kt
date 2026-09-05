@@ -19,16 +19,14 @@ object JavaWebSocketClient {
         url: String,
         autoReconnect: Boolean = true,
         reconnectInterval: Long = 5000,
-        listener: JavaWebSocketClientListener? = null
-    ): WebSocketClient {
-        return connect(URI(url), autoReconnect, reconnectInterval, listener)
-    }
+        listener: JavaWebSocketClientListener? = null,
+    ): WebSocketClient = connect(URI(url), autoReconnect, reconnectInterval, listener)
 
     fun connect(
         uri: URI,
         autoReconnect: Boolean = true,
         reconnectInterval: Long = 5000,
-        listener: JavaWebSocketClientListener? = null
+        listener: JavaWebSocketClientListener? = null,
     ): WebSocketClient {
         val url = uri.toString()
 
@@ -122,7 +120,7 @@ object JavaWebSocketClient {
             try {
                 client.closeConnection(
                     org.java_websocket.framing.CloseFrame.ABNORMAL_CLOSE,
-                    "Client cancel"
+                    "Client cancel",
                 )
             } catch (e: Exception) {
                 JavaWebSocketLogger.error("cancel failed: $url", e)
@@ -144,9 +142,7 @@ object JavaWebSocketClient {
         clients.clear()
     }
 
-    fun isConnected(url: String): Boolean {
-        return clients[url]?.isOpen == true
-    }
+    fun isConnected(url: String): Boolean = clients[url]?.isOpen == true
 
     private fun cancelReconnect(url: String) {
         reconnectRunnables.remove(url)?.let { runnable ->

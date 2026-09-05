@@ -33,7 +33,7 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         val id: Int,
         val type: String, // READ / WRITE
         val payload: ByteArray,
-        val completion: CompletableDeferred<Boolean>
+        val completion: CompletableDeferred<Boolean>,
     )
 
     // GATT 指令串行队列通道
@@ -47,8 +47,8 @@ class BleNativeQueueActivity : BasicResponseActivity() {
 
         showDescription(
             "Android 原生 BLE 协程队列与分包传输示例\n\n" +
-                    "解决原生 GATT 并发操作冲突、实现 Channel FIFO 指令排队与大包 Chunking 自动分包\n" +
-                    "请点击下方操作项触发"
+                "解决原生 GATT 并发操作冲突、实现 Channel FIFO 指令排队与大包 Chunking 自动分包\n" +
+                "请点击下方操作项触发",
         )
     }
 
@@ -73,15 +73,13 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         }
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 模拟并发提交 5 个 GATT 读写指令 (验证串行排队)",
-            "2. 模拟设置 MTU 为 247 字节 (Payload: 244 字节)",
-            "3. 模拟重置 MTU 为默认 23 字节 (Payload: 20 字节)",
-            "4. 发送 128 字节大数据包 (演示自动分包切片入队)",
-            "5. 模拟接收端接收 3 个分包并组包校验完整性"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 模拟并发提交 5 个 GATT 读写指令 (验证串行排队)",
+        "2. 模拟设置 MTU 为 247 字节 (Payload: 244 字节)",
+        "3. 模拟重置 MTU 为默认 23 字节 (Payload: 20 字节)",
+        "4. 发送 128 字节大数据包 (演示自动分包切片入队)",
+        "5. 模拟接收端接收 3 个分包并组包校验完整性",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {

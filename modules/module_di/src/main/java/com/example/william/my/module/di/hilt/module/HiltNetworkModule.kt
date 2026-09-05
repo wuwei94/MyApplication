@@ -14,7 +14,5 @@ import dagger.hilt.components.SingletonComponent
 object HiltNetworkModule {
 
     @Provides
-    fun provideNetworkClient(): HiltNetworkClient {
-        return HiltNetworkClient(baseUrl = "https://api.example.com", timeoutSeconds = 30)
-    }
+    fun provideNetworkClient(): HiltNetworkClient = HiltNetworkClient(baseUrl = "https://api.example.com", timeoutSeconds = 30)
 }

@@ -140,21 +140,15 @@ object ServiceLocator {
     // 4. 内部构建与装配方法
     // =========================================================================
 
-    private fun createApi(): ArticleApi {
-        return createApi(ArticleApi::class.java).also {
-            articleApi = it
-        }
+    private fun createApi(): ArticleApi = createApi(ArticleApi::class.java).also {
+        articleApi = it
     }
 
-    private fun createRxApi(): ArticleRxApi {
-        return createRxApi(ArticleRxApi::class.java).also {
-            articleRxApi = it
-        }
+    private fun createRxApi(): ArticleRxApi = createRxApi(ArticleRxApi::class.java).also {
+        articleRxApi = it
     }
 
-    private fun createArticleRemoteDataSource(): ArticleRemoteDataSource {
-        return ArticleRemoteDataSourceImpl(provideArticleApi(), provideArticleRxApi())
-    }
+    private fun createArticleRemoteDataSource(): ArticleRemoteDataSource = ArticleRemoteDataSourceImpl(provideArticleApi(), provideArticleRxApi())
 
     private fun createArticleLocalDataSource(context: Context): ArticleLocalDataSource {
         val database = provideArticleDatabase(context)

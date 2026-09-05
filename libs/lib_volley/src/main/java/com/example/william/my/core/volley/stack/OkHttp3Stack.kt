@@ -23,23 +23,25 @@ import java.io.IOException
  * @param client 可选，自定义的 OkHttpClient。不传则使用默认配置（含日志拦截器）。
  */
 class OkHttp3Stack(
-    private val client: OkHttpClient = defaultClient()
+    private val client: OkHttpClient = defaultClient(),
 ) : BaseHttpStack() {
 
     companion object {
         private const val TAG = "OkHttp3Stack"
 
         private fun defaultClient(): OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor { message ->
-                Log.d(TAG, message)
-            }.setLevel(Level.BASIC))
+            .addInterceptor(
+                HttpLoggingInterceptor { message ->
+                    Log.d(TAG, message)
+                }.setLevel(Level.BASIC),
+            )
             .build()
     }
 
     @Throws(IOException::class, AuthFailureError::class)
     override fun executeRequest(
         request: Request<*>,
-        additionalHeaders: Map<String, String>
+        additionalHeaders: Map<String, String>,
     ): HttpResponse {
         // ── URL ──
         val httpUrl = try {

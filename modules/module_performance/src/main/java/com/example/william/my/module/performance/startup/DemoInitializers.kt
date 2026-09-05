@@ -83,9 +83,7 @@ class ManualLazyInitializer : Initializer<ManualLazySdk> {
         return ManualLazySdk(initTimeMillis = startTime)
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        return emptyList()
-    }
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 
     companion object {
         private const val TAG = "StartupLazySdk"

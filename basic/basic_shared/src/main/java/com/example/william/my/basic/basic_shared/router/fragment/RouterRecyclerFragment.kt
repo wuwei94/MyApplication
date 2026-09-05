@@ -18,17 +18,11 @@ import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 @Route(path = RouterPath.Fragment.FragmentBasicRecycler)
 class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
 
-    override fun initRecyclerAdapter(): BaseQuickAdapter<RouterItem, QuickViewHolder> {
-        return RouterRecyclerAdapter(arrayListOf())
-    }
+    override fun initRecyclerAdapter(): BaseQuickAdapter<RouterItem, QuickViewHolder> = RouterRecyclerAdapter(arrayListOf())
 
-    override fun canRefresh(): Boolean {
-        return false
-    }
+    override fun canRefresh(): Boolean = false
 
-    override fun canLoadMore(): Boolean {
-        return false
-    }
+    override fun canLoadMore(): Boolean = false
 
     override fun initView(view: View?, state: Bundle?) {
         super.initView(view, state)
@@ -60,8 +54,7 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
         }
     }
 
-    class RouterRecyclerAdapter(data: ArrayList<RouterItem>) :
-        BaseQuickAdapter<RouterItem, QuickViewHolder>(data) {
+    class RouterRecyclerAdapter(data: ArrayList<RouterItem>) : BaseQuickAdapter<RouterItem, QuickViewHolder>(data) {
 
         override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: RouterItem?) {
             holder.setText(R.id.item_textView, item?.mRouterName)
@@ -70,9 +63,7 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
         override fun onCreateViewHolder(
             context: Context,
             parent: ViewGroup,
-            viewType: Int
-        ): QuickViewHolder {
-            return QuickViewHolder(R.layout.shared_item_recycler, parent)
-        }
+            viewType: Int,
+        ): QuickViewHolder = QuickViewHolder(R.layout.shared_item_recycler, parent)
     }
 }

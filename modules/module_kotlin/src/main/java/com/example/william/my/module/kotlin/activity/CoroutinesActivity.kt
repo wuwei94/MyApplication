@@ -36,15 +36,13 @@ class CoroutinesActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin 协程：线程切换、并发聚合、异常隔离、超时取消与全局异常处理")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 基础异步网络请求（withContext 调度）",
-            "2. async / await 并发请求合并（awaitAll 并行提速）",
-            "3. 结构化并发与异常隔离（supervisorScope）",
-            "4. 协程超时处理与协作式取消（withTimeoutOrNull / isActive）",
-            "5. 上下文元素组合与异常处理器（CoroutineExceptionHandler）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 基础异步网络请求（withContext 调度）",
+        "2. async / await 并发请求合并（awaitAll 并行提速）",
+        "3. 结构化并发与异常隔离（supervisorScope）",
+        "4. 协程超时处理与协作式取消（withTimeoutOrNull / isActive）",
+        "5. 上下文元素组合与异常处理器（CoroutineExceptionHandler）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

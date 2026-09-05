@@ -54,25 +54,26 @@ import com.example.william.my.module.widget.databinding.UiActivityWebviewBinding
 @Route(path = RouterPath.Widget.WebView)
 class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
 
-    override fun getViewBinding(): UiActivityWebviewBinding {
-        return UiActivityWebviewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityWebviewBinding = UiActivityWebviewBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
         initWebView()
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (mBinding.webView.canGoBack()) {
-                    mBinding.webView.goBack()
-                } else {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (mBinding.webView.canGoBack()) {
+                        mBinding.webView.goBack()
+                    } else {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
                 }
-            }
-        })
+            },
+        )
     }
 
     override fun onDestroy() {
@@ -85,27 +86,27 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
 
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     private fun initWebView() {
-        //隐藏滚动条
+        // 隐藏滚动条
         mBinding.webView.isVerticalScrollBarEnabled = true
         mBinding.webView.isHorizontalScrollBarEnabled = true
 
-        //启用JavaScript
+        // 启用JavaScript
         mBinding.webView.settings.javaScriptEnabled = true
-        //启用视图支持
+        // 启用视图支持
         mBinding.webView.settings.useWideViewPort = true
-        //适应屏幕宽度
+        // 适应屏幕宽度
         mBinding.webView.settings.loadWithOverviewMode = true
-        //手势缩放
+        // 手势缩放
         mBinding.webView.settings.builtInZoomControls = true
-        //隐藏缩放按钮
+        // 隐藏缩放按钮
         mBinding.webView.settings.displayZoomControls = false
-        //DOM Storage
+        // DOM Storage
         mBinding.webView.settings.domStorageEnabled = true
         // 关闭file域访问，禁止file域对http域进行访问
         // setAllowFileAccessFromFileURLs&setAllowUniversalAccessFromFileURLs
         // Android 4.1版本之前这两个API默认是true，需要显式设置为false
         val headers = mapOf<String, String>()
-        //添加HTTP头信息
+        // 添加HTTP头信息
         mBinding.webView.loadUrl("https://www.baidu.com/", headers)
         mBinding.webView.webViewClient = object : WebViewClient() {
             /**
@@ -122,7 +123,7 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
              */
             override fun shouldOverrideUrlLoading(
                 view: WebView,
-                request: WebResourceRequest
+                request: WebResourceRequest,
             ): Boolean {
                 view.loadUrl(request.url.toString())
                 return true
@@ -134,7 +135,7 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
             override fun onReceivedSslError(
                 view: WebView,
                 handler: SslErrorHandler,
-                error: SslError
+                error: SslError,
             ) {
                 handler.cancel()
             }
@@ -144,16 +145,16 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
             }
         }
         mBinding.webView.webChromeClient = object : WebChromeClient() {
-
         }
-        mBinding.webView.addJavascriptInterface(object :
-            WebViewInterface(object : WebViewJsCallback() {
-                override fun closeWebViewPage() {
-
-                }
-            }) {
-
-        }, "interfaceName")
+        mBinding.webView.addJavascriptInterface(
+            object :
+                WebViewInterface(object : WebViewJsCallback() {
+                    override fun closeWebViewPage() {
+                    }
+                }) {
+            },
+            "interfaceName",
+        )
     }
 
     open class WebViewInterface(private val jsCallback: WebViewJsCallback?) {

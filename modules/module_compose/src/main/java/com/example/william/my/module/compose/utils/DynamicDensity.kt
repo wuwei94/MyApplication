@@ -12,14 +12,13 @@ import androidx.compose.ui.platform.LocalContext
  */
 @Composable
 fun dynamicDensity(designWidth: Float, designHeight: Float): Float {
-
     val isPortrait =
-        LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT  //判断横竖屏
+        LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT // 判断横竖屏
     val displayMetrics =
         LocalContext.current.resources.displayMetrics
 
-    val widthPixels = displayMetrics.widthPixels    //屏幕短边像素（绝对宽度）
-    val heightPixels = displayMetrics.heightPixels  //屏幕长边像素（绝对高度）
+    val widthPixels = displayMetrics.widthPixels // 屏幕短边像素（绝对宽度）
+    val heightPixels = displayMetrics.heightPixels // 屏幕长边像素（绝对高度）
 
-    return if (isPortrait) widthPixels / designWidth else heightPixels / designHeight //计算密度
+    return if (isPortrait) widthPixels / designWidth else heightPixels / designHeight // 计算密度
 }

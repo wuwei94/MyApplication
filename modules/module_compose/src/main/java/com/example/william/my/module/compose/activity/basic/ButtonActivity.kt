@@ -29,21 +29,20 @@ class ButtonActivity : ComponentActivity() {
     fun ButtonExample(str: String) {
         Button(
             onClick = {
-
             },
             modifier = Modifier.padding(6.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.White,
-                contentColor = Color.Black
+                contentColor = Color.Black,
             ),
             elevation = ButtonDefaults.buttonElevation(
                 defaultElevation = 6.dp,
-                pressedElevation = 6.dp
+                pressedElevation = 6.dp,
             ),
             border = BorderStroke(
                 width = 1.dp,
                 color = Color.Black,
-            )
+            ),
         ) {
             Text(text = str)
         }

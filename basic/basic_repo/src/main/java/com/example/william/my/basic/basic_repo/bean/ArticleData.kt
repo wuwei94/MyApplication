@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ArticleData(
     val curPage: Int = 0,
-    val datas: List<ArticleDetailData> = emptyList()
+    val datas: List<ArticleDetailData> = emptyList(),
 ) : Parcelable

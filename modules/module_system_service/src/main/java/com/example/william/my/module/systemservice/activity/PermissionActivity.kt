@@ -49,13 +49,11 @@ class PermissionActivity : BasicResponseActivity() {
         showDescription("运行时权限申请（Jetpack ActivityResult 契约模式）\n\n演示使用官方标准 API 请求通知与多媒体存储权限")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
-            "申请多媒体存储权限 — READ_MEDIA_* (Android 13+) / READ_EXTERNAL_STORAGE",
-            "申请全部常用基础权限（通知 + 多媒体存储）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
+        "申请多媒体存储权限 — READ_MEDIA_* (Android 13+) / READ_EXTERNAL_STORAGE",
+        "申请全部常用基础权限（通知 + 多媒体存储）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -87,50 +85,45 @@ class PermissionActivity : BasicResponseActivity() {
         requestPermissions.launch(deniedPerms.toTypedArray())
     }
 
-    private fun isPermissionAvailable(permission: String): Boolean {
-        return when (permission) {
-            Manifest.permission.POST_NOTIFICATIONS -> Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+    private fun isPermissionAvailable(permission: String): Boolean = when (permission) {
+        Manifest.permission.POST_NOTIFICATIONS -> Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        Manifest.permission.READ_MEDIA_IMAGES,
+        Manifest.permission.READ_MEDIA_VIDEO,
+        Manifest.permission.READ_MEDIA_AUDIO,
+        -> Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        ->
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+        else -> true
+    }
+
+    private fun permissionLabel(permission: String): String = when (permission) {
+        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE -> "外部存储"
+        Manifest.permission.READ_MEDIA_IMAGES -> "照片库"
+        Manifest.permission.READ_MEDIA_VIDEO -> "视频库"
+        Manifest.permission.READ_MEDIA_AUDIO -> "音频库"
+        Manifest.permission.POST_NOTIFICATIONS -> "系统通知"
+        else -> permission.substringAfterLast(".")
+    }
+
+    private fun buildNotificationPermissions(): Array<String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+    } else {
+        emptyArray()
+    }
+
+    private fun buildStoragePermissions(): Array<String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arrayOf(
             Manifest.permission.READ_MEDIA_IMAGES,
             Manifest.permission.READ_MEDIA_VIDEO,
-            Manifest.permission.READ_MEDIA_AUDIO -> Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+            Manifest.permission.READ_MEDIA_AUDIO,
+        )
+    } else {
+        arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE -> Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
-            else -> true
-        }
-    }
-
-    private fun permissionLabel(permission: String): String {
-        return when (permission) {
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE -> "外部存储"
-            Manifest.permission.READ_MEDIA_IMAGES -> "照片库"
-            Manifest.permission.READ_MEDIA_VIDEO -> "视频库"
-            Manifest.permission.READ_MEDIA_AUDIO -> "音频库"
-            Manifest.permission.POST_NOTIFICATIONS -> "系统通知"
-            else -> permission.substringAfterLast(".")
-        }
-    }
-
-    private fun buildNotificationPermissions(): Array<String> {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arrayOf(Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            emptyArray()
-        }
-    }
-
-    private fun buildStoragePermissions(): Array<String> {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arrayOf(
-                Manifest.permission.READ_MEDIA_IMAGES,
-                Manifest.permission.READ_MEDIA_VIDEO,
-                Manifest.permission.READ_MEDIA_AUDIO
-            )
-        } else {
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        }
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
     }
 
     private fun buildAllPermissions(): Array<String> {

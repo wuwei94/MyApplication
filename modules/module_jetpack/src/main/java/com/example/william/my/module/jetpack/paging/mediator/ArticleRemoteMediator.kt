@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit
 class ArticleRemoteMediator(
     private val articleDatabase: ArticleDatabase,
     private val remoteKeyDatabase: RemoteKeyDatabase,
-    private val networkApi: ArticleApi
+    private val networkApi: ArticleApi,
 ) : RemoteMediator<Int, ArticleDetailData>() {
 
     private val articleDao = articleDatabase.articleDao()
@@ -54,7 +54,7 @@ class ArticleRemoteMediator(
      */
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleDetailData>
+        state: PagingState<Int, ArticleDetailData>,
     ): MediatorResult {
         return try {
             val loadKey = when (loadType) {
@@ -105,9 +105,11 @@ class ArticleRemoteMediator(
                 if (loadType == LoadType.REFRESH) {
                     articleDao.deleteAllArticles()
                 }
-                articleDao.insertArticles(articles.map { article ->
-                    article.copy(page = curPage)
-                })
+                articleDao.insertArticles(
+                    articles.map { article ->
+                        article.copy(page = curPage)
+                    },
+                )
             }
 
             // 若本次网络请求返回的数据为空，说明已达到最后一页

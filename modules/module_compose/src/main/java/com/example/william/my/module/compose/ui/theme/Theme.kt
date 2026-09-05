@@ -15,11 +15,15 @@ import androidx.compose.ui.unit.Density
 import com.example.william.my.module.compose.utils.dynamicDensity
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80, secondary = PurpleGrey80, tertiary = Pink80
+    primary = Purple80,
+    secondary = PurpleGrey80,
+    tertiary = Pink80,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40, secondary = PurpleGrey40, tertiary = Pink40
+    primary = Purple40,
+    secondary = PurpleGrey40,
+    tertiary = Pink40,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -29,14 +33,15 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
+     */
 )
 
 @Composable
 fun MyApplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true, content: @Composable () -> Unit
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -49,7 +54,9 @@ fun MyApplicationTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme, typography = Typography, content = content
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content,
     )
 }
 
@@ -57,7 +64,8 @@ fun MyApplicationTheme(
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true, content: @Composable () -> Unit
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -71,7 +79,7 @@ fun AppTheme(
 
     val appDensity = Density(
         density = dynamicDensity(360f, 640f),
-        fontScale = LocalDensity.current.fontScale
+        fontScale = LocalDensity.current.fontScale,
     )
 
     MaterialTheme(
@@ -81,6 +89,6 @@ fun AppTheme(
             CompositionLocalProvider(LocalDensity provides appDensity) {
                 content()
             }
-        }
+        },
     )
 }

@@ -45,9 +45,7 @@ class PopWindowActivity : BasicResponseActivity() {
         showDescription("点击下方列表项展示 PopupWindow")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("显示 PopupWindow")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("显示 PopupWindow")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -62,7 +60,7 @@ class PopWindowActivity : BasicResponseActivity() {
             binding.root,
             resources.getDimensionPixelOffset(R.dimen.shared_dp_dialog_width),
             resources.getDimensionPixelOffset(R.dimen.shared_dp_dialog_height),
-            true
+            true,
         ).apply {
             isOutsideTouchable = true
         }
@@ -70,8 +68,8 @@ class PopWindowActivity : BasicResponseActivity() {
         binding.basicsResponse.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.shared_color_primary
-            )
+                R.color.shared_color_primary,
+            ),
         )
         binding.basicsResponse.text = "PopupWindow 内容区域\n点击关闭"
         binding.basicsResponse.setOnClickListener {

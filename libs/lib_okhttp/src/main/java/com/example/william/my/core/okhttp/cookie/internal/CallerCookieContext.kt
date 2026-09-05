@@ -6,5 +6,5 @@ package com.example.william.my.core.okhttp.cookie.internal
 internal data class CallerCookieContext(
     val value: String,
     val names: Set<String>,
-    val host: String
+    val host: String,
 )

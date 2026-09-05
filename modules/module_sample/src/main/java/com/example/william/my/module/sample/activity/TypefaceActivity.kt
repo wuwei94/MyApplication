@@ -38,16 +38,14 @@ class TypefaceActivity : BasicLayoutActivity() {
         setView(previewView)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "系统默认字体（Typeface.DEFAULT）",
-            "系统粗体样式（Typeface.DEFAULT_BOLD）",
-            "等宽字体（Typeface.MONOSPACE）",
-            "衬线字体（Typeface.SERIF）",
-            "无衬线字体（Typeface.SANS_SERIF）",
-            "Asset 自定义字体（fonts/juice.ttf）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "系统默认字体（Typeface.DEFAULT）",
+        "系统粗体样式（Typeface.DEFAULT_BOLD）",
+        "等宽字体（Typeface.MONOSPACE）",
+        "衬线字体（Typeface.SERIF）",
+        "无衬线字体（Typeface.SANS_SERIF）",
+        "Asset 自定义字体（fonts/juice.ttf）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

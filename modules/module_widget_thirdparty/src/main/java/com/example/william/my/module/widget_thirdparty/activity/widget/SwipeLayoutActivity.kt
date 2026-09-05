@@ -45,9 +45,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
 @Route(path = RouterPath.WidgetThirdparty.SwipeLayout)
 class SwipeLayoutActivity : BaseVBActivity<WidgetThirdpartyActivitySwipeLayoutBinding>() {
 
-    override fun getViewBinding(): WidgetThirdpartyActivitySwipeLayoutBinding {
-        return WidgetThirdpartyActivitySwipeLayoutBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivitySwipeLayoutBinding = WidgetThirdpartyActivitySwipeLayoutBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

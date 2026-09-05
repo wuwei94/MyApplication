@@ -52,9 +52,7 @@ class NettyServerHandler : SimpleChannelInboundHandler<String>() {
         channels.writeAndFlush("$message\n")
     }
 
-    fun getConnectionCount(): Int {
-        return channels.size
-    }
+    fun getConnectionCount(): Int = channels.size
 
     interface OnMessageListener {
         fun onClientConnected(remoteAddress: String) {}

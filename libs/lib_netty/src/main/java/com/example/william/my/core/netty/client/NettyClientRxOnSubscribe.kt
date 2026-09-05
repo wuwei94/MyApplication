@@ -13,7 +13,7 @@ import java.net.InetSocketAddress
 
 class NettyClientRxOnSubscribe(
     private val host: String,
-    private val port: Int
+    private val port: Int,
 ) : ObservableOnSubscribe<NettyClientInfo> {
 
     override fun subscribe(emitter: ObservableEmitter<NettyClientInfo>) {

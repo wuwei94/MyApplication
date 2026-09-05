@@ -27,17 +27,15 @@ class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
     /**
      * 1. 创建数据流
      */
-    private fun createFlow(username: String, password: String): Flow<RetrofitResponse<LoginData>> {
-        return flow {
-            // 打印线程
-            ThreadUtils.isMainThread("FlowUseCase login")
+    private fun createFlow(username: String, password: String): Flow<RetrofitResponse<LoginData>> = flow {
+        // 打印线程
+        ThreadUtils.isMainThread("FlowUseCase login")
 
-            // Emits the result of the request to the flow
-            emit(api.loginSuspend(username, password))
-        }
-            // Executes on the IO dispatcher
-            .flowOn(defaultDispatcher)
+        // Emits the result of the request to the flow
+        emit(api.loginSuspend(username, password))
     }
+        // Executes on the IO dispatcher
+        .flowOn(defaultDispatcher)
 
     /**
      * 2. 修改数据流
@@ -45,27 +43,25 @@ class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
      * These operations are lazy and don't trigger the flow.
      * They just transform the current value emitted by the flow at that point in time.
      */
-    fun login(username: String, password: String): Flow<RetrofitResponse<LoginData>> {
-        return createFlow(username, password)
-            // 在默认调度程序上执行
-            // Executes on the default dispatcher
-            .map { news ->
-                news
-            }
-            // 在默认调度程序上执行
-            // Executes on the default dispatcher
-            .onEach {
-
-            }
-            // flowOn 影响上游的 flow
-            // flowOn affects the upstream flow ↑
-            .flowOn(defaultDispatcher)
-            // 下游的 flow 不受影响
-            // the downstream flow ↓ is not affected
-            .catch { exception -> // Executes in the consumer's context
-                Utils.logcat(TAG, "exception : " + exception.message.toString())
-            }
-    }
+    fun login(username: String, password: String): Flow<RetrofitResponse<LoginData>> = createFlow(username, password)
+        // 在默认调度程序上执行
+        // Executes on the default dispatcher
+        .map { news ->
+            news
+        }
+        // 在默认调度程序上执行
+        // Executes on the default dispatcher
+        .onEach {
+        }
+        // flowOn 影响上游的 flow
+        // flowOn affects the upstream flow ↑
+        .flowOn(defaultDispatcher)
+        // 下游的 flow 不受影响
+        // the downstream flow ↓ is not affected
+        .catch { exception ->
+            // Executes in the consumer's context
+            Utils.logcat(TAG, "exception : " + exception.message.toString())
+        }
 
     companion object {
         private val TAG = FlowUseCase::class.java.simpleName

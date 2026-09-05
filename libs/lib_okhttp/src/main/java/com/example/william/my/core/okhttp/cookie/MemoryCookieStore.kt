@@ -40,7 +40,5 @@ class MemoryCookieStore() : CookieStore {
         }
     }
 
-    private fun Cookie.sameIdentityAs(other: Cookie): Boolean {
-        return name == other.name && domain == other.domain && path == other.path
-    }
+    private fun Cookie.sameIdentityAs(other: Cookie): Boolean = name == other.name && domain == other.domain && path == other.path
 }

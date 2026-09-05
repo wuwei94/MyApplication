@@ -33,20 +33,18 @@ class TFLiteTensorBasicsActivity : BasicResponseActivity() {
         super.initView(savedInstanceState)
         showDescription(
             "TFLite 张量底层操作与内存架构\n\n" +
-                    "演示 FlatBuffers 零拷贝 mmap、Direct 内存排布、动态张量调整与 Native 资源释放\n" +
-                    "请点击下方操作项执行"
+                "演示 FlatBuffers 零拷贝 mmap、Direct 内存排布、动态张量调整与 Native 资源释放\n" +
+                "请点击下方操作项执行",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 零拷贝 mmap 模型加载与张量元数据反射",
-            "2. Direct ByteBuffer 内存排布与字节序机制",
-            "3. 动态张量调整 (Interpreter.resizeInput)",
-            "4. 多输入多输出 (MIMO) 调度演示",
-            "5. Native 内存释放与防泄漏最佳实践"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 零拷贝 mmap 模型加载与张量元数据反射",
+        "2. Direct ByteBuffer 内存排布与字节序机制",
+        "3. 动态张量调整 (Interpreter.resizeInput)",
+        "4. 多输入多输出 (MIMO) 调度演示",
+        "5. Native 内存释放与防泄漏最佳实践",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {

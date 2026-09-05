@@ -46,15 +46,13 @@ class WorkManagerActivity : BasicResponseActivity() {
         showDescription("点击下方列表项提交与管理 WorkManager 后台任务")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "提交一次性任务 (带约束与参数)",
-            "提交加急任务 (Expedited Worker)",
-            "提交唯一任务 (UniqueWork REPLACE)",
-            "链式执行任务 (beginWith -> then)",
-            "取消所有任务 (Cancel All)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "提交一次性任务 (带约束与参数)",
+        "提交加急任务 (Expedited Worker)",
+        "提交唯一任务 (UniqueWork REPLACE)",
+        "链式执行任务 (beginWith -> then)",
+        "取消所有任务 (Cancel All)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

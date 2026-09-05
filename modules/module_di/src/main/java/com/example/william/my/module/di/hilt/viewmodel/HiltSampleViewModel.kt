@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HiltSampleViewModel @Inject constructor(
-    private val userRepository: HiltUserRepository
+    private val userRepository: HiltUserRepository,
 ) : ViewModel() {
 
     private var counter = 0
@@ -20,7 +20,5 @@ class HiltSampleViewModel @Inject constructor(
         return counter
     }
 
-    fun getViewModelInfo(): String {
-        return "HiltViewModel: ${userRepository.getUserInfo(888)}"
-    }
+    fun getViewModelInfo(): String = "HiltViewModel: ${userRepository.getUserInfo(888)}"
 }

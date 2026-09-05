@@ -89,8 +89,8 @@ android {
 
 dependencies {
     // 基础公共层
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
     // 应用启动与启动页
     implementation(libs.androidx.core.splashscreen)

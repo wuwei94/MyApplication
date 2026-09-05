@@ -51,12 +51,10 @@ class SpinnerActivity : BasicLayoutActivity() {
         setView(previewView)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 展开 Spinner 下拉列表（锚定上方选择框）",
-            "2. 重置选择器状态"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 展开 Spinner 下拉列表（锚定上方选择框）",
+        "2. 重置选择器状态",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

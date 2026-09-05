@@ -52,7 +52,10 @@ object NinePatchHelper {
         // 计算降采样率
         if (reqWidth > 0 || reqHeight > 0) {
             options.inSampleSize = calculateInSampleSize(
-                options.outWidth, options.outHeight, reqWidth, reqHeight
+                options.outWidth,
+                options.outHeight,
+                reqWidth,
+                reqHeight,
             )
         }
         options.inJustDecodeBounds = false
@@ -68,8 +71,10 @@ object NinePatchHelper {
      * 与 Glide 逻辑一致：找到最大的 2 的幂次，使解码尺寸 ≥ 目标尺寸
      */
     private fun calculateInSampleSize(
-        width: Int, height: Int,
-        reqWidth: Int, reqHeight: Int
+        width: Int,
+        height: Int,
+        reqWidth: Int,
+        reqHeight: Int,
     ): Int {
         if (reqWidth == 0 && reqHeight == 0) return 1
 
@@ -90,7 +95,5 @@ object NinePatchHelper {
         return inSampleSize
     }
 
-    private fun floorLog2(value: Int): Int {
-        return 31 - Integer.numberOfLeadingZeros(value)
-    }
+    private fun floorLog2(value: Int): Int = 31 - Integer.numberOfLeadingZeros(value)
 }

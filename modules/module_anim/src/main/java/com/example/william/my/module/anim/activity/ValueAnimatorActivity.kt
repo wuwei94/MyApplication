@@ -73,18 +73,16 @@ class ValueAnimatorActivity : BasicImageActivity() {
         mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.shared_color_primary))
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "LinearInterpolator（线性插值器）",
-            "AccelerateInterpolator（加速插值器）",
-            "DecelerateInterpolator（减速插值器）",
-            "AccelerateDecelerateInterpolator（先加速后减速）",
-            "BounceInterpolator（弹跳插值器）",
-            "OvershootInterpolator（过冲插值器）",
-            "AnticipateInterpolator（回拉插值器）",
-            "ViewPropertyAnimator（链式调用）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "LinearInterpolator（线性插值器）",
+        "AccelerateInterpolator（加速插值器）",
+        "DecelerateInterpolator（减速插值器）",
+        "AccelerateDecelerateInterpolator（先加速后减速）",
+        "BounceInterpolator（弹跳插值器）",
+        "OvershootInterpolator（过冲插值器）",
+        "AnticipateInterpolator（回拉插值器）",
+        "ViewPropertyAnimator（链式调用）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         if (isAnimating) return

@@ -27,9 +27,7 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
         ArticleStateFlowViewModel.Factory
     }
 
-    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {
-        return ArticleAdapter(arrayListOf())
-    }
+    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> = ArticleAdapter(arrayListOf())
 
     override fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {

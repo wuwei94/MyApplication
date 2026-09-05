@@ -31,18 +31,16 @@ class StartupActivity : BasicResponseActivity() {
             • 统一托管：单个 InitializationProvider 聚合所有 SDK 初始化，消除多 Provider 启动开销；
             • 自动依赖拓扑：dependencies() 定义先后依赖顺序；
             • 懒加载与按需：手动 initializeComponent 规避 Application.onCreate 阻塞。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 检查自动初始化状态 (LogSdk / SecuritySdk)",
-            "2. 执行手动延迟按需初始化 (ManualLazyInitializer)",
-            "3. 查询已缓存组件初始化实例 (isEagerlyInitialized)",
-            "4. 性能原理：多 ContentProvider vs App Startup 耗时对比分析"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 检查自动初始化状态 (LogSdk / SecuritySdk)",
+        "2. 执行手动延迟按需初始化 (ManualLazyInitializer)",
+        "3. 查询已缓存组件初始化实例 (isEagerlyInitialized)",
+        "4. 性能原理：多 ContentProvider vs App Startup 耗时对比分析",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -112,7 +110,7 @@ class StartupActivity : BasicResponseActivity() {
                • 将 N 个 ContentProvider 减少为 1 个 InitializationProvider；
                • 内部由 DAG 算法自动拓扑排序并并发/链式调用 Initializer.create()；
                • 支持 tools:node="remove" 完全移除不需要在启动阶段初始化的 SDK，转为业务触发时懒加载。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 }

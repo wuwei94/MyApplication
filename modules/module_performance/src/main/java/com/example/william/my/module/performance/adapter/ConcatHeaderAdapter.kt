@@ -12,7 +12,7 @@ import com.example.william.my.module.performance.R
  */
 class ConcatHeaderAdapter(
     var title: String = "【Header 模块】首页动态推荐",
-    var subtitle: String = "由 HeaderAdapter 独立驱动（ViewType = 0，已配置隔离）"
+    var subtitle: String = "由 HeaderAdapter 独立驱动（ViewType = 0，已配置隔离）",
 ) : RecyclerView.Adapter<ConcatHeaderAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -34,15 +34,13 @@ class RxJavaOperatorsActivity : BasicResponseActivity() {
         showDescription("演示 RxJava 3 核心操作符流式处理（创建 / 变换 / 过滤 / 组合 / 错误恢复）")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "创建操作符（just / range）",
-            "变换操作符（map / flatMap / buffer）",
-            "过滤操作符（filter / take / distinct）",
-            "组合操作符（zip / concat）",
-            "错误恢复（onErrorReturn）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "创建操作符（just / range）",
+        "变换操作符（map / flatMap / buffer）",
+        "过滤操作符（filter / take / distinct）",
+        "组合操作符（zip / concat）",
+        "错误恢复（onErrorReturn）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -151,7 +149,7 @@ class RxJavaOperatorsActivity : BasicResponseActivity() {
 
         val disposable2 = Observable.concat(
             Observable.just("A", "B"),
-            Observable.just("C", "D")
+            Observable.just("C", "D"),
         )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ item ->

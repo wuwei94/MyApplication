@@ -14,5 +14,5 @@ data class ArticleComposeState(
     val articles: List<ArticleDetailData> = emptyList(),
     val isRefreshing: Boolean = false,
     val isLoadingMore: Boolean = false,
-    val page: Int = 0
+    val page: Int = 0,
 )

@@ -14,10 +14,8 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 @Route(path = RouterPath.Ipc.Main)
 class IpcMainActivity : RouterRecyclerActivity() {
 
-    override fun buildRouter(): ArrayList<RouterItem> {
-        return arrayListOf(
-            RouterItem("AIDL（标准 Binder 跨进程接口）", RouterPath.Ipc.AIDL),
-            RouterItem("Messenger（轻量级跨进程消息传递）", RouterPath.Ipc.Messenger)
-        )
-    }
+    override fun buildRouter(): ArrayList<RouterItem> = arrayListOf(
+        RouterItem("AIDL（标准 Binder 跨进程接口）", RouterPath.Ipc.AIDL),
+        RouterItem("Messenger（轻量级跨进程消息传递）", RouterPath.Ipc.Messenger),
+    )
 }

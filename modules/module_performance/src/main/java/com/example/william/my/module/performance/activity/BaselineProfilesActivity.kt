@@ -30,18 +30,16 @@ class BaselineProfilesActivity : BasicResponseActivity() {
             • 运行原理：ART 基于基线配置文件预编译关键路径（CUJ）为机器码；
             • ProfileInstaller：客户端运行时基线配置文件解析与写入触发器；
             • 性能收益：冷启动速度提升 20%~40%，消除列表初次滑动与转场掉帧。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 触发 ProfileInstaller 本地写入与诊断 (writeProfile)",
-            "2. 深度解析：JIT vs AOT vs Baseline Profiles 编译演进",
-            "3. 规则剖析：Baseline Profile 生成语法与 CUJ 规则",
-            "4. 实战基准：Macrobenchmark 性能测试与 ADB 调试指令"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 触发 ProfileInstaller 本地写入与诊断 (writeProfile)",
+        "2. 深度解析：JIT vs AOT vs Baseline Profiles 编译演进",
+        "3. 规则剖析：Baseline Profile 生成语法与 CUJ 规则",
+        "4. 实战基准：Macrobenchmark 性能测试与 ADB 调试指令",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -106,7 +104,7 @@ class BaselineProfilesActivity : BasicResponseActivity() {
             4. Jetpack Baseline Profiles (现代化终极方案)：
                • 开发者在编译期通过 Macrobenchmark 采集核心旅程（CUJ），生成 baseline.prof 随 APK 发布；
                • 应用首次安装时，ART 直接拿到 Profile 进行局部 AOT 预编译，让用户「首次启动即享受全速 AOT 体验」。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -127,7 +125,7 @@ class BaselineProfilesActivity : BasicResponseActivity() {
             HSPLcom/example/william/my/basic/basic_shared/category/DirectoryActivity;->onCreate(Landroid/os/Bundle;)V
             HSPLandroidx/recyclerview/widget/RecyclerView;->onLayout(ZIIII)V
             HSPLcom/alibaba/android/arouter/launcher/ARouter;->getInstance()Lcom/alibaba/android/arouter/launcher/ARouter;
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -149,7 +147,7 @@ class BaselineProfilesActivity : BasicResponseActivity() {
 
             4. Macrobenchmark 自动化基准测试：
                在 benchmark 模块中编写 BaselineProfileGenerator，运行 ./gradlew :benchmark:pixel2Api31Benchmark 自动生成最新规则。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 

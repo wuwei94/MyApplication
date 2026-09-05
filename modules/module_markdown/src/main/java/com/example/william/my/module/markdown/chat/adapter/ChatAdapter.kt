@@ -22,7 +22,7 @@ import io.noties.markwon.Markwon
  */
 class ChatAdapter(
     private val mMarkwon: Markwon,
-    private val mOnCopyClickListener: (content: String) -> Unit
+    private val mOnCopyClickListener: (content: String) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -61,17 +61,13 @@ class ChatAdapter(
         }
     }
 
-    fun getMessage(index: Int): ChatMessage? {
-        return mMessages.getOrNull(index)
-    }
+    fun getMessage(index: Int): ChatMessage? = mMessages.getOrNull(index)
 
     override fun getItemCount(): Int = mMessages.size
 
-    override fun getItemViewType(position: Int): Int {
-        return when (mMessages[position].role) {
-            ChatMessage.Role.USER -> TYPE_USER
-            else -> TYPE_ASSISTANT
-        }
+    override fun getItemViewType(position: Int): Int = when (mMessages[position].role) {
+        ChatMessage.Role.USER -> TYPE_USER
+        else -> TYPE_ASSISTANT
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -92,7 +88,7 @@ class ChatAdapter(
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
-        payloads: List<Any>
+        payloads: List<Any>,
     ) {
         val message = mMessages[position]
 
@@ -120,7 +116,7 @@ class ChatAdapter(
     }
 
     class UserViewHolder(
-        private val binding: MarkdownItemChatUserBinding
+        private val binding: MarkdownItemChatUserBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(message: ChatMessage) {
             binding.tvUserContent.text = message.content
@@ -128,13 +124,13 @@ class ChatAdapter(
     }
 
     class AssistantViewHolder(
-        private val binding: MarkdownItemChatAssistantBinding
+        private val binding: MarkdownItemChatAssistantBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindFull(
             markwon: Markwon,
             message: ChatMessage,
-            onCopyClick: (content: String) -> Unit
+            onCopyClick: (content: String) -> Unit,
         ) {
             updateStreamContent(markwon, message)
             updateStatus(message, onCopyClick)

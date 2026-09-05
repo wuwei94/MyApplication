@@ -32,7 +32,7 @@ class InterceptorCookie(private val store: CookieStore) : Interceptor {
                 .joinToString("; ") { "${it.name}=${it.value}" }
             val mergedCookieHeader = listOfNotNull(
                 callerCookieHeader?.takeIf(String::isNotBlank),
-                storedCookieHeader.takeIf(String::isNotBlank)
+                storedCookieHeader.takeIf(String::isNotBlank),
             ).joinToString("; ")
             if (mergedCookieHeader.isNotEmpty()) {
                 builder.header("Cookie", mergedCookieHeader)

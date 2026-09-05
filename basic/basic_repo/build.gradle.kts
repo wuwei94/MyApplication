@@ -9,12 +9,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
-    api(project(":libs:lib_okhttp"))
-    api(project(":libs:lib_retrofit"))
-    api(project(":libs:lib_retrofit_rx"))
+    api(projects.libs.libOkhttp)
+    api(projects.libs.libRetrofit)
+    api(projects.libs.libRetrofitRx)
 
     api(libs.androidx.lifecycle.livedata)
     api(libs.kotlinx.coroutines.rx3)

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * 有网络时按指定秒数决定读取网络或缓存，无网络时仅读取缓存。
  */
 class InterceptorCacheRequest(
-    private val isConnected: () -> Boolean
+    private val isConnected: () -> Boolean,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -48,5 +48,4 @@ class InterceptorCacheRequest(
             builder.cacheControl(CacheControl.FORCE_CACHE).build()
         }
     }
-
 }

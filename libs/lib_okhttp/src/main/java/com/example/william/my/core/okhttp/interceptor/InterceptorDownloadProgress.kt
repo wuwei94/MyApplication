@@ -18,7 +18,7 @@ import okhttp3.Response
  * ```
  */
 class InterceptorDownloadProgress(
-    private val listener: (url: String, currentBytes: Long, totalBytes: Long) -> Unit
+    private val listener: (url: String, currentBytes: Long, totalBytes: Long) -> Unit,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {

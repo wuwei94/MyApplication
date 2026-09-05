@@ -24,14 +24,12 @@ class PermissionXActivity : BasicResponseActivity() {
         showDescription("运行时权限申请（PermissionX 链式开源库模式）\n\n演示链式调用、前置解释弹窗与设置页引导")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
-            "申请多媒体存储权限（带理由解释弹窗）",
-            "申请多媒体存储权限（前置解释 + 永久拒绝设置引导）",
-            "申请全部常用基础权限（通知 + 多媒体存储 全流程托管）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
+        "申请多媒体存储权限（带理由解释弹窗）",
+        "申请多媒体存储权限（前置解释 + 永久拒绝设置引导）",
+        "申请全部常用基础权限（通知 + 多媒体存储 全流程托管）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -77,7 +75,7 @@ class PermissionXActivity : BasicResponseActivity() {
                     deniedList,
                     "应用需要访问您的照片、视频与音频媒体库以读取和缓存资源，请在接下来的对话框中允许。",
                     "允许",
-                    "取消"
+                    "取消",
                 )
             }
             .request { allGranted, grantedList, deniedList ->
@@ -103,7 +101,7 @@ class PermissionXActivity : BasicResponseActivity() {
                     deniedList,
                     "为了浏览和加载相册与媒体资源，需要您授予多媒体存储访问权限。",
                     "确定",
-                    "拒绝"
+                    "拒绝",
                 )
             }
             .onForwardToSettings { scope, deniedList ->
@@ -111,7 +109,7 @@ class PermissionXActivity : BasicResponseActivity() {
                     deniedList,
                     "您已勾选了不再提示或永久拒绝了媒体权限，请前往系统“设置”中手动允许以恢复功能。",
                     "前往设置",
-                    "取消"
+                    "取消",
                 )
             }
             .request { allGranted, grantedList, deniedList ->
@@ -140,7 +138,7 @@ class PermissionXActivity : BasicResponseActivity() {
                     deniedList,
                     "为了保证基础功能（通知提醒与多媒体资源加载）正常工作，需要获取以下必要权限。",
                     "允许",
-                    "取消"
+                    "取消",
                 )
             }
             .onForwardToSettings { scope, deniedList ->
@@ -148,7 +146,7 @@ class PermissionXActivity : BasicResponseActivity() {
                     deniedList,
                     "部分必要基础权限被永久拒绝，请在系统设置中手动开启。",
                     "去设置",
-                    "取消"
+                    "取消",
                 )
             }
             .request { allGranted, grantedList, deniedList ->
@@ -160,18 +158,16 @@ class PermissionXActivity : BasicResponseActivity() {
             }
     }
 
-    private fun getStoragePermissions(): List<String> {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            listOf(
-                Manifest.permission.READ_MEDIA_IMAGES,
-                Manifest.permission.READ_MEDIA_VIDEO,
-                Manifest.permission.READ_MEDIA_AUDIO
-            )
-        } else {
-            listOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        }
+    private fun getStoragePermissions(): List<String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        listOf(
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+            Manifest.permission.READ_MEDIA_AUDIO,
+        )
+    } else {
+        listOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
     }
 }

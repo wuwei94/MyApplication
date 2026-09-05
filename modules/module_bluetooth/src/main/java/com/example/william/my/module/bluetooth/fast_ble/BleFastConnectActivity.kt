@@ -42,21 +42,19 @@ class BleFastConnectActivity : BasicResponseActivity() {
 
         showDescription(
             "FastBle 连接与读写回调示例\n\n" +
-                    "演示 FastBle 极简的 UUID 驱动读写与 BleGattCallback / BleNotifyCallback\n" +
-                    "请按顺序点击下方操作项"
+                "演示 FastBle 极简的 UUID 驱动读写与 BleGattCallback / BleNotifyCallback\n" +
+                "请按顺序点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 扫描并使用 FastBle 连接首个设备",
-            "2. 设置 MTU 为 512 字节 (setMtu)",
-            "3. 读取特征值 (BleReadCallback)",
-            "4. 写入测试数据 (BleWriteCallback)",
-            "5. 开启 Notify 通知监听 (BleNotifyCallback)",
-            "6. 断开连接 (disconnect)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 扫描并使用 FastBle 连接首个设备",
+        "2. 设置 MTU 为 512 字节 (setMtu)",
+        "3. 读取特征值 (BleReadCallback)",
+        "4. 写入测试数据 (BleWriteCallback)",
+        "5. 开启 Notify 通知监听 (BleNotifyCallback)",
+        "6. 断开连接 (disconnect)",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -90,34 +88,37 @@ class BleFastConnectActivity : BasicResponseActivity() {
     }
 
     private fun connectDevice(bleDevice: BleDevice) {
-        BleManager.getInstance().connect(bleDevice, object : BleGattCallback() {
-            override fun onStartConnect() {
-                appendLog("⏳ FastBle 正在连接...")
-            }
-
-            override fun onConnectFail(bleDevice: BleDevice?, exception: BleException?) {
-                appendLog("✗ FastBle 连接失败: ${exception?.description}")
-            }
-
-            override fun onConnectSuccess(bleDevice: BleDevice?, gatt: BluetoothGatt?, status: Int) {
-                mConnectedDevice = bleDevice
-                appendLog("✓ FastBle 连接成功: ${bleDevice?.mac}")
-
-                // 自动提取首个可用服务与特征 UUID
-                gatt?.services?.firstOrNull()?.let { s ->
-                    mTargetServiceUuid = s.uuid.toString()
-                    s.characteristics.firstOrNull()?.let { c ->
-                        mTargetCharUuid = c.uuid.toString()
-                    }
+        BleManager.getInstance().connect(
+            bleDevice,
+            object : BleGattCallback() {
+                override fun onStartConnect() {
+                    appendLog("⏳ FastBle 正在连接...")
                 }
-                appendLog("✓ 自动捕获目标 Service: $mTargetServiceUuid, Char: $mTargetCharUuid")
-            }
 
-            override fun onDisConnected(isActiveDisConnected: Boolean, device: BleDevice?, gatt: BluetoothGatt?, status: Int) {
-                mConnectedDevice = null
-                appendLog("✓ FastBle 设备已断开 (主动断开=$isActiveDisConnected)")
-            }
-        })
+                override fun onConnectFail(bleDevice: BleDevice?, exception: BleException?) {
+                    appendLog("✗ FastBle 连接失败: ${exception?.description}")
+                }
+
+                override fun onConnectSuccess(bleDevice: BleDevice?, gatt: BluetoothGatt?, status: Int) {
+                    mConnectedDevice = bleDevice
+                    appendLog("✓ FastBle 连接成功: ${bleDevice?.mac}")
+
+                    // 自动提取首个可用服务与特征 UUID
+                    gatt?.services?.firstOrNull()?.let { s ->
+                        mTargetServiceUuid = s.uuid.toString()
+                        s.characteristics.firstOrNull()?.let { c ->
+                            mTargetCharUuid = c.uuid.toString()
+                        }
+                    }
+                    appendLog("✓ 自动捕获目标 Service: $mTargetServiceUuid, Char: $mTargetCharUuid")
+                }
+
+                override fun onDisConnected(isActiveDisConnected: Boolean, device: BleDevice?, gatt: BluetoothGatt?, status: Int) {
+                    mConnectedDevice = null
+                    appendLog("✓ FastBle 设备已断开 (主动断开=$isActiveDisConnected)")
+                }
+            },
+        )
     }
 
     private fun setFastBleMtu() {
@@ -127,15 +128,19 @@ class BleFastConnectActivity : BasicResponseActivity() {
             return
         }
         appendLog("正在请求设置 MTU 为 512 字节...")
-        BleManager.getInstance().setMtu(dev, 512, object : BleMtuChangedCallback() {
-            override fun onSetMTUFailure(exception: BleException?) {
-                appendLog("✗ MTU 设置失败: ${exception?.description}")
-            }
+        BleManager.getInstance().setMtu(
+            dev,
+            512,
+            object : BleMtuChangedCallback() {
+                override fun onSetMTUFailure(exception: BleException?) {
+                    appendLog("✗ MTU 设置失败: ${exception?.description}")
+                }
 
-            override fun onMtuChanged(mtu: Int) {
-                appendLog("✓ MTU 调整成功: 当前 MTU = $mtu 字节")
-            }
-        })
+                override fun onMtuChanged(mtu: Int) {
+                    appendLog("✓ MTU 调整成功: 当前 MTU = $mtu 字节")
+                }
+            },
+        )
     }
 
     private fun readCharacteristic() {
@@ -148,17 +153,22 @@ class BleFastConnectActivity : BasicResponseActivity() {
         }
 
         appendLog("正在读取特征值: $cUuid...")
-        BleManager.getInstance().read(dev, sUuid, cUuid, object : BleReadCallback() {
-            override fun onReadSuccess(data: ByteArray?) {
-                val hex = data?.joinToString(" ") { String.format("%02X", it) } ?: ""
-                val text = if (data != null) String(data) else ""
-                appendLog("✓ [FastBle 读成功] Hex=[$hex] | Text=[$text]")
-            }
+        BleManager.getInstance().read(
+            dev,
+            sUuid,
+            cUuid,
+            object : BleReadCallback() {
+                override fun onReadSuccess(data: ByteArray?) {
+                    val hex = data?.joinToString(" ") { String.format("%02X", it) } ?: ""
+                    val text = if (data != null) String(data) else ""
+                    appendLog("✓ [FastBle 读成功] Hex=[$hex] | Text=[$text]")
+                }
 
-            override fun onReadFailure(exception: BleException?) {
-                appendLog("✗ [FastBle 读失败] ${exception?.description}")
-            }
-        })
+                override fun onReadFailure(exception: BleException?) {
+                    appendLog("✗ [FastBle 读失败] ${exception?.description}")
+                }
+            },
+        )
     }
 
     private fun writeCharacteristic() {
@@ -172,15 +182,21 @@ class BleFastConnectActivity : BasicResponseActivity() {
 
         val sendBytes = "Hello FastBle!".toByteArray(Charsets.UTF_8)
         appendLog("正在写入数据 (${sendBytes.size} 字节)...")
-        BleManager.getInstance().write(dev, sUuid, cUuid, sendBytes, object : BleWriteCallback() {
-            override fun onWriteSuccess(current: Int, total: Int, justWrite: ByteArray?) {
-                appendLog("✓ [FastBle 写成功] 进度: [$current/$total]")
-            }
+        BleManager.getInstance().write(
+            dev,
+            sUuid,
+            cUuid,
+            sendBytes,
+            object : BleWriteCallback() {
+                override fun onWriteSuccess(current: Int, total: Int, justWrite: ByteArray?) {
+                    appendLog("✓ [FastBle 写成功] 进度: [$current/$total]")
+                }
 
-            override fun onWriteFailure(exception: BleException?) {
-                appendLog("✗ [FastBle 写失败] ${exception?.description}")
-            }
-        })
+                override fun onWriteFailure(exception: BleException?) {
+                    appendLog("✗ [FastBle 写失败] ${exception?.description}")
+                }
+            },
+        )
     }
 
     private fun enableNotification() {
@@ -193,20 +209,25 @@ class BleFastConnectActivity : BasicResponseActivity() {
         }
 
         appendLog("正在开启 Notify 通知: $cUuid...")
-        BleManager.getInstance().notify(dev, sUuid, cUuid, object : BleNotifyCallback() {
-            override fun onNotifySuccess() {
-                appendLog("✓ [FastBle Notify] 通知监听已成功使能")
-            }
+        BleManager.getInstance().notify(
+            dev,
+            sUuid,
+            cUuid,
+            object : BleNotifyCallback() {
+                override fun onNotifySuccess() {
+                    appendLog("✓ [FastBle Notify] 通知监听已成功使能")
+                }
 
-            override fun onNotifyFailure(exception: BleException?) {
-                appendLog("✗ [FastBle Notify] 通知监听使能失败: ${exception?.description}")
-            }
+                override fun onNotifyFailure(exception: BleException?) {
+                    appendLog("✗ [FastBle Notify] 通知监听使能失败: ${exception?.description}")
+                }
 
-            override fun onCharacteristicChanged(data: ByteArray?) {
-                val hex = data?.joinToString(" ") { String.format("%02X", it) } ?: ""
-                appendLog("🔔 [FastBle 收到 Notify] Hex=[$hex]")
-            }
-        })
+                override fun onCharacteristicChanged(data: ByteArray?) {
+                    val hex = data?.joinToString(" ") { String.format("%02X", it) } ?: ""
+                    appendLog("🔔 [FastBle 收到 Notify] Hex=[$hex]")
+                }
+            },
+        )
     }
 
     private fun disconnect() {

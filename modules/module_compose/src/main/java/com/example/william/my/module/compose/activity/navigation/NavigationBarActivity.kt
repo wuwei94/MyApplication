@@ -37,7 +37,7 @@ class NavigationBarActivity : ComponentActivity() {
     fun MyMain() {
         val navController = rememberNavController()
         Scaffold(
-            bottomBar = { MyNavigationBar(navController) }
+            bottomBar = { MyNavigationBar(navController) },
         ) { innerPadding ->
             println(innerPadding)
             MyNavHost(navController)
@@ -54,9 +54,9 @@ class NavigationBarActivity : ComponentActivity() {
 
     @Composable
     fun MyNavigationBar(navController: NavHostController) {
-
         val items = listOf(
-            Screen.Home, Screen.Profile
+            Screen.Home,
+            Screen.Profile,
         )
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -80,12 +80,12 @@ class NavigationBarActivity : ComponentActivity() {
                     icon = {
                         Icon(
                             imageVector = screen.icon,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
                     label = {
                         Text(
-                            text = (screen.resourceId)
+                            text = (screen.resourceId),
                         )
                     },
                 )

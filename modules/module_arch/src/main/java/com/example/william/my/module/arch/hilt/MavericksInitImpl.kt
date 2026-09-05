@@ -24,9 +24,7 @@ class MavericksInitImpl @Inject constructor() : IAppInit {
         initMavericks(app)
     }
 
-    override fun getApp(): Application {
-        return mApp
-    }
+    override fun getApp(): Application = mApp
 
     private fun initMavericks(app: Application) {
         Mavericks.initialize(app)

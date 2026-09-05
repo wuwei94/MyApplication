@@ -26,6 +26,5 @@ class CoordinatorLayoutActivity : ComponentActivity() {
 
     @Composable
     fun MyCoordinatorLayout() {
-
     }
 }

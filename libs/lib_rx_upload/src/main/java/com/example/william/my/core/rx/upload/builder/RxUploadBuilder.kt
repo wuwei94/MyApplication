@@ -136,7 +136,7 @@ class RxUploadBuilder internal constructor() {
             require(part.file.isFile) { "上传文件不存在：${part.file.path}" }
         }
         val uploadRetrofit = RxUploadRequest.withoutConnectionFailureRetry(
-            retrofit ?: RxUploadRequest.defaultRetrofit
+            retrofit ?: RxUploadRequest.defaultRetrofit,
         )
         return UploadConfig(
             url = requestUrl,

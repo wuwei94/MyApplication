@@ -39,16 +39,14 @@ class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
         showHintView("AsyncLayoutInflater 与 ViewPreloadManager 视图预加载示例\n点击下方列表演示后台预加载、0ms 瞬间挂载与弹窗秒开")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 异步加载卡片并挂载（原生 AsyncLayoutInflater 异步解析）",
-            "2. ViewPreloadManager 预加载 2 个详情页布局入池（后台 Pre-Inflation）",
-            "3. ViewPreloadManager.getView 取出并挂载详情页（0ms 瞬间上屏 / Fallback）",
-            "4. 预加载 BottomSheet 复杂弹窗并瞬间弹出（0ms 弹窗体验）",
-            "5. 查看 ViewPreloadManager 运行状态与池容量",
-            "6. 清空展示容器与 ViewPreloadManager 全部缓存池"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 异步加载卡片并挂载（原生 AsyncLayoutInflater 异步解析）",
+        "2. ViewPreloadManager 预加载 2 个详情页布局入池（后台 Pre-Inflation）",
+        "3. ViewPreloadManager.getView 取出并挂载详情页（0ms 瞬间上屏 / Fallback）",
+        "4. 预加载 BottomSheet 复杂弹窗并瞬间弹出（0ms 弹窗体验）",
+        "5. 查看 ViewPreloadManager 运行状态与池容量",
+        "6. 清空展示容器与 ViewPreloadManager 全部缓存池",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -75,7 +73,7 @@ class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
 
             titleView.text = "⚡ 异步加载卡片（耗时：${cost}ms）"
             descView.text = "解析线程：后台工作线程 | 挂载线程：${Thread.currentThread().name}\n" +
-                    "完成时间：${System.currentTimeMillis()}，已动态挂载至上方展示区！"
+                "完成时间：${System.currentTimeMillis()}，已动态挂载至上方展示区！"
 
             setView(view)
         }
@@ -93,9 +91,9 @@ class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
 
             showHintView(
                 "✅ [ViewPreloadManager 后台预加载完成]\n" +
-                        "成功在后台解析并入池 $loadedCount 个详情页 View（总耗时：${cost}ms）\n" +
-                        "当前详情页池大小：$currentPoolSize\n\n" +
-                        "👉 请点击【3. ViewPreloadManager.getView 取出并挂载详情页】体验 0ms 瞬间渲染"
+                    "成功在后台解析并入池 $loadedCount 个详情页 View（总耗时：${cost}ms）\n" +
+                    "当前详情页池大小：$currentPoolSize\n\n" +
+                    "👉 请点击【3. ViewPreloadManager.getView 取出并挂载详情页】体验 0ms 瞬间渲染",
             )
         }
     }
@@ -156,9 +154,9 @@ class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
 
         showHintView(
             "📊 【ViewPreloadManager 缓存池运行状态】\n\n" +
-                    "• 详情页布局（performance_layout_async_detail）当前就绪池大小：$detailPoolSize / 上限: 3\n" +
-                    "• 卡片/弹窗布局（performance_layout_async_card）当前就绪池大小：$cardPoolSize / 上限: 5\n\n" +
-                    "调用 ViewPreloadManager.getView() 时，有缓存则 0ms 瞬间返回，无缓存自动 Fallback 同步加载。"
+                "• 详情页布局（performance_layout_async_detail）当前就绪池大小：$detailPoolSize / 上限: 3\n" +
+                "• 卡片/弹窗布局（performance_layout_async_card）当前就绪池大小：$cardPoolSize / 上限: 5\n\n" +
+                "调用 ViewPreloadManager.getView() 时，有缓存则 0ms 瞬间返回，无缓存自动 Fallback 同步加载。",
         )
     }
 

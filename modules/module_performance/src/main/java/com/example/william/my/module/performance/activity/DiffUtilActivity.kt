@@ -25,15 +25,13 @@ class DiffUtilActivity : BasicRecyclerActivity() {
     private var currentList = mutableListOf<ArticleItem>()
     private lateinit var articleAdapter: ArticleAdapter
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "点赞首项 (Payload 细粒度刷新)",
-            "修改首项标题 (整项重新绑定)",
-            "头部插入新数据 (触发插入动画)",
-            "删除首条数据 (触发移除动画)",
-            "随机乱序 (触发移动动画)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "点赞首项 (Payload 细粒度刷新)",
+        "修改首项标题 (整项重新绑定)",
+        "头部插入新数据 (触发插入动画)",
+        "删除首条数据 (触发移除动画)",
+        "随机乱序 (触发移动动画)",
+    )
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -46,7 +44,7 @@ class DiffUtilActivity : BasicRecyclerActivity() {
             ArticleItem(id = 1, title = "Kotlin 协程与 Flow 深入剖析", likes = 10),
             ArticleItem(id = 2, title = "Android 性能优化实战与内存管理", likes = 25),
             ArticleItem(id = 3, title = "Jetpack Compose 现代化 UI 指南", likes = 8),
-            ArticleItem(id = 4, title = "RecyclerView 缓存与复用机制精讲", likes = 16)
+            ArticleItem(id = 4, title = "RecyclerView 缓存与复用机制精讲", likes = 16),
         )
     }
 
@@ -87,7 +85,9 @@ class DiffUtilActivity : BasicRecyclerActivity() {
                     val newList = currentList.map {
                         if (it.id == targetId) {
                             it.copy(title = "文章 [已更新标题 ${System.currentTimeMillis() % 1000}]")
-                        } else it.copy()
+                        } else {
+                            it.copy()
+                        }
                     }.toMutableList()
                     applyDiffResult(newList)
                 }

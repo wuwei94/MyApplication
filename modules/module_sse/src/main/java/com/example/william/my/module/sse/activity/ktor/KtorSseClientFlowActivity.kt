@@ -29,12 +29,10 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
         showDescription("【Ktor SSE】DeepSeek AI 流式对话 (Ktor Client + Flow 封装)\n地址：$serverUrl\n模型：deepseek-chat\n特性：Ktor 原生 Flow 收集 -> POST JSON Payload -> [DONE] 完成")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "发起 DeepSeek 对话（Ktor POST Flow）",
-            "中断当前生成（Cancel Job）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "发起 DeepSeek 对话（Ktor POST Flow）",
+        "中断当前生成（Cancel Job）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

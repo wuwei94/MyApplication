@@ -9,7 +9,9 @@ import com.daimajia.swipe.interfaces.SwipeItemMangerInterface
 import com.daimajia.swipe.util.Attributes
 
 abstract class BaseQuickSwipeAdapter<T : Any, VH : RecyclerView.ViewHolder> :
-    BaseQuickAdapter<T, VH>(), SwipeItemMangerInterface, SwipeAdapterInterface {
+    BaseQuickAdapter<T, VH>(),
+    SwipeItemMangerInterface,
+    SwipeAdapterInterface {
 
     private var mItemManger: SwipeItemRecyclerMangerImpl = SwipeItemRecyclerMangerImpl(this)
 
@@ -35,25 +37,17 @@ abstract class BaseQuickSwipeAdapter<T : Any, VH : RecyclerView.ViewHolder> :
         mItemManger.closeAllItems()
     }
 
-    override fun getOpenItems(): MutableList<Int?>? {
-        return mItemManger.openItems
-    }
+    override fun getOpenItems(): MutableList<Int?>? = mItemManger.openItems
 
-    override fun getOpenLayouts(): MutableList<SwipeLayout?>? {
-        return mItemManger.openLayouts
-    }
+    override fun getOpenLayouts(): MutableList<SwipeLayout?>? = mItemManger.openLayouts
 
     override fun removeShownLayouts(layout: SwipeLayout?) {
         mItemManger.removeShownLayouts(layout)
     }
 
-    override fun isOpen(position: Int): Boolean {
-        return mItemManger.isOpen(position)
-    }
+    override fun isOpen(position: Int): Boolean = mItemManger.isOpen(position)
 
-    override fun getMode(): Attributes.Mode? {
-        return mItemManger.mode
-    }
+    override fun getMode(): Attributes.Mode? = mItemManger.mode
 
     override fun setMode(mode: Attributes.Mode?) {
         mItemManger.setMode(mode)

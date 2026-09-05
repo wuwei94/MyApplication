@@ -54,13 +54,11 @@ class EventBusActivity : BasicResponseActivity() {
         showDescription("EventBus 示例\n\n请点击下方按钮注册监听或发送事件")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "注册/注销 (Register/Unregister)",
-            "发送普通事件 (Post Event)",
-            "发送粘性事件 (Post Sticky Event)",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "注册/注销 (Register/Unregister)",
+        "发送普通事件 (Post Event)",
+        "发送粘性事件 (Post Sticky Event)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -69,13 +67,13 @@ class EventBusActivity : BasicResponseActivity() {
             1 -> {
                 appendLog("发送普通事件：GlobalEvent")
                 EventBusHelper.postEvent(
-                    GlobalEvent("EventBus post by Activity")
+                    GlobalEvent("EventBus post by Activity"),
                 )
             }
             2 -> {
                 appendLog("发送粘性事件：StickyEvent")
                 EventBusHelper.postStickyEvent(
-                    StickyEvent("EventBus postSticky by Activity")
+                    StickyEvent("EventBus postSticky by Activity"),
                 )
             }
         }

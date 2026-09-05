@@ -18,15 +18,13 @@ internal class InterceptorCookieCapture : Interceptor {
         val taggedRequest = request.newBuilder()
             .tag(
                 CallerCookieContext::class.java,
-                CallerCookieContext(callerHeader, cookieNames(callerHeader), request.url.host)
+                CallerCookieContext(callerHeader, cookieNames(callerHeader), request.url.host),
             )
             .build()
         return chain.proceed(taggedRequest)
     }
 
-    private fun cookieNames(header: String): Set<String> {
-        return header.split(';').mapNotNull { part ->
-            part.substringBefore('=', "").trim().takeIf(String::isNotEmpty)
-        }.toSet()
-    }
+    private fun cookieNames(header: String): Set<String> = header.split(';').mapNotNull { part ->
+        part.substringBefore('=', "").trim().takeIf(String::isNotEmpty)
+    }.toSet()
 }

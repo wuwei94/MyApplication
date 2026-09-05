@@ -43,15 +43,13 @@ class FlowOperatorsActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin Flow 核心操作符流式处理（创建 / 变换 / 过滤 / 组合 / 错误恢复）")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "创建操作符（flowOf / asFlow）",
-            "变换操作符（map / flatMapConcat / buffer）",
-            "过滤操作符（filter / take / distinct）",
-            "组合操作符（zip / combine）",
-            "错误恢复（catch 降级）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "创建操作符（flowOf / asFlow）",
+        "变换操作符（map / flatMapConcat / buffer）",
+        "过滤操作符（filter / take / distinct）",
+        "组合操作符（zip / combine）",
+        "错误恢复（catch 降级）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

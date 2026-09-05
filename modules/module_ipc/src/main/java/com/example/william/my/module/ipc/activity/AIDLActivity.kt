@@ -51,14 +51,12 @@ class AIDLActivity : BasicResponseActivity() {
         showDescription("AIDL 跨进程通信\n\n点击下方按钮操作 AIDL Service")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "绑定 AIDL Service",
-            "解绑 AIDL Service",
-            "调用 getMessage()",
-            "调用 showToast()"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "绑定 AIDL Service",
+        "解绑 AIDL Service",
+        "调用 getMessage()",
+        "调用 showToast()",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -91,7 +89,7 @@ class AIDLActivity : BasicResponseActivity() {
         val result = bindService(
             Intent(this, MyAIDLService::class.java),
             mAIDLConnection!!,
-            BIND_AUTO_CREATE
+            BIND_AUTO_CREATE,
         )
         appendLog("正在绑定 AIDL Service...（result=$result）")
     }

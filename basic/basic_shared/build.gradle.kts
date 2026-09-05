@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
+    implementation(projects.basic.basicLib)
 
     implementation(libs.utils)
 }

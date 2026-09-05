@@ -42,15 +42,13 @@ class TitleBarActivity : BasicResponseActivity() {
         mTitleBar?.setBackPressed("返回")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "设置主标题与返回键文案",
-            "添加右侧文字菜单（更多）",
-            "修改 TitleBar 背景色",
-            "隐藏返回按钮",
-            "重置 TitleBar 默认状态"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "设置主标题与返回键文案",
+        "添加右侧文字菜单（更多）",
+        "修改 TitleBar 背景色",
+        "隐藏返回按钮",
+        "重置 TitleBar 默认状态",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

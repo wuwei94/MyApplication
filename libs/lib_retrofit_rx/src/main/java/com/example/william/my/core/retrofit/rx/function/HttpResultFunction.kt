@@ -10,7 +10,5 @@ import io.reactivex.rxjava3.functions.Function
  */
 class HttpResultFunction<T : Any> : Function<Throwable, SingleSource<T>> {
 
-    override fun apply(t: Throwable): SingleSource<T> {
-        return Single.error(ExceptionHandler.handleException(t))
-    }
+    override fun apply(t: Throwable): SingleSource<T> = Single.error(ExceptionHandler.handleException(t))
 }

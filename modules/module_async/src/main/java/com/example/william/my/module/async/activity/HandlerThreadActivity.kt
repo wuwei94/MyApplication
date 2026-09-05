@@ -73,12 +73,10 @@ class HandlerThreadActivity : BasicResponseActivity() {
         }
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "sendMessage — 主线程发送",
-            "sendMessage — 子线程发送"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "sendMessage — 主线程发送",
+        "sendMessage — 子线程发送",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {

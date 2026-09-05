@@ -23,30 +23,20 @@ object OkHttpWebSocketClientRx {
         webSocketMap[url] = webSocket
     }
 
-    private fun getWebSocket(url: String): WebSocket? {
-        return webSocketMap[url]
-    }
+    private fun getWebSocket(url: String): WebSocket? = webSocketMap[url]
 
-    fun createWebSocket(url: String): Observable<OkHttpWebSocketInfo> {
-        return createWebSocket(url, Request.Builder().get().url(url).build(), defaultClient)
-    }
+    fun createWebSocket(url: String): Observable<OkHttpWebSocketInfo> = createWebSocket(url, Request.Builder().get().url(url).build(), defaultClient)
 
-    fun createWebSocket(request: Request): Observable<OkHttpWebSocketInfo> {
-        return createWebSocket(request.url.toString(), request, defaultClient)
-    }
+    fun createWebSocket(request: Request): Observable<OkHttpWebSocketInfo> = createWebSocket(request.url.toString(), request, defaultClient)
 
-    fun createWebSocket(url: String, okHttpClient: OkHttpClient): Observable<OkHttpWebSocketInfo> {
-        return createWebSocket(url, Request.Builder().get().url(url).build(), okHttpClient)
-    }
+    fun createWebSocket(url: String, okHttpClient: OkHttpClient): Observable<OkHttpWebSocketInfo> = createWebSocket(url, Request.Builder().get().url(url).build(), okHttpClient)
 
-    fun createWebSocket(request: Request, okHttpClient: OkHttpClient): Observable<OkHttpWebSocketInfo> {
-        return createWebSocket(request.url.toString(), request, okHttpClient)
-    }
+    fun createWebSocket(request: Request, okHttpClient: OkHttpClient): Observable<OkHttpWebSocketInfo> = createWebSocket(request.url.toString(), request, okHttpClient)
 
     private fun createWebSocket(
         url: String,
         request: Request,
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): Observable<OkHttpWebSocketInfo> {
         // 如果已有缓存的订阅，直接返回当前连接状态
         disposableMap[url]?.let { existing ->
@@ -93,9 +83,7 @@ object OkHttpWebSocketClientRx {
         }
     }
 
-    fun send(request: Request, message: String): Boolean {
-        return send(request.url.toString(), message)
-    }
+    fun send(request: Request, message: String): Boolean = send(request.url.toString(), message)
 
     fun cancel(url: String) {
         getWebSocket(url)?.let { webSocket ->

@@ -138,9 +138,7 @@ internal class DownloadQueueTaskResources(
         }
     }
 
-    private fun cancelledException(): InterruptedIOException {
-        return InterruptedIOException("下载队列任务已取消")
-    }
+    private fun cancelledException(): InterruptedIOException = InterruptedIOException("下载队列任务已取消")
 
     private data class Resources(
         val releasePermit: Boolean,

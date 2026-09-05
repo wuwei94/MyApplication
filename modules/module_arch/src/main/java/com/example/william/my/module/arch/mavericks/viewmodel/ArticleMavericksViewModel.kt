@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
  */
 class ArticleMavericksViewModel(
     initialState: ArticleMavericksState,
-    private val articleRepository: ArticleRepository
+    private val articleRepository: ArticleRepository,
 ) : MavericksViewModel<ArticleMavericksState>(initialState) {
 
     fun loadArticle(page: Int) {
@@ -38,7 +38,7 @@ class ArticleMavericksViewModel(
     companion object : MavericksViewModelFactory<ArticleMavericksViewModel, ArticleMavericksState> {
         override fun create(
             viewModelContext: ViewModelContext,
-            state: ArticleMavericksState
+            state: ArticleMavericksState,
         ): ArticleMavericksViewModel {
             val articleRepo =
                 ServiceLocator.provideArticleRepository(viewModelContext.activity.applicationContext)

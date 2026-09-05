@@ -8,7 +8,7 @@ android {
 
 dependencies {
     // 复用 lib_mqtt 的 MqttClientListener 回调接口
-    api(project(":libs:lib_mqtt"))
+    api(projects.libs.libMqtt)
 
     // HiveMQ MQTT Client（异步 API，支持 MQTT 3.1.1 / 5.0）
     // 排除其传递的模块化 Netty，统一使用项目的 netty-all，避免与 lib_netty 产生重复类冲突

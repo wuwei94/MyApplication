@@ -60,7 +60,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
             mBinding.basicsResponse.text = description
             mBinding.basicsResponse.gravity = Gravity.CENTER
             mBinding.basicsResponse.setTextColor(
-                ContextCompat.getColor(this, R.color.shared_color_console_desc)
+                ContextCompat.getColor(this, R.color.shared_color_console_desc),
             )
         }
     }
@@ -91,7 +91,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
                 ForegroundColorSpan(ContextCompat.getColor(this, R.color.shared_color_console_time)),
                 timeStart,
                 mLog.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
 
             val msgStart = mLog.length
@@ -100,7 +100,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
                 ForegroundColorSpan(color),
                 msgStart,
                 mLog.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             renderLogs()
         }
@@ -164,9 +164,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
         }
     }
 
-    private fun formatTimestamp(): String {
-        return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
-    }
+    private fun formatTimestamp(): String = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
 
     companion object {
         private val gson = GsonBuilder()

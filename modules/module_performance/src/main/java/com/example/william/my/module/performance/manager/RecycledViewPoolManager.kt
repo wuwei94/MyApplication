@@ -33,9 +33,7 @@ object RecycledViewPoolManager {
     /**
      * 获取指定 viewType 当前在池中的缓存数量
      */
-    fun getRecycledViewCount(viewType: Int): Int {
-        return pool.getRecycledViewCount(viewType)
-    }
+    fun getRecycledViewCount(viewType: Int): Int = pool.getRecycledViewCount(viewType)
 
     /**
      * 清空全局复用池

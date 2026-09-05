@@ -51,12 +51,11 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBin
  * - 需要禁用滑动的场景
  */
 @Route(path = RouterPath.Tab.ViewPager2Tab)
-class ViewPager2TabActivity : BaseVBActivity<TabActivityViewPager2TabBinding>(),
+class ViewPager2TabActivity :
+    BaseVBActivity<TabActivityViewPager2TabBinding>(),
     RadioGroup.OnCheckedChangeListener {
 
-    override fun getViewBinding(): TabActivityViewPager2TabBinding {
-        return TabActivityViewPager2TabBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TabActivityViewPager2TabBinding = TabActivityViewPager2TabBinding.inflate(layoutInflater)
 
     private val mTitles: ArrayList<String> by lazy {
         arrayListOf(
@@ -115,14 +114,14 @@ class ViewPager2TabActivity : BaseVBActivity<TabActivityViewPager2TabBinding>(),
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
-                    R.color.tab_selector_check_primary_dark
-                )
+                    R.color.tab_selector_check_primary_dark,
+                ),
             )
             val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
             drawable?.let {
                 DrawableCompat.setTintList(
                     it,
-                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark)
+                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark),
                 )
                 radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
             }

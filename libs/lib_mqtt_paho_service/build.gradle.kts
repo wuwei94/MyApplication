@@ -8,7 +8,7 @@ android {
 
 dependencies {
     // 复用 lib_mqtt 的 MqttClientListener 回调接口
-    api(project(":libs:lib_mqtt"))
+    api(projects.libs.libMqtt)
 
     // Paho Android Service（MqttAndroidClient，通过绑定 MqttService 通信）
     // 使用 hannesa2 维护 fork：官方 org.eclipse.paho 1.1.1 已停更，

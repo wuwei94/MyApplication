@@ -12,8 +12,12 @@ import org.libpag.PAGView.PAGViewListener
 import java.util.concurrent.LinkedBlockingQueue
 
 class GiftLayout @JvmOverloads constructor(
-    context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RelativeLayout(context, attrs, defStyleAttr), PAGViewListener, Animator.AnimatorListener {
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : RelativeLayout(context, attrs, defStyleAttr),
+    PAGViewListener,
+    Animator.AnimatorListener {
     private val TAG = this.javaClass.simpleName
 
     private var isPlaying = false
@@ -23,7 +27,7 @@ class GiftLayout @JvmOverloads constructor(
 
     // temp
     private val mGiftMsgBodyQueue = LinkedBlockingQueue<String>()
-    //private val mGiftMsgBodyQueue = LinkedBlockingQueue<CustomMsg<RoomGiftMsg>>()
+    // private val mGiftMsgBodyQueue = LinkedBlockingQueue<CustomMsg<RoomGiftMsg>>()
 
     init {
         this.mPagView = PAGView(context, attrs, defStyleAttr)
@@ -42,18 +46,18 @@ class GiftLayout @JvmOverloads constructor(
         addView(mSmallAnimView, mallAnimViewParams)
     }
 
-    //fun handlerGiftMsg(giftMsg: CustomMsg<RoomGiftMsg>) {
+    // fun handlerGiftMsg(giftMsg: CustomMsg<RoomGiftMsg>) {
     //    println("handlerGiftMsg 收到消息")
     //    mGiftMsgBodyQueue.offer(giftMsg)
     //    notifyGiftMsg()
-    //}
+    // }
 
     private fun notifyGiftMsg() {
         println("notifyGiftMsg 通知播放动画")
 
         if (!isPlaying && !mGiftMsgBodyQueue.isEmpty()) {
             val nextMessage = mGiftMsgBodyQueue.poll()
-            //if (nextMessage is CustomMsg<RoomGiftMsg>) {
+            // if (nextMessage is CustomMsg<RoomGiftMsg>) {
             //    when (nextMessage.data.getAnimationType()) {
             //        GiftAnimationType.BigAnim -> {
             //            startPagAnim(nextMessage)
@@ -63,21 +67,21 @@ class GiftLayout @JvmOverloads constructor(
             //            startSmallAnim(nextMessage)
             //        }
             //    }
-            //}
+            // }
         }
     }
 
-    //private fun startPagAnim(data: CustomMsg<RoomGiftMsg>) {
+    // private fun startPagAnim(data: CustomMsg<RoomGiftMsg>) {
     //    println("startPagAnim 大动画")
     //    mPagView.setPath(data.data.getAnimationId().getFilePathByAnimId())
     //    mPagView.play()
-    //}
+    // }
 
-    //private fun startSmallAnim(data: CustomMsg<RoomGiftMsg>) {
+    // private fun startSmallAnim(data: CustomMsg<RoomGiftMsg>) {
     //    println("startPagAnim 小动画")
     //    mSmallAnimView.setImageUrl(data.data.giftInfo.imageUrl)
     //    mSmallAnimView.play()
-    //}
+    // }
 
     override fun onAnimationStart(pagView: PAGView) {
         println("onAnimationStart")

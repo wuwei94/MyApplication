@@ -36,7 +36,7 @@ abstract class BasicLayoutActivity : BasicControlActivity() {
         mContainer.removeAllViews()
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
         )
         mContainer.addView(view, params)
     }

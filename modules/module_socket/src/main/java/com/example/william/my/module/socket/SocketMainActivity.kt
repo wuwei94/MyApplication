@@ -34,4 +34,3 @@ class SocketMainActivity : RouterRecyclerActivity() {
         return routerItems
     }
 }
-

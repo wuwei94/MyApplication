@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
  * 演示 MVVM 模式中通过 LiveData 暴露状态，支持协程、RxJava 与 UseCase 方式加载数据。
  */
 class ArticleLiveDataViewModel(
-    private val repository: ArticleRepository
+    private val repository: ArticleRepository,
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -103,10 +103,10 @@ class ArticleLiveDataViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = checkNotNull(
-                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
+                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY],
                 )
                 ArticleLiveDataViewModel(
-                    ServiceLocator.provideArticleRepository(application)
+                    ServiceLocator.provideArticleRepository(application),
                 )
             }
         }

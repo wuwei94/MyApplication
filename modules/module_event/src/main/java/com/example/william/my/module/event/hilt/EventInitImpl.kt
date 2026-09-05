@@ -18,9 +18,7 @@ class EventInitImpl @Inject constructor() : IAppInit {
         initFlowEventBus(app)
     }
 
-    override fun getApp(): Application {
-        return mApp
-    }
+    override fun getApp(): Application = mApp
 
     private fun initFlowEventBus(app: Application) {
         FlowEventBus.init(app)

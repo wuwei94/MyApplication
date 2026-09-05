@@ -18,14 +18,14 @@ data class SecureKeyInfo(
     val algorithm: String,
     val secureLevel: String,
     val trustLevel: String,
-    val hardwareBacked: Boolean
+    val hardwareBacked: Boolean,
 )
 
 data class SecureSignatureResult(
     val keyId: String,
     val signature: String,
     val algorithm: String,
-    val challenge: String
+    val challenge: String,
 )
 
 object SecureKeyDemoUtils {
@@ -43,12 +43,12 @@ object SecureKeyDemoUtils {
         if (!keyStore.containsAlias(KEY_ALIAS)) {
             val generator = KeyPairGenerator.getInstance(
                 KeyProperties.KEY_ALGORITHM_EC,
-                ANDROID_KEYSTORE
+                ANDROID_KEYSTORE,
             )
 
             val spec = KeyGenParameterSpec.Builder(
                 KEY_ALIAS,
-                KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
+                KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY,
             )
                 .setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
                 .setDigests(KeyProperties.DIGEST_SHA256)
@@ -79,7 +79,7 @@ object SecureKeyDemoUtils {
             algorithm = "EC_P256",
             secureLevel = secureLevel,
             trustLevel = resolveTrustLevel(secureLevel),
-            hardwareBacked = keyInfo.isInsideSecureHardware
+            hardwareBacked = keyInfo.isInsideSecureHardware,
         )
     }
 
@@ -102,7 +102,7 @@ object SecureKeyDemoUtils {
             keyId = KEY_ALIAS,
             signature = Base64.encodeToString(signature.sign(), Base64.NO_WRAP),
             algorithm = "ES256",
-            challenge = challenge
+            challenge = challenge,
         )
     }
 
@@ -118,8 +118,7 @@ object SecureKeyDemoUtils {
         return true
     }
 
-    private fun loadKeyStore(): KeyStore =
-        KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }
+    private fun loadKeyStore(): KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }
 
     /**
      * 将 Android 平台返回的密钥属性转换成统一安全级别字符串。
@@ -140,12 +139,10 @@ object SecureKeyDemoUtils {
     /**
      * 根据安全级别映射业务可读的信任等级。
      */
-    private fun resolveTrustLevel(secureLevel: String): String {
-        return when (secureLevel) {
-            "strongbox" -> "高信任"
-            "tee", "tee_or_strongbox" -> "中高信任"
-            "software" -> "低信任"
-            else -> "未知信任"
-        }
+    private fun resolveTrustLevel(secureLevel: String): String = when (secureLevel) {
+        "strongbox" -> "高信任"
+        "tee", "tee_or_strongbox" -> "中高信任"
+        "software" -> "低信任"
+        else -> "未知信任"
     }
 }

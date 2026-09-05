@@ -43,9 +43,7 @@ class NotificationActivity : BasicResponseActivity() {
         showDescription("NotificationChannel 通知渠道\n\n点击下方按钮发送通知")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("发送通知")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("发送通知")
 
     override fun onRecyclerClick(position: Int, string: String) {
         sendNotification()
@@ -56,7 +54,9 @@ class NotificationActivity : BasicResponseActivity() {
 
         // IMPORTANCE_HIGH: 弹出悬浮通知 + 提示音，适合即时消息
         val channel = NotificationChannel(
-            CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_HIGH,
         )
         channel.setShowBadge(true)
         channel.description = CHANNEL_DESCRIPTION

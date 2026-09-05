@@ -38,9 +38,7 @@ class MPBarChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpBarChartBind
     private val targetSales = listOf(120f, 150f, 180f, 220f)
     private val actualSales = listOf(135.5f, 142f, 210.8f, 245f)
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpBarChartBinding {
-        return WidgetThirdpartyActivityMpBarChartBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityMpBarChartBinding = WidgetThirdpartyActivityMpBarChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -131,11 +129,11 @@ class MPBarChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpBarChartBind
         mBinding.tvMetricsTitle.text = "${quarters[index]} 业绩达成分析"
         mBinding.tvBadgeStatus.text = if (rate >= 100) "超额完成" else "未达预期"
         mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
-            if (rate >= 100) Color.parseColor("#10B981") else Color.parseColor("#EF4444")
+            if (rate >= 100) Color.parseColor("#10B981") else Color.parseColor("#EF4444"),
         )
 
-        mBinding.tvTarget.text = "${target} 万"
-        mBinding.tvActual.text = "${actual} 万"
+        mBinding.tvTarget.text = "$target 万"
+        mBinding.tvActual.text = "$actual 万"
         mBinding.tvDiff.text = "${if (diff > 0) "+" else ""}${String.format("%.1f", diff)} 万"
         mBinding.tvRate.text = "${String.format("%.1f", rate)}%"
         mBinding.tvRemark.text = "分析：Q${index + 1} 实际营收 ${if (diff >= 0) "超过" else "低于"} 目标 ${abs(diff)} 万元"

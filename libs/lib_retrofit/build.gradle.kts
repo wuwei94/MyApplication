@@ -7,10 +7,9 @@ android {
 }
 
 dependencies {
-    api(project(":libs:lib_okhttp"))
+    api(projects.libs.libOkhttp)
     api(libs.retrofit)
     api(libs.retrofit.converter.gson)
     api(libs.retrofit.converter.scalars)
     api(libs.androidx.lifecycle.livedata)
 }
-

@@ -16,12 +16,11 @@ class VolleySingleton(context: Context) {
     companion object {
         @Volatile
         private var INSTANCE: VolleySingleton? = null
-        fun getInstance(context: Context) =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: VolleySingleton(context).also {
-                    INSTANCE = it
-                }
+        fun getInstance(context: Context) = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: VolleySingleton(context).also {
+                INSTANCE = it
             }
+        }
 
         // ImageLoader 内存缓存大小
         private const val IMAGE_CACHE_SIZE = 20
@@ -39,14 +38,13 @@ class VolleySingleton(context: Context) {
             requestQueue,
             object : ImageLoader.ImageCache {
                 private val cache = LruCache<String, Bitmap>(IMAGE_CACHE_SIZE)
-                override fun getBitmap(url: String): Bitmap? {
-                    return cache.get(url)
-                }
+                override fun getBitmap(url: String): Bitmap? = cache.get(url)
 
                 override fun putBitmap(url: String, bitmap: Bitmap) {
                     cache.put(url, bitmap)
                 }
-            })
+            },
+        )
     }
 
     private val requestQueue: RequestQueue by lazy {

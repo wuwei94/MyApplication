@@ -9,8 +9,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
     // CameraX
     implementation(libs.androidx.camera.core)

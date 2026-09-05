@@ -62,9 +62,7 @@ class BroadcastActivity : BasicResponseActivity() {
         showDescription("BroadcastReceiver\n\n点击下方按钮发送广播")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("发送广播")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("发送广播")
 
     override fun onRecyclerClick(position: Int, string: String) {
         sendBroadcast()

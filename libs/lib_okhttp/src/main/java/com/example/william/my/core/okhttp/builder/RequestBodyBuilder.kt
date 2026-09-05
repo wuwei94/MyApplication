@@ -21,8 +21,8 @@ import java.io.File
     message = "请直接使用 OkHttp 原生 API，进度监听使用 InterceptorUploadProgress",
     replaceWith = ReplaceWith(
         "FormBody.Builder()",
-        "okhttp3.FormBody"
-    )
+        "okhttp3.FormBody",
+    ),
 )
 class RequestBodyBuilder {
 
@@ -30,7 +30,7 @@ class RequestBodyBuilder {
 
     @Deprecated(
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorUploadProgress")
+        replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
     fun addListener(listener: RequestProgressListener) {
         mProgressListener = listener
@@ -45,11 +45,9 @@ class RequestBodyBuilder {
 
     @Deprecated(
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorUploadProgress")
+        replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
-    fun buildForm(): RequestBody {
-        return wrapWithProgress(mFormBuilder.build())
-    }
+    fun buildForm(): RequestBody = wrapWithProgress(mFormBuilder.build())
 
     private val mMultipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
@@ -62,18 +60,16 @@ class RequestBodyBuilder {
         mMultipartBuilder.addFormDataPart(
             name,
             fileName,
-            file.asRequestBody(MediaTypes.MEDIA_TYPE_MULTIPART)
+            file.asRequestBody(MediaTypes.MEDIA_TYPE_MULTIPART),
         )
         return this
     }
 
     @Deprecated(
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorUploadProgress")
+        replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
-    fun buildMultipart(): RequestBody {
-        return wrapWithProgress(mMultipartBuilder.build())
-    }
+    fun buildMultipart(): RequestBody = wrapWithProgress(mMultipartBuilder.build())
 
     private val mJsonBuilder = JSONObject()
 
@@ -84,7 +80,7 @@ class RequestBodyBuilder {
 
     @Deprecated(
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
-        replaceWith = ReplaceWith("InterceptorUploadProgress")
+        replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
     fun buildJson(): RequestBody {
         val body = mJsonBuilder.toString().toRequestBody(MediaTypes.MEDIA_TYPE_JSON)

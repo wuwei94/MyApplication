@@ -29,15 +29,14 @@ import kotlin.system.measureNanoTime
  * 5. 解析输出张量 [1, 10]，实时展示置信度最高的数字与 0~9 概率分布
  */
 @Route(path = RouterPath.Ml.DigitClassifier)
-class TFLiteDigitClassifierActivity : BaseVBActivity<MlActivityDigitClassificationBinding>(),
+class TFLiteDigitClassifierActivity :
+    BaseVBActivity<MlActivityDigitClassificationBinding>(),
     View.OnClickListener {
 
     private var interpreter: Interpreter? = null
     private val modelFileName = "mnist.tflite"
 
-    override fun getViewBinding(): MlActivityDigitClassificationBinding {
-        return MlActivityDigitClassificationBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): MlActivityDigitClassificationBinding = MlActivityDigitClassificationBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

@@ -33,7 +33,8 @@ import kotlin.system.measureNanoTime
  */
 @Route(path = RouterPath.Ml.GpuDelegate)
 class TFLiteGpuDelegateActivity :
-    BaseVBActivity<MlActivityGpuBenchmarkBinding>(), View.OnClickListener {
+    BaseVBActivity<MlActivityGpuBenchmarkBinding>(),
+    View.OnClickListener {
 
     private val modelFileName = "mobilenet_v1_1.0_224_quant.tflite"
 
@@ -43,9 +44,7 @@ class TFLiteGpuDelegateActivity :
     private var cpuMultiXnnAvg = 0.0
     private var gpuAvg = 0.0
 
-    override fun getViewBinding(): MlActivityGpuBenchmarkBinding {
-        return MlActivityGpuBenchmarkBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): MlActivityGpuBenchmarkBinding = MlActivityGpuBenchmarkBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -91,7 +90,7 @@ class TFLiteGpuDelegateActivity :
         CPU_SINGLE_XNN,
         CPU_MULTI,
         CPU_MULTI_XNN,
-        GPU_DELEGATE
+        GPU_DELEGATE,
     }
 
     private fun runBenchmark(mode: Mode) {
@@ -153,7 +152,7 @@ class TFLiteGpuDelegateActivity :
                 Mode.CPU_SINGLE_XNN,
                 Mode.CPU_MULTI,
                 Mode.CPU_MULTI_XNN,
-                Mode.GPU_DELEGATE
+                Mode.GPU_DELEGATE,
             )
 
             for (mode in modes) {
@@ -290,7 +289,7 @@ class TFLiteGpuDelegateActivity :
         val warmUpMs: Double,
         val steadyAvgMs: Double,
         val p95Ms: Double,
-        val fps: Double
+        val fps: Double,
     )
 
     private fun appendLog(log: String) {

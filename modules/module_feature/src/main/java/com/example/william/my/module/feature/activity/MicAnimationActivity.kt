@@ -44,12 +44,10 @@ class MicAnimationActivity : BaseVBActivity<FeatureActivityMicAnimationBinding>(
         "#BA68C8".toColorInt(),
         "#4DB6AC".toColorInt(),
         "#FF8A65".toColorInt(),
-        "#A1887F".toColorInt()
+        "#A1887F".toColorInt(),
     )
 
-    override fun getViewBinding(): FeatureActivityMicAnimationBinding {
-        return FeatureActivityMicAnimationBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): FeatureActivityMicAnimationBinding = FeatureActivityMicAnimationBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

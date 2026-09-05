@@ -14,14 +14,12 @@ class RxDownloadManager private constructor(
     private val destinationRegistry: DownloadDestinationRegistry,
 ) {
 
-    fun download(): RxDownloadQueueBuilder {
-        return RxDownloadQueueBuilder(
-            retrofit,
-            maxConcurrency,
-            concurrencyLimiter,
-            destinationRegistry,
-        )
-    }
+    fun download(): RxDownloadQueueBuilder = RxDownloadQueueBuilder(
+        retrofit,
+        maxConcurrency,
+        concurrencyLimiter,
+        destinationRegistry,
+    )
 
     fun queue(): RxDownloadQueueBuilder = download()
 
@@ -38,14 +36,12 @@ class RxDownloadManager private constructor(
             this.maxConcurrency = maxConcurrency
         }
 
-        fun build(): RxDownloadManager {
-            return RxDownloadManager(
-                retrofit = retrofit,
-                maxConcurrency = maxConcurrency,
-                concurrencyLimiter = DownloadConcurrencyLimiter(maxConcurrency),
-                destinationRegistry = DownloadDestinationRegistry(),
-            )
-        }
+        fun build(): RxDownloadManager = RxDownloadManager(
+            retrofit = retrofit,
+            maxConcurrency = maxConcurrency,
+            concurrencyLimiter = DownloadConcurrencyLimiter(maxConcurrency),
+            destinationRegistry = DownloadDestinationRegistry(),
+        )
     }
 
     companion object {

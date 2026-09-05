@@ -16,9 +16,7 @@ class ActivityResultActivity2 : BasicResponseActivity() {
         showDescription("收到数据：${intent?.getStringExtra("input")}")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("返回数据给上游")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("返回数据给上游")
 
     override fun onRecyclerClick(position: Int, string: String) {
         val result = Intent().apply {

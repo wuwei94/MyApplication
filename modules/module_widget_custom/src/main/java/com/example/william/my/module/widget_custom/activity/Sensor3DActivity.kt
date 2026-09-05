@@ -31,7 +31,5 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivitySenso
 @Route(path = RouterPath.WidgetCustom.Sensor3DView)
 class Sensor3DActivity : BaseVBActivity<DemoActivitySensor3dBinding>() {
 
-    override fun getViewBinding(): DemoActivitySensor3dBinding {
-        return DemoActivitySensor3dBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): DemoActivitySensor3dBinding = DemoActivitySensor3dBinding.inflate(layoutInflater)
 }

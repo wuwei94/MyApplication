@@ -6,7 +6,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
 
 /**
@@ -28,7 +27,7 @@ class TypewriterEngine {
         IDLE,
         TYPING,
         PAUSED,
-        COMPLETED
+        COMPLETED,
     }
 
     private val mLock = Any()
@@ -230,12 +229,10 @@ class TypewriterEngine {
      * - 句末重标点（句号、感叹号、问号、换行）：停顿 160ms（轻快思考停顿）
      * - 句中轻标点（逗号、顿号、分号、冒号）：停顿 80ms（自然换气停顿）
      */
-    private fun getPunctuationPause(c: Char): Long {
-        return when (c) {
-            '。', '！', '？', '.', '!', '?', '\n' -> 160L
-            '，', '、', '；', '：', ',', ';', ':' -> 80L
-            else -> 0L
-        }
+    private fun getPunctuationPause(c: Char): Long = when (c) {
+        '。', '！', '？', '.', '!', '?', '\n' -> 160L
+        '，', '、', '；', '：', ',', ';', ':' -> 80L
+        else -> 0L
     }
 
     private fun notifyText(text: String, isFinished: Boolean) {

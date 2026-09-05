@@ -84,13 +84,13 @@ fun ComposeLineChartScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // 图表容器卡片
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("2026 年度收支趋势图 (Compose Canvas)", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -106,7 +106,7 @@ fun ComposeLineChartScreen(modifier: Modifier = Modifier) {
                     expense = expenseData,
                     labels = months,
                     selectedIndex = selectedMonthIndex,
-                    onPointSelected = { selectedMonthIndex = it }
+                    onPointSelected = { selectedMonthIndex = it },
                 )
             }
         }
@@ -120,20 +120,20 @@ fun ComposeLineChartScreen(modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF00897B).copy(alpha = 0.08f))
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF00897B).copy(alpha = 0.08f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text("选中月份数据联动 (${months[selectedMonthIndex]})", fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     Text(
                         text = if (profit >= 0) "盈利良好" else "支出预警",
                         color = if (profit >= 0) Color(0xFF10B981) else Color(0xFFEF4444),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
                     )
                 }
 
@@ -142,11 +142,11 @@ fun ComposeLineChartScreen(modifier: Modifier = Modifier) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Column {
                         Text("月度收入", fontSize = 11.sp, color = Color.Gray)
-                        Text("${inc} 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF00897B))
+                        Text("$inc 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF00897B))
                     }
                     Column {
                         Text("月度支出", fontSize = 11.sp, color = Color.Gray)
-                        Text("${exp} 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFFE64A19))
+                        Text("$exp 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFFE64A19))
                     }
                     Column {
                         Text("净利润", fontSize = 11.sp, color = Color.Gray)
@@ -169,7 +169,7 @@ fun ComposeLineChartCore(
     expense: List<Float>,
     labels: List<String>,
     selectedIndex: Int,
-    onPointSelected: (Int) -> Unit
+    onPointSelected: (Int) -> Unit,
 ) {
     val primaryColor = Color(0xFF00897B)
     val expenseColor = Color(0xFFE64A19)
@@ -189,7 +189,7 @@ fun ComposeLineChartCore(
                     val idx = (xRatio * (labels.size - 1)).toInt().coerceIn(0, labels.size - 1)
                     onPointSelected(idx)
                 }
-            }
+            },
     ) {
         val width = size.width
         val height = size.height
@@ -206,7 +206,7 @@ fun ComposeLineChartCore(
                 start = Offset(0f, y),
                 end = Offset(width, y),
                 strokeWidth = 1.dp.toPx(),
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
+                pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f),
             )
         }
 
@@ -235,8 +235,8 @@ fun ComposeLineChartCore(
                 brush = Brush.verticalGradient(
                     colors = listOf(primaryColor.copy(alpha = 0.35f), primaryColor.copy(alpha = 0.02f)),
                     startY = 0f,
-                    endY = chartHeight
-                )
+                    endY = chartHeight,
+                ),
             )
             drawPath(path = incomePath, color = primaryColor, style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round))
         }
@@ -267,7 +267,7 @@ fun ComposeLineChartCore(
                 start = Offset(selX, 0f),
                 end = Offset(selX, chartHeight),
                 strokeWidth = 1.5.dp.toPx(),
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 6f), 0f)
+                pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 6f), 0f),
             )
 
             drawCircle(color = Color.White, radius = 6.dp.toPx(), center = Offset(selX, selY))

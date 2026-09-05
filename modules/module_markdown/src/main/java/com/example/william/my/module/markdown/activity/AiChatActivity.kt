@@ -22,13 +22,11 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.core.CorePlugin
 import io.noties.markwon.core.MarkwonTheme
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
-import io.noties.markwon.ext.tables.TablePlugin
 import io.noties.markwon.ext.tables.TableTheme
 import io.noties.markwon.ext.tasklist.TaskListPlugin
 import io.noties.markwon.syntax.Prism4jThemeDarkula
 import io.noties.markwon.syntax.SyntaxHighlightPlugin
 import io.noties.prism4j.Prism4j
-import org.commonmark.node.Code
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -58,9 +56,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
     private var mIsGenerating = false
     private var mAutoScrollEnabled = true
 
-    override fun getViewBinding(): MarkdownActivityChatBinding {
-        return MarkdownActivityChatBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): MarkdownActivityChatBinding = MarkdownActivityChatBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -122,9 +118,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
             .build()
     }
 
-    private fun dpToPx(dp: Int): Int {
-        return (dp * resources.displayMetrics.density).toInt()
-    }
+    private fun dpToPx(dp: Int): Int = (dp * resources.displayMetrics.density).toInt()
 
     private fun initRecyclerView() {
         mAdapter = ChatAdapter(mMarkwon) { content ->
@@ -258,16 +252,16 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
             role = ChatMessage.Role.ASSISTANT,
             content = """
                 👋 **您好！我是您的 AI 流式智能助手。**
-                
+
                 本界面完整演示了 Android 端**极致丝滑**的大模型聊天交互：
                 - 🚀 **Markwon + Prism4j**：代码块多语言离线语法高亮与 GFM 表格排版；
                 - ⚡ **Payload 增量刷新**：流式出字 0 掉帧、0 闪烁；
                 - 🎯 **自适应打字机**：大模型突发推流自适应提速 + 标点呼吸停顿；
                 - 🛡️ **未闭合语法容错**：代码块在流式生成中语法树不崩塌。
-                
+
                 您可以点击下方的**快捷提示词**或直接在底部输入框提问！
             """.trimIndent(),
-            status = ChatMessage.Status.COMPLETED
+            status = ChatMessage.Status.COMPLETED,
         )
         mAdapter.addMessage(welcome)
     }
@@ -280,13 +274,13 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
             id = UUID.randomUUID().toString(),
             role = ChatMessage.Role.USER,
             content = prompt,
-            status = ChatMessage.Status.COMPLETED
+            status = ChatMessage.Status.COMPLETED,
         )
         val aiMsg = ChatMessage(
             id = UUID.randomUUID().toString(),
             role = ChatMessage.Role.ASSISTANT,
             content = "",
-            status = ChatMessage.Status.SENDING
+            status = ChatMessage.Status.SENDING,
         )
 
         // 2. 原子性批量插入两条消息（避免分批插入导致列表高度两次跳跃与闪烁）
@@ -399,7 +393,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 "- ⚡ **渲染与架构**：120fps 丝滑 Markdown 渲染、RecyclerView Payload 局部增量刷新；\n",
                 "- 🏛️ **依赖注入**：Google Hilt vs Koin 方案深度对比；\n",
                 "- 📊 **数据库调优**：SQL 复杂多表统计与索引优化；\n\n",
-                "> 请随时在下方输入框提问或点击预设提示词！"
+                "> 请随时在下方输入框提问或点击预设提示词！",
             )
         }
 
@@ -432,7 +426,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 "```\n\n",
                 "**架构优势**：\n",
                 "- 🚀 **背压支持**：Flow 自动支持协程背压与生命周期协作取消；\n",
-                "- 🛡️ **内存友好**：逐行流式读取，无 OOM 风险！"
+                "- 🛡️ **内存友好**：逐行流式读取，无 OOM 风险！",
             )
         }
 
@@ -455,7 +449,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 "        holder.bindFull(item)\n",
                 "    }\n",
                 "}\n",
-                "```"
+                "```",
             )
         }
 
@@ -484,7 +478,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 "    total_tokens DESC;\n",
                 "```\n\n",
                 "**索引调优建议**：\n",
-                "在 `request_logs` 表建立联合索引：`CREATE INDEX idx_model_created ON request_logs(model_id, created_at);`。"
+                "在 `request_logs` 表建立联合索引：`CREATE INDEX idx_model_created ON request_logs(model_id, created_at);`。",
             )
         }
 
@@ -504,7 +498,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 "    private val repo: ChatRepository\n",
                 ") : ViewModel()\n",
                 "```\n\n",
-                "**选型建议**：大型商业 App 首选 **Hilt** 获得编译期安全保障；中小型或快速原型项目推荐 **Koin**。"
+                "**选型建议**：大型商业 App 首选 **Hilt** 获得编译期安全保障；中小型或快速原型项目推荐 **Koin**。",
             )
         }
 
@@ -527,7 +521,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
             "    }\n",
             "}\n",
             "```\n\n",
-            "> 💡 **提示**：您可以点击下方快捷提示词进一步探索 SSE 流式推流、Markdown 语法高亮与打字机流控！"
+            "> 💡 **提示**：您可以点击下方快捷提示词进一步探索 SSE 流式推流、Markdown 语法高亮与打字机流控！",
         )
     }
 

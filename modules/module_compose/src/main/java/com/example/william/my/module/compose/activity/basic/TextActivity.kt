@@ -44,7 +44,7 @@ class TextActivity : ComponentActivity() {
             textAlign = TextAlign.Center,
             textDecoration = TextDecoration.Underline,
             fontStyle = FontStyle.Italic,
-            maxLines = 1
+            maxLines = 1,
         )
     }
 }

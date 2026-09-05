@@ -55,12 +55,10 @@ class CustomPopWindowActivity : BasicResponseActivity() {
         showDescription("点击下方列表项展示 CustomPopWindow")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "显示 CustomPopWindow",
-            "显示 CustomPopWindow（背景变暗）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "显示 CustomPopWindow",
+        "显示 CustomPopWindow（背景变暗）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -72,7 +70,8 @@ class CustomPopWindowActivity : BasicResponseActivity() {
 
     private fun showCustomPopWindow(backgroundDark: Boolean) {
         val contentView = layoutInflater.inflate(
-            R.layout.widget_layout_custom_pop_window, null
+            R.layout.widget_layout_custom_pop_window,
+            null,
         )
 
         contentView.findViewById<TextView>(R.id.widget_item_one).setOnClickListener {

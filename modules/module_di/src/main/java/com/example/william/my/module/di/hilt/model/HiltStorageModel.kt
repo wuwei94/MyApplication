@@ -13,7 +13,5 @@ interface HiltStorageService {
  * 磁盘存储具体实现
  */
 class HiltDiskStorageServiceImpl @Inject constructor() : HiltStorageService {
-    override fun saveData(key: String, value: String): String {
-        return "DiskStorageService: 成功写入本地磁盘 [$key -> $value]"
-    }
+    override fun saveData(key: String, value: String): String = "DiskStorageService: 成功写入本地磁盘 [$key -> $value]"
 }

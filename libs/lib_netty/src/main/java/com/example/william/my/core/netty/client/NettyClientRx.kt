@@ -25,9 +25,7 @@ object NettyClientRx {
         channelMap["$host:$port"] = channel
     }
 
-    fun getChannel(host: String, port: Int): Channel? {
-        return channelMap["$host:$port"]
-    }
+    fun getChannel(host: String, port: Int): Channel? = channelMap["$host:$port"]
 
     /**
      * 创建连接 Observable
@@ -38,7 +36,7 @@ object NettyClientRx {
      */
     fun createConnection(
         host: String,
-        port: Int
+        port: Int,
     ): Observable<NettyClientInfo> {
         val key = "$host:$port"
 

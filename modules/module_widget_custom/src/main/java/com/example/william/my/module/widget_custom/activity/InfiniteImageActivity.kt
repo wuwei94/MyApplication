@@ -38,7 +38,5 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityInfin
 @Route(path = RouterPath.WidgetCustom.InfiniteImage)
 class InfiniteImageActivity : BaseVBActivity<DemoActivityInfiniteImageBinding>() {
 
-    override fun getViewBinding(): DemoActivityInfiniteImageBinding {
-        return DemoActivityInfiniteImageBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): DemoActivityInfiniteImageBinding = DemoActivityInfiniteImageBinding.inflate(layoutInflater)
 }

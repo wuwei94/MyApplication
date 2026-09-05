@@ -36,7 +36,7 @@ abstract class BasicRecyclerActivity : BasicControlActivity() {
      */
     protected fun setAdapter(
         adapter: RecyclerView.Adapter<*>,
-        layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this),
     ) {
         mDataRecycler.layoutManager = layoutManager
         mDataRecycler.adapter = adapter

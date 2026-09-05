@@ -40,10 +40,8 @@ class MyJobSchedulerService : JobService() {
         val duration = params.extras.getLong(JobSchedulerActivity.KEY_WORK_DURATION)
 
         Handler(Looper.getMainLooper()).postDelayed({
-
             sendMessage(JobSchedulerActivity.MSG_COLOR_STOP, params.jobId)
             jobFinished(params, false)
-
         }, duration)
 
         Utils.toast("JobScheduler — 开始执行 Job ID: ${params.jobId}")

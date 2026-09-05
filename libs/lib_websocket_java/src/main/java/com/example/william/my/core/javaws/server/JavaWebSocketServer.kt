@@ -12,7 +12,7 @@ object JavaWebSocketServer {
 
     fun start(
         port: Int,
-        listener: JavaWebSocketServerListener? = null
+        listener: JavaWebSocketServerListener? = null,
     ): WebSocketServer {
         val address = InetSocketAddress(port)
         return start(address, listener)
@@ -20,7 +20,7 @@ object JavaWebSocketServer {
 
     fun start(
         address: InetSocketAddress,
-        listener: JavaWebSocketServerListener? = null
+        listener: JavaWebSocketServerListener? = null,
     ): WebSocketServer {
         server?.stop()
         server = object : WebSocketServer(address) {
@@ -66,11 +66,7 @@ object JavaWebSocketServer {
         server?.broadcast(bytes)
     }
 
-    fun getConnections(): Int {
-        return server?.connections?.size ?: 0
-    }
+    fun getConnections(): Int = server?.connections?.size ?: 0
 
-    fun isRunning(): Boolean {
-        return server != null
-    }
+    fun isRunning(): Boolean = server != null
 }

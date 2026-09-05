@@ -51,16 +51,14 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("【MMKV 初始化】存储根目录: $rootDir")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "写入基础类型数据（String / Int / Boolean / Float）",
-            "读取基础类型数据",
-            "写入二进制数据（ByteArray）",
-            "读取二进制数据",
-            "删除指定键（user_name）",
-            "清空全部存储（clearAll）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "写入基础类型数据（String / Int / Boolean / Float）",
+        "读取基础类型数据",
+        "写入二进制数据（ByteArray）",
+        "读取二进制数据",
+        "删除指定键（user_name）",
+        "清空全部存储（clearAll）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

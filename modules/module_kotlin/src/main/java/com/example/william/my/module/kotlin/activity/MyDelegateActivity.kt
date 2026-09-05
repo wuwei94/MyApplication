@@ -52,17 +52,15 @@ class MyDelegateActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin 委托机制：类委托与属性委托")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "类委托（Class Delegation: by base）",
-            "自定义属性委托（ReadWriteProperty）",
-            "延迟属性委托（by lazy）",
-            "可观察属性（Delegates.observable）",
-            "可否决属性（Delegates.vetoable）",
-            "Map 映射属性委托（by map）",
-            "属性重定向委托（::otherProp）与 notNull"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "类委托（Class Delegation: by base）",
+        "自定义属性委托（ReadWriteProperty）",
+        "延迟属性委托（by lazy）",
+        "可观察属性（Delegates.observable）",
+        "可否决属性（Delegates.vetoable）",
+        "Map 映射属性委托（by map）",
+        "属性重定向委托（::otherProp）与 notNull",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -101,9 +99,7 @@ class MyDelegateActivity : BasicResponseActivity() {
     class StringDelegate : ReadWriteProperty<Any?, String> {
         private var innerValue = "DefaultValue"
 
-        override fun getValue(thisRef: Any?, property: KProperty<*>): String {
-            return innerValue
-        }
+        override fun getValue(thisRef: Any?, property: KProperty<*>): String = innerValue
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
             innerValue = value

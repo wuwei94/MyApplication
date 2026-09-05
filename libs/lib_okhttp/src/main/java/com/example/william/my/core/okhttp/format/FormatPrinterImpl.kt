@@ -18,14 +18,10 @@ import okhttp3.Response
 class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
 
     private val last: ThreadLocal<Int> = object : ThreadLocal<Int>() {
-        override fun initialValue(): Int {
-            return 0
-        }
+        override fun initialValue(): Int = 0
     }
 
-    private fun isEmpty(line: String): Boolean {
-        return line.isEmpty() || "\n" == line || "\t" == line || line.trim().isEmpty()
-    }
+    private fun isEmpty(line: String): Boolean = line.isEmpty() || "\n" == line || "\t" == line || line.trim().isEmpty()
 
     /**
      * 打印网络请求信息, 当网络请求时 {[okhttp3.RequestBody]} 可以解析的情况
@@ -67,7 +63,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
         tookMs: Long,
         response: Response,
         mediaType: MediaType?,
-        bodyString: String
+        bodyString: String,
     ) {
         if (shouldPrint(response.request.url)) {
             val tag = "$TAG-Response"
@@ -123,7 +119,6 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
         }
     }
 
-
     /**
      * 此方法是为了解决在 AndroidStudio v3.1 以上 Logcat 输出的日志无法对齐的问题
      *
@@ -138,9 +133,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
      *
      * @param tag
      */
-    private fun resolveTag(tag: String): String {
-        return computeKey() + tag
-    }
+    private fun resolveTag(tag: String): String = computeKey() + tag
 
     private fun computeKey(): String {
         val index = last.get() ?: 0
@@ -152,9 +145,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
         return ARMS[index]
     }
 
-    private fun getUrl(request: Request): Array<String> {
-        return arrayOf(URL_TAG + request.url)
-    }
+    private fun getUrl(request: Request): Array<String> = arrayOf(URL_TAG + request.url)
 
     private fun getHeaders(request: Request): Array<String> {
         val log: String
@@ -166,9 +157,13 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
         }
 
         log = METHOD_TAG + request.method + DOUBLE_SEPARATOR +
-                if (isEmpty(headerString.toString())) "" else HEADERS_TAG + LINE_SEPARATOR + dotHeaders(
-                    headerString.toString()
+            if (isEmpty(headerString.toString())) {
+                ""
+            } else {
+                HEADERS_TAG + LINE_SEPARATOR + dotHeaders(
+                    headerString.toString(),
                 )
+            }
         return log.split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
     }
 
@@ -177,9 +172,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
         return log.split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
     }
 
-    private fun getUrl(response: Response): Array<String> {
-        return arrayOf(URL_TAG + response.request.url)
-    }
+    private fun getUrl(response: Response): Array<String> = arrayOf(URL_TAG + response.request.url)
 
     private fun getHeaders(response: Response, tookMs: Long): Array<String> {
         val log: String
@@ -192,21 +185,26 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
 
         log =
             STATUS_CODE_TAG + "${response.code}" + "${if (response.message.isEmpty()) "" else ' ' + response.message} (${tookMs}ms)" + DOUBLE_SEPARATOR +
-                    if (isEmpty(headerString.toString())) "" else HEADERS_TAG + LINE_SEPARATOR + dotHeaders(
-                        headerString.toString()
-                    )
+            if (isEmpty(headerString.toString())) {
+                ""
+            } else {
+                HEADERS_TAG + LINE_SEPARATOR + dotHeaders(
+                    headerString.toString(),
+                )
+            }
         return log.split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
     }
 
     private fun getResponseBody(mediaType: MediaType?, bodyString: String): Array<String> {
         val log = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + (
-                if (FormatParser.isJson(mediaType)) {
-                    FormatParser.jsonFormat(bodyString)
-                } else if (FormatParser.isXml(mediaType)) {
-                    FormatParser.xmlFormat(bodyString)
-                } else {
-                    bodyString
-                })
+            if (FormatParser.isJson(mediaType)) {
+                FormatParser.jsonFormat(bodyString)
+            } else if (FormatParser.isXml(mediaType)) {
+                FormatParser.xmlFormat(bodyString)
+            } else {
+                bodyString
+            }
+            )
         return log.split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
     }
 

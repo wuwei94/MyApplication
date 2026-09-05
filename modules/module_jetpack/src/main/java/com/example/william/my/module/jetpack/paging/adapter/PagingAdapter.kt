@@ -11,8 +11,7 @@ import com.example.william.my.module.jetpack.databinding.JetpackItemRecyclerBind
 /**
  * Paging RecyclerView 适配器
  */
-class PagingAdapter(diffCallback: DiffUtil.ItemCallback<ArticleDetailData>) :
-    PagingDataAdapter<ArticleDetailData, PagingAdapter.ViewHolder>(diffCallback) {
+class PagingAdapter(diffCallback: DiffUtil.ItemCallback<ArticleDetailData>) : PagingDataAdapter<ArticleDetailData, PagingAdapter.ViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = position.toString() + ". " + getItem(position)?.title
@@ -33,7 +32,7 @@ class PagingAdapter(diffCallback: DiffUtil.ItemCallback<ArticleDetailData>) :
 
         override fun areItemsTheSame(
             oldItem: ArticleDetailData,
-            newItem: ArticleDetailData
+            newItem: ArticleDetailData,
         ): Boolean {
             // Id is unique.
             return oldItem.id == newItem.id
@@ -41,9 +40,7 @@ class PagingAdapter(diffCallback: DiffUtil.ItemCallback<ArticleDetailData>) :
 
         override fun areContentsTheSame(
             oldItem: ArticleDetailData,
-            newItem: ArticleDetailData
-        ): Boolean {
-            return oldItem == newItem
-        }
+            newItem: ArticleDetailData,
+        ): Boolean = oldItem == newItem
     }
 }

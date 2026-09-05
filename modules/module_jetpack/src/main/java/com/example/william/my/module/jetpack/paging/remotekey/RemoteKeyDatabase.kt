@@ -39,23 +39,22 @@ abstract class RemoteKeyDatabase : RoomDatabase() {
         private const val DB_NAME = "RemoteKey.db"
 
         private var instance: RemoteKeyDatabase? = null
-        fun getInstance(context: Context) =
-            instance ?: synchronized(this) {
-                instance ?: createDataBase(context).also {
-                    instance = it
-                }
+        fun getInstance(context: Context) = instance ?: synchronized(this) {
+            instance ?: createDataBase(context).also {
+                instance = it
             }
+        }
 
         private fun createDataBase(
             context: Context,
-            inMemory: Boolean = false
+            inMemory: Boolean = false,
         ): RemoteKeyDatabase {
             val result = if (inMemory) {
                 // 使用更快的内存中数据库进行测试
                 // Use a faster in-memory database for tests
                 Room.inMemoryDatabaseBuilder(
                     context.applicationContext,
-                    RemoteKeyDatabase::class.java
+                    RemoteKeyDatabase::class.java,
                 )
                     .allowMainThreadQueries()
                     .build()
@@ -64,7 +63,8 @@ abstract class RemoteKeyDatabase : RoomDatabase() {
                 // Real database using SQLite
                 Room.databaseBuilder(
                     context.applicationContext,
-                    RemoteKeyDatabase::class.java, DB_NAME
+                    RemoteKeyDatabase::class.java,
+                    DB_NAME,
                 )
                     .fallbackToDestructiveMigration(true)
                     .build()

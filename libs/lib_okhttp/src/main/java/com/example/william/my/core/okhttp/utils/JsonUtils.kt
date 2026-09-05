@@ -7,7 +7,5 @@ object JsonUtils {
     private val gson = Gson()
 
     /** 将对象转换为 JSON 字符串。 */
-    fun toJson(value: Any): String {
-        return gson.toJson(value)
-    }
+    fun toJson(value: Any): String = gson.toJson(value)
 }

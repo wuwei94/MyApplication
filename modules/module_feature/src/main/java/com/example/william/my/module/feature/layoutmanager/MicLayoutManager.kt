@@ -9,7 +9,7 @@ class MicLayoutManager : RecyclerView.LayoutManager() {
 
     enum class LayoutMode {
         MODE_A,
-        MODE_B
+        MODE_B,
     }
 
     var layoutMode: LayoutMode = LayoutMode.MODE_A
@@ -24,18 +24,16 @@ class MicLayoutManager : RecyclerView.LayoutManager() {
 
     override fun isAutoMeasureEnabled(): Boolean = false
 
-    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-        return RecyclerView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-    }
+    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams = RecyclerView.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT,
+    )
 
     override fun onMeasure(
         recycler: RecyclerView.Recycler,
         state: RecyclerView.State,
         widthSpec: Int,
-        heightSpec: Int
+        heightSpec: Int,
     ) {
         val width = View.MeasureSpec.getSize(widthSpec)
 
@@ -84,7 +82,7 @@ class MicLayoutManager : RecyclerView.LayoutManager() {
             intArrayOf(0, itemSize + rowGap),
             intArrayOf(itemSize, itemSize + rowGap),
             intArrayOf(2 * itemSize, itemSize + rowGap),
-            intArrayOf(3 * itemSize, itemSize + rowGap)
+            intArrayOf(3 * itemSize, itemSize + rowGap),
         )
         layoutAll(recycler, positions, itemSize)
     }
@@ -110,7 +108,7 @@ class MicLayoutManager : RecyclerView.LayoutManager() {
             intArrayOf(col1, 0),
             intArrayOf(col1, itemSize + rowGap),
             intArrayOf(col1, 2 * (itemSize + rowGap)),
-            intArrayOf(col1, 3 * (itemSize + rowGap))
+            intArrayOf(col1, 3 * (itemSize + rowGap)),
         )
         layoutAll(recycler, positions, itemSize)
     }
@@ -118,7 +116,7 @@ class MicLayoutManager : RecyclerView.LayoutManager() {
     private fun layoutAll(
         recycler: RecyclerView.Recycler,
         positions: Array<IntArray>,
-        itemSize: Int
+        itemSize: Int,
     ) {
         for (i in 0 until min(itemCount, positions.size)) {
             val view = recycler.getViewForPosition(i)

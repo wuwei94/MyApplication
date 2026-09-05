@@ -14,7 +14,7 @@ import okio.buffer
 class DownloadProgressResponseBody(
     private val url: String,
     private val delegate: ResponseBody,
-    private val listener: (url: String, Long, Long) -> Unit
+    private val listener: (url: String, Long, Long) -> Unit,
 ) : ResponseBody() {
 
     private val progressSource =
@@ -33,7 +33,7 @@ class DownloadProgressResponseBody(
         delegate: Source,
         private val url: String,
         private val totalBytes: Long,
-        private val listener: (String, Long, Long) -> Unit
+        private val listener: (String, Long, Long) -> Unit,
     ) : ForwardingSource(delegate) {
 
         private var bytesRead = 0L

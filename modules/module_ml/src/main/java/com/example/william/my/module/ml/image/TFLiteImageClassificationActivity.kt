@@ -36,7 +36,8 @@ import kotlin.system.measureNanoTime
  */
 @Route(path = RouterPath.Ml.ImageClassification)
 class TFLiteImageClassificationActivity :
-    BaseVBActivity<MlActivityImageClassificationBinding>(), View.OnClickListener {
+    BaseVBActivity<MlActivityImageClassificationBinding>(),
+    View.OnClickListener {
 
     private var interpreter: Interpreter? = null
     private var gpuDelegate: GpuDelegate? = null
@@ -49,14 +50,12 @@ class TFLiteImageClassificationActivity :
     private var useGpu = false
 
     private val pickImageLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
+        ActivityResultContracts.GetContent(),
     ) { uri: Uri? ->
         uri?.let { loadBitmapFromUri(it) }
     }
 
-    override fun getViewBinding(): MlActivityImageClassificationBinding {
-        return MlActivityImageClassificationBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): MlActivityImageClassificationBinding = MlActivityImageClassificationBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -81,7 +80,7 @@ class TFLiteImageClassificationActivity :
                 labels = withContext(Dispatchers.IO) {
                     TFLiteModelHelper.loadLabels(
                         this@TFLiteImageClassificationActivity,
-                        labelsFileName
+                        labelsFileName,
                     )
                 }
                 rebuildInterpreter {
@@ -105,7 +104,7 @@ class TFLiteImageClassificationActivity :
                 val modelBuffer = withContext(Dispatchers.IO) {
                     TFLiteModelHelper.loadModelFile(
                         this@TFLiteImageClassificationActivity,
-                        modelFileName
+                        modelFileName,
                     )
                 }
 
@@ -214,7 +213,7 @@ class TFLiteImageClassificationActivity :
                             bitmap = bitmap,
                             targetWidth = 224,
                             targetHeight = 224,
-                            isQuantized = true
+                            isQuantized = true,
                         )
                     }
 
@@ -248,7 +247,7 @@ class TFLiteImageClassificationActivity :
                 topKList.forEachIndexed { rank, (index, prob) ->
                     val label = labels.getOrElse(index) { "类别 #$index" }
                     val percent = "%.2f".format(prob * 100).padStart(5, ' ')
-                    sb.append("Top ${rank + 1}:  ${percent}%  ──  $label\n")
+                    sb.append("Top ${rank + 1}:  $percent%  ──  $label\n")
                 }
                 mBinding.tvTop5Results.text = sb.toString().trimEnd()
             } catch (e: Exception) {

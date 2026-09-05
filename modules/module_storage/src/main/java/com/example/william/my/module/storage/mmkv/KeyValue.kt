@@ -38,27 +38,21 @@ object KeyValue {
         }
 
         @Suppress("UNCHECKED_CAST")
-        fun <T> get(key: String, defValue: T): T {
-            return when (defValue) {
-                is Int -> mmkv.decodeInt(key, defValue) as T
-                is Long -> mmkv.decodeLong(key, defValue) as T
-                is Float -> mmkv.decodeFloat(key, defValue) as T
-                is Double -> mmkv.decodeDouble(key, defValue) as T
-                is Boolean -> mmkv.decodeBool(key, defValue) as T
-                is String -> mmkv.decodeString(key, defValue) as T
-                is MutableSet<*> -> (mmkv.decodeStringSet(key) ?: defValue) as T
-                else -> defValue
-            }
+        fun <T> get(key: String, defValue: T): T = when (defValue) {
+            is Int -> mmkv.decodeInt(key, defValue) as T
+            is Long -> mmkv.decodeLong(key, defValue) as T
+            is Float -> mmkv.decodeFloat(key, defValue) as T
+            is Double -> mmkv.decodeDouble(key, defValue) as T
+            is Boolean -> mmkv.decodeBool(key, defValue) as T
+            is String -> mmkv.decodeString(key, defValue) as T
+            is MutableSet<*> -> (mmkv.decodeStringSet(key) ?: defValue) as T
+            else -> defValue
         }
 
-        fun <T : Parcelable> getParcelable(key: String, tClass: Class<T>): T {
-            return mmkv.decodeParcelable(key, tClass) ?: tClass.getDeclaredConstructor()
-                .newInstance()
-        }
+        fun <T : Parcelable> getParcelable(key: String, tClass: Class<T>): T = mmkv.decodeParcelable(key, tClass) ?: tClass.getDeclaredConstructor()
+            .newInstance()
 
-        fun containsKey(key: String): Boolean {
-            return mmkv.containsKey(key)
-        }
+        fun containsKey(key: String): Boolean = mmkv.containsKey(key)
 
         fun removeKey(key: String) {
             mmkv.removeValueForKey(key)

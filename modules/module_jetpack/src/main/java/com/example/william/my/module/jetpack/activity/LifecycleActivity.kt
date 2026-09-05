@@ -70,7 +70,7 @@ class LifecycleActivity : BasicResponseActivity() {
             • DefaultLifecycleObserver：替代传统的 BaseActivity 模板方法回调；
             • ProcessLifecycleOwner：进程级全局前后台状态监听；
             • repeatOnLifecycle / flowWithLifecycle：现代协程流生命周期感知安全收集。
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         // 绑定组件生命周期观察者
@@ -80,14 +80,12 @@ class LifecycleActivity : BasicResponseActivity() {
         ProcessLifecycleOwner.get().lifecycle.addObserver(appProcessObserver)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 检查当前 Activity 生命周期状态 (Lifecycle.currentState)",
-            "2. 启动 repeatOnLifecycle(STARTED) 数据流监听 (退到后台自动挂起)",
-            "3. 启动 flowWithLifecycle(RESUMED) 单流监听",
-            "4. 模拟触发组件生命周期事件日志"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 检查当前 Activity 生命周期状态 (Lifecycle.currentState)",
+        "2. 启动 repeatOnLifecycle(STARTED) 数据流监听 (退到后台自动挂起)",
+        "3. 启动 flowWithLifecycle(RESUMED) 单流监听",
+        "4. 模拟触发组件生命周期事件日志",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

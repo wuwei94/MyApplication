@@ -27,12 +27,10 @@ sealed class NetworkResult<out R> {
     data class Error(val exception: Exception) : NetworkResult<Nothing>()
     data object Loading : NetworkResult<Nothing>()
 
-    override fun toString(): String {
-        return when (this) {
-            is Success<*> -> "Success[data=$data]"
-            is Error -> "Error[exception=$exception]"
-            Loading -> "Loading"
-        }
+    override fun toString(): String = when (this) {
+        is Success<*> -> "Success[data=$data]"
+        is Error -> "Error[exception=$exception]"
+        Loading -> "Loading"
     }
 }
 

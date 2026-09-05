@@ -20,16 +20,15 @@ class SwitchableVPFAdapter(
     fm: FragmentManager,
     private val mFragments: List<Fragment> = emptyList(),
     private val mTitles: List<String>? = null,
-    isNew: Boolean
+    isNew: Boolean,
 ) : FragmentStatePagerAdapter(
-    fm, if (isNew) BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT else BEHAVIOR_SET_USER_VISIBLE_HINT
+    fm,
+    if (isNew) BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT else BEHAVIOR_SET_USER_VISIBLE_HINT,
 ) {
 
     override fun getCount(): Int = mFragments.size
 
     override fun getItem(position: Int): Fragment = mFragments[position]
 
-    override fun getPageTitle(position: Int): CharSequence {
-        return mTitles?.getOrNull(position) ?: ""
-    }
+    override fun getPageTitle(position: Int): CharSequence = mTitles?.getOrNull(position) ?: ""
 }

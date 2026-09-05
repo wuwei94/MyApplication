@@ -15,7 +15,9 @@ import com.example.william.my.module.arch.mavericks.viewmodel.ArticleMavericksVi
  *
  * 演示使用 Mavericks 进行状态持久化、异步请求与分页列表数据绑定。
  */
-class ArticleMavericksFragment : BaseRecyclerFragment<ArticleDetailData>(), MavericksView {
+class ArticleMavericksFragment :
+    BaseRecyclerFragment<ArticleDetailData>(),
+    MavericksView {
 
     /**
      * Mavericks 架构专属的 ViewModel 委托方式（区别于标准 Jetpack 的 by viewModels）：
@@ -24,9 +26,7 @@ class ArticleMavericksFragment : BaseRecyclerFragment<ArticleDetailData>(), Mave
      */
     private val viewModel: ArticleMavericksViewModel by fragmentViewModel()
 
-    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {
-        return ArticleAdapter(arrayListOf())
-    }
+    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> = ArticleAdapter(arrayListOf())
 
     override fun observeViewModel() {
         viewModel.onAsync(
@@ -42,7 +42,7 @@ class ArticleMavericksFragment : BaseRecyclerFragment<ArticleDetailData>(), Mave
                     showToast(response.message.ifEmpty { "加载失败" })
                     onDataFail()
                 }
-            }
+            },
         )
 
         queryData()

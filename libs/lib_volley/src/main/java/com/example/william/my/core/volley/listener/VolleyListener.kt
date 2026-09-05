@@ -2,7 +2,9 @@ package com.example.william.my.core.volley.listener
 
 import com.android.volley.Response
 
-abstract class VolleyListener<T> : Response.Listener<T>, Response.ErrorListener {
+abstract class VolleyListener<T> :
+    Response.Listener<T>,
+    Response.ErrorListener {
     /**
      * 创建请求的事件监听
      */

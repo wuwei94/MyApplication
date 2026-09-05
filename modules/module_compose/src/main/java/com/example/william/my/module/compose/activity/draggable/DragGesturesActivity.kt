@@ -38,7 +38,7 @@ class DragGesturesActivity : ComponentActivity() {
     @Composable
     private fun DragGesturesExample() {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             var offsetX by remember { mutableStateOf(0f) }
             var offsetY by remember { mutableStateOf(0f) }
@@ -57,7 +57,7 @@ class DragGesturesActivity : ComponentActivity() {
                             offsetY += dragAmount.y
                         }
                     },
-                text = "Drag me!"
+                text = "Drag me!",
             )
         }
     }

@@ -27,13 +27,9 @@ object JavaWebSocketClientFlow {
         webSocketMap[url] = client
     }
 
-    private fun getWebSocket(url: String): WebSocketClient? {
-        return webSocketMap[url]
-    }
+    private fun getWebSocket(url: String): WebSocketClient? = webSocketMap[url]
 
-    fun createWebSocket(url: String): Flow<JavaWebSocketInfo> {
-        return createWebSocket(URI(url))
-    }
+    fun createWebSocket(url: String): Flow<JavaWebSocketInfo> = createWebSocket(URI(url))
 
     fun createWebSocket(uri: URI): Flow<JavaWebSocketInfo> = callbackFlow {
         val url = uri.toString()
@@ -126,7 +122,7 @@ object JavaWebSocketClientFlow {
             try {
                 client.closeConnection(
                     org.java_websocket.framing.CloseFrame.ABNORMAL_CLOSE,
-                    "Client cancel"
+                    "Client cancel",
                 )
             } catch (e: Exception) {
                 JavaWebSocketLogger.error("cancel failed: $url", e)

@@ -20,6 +20,5 @@ class AnchoredDraggableActivity : ComponentActivity() {
 
     @Composable
     fun AnchoredDraggableExample() {
-
     }
 }

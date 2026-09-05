@@ -62,14 +62,12 @@ class DataStoreActivity : BasicResponseActivity() {
         observeDataStore()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Preferences: 自增计数器",
-            "Preferences: 写入用户名",
-            "Proto: 自增计数器 (类型安全)",
-            "清空所有 DataStore 数据"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Preferences: 自增计数器",
+        "Preferences: 写入用户名",
+        "Proto: 自增计数器 (类型安全)",
+        "清空所有 DataStore 数据",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

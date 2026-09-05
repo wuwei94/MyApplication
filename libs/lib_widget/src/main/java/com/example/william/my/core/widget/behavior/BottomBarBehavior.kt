@@ -8,8 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
-class BottomBarBehavior(context: Context?, attrs: AttributeSet?) :
-    CoordinatorLayout.Behavior<View>(context, attrs) {
+class BottomBarBehavior(context: Context?, attrs: AttributeSet?) : CoordinatorLayout.Behavior<View>(context, attrs) {
 
     private var viewY = 0f
     private var isAnimate = false
@@ -20,7 +19,7 @@ class BottomBarBehavior(context: Context?, attrs: AttributeSet?) :
         directTargetChild: View,
         target: View,
         nestedScrollAxes: Int,
-        @ViewCompat.NestedScrollType type: Int
+        @ViewCompat.NestedScrollType type: Int,
     ): Boolean {
         if (child.visibility == View.VISIBLE && viewY == 0f) {
             // 获取控件距离父布局（coordinatorLayout）底部距离
@@ -36,7 +35,7 @@ class BottomBarBehavior(context: Context?, attrs: AttributeSet?) :
         dx: Int,
         dy: Int,
         consumed: IntArray,
-        type: Int
+        type: Int,
     ) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         // dy大于0是向上滚动 小于0是向下滚动

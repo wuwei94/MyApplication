@@ -50,15 +50,13 @@ class CoilActivity : BasicImageActivity() {
         loadDefault()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "基础图片加载（Url_Image1）",
-            "切换第二张图片（Url_Image2）",
-            "淡入过渡动画（crossfade）",
-            "占位图与错误图（placeholder / error）",
-            "异常链接加载测试（触发 error）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "基础图片加载（Url_Image1）",
+        "切换第二张图片（Url_Image2）",
+        "淡入过渡动画（crossfade）",
+        "占位图与错误图（placeholder / error）",
+        "异常链接加载测试（触发 error）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

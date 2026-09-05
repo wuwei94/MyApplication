@@ -25,14 +25,12 @@ class SecureKeyActivity : BasicResponseActivity() {
         showDescription("Android Keystore 安全密钥\n\n点击下方按钮操作密钥")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "创建密钥（EC P-256）",
-            "查看密钥信息",
-            "ECDSA 签名",
-            "删除密钥"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "创建密钥（EC P-256）",
+        "查看密钥信息",
+        "ECDSA 签名",
+        "删除密钥",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {

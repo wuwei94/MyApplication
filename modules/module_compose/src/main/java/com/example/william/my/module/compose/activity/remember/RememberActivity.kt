@@ -63,7 +63,6 @@ class RememberActivity : ComponentActivity() {
         val clickedALot by remember { derivedStateOf { clickCount >= 3 } }
 
         Column {
-
             // 显示当前文本状态的 Text
             Text(text = "Current text: $text")
 
@@ -76,7 +75,7 @@ class RememberActivity : ComponentActivity() {
                 keyboardActions = KeyboardActions(onDone = {
                     // 当用户点击键盘上的“完成”按钮时调用
                     println("Final text: $text")
-                })
+                }),
             )
 
             Button(onClick = { clickCount++ }) {

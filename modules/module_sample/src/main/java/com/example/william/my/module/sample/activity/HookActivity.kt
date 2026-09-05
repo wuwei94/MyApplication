@@ -33,14 +33,12 @@ class HookActivity : BasicResponseActivity() {
         targetDemoView.setOnClickListener(originalClickListener)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 触发原始点击事件（performClick）",
-            "2. 执行反射 Hook（动态代理拦截点击）",
-            "3. 再次触发点击事件（验证 Hook 拦截）",
-            "4. 还原 Hook（恢复原始 Listener）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 触发原始点击事件（performClick）",
+        "2. 执行反射 Hook（动态代理拦截点击）",
+        "3. 再次触发点击事件（验证 Hook 拦截）",
+        "4. 还原 Hook（恢复原始 Listener）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

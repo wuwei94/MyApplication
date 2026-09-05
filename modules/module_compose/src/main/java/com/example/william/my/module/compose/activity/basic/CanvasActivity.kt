@@ -32,7 +32,7 @@ class CanvasActivity : ComponentActivity() {
             drawLine(
                 start = Offset(x = canvasWidth, y = 0f),
                 end = Offset(x = 0f, y = canvasHeight),
-                color = Color.Blue
+                color = Color.Blue,
             )
 
             // 在以 200，1200 位置 120 为半径绘制一个圆

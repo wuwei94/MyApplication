@@ -8,13 +8,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
     // NanoHTTPD
-    implementation(project(":libs:lib_nanohttpd"))
+    implementation(projects.libs.libNanohttpd)
 
     // WebSocket
-    implementation(project(":libs:lib_websocket_java"))
-    implementation(project(":libs:lib_netty"))
+    implementation(projects.libs.libWebsocketJava)
+    implementation(projects.libs.libNetty)
 }

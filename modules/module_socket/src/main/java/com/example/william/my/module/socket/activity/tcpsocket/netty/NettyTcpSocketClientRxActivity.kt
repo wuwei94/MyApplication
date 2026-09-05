@@ -34,15 +34,13 @@ class NettyTcpSocketClientRxActivity : BasicResponseActivity() {
         showDescription("【Netty TCP】RxJava 封装\n地址：$serverUrl\n需要先启动本地服务端")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "启动服务端（Start Server）",
-            "停止服务端（Stop Server）",
-            "连接服务器（Connect）",
-            "发送消息（Send Message）",
-            "断开连接（Disconnect）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "启动服务端（Start Server）",
+        "停止服务端（Stop Server）",
+        "连接服务器（Connect）",
+        "发送消息（Send Message）",
+        "断开连接（Disconnect）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

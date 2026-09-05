@@ -23,7 +23,8 @@ import com.example.william.my.core.base.ui.activity.BaseActivity
  * 1. 继承类实现 [buildList] 构建列表数据源。
  * 2. 继承类实现 [onRecyclerClick] 响应列表项点击事件。
  */
-abstract class BasicControlActivity : BaseActivity(),
+abstract class BasicControlActivity :
+    BaseActivity(),
     BaseQuickAdapter.OnItemClickListener<String> {
 
     private val mAdapter: RecyclerAdapter by lazy {
@@ -56,24 +57,18 @@ abstract class BasicControlActivity : BaseActivity(),
         mRecycler.adapter = mAdapterHelper.adapter
     }
 
-    protected open fun buildRecyclerList(): ArrayList<String> {
-        return buildList()
-    }
+    protected open fun buildRecyclerList(): ArrayList<String> = buildList()
 
-    protected open fun buildList(): ArrayList<String> {
-        return arrayListOf()
-    }
+    protected open fun buildList(): ArrayList<String> = arrayListOf()
 
     override fun onClick(adapter: BaseQuickAdapter<String, *>, view: View, position: Int) {
         onRecyclerClick(position, adapter.items[position])
     }
 
     protected open fun onRecyclerClick(position: Int, string: String) {
-
     }
 
-    class RecyclerAdapter(data: ArrayList<String> = arrayListOf()) :
-        BaseQuickAdapter<String, QuickViewHolder>(data) {
+    class RecyclerAdapter(data: ArrayList<String> = arrayListOf()) : BaseQuickAdapter<String, QuickViewHolder>(data) {
 
         override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
             holder.setText(R.id.item_textView, item)
@@ -82,9 +77,7 @@ abstract class BasicControlActivity : BaseActivity(),
         override fun onCreateViewHolder(
             context: Context,
             parent: ViewGroup,
-            viewType: Int
-        ): QuickViewHolder {
-            return QuickViewHolder(R.layout.shared_item_recycler, parent)
-        }
+            viewType: Int,
+        ): QuickViewHolder = QuickViewHolder(R.layout.shared_item_recycler, parent)
     }
 }

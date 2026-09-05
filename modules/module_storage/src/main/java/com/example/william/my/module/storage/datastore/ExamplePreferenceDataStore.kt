@@ -26,36 +26,32 @@ class ExamplePreferenceDataStore(private val context: Context) {
     /**
      * 读取计数器 Flow（带 IOException 捕获与默认值降级）
      */
-    fun getCounter(): Flow<Int> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
+    fun getCounter(): Flow<Int> = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
             }
-            .map { preferences ->
-                preferences[KEY_COUNTER] ?: 0
-            }
-    }
+        }
+        .map { preferences ->
+            preferences[KEY_COUNTER] ?: 0
+        }
 
     /**
      * 读取用户名 Flow
      */
-    fun getUserName(): Flow<String> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
+    fun getUserName(): Flow<String> = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
             }
-            .map { preferences ->
-                preferences[KEY_USER_NAME] ?: "未设置用户名"
-            }
-    }
+        }
+        .map { preferences ->
+            preferences[KEY_USER_NAME] ?: "未设置用户名"
+        }
 
     /**
      * 自增计数器

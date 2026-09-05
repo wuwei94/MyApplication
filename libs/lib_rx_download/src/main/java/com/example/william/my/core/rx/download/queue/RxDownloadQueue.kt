@@ -32,23 +32,21 @@ class RxDownloadQueue internal constructor(
      */
     fun subscribeWith(
         callback: RxDownloadCallback<DownloadQueueProgress, DownloadQueueResult>,
-    ): Disposable {
-        return asFlowable()
-            .doOnSubscribe { callback.onLoading() }
-            .subscribe(
-                { event ->
-                    when (event) {
-                        is DownloadQueueEvent.OverallProgress -> {
-                            callback.onProgress(event.progress)
-                        }
-
-                        is DownloadQueueEvent.Completed -> callback.onResponse(event.result)
-                        else -> Unit
+    ): Disposable = asFlowable()
+        .doOnSubscribe { callback.onLoading() }
+        .subscribe(
+            { event ->
+                when (event) {
+                    is DownloadQueueEvent.OverallProgress -> {
+                        callback.onProgress(event.progress)
                     }
-                },
-                { error -> callback.onFailure(error.toDownloadApiException()) },
-            )
-    }
+
+                    is DownloadQueueEvent.Completed -> callback.onResponse(event.result)
+                    else -> Unit
+                }
+            },
+            { error -> callback.onFailure(error.toDownloadApiException()) },
+        )
 
     fun asFlowable(): Flowable<DownloadQueueEvent> {
         var source = Flowable.create<DownloadQueueEvent>({ emitter ->
@@ -60,8 +58,8 @@ class RxDownloadQueue internal constructor(
 
             val disposable = Flowable.fromIterable(config.tasks)
                 .flatMapSingle(
-                    {
-                        task -> createTaskSingle(
+                    { task ->
+                        createTaskSingle(
                             task = task,
                             state = state,
                             eventLock = eventLock,
@@ -82,7 +80,7 @@ class RxDownloadQueue internal constructor(
                                         DownloadQueueEvent.TaskSucceeded(
                                             outcome.task,
                                             outcome.result,
-                                        )
+                                        ),
                                     )
                                     output.onNext(DownloadQueueEvent.OverallProgress(progress))
                                 }
@@ -95,7 +93,7 @@ class RxDownloadQueue internal constructor(
                                         DownloadQueueEvent.TaskFailed(
                                             outcome.task,
                                             outcome.error,
-                                        )
+                                        ),
                                     )
                                     output.onNext(DownloadQueueEvent.OverallProgress(progress))
                                 }
@@ -146,40 +144,40 @@ class RxDownloadQueue internal constructor(
         return Single.fromCallable {
             resources.acquire()
         }
-        .subscribeOn(config.subscribeScheduler)
-        .flatMap {
-            RxDownload.builder()
-                .api(task.url)
-                .destination(task.destination)
-                .addHeader(task.headers)
-                .resume(task.resume)
-                .retrofit(config.retrofit)
-                .subscribeOn(config.subscribeScheduler)
-                .observeOn(Schedulers.trampoline())
-                .progressOn(Schedulers.trampoline())
-                .progressIntervalMillis(config.progressIntervalMillis)
-                .onOperationStart(resources::startOperation)
-                .onFinally(resources::finishOperation)
-                .onProgress { progress ->
-                    synchronized(eventLock) {
-                        val overall = state.update(task, progress)
-                        emit(DownloadQueueEvent.TaskProgress(task, progress))
-                        emit(DownloadQueueEvent.OverallProgress(overall))
+            .subscribeOn(config.subscribeScheduler)
+            .flatMap {
+                RxDownload.builder()
+                    .api(task.url)
+                    .destination(task.destination)
+                    .addHeader(task.headers)
+                    .resume(task.resume)
+                    .retrofit(config.retrofit)
+                    .subscribeOn(config.subscribeScheduler)
+                    .observeOn(Schedulers.trampoline())
+                    .progressOn(Schedulers.trampoline())
+                    .progressIntervalMillis(config.progressIntervalMillis)
+                    .onOperationStart(resources::startOperation)
+                    .onFinally(resources::finishOperation)
+                    .onProgress { progress ->
+                        synchronized(eventLock) {
+                            val overall = state.update(task, progress)
+                            emit(DownloadQueueEvent.TaskProgress(task, progress))
+                            emit(DownloadQueueEvent.OverallProgress(overall))
+                        }
                     }
-                }
-                .buildSingle()
-                .doOnSubscribe {
-                    synchronized(eventLock) {
-                        val overall = state.start(task)
-                        emit(DownloadQueueEvent.TaskStarted(task))
-                        emit(DownloadQueueEvent.OverallProgress(overall))
+                    .buildSingle()
+                    .doOnSubscribe {
+                        synchronized(eventLock) {
+                            val overall = state.start(task)
+                            emit(DownloadQueueEvent.TaskStarted(task))
+                            emit(DownloadQueueEvent.OverallProgress(overall))
+                        }
                     }
-                }
-        }
-        .doOnDispose(resources::cancel)
-        .doFinally(resources::finishIfReady)
-        .map<TaskOutcome> { result -> TaskOutcome.Success(task, result) }
-        .onErrorReturn { error -> TaskOutcome.Failure(task, error.toDownloadApiException()) }
+            }
+            .doOnDispose(resources::cancel)
+            .doFinally(resources::finishIfReady)
+            .map<TaskOutcome> { result -> TaskOutcome.Success(task, result) }
+            .onErrorReturn { error -> TaskOutcome.Failure(task, error.toDownloadApiException()) }
     }
 
     private sealed interface TaskOutcome {
@@ -265,15 +263,13 @@ class RxDownloadQueue internal constructor(
         }
 
         @Synchronized
-        fun result(): DownloadQueueResult {
-            return DownloadQueueResult(
-                successes = orderedTasks.mapNotNull { task ->
-                    successes[task]?.let { DownloadTaskResult(task, it) }
-                },
-                failures = orderedTasks.mapNotNull { task ->
-                    failures[task]?.let { DownloadTaskFailure(task, it) }
-                },
-            )
-        }
+        fun result(): DownloadQueueResult = DownloadQueueResult(
+            successes = orderedTasks.mapNotNull { task ->
+                successes[task]?.let { DownloadTaskResult(task, it) }
+            },
+            failures = orderedTasks.mapNotNull { task ->
+                failures[task]?.let { DownloadTaskFailure(task, it) }
+            },
+        )
     }
 }

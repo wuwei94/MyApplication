@@ -39,9 +39,7 @@ object NettyClientFlow {
         channelMap["$host:$port"] = channel
     }
 
-    fun getChannel(host: String, port: Int): Channel? {
-        return channelMap["$host:$port"]
-    }
+    fun getChannel(host: String, port: Int): Channel? = channelMap["$host:$port"]
 
     fun createConnection(host: String, port: Int): Flow<NettyClientInfo> = callbackFlow {
         val key = "$host:$port"

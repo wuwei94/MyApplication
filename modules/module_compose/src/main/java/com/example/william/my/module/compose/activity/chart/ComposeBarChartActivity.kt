@@ -81,13 +81,13 @@ fun ComposeBarChartScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // 图表卡片
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("季度目标 vs 实际销售额 (Compose Canvas)", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -100,7 +100,7 @@ fun ComposeBarChartScreen(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .height(260.dp),
                     selectedIndex = selectedQuarterIndex,
-                    onQuarterSelected = { selectedQuarterIndex = it }
+                    onQuarterSelected = { selectedQuarterIndex = it },
                 )
             }
         }
@@ -114,20 +114,20 @@ fun ComposeBarChartScreen(modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF3F51B5).copy(alpha = 0.08f))
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF3F51B5).copy(alpha = 0.08f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text("${quarters[selectedQuarterIndex]} 业绩达成分析", fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     Text(
                         text = if (rate >= 100) "超额完成" else "未达预期",
                         color = if (rate >= 100) Color(0xFF10B981) else Color(0xFFEF4444),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
                     )
                 }
 
@@ -136,11 +136,11 @@ fun ComposeBarChartScreen(modifier: Modifier = Modifier) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Column {
                         Text("目标额", fontSize = 11.sp, color = Color.Gray)
-                        Text("${target} 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF3F51B5))
+                        Text("$target 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF3F51B5))
                     }
                     Column {
                         Text("实际额", fontSize = 11.sp, color = Color.Gray)
-                        Text("${actual} 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF009688))
+                        Text("$actual 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF009688))
                     }
                     Column {
                         Text("差额", fontSize = 11.sp, color = Color.Gray)
@@ -156,7 +156,7 @@ fun ComposeBarChartScreen(modifier: Modifier = Modifier) {
                 Text(
                     "分析：Q${selectedQuarterIndex + 1} 实际营收 ${if (diff >= 0) "超过" else "低于"} 目标 ${abs(diff)} 万元",
                     fontSize = 12.sp,
-                    color = Color.Gray
+                    color = Color.Gray,
                 )
             }
         }
@@ -167,7 +167,7 @@ fun ComposeBarChartScreen(modifier: Modifier = Modifier) {
 fun ComposeBarChartCore(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
-    onQuarterSelected: (Int) -> Unit
+    onQuarterSelected: (Int) -> Unit,
 ) {
     val targetColor = Color(0xFF3F51B5)
     val actualColor = Color(0xFF009688)
@@ -182,7 +182,7 @@ fun ComposeBarChartCore(
                 val idx = (offset.x / groupWidth).toInt().coerceIn(0, quarters.size - 1)
                 onQuarterSelected(idx)
             }
-        }
+        },
     ) {
         val width = size.width
         val height = size.height
@@ -205,7 +205,7 @@ fun ComposeBarChartCore(
                 color = targetColor.copy(alpha = if (isSelected) 1.0f else 0.75f),
                 topLeft = Offset(groupCenterX - barWidth - 4.dp.toPx(), chartHeight - targetHeight),
                 size = Size(barWidth, targetHeight),
-                cornerRadius = CornerRadius(6.dp.toPx(), 6.dp.toPx())
+                cornerRadius = CornerRadius(6.dp.toPx(), 6.dp.toPx()),
             )
 
             // 实际柱
@@ -213,7 +213,7 @@ fun ComposeBarChartCore(
                 color = actualColor.copy(alpha = if (isSelected) 1.0f else 0.75f),
                 topLeft = Offset(groupCenterX + 4.dp.toPx(), chartHeight - actualHeight),
                 size = Size(barWidth, actualHeight),
-                cornerRadius = CornerRadius(6.dp.toPx(), 6.dp.toPx())
+                cornerRadius = CornerRadius(6.dp.toPx(), 6.dp.toPx()),
             )
 
             val paint = android.graphics.Paint().apply {

@@ -65,7 +65,7 @@ interface ArticleRemoteDataSource {
  */
 class ArticleRemoteDataSourceImpl(
     private val articleApi: ArticleApi,
-    private val articleRxApi: ArticleRxApi
+    private val articleRxApi: ArticleRxApi,
 ) : ArticleRemoteDataSource {
 
     // =========================================================================
@@ -74,7 +74,7 @@ class ArticleRemoteDataSourceImpl(
 
     override fun getArticleCallback(
         page: Int,
-        callback: ArticleRemoteDataSource.LoadArticleCallback
+        callback: ArticleRemoteDataSource.LoadArticleCallback,
     ) {
         articleRxApi.getArticleSingle(page)
             .map(ServerResultFunction())
@@ -107,20 +107,16 @@ class ArticleRemoteDataSourceImpl(
     /**
      * RxJava3 Single：执行网络请求并返回单次响应流。
      */
-    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> {
-        return articleRxApi.getArticleSingle(page)
-            .map(ServerResultFunction())
-            .onErrorResumeNext(HttpResultFunction())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> = articleRxApi.getArticleSingle(page)
+        .map(ServerResultFunction())
+        .onErrorResumeNext(HttpResultFunction())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     /**
      * 协程挂起函数：执行网络请求并返回业务响应。
      */
-    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> {
-        return articleApi.getArticleSuspend(page)
-    }
+    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> = articleApi.getArticleSuspend(page)
 
     // =========================================================================
     // 3. 业务数据挂起请求

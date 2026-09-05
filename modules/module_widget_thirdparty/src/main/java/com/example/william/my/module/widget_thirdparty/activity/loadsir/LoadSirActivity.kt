@@ -46,13 +46,11 @@ class LoadSirActivity : BasicLayoutActivity() {
         setView(loadService.loadLayout)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 切换为默认/加载中状态（DefaultCallback）",
-            "2. 切换为错误重试状态（ErrorCallback）",
-            "3. 恢复真实内容/成功状态（showSuccess）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 切换为默认/加载中状态（DefaultCallback）",
+        "2. 切换为错误重试状态（ErrorCallback）",
+        "3. 恢复真实内容/成功状态（showSuccess）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

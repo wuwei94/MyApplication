@@ -7,7 +7,7 @@ import io.netty.channel.SimpleChannelInboundHandler
 import io.reactivex.rxjava3.core.ObservableEmitter
 
 class NettyClientRxHandler(
-    private val emitter: ObservableEmitter<NettyClientInfo>
+    private val emitter: ObservableEmitter<NettyClientInfo>,
 ) : SimpleChannelInboundHandler<String?>() {
 
     override fun channelActive(ctx: ChannelHandlerContext) {

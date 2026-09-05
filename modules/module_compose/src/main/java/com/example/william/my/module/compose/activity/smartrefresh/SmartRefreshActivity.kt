@@ -45,11 +45,9 @@ class SmartRefreshActivity : ComponentActivity() {
     private val mViewModel by viewModels<SmartRefreshViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         setContent {
-
             val refreshState = rememberSmartSwipeRefreshState().apply {
                 this.needFirstRefresh = true
             }
@@ -67,8 +65,6 @@ class SmartRefreshActivity : ComponentActivity() {
                     ThresholdScrollStrategy.Fixed(80.dp.toPx())
             }
 
-
-
             Column {
                 SmartSwipeRefresh(
                     modifier = Modifier.fillMaxSize(),
@@ -85,7 +81,7 @@ class SmartRefreshActivity : ComponentActivity() {
                     footerIndicator = {
                         MyRefreshFooter(refreshState.loadMoreFlag, true)
                     },
-                    contentScrollState = scrollState
+                    contentScrollState = scrollState,
                 ) {
                     LaunchedEffect(mainUiState.value) {
                         mainUiState.value?.let {
@@ -106,7 +102,7 @@ class SmartRefreshActivity : ComponentActivity() {
                     CompositionLocalProvider {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            state = scrollState
+                            state = scrollState,
                         ) {
                             mainUiState.value?.data?.let {
                                 items(it) { item ->
@@ -116,14 +112,14 @@ class SmartRefreshActivity : ComponentActivity() {
                                             .wrapContentHeight()
                                             .background(Color.LightGray)
                                             .padding(16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
+                                        verticalAlignment = Alignment.CenterVertically,
                                     ) {
                                         Image(
                                             modifier = Modifier
                                                 .width(32.dp)
                                                 .height(32.dp),
                                             painter = painterResource(id = item.icon),
-                                            contentDescription = null
+                                            contentDescription = null,
                                         )
                                         Spacer(modifier = Modifier.width(16.dp))
                                         Text(text = item.title)

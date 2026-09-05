@@ -23,7 +23,7 @@ object HookHelper {
     @SuppressLint("PrivateApi,DiscouragedPrivateApi")
     fun hookOnClickListener(
         view: View,
-        onIntercept: ((v: View) -> Unit)? = null
+        onIntercept: ((v: View) -> Unit)? = null,
     ): Boolean {
         return try {
             // 1. 反射获取 ListenerInfo 实例
@@ -42,7 +42,7 @@ object HookHelper {
             // 3. 动态代理包装原始 OnClickListener
             val proxy = Proxy.newProxyInstance(
                 view.context.classLoader,
-                arrayOf(View.OnClickListener::class.java)
+                arrayOf(View.OnClickListener::class.java),
             ) { _, method, args ->
                 onIntercept?.invoke(view)
                 if (args != null) {

@@ -86,9 +86,7 @@ class MessengerActivity : BasicResponseActivity() {
         initMessenger()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("发送消息给 Service")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("发送消息给 Service")
 
     override fun onRecyclerClick(position: Int, string: String) {
         sendMessage()
@@ -136,7 +134,7 @@ class MessengerActivity : BasicResponseActivity() {
             bindService(
                 Intent(this@MessengerActivity, MyMessageService::class.java),
                 conn,
-                BIND_AUTO_CREATE
+                BIND_AUTO_CREATE,
             )
         }
     }

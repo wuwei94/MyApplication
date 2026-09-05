@@ -44,9 +44,7 @@ class EasyFloatActivity : BasicResponseActivity() {
         showDescription("点击下方列表项展示 EasyFloat 悬浮窗")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("显示悬浮窗", "隐藏悬浮窗")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("显示悬浮窗", "隐藏悬浮窗")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

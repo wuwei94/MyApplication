@@ -13,7 +13,7 @@ class PoolPagerAdapter(
     private val sharedViewPool: RecyclerView.RecycledViewPool,
     private val tabCount: Int = 2,
     private val onCreateItem: (isTab1: Boolean) -> Unit,
-    private val onBindItem: (isTab1: Boolean) -> Unit
+    private val onBindItem: (isTab1: Boolean) -> Unit,
 ) : RecyclerView.Adapter<PoolPagerAdapter.PageViewHolder>() {
 
     override fun getItemCount(): Int = tabCount
@@ -22,7 +22,7 @@ class PoolPagerAdapter(
         val recyclerView = RecyclerView(parent.context).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
             )
             layoutManager = LinearLayoutManager(parent.context)
             clipToPadding = false
@@ -41,7 +41,7 @@ class PoolPagerAdapter(
             tabName = if (isTab1) "Tab 1" else "Tab 2",
             items = data,
             onCreateCallback = { onCreateItem(isTab1) },
-            onBindCallback = { onBindItem(isTab1) }
+            onBindCallback = { onBindItem(isTab1) },
         )
         holder.recyclerView.adapter = adapter
     }

@@ -35,7 +35,7 @@ object OkHttpSseClient {
         url: String,
         jsonBody: String? = null,
         headers: Map<String, String> = emptyMap(),
-        listener: OkHttpSseListener? = null
+        listener: OkHttpSseListener? = null,
     ): EventSource {
         val requestBuilder = Request.Builder()
             .url(url)
@@ -57,7 +57,7 @@ object OkHttpSseClient {
         url: String,
         request: Request,
         okHttpClient: OkHttpClient = defaultClient,
-        listener: OkHttpSseListener? = null
+        listener: OkHttpSseListener? = null,
     ): EventSource {
         eventSourceMap[url]?.let { existing ->
             return existing
@@ -74,7 +74,7 @@ object OkHttpSseClient {
                 eventSource: EventSource,
                 id: String?,
                 type: String?,
-                data: String
+                data: String,
             ) {
                 OkHttpSseLogger.debug("SSE onEvent: type=$type, data=$data")
                 mainHandler.post { listener?.onEvent(eventSource, id, type, data) }
@@ -89,7 +89,7 @@ object OkHttpSseClient {
             override fun onFailure(
                 eventSource: EventSource,
                 t: Throwable?,
-                response: Response?
+                response: Response?,
             ) {
                 eventSourceMap.remove(url)
                 OkHttpSseLogger.error("SSE onFailure: ${t?.message}", t)
@@ -125,7 +125,5 @@ object OkHttpSseClient {
         eventSourceMap.clear()
     }
 
-    fun isConnected(url: String): Boolean {
-        return eventSourceMap.containsKey(url)
-    }
+    fun isConnected(url: String): Boolean = eventSourceMap.containsKey(url)
 }

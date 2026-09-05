@@ -7,7 +7,7 @@ import com.example.william.my.module.di.koin.model.KoinAnalyticsTracker
  * 演示 Koin 注入的 ViewModel
  */
 class KoinSampleViewModel(
-    private val tracker: KoinAnalyticsTracker
+    private val tracker: KoinAnalyticsTracker,
 ) : ViewModel() {
 
     private var counter = 0
@@ -17,7 +17,5 @@ class KoinSampleViewModel(
         return counter
     }
 
-    fun getViewModelInfo(): String {
-        return "KoinSampleViewModel: ${tracker.logEvent("vm_counter_updated")}"
-    }
+    fun getViewModelInfo(): String = "KoinSampleViewModel: ${tracker.logEvent("vm_counter_updated")}"
 }

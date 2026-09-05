@@ -27,19 +27,17 @@ class ContentProviderActivity : BasicResponseActivity() {
             • 早期无侵入模式：利用 ContentProvider.onCreate 优先时序自动捕获 Context；
             • 冷启动性能瓶颈：多 Provider 串行反射与 Binder 开销显著增加冷启动白屏；
             • 现代优化方案：收拢聚合至单个 Provider，或迁移至 Jetpack App Startup。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 检查 AutoInitSdk 自动初始化状态与元数据",
-            "2. 深度剖析：Android 进程启动与 ContentProvider 执行时序链",
-            "3. 通过 ContentResolver 查询 Provider 共享数据 (query)",
-            "4. 通过 ContentResolver 写入新数据项 (insert)",
-            "5. 性能反思：多 ContentProvider 对冷启动的负面影响与治理"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 检查 AutoInitSdk 自动初始化状态与元数据",
+        "2. 深度剖析：Android 进程启动与 ContentProvider 执行时序链",
+        "3. 通过 ContentResolver 查询 Provider 共享数据 (query)",
+        "4. 通过 ContentResolver 写入新数据项 (insert)",
+        "5. 性能反思：多 ContentProvider 对冷启动的负面影响与治理",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -91,7 +89,7 @@ class ContentProviderActivity : BasicResponseActivity() {
             5. ActivityThread.performLaunchActivity() 启动主入口 Activity (onCreate -> onStart -> onResume)。
 
             结论：ContentProvider.onCreate 执行时机 介于 Application.attachBaseContext 与 Application.onCreate 之间！
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -106,7 +104,7 @@ class ContentProviderActivity : BasicResponseActivity() {
                 null,
                 null,
                 null,
-                null
+                null,
             )
             cursor?.use {
                 val count = it.count
@@ -159,7 +157,7 @@ class ContentProviderActivity : BasicResponseActivity() {
 
             【现代治理方案】：
             Jetpack 官方推出 App Startup，使用一个唯一的 InitializationProvider 统一托管所有 SDK 初始化，通过 DAG 拓扑排序解决依赖顺序并支持按需懒加载（详见下方 App Startup 示例）。
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 }

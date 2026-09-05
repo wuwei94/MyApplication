@@ -51,12 +51,11 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  * - 不需要复杂动画的场景
  */
 @Route(path = RouterPath.Tab.FrameLayoutTab)
-class FrameLayoutTabActivity : BaseVBActivity<TabActivityFrameLayoutTabBinding>(),
+class FrameLayoutTabActivity :
+    BaseVBActivity<TabActivityFrameLayoutTabBinding>(),
     RadioGroup.OnCheckedChangeListener {
 
-    override fun getViewBinding(): TabActivityFrameLayoutTabBinding {
-        return TabActivityFrameLayoutTabBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TabActivityFrameLayoutTabBinding = TabActivityFrameLayoutTabBinding.inflate(layoutInflater)
 
     private val mTitles: ArrayList<String> by lazy {
         arrayListOf(
@@ -94,8 +93,11 @@ class FrameLayoutTabActivity : BaseVBActivity<TabActivityFrameLayoutTabBinding>(
 
     private fun initFragment(savedInstanceState: Bundle?) {
         FragmentUtils.initFragment(
-            savedInstanceState, supportFragmentManager,
-            R.id.frameLayout, mFragments, mTitles
+            savedInstanceState,
+            supportFragmentManager,
+            R.id.frameLayout,
+            mFragments,
+            mTitles,
         )
     }
 
@@ -107,14 +109,14 @@ class FrameLayoutTabActivity : BaseVBActivity<TabActivityFrameLayoutTabBinding>(
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
-                    R.color.tab_selector_check_primary_dark
-                )
+                    R.color.tab_selector_check_primary_dark,
+                ),
             )
             val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
             drawable?.let {
                 DrawableCompat.setTintList(
                     it,
-                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark)
+                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark),
                 )
                 radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
             }

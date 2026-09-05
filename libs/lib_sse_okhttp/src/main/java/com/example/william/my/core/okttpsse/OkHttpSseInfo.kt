@@ -13,7 +13,7 @@ sealed class OkHttpSseInfo {
     data class Event(
         val id: String?,
         val type: String?,
-        val data: String
+        val data: String,
     ) : OkHttpSseInfo()
 
     /** 连接已关闭 */

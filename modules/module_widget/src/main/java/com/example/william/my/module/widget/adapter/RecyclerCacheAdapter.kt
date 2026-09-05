@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.william.my.module.widget.cache.RecyclerCacheExtension
 import com.example.william.my.module.widget.databinding.UiItemRecyclerViewBinding
 
-class RecyclerCacheAdapter(private val data: List<String>?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerCacheAdapter(private val data: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val mCaches: RecyclerCacheExtension = RecyclerCacheExtension()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = UiItemRecyclerViewBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
         )
         return ViewHolder(binding)
     }
@@ -25,10 +26,7 @@ class RecyclerCacheAdapter(private val data: List<String>?) :
         binding.itemTextView.text = data?.getOrNull(position) ?: ""
     }
 
-    override fun getItemCount(): Int {
-        return data?.size ?: 0
-    }
+    override fun getItemCount(): Int = data?.size ?: 0
 
-    class ViewHolder(val binding: UiItemRecyclerViewBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: UiItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 }

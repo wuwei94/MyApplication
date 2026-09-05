@@ -40,7 +40,7 @@ class BleNativeScanActivity : BasicResponseActivity() {
     private var mIsScanning = false
 
     private val permissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
+        ActivityResultContracts.RequestMultiplePermissions(),
     ) { result ->
         val allGranted = result.values.all { it }
         if (allGranted) {
@@ -63,7 +63,7 @@ class BleNativeScanActivity : BasicResponseActivity() {
             // 使用 updateLog 原位更新设备列表，避免高频刷屏
             updateLog(
                 address,
-                "📡 [] () | RSSI: dBm | UUIDs: "
+                "📡 [] () | RSSI: dBm | UUIDs: ",
             )
         }
 
@@ -94,21 +94,19 @@ class BleNativeScanActivity : BasicResponseActivity() {
 
         showDescription(
             "Android 原生 BLE 扫描示例\n\n" +
-                    "支持权限检测、低延迟/过滤扫描、高频 RSSI 原位刷新与广播数据解析\n" +
-                    "请点击下方操作项开始"
+                "支持权限检测、低延迟/过滤扫描、高频 RSSI 原位刷新与广播数据解析\n" +
+                "请点击下方操作项开始",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 检查并申请蓝牙/位置权限",
-            "2. 检查蓝牙适配器开关状态",
-            "3. 开启 BLE 连续扫描 (低延迟模式)",
-            "4. 开启 BLE 过滤扫描 (带 UUID 过滤)",
-            "5. 停止 BLE 扫描",
-            "6. 模拟解析 BLE 广播包结构"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 检查并申请蓝牙/位置权限",
+        "2. 检查蓝牙适配器开关状态",
+        "3. 开启 BLE 连续扫描 (低延迟模式)",
+        "4. 开启 BLE 过滤扫描 (带 UUID 过滤)",
+        "5. 停止 BLE 扫描",
+        "6. 模拟解析 BLE 广播包结构",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -125,12 +123,12 @@ class BleNativeScanActivity : BasicResponseActivity() {
         val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             arrayOf(
                 Manifest.permission.BLUETOOTH_SCAN,
-                Manifest.permission.BLUETOOTH_CONNECT
+                Manifest.permission.BLUETOOTH_CONNECT,
             )
         } else {
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         }
 
@@ -187,7 +185,7 @@ class BleNativeScanActivity : BasicResponseActivity() {
             filters.add(
                 ScanFilter.Builder()
                     .setServiceUuid(ParcelUuid(testUuid))
-                    .build()
+                    .build(),
             )
             appendLog("启动带过滤条件的 BLE 扫描 (UUID: 0x180D)...")
         } else {

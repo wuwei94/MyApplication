@@ -54,9 +54,7 @@ class ObjectBoxActivity : BasicResponseActivity() {
         initBox()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("插入 Note 数据", "查询所有 Note", "清空 Note 数据")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("插入 Note 数据", "查询所有 Note", "清空 Note 数据")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

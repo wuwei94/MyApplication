@@ -8,9 +8,7 @@ import com.kingja.loadsir.callback.Callback
 
 class DefaultCallback : Callback() {
 
-    override fun onCreateView(): Int {
-        return R.layout.shared_layout_response
-    }
+    override fun onCreateView(): Int = R.layout.shared_layout_response
 
     override fun onReloadEvent(context: Context, view: View): Boolean {
         val response: TextView = view.findViewById(R.id.basics_response)

@@ -29,9 +29,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
-    implementation(project(":libs:lib_sse_okhttp"))
-    implementation(project(":libs:lib_sse_ktor"))
+    implementation(projects.libs.libSseOkhttp)
+    implementation(projects.libs.libSseKtor)
 }

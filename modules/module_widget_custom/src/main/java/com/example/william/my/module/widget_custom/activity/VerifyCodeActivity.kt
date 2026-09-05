@@ -40,9 +40,7 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityVerif
 @Route(path = RouterPath.WidgetCustom.VerifyCode)
 class VerifyCodeActivity : BaseVBActivity<DemoActivityVerifyCodeBinding>() {
 
-    override fun getViewBinding(): DemoActivityVerifyCodeBinding {
-        return DemoActivityVerifyCodeBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): DemoActivityVerifyCodeBinding = DemoActivityVerifyCodeBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

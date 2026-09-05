@@ -67,12 +67,10 @@ class ActivityResultActivity : BasicResponseActivity() {
         showDescription("ActivityResultContracts\n\n点击下方按钮启动目标页，接收回传数据")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "StartActivityForResult — 启动目标页并接收回传",
-            "ActivityResultContract — 封装 Intent 构建和结果解析"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "StartActivityForResult — 启动目标页并接收回传",
+        "ActivityResultContract — 封装 Intent 构建和结果解析",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -116,10 +114,8 @@ class ActivityResultActivity : BasicResponseActivity() {
      */
     class CustomResultContract : ActivityResultContract<String, String?>() {
 
-        override fun createIntent(context: Context, input: String): Intent {
-            return Intent(context, ActivityResultActivity2::class.java).apply {
-                putExtra("input", input)
-            }
+        override fun createIntent(context: Context, input: String): Intent = Intent(context, ActivityResultActivity2::class.java).apply {
+            putExtra("input", input)
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): String? {

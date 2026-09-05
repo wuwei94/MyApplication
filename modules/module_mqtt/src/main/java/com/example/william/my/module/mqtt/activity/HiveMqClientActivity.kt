@@ -46,16 +46,14 @@ class HiveMqClientActivity : BasicResponseActivity() {
         showDescription("【HiveMQ】异步 API（MQTT 3.1.1）\nBroker：$host:$port\nTopic：$topic\n\n先连接，再订阅，最后发布。")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "连接 Broker（Connect）",
-            "订阅主题（Subscribe QoS 2）",
-            "发布消息（Publish QoS 0）",
-            "发布消息（Publish QoS 1）",
-            "发布消息（Publish QoS 2）",
-            "断开连接（Disconnect）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "连接 Broker（Connect）",
+        "订阅主题（Subscribe QoS 2）",
+        "发布消息（Publish QoS 0）",
+        "发布消息（Publish QoS 1）",
+        "发布消息（Publish QoS 2）",
+        "断开连接（Disconnect）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -95,7 +93,7 @@ class HiveMqClientActivity : BasicResponseActivity() {
                 override fun onError(message: String) {
                     appendLogAccent("【错误】$message")
                 }
-            }
+            },
         )
     }
 

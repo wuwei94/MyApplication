@@ -62,7 +62,7 @@ class AutoInitProvider : ContentProvider() {
         projection: Array<out String>?,
         selection: String?,
         selectionArgs: Array<out String>?,
-        sortOrder: String?
+        sortOrder: String?,
     ): Cursor {
         val cursor = MatrixCursor(arrayOf("_id", "item_name"))
         when (uriMatcher.match(uri)) {
@@ -89,19 +89,13 @@ class AutoInitProvider : ContentProvider() {
         return null
     }
 
-    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
-        return 0
-    }
+    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int = 0
 
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        return 0
-    }
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int = 0
 
-    override fun getType(uri: Uri): String? {
-        return when (uriMatcher.match(uri)) {
-            CODE_ITEMS -> "vnd.android.cursor.dir/vnd.com.example.autoinit.item"
-            else -> null
-        }
+    override fun getType(uri: Uri): String? = when (uriMatcher.match(uri)) {
+        CODE_ITEMS -> "vnd.android.cursor.dir/vnd.com.example.autoinit.item"
+        else -> null
     }
 
     companion object {

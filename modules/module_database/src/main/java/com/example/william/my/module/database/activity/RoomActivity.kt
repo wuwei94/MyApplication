@@ -82,16 +82,14 @@ class RoomActivity : BasicResponseActivity() {
         observeOAuthFlow()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "插入单条数据 (Insert Single)",
-            "批量插入数据 (Insert Batch)",
-            "更新最近一条数据 (Update)",
-            "根据 ID 查询数据 (Query by ID)",
-            "RxJava Single 异步查询 (Rx Query)",
-            "清空数据库 (Delete All)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "插入单条数据 (Insert Single)",
+        "批量插入数据 (Insert Batch)",
+        "更新最近一条数据 (Update)",
+        "根据 ID 查询数据 (Query by ID)",
+        "RxJava Single 异步查询 (Rx Query)",
+        "清空数据库 (Delete All)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

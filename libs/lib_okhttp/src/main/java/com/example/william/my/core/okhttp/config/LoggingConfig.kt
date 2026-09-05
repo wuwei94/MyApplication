@@ -14,7 +14,7 @@ sealed interface LoggingConfig {
      * 使用 OkHttp 官方 [HttpLoggingInterceptor]
      */
     data class Basic(
-        val level: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BASIC
+        val level: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BASIC,
     ) : LoggingConfig
 
     /**

@@ -28,19 +28,15 @@ class RxUploadRequest internal constructor(
     private val config: UploadConfig,
 ) {
 
-    fun asSingle(): Single<UploadResult> {
-        return Single.defer { createSingle(callbackProgress = null) }
-    }
+    fun asSingle(): Single<UploadResult> = Single.defer { createSingle(callbackProgress = null) }
 
     /** 使用上传回调订阅请求，并返回用于取消的 Disposable。 */
-    fun subscribeWith(callback: RxUploadCallback): Disposable {
-        return Single.defer { createSingle(callback::onProgress) }
-            .doOnSubscribe { callback.onLoading() }
-            .subscribe(
-                callback::onResponse,
-                { error -> callback.onFailure(error.toUploadApiException()) },
-            )
-    }
+    fun subscribeWith(callback: RxUploadCallback): Disposable = Single.defer { createSingle(callback::onProgress) }
+        .doOnSubscribe { callback.onLoading() }
+        .subscribe(
+            callback::onResponse,
+            { error -> callback.onFailure(error.toUploadApiException()) },
+        )
 
     private fun createSingle(
         callbackProgress: ((UploadProgress) -> Unit)?,
@@ -144,7 +140,7 @@ class RxUploadRequest internal constructor(
                 client(
                     OkHttpClient.Builder()
                         .retryOnConnectionFailure(false)
-                        .build()
+                        .build(),
                 )
             }
         }

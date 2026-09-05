@@ -12,18 +12,18 @@ import okio.BufferedSource
  */
 @Deprecated(
     message = "请使用 DownloadProgressResponseBody",
-    replaceWith = ReplaceWith("DownloadProgressResponseBody(url, responseBody, listener)")
+    replaceWith = ReplaceWith("DownloadProgressResponseBody(url, responseBody, listener)"),
 )
 class ResponseBodyProgress(
     mUrl: String,
     mResponseBody: ResponseBody,
-    mResponseProgressListener: ResponseProgressListener
+    mResponseProgressListener: ResponseProgressListener,
 ) : ResponseBody() {
 
     private val delegate = DownloadProgressResponseBody(
         mUrl,
         mResponseBody,
-        mResponseProgressListener::onProgress
+        mResponseProgressListener::onProgress,
     )
 
     override fun contentType(): MediaType? = delegate.contentType()

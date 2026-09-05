@@ -9,10 +9,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
-    implementation(project(":libs:lib_image_loader"))
+    implementation(projects.libs.libImageLoader)
 
     implementation(libs.coil)
     implementation(libs.glide)

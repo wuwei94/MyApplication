@@ -34,9 +34,7 @@ import com.example.william.my.module.anim.databinding.AnimActivityTransitionSeco
 @Route(path = RouterPath.Anim.Transition2)
 class TransitionSecondActivity : BaseVBActivity<AnimActivityTransitionSecondBinding>() {
 
-    override fun getViewBinding(): AnimActivityTransitionSecondBinding {
-        return AnimActivityTransitionSecondBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): AnimActivityTransitionSecondBinding = AnimActivityTransitionSecondBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

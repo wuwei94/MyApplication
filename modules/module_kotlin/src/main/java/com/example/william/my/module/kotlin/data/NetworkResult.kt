@@ -28,12 +28,10 @@ sealed class NetworkResult<out R> {
     data class Error(val exception: Exception) : NetworkResult<Nothing>()
     data object Loading : NetworkResult<Nothing>()
 
-    fun string(): String {
-        return when (this) {
-            is Success<*> -> "onResponse: " + Gson().toJson(this.data)
-            is Error -> "onFailure: " + this.exception.message
-            Loading -> "onLoading: " + "加载中……"
-        }
+    fun string(): String = when (this) {
+        is Success<*> -> "onResponse: " + Gson().toJson(this.data)
+        is Error -> "onFailure: " + this.exception.message
+        Loading -> "onLoading: " + "加载中……"
     }
 }
 

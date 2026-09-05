@@ -59,9 +59,9 @@ import java.util.Locale
 class PickerViewActivity : BasicResponseActivity() {
 
     private var isLoaded = false
-    private val options1Items: MutableList<ProvinceData> = arrayListOf() //所有省份数组
-    private val options2Items: MutableList<List<String>> = arrayListOf() //所有城市数组
-    private val options3Items: MutableList<List<List<String>>> = arrayListOf() //所有地区数组
+    private val options1Items: MutableList<ProvinceData> = arrayListOf() // 所有省份数组
+    private val options2Items: MutableList<List<String>> = arrayListOf() // 所有城市数组
+    private val options3Items: MutableList<List<List<String>>> = arrayListOf() // 所有地区数组
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -76,9 +76,7 @@ class PickerViewActivity : BasicResponseActivity() {
         }.start()
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("城市三级选择器", "时间选择器")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("城市三级选择器", "时间选择器")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -97,7 +95,7 @@ class PickerViewActivity : BasicResponseActivity() {
         }
     }
 
-    private fun initJsonData() { //解析数据
+    private fun initJsonData() { // 解析数据
 
         /*
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
@@ -106,7 +104,7 @@ class PickerViewActivity : BasicResponseActivity() {
         val service = ARouter.getInstance()
             .build(RouterPath.Service.ResourceUtilsService)
             .navigation() as ResourceUtilsService
-        val jsonData = service.getAssets("province.json") //获取assets目录下的json文件数据
+        val jsonData = service.getAssets("province.json") // 获取assets目录下的json文件数据
 
         val provinceData = parseData(jsonData)
 
@@ -118,14 +116,14 @@ class PickerViewActivity : BasicResponseActivity() {
          */
         options1Items.addAll(provinceData)
 
-        for (i in provinceData.indices) { //遍历省份
-            val cityList: MutableList<String> = arrayListOf() //该省的城市列表（第二级）
-            val areaList: MutableList<List<String>> = arrayListOf() //该省的所有地区列表（第三极）
+        for (i in provinceData.indices) { // 遍历省份
+            val cityList: MutableList<String> = arrayListOf() // 该省的城市列表（第二级）
+            val areaList: MutableList<List<String>> = arrayListOf() // 该省的所有地区列表（第三极）
 
-            for (j in provinceData[i].cityList.indices) { //遍历该省份的所有城市
-                val cityAreaList: MutableList<String> = arrayListOf() //该城市的所有地区列表（第三极）
+            for (j in provinceData[i].cityList.indices) { // 遍历该省份的所有城市
+                val cityAreaList: MutableList<String> = arrayListOf() // 该城市的所有地区列表（第三极）
 
-                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
+                // 如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
                 provinceData[i].cityList[j].areaList?.let { area ->
                     if (area.isEmpty()) {
                         cityAreaList.add("")
@@ -136,8 +134,8 @@ class PickerViewActivity : BasicResponseActivity() {
                     }
                 }
 
-                cityList.add(provinceData[i].cityList[j].name) //添加该省份的所有城市
-                areaList.add(cityAreaList) //添加该省份的所有地区
+                cityList.add(provinceData[i].cityList[j].name) // 添加该省份的所有城市
+                areaList.add(cityAreaList) // 添加该省份的所有地区
             }
 
             /*
@@ -171,33 +169,34 @@ class PickerViewActivity : BasicResponseActivity() {
 
     private fun showOptionsPickerView() {
         val pvOptions: OptionsPickerView<*> =
-            OptionsPickerBuilder(this) { options1, options2, options3, v -> //返回的分别是三个级别的选中位置
+            OptionsPickerBuilder(this) { options1, options2, options3, v ->
+                // 返回的分别是三个级别的选中位置
                 val options = options1Items[options1].pickerViewText +
-                        options2Items[options1][options2] +
-                        options3Items[options1][options2][options3]
+                    options2Items[options1][options2] +
+                    options3Items[options1][options2][options3]
                 appendLog("选中城市: $options")
             }
-                .setDecorView(window.decorView.findViewById(android.R.id.content)) //防止被虚拟按键遮挡
-                .setSubmitText("确定") //确定按钮文字
-                .setCancelText("取消") //取消按钮文字
-                .setTitleText("城市选择") //标题
-                .setSubmitColor(Color.BLUE) //确定按钮文字颜色
-                .setCancelColor(Color.BLUE) //取消按钮文字颜色
-                .setTitleColor(Color.BLACK) //标题文字颜色
-                .setBgColor(-0x1) //滚轮背景颜色 Night mode
-                .setTitleBgColor(-0x1) //标题背景颜色 Night mode
-                .setSubCalSize(18) //确定和取消文字大小
-                .setTitleSize(20) //标题文字大小
-                .setContentTextSize(18) //滚轮文字大小
-                .setOutSideCancelable(true) //点击外部dismiss default true
+                .setDecorView(window.decorView.findViewById(android.R.id.content)) // 防止被虚拟按键遮挡
+                .setSubmitText("确定") // 确定按钮文字
+                .setCancelText("取消") // 取消按钮文字
+                .setTitleText("城市选择") // 标题
+                .setSubmitColor(Color.BLUE) // 确定按钮文字颜色
+                .setCancelColor(Color.BLUE) // 取消按钮文字颜色
+                .setTitleColor(Color.BLACK) // 标题文字颜色
+                .setBgColor(-0x1) // 滚轮背景颜色 Night mode
+                .setTitleBgColor(-0x1) // 标题背景颜色 Night mode
+                .setSubCalSize(18) // 确定和取消文字大小
+                .setTitleSize(20) // 标题文字大小
+                .setContentTextSize(18) // 滚轮文字大小
+                .setOutSideCancelable(true) // 点击外部dismiss default true
                 .build<Any>()
 
         @Suppress("UNCHECKED_CAST")
         pvOptions.setPicker(
             options1Items as List<Nothing>?,
             options2Items as List<Nothing>?,
-            options3Items as List<Nothing>?
-        ) //三级选择器
+            options3Items as List<Nothing>?,
+        ) // 三级选择器
         pvOptions.show()
     }
 
@@ -205,29 +204,29 @@ class PickerViewActivity : BasicResponseActivity() {
         val pvTime = TimePickerBuilder(this) { date, v ->
             val time = SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss",
-                Locale.CHINA
+                Locale.CHINA,
             ).format(date)
             appendLog("选中时间: $time")
         }
             .setType(booleanArrayOf(true, true, true, false, false, false))
-            .setCancelText("Cancel") //取消按钮文字
-            .setSubmitText("Sure") //确认按钮文字
-            .setTitleText("Title") //标题文字
-            .setSubmitColor(Color.BLUE) //确定按钮文字颜色
-            .setCancelColor(Color.BLUE) //取消按钮文字颜色
-            .setTitleColor(Color.BLACK) //标题文字颜色
-            .setBgColor(-0x1) //滚轮背景颜色 Night mode
-            .setTitleBgColor(-0x1) //标题背景颜色 Night mode
-            .setSubCalSize(18) //确定和取消文字大小
-            .setTitleSize(20) //标题文字大小
-            .setContentTextSize(18) //滚轮文字大小
-            .setOutSideCancelable(true) //点击屏幕，点在控件外部范围时，是否取消显示
-            .isCyclic(true) //是否循环滚动
-            .setLunarCalendar(true) //是否显示农历
-            .setLabel("年", "月", "日", "时", "分", "秒") //默认设置为年月日时分秒
-            .isDialog(true) //是否显示为对话框样式
+            .setCancelText("Cancel") // 取消按钮文字
+            .setSubmitText("Sure") // 确认按钮文字
+            .setTitleText("Title") // 标题文字
+            .setSubmitColor(Color.BLUE) // 确定按钮文字颜色
+            .setCancelColor(Color.BLUE) // 取消按钮文字颜色
+            .setTitleColor(Color.BLACK) // 标题文字颜色
+            .setBgColor(-0x1) // 滚轮背景颜色 Night mode
+            .setTitleBgColor(-0x1) // 标题背景颜色 Night mode
+            .setSubCalSize(18) // 确定和取消文字大小
+            .setTitleSize(20) // 标题文字大小
+            .setContentTextSize(18) // 滚轮文字大小
+            .setOutSideCancelable(true) // 点击屏幕，点在控件外部范围时，是否取消显示
+            .isCyclic(true) // 是否循环滚动
+            .setLunarCalendar(true) // 是否显示农历
+            .setLabel("年", "月", "日", "时", "分", "秒") // 默认设置为年月日时分秒
+            .isDialog(true) // 是否显示为对话框样式
             .build()
-        //dialog底部显示
+        // dialog底部显示
         pvTime.dialog?.let {
             val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
             layoutParams.gravity = Gravity.BOTTOM
@@ -235,8 +234,8 @@ class PickerViewActivity : BasicResponseActivity() {
             layoutParams.rightMargin = 0
             pvTime.dialogContainerLayout.layoutParams = layoutParams
             it.window?.let {
-                it.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim) //修改动画样式
-                it.setGravity(Gravity.BOTTOM) //改成Bottom,底部显示
+                it.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim) // 修改动画样式
+                it.setGravity(Gravity.BOTTOM) // 改成Bottom,底部显示
             }
             pvTime.show()
         }

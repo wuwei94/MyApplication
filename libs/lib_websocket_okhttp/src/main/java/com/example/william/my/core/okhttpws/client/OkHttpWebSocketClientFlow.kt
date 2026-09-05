@@ -30,33 +30,23 @@ object OkHttpWebSocketClientFlow {
         webSocketMap[url] = webSocket
     }
 
-    private fun getWebSocket(url: String): WebSocket? {
-        return webSocketMap[url]
-    }
+    private fun getWebSocket(url: String): WebSocket? = webSocketMap[url]
 
-    fun createWebSocket(url: String): Flow<OkHttpWebSocketInfo> {
-        return createWebSocket(url, Request.Builder().get().url(url).build(), defaultClient)
-    }
+    fun createWebSocket(url: String): Flow<OkHttpWebSocketInfo> = createWebSocket(url, Request.Builder().get().url(url).build(), defaultClient)
 
-    fun createWebSocket(request: Request): Flow<OkHttpWebSocketInfo> {
-        return createWebSocket(request.url.toString(), request, defaultClient)
-    }
+    fun createWebSocket(request: Request): Flow<OkHttpWebSocketInfo> = createWebSocket(request.url.toString(), request, defaultClient)
 
-    fun createWebSocket(url: String, okHttpClient: OkHttpClient): Flow<OkHttpWebSocketInfo> {
-        return createWebSocket(url, Request.Builder().get().url(url).build(), okHttpClient)
-    }
+    fun createWebSocket(url: String, okHttpClient: OkHttpClient): Flow<OkHttpWebSocketInfo> = createWebSocket(url, Request.Builder().get().url(url).build(), okHttpClient)
 
     fun createWebSocket(
         request: Request,
-        okHttpClient: OkHttpClient
-    ): Flow<OkHttpWebSocketInfo> {
-        return createWebSocket(request.url.toString(), request, okHttpClient)
-    }
+        okHttpClient: OkHttpClient,
+    ): Flow<OkHttpWebSocketInfo> = createWebSocket(request.url.toString(), request, okHttpClient)
 
     private fun createWebSocket(
         url: String,
         request: Request,
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): Flow<OkHttpWebSocketInfo> = callbackFlow {
         val listener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
@@ -124,9 +114,7 @@ object OkHttpWebSocketClientFlow {
         }
     }
 
-    fun send(request: Request, message: String): Boolean {
-        return send(request.url.toString(), message)
-    }
+    fun send(request: Request, message: String): Boolean = send(request.url.toString(), message)
 
     fun close(url: String, code: Int = 1000, reason: String = "") {
         getWebSocket(url)?.let { webSocket ->
@@ -169,7 +157,5 @@ object OkHttpWebSocketClientFlow {
         webSocketMap.clear()
     }
 
-    fun isConnected(url: String): Boolean {
-        return webSocketMap.containsKey(url)
-    }
+    fun isConnected(url: String): Boolean = webSocketMap.containsKey(url)
 }

@@ -35,9 +35,7 @@ import com.example.william.my.module.anim.databinding.AnimActivityPagBinding
 @Route(path = RouterPath.Anim.Pag)
 class PagActivity : BaseVBActivity<AnimActivityPagBinding>() {
 
-    override fun getViewBinding(): AnimActivityPagBinding {
-        return AnimActivityPagBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): AnimActivityPagBinding = AnimActivityPagBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

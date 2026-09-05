@@ -99,9 +99,11 @@ object ExceptionHandler {
         if (body.isBlank()) return null
         return try {
             val jsonObj = JsonParser.parseString(body).asJsonObject
-            (jsonObj.get("message")?.asString
-                ?: jsonObj.get("msg")?.asString
-                ?: jsonObj.get("errorMsg")?.asString)
+            (
+                jsonObj.get("message")?.asString
+                    ?: jsonObj.get("msg")?.asString
+                    ?: jsonObj.get("errorMsg")?.asString
+                )
                 ?.takeIf { it.isNotBlank() }
         } catch (_: Exception) {
             body

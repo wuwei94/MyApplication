@@ -19,14 +19,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * 在 IO 线程订阅，并在主线程观察结果。
  * [RetrofitResponse] 的类型参数表示预期数据类型，数据是否存在由其可空的 `data` 属性表达。
  */
-fun <T : Any> Single<RetrofitResponse<T>>.withNetworkDefaults(
-): Single<RetrofitResponse<T>> {
-    return this
-        .map(ServerResultFunction<T>())
-        .onErrorResumeNext(HttpResultFunction())
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-}
+fun <T : Any> Single<RetrofitResponse<T>>.withNetworkDefaults(): Single<RetrofitResponse<T>> = this
+    .map(ServerResultFunction<T>())
+    .onErrorResumeNext(HttpResultFunction())
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
 
 /**
  * 为网络请求应用默认 Rx 策略，并绑定生命周期。
@@ -39,12 +36,10 @@ fun <T : Any> Single<RetrofitResponse<T>>.withNetworkDefaults(
  * @param owner 用于管理订阅的生命周期持有者
  */
 fun <T : Any> Single<RetrofitResponse<T>>.withNetworkDefaults(
-    owner: LifecycleOwner
-): Single<RetrofitResponse<T>> {
-    return this
-        .compose(AndroidLifecycle.createLifecycleProvider(owner).bindToLifecycle())
-        .map(ServerResultFunction<T>())
-        .onErrorResumeNext(HttpResultFunction())
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-}
+    owner: LifecycleOwner,
+): Single<RetrofitResponse<T>> = this
+    .compose(AndroidLifecycle.createLifecycleProvider(owner).bindToLifecycle())
+    .map(ServerResultFunction<T>())
+    .onErrorResumeNext(HttpResultFunction())
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())

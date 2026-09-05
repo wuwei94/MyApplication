@@ -9,9 +9,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
-    implementation(project(":libs:lib_widget"))
-    implementation(project(":libs:lib_ninepatch"))
+    implementation(projects.libs.libWidget)
+    implementation(projects.libs.libNinepatch)
 }

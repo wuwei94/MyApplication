@@ -10,10 +10,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
-    implementation(project(":basic:basic_repo"))
+    implementation(projects.basic.basicRepo)
 
     //lifecycle
     implementation(libs.androidx.lifecycle.process)

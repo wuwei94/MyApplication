@@ -19,9 +19,7 @@ class MvvmFragment : BaseRecyclerFragment<ArticleDetailData>() {
         ArticleLiveDataViewModel.Factory
     }
 
-    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> {
-        return ArticleAdapter(arrayListOf())
-    }
+    override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> = ArticleAdapter(arrayListOf())
 
     override fun observeViewModel() {
         mViewModel.articleResponse.observe(viewLifecycleOwner) { response ->

@@ -120,17 +120,11 @@ class RxRequestBuilder<T> @PublishedApi internal constructor(
         return this
     }
 
-    fun addRawBody(value: String): RxRequestBuilder<T> {
-        return addBody(value.toRequestBody(null))
-    }
+    fun addRawBody(value: String): RxRequestBuilder<T> = addBody(value.toRequestBody(null))
 
-    fun addJsonBody(value: String): RxRequestBuilder<T> {
-        return addBody(value.toRequestBody(MediaTypes.MEDIA_TYPE_JSON))
-    }
+    fun addJsonBody(value: String): RxRequestBuilder<T> = addBody(value.toRequestBody(MediaTypes.MEDIA_TYPE_JSON))
 
-    fun addJsonBody(value: JSONObject): RxRequestBuilder<T> {
-        return addJsonBody(value.toString())
-    }
+    fun addJsonBody(value: JSONObject): RxRequestBuilder<T> = addJsonBody(value.toString())
 
     fun addMultipartField(key: String, value: String): RxRequestBuilder<T> {
         clearRawBody()
@@ -181,9 +175,7 @@ class RxRequestBuilder<T> @PublishedApi internal constructor(
         return this
     }
 
-    fun buildSingle(): Single<RetrofitResponse<T>> {
-        return RxRequest(this).createResponse()
-    }
+    fun buildSingle(): Single<RetrofitResponse<T>> = RxRequest(this).createResponse()
 
     internal fun buildConfig(): RequestConfig {
         val requestApi = api

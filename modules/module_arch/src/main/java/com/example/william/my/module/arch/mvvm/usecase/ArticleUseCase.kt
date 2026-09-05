@@ -11,15 +11,12 @@ import io.reactivex.rxjava3.core.Single
  *
  * 基于 RxJava Single 封装文章列表请求业务用例。
  */
-class ArticleUseCase(private val repository: ArticleRepository) :
-    SingleObserverUseCase<RetrofitResponse<ArticleData>>() {
+class ArticleUseCase(private val repository: ArticleRepository) : SingleObserverUseCase<RetrofitResponse<ArticleData>>() {
 
     private var page = 0
     fun setPage(page: Int) {
         this.page = page
     }
 
-    override fun buildUseCaseObservable(): Single<RetrofitResponse<ArticleData>> {
-        return repository.getArticleSingle(page)
-    }
+    override fun buildUseCaseObservable(): Single<RetrofitResponse<ArticleData>> = repository.getArticleSingle(page)
 }

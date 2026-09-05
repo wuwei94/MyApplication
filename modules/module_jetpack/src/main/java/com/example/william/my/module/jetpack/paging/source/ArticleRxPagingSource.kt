@@ -10,9 +10,8 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ArticleRxPagingSource(
-    private val networkApi: ArticleRxApi
-) :
-    RxPagingSource<Int, ArticleDetailData>() {
+    private val networkApi: ArticleRxApi,
+) : RxPagingSource<Int, ArticleDetailData>() {
 
     /**
      * getArticleSingle
@@ -38,7 +37,7 @@ class ArticleRxPagingSource(
             LoadResult.Page(
                 data = data.datas,
                 prevKey = null, // Only paging forward.
-                nextKey = data.curPage
+                nextKey = data.curPage,
             )
         } else {
             LoadResult.Error(NullPointerException("Response data is null"))

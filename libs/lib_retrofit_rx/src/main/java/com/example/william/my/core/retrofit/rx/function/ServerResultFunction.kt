@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.functions.Function
 class ServerResultFunction<T> : Function<RetrofitResponse<T>, RetrofitResponse<T>> {
 
     override fun apply(response: RetrofitResponse<T>): RetrofitResponse<T> {
-        //抛出服务器返回自定义异常
+        // 抛出服务器返回自定义异常
         if (!response.isSuccess) {
             throw ServerResultException(response.code, response.message)
         }

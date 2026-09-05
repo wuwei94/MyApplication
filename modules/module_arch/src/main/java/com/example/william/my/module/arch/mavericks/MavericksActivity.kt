@@ -26,7 +26,5 @@ import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 @Route(path = RouterPath.Arch.Mavericks)
 class MavericksActivity : BaseFragmentActivity() {
 
-    override fun setFragment(): Fragment {
-        return ArticleMavericksFragment()
-    }
+    override fun setFragment(): Fragment = ArticleMavericksFragment()
 }

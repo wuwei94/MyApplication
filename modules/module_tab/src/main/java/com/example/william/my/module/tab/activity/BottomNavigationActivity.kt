@@ -48,9 +48,7 @@ import com.example.william.my.module.tab.utils.FragmentUtils
 @Route(path = RouterPath.Tab.BottomNavigation)
 class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBinding>() {
 
-    override fun getViewBinding(): TabActivityBottomNavigationBinding {
-        return TabActivityBottomNavigationBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TabActivityBottomNavigationBinding = TabActivityBottomNavigationBinding.inflate(layoutInflater)
 
     private val mTitles by lazy {
         arrayListOf(
@@ -77,8 +75,11 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
 
     private fun initFragment(savedInstanceState: Bundle?) {
         FragmentUtils.initFragment(
-            savedInstanceState, supportFragmentManager,
-            R.id.frameLayout, mFragments, mTitles
+            savedInstanceState,
+            supportFragmentManager,
+            R.id.frameLayout,
+            mFragments,
+            mTitles,
         )
     }
 

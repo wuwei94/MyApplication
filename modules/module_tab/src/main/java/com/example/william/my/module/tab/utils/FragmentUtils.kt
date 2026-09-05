@@ -10,7 +10,9 @@ object FragmentUtils {
     fun initFragment(
         savedInstanceState: Bundle?,
         fragmentManager: FragmentManager,
-        layoutId: Int, fragments: ArrayList<Fragment>, titles: ArrayList<String>,
+        layoutId: Int,
+        fragments: ArrayList<Fragment>,
+        titles: ArrayList<String>,
     ) {
         val transaction = fragmentManager.beginTransaction()
 
@@ -35,7 +37,9 @@ object FragmentUtils {
     }
 
     fun switchFragment(
-        fragmentManager: FragmentManager, fragments: ArrayList<Fragment>, position: Int
+        fragmentManager: FragmentManager,
+        fragments: ArrayList<Fragment>,
+        position: Int,
     ) {
         val transaction = fragmentManager.beginTransaction()
 

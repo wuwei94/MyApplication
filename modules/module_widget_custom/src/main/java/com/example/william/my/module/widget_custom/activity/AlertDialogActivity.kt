@@ -59,13 +59,11 @@ class AlertDialogActivity : BasicResponseActivity() {
         showDescription("点击下方列表项展示不同样式的 Dialog")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "IosAlertDialog",
-            "IosAlertItemDialog",
-            "ViewPagerBottomSheetDialog"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "IosAlertDialog",
+        "IosAlertItemDialog",
+        "ViewPagerBottomSheetDialog",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -76,12 +74,18 @@ class AlertDialogActivity : BasicResponseActivity() {
                     .setMsg(Gravity.CENTER, "内容")
                     .setCancelable(false)
                     .setCanceledOnTouchOutside(false)
-                    .setLeftButton("左", View.OnClickListener {
-                        appendLog("点击了 IosAlertDialog 左按钮")
-                    })
-                    .setRightButton("右", View.OnClickListener {
-                        appendLog("点击了 IosAlertDialog 右按钮")
-                    })
+                    .setLeftButton(
+                        "左",
+                        View.OnClickListener {
+                            appendLog("点击了 IosAlertDialog 左按钮")
+                        },
+                    )
+                    .setRightButton(
+                        "右",
+                        View.OnClickListener {
+                            appendLog("点击了 IosAlertDialog 右按钮")
+                        },
+                    )
                     .show()
                 appendLog("展示 IosAlertDialog")
             }
@@ -99,7 +103,7 @@ class AlertDialogActivity : BasicResponseActivity() {
                     }
                     .addAlertItem(
                         "ITEM 3",
-                        com.example.william.my.basic.basic_shared.R.color.shared_color_primary
+                        com.example.william.my.basic.basic_shared.R.color.shared_color_primary,
                     ) { which ->
                         appendLog("点击了 IosAlertItemDialog: ITEM 3 (which: $which)")
                     }

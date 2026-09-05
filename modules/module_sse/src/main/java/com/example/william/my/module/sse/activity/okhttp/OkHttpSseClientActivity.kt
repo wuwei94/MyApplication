@@ -27,12 +27,10 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
         showDescription("【OkHttp SSE】DeepSeek AI 流式对话 (Listener 回调)\n地址：$serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "发起 DeepSeek 对话（POST Stream）",
-            "中断当前生成（Cancel Stream）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "发起 DeepSeek 对话（POST Stream）",
+        "中断当前生成（Cancel Stream）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -78,7 +76,7 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
                     eventSource: EventSource,
                     id: String?,
                     type: String?,
-                    data: String
+                    data: String,
                 ) {
                     if (data.trim() == "[DONE]") {
                         removeUpdatingLog("deepseek_response")
@@ -102,12 +100,12 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
                 override fun onFailure(
                     eventSource: EventSource,
                     t: Throwable?,
-                    response: Response?
+                    response: Response?,
                 ) {
                     removeUpdatingLog("deepseek_response")
                     appendLog("【错误】${t?.message ?: "HTTP ${response?.code}"}")
                 }
-            }
+            },
         )
     }
 

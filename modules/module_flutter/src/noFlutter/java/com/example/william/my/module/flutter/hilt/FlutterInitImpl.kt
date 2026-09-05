@@ -12,7 +12,5 @@ class FlutterInitImpl @Inject constructor() : IAppInit {
         this.app = app
     }
 
-    override fun getApp(): Application {
-        return app
-    }
+    override fun getApp(): Application = app
 }

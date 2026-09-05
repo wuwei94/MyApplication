@@ -46,12 +46,10 @@ class MPChartLinkageActivity : BaseVBActivity<WidgetThirdpartyActivityMpChartLin
         Color.parseColor("#3B82F6"),
         Color.parseColor("#10B981"),
         Color.parseColor("#F59E0B"),
-        Color.parseColor("#EC4899")
+        Color.parseColor("#EC4899"),
     )
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpChartLinkageBinding {
-        return WidgetThirdpartyActivityMpChartLinkageBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityMpChartLinkageBinding = WidgetThirdpartyActivityMpChartLinkageBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

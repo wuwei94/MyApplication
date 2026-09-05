@@ -107,9 +107,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             .build()
     }
 
-    private fun dpToPx(dp: Int): Int {
-        return (dp * resources.displayMetrics.density + 0.5f).toInt()
-    }
+    private fun dpToPx(dp: Int): Int = (dp * resources.displayMetrics.density + 0.5f).toInt()
 
     private fun initRenderPipeline() {
         mRenderJob?.cancel()
@@ -164,7 +162,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
                         TypewriterEngine.State.PAUSED -> 0xFFFF9800.toInt()
                         TypewriterEngine.State.COMPLETED -> 0xFF2196F3.toInt()
                         TypewriterEngine.State.IDLE -> 0xFF9E9E9E.toInt()
-                    }
+                    },
                 )
             }
         }
@@ -220,7 +218,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             "    }\n",
             "}\n",
             "```\n\n",
-            "整个流式过程自然丝滑，毫无界面闪烁！"
+            "整个流式过程自然丝滑，毫无界面闪烁！",
         )
 
         mMockNetworkJob = lifecycleScope.launch {
@@ -270,7 +268,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             "- 行内代码：`val response = api.call()` 即时闭合\n",
             "- 粗斜体嵌套：***这是加粗且斜体的流式文本*** 实时生效\n",
             "- 删除线：~~已废弃的旧版本逻辑~~ 稳定划线\n\n",
-            "> MarkdownStreamFixer 单遍状态机保证了在闭合标签到达前，AST 语法树始终完整无闪烁！"
+            "> MarkdownStreamFixer 单遍状态机保证了在闭合标签到达前，AST 语法树始终完整无闪烁！",
         )
 
         mMockNetworkJob = lifecycleScope.launch {
@@ -298,7 +296,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             "你看！遇到逗号时，会有约 150ms 的自然换气微停顿；\n",
             "遇到句号、感叹号与问号时？停顿会延长至约 280ms！\n\n",
             "段落换行也是一样。\n\n",
-            "这种富有层次的呼吸节奏，让 AI 显得更加生动，就像是在实时思考一样！"
+            "这种富有层次的呼吸节奏，让 AI 显得更加生动，就像是在实时思考一样！",
         )
 
         mMockNetworkJob = lifecycleScope.launch {

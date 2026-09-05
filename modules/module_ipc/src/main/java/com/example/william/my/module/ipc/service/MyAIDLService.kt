@@ -19,9 +19,7 @@ class MyAIDLService : Service() {
             Utils.toast(message)
         }
 
-        override fun getMessage(): String {
-            return "来自 AIDL Service 的消息"
-        }
+        override fun getMessage(): String = "来自 AIDL Service 的消息"
     }
 
     override fun onBind(intent: Intent): IBinder = binder

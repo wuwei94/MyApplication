@@ -36,7 +36,7 @@ class LruCacheActivity : BasicResponseActivity() {
                 evicted: Boolean,
                 key: String,
                 oldValue: UserProfile,
-                newValue: UserProfile?
+                newValue: UserProfile?,
             ) {
                 if (evicted) {
                     appendLog("  [LRU 淘汰事件] Key: $key（用户：${oldValue.name}）因容量超出被自动淘汰！")
@@ -45,15 +45,13 @@ class LruCacheActivity : BasicResponseActivity() {
         }
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 写入并读取用户缓存（首次未命中 -> 回源拉取并存入）",
-            "2. 再次读取相同用户（直接命中 LruCache 内存缓存）",
-            "3. 连续写入多个用户（触发 LRU 容量淘汰机制）",
-            "4. 查看当前缓存池内容与状态",
-            "5. 清空缓存（evictAll）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 写入并读取用户缓存（首次未命中 -> 回源拉取并存入）",
+        "2. 再次读取相同用户（直接命中 LruCache 内存缓存）",
+        "3. 连续写入多个用户（触发 LRU 容量淘汰机制）",
+        "4. 查看当前缓存池内容与状态",
+        "5. 清空缓存（evictAll）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -116,7 +114,5 @@ class LruCacheActivity : BasicResponseActivity() {
         appendLogAccent("已调用 userProfileCache.evictAll() 清空全部内存缓存！")
     }
 
-    private fun mockFetchFromNetworkOrDb(userId: String): UserProfile {
-        return UserProfile(id = userId, name = "Name of $userId", level = 99)
-    }
+    private fun mockFetchFromNetworkOrDb(userId: String): UserProfile = UserProfile(id = userId, name = "Name of $userId", level = 99)
 }

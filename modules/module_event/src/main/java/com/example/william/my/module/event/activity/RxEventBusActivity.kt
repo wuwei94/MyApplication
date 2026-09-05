@@ -53,13 +53,11 @@ class RxEventBusActivity : BasicResponseActivity() {
         showDescription("RxEventBus 示例\n\n请点击下方按钮注册监听或发送事件")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "注册/注销监听 (Observe/Unobserve)",
-            "发送普通事件 (Post Event)",
-            "发送粘性事件 (Post Sticky Event)",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "注册/注销监听 (Observe/Unobserve)",
+        "发送普通事件 (Post Event)",
+        "发送粘性事件 (Post Sticky Event)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -68,13 +66,13 @@ class RxEventBusActivity : BasicResponseActivity() {
             1 -> {
                 appendLog("发送普通事件：GlobalEvent")
                 RxEventBus.postEvent(
-                    GlobalEvent("RxEventBus post by Activity")
+                    GlobalEvent("RxEventBus post by Activity"),
                 )
             }
             2 -> {
                 appendLog("发送粘性事件：StickyEvent")
                 RxEventBus.postStickyEvent(
-                    StickyEvent("RxEventBus postSticky by Activity")
+                    StickyEvent("RxEventBus postSticky by Activity"),
                 )
             }
         }
@@ -86,12 +84,12 @@ class RxEventBusActivity : BasicResponseActivity() {
             mDisposable.add(
                 RxEventBus.observeEvent(GlobalEvent::class.java).subscribe {
                     appendLog("收到普通事件：${it.message}")
-                }
+                },
             )
             mDisposable.add(
                 RxEventBus.observeEvent(StickyEvent::class.java).subscribe {
                     appendLog("收到粘性事件：${it.message}")
-                }
+                },
             )
             isObserving = true
             appendLog("已开启 RxEventBus 监听")

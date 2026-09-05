@@ -14,25 +14,31 @@ import com.flyco.tablayout.listener.OnTabSelectListener
 object TabLayoutUtils {
 
     fun initSlidingTab(
-        tabLayout: SlidingTabLayout, viewPager: ViewPager,
-        titles: ArrayList<String>, activity: FragmentActivity, fragments: ArrayList<Fragment>
+        tabLayout: SlidingTabLayout,
+        viewPager: ViewPager,
+        titles: ArrayList<String>,
+        activity: FragmentActivity,
+        fragments: ArrayList<Fragment>,
     ) {
         tabLayout.setViewPager(
-            viewPager, titles.toTypedArray(), activity, fragments
+            viewPager,
+            titles.toTypedArray(),
+            activity,
+            fragments,
         )
         tabLayout.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
-
             }
 
             override fun onTabReselect(position: Int) {
-
             }
         })
     }
 
     fun initCommonTabLayout(
-        tabLayout: CommonTabLayout, viewPager: ViewPager, titles: ArrayList<String>,
+        tabLayout: CommonTabLayout,
+        viewPager: ViewPager,
+        titles: ArrayList<String>,
     ) {
         val tabs: ArrayList<CustomTabEntity> = arrayListOf()
         for (i in titles.indices) {
@@ -45,13 +51,14 @@ object TabLayoutUtils {
             }
 
             override fun onTabReselect(position: Int) {
-
             }
         })
     }
 
     fun initSegmentTabLayout(
-        tabLayout: SegmentTabLayout, viewPager: ViewPager, titles: ArrayList<String>,
+        tabLayout: SegmentTabLayout,
+        viewPager: ViewPager,
+        titles: ArrayList<String>,
     ) {
         tabLayout.setTabData(titles.toTypedArray())
         tabLayout.setOnTabSelectListener(object : OnTabSelectListener {
@@ -60,13 +67,14 @@ object TabLayoutUtils {
             }
 
             override fun onTabReselect(position: Int) {
-
             }
         })
     }
 
     fun initCommonTabLayout(
-        tabLayout: CommonTabLayout, viewPager: ViewPager2, titles: ArrayList<String>,
+        tabLayout: CommonTabLayout,
+        viewPager: ViewPager2,
+        titles: ArrayList<String>,
     ) {
         val tabs: ArrayList<CustomTabEntity> = arrayListOf()
         for (i in titles.indices) {
@@ -79,13 +87,14 @@ object TabLayoutUtils {
             }
 
             override fun onTabReselect(position: Int) {
-
             }
         })
     }
 
     fun initSegmentTabLayout(
-        tabLayout: SegmentTabLayout, viewPager: ViewPager2, titles: ArrayList<String>,
+        tabLayout: SegmentTabLayout,
+        viewPager: ViewPager2,
+        titles: ArrayList<String>,
     ) {
         tabLayout.setTabData(titles.toTypedArray())
         tabLayout.setOnTabSelectListener(object : OnTabSelectListener {
@@ -94,7 +103,6 @@ object TabLayoutUtils {
             }
 
             override fun onTabReselect(position: Int) {
-
             }
         })
     }

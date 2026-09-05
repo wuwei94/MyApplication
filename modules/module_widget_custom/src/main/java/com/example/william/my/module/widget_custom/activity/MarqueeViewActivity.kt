@@ -44,9 +44,7 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityMarqu
 @Route(path = RouterPath.WidgetCustom.MarqueeView)
 class MarqueeViewActivity : BaseVBActivity<DemoActivityMarqueeViewBinding>() {
 
-    override fun getViewBinding(): DemoActivityMarqueeViewBinding {
-        return DemoActivityMarqueeViewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): DemoActivityMarqueeViewBinding = DemoActivityMarqueeViewBinding.inflate(layoutInflater)
 
     private val mData = arrayListOf("第一条数据", "第二条数据", "第三条数据", "第四条数据")
     private val marqueeViews = mutableListOf<View>()
@@ -60,25 +58,25 @@ class MarqueeViewActivity : BaseVBActivity<DemoActivityMarqueeViewBinding>() {
     private fun initMarqueeView() {
         var i = 0
         while (i < mData.size) {
-            //设置滚动的单个布局
+            // 设置滚动的单个布局
             val viewGroup = layoutInflater.inflate(
                 R.layout.demo_item_marquee_view,
                 window.decorView as ViewGroup,
-                false
+                false,
             ) as LinearLayout
-            //初始化布局的控件
+            // 初始化布局的控件
             val textView1 = viewGroup.findViewById<TextView>(R.id.item_marquee_primary)
             val textView2 = viewGroup.findViewById<TextView>(R.id.item_marquee_accent)
-            //进行对控件赋值
+            // 进行对控件赋值
             textView1.text = mData[i]
             if (mData.size > i + 1) {
-                //因为淘宝那儿是两条数据，但是当数据是奇数时就不需要赋值第二个，所以加了一个判断，还应该把第二个布局给隐藏掉
+                // 因为淘宝那儿是两条数据，但是当数据是奇数时就不需要赋值第二个，所以加了一个判断，还应该把第二个布局给隐藏掉
                 textView2.text = mData[i + 1]
             } else {
                 textView2.visibility = View.GONE
             }
             viewGroup.gravity = Gravity.CENTER
-            //添加到循环滚动数组里面去
+            // 添加到循环滚动数组里面去
             marqueeViews.add(viewGroup)
             i += 2
         }

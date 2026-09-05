@@ -35,27 +35,19 @@ class RetrofitResponse<T> private constructor(
         const val ERROR = -1
 
         @JvmStatic
-        fun <T> loading(): RetrofitResponse<T> {
-            return RetrofitResponse(LOADING)
-        }
+        fun <T> loading(): RetrofitResponse<T> = RetrofitResponse(LOADING)
 
         @JvmStatic
         @JvmOverloads
-        fun <T> success(data: T? = null): RetrofitResponse<T> {
-            return RetrofitResponse(SUCCESS, data = data)
-        }
+        fun <T> success(data: T? = null): RetrofitResponse<T> = RetrofitResponse(SUCCESS, data = data)
 
         @JvmStatic
-        fun <T> error(message: String): RetrofitResponse<T> {
-            return RetrofitResponse(ERROR, message)
-        }
+        fun <T> error(message: String): RetrofitResponse<T> = RetrofitResponse(ERROR, message)
 
         /**
          * 使用指定的状态码、消息和数据构建 RetrofitResponse。
          */
         @JvmStatic
-        fun <T> of(code: Int, message: String, data: T?): RetrofitResponse<T> {
-            return RetrofitResponse(code, message, data)
-        }
+        fun <T> of(code: Int, message: String, data: T?): RetrofitResponse<T> = RetrofitResponse(code, message, data)
     }
 }

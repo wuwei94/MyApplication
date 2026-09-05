@@ -55,14 +55,12 @@ class MyInlineActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin 内联函数、作用域函数与泛型实化 (reified)")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "作用域函数对比（with / let / run / also / apply）",
-            "泛型实化类型获取（inline + reified）",
-            "自定义内联扩展函数（mAlso / mApply / mRun）",
-            "内联修饰符（noinline 与 crossinline）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "作用域函数对比（with / let / run / also / apply）",
+        "泛型实化类型获取（inline + reified）",
+        "自定义内联扩展函数（mAlso / mApply / mRun）",
+        "内联修饰符（noinline 与 crossinline）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -118,13 +116,9 @@ class MyInlineActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 2. 泛型实化 (reified)
     // ─────────────────────────────────────────────
-    private inline fun <reified T> getTypeName(): String {
-        return "类型名称: ${T::class.java.simpleName}, 全限定名: ${T::class.java.name}"
-    }
+    private inline fun <reified T> getTypeName(): String = "类型名称: ${T::class.java.simpleName}, 全限定名: ${T::class.java.name}"
 
-    private inline fun <reified T> parseJson(json: String): T {
-        return Gson().fromJson(json, T::class.java)
-    }
+    private inline fun <reified T> parseJson(json: String): T = Gson().fromJson(json, T::class.java)
 
     private fun testReifiedGenerics() {
         appendLog("【reified】${getTypeName<UserData>()}")
@@ -148,9 +142,7 @@ class MyInlineActivity : BasicResponseActivity() {
         return this
     }
 
-    private inline fun <T, R> T.mRun(block: T.() -> R): R {
-        return block()
-    }
+    private inline fun <T, R> T.mRun(block: T.() -> R): R = block()
 
     private fun testCustomInlineExtensions() {
         val user = UserData("CustomUser", 50)
@@ -171,7 +163,7 @@ class MyInlineActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     private inline fun executeWithNoinline(
         inlinedBlock: () -> String,
-        noinline storedBlock: () -> String
+        noinline storedBlock: () -> String,
     ): Pair<String, () -> String> {
         val inlinedResult = inlinedBlock()
         // noinline 的参数可以作为函数对象返回或保存
@@ -179,7 +171,7 @@ class MyInlineActivity : BasicResponseActivity() {
     }
 
     private inline fun executeWithCrossinline(
-        crossinline asyncAction: () -> Unit
+        crossinline asyncAction: () -> Unit,
     ) {
         // 在非局部上下文（如 Runnable）中执行 crossinline Lambda
         val runnable = Runnable {
@@ -192,7 +184,7 @@ class MyInlineActivity : BasicResponseActivity() {
         // noinline 演示
         val (_, savedLambda) = executeWithNoinline(
             inlinedBlock = { "Inlined-Content" },
-            storedBlock = { "Stored-Non-Inlined-Content" }
+            storedBlock = { "Stored-Non-Inlined-Content" },
         )
         appendLog("【noinline】成功将未内联 Lambda 传递并延迟调用: ${savedLambda()}")
 

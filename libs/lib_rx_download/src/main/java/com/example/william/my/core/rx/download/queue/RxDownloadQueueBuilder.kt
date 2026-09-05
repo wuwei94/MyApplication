@@ -43,7 +43,7 @@ class RxDownloadQueueBuilder internal constructor(
             id = id,
             headers = headers,
             resume = resume,
-        )
+        ),
     )
 
     fun addTasks(tasks: Iterable<DownloadQueueTask>) = apply {
@@ -77,9 +77,7 @@ class RxDownloadQueueBuilder internal constructor(
 
     fun build(): RxDownloadQueue = RxDownloadQueue(buildConfig())
 
-    fun buildFlowable(): Flowable<DownloadQueueEvent> {
-        return build().asFlowable()
-    }
+    fun buildFlowable(): Flowable<DownloadQueueEvent> = build().asFlowable()
 
     internal fun buildConfig(): DownloadQueueConfig {
         require(tasks.isNotEmpty()) { "至少需要通过 addTask(...) 添加一个下载任务" }
@@ -95,7 +93,7 @@ class RxDownloadQueueBuilder internal constructor(
             "批量下载任务 ID 不能重复"
         }
         require(
-            snapshots.map { it.destination.absoluteFile.path }.distinct().size == snapshots.size
+            snapshots.map { it.destination.absoluteFile.path }.distinct().size == snapshots.size,
         ) {
             "批量下载目标文件不能重复"
         }

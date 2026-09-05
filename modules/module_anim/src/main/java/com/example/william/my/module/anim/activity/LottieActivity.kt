@@ -42,9 +42,7 @@ import com.example.william.my.module.anim.databinding.AnimActivityLottieBinding
 @Route(path = RouterPath.Anim.Lottie)
 class LottieActivity : BaseVBActivity<AnimActivityLottieBinding>() {
 
-    override fun getViewBinding(): AnimActivityLottieBinding {
-        return AnimActivityLottieBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): AnimActivityLottieBinding = AnimActivityLottieBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -61,7 +59,7 @@ class LottieActivity : BaseVBActivity<AnimActivityLottieBinding>() {
 
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
-            }
+            },
         )
     }
 }

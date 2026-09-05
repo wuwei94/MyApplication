@@ -11,7 +11,7 @@ sealed class KtorSseInfo {
     data class Event(
         val id: String?,
         val event: String?,
-        val data: String?
+        val data: String?,
     ) : KtorSseInfo()
 
     /** 连接已关闭 */

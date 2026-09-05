@@ -45,12 +45,11 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPagerTabBind
  * - 多 Tab 页面切换
  */
 @Route(path = RouterPath.Tab.ViewPagerTab)
-class ViewPagerTabActivity : BaseVBActivity<TabActivityViewPagerTabBinding>(),
+class ViewPagerTabActivity :
+    BaseVBActivity<TabActivityViewPagerTabBinding>(),
     RadioGroup.OnCheckedChangeListener {
 
-    override fun getViewBinding(): TabActivityViewPagerTabBinding {
-        return TabActivityViewPagerTabBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TabActivityViewPagerTabBinding = TabActivityViewPagerTabBinding.inflate(layoutInflater)
 
     private val mTitles: ArrayList<String> by lazy {
         arrayListOf(
@@ -99,14 +98,14 @@ class ViewPagerTabActivity : BaseVBActivity<TabActivityViewPagerTabBinding>(),
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
-                    R.color.tab_selector_check_primary_dark
-                )
+                    R.color.tab_selector_check_primary_dark,
+                ),
             )
             val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
             drawable?.let {
                 DrawableCompat.setTintList(
                     it,
-                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark)
+                    ContextCompat.getColorStateList(this, R.color.tab_selector_check_primary_dark),
                 )
                 radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
             }

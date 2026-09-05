@@ -24,24 +24,22 @@ object TFLiteModelHelper {
      * 若遇到压缩 Asset 或系统 openFd 限制，自动降级为 Direct ByteBuffer 安全加载。
      */
     @Throws(Exception::class)
-    fun loadModelFile(context: Context, modelPath: String): ByteBuffer {
-        return try {
-            val fileDescriptor: AssetFileDescriptor = context.assets.openFd(modelPath)
-            val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
-            val fileChannel: FileChannel = inputStream.channel
-            val startOffset: Long = fileDescriptor.startOffset
-            val declaredLength: Long = fileDescriptor.declaredLength
-            fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
-        } catch (e: Exception) {
-            context.assets.open(modelPath).use { inputStream ->
-                val bytes = inputStream.readBytes()
-                val buffer = ByteBuffer.allocateDirect(bytes.size).apply {
-                    order(ByteOrder.nativeOrder())
-                    put(bytes)
-                    rewind()
-                }
-                buffer
+    fun loadModelFile(context: Context, modelPath: String): ByteBuffer = try {
+        val fileDescriptor: AssetFileDescriptor = context.assets.openFd(modelPath)
+        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
+        val fileChannel: FileChannel = inputStream.channel
+        val startOffset: Long = fileDescriptor.startOffset
+        val declaredLength: Long = fileDescriptor.declaredLength
+        fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+    } catch (e: Exception) {
+        context.assets.open(modelPath).use { inputStream ->
+            val bytes = inputStream.readBytes()
+            val buffer = ByteBuffer.allocateDirect(bytes.size).apply {
+                order(ByteOrder.nativeOrder())
+                put(bytes)
+                rewind()
             }
+            buffer
         }
     }
 
@@ -87,7 +85,7 @@ object TFLiteModelHelper {
     fun convertBitmapToDigitByteBuffer(
         bitmap: Bitmap,
         targetWidth: Int = 28,
-        targetHeight: Int = 28
+        targetHeight: Int = 28,
     ): ByteBuffer {
         val scaled = if (bitmap.width == targetWidth && bitmap.height == targetHeight) {
             bitmap
@@ -125,7 +123,7 @@ object TFLiteModelHelper {
         bitmap: Bitmap,
         targetWidth: Int = 224,
         targetHeight: Int = 224,
-        isQuantized: Boolean = true
+        isQuantized: Boolean = true,
     ): ByteBuffer {
         // 1. 中心正方形等比裁剪，避免非 1:1 图片拉伸变形失真
         val minDim = minOf(bitmap.width, bitmap.height)
@@ -197,10 +195,8 @@ object TFLiteModelHelper {
     /**
      * 获取置信度最高的 Top-K 索引与概率值
      */
-    fun getTopK(probabilities: FloatArray, k: Int = 5): List<Pair<Int, Float>> {
-        return probabilities
-            .mapIndexed { index, score -> Pair(index, score) }
-            .sortedByDescending { it.second }
-            .take(k)
-    }
+    fun getTopK(probabilities: FloatArray, k: Int = 5): List<Pair<Int, Float>> = probabilities
+        .mapIndexed { index, score -> Pair(index, score) }
+        .sortedByDescending { it.second }
+        .take(k)
 }

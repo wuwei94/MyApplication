@@ -73,7 +73,7 @@ class RetrofitBuilder {
             .baseUrl(baseUrl)
             .client(client ?: okHttpClient { logging() })
             .addConverterFactory(
-                converterFactory ?: RetrofitConverterFactory.create(code, message)
+                converterFactory ?: RetrofitConverterFactory.create(code, message),
             )
 
         callAdapterFactory?.let {

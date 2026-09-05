@@ -19,7 +19,7 @@ import kotlin.math.abs
 class FloatTouchHelper(
     private val windowManager: WindowManager?,
     private val layoutParams: WindowManager.LayoutParams?,
-    private val onUpdateLayout: (() -> Unit)? = null
+    private val onUpdateLayout: (() -> Unit)? = null,
 ) : View.OnTouchListener {
 
     private var startX = 0

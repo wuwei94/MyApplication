@@ -18,7 +18,7 @@ object NettyServer {
 
     fun start(
         port: Int,
-        listener: NettyServerHandler.OnMessageListener? = null
+        listener: NettyServerHandler.OnMessageListener? = null,
     ) {
         bossGroup = NioEventLoopGroup()
         workerGroup = NioEventLoopGroup()
@@ -61,11 +61,7 @@ object NettyServer {
         serverHandler?.broadcast(message)
     }
 
-    fun getConnectionCount(): Int {
-        return serverHandler?.getConnectionCount() ?: 0
-    }
+    fun getConnectionCount(): Int = serverHandler?.getConnectionCount() ?: 0
 
-    fun isRunning(): Boolean {
-        return channel?.isActive == true
-    }
+    fun isRunning(): Boolean = channel?.isActive == true
 }

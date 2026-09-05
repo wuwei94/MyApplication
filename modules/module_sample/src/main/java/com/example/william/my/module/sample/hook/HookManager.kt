@@ -27,7 +27,7 @@ object HookManager {
         try {
             // 1. 得到 View 的 ListenerInfo 对象
             val getListenerInfo = View::class.java.getDeclaredMethod("getListenerInfo")
-            //修改getListenerInfo为可访问(View中的getListenerInfo不是public)
+            // 修改getListenerInfo为可访问(View中的getListenerInfo不是public)
             getListenerInfo.isAccessible = true
             val listenerInfo = getListenerInfo.invoke(view)
 
@@ -47,28 +47,27 @@ object HookManager {
     }
 
     // 方式1：自己创建代理类
-    private fun buildProxy1(context: Context, clickListener: View.OnClickListener): Any {
-        return OnClickListenerProxy(clickListener)
-    }
+    private fun buildProxy1(context: Context, clickListener: View.OnClickListener): Any = OnClickListenerProxy(clickListener)
 
     // 方式2：由于View.OnClickListener是一个接口，所以可以直接用动态代理模式
     // Proxy.newProxyInstance的3个参数依次分别是：
     // 本地的类加载器;
     // 代理类的对象所继承的接口（用Class数组表示，支持多个接口）
     // 代理类的实际逻辑，封装在new出来的InvocationHandler内
-    private fun buildProxy2(context: Context, clickListener: View.OnClickListener): Any {
-        return Proxy.newProxyInstance(
-            context.javaClass.classLoader, arrayOf<Class<*>>(
-                View.OnClickListener::class.java
-            )
-        ) { proxy, method, args ->
-            println("点击事件被hook到了")
-            method.invoke(clickListener, *args) //执行被代理的对象的逻辑
-        }
+    private fun buildProxy2(context: Context, clickListener: View.OnClickListener): Any = Proxy.newProxyInstance(
+        context.javaClass.classLoader,
+        arrayOf<Class<*>>(
+            View.OnClickListener::class.java,
+        ),
+    ) { proxy, method, args ->
+        println("点击事件被hook到了")
+        method.invoke(clickListener, *args) // 执行被代理的对象的逻辑
     }
 
-    class OnClickListenerProxy    //直接在构造函数中传进来原来的OnClickListener
-        (private val mOriginalListener: View.OnClickListener?) : View.OnClickListener {
+    // 直接在构造函数中传进来原来的OnClickListener(
+    class OnClickListenerProxy(
+        private val mOriginalListener: View.OnClickListener?,
+    ) : View.OnClickListener {
         override fun onClick(v: View) {
             mOriginalListener?.onClick(v)
             println("点击事件被hook到了!")

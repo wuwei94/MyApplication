@@ -30,7 +30,7 @@ interface FormatPrinter {
         tookMs: Long,
         response: Response,
         mediaType: MediaType?,
-        bodyString: String
+        bodyString: String,
     )
 
     /**

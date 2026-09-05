@@ -64,9 +64,7 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBi
 @Route(path = RouterPath.Widget.RecyclerView)
 class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
 
-    override fun getViewBinding(): UiActivityRecyclerViewBinding {
-        return UiActivityRecyclerViewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityRecyclerViewBinding = UiActivityRecyclerViewBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -75,19 +73,19 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
     }
 
     private fun initRecyclerView() {
-        //固定大小，item 尺寸不变时跳过重新测量
+        // 固定大小，item 尺寸不变时跳过重新测量
         mBinding.recycleView.setHasFixedSize(true)
-        //布局管理器（必须最先设置）
+        // 布局管理器（必须最先设置）
         initLayoutManager(LayoutManagerType.LINEAR)
-        //装饰器（影响测量，应在 Adapter 之前）
+        // 装饰器（影响测量，应在 Adapter 之前）
         initItemDecoration()
-        //项动画（add/remove/move/change）
+        // 项动画（add/remove/move/change）
         initItemAnimator()
-        //适配器（数据绑定）
+        // 适配器（数据绑定）
         initAdapter()
-        //入场动画（需要 Adapter 已设置）
+        // 入场动画（需要 Adapter 已设置）
         initLayoutAnimation()
-        //SnapHelper（对齐方式，依赖 LayoutManager）
+        // SnapHelper（对齐方式，依赖 LayoutManager）
         initSnapHelper(SnapHelperType.LINEAR)
     }
 
@@ -118,7 +116,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
         mBinding.recycleView.addItemDecoration(
             DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
                 setDrawable(ContextCompat.getDrawable(this@RecyclerViewActivity, R.drawable.ui_divider)!!)
-            }
+            },
         )
     }
 
@@ -150,7 +148,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
      */
     private fun initLayoutAnimation() {
         val controller = LayoutAnimationController(
-            AnimationUtils.loadAnimation(this, R.anim.ui_anim_recycler_item_left)
+            AnimationUtils.loadAnimation(this, R.anim.ui_anim_recycler_item_left),
         )
         controller.order = LayoutAnimationController.ORDER_NORMAL
         controller.delay = 0.2f

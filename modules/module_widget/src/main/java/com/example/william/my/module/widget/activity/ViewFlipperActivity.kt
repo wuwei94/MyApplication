@@ -49,9 +49,7 @@ import com.example.william.my.module.widget.databinding.UiActivityViewFlipperBin
 @Route(path = RouterPath.Widget.ViewFlipper)
 class ViewFlipperActivity : BaseVBActivity<UiActivityViewFlipperBinding>() {
 
-    override fun getViewBinding(): UiActivityViewFlipperBinding {
-        return UiActivityViewFlipperBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityViewFlipperBinding = UiActivityViewFlipperBinding.inflate(layoutInflater)
 
     /**
      * 在 onStart 中启动翻转，onStop 中停止

@@ -16,7 +16,7 @@ class PoolItemAdapter(
     val tabName: String,
     val items: List<String>,
     private val onCreateCallback: () -> Unit,
-    private val onBindCallback: () -> Unit
+    private val onBindCallback: () -> Unit,
 ) : RecyclerView.Adapter<PoolItemAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

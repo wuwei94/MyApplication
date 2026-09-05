@@ -37,7 +37,7 @@ interface NetworkApi {
     @POST(Constants.Url_Login)
     fun loginCall(
         @Query(Constants.Key_Username) username: String,
-        @Query(Constants.Key_Password) password: String
+        @Query(Constants.Key_Password) password: String,
     ): Call<ResponseBody>
 
     /**
@@ -48,7 +48,7 @@ interface NetworkApi {
     @POST(Constants.Url_Login)
     fun loginSingle(
         @Query(Constants.Key_Username) username: String,
-        @Query(Constants.Key_Password) password: String
+        @Query(Constants.Key_Password) password: String,
     ): Single<RetrofitResponse<LoginData>>
 
     /**
@@ -97,6 +97,6 @@ interface NetworkApi {
     @POST(Constants.Url_Login)
     suspend fun loginSuspend(
         @Query(Constants.Key_Username) username: String,
-        @Query(Constants.Key_Password) password: String
+        @Query(Constants.Key_Password) password: String,
     ): RetrofitResponse<LoginData>
 }

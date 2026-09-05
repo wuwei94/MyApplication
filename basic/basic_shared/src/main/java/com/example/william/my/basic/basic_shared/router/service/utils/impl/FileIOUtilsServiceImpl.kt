@@ -14,13 +14,9 @@ import java.io.InputStream
 @Route(path = RouterPath.Service.FileIOUtilsService)
 class FileIOUtilsServiceImpl : FileIOUtilsService {
 
-    override fun writeFileFromIS(file: File, inputStream: InputStream): Boolean {
-        return FileIOUtils.writeFileFromIS(file, inputStream)
-    }
+    override fun writeFileFromIS(file: File, inputStream: InputStream): Boolean = FileIOUtils.writeFileFromIS(file, inputStream)
 
-    override fun writeFileFromString(file: File, str: String): Boolean {
-        return FileIOUtils.writeFileFromString(file, str)
-    }
+    override fun writeFileFromString(file: File, str: String): Boolean = FileIOUtils.writeFileFromString(file, str)
 
     override fun init(context: Context) {}
 }

@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class RouterItem(
     val mRouterName: String?,
     val mRouterPath: String?,
-    val mParams: HashMap<String, String> = hashMapOf()
+    val mParams: HashMap<String, String> = hashMapOf(),
 ) : Parcelable

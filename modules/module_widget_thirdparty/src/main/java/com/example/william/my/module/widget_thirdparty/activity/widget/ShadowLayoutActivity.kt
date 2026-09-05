@@ -40,7 +40,5 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
 @Route(path = RouterPath.WidgetThirdparty.ShadowLayout)
 class ShadowLayoutActivity : BaseVBActivity<WidgetThirdpartyActivityShadowLayoutBinding>() {
 
-    override fun getViewBinding(): WidgetThirdpartyActivityShadowLayoutBinding {
-        return WidgetThirdpartyActivityShadowLayoutBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityShadowLayoutBinding = WidgetThirdpartyActivityShadowLayoutBinding.inflate(layoutInflater)
 }

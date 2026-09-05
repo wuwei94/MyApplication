@@ -20,7 +20,7 @@ class JsonRequest<T>(
     headers: MutableMap<String, String>?,
     private val jsonObject: JSONObject?,
     listener: Response.Listener<T>,
-    errorListener: Response.ErrorListener
+    errorListener: Response.ErrorListener,
 ) : BaseGsonRequest<T>(method, url, clazz, headers, listener, errorListener) {
 
     override fun getBody(): ByteArray? {
@@ -29,7 +29,8 @@ class JsonRequest<T>(
         } catch (uee: UnsupportedEncodingException) {
             VolleyLog.wtf(
                 "Unsupported Encoding while trying to get the bytes of %s using %s",
-                jsonObject.toString(), "utf-8"
+                jsonObject.toString(),
+                "utf-8",
             )
             return null
         }

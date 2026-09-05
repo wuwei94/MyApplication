@@ -26,7 +26,7 @@ object RandomIcon {
         R.drawable.ic_hudie,
         R.drawable.ic_jiakechong,
         R.drawable.ic_jingangyingwu,
-        R.drawable.ic_jingyu
+        R.drawable.ic_jingyu,
     )
 
     fun icon() = icons[Random.nextInt(0, icons.size - 1)]

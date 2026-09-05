@@ -16,4 +16,3 @@ dependencies {
     api(libs.ktor.client.logging)
     api(libs.ktor.serialization.gson)
 }
-

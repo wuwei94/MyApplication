@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    api(project(":libs:lib_retrofit"))
+    api(projects.libs.libRetrofit)
     api(libs.retrofit.adapter.rxjava3)
     api(libs.rxandroid)
     implementation(libs.rxlifecycle)

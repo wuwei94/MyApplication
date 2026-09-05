@@ -13,7 +13,7 @@ class HiltUserDatabase @Inject constructor() {
  * 模拟用户仓库层，依赖 HiltUserDatabase
  */
 class HiltUserRepository @Inject constructor(
-    private val database: HiltUserDatabase
+    private val database: HiltUserDatabase,
 ) {
     fun getUserInfo(id: Long): String = "UserRepository 查询结果 -> ${database.queryUser(id)}"
 }

@@ -34,7 +34,7 @@ object CompatCookieJar {
      */
     @Deprecated(
         message = "请使用 cookieJar() 方式替代",
-        replaceWith = ReplaceWith("cookieJar()")
+        replaceWith = ReplaceWith("cookieJar()"),
     )
     fun cookieJarByInterceptor(builder: OkHttpClient.Builder) {
         builder.addInterceptor(InterceptorCookie(MemoryCookieStore()))
@@ -45,7 +45,7 @@ object CompatCookieJar {
      */
     @Deprecated(
         message = "请使用 cookieJar(store) 方式替代",
-        replaceWith = ReplaceWith("cookieJar(store)")
+        replaceWith = ReplaceWith("cookieJar(store)"),
     )
     fun cookieJarByInterceptor(builder: OkHttpClient.Builder, store: CookieStore) {
         builder.addInterceptor(InterceptorCookie(store))

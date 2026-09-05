@@ -11,7 +11,7 @@ import com.example.william.my.module.arch.mvp.contract.ArticleContract
  */
 class ArticlePresenter(
     private val repository: ArticleRepository,
-    private var view: ArticleContract.View?
+    private var view: ArticleContract.View?,
 ) : ArticleContract.Presenter {
 
     override fun loadArticle(page: Int) {
@@ -25,11 +25,11 @@ class ArticlePresenter(
                 override fun onDataNotAvailable() {
                     view?.showNoArticle()
                 }
-            })
+            },
+        )
     }
 
     override fun start() {
-
     }
 
     override fun clear() {
@@ -37,6 +37,5 @@ class ArticlePresenter(
     }
 
     override fun queryData() {
-
     }
 }

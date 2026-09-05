@@ -36,7 +36,6 @@ class ScrollableTabActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     fun MyScrollableTab() {
-
         val tabs = listOf("标签1", "标签2", "标签3", "标签4", "这是很长的标签5")
         val pagerState = rememberPagerState { tabs.size }
         val coroutineScope = rememberCoroutineScope()
@@ -45,7 +44,7 @@ class ScrollableTabActivity : ComponentActivity() {
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 modifier = Modifier.wrapContentWidth(),
-                edgePadding = 16.dp
+                edgePadding = 16.dp,
             ) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
@@ -55,7 +54,7 @@ class ScrollableTabActivity : ComponentActivity() {
                             coroutineScope.launch {
                                 pagerState.scrollToPage(index)
                             }
-                        }
+                        },
                     )
                 }
             }

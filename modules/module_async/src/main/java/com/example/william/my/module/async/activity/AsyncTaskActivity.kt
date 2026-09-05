@@ -37,11 +37,9 @@ class AsyncTaskActivity : BasicResponseActivity() {
         showDescription("AsyncTask（已废弃）— 异步任务演示")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "execute() — 执行任务"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "execute() — 执行任务",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {

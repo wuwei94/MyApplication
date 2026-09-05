@@ -112,6 +112,7 @@ interface ArticleRepository {
      * @return 包含文章列表的数据结果封装 [NetworkResult]。
      */
     suspend fun getArticleResult(
-        page: Int, forceUpdate: Boolean = false
+        page: Int,
+        forceUpdate: Boolean = false,
     ): NetworkResult<List<ArticleDetailData>>
 }

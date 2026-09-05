@@ -63,9 +63,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 @Route(path = RouterPath.Widget.FlexBox)
 class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
 
-    override fun getViewBinding(): UiActivityFlexBoxBinding {
-        return UiActivityFlexBoxBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityFlexBoxBinding = UiActivityFlexBoxBinding.inflate(layoutInflater)
 
     private val mData = arrayListOf(
         "FlexBox_1234",
@@ -87,8 +85,8 @@ class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
 
     private fun initFlexBox() {
         val manager = FlexboxLayoutManager(this)
-        manager.flexDirection = FlexDirection.ROW //主轴方向
-        manager.flexWrap = FlexWrap.WRAP //是否换行
+        manager.flexDirection = FlexDirection.ROW // 主轴方向
+        manager.flexWrap = FlexWrap.WRAP // 是否换行
 
         mBinding.flexboxRecycleView.layoutManager = manager
         mBinding.flexboxRecycleView.adapter = RecyclerAdapter(mData)

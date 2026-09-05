@@ -29,14 +29,12 @@ class IdleHandlerActivity : BasicResponseActivity() {
         showDescription("IdleHandler 主线程空闲调度示例\n演示单次执行、持续空闲监听、生命周期注销与延迟任务调度")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 注册单次 IdleHandler（返回 false，执行后自动注销）",
-            "2. 注册持续监听 IdleHandler（返回 true，每次空闲触发）",
-            "3. 模拟发送连续 Handler 消息（观察空闲间隙调度）",
-            "4. 主动注销持续监听的 IdleHandler（removeIdleHandler）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 注册单次 IdleHandler（返回 false，执行后自动注销）",
+        "2. 注册持续监听 IdleHandler（返回 true，每次空闲触发）",
+        "3. 模拟发送连续 Handler 消息（观察空闲间隙调度）",
+        "4. 主动注销持续监听的 IdleHandler（removeIdleHandler）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

@@ -41,7 +41,7 @@ import kotlinx.coroutines.rx3.asFlow
  */
 class DefaultArticleRepository(
     private val articlesRemoteDataSource: ArticleRemoteDataSource,
-    private val articlesLocalDataSource: ArticleLocalDataSource
+    private val articlesLocalDataSource: ArticleLocalDataSource,
 ) : ArticleRepository {
 
     // =========================================================================
@@ -50,10 +50,11 @@ class DefaultArticleRepository(
 
     override fun getArticleCallback(
         page: Int,
-        callback: ArticleRepository.LoadArticleCallback
+        callback: ArticleRepository.LoadArticleCallback,
     ) {
         articlesRemoteDataSource.getArticleCallback(
-            page, object : ArticleRemoteDataSource.LoadArticleCallback {
+            page,
+            object : ArticleRemoteDataSource.LoadArticleCallback {
                 override fun onArticleLoaded(articles: List<ArticleDetailData>) {
                     callback.onArticleLoaded(articles)
                 }
@@ -61,7 +62,8 @@ class DefaultArticleRepository(
                 override fun onDataNotAvailable() {
                     callback.onDataNotAvailable()
                 }
-            })
+            },
+        )
     }
 
     // =========================================================================
@@ -71,16 +73,12 @@ class DefaultArticleRepository(
     /**
      * RxJava3 Single：执行网络请求并返回单次响应流。
      */
-    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> {
-        return articlesRemoteDataSource.getArticleSingle(page)
-    }
+    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> = articlesRemoteDataSource.getArticleSingle(page)
 
     /**
      * 协程挂起函数：执行网络请求并返回业务响应。
      */
-    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> {
-        return articlesRemoteDataSource.getArticleSuspend(page)
-    }
+    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> = articlesRemoteDataSource.getArticleSuspend(page)
 
     // =========================================================================
     // 3. LiveData 响应式数据流及互转 API
@@ -89,35 +87,29 @@ class DefaultArticleRepository(
     /**
      * 官方 liveData 协程构建器：通过 liveData(Dispatchers.IO) { ... } 构建生命周期感知的 LiveData。
      */
-    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return liveData(Dispatchers.IO) {
-            emit(RetrofitResponse.loading())
-            try {
-                val response = articlesRemoteDataSource.getArticleSuspend(page)
-                emit(response)
-            } catch (e: Exception) {
-                emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
-            }
+    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> = liveData(Dispatchers.IO) {
+        emit(RetrofitResponse.loading())
+        try {
+            val response = articlesRemoteDataSource.getArticleSuspend(page)
+            emit(response)
+        } catch (e: Exception) {
+            emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
         }
     }
 
     /**
      * RxJava 转 LiveData：遵循 ReactiveStreams 规范将 Single 桥接为 LiveData。
      */
-    override fun getArticleLiveDataByRx(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return articlesRemoteDataSource.getArticleSingle(page)
-            .toObservable()
-            .asFlow()
-            .asLiveData()
-    }
+    override fun getArticleLiveDataByRx(page: Int): LiveData<RetrofitResponse<ArticleData>> = articlesRemoteDataSource.getArticleSingle(page)
+        .toObservable()
+        .asFlow()
+        .asLiveData()
 
     /**
      * Flow 转 LiveData：通过 asLiveData() 将 Kotlin Flow 桥接为 LiveData。
      */
-    override fun getArticleLiveDataByFlow(page: Int): LiveData<RetrofitResponse<ArticleData>> {
-        return getArticleFlow(page)
-            .asLiveData()
-    }
+    override fun getArticleLiveDataByFlow(page: Int): LiveData<RetrofitResponse<ArticleData>> = getArticleFlow(page)
+        .asLiveData()
 
     // =========================================================================
     // 4. Flow 响应式数据流及互转 API
@@ -126,32 +118,26 @@ class DefaultArticleRepository(
     /**
      * 纯协程 Flow 构建：通过 flow { ... } 发送 loading/error/success 状态。
      */
-    override fun getArticleFlow(page: Int): Flow<RetrofitResponse<ArticleData>> {
-        return flow {
-            emit(RetrofitResponse.loading())
-            val response = articlesRemoteDataSource.getArticleSuspend(page)
-            emit(response)
-        }.catch { e ->
-            emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
-        }.flowOn(Dispatchers.IO)
-    }
+    override fun getArticleFlow(page: Int): Flow<RetrofitResponse<ArticleData>> = flow {
+        emit(RetrofitResponse.loading())
+        val response = articlesRemoteDataSource.getArticleSuspend(page)
+        emit(response)
+    }.catch { e ->
+        emit(RetrofitResponse.error(e.message ?: "网络请求失败"))
+    }.flowOn(Dispatchers.IO)
 
     /**
      * RxJava 转 Flow：将 Single 转换为 Kotlin 响应式 Flow (asFlow)。
      */
-    override fun getArticleFlowByRx(page: Int): Flow<RetrofitResponse<ArticleData>> {
-        return articlesRemoteDataSource.getArticleSingle(page)
-            .toObservable()
-            .asFlow()
-    }
+    override fun getArticleFlowByRx(page: Int): Flow<RetrofitResponse<ArticleData>> = articlesRemoteDataSource.getArticleSingle(page)
+        .toObservable()
+        .asFlow()
 
     /**
      * LiveData 转 Flow：将 LiveData 转换为 Kotlin 响应式 Flow (asFlow)。
      */
-    override fun getArticleFlowByLiveData(page: Int): Flow<RetrofitResponse<ArticleData>> {
-        return getArticleLiveData(page)
-            .asFlow()
-    }
+    override fun getArticleFlowByLiveData(page: Int): Flow<RetrofitResponse<ArticleData>> = getArticleLiveData(page)
+        .asFlow()
 
     // =========================================================================
     // 5. 本地持久化与数据仓库业务 API
@@ -170,7 +156,7 @@ class DefaultArticleRepository(
      */
     override suspend fun getArticleResult(
         page: Int,
-        forceUpdate: Boolean
+        forceUpdate: Boolean,
     ): NetworkResult<List<ArticleDetailData>> {
         if (forceUpdate) {
             try {

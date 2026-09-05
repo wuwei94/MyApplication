@@ -41,9 +41,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
 @Route(path = RouterPath.WidgetThirdparty.RealtimeBlurView)
 class RealtimeBlurViewActivity : BaseVBActivity<WidgetThirdpartyActivityBlurViewBinding>() {
 
-    override fun getViewBinding(): WidgetThirdpartyActivityBlurViewBinding {
-        return WidgetThirdpartyActivityBlurViewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityBlurViewBinding = WidgetThirdpartyActivityBlurViewBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -52,8 +50,8 @@ class RealtimeBlurViewActivity : BaseVBActivity<WidgetThirdpartyActivityBlurView
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 10f,
-                resources.displayMetrics
-            )
+                resources.displayMetrics,
+            ),
         )
     }
 }

@@ -6,9 +6,7 @@ import javax.inject.Inject
  * 模拟第三方网络客户端（无法直接添加 @Inject constructor 注解的类）
  */
 class HiltNetworkClient(val baseUrl: String, val timeoutSeconds: Long) {
-    fun request(path: String): String {
-        return "NetworkClient: GET $baseUrl$path (timeout: ${timeoutSeconds}s)"
-    }
+    fun request(path: String): String = "NetworkClient: GET $baseUrl$path (timeout: ${timeoutSeconds}s)"
 }
 
 /**

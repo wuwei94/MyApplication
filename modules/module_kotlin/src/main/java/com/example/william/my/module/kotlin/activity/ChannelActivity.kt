@@ -38,14 +38,12 @@ class ChannelActivity : BasicResponseActivity() {
         showDescription("演示 Kotlin Channel 通道通信、缓冲策略、生产消费模型、callbackFlow 与 channelFlow")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. Channel 4 种缓冲模式（RENDEZVOUS / BUFFERED / CONFLATED / UNLIMITED）",
-            "2. 生产-消费模型（produce 构建器与多消费者竞争）",
-            "3. callbackFlow 传统回调桥接（awaitClose 优雅反注册防泄漏）",
-            "4. channelFlow 跨子协程并发发射与数据合并"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. Channel 4 种缓冲模式（RENDEZVOUS / BUFFERED / CONFLATED / UNLIMITED）",
+        "2. 生产-消费模型（produce 构建器与多消费者竞争）",
+        "3. callbackFlow 传统回调桥接（awaitClose 优雅反注册防泄漏）",
+        "4. channelFlow 跨子协程并发发射与数据合并",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

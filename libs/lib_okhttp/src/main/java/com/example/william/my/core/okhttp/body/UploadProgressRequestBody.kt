@@ -15,7 +15,7 @@ import okio.buffer
  */
 class UploadProgressRequestBody(
     private val delegate: RequestBody,
-    private val listener: (Long, Long) -> Unit
+    private val listener: (Long, Long) -> Unit,
 ) : RequestBody() {
 
     override fun contentType(): MediaType? = delegate.contentType()
@@ -40,7 +40,7 @@ class UploadProgressRequestBody(
     private class ProgressSink(
         delegate: Sink,
         private val totalBytes: Long,
-        private val listener: (Long, Long) -> Unit
+        private val listener: (Long, Long) -> Unit,
     ) : ForwardingSink(delegate) {
 
         private var bytesWritten = 0L

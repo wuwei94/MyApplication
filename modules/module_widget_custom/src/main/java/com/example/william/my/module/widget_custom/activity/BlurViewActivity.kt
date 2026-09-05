@@ -31,9 +31,7 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityBlurV
 @Route(path = RouterPath.WidgetCustom.BlurView)
 class BlurViewActivity : BaseVBActivity<DemoActivityBlurViewBinding>() {
 
-    override fun getViewBinding(): DemoActivityBlurViewBinding {
-        return DemoActivityBlurViewBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): DemoActivityBlurViewBinding = DemoActivityBlurViewBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

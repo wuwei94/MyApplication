@@ -18,7 +18,7 @@ object CompatCache {
         builder: OkHttpClient.Builder,
         app: Application,
         dirName: String = "cache",
-        dirSize: Long = 10L * 1024L * 1024L
+        dirSize: Long = 10L * 1024L * 1024L,
     ) {
         val cacheFile = File(getCacheDir(app), dirName)
         val networkCheck = NetworkCheck(app)
@@ -31,7 +31,7 @@ object CompatCache {
         builder: OkHttpClient.Builder,
         app: Application,
         dir: File,
-        dirSize: Long = 10L * 1024L * 1024L
+        dirSize: Long = 10L * 1024L * 1024L,
     ) {
         val networkCheck = NetworkCheck(app)
         builder.cache(Cache(dir, dirSize))
@@ -39,13 +39,11 @@ object CompatCache {
         builder.addNetworkInterceptor(InterceptorCacheResponse())
     }
 
-    private fun getCacheDir(context: Application): File {
-        return if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
-            //外部存储可用
-            context.externalCacheDir ?: context.cacheDir
-        } else {
-            //外部存储不可用
-            context.cacheDir
-        }
+    private fun getCacheDir(context: Application): File = if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
+        // 外部存储可用
+        context.externalCacheDir ?: context.cacheDir
+    } else {
+        // 外部存储不可用
+        context.cacheDir
     }
 }

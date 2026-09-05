@@ -44,9 +44,7 @@ import com.example.william.my.module.tab.utils.TabLayoutUtils
 @Route(path = RouterPath.Tab.FlycoTabLayout)
 class FlycoTabLayoutActivity : BaseVBActivity<TabActivityFlycoTabLayoutBinding>() {
 
-    override fun getViewBinding(): TabActivityFlycoTabLayoutBinding {
-        return TabActivityFlycoTabLayoutBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): TabActivityFlycoTabLayoutBinding = TabActivityFlycoTabLayoutBinding.inflate(layoutInflater)
 
     private var mTitles: ArrayList<String> = arrayListOf()
 
@@ -70,26 +68,30 @@ class FlycoTabLayoutActivity : BaseVBActivity<TabActivityFlycoTabLayoutBinding>(
 
     private fun initTabLayout() {
         TabLayoutUtils.initSlidingTab(
-            mBinding.slidingTab, mBinding.viewPager,
-            mTitles, this, mFragments
+            mBinding.slidingTab,
+            mBinding.viewPager,
+            mTitles,
+            this,
+            mFragments,
         )
         TabLayoutUtils.initCommonTabLayout(
-            mBinding.commonTab, mBinding.viewPager,
-            mTitles
+            mBinding.commonTab,
+            mBinding.viewPager,
+            mTitles,
         )
 
         TabLayoutUtils.initSegmentTabLayout(
-            mBinding.segmentTab, mBinding.viewPager,
-            mTitles
+            mBinding.segmentTab,
+            mBinding.viewPager,
+            mTitles,
         )
 
         mBinding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
+                positionOffsetPixels: Int,
             ) {
-
             }
 
             override fun onPageSelected(position: Int) {
@@ -98,7 +100,6 @@ class FlycoTabLayoutActivity : BaseVBActivity<TabActivityFlycoTabLayoutBinding>(
             }
 
             override fun onPageScrollStateChanged(state: Int) {
-
             }
         })
     }

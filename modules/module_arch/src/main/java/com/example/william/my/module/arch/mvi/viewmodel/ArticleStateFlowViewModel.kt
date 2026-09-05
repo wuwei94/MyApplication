@@ -27,8 +27,7 @@ import kotlinx.coroutines.launch
  * 演示 MVI 模式中通过 Channel 接收 Intent、StateFlow 暴露 UIState，以及 Channel 分发 Effect 副作用。
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-class ArticleStateFlowViewModel(private val repository: ArticleRepository) :
-    ViewModel() {
+class ArticleStateFlowViewModel(private val repository: ArticleRepository) : ViewModel() {
 
     val intent = Channel<ArticleIntent>(Channel.UNLIMITED)
 
@@ -76,10 +75,10 @@ class ArticleStateFlowViewModel(private val repository: ArticleRepository) :
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = checkNotNull(
-                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
+                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY],
                 )
                 ArticleStateFlowViewModel(
-                    ServiceLocator.provideArticleRepository(application)
+                    ServiceLocator.provideArticleRepository(application),
                 )
             }
         }

@@ -27,21 +27,17 @@ class RxDownloadRequest internal constructor(
     private val config: DownloadConfig,
 ) {
 
-    fun asSingle(): Single<DownloadResult> {
-        return Single.defer { createSingle(callbackProgress = null) }
-    }
+    fun asSingle(): Single<DownloadResult> = Single.defer { createSingle(callbackProgress = null) }
 
     /** 使用统一下载回调订阅单任务，并返回用于取消的 Disposable。 */
     fun subscribeWith(
         callback: RxDownloadCallback<DownloadProgress, DownloadResult>,
-    ): Disposable {
-        return Single.defer { createSingle(callback::onProgress) }
-            .doOnSubscribe { callback.onLoading() }
-            .subscribe(
-                callback::onResponse,
-                { error -> callback.onFailure(error.toDownloadApiException()) },
-            )
-    }
+    ): Disposable = Single.defer { createSingle(callback::onProgress) }
+        .doOnSubscribe { callback.onLoading() }
+        .subscribe(
+            callback::onResponse,
+            { error -> callback.onFailure(error.toDownloadApiException()) },
+        )
 
     private fun createSingle(
         callbackProgress: ((DownloadProgress) -> Unit)?,
@@ -103,12 +99,10 @@ class RxDownloadRequest internal constructor(
             .doOnDispose(termination::close)
     }
 
-    private fun buildHeaders(resume: ResumeContext): Map<String, String> {
-        return config.headers.toMutableMap().apply {
-            if (resume.offset > 0L) {
-                this["Range"] = "bytes=${resume.offset}-"
-                this["If-Range"] = requireNotNull(resume.ifRange)
-            }
+    private fun buildHeaders(resume: ResumeContext): Map<String, String> = config.headers.toMutableMap().apply {
+        if (resume.offset > 0L) {
+            this["Range"] = "bytes=${resume.offset}-"
+            this["If-Range"] = requireNotNull(resume.ifRange)
         }
     }
 
@@ -274,9 +268,7 @@ class RxDownloadRequest internal constructor(
         }
     }
 
-    private fun destinationBackupFile(): File {
-        return File(config.destination.path + BACKUP_SUFFIX)
-    }
+    private fun destinationBackupFile(): File = File(config.destination.path + BACKUP_SUFFIX)
 
     private fun deleteOrThrow(file: File, description: String) {
         if (file.exists() && !file.delete()) {

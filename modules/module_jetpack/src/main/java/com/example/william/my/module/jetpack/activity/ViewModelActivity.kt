@@ -73,7 +73,7 @@ class ViewModelActivity : BaseActivity() {
              */
             private val viewModelByParent: FactoryViewModel by viewModels(
                 ownerProducer = { requireParentFragment() },
-                factoryProducer = { FactoryViewModel.DslFactory }
+                factoryProducer = { FactoryViewModel.DslFactory },
             )
         }
     }

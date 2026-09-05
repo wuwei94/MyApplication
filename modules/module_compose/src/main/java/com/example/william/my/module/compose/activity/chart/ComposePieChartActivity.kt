@@ -80,7 +80,7 @@ fun ComposePieChartScreen(modifier: Modifier = Modifier) {
         Color(0xFF10B981),
         Color(0xFFF59E0B),
         Color(0xFFEC4899),
-        Color(0xFF8B5CF6)
+        Color(0xFF8B5CF6),
     )
 
     var selectedPieIndex by remember { mutableIntStateOf(0) }
@@ -90,13 +90,13 @@ fun ComposePieChartScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // 图表卡片
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("年度各项成本预算占比 (Compose Canvas)", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -112,7 +112,7 @@ fun ComposePieChartScreen(modifier: Modifier = Modifier) {
                     amounts = pieAmounts,
                     colors = colors,
                     selectedIndex = selectedPieIndex,
-                    onSliceSelected = { selectedPieIndex = it }
+                    onSliceSelected = { selectedPieIndex = it },
                 )
             }
         }
@@ -124,13 +124,13 @@ fun ComposePieChartScreen(modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = colors[selectedPieIndex].copy(alpha = 0.08f))
+            colors = CardDefaults.cardColors(containerColor = colors[selectedPieIndex].copy(alpha = 0.08f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text("品类成本细分 — ${pieCategories[selectedPieIndex]}", fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     Text("占比 ${String.format("%.1f", pct)}%", color = colors[selectedPieIndex], fontWeight = FontWeight.Bold, fontSize = 12.sp)
@@ -145,7 +145,7 @@ fun ComposePieChartScreen(modifier: Modifier = Modifier) {
                     }
                     Column {
                         Text("支出预算", fontSize = 11.sp, color = Color.Gray)
-                        Text("${currentAmount} 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF10B981))
+                        Text("$currentAmount 万", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF10B981))
                     }
                     Column {
                         Text("总预算额", fontSize = 11.sp, color = Color.Gray)
@@ -168,13 +168,13 @@ fun ComposePieChartCore(
     amounts: List<Float>,
     colors: List<Color>,
     selectedIndex: Int,
-    onSliceSelected: (Int) -> Unit
+    onSliceSelected: (Int) -> Unit,
 ) {
     val total = amounts.sum()
     val animatedScale by animateFloatAsState(
         targetValue = 1.0f,
         animationSpec = tween(300),
-        label = "pieAnim"
+        label = "pieAnim",
     )
 
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
@@ -185,7 +185,7 @@ fun ComposePieChartCore(
                     detectTapGestures {
                         onSliceSelected((selectedIndex + 1) % categories.size)
                     }
-                }
+                },
         ) {
             val center = Offset(size.width / 2f, size.height / 2f)
             val baseRadius = (minOf(size.width, size.height) / 2.2f) * animatedScale
@@ -204,7 +204,7 @@ fun ComposePieChartCore(
                     useCenter = false,
                     topLeft = Offset(center.x - currentRadius, center.y - currentRadius),
                     size = Size(currentRadius * 2f, currentRadius * 2f),
-                    style = Stroke(width = if (isSelected) strokeWidth + 6.dp.toPx() else strokeWidth, cap = StrokeCap.Round)
+                    style = Stroke(width = if (isSelected) strokeWidth + 6.dp.toPx() else strokeWidth, cap = StrokeCap.Round),
                 )
                 startAngle += sweepAngle
             }

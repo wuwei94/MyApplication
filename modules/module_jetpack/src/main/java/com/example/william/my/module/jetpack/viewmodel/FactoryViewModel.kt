@@ -22,7 +22,7 @@ import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
  */
 class FactoryViewModel(
     private val repository: ArticleRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     companion object {
@@ -35,7 +35,7 @@ class FactoryViewModel(
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
-                extras: CreationExtras
+                extras: CreationExtras,
             ): T {
                 // 1. 从 CreationExtras 中提取系统级依赖 Application
                 val application =
@@ -47,7 +47,7 @@ class FactoryViewModel(
                 val repository = ServiceLocator.provideArticleRepository(application)
                 return FactoryViewModel(
                     repository = repository,
-                    savedStateHandle = savedStateHandle
+                    savedStateHandle = savedStateHandle,
                 ) as T
             }
         }
@@ -69,7 +69,7 @@ class FactoryViewModel(
                 val repository = ServiceLocator.provideArticleRepository(application)
                 FactoryViewModel(
                     repository = repository,
-                    savedStateHandle = savedStateHandle
+                    savedStateHandle = savedStateHandle,
                 )
             }
         }

@@ -29,9 +29,7 @@ private val defaultRetrofit: Retrofit by lazy(LazyThreadSafetyMode.SYNCHRONIZED)
  * }
  * ```
  */
-fun retrofit(init: RetrofitBuilder.() -> Unit): Retrofit {
-    return RetrofitBuilder().apply(init).build()
-}
+fun retrofit(init: RetrofitBuilder.() -> Unit): Retrofit = RetrofitBuilder().apply(init).build()
 
 /**
  * 按名称缓存 Retrofit，同名实例只会完成一次初始化并在后续调用中复用。
@@ -49,16 +47,12 @@ fun cachedRetrofit(name: String, init: RetrofitBuilder.() -> Unit): Retrofit {
 }
 
 /** 获取已缓存的 Retrofit；指定名称不存在时抛出 [NoSuchElementException]。 */
-fun getCachedRetrofit(name: String): Retrofit {
-    return retrofitCache[name]
-        ?: throw NoSuchElementException("No cached retrofit found with name: '$name'")
-}
+fun getCachedRetrofit(name: String): Retrofit = retrofitCache[name]
+    ?: throw NoSuchElementException("No cached retrofit found with name: '$name'")
 
 /** 移除并返回指定名称的 Retrofit；不存在时返回 `null`。 */
-fun removeCachedRetrofit(name: String): Retrofit? {
-    return synchronized(retrofitCache) {
-        retrofitCache.remove(name)
-    }
+fun removeCachedRetrofit(name: String): Retrofit? = synchronized(retrofitCache) {
+    retrofitCache.remove(name)
 }
 
 /** 清空通过 [cachedRetrofit] 创建的所有 Retrofit，不影响内部默认实例。 */
@@ -76,9 +70,7 @@ fun clearCachedRetrofits() {
  * val api2 = createApi(NetworkApi::class.java, myRetrofit)
  * ```
  */
-fun <T> createApi(api: Class<T>, retrofit: Retrofit = defaultRetrofit): T {
-    return retrofit.create(api)
-}
+fun <T> createApi(api: Class<T>, retrofit: Retrofit = defaultRetrofit): T = retrofit.create(api)
 
 /**
  * Java 兼容：创建 Retrofit 实例。
@@ -90,15 +82,11 @@ fun <T> createApi(api: Class<T>, retrofit: Retrofit = defaultRetrofit): T {
  * });
  * ```
  */
-fun createRetrofit(init: Consumer<RetrofitBuilder>): Retrofit {
-    return RetrofitBuilder().apply { init.accept(this) }.build()
-}
+fun createRetrofit(init: Consumer<RetrofitBuilder>): Retrofit = RetrofitBuilder().apply { init.accept(this) }.build()
 
 /**
  * Java 兼容：按名称缓存 Retrofit。
  *
  * 该入口仅用于未使用 Hilt 或 ServiceLocator 的简单场景。
  */
-fun cachedRetrofit(name: String, init: Consumer<RetrofitBuilder>): Retrofit {
-    return cachedRetrofit(name) { init.accept(this) }
-}
+fun cachedRetrofit(name: String, init: Consumer<RetrofitBuilder>): Retrofit = cachedRetrofit(name) { init.accept(this) }

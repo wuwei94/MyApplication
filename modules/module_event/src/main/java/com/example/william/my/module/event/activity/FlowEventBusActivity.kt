@@ -55,13 +55,11 @@ class FlowEventBusActivity : BasicResponseActivity() {
         showDescription("FlowEventBus 示例\n\n请点击下方按钮注册监听或发送事件")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "注册/注销监听 (Observe/Unobserve)",
-            "发送普通事件 (Post Event)",
-            "发送粘性事件 (Post Sticky Event)",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "注册/注销监听 (Observe/Unobserve)",
+        "发送普通事件 (Post Event)",
+        "发送粘性事件 (Post Sticky Event)",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -71,14 +69,14 @@ class FlowEventBusActivity : BasicResponseActivity() {
                 appendLog("发送普通事件：GlobalEvent")
                 FlowEventBus.postEvent(
                     this,
-                    GlobalEvent("FlowEventBus post by Activity")
+                    GlobalEvent("FlowEventBus post by Activity"),
                 )
             }
             2 -> {
                 appendLog("发送粘性事件：StickyEvent")
                 FlowEventBus.postEvent(
                     this,
-                    StickyEvent("FlowEventBus postSticky by Activity")
+                    StickyEvent("FlowEventBus postSticky by Activity"),
                 )
             }
         }

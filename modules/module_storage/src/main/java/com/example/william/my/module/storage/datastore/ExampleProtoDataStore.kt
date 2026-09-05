@@ -39,7 +39,7 @@ object SettingsSerializer : Serializer<Settings> {
 // 顶层单例属性委托（官方推荐最佳实践）
 private val Context.protoDataStore: DataStore<Settings> by dataStore(
     fileName = "jetpack_settings.pb",
-    serializer = SettingsSerializer
+    serializer = SettingsSerializer,
 )
 
 /**
@@ -52,19 +52,17 @@ class ExampleProtoDataStore(private val context: Context) {
     /**
      * 读取 Proto 中的计数器 Flow（带异常捕获与默认值处理）
      */
-    fun getCounter(): Flow<Int> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(Settings.getDefaultInstance())
-                } else {
-                    throw exception
-                }
+    fun getCounter(): Flow<Int> = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(Settings.getDefaultInstance())
+            } else {
+                throw exception
             }
-            .map { settings ->
-                settings.exampleCounter
-            }
-    }
+        }
+        .map { settings ->
+            settings.exampleCounter
+        }
 
     /**
      * 自增 Proto 计数器

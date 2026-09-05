@@ -8,7 +8,6 @@ android {
 }
 
 dependencies {
-    api(project(":libs:lib_retrofit_rx"))
+    api(projects.libs.libRetrofitRx)
     implementation(libs.rxlifecycle)
 }
-

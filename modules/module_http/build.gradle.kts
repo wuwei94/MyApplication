@@ -9,18 +9,18 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
-    implementation(project(":basic:basic_server"))
-    implementation(project(":basic:basic_repo"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
+    implementation(projects.basic.basicServer)
+    implementation(projects.basic.basicRepo)
 
-    implementation(project(":libs:lib_httpurl"))
-    implementation(project(":libs:lib_volley"))
-    implementation(project(":libs:lib_okhttp"))
-    implementation(project(":libs:lib_retrofit"))
-    implementation(project(":libs:lib_retrofit_rx"))
-    implementation(project(":libs:lib_rx_request"))
-    implementation(project(":libs:lib_rx_download"))
-    implementation(project(":libs:lib_rx_upload"))
-    implementation(project(":libs:lib_ktor"))
+    implementation(projects.libs.libHttpurl)
+    implementation(projects.libs.libVolley)
+    implementation(projects.libs.libOkhttp)
+    implementation(projects.libs.libRetrofit)
+    implementation(projects.libs.libRetrofitRx)
+    implementation(projects.libs.libRxRequest)
+    implementation(projects.libs.libRxDownload)
+    implementation(projects.libs.libRxUpload)
+    implementation(projects.libs.libKtor)
 }

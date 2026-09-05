@@ -36,38 +36,31 @@ object FormatParser {
      * application/json
      * application/x-www-form-urlencoded
      */
-    fun MediaType?.isParseAble(): Boolean {
-        return if (this == null) {
-            false
-        } else (isText(this) || isPlain(this)
-                || isXml(this) || isHtml(this)
-                || isJson(this) || isForm(this))
+    fun MediaType?.isParseAble(): Boolean = if (this == null) {
+        false
+    } else {
+        (
+            isText(this) ||
+                isPlain(this) ||
+                isXml(this) ||
+                isHtml(this) ||
+                isJson(this) ||
+                isForm(this)
+            )
     }
 
-    fun isText(mediaType: MediaType?): Boolean {
-        return mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("text") == true
-    }
+    fun isText(mediaType: MediaType?): Boolean = mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("text") == true
 
-    fun isPlain(mediaType: MediaType?): Boolean {
-        return mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("plain") == true
-    }
+    fun isPlain(mediaType: MediaType?): Boolean = mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("plain") == true
 
-    fun isXml(mediaType: MediaType?): Boolean {
-        return mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("xml") == true
-    }
+    fun isXml(mediaType: MediaType?): Boolean = mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("xml") == true
 
-    fun isHtml(mediaType: MediaType?): Boolean {
-        return mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("html") == true
-    }
+    fun isHtml(mediaType: MediaType?): Boolean = mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("html") == true
 
-    fun isJson(mediaType: MediaType?): Boolean {
-        return mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("json") == true
-    }
+    fun isJson(mediaType: MediaType?): Boolean = mediaType?.subtype?.lowercase(Locale.getDefault())?.contains("json") == true
 
-    fun isForm(mediaType: MediaType?): Boolean {
-        return mediaType?.subtype?.lowercase(Locale.getDefault())
-            ?.contains("x-www-form-urlencoded") == true
-    }
+    fun isForm(mediaType: MediaType?): Boolean = mediaType?.subtype?.lowercase(Locale.getDefault())
+        ?.contains("x-www-form-urlencoded") == true
 
     fun parseRequest(request: Request): String {
         val requestBody = request.body ?: return ""
@@ -87,7 +80,6 @@ object FormatParser {
             "{\"error\": \"" + e.message + "\"}"
         }
     }
-
 
     fun parseResponse(response: Response): String {
         val responseBody = response.body ?: return ""

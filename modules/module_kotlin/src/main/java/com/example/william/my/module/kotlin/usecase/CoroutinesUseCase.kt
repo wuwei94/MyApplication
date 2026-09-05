@@ -21,17 +21,14 @@ class CoroutinesUseCase(private val defaultDispatcher: CoroutineDispatcher) {
 
     suspend fun login(
         username: String,
-        password: String
-    ): NetworkResult<RetrofitResponse<LoginData>> {
+        password: String,
+    ): NetworkResult<RetrofitResponse<LoginData>> = withContext(defaultDispatcher) {
+        // 打印线程
+        ThreadUtils.isMainThread("CoroutinesUseCase login")
 
-        return withContext(defaultDispatcher) {
-            // 打印线程
-            ThreadUtils.isMainThread("CoroutinesUseCase login")
-
-            // 阻塞网络请求
-            // Blocking network request code
-            NetworkResult.Success(api.loginSuspend(username, password))
-        }
+        // 阻塞网络请求
+        // Blocking network request code
+        NetworkResult.Success(api.loginSuspend(username, password))
     }
 
     companion object {

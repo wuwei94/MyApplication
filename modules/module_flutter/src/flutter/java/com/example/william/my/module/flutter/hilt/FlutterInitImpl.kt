@@ -17,9 +17,7 @@ class FlutterInitImpl @Inject constructor() : IAppInit {
         initFlutterEngine(app)
     }
 
-    override fun getApp(): Application {
-        return mApp
-    }
+    override fun getApp(): Application = mApp
 
     private fun initFlutterEngine(app: Application) {
         // 实例化FlutterEngine。
@@ -33,7 +31,7 @@ class FlutterInitImpl @Inject constructor() : IAppInit {
         // 开始执行Dart代码来预热FlutterEngine
         // Start executing Dart code to pre-warm the FlutterEngine.
         flutterEngine.dartExecutor.executeDartEntrypoint(
-            DartExecutor.DartEntrypoint.createDefault()
+            DartExecutor.DartEntrypoint.createDefault(),
         )
 
         // 缓存FlutterActivity要使用的FlutterEngine。

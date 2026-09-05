@@ -27,10 +27,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
     if (enableFlutter) {
-        implementation(project(":flutter"))
+        implementation(projects.flutter)
     }
 }

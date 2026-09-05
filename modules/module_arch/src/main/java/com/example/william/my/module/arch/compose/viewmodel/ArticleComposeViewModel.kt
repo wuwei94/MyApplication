@@ -69,7 +69,7 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
                         _state.update { current ->
                             current.copy(
                                 isRefreshing = isRefresh,
-                                isLoadingMore = !isRefresh
+                                isLoadingMore = !isRefresh,
                             )
                         }
                     }
@@ -86,7 +86,7 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
                                 articles = updatedList,
                                 page = targetPage,
                                 isRefreshing = false,
-                                isLoadingMore = false
+                                isLoadingMore = false,
                             )
                         }
                         if (isRefresh) {
@@ -101,7 +101,7 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
                         _state.update { current ->
                             current.copy(
                                 isRefreshing = false,
-                                isLoadingMore = false
+                                isLoadingMore = false,
                             )
                         }
                         if (isRefresh) {
@@ -120,10 +120,10 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = checkNotNull(
-                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
+                    this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY],
                 )
                 ArticleComposeViewModel(
-                    ServiceLocator.provideArticleRepository(application)
+                    ServiceLocator.provideArticleRepository(application),
                 )
             }
         }

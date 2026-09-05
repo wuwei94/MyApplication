@@ -19,28 +19,26 @@ abstract class BaseGsonRequest<T>(
     private val clazz: Class<T>,
     private val headers: MutableMap<String, String>?,
     private val listener: Response.Listener<T>,
-    errorListener: Response.ErrorListener
+    errorListener: Response.ErrorListener,
 ) : Request<T>(method, url, errorListener) {
 
     override fun getHeaders(): MutableMap<String, String> = headers ?: super.getHeaders()
 
     override fun deliverResponse(response: T) = listener.onResponse(response)
 
-    override fun parseNetworkResponse(response: NetworkResponse): Response<T> {
-        return try {
-            val json = String(
-                response.data,
-                Charset.forName(HttpHeaderParser.parseCharset(response.headers))
-            )
-            Response.success(
-                gson.fromJson(json, clazz),
-                HttpHeaderParser.parseCacheHeaders(response)
-            )
-        } catch (e: UnsupportedEncodingException) {
-            Response.error(ParseError(e))
-        } catch (e: JsonSyntaxException) {
-            Response.error(ParseError(e))
-        }
+    override fun parseNetworkResponse(response: NetworkResponse): Response<T> = try {
+        val json = String(
+            response.data,
+            Charset.forName(HttpHeaderParser.parseCharset(response.headers)),
+        )
+        Response.success(
+            gson.fromJson(json, clazz),
+            HttpHeaderParser.parseCacheHeaders(response),
+        )
+    } catch (e: UnsupportedEncodingException) {
+        Response.error(ParseError(e))
+    } catch (e: JsonSyntaxException) {
+        Response.error(ParseError(e))
     }
 
     companion object {

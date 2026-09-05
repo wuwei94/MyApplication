@@ -37,13 +37,11 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
         showDescription("【OkHttp WebSocket】普通版本\n地址：$serverUrl")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "连接服务器（Connect）",
-            "发送消息（Send Message）",
-            "断开连接（Disconnect）",
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "连接服务器（Connect）",
+        "发送消息（Send Message）",
+        "断开连接（Disconnect）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -87,7 +85,7 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
                         appendLogAccent("【错误】${t.message}")
                     }
                 }
-            }
+            },
         )
     }
 

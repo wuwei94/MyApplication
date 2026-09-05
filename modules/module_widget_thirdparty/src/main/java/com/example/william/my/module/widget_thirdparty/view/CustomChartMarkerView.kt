@@ -16,7 +16,7 @@ import com.github.mikephil.charting.utils.MPPointF
 class CustomChartMarkerView(
     context: Context,
     layoutResource: Int = R.layout.widget_thirdparty_layout_chart_marker_view,
-    private val xLabels: List<String>? = null
+    private val xLabels: List<String>? = null,
 ) : MarkerView(context, layoutResource) {
 
     private val tvTitle: TextView = findViewById(R.id.tvMarkerTitle)

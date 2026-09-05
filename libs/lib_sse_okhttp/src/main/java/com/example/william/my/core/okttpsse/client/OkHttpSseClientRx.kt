@@ -38,7 +38,7 @@ object OkHttpSseClientRx {
     fun createEventSource(
         url: String,
         jsonBody: String? = null,
-        headers: Map<String, String> = emptyMap()
+        headers: Map<String, String> = emptyMap(),
     ): Observable<OkHttpSseInfo> {
         val requestBuilder = Request.Builder()
             .url(url)
@@ -59,73 +59,71 @@ object OkHttpSseClientRx {
     fun createEventSource(
         url: String,
         request: Request,
-        okHttpClient: OkHttpClient = defaultClient
-    ): Observable<OkHttpSseInfo> {
-        return Observable.create { emitter: ObservableEmitter<OkHttpSseInfo> ->
-            val listener = object : EventSourceListener() {
-                override fun onOpen(eventSource: EventSource, response: Response) {
-                    eventSourceMap[url] = eventSource
-                    OkHttpSseLogger.debug("SSE Rx onOpen: $url")
-                    if (!emitter.isDisposed) {
-                        emitter.onNext(OkHttpSseInfo.Open(response))
-                    }
-                }
-
-                override fun onEvent(
-                    eventSource: EventSource,
-                    id: String?,
-                    type: String?,
-                    data: String
-                ) {
-                    OkHttpSseLogger.debug("SSE Rx onEvent: $data")
-                    if (!emitter.isDisposed) {
-                        emitter.onNext(OkHttpSseInfo.Event(id, type, data))
-                    }
-                }
-
-                override fun onClosed(eventSource: EventSource) {
-                    eventSourceMap.remove(url)
-                    disposableMap.remove(url)
-                    OkHttpSseLogger.debug("SSE Rx onClosed: $url")
-                    if (!emitter.isDisposed) {
-                        emitter.onNext(OkHttpSseInfo.Closed("Server closed"))
-                        emitter.onComplete()
-                    }
-                }
-
-                override fun onFailure(
-                    eventSource: EventSource,
-                    t: Throwable?,
-                    response: Response?
-                ) {
-                    eventSourceMap.remove(url)
-                    disposableMap.remove(url)
-                    val error = t ?: Exception("SSE Error with status: ${response?.code}")
-                    OkHttpSseLogger.error("SSE Rx onFailure: ${error.message}", error)
-                    if (!emitter.isDisposed) {
-                        emitter.onNext(OkHttpSseInfo.Error(error, response))
-                        emitter.onComplete()
-                    }
+        okHttpClient: OkHttpClient = defaultClient,
+    ): Observable<OkHttpSseInfo> = Observable.create { emitter: ObservableEmitter<OkHttpSseInfo> ->
+        val listener = object : EventSourceListener() {
+            override fun onOpen(eventSource: EventSource, response: Response) {
+                eventSourceMap[url] = eventSource
+                OkHttpSseLogger.debug("SSE Rx onOpen: $url")
+                if (!emitter.isDisposed) {
+                    emitter.onNext(OkHttpSseInfo.Open(response))
                 }
             }
 
-            val factory = EventSources.createFactory(okHttpClient)
-            val eventSource = factory.newEventSource(request, listener)
-            eventSourceMap[url] = eventSource
-
-            emitter.setCancellable {
-                try {
-                    eventSource.cancel()
-                } catch (e: Exception) {
-                    OkHttpSseLogger.error("cancel in emitter failed: $url", e)
+            override fun onEvent(
+                eventSource: EventSource,
+                id: String?,
+                type: String?,
+                data: String,
+            ) {
+                OkHttpSseLogger.debug("SSE Rx onEvent: $data")
+                if (!emitter.isDisposed) {
+                    emitter.onNext(OkHttpSseInfo.Event(id, type, data))
                 }
+            }
+
+            override fun onClosed(eventSource: EventSource) {
                 eventSourceMap.remove(url)
                 disposableMap.remove(url)
+                OkHttpSseLogger.debug("SSE Rx onClosed: $url")
+                if (!emitter.isDisposed) {
+                    emitter.onNext(OkHttpSseInfo.Closed("Server closed"))
+                    emitter.onComplete()
+                }
+            }
+
+            override fun onFailure(
+                eventSource: EventSource,
+                t: Throwable?,
+                response: Response?,
+            ) {
+                eventSourceMap.remove(url)
+                disposableMap.remove(url)
+                val error = t ?: Exception("SSE Error with status: ${response?.code}")
+                OkHttpSseLogger.error("SSE Rx onFailure: ${error.message}", error)
+                if (!emitter.isDisposed) {
+                    emitter.onNext(OkHttpSseInfo.Error(error, response))
+                    emitter.onComplete()
+                }
             }
         }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+
+        val factory = EventSources.createFactory(okHttpClient)
+        val eventSource = factory.newEventSource(request, listener)
+        eventSourceMap[url] = eventSource
+
+        emitter.setCancellable {
+            try {
+                eventSource.cancel()
+            } catch (e: Exception) {
+                OkHttpSseLogger.error("cancel in emitter failed: $url", e)
+            }
+            eventSourceMap.remove(url)
+            disposableMap.remove(url)
+        }
     }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     fun cancel(url: String) {
         eventSourceMap[url]?.let { eventSource ->
@@ -143,7 +141,7 @@ object OkHttpSseClientRx {
     fun subscribe(
         url: String,
         jsonBody: String? = null,
-        headers: Map<String, String> = emptyMap()
+        headers: Map<String, String> = emptyMap(),
     ): Disposable {
         disposableMap[url]?.dispose()
         val disposable = createEventSource(url = url, jsonBody = jsonBody, headers = headers).subscribe()

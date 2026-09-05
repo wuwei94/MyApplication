@@ -49,15 +49,13 @@ import com.example.william.my.module.widget.databinding.UiActivityViewPager2Bind
 @Route(path = RouterPath.Widget.ViewPager2)
 class ViewPager2Activity : BaseVBActivity<UiActivityViewPager2Binding>() {
 
-    override fun getViewBinding(): UiActivityViewPager2Binding {
-        return UiActivityViewPager2Binding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityViewPager2Binding = UiActivityViewPager2Binding.inflate(layoutInflater)
 
     private val mTitles: ArrayList<String> = arrayListOf(
         "primary1",
         "primary2",
         "primaryDark1",
-        "primaryDark2"
+        "primaryDark2",
     )
 
     private val mFragments: ArrayList<Fragment> = arrayListOf(
@@ -79,7 +77,9 @@ class ViewPager2Activity : BaseVBActivity<UiActivityViewPager2Binding>() {
 
         mBinding.viewpager2Fragment.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         mBinding.viewpager2Fragment.adapter = ViewPagerFragmentAdapter2(
-            supportFragmentManager, lifecycle, mFragments
+            supportFragmentManager,
+            lifecycle,
+            mFragments,
         )
     }
 }

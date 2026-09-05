@@ -8,8 +8,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":basic:basic_lib"))
-    implementation(project(":basic:basic_shared"))
+    implementation(projects.basic.basicLib)
+    implementation(projects.basic.basicShared)
 
     implementation(libs.nordic.ble)
     implementation(libs.nordic.ble.ktx)

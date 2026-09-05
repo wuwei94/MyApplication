@@ -20,7 +20,7 @@ import java.util.Collections
  */
 class GfmTablePlugin(
     private val theme: TableTheme,
-    private val widthProvider: () -> Int
+    private val widthProvider: () -> Int,
 ) : AbstractMarkwonPlugin() {
 
     private var pendingTableRow: ArrayList<StreamTableRowSpan.Cell>? = null
@@ -61,8 +61,8 @@ class GfmTablePlugin(
                 pendingTableRow?.add(
                     StreamTableRowSpan.Cell(
                         tableCellAlignment(tableCell.alignment),
-                        visitor.builder().removeFromEnd(length)
-                    )
+                        visitor.builder().removeFromEnd(length),
+                    ),
                 )
                 tableRowIsHeader = tableCell.isHeader
             }
@@ -95,7 +95,7 @@ class GfmTablePlugin(
                 cells = pending,
                 isHeader = tableRowIsHeader,
                 isOdd = tableRows % 2 == 1,
-                widthProvider = widthProvider
+                widthProvider = widthProvider,
             )
 
             tableRows = if (tableRowIsHeader) 0 else tableRows + 1
@@ -104,16 +104,13 @@ class GfmTablePlugin(
         }
     }
 
-    private fun tableCellAlignment(alignment: TableCell.Alignment?): Layout.Alignment {
-        return when (alignment) {
-            TableCell.Alignment.CENTER -> Layout.Alignment.ALIGN_CENTER
-            TableCell.Alignment.RIGHT -> Layout.Alignment.ALIGN_OPPOSITE
-            else -> Layout.Alignment.ALIGN_NORMAL
-        }
+    private fun tableCellAlignment(alignment: TableCell.Alignment?): Layout.Alignment = when (alignment) {
+        TableCell.Alignment.CENTER -> Layout.Alignment.ALIGN_CENTER
+        TableCell.Alignment.RIGHT -> Layout.Alignment.ALIGN_OPPOSITE
+        else -> Layout.Alignment.ALIGN_NORMAL
     }
 
     companion object {
-        fun create(theme: TableTheme, widthProvider: () -> Int): GfmTablePlugin =
-            GfmTablePlugin(theme, widthProvider)
+        fun create(theme: TableTheme, widthProvider: () -> Int): GfmTablePlugin = GfmTablePlugin(theme, widthProvider)
     }
 }

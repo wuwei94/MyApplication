@@ -43,14 +43,12 @@ class ObjectAnimatorActivity : BasicImageActivity() {
         mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.shared_color_primary))
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "Alpha（透明度）",
-            "Rotation（旋转）",
-            "ScaleX（缩放）",
-            "TranslationX（平移）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "Alpha（透明度）",
+        "Rotation（旋转）",
+        "ScaleX（缩放）",
+        "TranslationX（平移）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -108,7 +106,7 @@ class ObjectAnimatorActivity : BasicImageActivity() {
             "translationX",
             mBinding.basicsImage.translationX,
             -400f,
-            mBinding.basicsImage.translationX
+            mBinding.basicsImage.translationX,
         ).apply {
             duration = 3000
             start()

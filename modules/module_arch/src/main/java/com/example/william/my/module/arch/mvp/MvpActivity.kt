@@ -55,7 +55,5 @@ import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 @Route(path = RouterPath.Arch.MVP)
 class MvpActivity : BaseFragmentActivity() {
 
-    override fun setFragment(): Fragment {
-        return MvpFragment()
-    }
+    override fun setFragment(): Fragment = MvpFragment()
 }

@@ -91,13 +91,13 @@ fun ComposeChartLinkageScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // 1. 顶部时间轴折线图 (Master)
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("主控时间轴：2026 月度营收趋势 (Compose)", fontWeight = FontWeight.Bold, fontSize = 15.sp)
@@ -111,7 +111,7 @@ fun ComposeChartLinkageScreen(modifier: Modifier = Modifier) {
                     months = months,
                     data = revenueTrend,
                     selectedIndex = activeMonthIndex,
-                    onMonthSelected = { activeMonthIndex = it }
+                    onMonthSelected = { activeMonthIndex = it },
                 )
             }
         }
@@ -120,7 +120,7 @@ fun ComposeChartLinkageScreen(modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("${months[activeMonthIndex]} 各部门成本支出 (万元)", fontWeight = FontWeight.Bold, fontSize = 15.sp)
@@ -131,7 +131,7 @@ fun ComposeChartLinkageScreen(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .height(160.dp),
                     labels = departments,
-                    values = deptCosts
+                    values = deptCosts,
                 )
             }
         }
@@ -140,7 +140,7 @@ fun ComposeChartLinkageScreen(modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f))
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.4f)),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("${months[activeMonthIndex]} 获客渠道构成占比", fontWeight = FontWeight.Bold, fontSize = 15.sp)
@@ -153,7 +153,7 @@ fun ComposeChartLinkageScreen(modifier: Modifier = Modifier) {
                     labels = channels,
                     values = channelShares,
                     colors = channelColors,
-                    centerLabel = months[activeMonthIndex]
+                    centerLabel = months[activeMonthIndex],
                 )
             }
         }
@@ -166,7 +166,7 @@ fun LinkageMasterLineChart(
     months: List<String>,
     data: List<Float>,
     selectedIndex: Int,
-    onMonthSelected: (Int) -> Unit
+    onMonthSelected: (Int) -> Unit,
 ) {
     val lineColor = Color(0xFF3B82F6)
 
@@ -177,7 +177,7 @@ fun LinkageMasterLineChart(
                 val idx = ((offset.x + stepX / 2f) / stepX).toInt().coerceIn(0, months.size - 1)
                 onMonthSelected(idx)
             }
-        }
+        },
     ) {
         val width = size.width
         val height = size.height
@@ -217,7 +217,7 @@ fun LinkageMasterLineChart(
             start = Offset(selX, 0f),
             end = Offset(selX, chartHeight),
             strokeWidth = 1.5.dp.toPx(),
-            pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 6f), 0f)
+            pathEffect = PathEffect.dashPathEffect(floatArrayOf(6f, 6f), 0f),
         )
         drawCircle(color = Color.White, radius = 5.dp.toPx(), center = Offset(selX, selY))
         drawCircle(color = lineColor, radius = 3.5.dp.toPx(), center = Offset(selX, selY))
@@ -257,7 +257,7 @@ fun LinkageBarChart(modifier: Modifier = Modifier, labels: List<String>, values:
                 color = barColor,
                 topLeft = Offset(cx - barWidth / 2f, chartHeight - h),
                 size = Size(barWidth, h),
-                cornerRadius = CornerRadius(6.dp.toPx(), 6.dp.toPx())
+                cornerRadius = CornerRadius(6.dp.toPx(), 6.dp.toPx()),
             )
 
             val paint = android.graphics.Paint().apply {
@@ -291,7 +291,7 @@ fun LinkagePieChart(modifier: Modifier = Modifier, labels: List<String>, values:
                     useCenter = false,
                     topLeft = Offset(center.x - radius, center.y - radius),
                     size = Size(radius * 2f, radius * 2f),
-                    style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+                    style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
                 )
                 startAngle += sweep
             }

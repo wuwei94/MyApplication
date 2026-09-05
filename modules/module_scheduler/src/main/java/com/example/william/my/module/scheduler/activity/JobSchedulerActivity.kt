@@ -60,8 +60,7 @@ class JobSchedulerActivity : BasicResponseActivity() {
 
     private var mJobId = 0
 
-    private class JobSchedulerHandler(activity: JobSchedulerActivity) :
-        Handler(Looper.getMainLooper()) {
+    private class JobSchedulerHandler(activity: JobSchedulerActivity) : Handler(Looper.getMainLooper()) {
 
         private val weakReference: WeakReference<JobSchedulerActivity?> = WeakReference(activity)
 
@@ -88,12 +87,10 @@ class JobSchedulerActivity : BasicResponseActivity() {
         startService(intent)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "schedule() — 调度任务",
-            "cancelAll() — 取消所有任务"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "schedule() — 调度任务",
+        "cancelAll() — 取消所有任务",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -111,9 +108,11 @@ class JobSchedulerActivity : BasicResponseActivity() {
             setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
             setRequiresDeviceIdle(true)
             setRequiresCharging(true)
-            setExtras(PersistableBundle().apply {
-                putLong(KEY_WORK_DURATION, 1000)
-            })
+            setExtras(
+                PersistableBundle().apply {
+                    putLong(KEY_WORK_DURATION, 1000)
+                },
+            )
         }
 
         val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler

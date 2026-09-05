@@ -43,7 +43,7 @@ class EffectActivity : ComponentActivity() {
         var message by remember { mutableStateOf("Initial message") }
 
         Column {
-            Text(text = "Message: ${message}")
+            Text(text = "Message: $message")
             LaunchedEffect(key1 = Unit) {
                 delay(3000) // 模拟网络请求
                 message = "Hello from LaunchedEffect"
@@ -57,7 +57,7 @@ class EffectActivity : ComponentActivity() {
         val message by remember { mutableStateOf("Initial message") }
 
         Column {
-            Text(text = "Message: ${message}")
+            Text(text = "Message: $message")
             SideEffect {
                 // 每次重组时都会执行
                 println("SideEffect executed")

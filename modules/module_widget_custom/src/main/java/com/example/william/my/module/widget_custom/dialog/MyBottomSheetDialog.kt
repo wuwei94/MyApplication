@@ -21,17 +21,15 @@ class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
-        PrimaryDarkFragment()
+        PrimaryDarkFragment(),
     )
 
-    override fun getLayout(): Int {
-        return R.layout.demo_dialog_bottom_sheet
-    }
+    override fun getLayout(): Int = R.layout.demo_dialog_bottom_sheet
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         mBinding = DemoDialogBottomSheetBinding.inflate(layoutInflater)
         return mBinding.root

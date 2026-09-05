@@ -42,8 +42,8 @@ object ObjectBox {
                 String.format(
                     "Using ObjectBox %s (%s)",
                     BoxStore.getVersion(),
-                    BoxStore.getVersionNative()
-                )
+                    BoxStore.getVersionNative(),
+                ),
             )
             // Enable ObjectBox Admin on debug builds.
             // https://docs.objectbox.io/data-browser

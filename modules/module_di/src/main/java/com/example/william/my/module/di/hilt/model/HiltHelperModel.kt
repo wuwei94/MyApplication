@@ -12,11 +12,9 @@ import javax.inject.Singleton
  */
 class HiltContextHelper @Inject constructor(
     @param:ApplicationContext private val appContext: Context,
-    @param:ActivityContext private val activityContext: Context
+    @param:ActivityContext private val activityContext: Context,
 ) {
-    fun getContextInfo(): String {
-        return "AppContext: ${appContext.javaClass.simpleName}, ActivityContext: ${activityContext.javaClass.simpleName}"
-    }
+    fun getContextInfo(): String = "AppContext: ${appContext.javaClass.simpleName}, ActivityContext: ${activityContext.javaClass.simpleName}"
 }
 
 /**

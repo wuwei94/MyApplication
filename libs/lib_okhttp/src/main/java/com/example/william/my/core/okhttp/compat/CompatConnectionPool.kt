@@ -13,10 +13,10 @@ object CompatConnectionPool {
         builder: OkHttpClient.Builder,
         maxIdleConnections: Int,
         keepAliveDuration: Long,
-        unit: TimeUnit = TimeUnit.MINUTES
+        unit: TimeUnit = TimeUnit.MINUTES,
     ) {
         builder.connectionPool(
-            okhttp3.ConnectionPool(maxIdleConnections, keepAliveDuration, unit)
+            okhttp3.ConnectionPool(maxIdleConnections, keepAliveDuration, unit),
         )
     }
 }

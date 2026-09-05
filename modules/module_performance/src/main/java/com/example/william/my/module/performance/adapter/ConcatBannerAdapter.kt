@@ -12,7 +12,7 @@ import com.example.william.my.module.performance.R
  */
 class ConcatBannerAdapter(
     var bannerTitle: String = "🎉【Banner 模块】年中狂欢大促（支持动态插拔）",
-    var bannerDesc: String = "由 BannerAdapter 驱动，点击顶部【下架/上线 Banner】可动态移除或重新插入"
+    var bannerDesc: String = "由 BannerAdapter 驱动，点击顶部【下架/上线 Banner】可动态移除或重新插入",
 ) : RecyclerView.Adapter<ConcatBannerAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

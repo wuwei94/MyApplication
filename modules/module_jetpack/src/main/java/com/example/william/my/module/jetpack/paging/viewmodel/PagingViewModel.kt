@@ -31,7 +31,7 @@ class PagingViewModel(
     private val articleDatabase: ArticleDatabase,
     private val remoteKeyDatabase: RemoteKeyDatabase,
     private val articleApi: ArticleApi,
-    private val articleRxApi: ArticleRxApi
+    private val articleRxApi: ArticleRxApi,
 ) : ViewModel() {
 
     // =========================================================================
@@ -51,8 +51,8 @@ class PagingViewModel(
             remoteMediator = ArticleRemoteMediator(
                 articleDatabase,
                 remoteKeyDatabase,
-                articleApi
-            )
+                articleApi,
+            ),
         ).liveData.cachedIn(viewModelScope)
 
     /**
@@ -70,8 +70,8 @@ class PagingViewModel(
             remoteMediator = ArticleRemoteMediator(
                 articleDatabase,
                 remoteKeyDatabase,
-                articleApi
-            )
+                articleApi,
+            ),
         ).flow.cachedIn(viewModelScope)
 
     /**
@@ -87,8 +87,8 @@ class PagingViewModel(
             remoteMediator = ArticleRxRemoteMediator(
                 articleDatabase,
                 remoteKeyDatabase,
-                articleRxApi
-            )
+                articleRxApi,
+            ),
         ).flowable.cachedIn(viewModelScope)
 
     // =========================================================================
@@ -99,7 +99,7 @@ class PagingViewModel(
      * LiveData 流：直接通过 ArticlePagingSource 加载网络数据
      */
     val articlesByNetworkLiveData: LiveData<PagingData<ArticleDetailData>> = Pager(
-        config = PagingConfig(pageSize = 20)
+        config = PagingConfig(pageSize = 20),
     ) {
         ArticlePagingSource(articleApi)
     }.liveData.cachedIn(viewModelScope)
@@ -117,7 +117,7 @@ class PagingViewModel(
      * RxJava Flowable 流：直接通过 ArticleRxPagingSource 加载网络数据
      */
     val articlesByNetworkFlowable: Flowable<PagingData<ArticleDetailData>> = Pager(
-        config = PagingConfig(pageSize = 20)
+        config = PagingConfig(pageSize = 20),
     ) {
         ArticleRxPagingSource(articleRxApi)
     }.flowable.cachedIn(viewModelScope)
@@ -131,7 +131,7 @@ class PagingViewModel(
                     articleDatabase = ServiceLocator.provideArticleDatabase(application),
                     remoteKeyDatabase = RemoteKeyDatabase.getInstance(application),
                     articleApi = ServiceLocator.provideArticleApi(),
-                    articleRxApi = ServiceLocator.provideArticleRxApi()
+                    articleRxApi = ServiceLocator.provideArticleRxApi(),
                 )
             }
         }

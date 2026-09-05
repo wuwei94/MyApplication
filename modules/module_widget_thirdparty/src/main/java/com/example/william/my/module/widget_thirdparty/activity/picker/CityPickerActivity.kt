@@ -59,9 +59,7 @@ class CityPickerActivity : BasicResponseActivity() {
         showDescription("点击下方列表项打开城市选择器")
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf("打开 CityPicker 城市选择器")
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf("打开 CityPicker 城市选择器")
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -72,10 +70,10 @@ class CityPickerActivity : BasicResponseActivity() {
 
     private fun showCityPicker() {
         CityPicker.from(this@CityPickerActivity)
-            .enableAnimation(true) //启用动画
-            //.setAnimationStyle(anim)//自定义动画
-            .setLocatedCity(null) //定位城市
-            //.setHotCities(hotCities)//指定热门城市
+            .enableAnimation(true) // 启用动画
+            // .setAnimationStyle(anim)//自定义动画
+            .setLocatedCity(null) // 定位城市
+            // .setHotCities(hotCities)//指定热门城市
             .setOnPickListener(object : OnPickListener {
                 override fun onPick(position: Int, data: City) {
                     appendLog("选中城市: ${data.name}，城市代码: ${data.code}")
@@ -86,13 +84,16 @@ class CityPickerActivity : BasicResponseActivity() {
                 }
 
                 override fun onLocate() {
-                    //开始定位，这里模拟一下定位
-                    runOnUiThread(Runnable { //定位完成之后更新数据
-                        CityPicker.from(this@CityPickerActivity).locateComplete(
-                            LocatedCity("深圳", "广东", "101280601"),
-                            LocateState.SUCCESS
-                        )
-                    })
+                    // 开始定位，这里模拟一下定位
+                    runOnUiThread(
+                        Runnable {
+                            // 定位完成之后更新数据
+                            CityPicker.from(this@CityPickerActivity).locateComplete(
+                                LocatedCity("深圳", "广东", "101280601"),
+                                LocateState.SUCCESS,
+                            )
+                        },
+                    )
                 }
             })
             .show()

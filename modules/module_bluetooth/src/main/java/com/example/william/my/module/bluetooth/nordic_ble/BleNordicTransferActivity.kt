@@ -31,19 +31,17 @@ class BleNordicTransferActivity : BasicResponseActivity() {
 
         showDescription(
             "Nordic BLE 大数据流式传输示例\n\n" +
-                    "演示 Nordic 内置的自动分包切割 (.split())、流式拼包合并 (.merge()) 与可靠传输\n" +
-                    "请点击下方操作项"
+                "演示 Nordic 内置的自动分包切割 (.split())、流式拼包合并 (.merge()) 与可靠传输\n" +
+                "请点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 演示 Nordic 自动分包切割原理 (.split())",
-            "2. 演示 Nordic 自动流式拼包合并原理 (.merge())",
-            "3. 模拟发送 512 字节大文件切片并统计传输吞吐率",
-            "4. 查看 Nordic 工业级架构优势总结"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 演示 Nordic 自动分包切割原理 (.split())",
+        "2. 演示 Nordic 自动流式拼包合并原理 (.merge())",
+        "3. 模拟发送 512 字节大文件切片并统计传输吞吐率",
+        "4. 查看 Nordic 工业级架构优势总结",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {

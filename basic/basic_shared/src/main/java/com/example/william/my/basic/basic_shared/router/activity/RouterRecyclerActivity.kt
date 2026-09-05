@@ -16,7 +16,5 @@ abstract class RouterRecyclerActivity : BaseFragmentActivity() {
         return fragment
     }
 
-    protected open fun buildRouter(): ArrayList<RouterItem> {
-        return arrayListOf()
-    }
+    protected open fun buildRouter(): ArrayList<RouterItem> = arrayListOf()
 }

@@ -47,21 +47,19 @@ class BleRxConnectActivity : BasicResponseActivity() {
 
         showDescription(
             "RxAndroidBle 响应式连接与流控示例\n\n" +
-                    "演示 establishConnection 响应式连接管道与 flatMap 链式读写与 Notify\n" +
-                    "请按顺序点击下方操作项"
+                "演示 establishConnection 响应式连接管道与 flatMap 链式读写与 Notify\n" +
+                "请按顺序点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 扫描并响应式连接首个设备 (establishConnection)",
-            "2. 链式协商 MTU 为 512 字节 (requestMtu)",
-            "3. 读取特征值 (readCharacteristic)",
-            "4. 写入测试数据 (writeCharacteristic)",
-            "5. 开启响应式 Notify 数据流 (setupNotification)",
-            "6. 断开连接并释放所有流 (dispose)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 扫描并响应式连接首个设备 (establishConnection)",
+        "2. 链式协商 MTU 为 512 字节 (requestMtu)",
+        "3. 读取特征值 (readCharacteristic)",
+        "4. 写入测试数据 (writeCharacteristic)",
+        "5. 开启响应式 Notify 数据流 (setupNotification)",
+        "6. 断开连接并释放所有流 (dispose)",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -91,7 +89,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
                     appendLog("找到设备: $name (${device.macAddress})，准备建立响应式连接...")
                     connect(device)
                 },
-                { e -> appendLog("✗ 扫描异常: ${e.message}") }
+                { e -> appendLog("✗ 扫描异常: ${e.message}") },
             )
         mDisposables.add(scanDisposable)
     }
@@ -124,7 +122,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
                 },
                 { throwable ->
                     appendLog("✗ 连接或服务发现异常: ${throwable.message}")
-                }
+                },
             )
     }
 
@@ -142,7 +140,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { mtu -> appendLog("✓ [RxBle MTU] 协商成功，当前 MTU = $mtu 字节") },
-                { e -> appendLog("✗ [RxBle MTU] 协商失败: ${e.message}") }
+                { e -> appendLog("✗ [RxBle MTU] 协商失败: ${e.message}") },
             )
         mDisposables.add(d)
     }
@@ -166,7 +164,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
                     val text = String(bytes)
                     appendLog("✓ [RxBle 读成功] Hex=[$hex] | Text=[$text]")
                 },
-                { e -> appendLog("✗ [RxBle 读失败] ${e.message}") }
+                { e -> appendLog("✗ [RxBle 读失败] ${e.message}") },
             )
         mDisposables.add(d)
     }
@@ -189,7 +187,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
                 { bytes ->
                     appendLog("✓ [RxBle 写成功] 已发送 ${bytes.size} 字节并收到底层确认")
                 },
-                { e -> appendLog("✗ [RxBle 写失败] ${e.message}") }
+                { e -> appendLog("✗ [RxBle 写失败] ${e.message}") },
             )
         mDisposables.add(d)
     }
@@ -213,7 +211,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
                     val hex = bytes.joinToString(" ") { String.format("%02X", it) }
                     appendLog("🔔 [RxBle 收到 Notify] Hex=[$hex]")
                 },
-                { e -> appendLog("✗ [RxBle Notify] 失败: ${e.message}") }
+                { e -> appendLog("✗ [RxBle Notify] 失败: ${e.message}") },
             )
         mDisposables.add(d)
     }

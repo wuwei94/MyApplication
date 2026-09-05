@@ -27,20 +27,20 @@ class CompositionLocalActivity : ComponentActivity() {
 
     data class User(val name: String)
 
-    //编译器会提示变量名应该以“Local”为前缀
+    // 编译器会提示变量名应该以“Local”为前缀
     private val LocalUser = compositionLocalOf { User("张三") }
-    //不想提供或无法提供有意义的默认值，可以直接抛异常。
-    //val LocalUser = compositionLocalOf { error("LocalUser没有提供值！") }
+    // 不想提供或无法提供有意义的默认值，可以直接抛异常。
+    // val LocalUser = compositionLocalOf { error("LocalUser没有提供值！") }
 
     @Composable
     fun CompositionLocalExample() {
         Column {
-            //CompositionLocalProvider函数提供作用域，provides中缀表达式提供修改，current取出当前值
+            // CompositionLocalProvider函数提供作用域，provides中缀表达式提供修改，current取出当前值
             CompositionLocalProvider(LocalUser provides User("李四")) {
-                val newUser = LocalUser.current //这里取出的值是修改过的“李四”
+                val newUser = LocalUser.current // 这里取出的值是修改过的“李四”
                 Text(text = newUser.name)
             }
-            val oldUser = LocalUser.current    //这里取出的值是未修改过的“张三”
+            val oldUser = LocalUser.current // 这里取出的值是未修改过的“张三”
             Text(text = oldUser.name)
         }
     }

@@ -86,7 +86,6 @@ class ComposeMainActivity : ComponentActivity() {
         routerItems.add(RouterItem("ChartLinkage（Compose 多图表全景看板）", RouterPath.Compose.ChartLinkage))
     }
 
-
     @Composable
     fun LazyColumnExample(itemsList: List<RouterItem>, modifier: Modifier = Modifier) {
         // 使用 rememberLazyListState 保存滚动的位置
@@ -94,7 +93,7 @@ class ComposeMainActivity : ComponentActivity() {
 
         LazyColumn(
             state = scrollState,
-            modifier = modifier
+            modifier = modifier,
         ) {
             items(itemsList) { item ->
                 LazyColumnItemExample(item) {
@@ -116,11 +115,11 @@ class ComposeMainActivity : ComponentActivity() {
                 .fillMaxWidth()
                 .height(48.dp)
                 .clickable(onClick = onClick),
-            contentAlignment = Alignment.CenterStart
+            contentAlignment = Alignment.CenterStart,
         ) {
             Text(
                 text = routerItem?.mRouterName ?: "",
-                modifier = Modifier.padding(horizontal = 8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp),
             )
         }
     }

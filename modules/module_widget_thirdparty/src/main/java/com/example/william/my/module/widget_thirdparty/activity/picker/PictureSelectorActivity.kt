@@ -53,9 +53,7 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
 
     private lateinit var mAdapter: PictureSelectorAdapter
 
-    override fun getViewBinding(): WidgetThirdpartyActivityPictureSelectorBinding {
-        return WidgetThirdpartyActivityPictureSelectorBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): WidgetThirdpartyActivityPictureSelectorBinding = WidgetThirdpartyActivityPictureSelectorBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -73,7 +71,6 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
                     .setImageEngine(GlideEngine.createGlideEngine())
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(result: ArrayList<LocalMedia?>) {
-
                             val oldSize: Int = mAdapter.data.size
                             val count = if (result.size == mAdapter.maxSelect) {
                                 oldSize + 1
@@ -88,7 +85,6 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
                         }
 
                         override fun onCancel() {
-
                         }
                     })
             }
@@ -105,10 +101,8 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
 
                         override fun onLongPressDownload(
                             context: Context?,
-                            media: LocalMedia?
-                        ): Boolean {
-                            return false
-                        }
+                            media: LocalMedia?,
+                        ): Boolean = false
                     })
                     .startActivityPreview(position, true, mAdapter.data)
             }

@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.william.my.module.jetpack.R
 import com.example.william.my.module.jetpack.databinding.JetpackItemRecyclerBinding
 
-class PagingStateAdapter(private val retry: () -> Unit) :
-    LoadStateAdapter<PagingStateAdapter.ViewHolder>() {
+class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<PagingStateAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.mBinding.itemTextView.setOnClickListener {
@@ -24,8 +23,8 @@ class PagingStateAdapter(private val retry: () -> Unit) :
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.shared_color_primary
-                    )
+                        R.color.shared_color_primary,
+                    ),
                 )
             }
 
@@ -34,8 +33,8 @@ class PagingStateAdapter(private val retry: () -> Unit) :
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        android.R.color.transparent
-                    )
+                        android.R.color.transparent,
+                    ),
                 )
             }
 
@@ -44,8 +43,8 @@ class PagingStateAdapter(private val retry: () -> Unit) :
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.shared_color_primary_dark
-                    )
+                        R.color.shared_color_primary_dark,
+                    ),
                 )
             }
         }

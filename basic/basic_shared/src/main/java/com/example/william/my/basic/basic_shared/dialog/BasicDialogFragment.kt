@@ -6,12 +6,9 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutDialogB
 import com.example.william.my.core.base.R
 import com.example.william.my.core.base.ui.dialog.BaseVBDialogFragment
 
-class BasicDialogFragment :
-    BaseVBDialogFragment<SharedLayoutDialogBinding>(R.style.base_Dialog_Translate_Slide_Alpha) {
+class BasicDialogFragment : BaseVBDialogFragment<SharedLayoutDialogBinding>(R.style.base_Dialog_Translate_Slide_Alpha) {
 
-    override fun getViewBinding(): SharedLayoutDialogBinding {
-        return SharedLayoutDialogBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): SharedLayoutDialogBinding = SharedLayoutDialogBinding.inflate(layoutInflater)
 
     override fun initView(view: View?, state: Bundle?) {
         super.initView(view, state)
@@ -34,11 +31,9 @@ class BasicDialogFragment :
     companion object {
         private const val KEY_MESSAGE = "dialog_message"
 
-        fun newInstance(message: String): BasicDialogFragment {
-            return BasicDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(KEY_MESSAGE, message)
-                }
+        fun newInstance(message: String): BasicDialogFragment = BasicDialogFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_MESSAGE, message)
             }
         }
     }

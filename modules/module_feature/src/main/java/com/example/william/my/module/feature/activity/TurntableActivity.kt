@@ -56,20 +56,18 @@ class TurntableActivity : BasicImageActivity() {
         mBinding.basicsImage.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.shared_ic_launcher
-            )
+                R.drawable.shared_ic_launcher,
+            ),
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "随机抽奖（旋转动画）",
-            "指定抽中奖品 1（0°）",
-            "指定抽中奖品 4（108°）",
-            "指定抽中奖品 7（216°）",
-            "重置转盘（恢复 0°）"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "随机抽奖（旋转动画）",
+        "指定抽中奖品 1（0°）",
+        "指定抽中奖品 4（108°）",
+        "指定抽中奖品 7（216°）",
+        "重置转盘（恢复 0°）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -108,13 +106,13 @@ class TurntableActivity : BasicImageActivity() {
             RotateAnimation.RELATIVE_TO_SELF,
             0.5f,
             RotateAnimation.RELATIVE_TO_SELF,
-            0.5f
+            0.5f,
         ).apply {
             duration = ANIMATION_DURATION
             fillAfter = true // 动画结束后停留在最终角度
             setInterpolator(
                 this@TurntableActivity,
-                android.R.anim.accelerate_decelerate_interpolator
+                android.R.anim.accelerate_decelerate_interpolator,
             )
             setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation) {

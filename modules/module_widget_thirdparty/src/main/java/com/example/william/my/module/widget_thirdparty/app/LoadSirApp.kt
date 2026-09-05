@@ -17,7 +17,7 @@ class LoadSirApp : BaseAppInit() {
         LoadSir.beginBuilder()
             .addCallback(ErrorCallback())
             .addCallback(DefaultCallback())
-            .setDefaultCallback(DefaultCallback::class.java) //设置默认状态页
+            .setDefaultCallback(DefaultCallback::class.java) // 设置默认状态页
             .commit()
     }
 }

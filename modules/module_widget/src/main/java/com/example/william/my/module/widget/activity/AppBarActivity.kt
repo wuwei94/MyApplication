@@ -46,9 +46,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 @Route(path = RouterPath.Widget.Appbar)
 class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
 
-    override fun getViewBinding(): UiActivityAppBarBinding {
-        return UiActivityAppBarBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding(): UiActivityAppBarBinding = UiActivityAppBarBinding.inflate(layoutInflater)
 
     private val mTitles: ArrayList<String> = arrayListOf(
         "primary1",
@@ -77,30 +75,30 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
         mBinding.viewPager.adapter =
             ViewPagerFragmentAdapter(supportFragmentManager, mFragments, mTitles)
 
-        //设置TabLayout可滚动，保证Tab数量过多时也可正常显示
+        // 设置TabLayout可滚动，保证Tab数量过多时也可正常显示
         mBinding.tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
-        //设置TabLayout选中Tab下划线颜色
+        // 设置TabLayout选中Tab下划线颜色
         mBinding.tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark
-            )
+                com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark,
+            ),
         )
-        //两个参数分别对应Tab未选中的文字颜色和选中的文字颜色
+        // 两个参数分别对应Tab未选中的文字颜色和选中的文字颜色
         mBinding.tabLayout.setTabTextColors(
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_shared.R.color.shared_color_primary
+                com.example.william.my.basic.basic_shared.R.color.shared_color_primary,
             ),
             ContextCompat.getColor(
                 this,
-                com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark
-            )
+                com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark,
+            ),
         )
-        //绑定ViewPager
+        // 绑定ViewPager
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
 
-        //设置TabLayout的选择监听
+        // 设置TabLayout的选择监听
         mBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 mBinding.viewPager.currentItem = tab.position

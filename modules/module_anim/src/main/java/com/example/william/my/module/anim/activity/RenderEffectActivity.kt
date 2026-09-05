@@ -61,12 +61,10 @@ class RenderEffectActivity : BasicImageActivity() {
         showImage(originalBitmap)
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "View.setRenderEffect（推荐）",
-            "HardwareRenderer 离屏渲染"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "View.setRenderEffect（推荐）",
+        "HardwareRenderer 离屏渲染",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
@@ -99,7 +97,7 @@ class RenderEffectActivity : BasicImageActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     private fun applyViewBlur() {
         mBinding.basicsImage.setRenderEffect(
-            RenderEffect.createBlurEffect(20f, 20f, Shader.TileMode.CLAMP)
+            RenderEffect.createBlurEffect(20f, 20f, Shader.TileMode.CLAMP),
         )
         isBlurred = true
         currentMethod = "view"
@@ -135,15 +133,17 @@ class RenderEffectActivity : BasicImageActivity() {
 
         try {
             imageReader = ImageReader.newInstance(
-                bitmap.width, bitmap.height,
-                PixelFormat.RGBA_8888, 1,
-                HardwareBuffer.USAGE_GPU_SAMPLED_IMAGE or HardwareBuffer.USAGE_GPU_COLOR_OUTPUT
+                bitmap.width,
+                bitmap.height,
+                PixelFormat.RGBA_8888,
+                1,
+                HardwareBuffer.USAGE_GPU_SAMPLED_IMAGE or HardwareBuffer.USAGE_GPU_COLOR_OUTPUT,
             )
 
             val renderNode = RenderNode("BlurEffect").apply {
                 setPosition(0, 0, imageReader.width, imageReader.height)
                 setRenderEffect(
-                    RenderEffect.createBlurEffect(clampedRadius, clampedRadius, Shader.TileMode.CLAMP)
+                    RenderEffect.createBlurEffect(clampedRadius, clampedRadius, Shader.TileMode.CLAMP),
                 )
             }
 

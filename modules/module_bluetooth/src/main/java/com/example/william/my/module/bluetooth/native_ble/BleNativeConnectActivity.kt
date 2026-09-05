@@ -109,7 +109,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         override fun onCharacteristicRead(
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?,
-            status: Int
+            status: Int,
         ) {
             super.onCharacteristicRead(gatt, characteristic, status)
             if (status == BluetoothGatt.GATT_SUCCESS && characteristic != null) {
@@ -125,7 +125,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         override fun onCharacteristicWrite(
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?,
-            status: Int
+            status: Int,
         ) {
             super.onCharacteristicWrite(gatt, characteristic, status)
             if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -139,7 +139,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         @Deprecated("Deprecated in Java")
         override fun onCharacteristicChanged(
             gatt: BluetoothGatt?,
-            characteristic: BluetoothGattCharacteristic?
+            characteristic: BluetoothGattCharacteristic?,
         ) {
             super.onCharacteristicChanged(gatt, characteristic)
             characteristic ?: return
@@ -160,7 +160,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         override fun onDescriptorWrite(
             gatt: BluetoothGatt?,
             descriptor: BluetoothGattDescriptor?,
-            status: Int
+            status: Int,
         ) {
             super.onDescriptorWrite(gatt, descriptor, status)
             if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -178,22 +178,20 @@ class BleNativeConnectActivity : BasicResponseActivity() {
 
         showDescription(
             "Android 原生 BLE 连接与 GATT 交互示例\n\n" +
-                    "演示 connectGatt、服务发现、MTU 扩展、读写交互与 CCCD Notify 监听\n" +
-                    "请按顺序点击下方操作项"
+                "演示 connectGatt、服务发现、MTU 扩展、读写交互与 CCCD Notify 监听\n" +
+                "请按顺序点击下方操作项",
         )
     }
 
-    override fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 扫描并自动连接发现的第一个 BLE 设备",
-            "2. 手动发现 GATT 服务树 (discoverServices)",
-            "3. 请求扩展 MTU 至 512 字节 (requestMtu)",
-            "4. 读取首个可读特征值 (readCharacteristic)",
-            "5. 写入测试文本到首个可写特征值 (writeCharacteristic)",
-            "6. 开启首个特征值 Notify 通知监听 (CCCD 写入)",
-            "7. 断开并释放 GATT 连接 (disconnect & close)"
-        )
-    }
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 扫描并自动连接发现的第一个 BLE 设备",
+        "2. 手动发现 GATT 服务树 (discoverServices)",
+        "3. 请求扩展 MTU 至 512 字节 (requestMtu)",
+        "4. 读取首个可读特征值 (readCharacteristic)",
+        "5. 写入测试文本到首个可写特征值 (writeCharacteristic)",
+        "6. 开启首个特征值 Notify 通知监听 (CCCD 写入)",
+        "7. 断开并释放 GATT 连接 (disconnect & close)",
+    )
 
     override fun onRecyclerClick(position: Int, text: String) {
         when (position) {
@@ -345,9 +343,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         return list.joinToString("/")
     }
 
-    private fun bytesToHex(bytes: ByteArray): String {
-        return bytes.joinToString(" ") { String.format("%02X", it) }
-    }
+    private fun bytesToHex(bytes: ByteArray): String = bytes.joinToString(" ") { String.format("%02X", it) }
 
     override fun onDestroy() {
         super.onDestroy()

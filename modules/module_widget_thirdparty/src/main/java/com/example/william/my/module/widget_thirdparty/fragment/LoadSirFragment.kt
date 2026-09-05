@@ -43,7 +43,7 @@ class LoadSirFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         mBinding = SharedLayoutRecyclerLayoutBinding.inflate(inflater, container, false)
         return mBinding.root
@@ -70,7 +70,7 @@ class LoadSirFragment : Fragment() {
         mBinding.basicsResponseContainer.removeAllViews()
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
         )
         mBinding.basicsResponseContainer.addView(loadService.loadLayout, params)
     }
@@ -84,13 +84,11 @@ class LoadSirFragment : Fragment() {
         mBinding.basicsRecycler.adapter = mAdapterHelper.adapter
     }
 
-    private fun buildList(): ArrayList<String> {
-        return arrayListOf(
-            "1. 切换为默认/加载中状态（DefaultCallback）",
-            "2. 切换为错误重试状态（ErrorCallback）",
-            "3. 恢复真实内容/成功状态（showSuccess）"
-        )
-    }
+    private fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 切换为默认/加载中状态（DefaultCallback）",
+        "2. 切换为错误重试状态（ErrorCallback）",
+        "3. 恢复真实内容/成功状态（showSuccess）",
+    )
 
     private fun onRecyclerClick(position: Int, string: String) {
         when (position) {
@@ -100,8 +98,7 @@ class LoadSirFragment : Fragment() {
         }
     }
 
-    class RecyclerAdapter(data: ArrayList<String> = arrayListOf()) :
-        BaseQuickAdapter<String, QuickViewHolder>(data) {
+    class RecyclerAdapter(data: ArrayList<String> = arrayListOf()) : BaseQuickAdapter<String, QuickViewHolder>(data) {
 
         override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
             holder.setText(com.example.william.my.basic.basic_shared.R.id.item_textView, item)
@@ -110,9 +107,7 @@ class LoadSirFragment : Fragment() {
         override fun onCreateViewHolder(
             context: Context,
             parent: ViewGroup,
-            viewType: Int
-        ): QuickViewHolder {
-            return QuickViewHolder(com.example.william.my.basic.basic_shared.R.layout.shared_item_recycler, parent)
-        }
+            viewType: Int,
+        ): QuickViewHolder = QuickViewHolder(com.example.william.my.basic.basic_shared.R.layout.shared_item_recycler, parent)
     }
 }

@@ -61,14 +61,14 @@ fun ScrapeLayerPage() {
                     while (true) {
                         val event = awaitPointerEvent()
                         when (event.type) {
-                            //按住时，更新起始点
+                            // 按住时，更新起始点
                             Press -> {
                                 path.moveTo(
                                     event.changes.first().position.x,
-                                    event.changes.first().position.y
+                                    event.changes.first().position.y,
                                 )
                             }
-                            //移动时，更新起始点 移动时，记录路径path
+                            // 移动时，更新起始点 移动时，记录路径path
                             Move -> {
                                 linePath = event.changes.first().position
                             }
@@ -76,18 +76,17 @@ fun ScrapeLayerPage() {
                     }
                 }
             }
-            .scrapeLayer(path, linePath)
+            .scrapeLayer(path, linePath),
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.shared_ic_launcher),
-            contentDescription = ""
+            contentDescription = "",
         )
     }
 }
 
-fun Modifier.scrapeLayer(startPath: Path, moveOffset: Offset) =
-    this.then(ScrapeLayer(startPath, moveOffset))
+fun Modifier.scrapeLayer(startPath: Path, moveOffset: Offset) = this.then(ScrapeLayer(startPath, moveOffset))
 
 class ScrapeLayer(private val strokePath: Path, private val moveOffset: Offset) : DrawModifier {
 
@@ -109,7 +108,7 @@ class ScrapeLayer(private val strokePath: Path, private val moveOffset: Offset) 
         drawIntoCanvas {
             val rect = Rect(0f, 0f, size.width, size.height)
             it.saveLayer(rect, layerPaint)
-            //从当前画布，裁切一个新的图层
+            // 从当前画布，裁切一个新的图层
             it.drawRect(rect, layerPaint)
             strokePath.lineTo(moveOffset.x, moveOffset.y)
             it.drawPath(strokePath, pathPaint)

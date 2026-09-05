@@ -18,13 +18,13 @@ class ViewPagerAdapter(private val mData: List<String> = emptyList()) : PagerAda
 
     override fun getCount(): Int = mData.size
 
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view === obj
-    }
+    override fun isViewFromObject(view: View, obj: Any): Boolean = view === obj
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = SharedLayoutResponseBinding.inflate(
-            LayoutInflater.from(container.context), container, true
+            LayoutInflater.from(container.context),
+            container,
+            true,
         )
         binding.basicsResponse.text = mData.getOrNull(position) ?: ""
         return binding.root
