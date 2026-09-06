@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.compose
+﻿package com.example.william.my.module.arch.compose
 
 import android.os.Bundle
 import android.widget.Toast
@@ -171,7 +171,6 @@ class ComposeMviActivity : BaseActivity() {
                         ) {
                             items(
                                 items = uiState.articles,
-                                key = { it.id },
                             ) { item ->
                                 ArticleItemView(item = item)
                             }

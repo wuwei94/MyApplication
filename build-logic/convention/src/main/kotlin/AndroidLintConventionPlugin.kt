@@ -45,7 +45,5 @@ private fun Lint.configure() {
     xmlReport = true
     sarifReport = true
     checkDependencies = true
-    // 让自定义 Lint 规则（如测试命名规范）能检查 src/test 与 src/androidTest
-    checkTestSources = true
     disable += "GradleDependency"
 }

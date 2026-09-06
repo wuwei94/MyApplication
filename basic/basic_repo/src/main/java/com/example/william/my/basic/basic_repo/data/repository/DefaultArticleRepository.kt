@@ -198,4 +198,42 @@ class DefaultArticleRepository(
             throw remoteArticles.exception
         }
     }
+
+    // =========================================================================
+    // 6. 现代离线优先与 SSOT 单一真实数据源 API（对齐 Now in Android）
+    // =========================================================================
+
+    override fun getArticlesStream(): Flow<List<ArticleDetailData>> = articlesLocalDataSource.getArticlesStream()
+
+    override fun getArticleCountStream(): Flow<Int> = articlesLocalDataSource.getArticleCountStream()
+
+    override suspend fun syncArticles(page: Int): Result<Unit> = runCatching {
+        val remoteResult = articlesRemoteDataSource.getArticleResult(page)
+        when (remoteResult) {
+            is NetworkResult.Success -> {
+                if (page <= 0) {
+                    articlesLocalDataSource.deleteAllArticles()
+                }
+                articlesLocalDataSource.saveArticles(remoteResult.data)
+            }
+            is NetworkResult.Error -> {
+                throw remoteResult.exception
+            }
+            is NetworkResult.Loading -> Unit
+        }
+    }
+
+    override suspend fun insertLocalArticle(title: String) {
+        val localArticle = ArticleDetailData(
+            id = System.currentTimeMillis().toString(),
+            title = title,
+            link = "https://www.wanandroid.com",
+            page = 0,
+        )
+        articlesLocalDataSource.saveArticle(localArticle)
+    }
+
+    override suspend fun clearLocalArticles() {
+        articlesLocalDataSource.deleteAllArticles()
+    }
 }

@@ -1,7 +1,15 @@
-# Git Blame Ignore Revisions
-# This file contains the commit hashes of bulk code formatting commits (e.g. Spotless / ktlint)
-# that should be ignored by git blame to preserve the original authorship history.
+# 批量格式化提交白名单
 #
-# Configure locally: git config blame.ignoreRevsFile .git-blame-ignore-revs
-# Configure globally: git config --global blame.ignoreRevsFile .git-blame-ignore-revs
+# 记录全工程批量格式化（Spotless / ktlint）等无语义改动的提交，
+# git blame 会自动跳过这些提交，把代码归属回溯到真正的作者。
 #
+# 配置：git config blame.ignoreRevsFile .git-blame-ignore-revs
+#      （或加 --global 全局生效）
+#
+# 新增批量格式化提交后，将其完整 hash 追加到本文件末尾。
+
+# 2026-09-05 全工程 ktlint 规范化
+6946cceb44e63e8a302d9c400364e73710460ac9
+
+# 2026-09-04 健全跨平台换行符与 ktlint 规范并格式化 basic_lib 模块
+7d88559bcaf25c1802b22c99556586efaac35596

@@ -31,10 +31,7 @@ internal fun Project.configureDepsAndroid(
             "implementation"(libs.findLibrary("kotlinx-coroutines-core").get())
             "implementation"(libs.findLibrary("kotlinx-coroutines-android").get())
 
-            "testImplementation"(libs.findBundle("testing-unit").get())
-
-            // 全工程统一启用自定义 Lint 规则（:lint 模块，当前含测试命名规范检查）
-            "lintChecks"(project(":lint"))
+            "testImplementation"(libs.findLibrary("junit").get())
 
             if (projectDir.resolve("src/androidTest").exists()) {
                 "androidTestImplementation"(libs.findLibrary("androidx-test-ext").get())

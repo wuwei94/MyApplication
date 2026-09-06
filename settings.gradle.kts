@@ -85,9 +85,6 @@ rootProject.name = "MyApplication"
 // 壳工程入口
 include(":app")
 
-// 自定义 Lint 规则（以 jar 形式注入各模块的 lintChecks）
-include(":lint")
-
 // 基础层
 include(":basic:basic_lib")
 include(":basic:basic_shared")

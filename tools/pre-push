@@ -102,8 +102,7 @@ mapfile -t included_projects < <(
 # 不提供 lintProdDebug 任务的工程：
 #   :benchmarks —— com.android.test 模块，未应用 Android Lint 插件
 #   :flutter    —— 由 Flutter Gradle 插件托管的外部模块
-#   :lint       —— 纯 JVM 模块（自定义 Lint 规则本身），无 Android Lint 任务
-lint_excluded=(":benchmarks" ":flutter" ":lint")
+lint_excluded=(":benchmarks" ":flutter")
 
 is_in() {
     local needle="$1"

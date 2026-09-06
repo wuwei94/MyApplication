@@ -18,6 +18,7 @@ package com.example.william.my.basic.basic_repo.data.source.local
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
 import com.example.william.my.basic.basic_repo.database.dao.ArticleDao
+import kotlinx.coroutines.flow.Flow
 
 /**
  * 本地持久化数据源接口。
@@ -25,17 +26,27 @@ import com.example.william.my.basic.basic_repo.database.dao.ArticleDao
 interface ArticleLocalDataSource {
 
     /**
+     * 响应式观察本地所有文章流（SSOT 唯一数据源）。
+     */
+    fun getArticlesStream(): Flow<List<ArticleDetailData>>
+
+    /**
+     * 响应式观察本地文章总数流。
+     */
+    fun getArticleCountStream(): Flow<Int>
+
+    /**
      * 从本地数据库按页查询文章数据。
      */
     suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>>
 
     /**
-     * 保存单篇文章到本地数据库。
+     * 保存或更新单篇文章到本地数据库。
      */
     suspend fun saveArticle(article: ArticleDetailData)
 
     /**
-     * 批量保存文章到本地数据库。
+     * 批量保存或更新文章到本地数据库。
      */
     suspend fun saveArticles(articles: List<ArticleDetailData>)
 
@@ -46,11 +57,15 @@ interface ArticleLocalDataSource {
 }
 
 /**
- * 本地持久化数据源实现（Room DAO 挂起函数原生 main-safe，无需额外 withContext）。
+ * 本地持久化数据源实现（Room DAO 挂起函数与 Flow 原生 main-safe，无需额外 withContext）。
  */
 class ArticleLocalDataSourceImpl(
     private val articleDao: ArticleDao,
 ) : ArticleLocalDataSource {
+
+    override fun getArticlesStream(): Flow<List<ArticleDetailData>> = articleDao.getArticlesStream()
+
+    override fun getArticleCountStream(): Flow<Int> = articleDao.getArticleCountStream()
 
     override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> = try {
         val articles = if (page >= 0) {
@@ -64,11 +79,11 @@ class ArticleLocalDataSourceImpl(
     }
 
     override suspend fun saveArticle(article: ArticleDetailData) {
-        articleDao.insertArticle(article)
+        articleDao.upsertArticle(article)
     }
 
     override suspend fun saveArticles(articles: List<ArticleDetailData>) {
-        articleDao.insertArticles(articles)
+        articleDao.upsertArticles(articles)
     }
 
     override suspend fun deleteAllArticles() {

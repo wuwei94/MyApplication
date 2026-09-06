@@ -11,108 +11,60 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect
 import com.example.william.my.module.arch.mvi.data.ArticleViewState
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
  * 文章列表 StateFlow ViewModel
  *
- * 遵循严格的 MVI 单向数据流（UDF）模式：
- * 1. Intent：通过 Channel 接收意图（Refresh / LoadMore / LoadArticleIntent）
- * 2. State：通过不可变 StateFlow 暴露全量 UI 状态（维护累积文章列表，状态可完整恢复）
- * 3. Effect：通过 Channel 分发单次瞬时副作用（如 Toast 提示）
+ * 演示 MVI 模式中通过 Channel 接收 Intent、StateFlow 暴露 UIState，以及 Channel 分发 Effect 副作用。
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class ArticleStateFlowViewModel(private val repository: ArticleRepository) : ViewModel() {
 
     val intent = Channel<ArticleIntent>(Channel.UNLIMITED)
 
-    private val _state = MutableStateFlow(ArticleViewState())
-    val state: StateFlow<ArticleViewState> = _state.asStateFlow()
+    private val _state = MutableStateFlow<ArticleViewState>(ArticleViewState.Loading)
+    val state: StateFlow<ArticleViewState>
+        get() = _state
 
     private val _effect = Channel<ArticleUiEffect>(Channel.BUFFERED)
-    val effect: Flow<ArticleUiEffect> = _effect.receiveAsFlow()
-
-    private var loadJob: Job? = null
+    val effect: Flow<ArticleUiEffect>
+        get() = _effect.receiveAsFlow()
 
     init {
         viewModelScope.launch {
-            intent.receiveAsFlow().collect { action ->
-                when (action) {
-                    is ArticleIntent.Refresh -> loadArticles(targetPage = 0, isRefresh = true)
-                    is ArticleIntent.LoadMore -> loadArticles(targetPage = _state.value.page + 1, isRefresh = false)
-                    is ArticleIntent.LoadArticleIntent -> {
-                        val isRefresh = action.page == 0
-                        loadArticles(targetPage = action.page, isRefresh = isRefresh)
+            intent.consumeAsFlow()
+                .flatMapLatest { intent ->
+                    when (intent) {
+                        is ArticleIntent.LoadArticleIntent -> repository.getArticleFlow(intent.page)
                     }
                 }
-            }
-        }
-    }
-
-    fun sendIntent(action: ArticleIntent) {
-        viewModelScope.launch {
-            intent.send(action)
-        }
-    }
-
-    private fun loadArticles(targetPage: Int, isRefresh: Boolean) {
-        if (isRefresh) {
-            loadJob?.cancel()
-        } else if (loadJob?.isActive == true) {
-            return
-        }
-
-        loadJob = viewModelScope.launch {
-            repository.getArticleFlow(targetPage).collect { response ->
-                when {
-                    response.code == RetrofitResponse.LOADING -> {
-                        _state.update { current ->
-                            current.copy(
-                                isLoading = true,
-                                isRefreshing = isRefresh,
-                                isLoadingMore = !isRefresh,
-                            )
+                .collect { response ->
+                    when {
+                        response.code == RetrofitResponse.LOADING -> {
+                            _state.value = ArticleViewState.Loading
                         }
-                    }
 
-                    response.isSuccess -> {
-                        val newArticles = response.data?.datas ?: emptyList()
-                        _state.update { current ->
-                            val updatedList = if (isRefresh) {
-                                newArticles
-                            } else {
-                                current.articles + newArticles
-                            }
-                            current.copy(
-                                articles = updatedList,
-                                page = targetPage,
-                                isLoading = false,
-                                isRefreshing = false,
-                                isLoadingMore = false,
-                            )
+                        response.isSuccess -> {
+                            val datas = response.data?.datas ?: emptyList()
+                            _state.value = ArticleViewState.Success(datas)
                         }
-                    }
 
-                    else -> {
-                        val message = response.message.ifEmpty { "网络请求失败" }
-                        _state.update { current ->
-                            current.copy(
-                                isLoading = false,
-                                isRefreshing = false,
-                                isLoadingMore = false,
-                            )
+                        else -> {
+                            val message = response.message.ifEmpty { "网络请求失败" }
+                            _effect.send(ArticleUiEffect.ShowToast(message))
+                            _state.value = ArticleViewState.Error(message)
                         }
-                        _effect.send(ArticleUiEffect.ShowToast(message))
                     }
                 }
-            }
         }
     }
 

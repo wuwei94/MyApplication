@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.recycler.host
+package com.example.william.my.core.base.ui.recycler.host
 
 import android.content.Context
 import android.os.Bundle
@@ -44,6 +44,11 @@ interface RecyclerViewHost<T : Any> :
      * 是否支持上拉加载更多
      */
     fun canLoadMore(): Boolean = true
+
+    /**
+     * 获取分页初始起始页码（默认为 0，若接口以 1 为起始页则重写此方法返回 1）
+     */
+    fun getStartPage(): Int = 0
 
     /**
      * 初始化RecyclerView的LayoutManager

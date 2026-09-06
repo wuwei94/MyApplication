@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.recycler.handler
+package com.example.william.my.core.base.ui.recycler.handler
 
 import android.view.View
 import android.widget.Toast
@@ -26,7 +26,7 @@ class BaseRecyclerHandler<T : Any>(
     OnRefreshLoadMoreListener {
 
     // ===== 分页相关 =====
-    var mPage: Int = 0
+    var mPage: Int = host.getStartPage()
     var mPageSize: Int = 20
 
     // ===== RecyclerView相关组件 =====
@@ -108,7 +108,7 @@ class BaseRecyclerHandler<T : Any>(
         val newList = list ?: emptyList()
         val binding = host.getHostBinding()
 
-        if (mPage == 0 || mPage == 1) {
+        if (mPage == host.getStartPage()) {
             mAdapter?.submitList(newList)
             mMultiItemAdapter?.submitList(newList)
         } else {
@@ -134,6 +134,10 @@ class BaseRecyclerHandler<T : Any>(
         val binding = host.getHostBinding()
         binding.smartRefresh.finishRefresh(false)
         binding.smartRefresh.finishLoadMore(false)
+        // 加载更多失败时回退页码，避免重试时跳过当前失败页
+        if (mPage > host.getStartPage()) {
+            mPage--
+        }
     }
 
     /**
@@ -154,7 +158,7 @@ class BaseRecyclerHandler<T : Any>(
     // ===== OnRefreshLoadMoreListener实现 =====
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mPage = 0
+        mPage = host.getStartPage()
         host.queryData()
     }
 

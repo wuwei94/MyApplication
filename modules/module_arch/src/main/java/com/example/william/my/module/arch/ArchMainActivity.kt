@@ -15,7 +15,6 @@ class ArchMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("MVI（StateFlow + Intent + Effect 单向数据流）", RouterPath.Arch.MVI))
         routerItems.add(RouterItem("Compose MVI（Compose + StateFlow 单向数据流）", RouterPath.Arch.ComposeMVI))
         routerItems.add(RouterItem("Mavericks（Airbnb 现代化响应式 MVI 架构）", RouterPath.Arch.Mavericks))
-        routerItems.add(RouterItem("Offline-First（Room 唯一数据源 SSOT 离线优先架构）", RouterPath.Arch.OfflineFirst))
         return routerItems
     }
 }

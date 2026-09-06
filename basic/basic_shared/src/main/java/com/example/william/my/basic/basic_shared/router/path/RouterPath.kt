@@ -404,6 +404,8 @@ object RouterPath {
         const val MVI = "$PATH/MVI"
         const val Mavericks = "$PATH/Mavericks"
         const val ComposeMVI = "$PATH/ComposeMVI"
+        const val OfflineFirst = "$PATH/OfflineFirst"
+        const val SSOT = OfflineFirst
     }
 
     // 事件总线

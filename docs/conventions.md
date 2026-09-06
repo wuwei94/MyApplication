@@ -100,6 +100,14 @@
   - 严禁采用强行截断、启发式猜测或伪数据拼接掩盖解析器与渲染器的底层缺陷；
   - 严禁通过粗暴的异常空捕获或空兜底绕过根本逻辑设计不当。
 
+## Git 提交规范
+
+- 提交信息遵循 Conventional Commits：`<type>(<scope>): <subject>`
+- 标题不超过 72 字符、结尾不加句号；正文写「为什么」而非复述改动
+- 常用 type：`feat` / `fix` / `docs` / `style` / `refactor` / `perf` / `test` / `build` / `ci` / `chore` / `revert`
+- scope 取模块名或领域名（`basic_lib` / `module_network` / `libs:lib_okhttp` / `flutter` / `ci`）
+- 完整规则、作者身份统一与历史遗留说明见 `docs/git.md`
+
 ## 构建与质量维护
 
 - `./gradlew assembleDebug` — 全量构建（Spotless 不在此流程中阻塞构建）
@@ -109,9 +117,13 @@
 - `./gradlew :<模块路径>:spotlessCheck` — 执行指定单模块的 Spotless 检查（如 `./gradlew :basic:basic_lib:spotlessCheck`）
 - `./gradlew spotlessApply` — 自动修复并格式化全工程 Kotlin / KTS 代码风格（统一换行符为 LF）
 - `./gradlew :<模块路径>:spotlessApply` — 自动修复并格式化指定单模块代码风格
+- `./gradlew :<模块路径>:testDemoDebugUnitTest` — 运行单模块单元测试（工程带 demo/prod 风味，任务名需带风味前缀）
+- `./gradlew :modules:module_compose:recordRoborazziDemoDebug` — 录制 / 更新 Roborazzi 截图基准（首次接入或 UI 有意变更时）
+- `./gradlew :modules:module_compose:verifyRoborazziDemoDebug` — 校验 Compose UI 截图与基准一致（差异超阈值即失败）
+- `./gradlew :lint:test` — 运行自定义 Lint 规则（测试命名规范）自身的单元测试
 - `./gradlew :benchmarks:connectedCheck` — 运行 Benchmark 基准测试与生成 Baseline Profile 基线配置文件
-- `./tools/install-git-hooks.sh` — 将 `tools/pre-push` 安装到 `.git/hooks/pre-push`；安装后每次推送会先执行 `spotlessCheck`，并对本次推送涉及变更的模块执行 `lintProdDebug`，未通过则阻止推送
-  - 跳过：`git push --no-verify` 或临时设置 `PRE_PUSH_DISABLE=1`
+- `./tools/install-git-hooks.sh` — 将 `tools/pre-push` 与 `tools/commit-msg` 安装到 `.git/hooks/`；安装后提交时校验 Conventional Commits 格式，推送时先执行 `spotlessCheck` 并对变更模块执行 `lintProdDebug`，未通过则阻止
+  - 跳过：`git commit --no-verify` / `git push --no-verify`，或临时设置 `COMMIT_MSG_DISABLE=1` / `PRE_PUSH_DISABLE=1`
 - `./tools/benchmark-report.py [路径…] [-o 输出文件]` — 将 Macrobenchmark 输出的 `benchmarkData.json` 汇总为可读 Markdown 报告（按 className → params → metrics 分层，仅依赖 Python 3.10+ 标准库）
 - **代码规范保护机制**：
   - 全工程遵循 `.editorconfig` 与 `.gitattributes`（统一换行符为 LF、4 格缩进、UTF-8 字符集）；

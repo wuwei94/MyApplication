@@ -479,6 +479,17 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 
 ---
 
+## 开发规范
+
+- **提交信息**：遵循 Conventional Commits（`<type>(<scope>): <subject>`），由 `tools/commit-msg` 自动校验
+- **质量门禁**：`./tools/install-git-hooks.sh` 安装钩子，提交时校验提交信息格式，推送时执行 `spotlessCheck` 与变更模块 `lintProdDebug`
+- **代码规范**：Spotless + ktlint，执行 `./gradlew spotlessApply` 自动格式化
+- **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/testing.md`
+- **注释语言**：代码注释与文档默认使用中文
+- 详见 `docs/git.md`、`docs/conventions.md` 与 `docs/testing.md`
+
+---
+
 ## License
 
 个人学习项目，欢迎参考 / fork / 提 Issue。

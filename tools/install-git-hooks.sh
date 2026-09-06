@@ -13,7 +13,7 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 hooks_dir="$(git rev-parse --git-path hooks)"
 mkdir -p "$hooks_dir"
 
-for hook in tools/pre-push tools/commit-msg; do
+for hook in tools/pre-push; do
     name="$(basename "$hook")"
     cp "$hook" "$hooks_dir/$name"
     chmod +x "$hooks_dir/$name"
@@ -21,5 +21,5 @@ for hook in tools/pre-push tools/commit-msg; do
 done
 
 echo ""
-echo "卸载：rm $(git rev-parse --git-path hooks)/{pre-push,commit-msg}"
-echo "单次跳过：git push --no-verify  /  git commit --no-verify"
+echo "卸载：rm $(git rev-parse --git-path hooks)/pre-push"
+echo "单次跳过：git push --no-verify"

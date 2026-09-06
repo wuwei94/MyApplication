@@ -17,6 +17,12 @@ ktlint_standard_backing-property-naming = disabled
 ktlint_standard_property-naming = disabled
 ktlint_function_naming_ignore_when_annotated_with = Composable
 
+# lint 模块测试文件故意使用下划线风格的方法名（被测对象_场景_预期结果），
+# 与 TestNamingDetector 强制的命名规范一致，与 ktlint 的 function-naming 规则冲突，
+# 故仅在该目录关闭该规则（不影响其它模块）。
+[lint/src/test/**/*.kt]
+ktlint_standard_function-naming = disabled
+
 [*.xml]
 indent_size = 4
 

@@ -27,10 +27,11 @@ import kotlinx.coroutines.flow.Flow
  * 文章数据仓库接口（服务于 module_arch 的 MVP / MVVM / MVI 与 Mavericks 架构模式教学对比演示）。
  *
  * 架构对应关系：
- * 1. MVP       -> 传统回调 API ([getArticleCallback])
- * 2. MVVM      -> 基础请求与响应式流 API ([getArticleSingle], [getArticleSuspend], [getArticleLiveData] 等)
- * 3. MVI       -> Flow 响应式数据流 API ([getArticleFlow] 等)
- * 4. Mavericks -> 挂起函数 API ([getArticleSuspend])，由专用的 [ArticleMavericksRepository] 包装驱动状态
+ * 1. MVP           -> 传统回调 API ([getArticleCallback])
+ * 2. MVVM          -> 基础请求与响应式流 API ([getArticleSingle], [getArticleSuspend], [getArticleLiveData] 等)
+ * 3. MVI           -> Flow 响应式数据流 API ([getArticleFlow] 等)
+ * 4. Mavericks     -> 挂起函数 API ([getArticleSuspend])，由专用的 [ArticleMavericksRepository] 包装驱动状态
+ * 5. Offline-First -> Room 响应式流 ([getArticlesStream]) + 网络写同步 ([syncArticles])，实现单一真实数据源（SSOT）
  */
 interface ArticleRepository {
 
@@ -115,4 +116,45 @@ interface ArticleRepository {
         page: Int,
         forceUpdate: Boolean = false,
     ): NetworkResult<List<ArticleDetailData>>
+
+    // =========================================================================
+    // 6. 现代离线优先与 SSOT 单一真实数据源 API（对齐 Now in Android）
+    // =========================================================================
+
+    /**
+     * SSOT 唯一数据源读流：观察 Room 本地数据库中的全部文章列表。
+     *
+     * 遵循 Google 离线优先架构（Offline-first architecture）规范：
+     * UI 层永远且仅观察本地数据库的数据流，不直接消费网络请求结果。
+     */
+    fun getArticlesStream(): Flow<List<ArticleDetailData>>
+
+    /**
+     * 观察本地文章总数流。
+     */
+    fun getArticleCountStream(): Flow<Int>
+
+    /**
+     * 网络写同步（Write-Only Sync）：从远端 API 拉取最新文章并写入本地 Room 数据库。
+     *
+     * 注意：本方法执行完毕后不向 UI 直接返回列表数据，数据更新由 Room 数据库的 Flow 响应式驱动。
+     *
+     * @param page 页码（首页通常为 0）。
+     * @return 同步执行结果（成功或异常）。
+     */
+    suspend fun syncArticles(page: Int = 0): Result<Unit>
+
+    /**
+     * 本地模拟写入文章（互动教学验证专用）。
+     *
+     * 绕过网络直接向 Room 写入一条本地文章，用于验证 UI 是否能自动感知 Room 变动。
+     */
+    suspend fun insertLocalArticle(title: String)
+
+    /**
+     * 本地清空文章缓存（互动教学验证专用）。
+     *
+     * 清空 Room 数据库，用于验证 UI 是否即时随底层数据表清空而变为空视图。
+     */
+    suspend fun clearLocalArticles()
 }

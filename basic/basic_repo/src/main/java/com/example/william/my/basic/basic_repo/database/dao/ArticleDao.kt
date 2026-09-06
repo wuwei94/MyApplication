@@ -21,13 +21,30 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Data Access Object for the article table.
  */
 @Dao
 interface ArticleDao {
+
+    /**
+     * 以响应式 Flow 流方式观察所有文章（SSOT 唯一数据源）。
+     *
+     * 依赖 Room 原生 InvalidationTracker 机制：
+     * 当 Articles 表发生任何写入、更新或删除变动时，Room 自动在后台线程重新执行查询并向下游推流。
+     */
+    @Query("SELECT * FROM Articles")
+    fun getArticlesStream(): Flow<List<ArticleDetailData>>
+
+    /**
+     * 观察本地缓存文章总条数流。
+     */
+    @Query("SELECT COUNT(*) FROM Articles")
+    fun getArticleCountStream(): Flow<Int>
 
     /**
      * Select all articles from the Articles table.
@@ -45,6 +62,21 @@ interface ArticleDao {
      */
     @Query("SELECT * FROM Articles WHERE page = :page")
     suspend fun getArticlesByPage(page: Int): List<ArticleDetailData>
+
+    /**
+     * 批量插入或更新文章（Room 2.5+ 原生 @Upsert，优先于传统 REPLACE 策略）。
+     *
+     * 相比于 OnConflictStrategy.REPLACE（底层先 DELETE 再 INSERT，易破坏主键且产生双重触发器开销），
+     * @Upsert 采用真正的 INSERT ... ON CONFLICT DO UPDATE 原生逻辑，性能更高且更安全。
+     */
+    @Upsert
+    suspend fun upsertArticles(articles: List<ArticleDetailData>)
+
+    /**
+     * 插入或更新单篇文章。
+     */
+    @Upsert
+    suspend fun upsertArticle(article: ArticleDetailData)
 
     /**
      * Insert articles in the database. If the articlse already exists, replace it.
