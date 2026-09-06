@@ -7,6 +7,9 @@ import io.netty.channel.group.ChannelGroup
 import io.netty.channel.group.DefaultChannelGroup
 import io.netty.util.concurrent.GlobalEventExecutor
 
+/**
+ * Netty 服务端消息处理器（维护连接组并广播消息）
+ */
 class NettyServerHandler : SimpleChannelInboundHandler<String>() {
 
     private val channels: ChannelGroup = DefaultChannelGroup(GlobalEventExecutor.INSTANCE)
@@ -54,6 +57,9 @@ class NettyServerHandler : SimpleChannelInboundHandler<String>() {
 
     fun getConnectionCount(): Int = channels.size
 
+    /**
+     * 服务端消息监听器
+     */
     interface OnMessageListener {
         fun onClientConnected(remoteAddress: String) {}
         fun onClientDisconnected(remoteAddress: String) {}

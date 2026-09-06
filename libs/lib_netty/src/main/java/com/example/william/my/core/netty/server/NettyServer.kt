@@ -9,6 +9,9 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import java.net.InetSocketAddress
 
+/**
+ * Netty TCP 服务端封装
+ */
 object NettyServer {
 
     private var channel: Channel? = null

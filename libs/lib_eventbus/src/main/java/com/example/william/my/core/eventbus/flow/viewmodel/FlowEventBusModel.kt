@@ -14,6 +14,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Flow 事件总线 ViewModel（维护普通事件流与粘性事件流）
+ */
 class FlowEventBusModel : ViewModel() {
 
     // 正常事件

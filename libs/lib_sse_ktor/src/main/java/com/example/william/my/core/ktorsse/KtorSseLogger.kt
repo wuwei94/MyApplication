@@ -2,6 +2,9 @@ package com.example.william.my.core.ktorsse
 
 import android.util.Log
 
+/**
+ * Ktor SSE 日志工具类
+ */
 object KtorSseLogger {
 
     private const val TAG = "KtorSse"

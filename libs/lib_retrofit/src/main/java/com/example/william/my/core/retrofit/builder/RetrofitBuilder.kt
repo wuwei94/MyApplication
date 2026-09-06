@@ -7,9 +7,15 @@ import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 
+/**
+ * Retrofit DSL 作用域标记
+ */
 @DslMarker
 annotation class RetrofitDslMarker
 
+/**
+ * Retrofit DSL 构建器
+ */
 @RetrofitDslMarker
 class RetrofitBuilder {
 

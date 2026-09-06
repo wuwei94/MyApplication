@@ -21,6 +21,9 @@ import com.example.william.my.core.imageloader.ImageOptions
 import com.example.william.my.core.imageloader.glide.module.GlideApp
 import java.io.File
 
+/**
+ * 基于 Glide 的图片加载器实现
+ */
 object ImageLoader : IImageLoader {
 
     override fun pauseRequests(context: Context?) {

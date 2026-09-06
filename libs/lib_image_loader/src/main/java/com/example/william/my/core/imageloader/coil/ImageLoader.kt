@@ -27,6 +27,9 @@ import kotlinx.coroutines.withContext
 import okio.Path.Companion.toOkioPath
 import java.io.File
 
+/**
+ * 基于 Coil 的图片加载器实现
+ */
 object ImageLoader : IImageLoader {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)

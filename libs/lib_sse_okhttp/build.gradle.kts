@@ -7,17 +7,17 @@ android {
 }
 
 dependencies {
-    // OkHttp & OkHttp-SSE
+    // OkHttp 与 OkHttp-SSE
     api(libs.okhttp)
     api(libs.okhttp.sse)
 
-    // RxJava — Observable/Disposable
+    // RxJava（Observable/Disposable）
     api(libs.rxandroid)
 
-    // Coroutines Flow — Flow
+    // 协程 Flow
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
 
-    // JSON Parser
+    // JSON 解析器
     implementation(libs.google.gson)
 }

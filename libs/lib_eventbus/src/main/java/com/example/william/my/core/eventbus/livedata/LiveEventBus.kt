@@ -10,10 +10,9 @@ import kotlinx.coroutines.Job
 
 object LiveEventBus {
 
-// _______________________________________
-//          observe event
-// _______________________________________
-
+// ───────────────────────────────────────
+//          监听事件
+// ───────────────────────────────────────
     /**
      * 监听 Activity Scope 事件
      */
@@ -36,10 +35,9 @@ object LiveEventBus {
     ): Job = ViewModelProvider(owner)[LiveEventBusModel::class.java]
         .observeEvent(owner, T::class.java.name, isSticky, onReceived)
 
-// _______________________________________
-//          post event
-// _______________________________________
-
+// ───────────────────────────────────────
+//          发送事件
+// ───────────────────────────────────────
     /**
      * 限定范围的事件
      */
@@ -48,10 +46,9 @@ object LiveEventBus {
             .postEvent(T::class.java.name, event!!)
     }
 
-// _______________________________________
-//          get event
-// _______________________________________
-
+// ───────────────────────────────────────
+//          获取事件
+// ───────────────────────────────────────
     inline fun <reified T> removeStickyEvent(scope: ViewModelStoreOwner, event: Class<T>) {
         ViewModelProvider(scope)[LiveEventBusModel::class.java]
             .removeStickEvent(event.name)

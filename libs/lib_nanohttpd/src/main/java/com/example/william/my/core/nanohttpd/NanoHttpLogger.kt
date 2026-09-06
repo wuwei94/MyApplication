@@ -2,6 +2,9 @@ package com.example.william.my.core.nanohttpd
 
 import android.util.Log
 
+/**
+ * NanoHTTPD 日志工具类
+ */
 object NanoHttpLogger {
 
     private const val TAG = "NanoHTTPD"

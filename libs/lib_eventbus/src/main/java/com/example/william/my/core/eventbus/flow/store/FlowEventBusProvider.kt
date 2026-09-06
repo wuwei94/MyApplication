@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.william.my.core.eventbus.flow.FlowEventBus
 
+/**
+ * Flow 事件总线的全局 ViewModelStoreOwner（提供跨页面共享的事件存储）
+ */
 object FlowEventBusProvider : ViewModelStoreOwner {
 
     private val store: ViewModelStore = ViewModelStore()

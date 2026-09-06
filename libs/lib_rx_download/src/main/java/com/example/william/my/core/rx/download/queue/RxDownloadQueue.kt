@@ -48,6 +48,9 @@ class RxDownloadQueue internal constructor(
             { error -> callback.onFailure(error.toDownloadApiException()) },
         )
 
+    /**
+     * 将下载队列转为响应式事件流，内部管理并发任务调度、进度聚合与完成事件
+     */
     fun asFlowable(): Flowable<DownloadQueueEvent> {
         var source = Flowable.create<DownloadQueueEvent>({ emitter ->
             val output = emitter.serialize()

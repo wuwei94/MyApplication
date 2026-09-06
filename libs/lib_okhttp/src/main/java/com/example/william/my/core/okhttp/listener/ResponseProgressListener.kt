@@ -10,10 +10,6 @@ package com.example.william.my.core.okhttp.listener
 interface ResponseProgressListener {
     /**
      * 下载进度
-     *
-     * @param url
-     * @param currentSize
-     * @param totalSize
      */
     fun onProgress(url: String, currentSize: Long, totalSize: Long)
 }

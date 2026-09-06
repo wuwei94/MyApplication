@@ -9,6 +9,9 @@ import java.net.URI
 import java.nio.ByteBuffer
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Java-WebSocket 客户端封装（支持自动重连与多连接管理）
+ */
 object JavaWebSocketClient {
 
     private val clients = ConcurrentHashMap<String, WebSocketClient>()

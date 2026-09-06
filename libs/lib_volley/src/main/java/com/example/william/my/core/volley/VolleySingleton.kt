@@ -11,6 +11,9 @@ import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import com.example.william.my.core.volley.stack.OkHttp3Stack
 
+/**
+ * Volley 单例（统一管理请求队列与图片加载器）
+ */
 class VolleySingleton(context: Context) {
 
     companion object {
@@ -48,8 +51,7 @@ class VolleySingleton(context: Context) {
     }
 
     private val requestQueue: RequestQueue by lazy {
-        // applicationContext is key, it keeps you from leaking the
-        // Activity or BroadcastReceiver if someone passes one in.
+        // 使用 applicationContext，避免因传入 Activity/BroadcastReceiver 而引发内存泄漏
         if (useOkHttp) {
             Volley.newRequestQueue(context.applicationContext, OkHttp3Stack())
         } else {

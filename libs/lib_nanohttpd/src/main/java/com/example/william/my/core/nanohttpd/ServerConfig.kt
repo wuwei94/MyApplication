@@ -1,5 +1,8 @@
 package com.example.william.my.core.nanohttpd
 
+/**
+ * NanoHTTPD 服务器配置（端口与超时时间）
+ */
 data class ServerConfig(
     val port: Int = DEFAULT_PORT,
     val timeout: Int = DEFAULT_TIMEOUT,

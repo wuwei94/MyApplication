@@ -2,6 +2,9 @@ package com.example.william.my.core.okhttpws
 
 import android.util.Log
 
+/**
+ * OkHttp WebSocket 日志工具类
+ */
 object OkHttpWebSocketLogger {
 
     private const val TAG = "OkHttpWebSocket"

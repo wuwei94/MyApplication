@@ -11,6 +11,9 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 
+/**
+ * OkHttp WebSocket 客户端 RxJava 连接订阅
+ */
 class OkHttpWebSocketOnSubscribe(
     private val url: String,
     private val request: Request,

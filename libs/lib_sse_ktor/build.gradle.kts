@@ -7,11 +7,11 @@ android {
 }
 
 dependencies {
-    // Ktor Core & OkHttp Engine (SSE is built into ktor-client-core)
+    // Ktor Core 与 OkHttp 引擎（SSE 内置于 ktor-client-core）
     api(libs.ktor.client.core)
     api(libs.ktor.client.okhttp)
 
-    // Coroutines Flow — Flow
+    // 协程 Flow
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
 }

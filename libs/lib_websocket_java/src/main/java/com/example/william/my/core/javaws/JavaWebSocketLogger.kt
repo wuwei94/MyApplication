@@ -2,6 +2,9 @@ package com.example.william.my.core.javaws
 
 import android.util.Log
 
+/**
+ * Java-WebSocket 日志工具类
+ */
 object JavaWebSocketLogger {
 
     private const val TAG = "JavaWebSocket"

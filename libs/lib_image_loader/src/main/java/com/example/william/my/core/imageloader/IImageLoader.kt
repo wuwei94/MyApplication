@@ -9,6 +9,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import java.io.File
 
+/**
+ * 图片加载器统一接口（抽象 Coil / Glide 等引擎的加载能力）
+ */
 interface IImageLoader {
 
     fun pauseRequests(context: Context?)

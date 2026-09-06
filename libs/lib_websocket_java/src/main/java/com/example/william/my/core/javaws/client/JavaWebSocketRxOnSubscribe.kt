@@ -9,6 +9,9 @@ import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import java.nio.ByteBuffer
 
+/**
+ * Java-WebSocket 客户端 RxJava 连接订阅
+ */
 class JavaWebSocketRxOnSubscribe(
     private val uri: URI,
     private val autoReconnect: Boolean,

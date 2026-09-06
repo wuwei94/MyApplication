@@ -2,6 +2,9 @@ package com.example.william.my.core.javaws
 
 import org.java_websocket.WebSocket
 
+/**
+ * Java-WebSocket 客户端事件信息（密封类，表示连接、消息、关闭、错误等事件）
+ */
 sealed class JavaWebSocketInfo {
     data class Open(val webSocket: WebSocket) : JavaWebSocketInfo()
     data class TextMessage(val webSocket: WebSocket, val message: String) : JavaWebSocketInfo()

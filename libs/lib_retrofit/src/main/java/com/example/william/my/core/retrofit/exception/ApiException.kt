@@ -13,6 +13,9 @@ class ApiException(throwable: Throwable, var code: Int) : Exception(throwable) {
         const val DEFAULT_MESSAGE = "未知错误"
     }
 
+    /**
+     * 错误码常量
+     */
     object Error {
         /**
          * 未知错误

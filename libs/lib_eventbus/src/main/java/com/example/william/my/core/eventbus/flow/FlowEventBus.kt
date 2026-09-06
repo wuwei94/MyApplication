@@ -18,6 +18,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
+ * 基于 Flow 的事件总线（支持粘性事件与生命周期感知的观察）
+ *
  * https://github.com/biubiuqiu0/flow-event-bus
  */
 object FlowEventBus {
@@ -35,10 +37,9 @@ object FlowEventBus {
         FlowEventBus.app = app
     }
 
-// _______________________________________
-//          observe event
-// _______________________________________
-
+// ───────────────────────────────────────
+//          监听事件
+// ───────────────────────────────────────
     /**
      * 监听 App Scope 事件
      */
@@ -111,10 +112,9 @@ object FlowEventBus {
             .observeEvent(T::class.java.name, isSticky, onReceived)
     }
 
-// _______________________________________
+// ───────────────────────────────────────
 //          post event
-// _______________________________________
-
+// ───────────────────────────────────────
     /**
      * Application范围的事件
      */
@@ -131,10 +131,9 @@ object FlowEventBus {
             .postEvent(T::class.java.name, event!!, timeMillis)
     }
 
-// _______________________________________
-//          get event
-// _______________________________________
-
+// ───────────────────────────────────────
+//          获取事件
+// ───────────────────────────────────────
     // 获取事件
     inline fun <reified T> getEventObserverCount(event: Class<T>): Int = FlowEventBusProvider[FlowEventBusModel::class.java]
         .getEventObserverCount(event.name)

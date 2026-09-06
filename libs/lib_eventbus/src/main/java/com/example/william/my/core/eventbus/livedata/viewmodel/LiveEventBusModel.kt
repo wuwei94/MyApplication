@@ -9,6 +9,9 @@ import com.example.william.my.core.eventbus.livedata.livedata.BusMutableLiveData
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+/**
+ * LiveData 事件总线 ViewModel（维护普通事件与粘性事件）
+ */
 class LiveEventBusModel : ViewModel() {
 
     // 正常事件

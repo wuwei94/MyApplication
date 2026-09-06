@@ -59,7 +59,7 @@ class OkHttp3Stack(
             requestBuilder.addHeader(key, value)
         }
 
-        // ── Method + Body ──
+        // ── 方法 + 请求体 ──
         val method = methodToString(request.method)
         val body = request.body
         if (body != null) {

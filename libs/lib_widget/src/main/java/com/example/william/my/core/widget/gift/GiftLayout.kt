@@ -11,6 +11,9 @@ import org.libpag.PAGView
 import org.libpag.PAGView.PAGViewListener
 import java.util.concurrent.LinkedBlockingQueue
 
+/**
+ * 礼物动画容器控件（PAG 大动画与小动画队列播放）
+ */
 class GiftLayout @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
@@ -25,9 +28,7 @@ class GiftLayout @JvmOverloads constructor(
     private val mPagView: PAGView
     private val mSmallAnimView: SmallAnimView
 
-    // temp
     private val mGiftMsgBodyQueue = LinkedBlockingQueue<String>()
-    // private val mGiftMsgBodyQueue = LinkedBlockingQueue<CustomMsg<RoomGiftMsg>>()
 
     init {
         this.mPagView = PAGView(context, attrs, defStyleAttr)
@@ -46,42 +47,13 @@ class GiftLayout @JvmOverloads constructor(
         addView(mSmallAnimView, mallAnimViewParams)
     }
 
-    // fun handlerGiftMsg(giftMsg: CustomMsg<RoomGiftMsg>) {
-    //    println("handlerGiftMsg 收到消息")
-    //    mGiftMsgBodyQueue.offer(giftMsg)
-    //    notifyGiftMsg()
-    // }
-
     private fun notifyGiftMsg() {
         println("notifyGiftMsg 通知播放动画")
 
         if (!isPlaying && !mGiftMsgBodyQueue.isEmpty()) {
             val nextMessage = mGiftMsgBodyQueue.poll()
-            // if (nextMessage is CustomMsg<RoomGiftMsg>) {
-            //    when (nextMessage.data.getAnimationType()) {
-            //        GiftAnimationType.BigAnim -> {
-            //            startPagAnim(nextMessage)
-            //        }
-
-            //        GiftAnimationType.SmallAnim -> {
-            //            startSmallAnim(nextMessage)
-            //        }
-            //    }
-            // }
         }
     }
-
-    // private fun startPagAnim(data: CustomMsg<RoomGiftMsg>) {
-    //    println("startPagAnim 大动画")
-    //    mPagView.setPath(data.data.getAnimationId().getFilePathByAnimId())
-    //    mPagView.play()
-    // }
-
-    // private fun startSmallAnim(data: CustomMsg<RoomGiftMsg>) {
-    //    println("startPagAnim 小动画")
-    //    mSmallAnimView.setImageUrl(data.data.giftInfo.imageUrl)
-    //    mSmallAnimView.play()
-    // }
 
     override fun onAnimationStart(pagView: PAGView) {
         println("onAnimationStart")

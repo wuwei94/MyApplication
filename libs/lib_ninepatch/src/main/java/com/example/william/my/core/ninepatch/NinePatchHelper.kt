@@ -11,6 +11,9 @@ import java.net.URL
 import java.util.concurrent.Executors
 import kotlin.math.min
 
+/**
+ * NinePatch 图片加载与解码帮助类（支持网络图片降采样解码）
+ */
 object NinePatchHelper {
 
     /**
@@ -19,6 +22,9 @@ object NinePatchHelper {
     private val mainHandler = Handler(Looper.getMainLooper())
     private val executor = Executors.newSingleThreadExecutor()
 
+    /**
+     * 异步下载并解码 NinePatch 图片，设置到 View 背景（降采样解码避免 OOM）
+     */
     fun ninePatchChunk(context: Context?, view: View, url: String?) {
         val ctx = context?.applicationContext ?: return
         val imageUrl = url ?: return

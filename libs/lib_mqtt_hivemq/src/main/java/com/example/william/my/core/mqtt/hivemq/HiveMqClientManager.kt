@@ -127,7 +127,7 @@ object HiveMqClientManager {
         try {
             current.disconnect()
         } catch (_: Exception) {
-            // ignore
+            // 忽略异常
         } finally {
             client = null
             listener = null

@@ -7,6 +7,9 @@ import io.netty.handler.codec.Delimiters
 import io.netty.handler.codec.string.StringDecoder
 import io.netty.handler.codec.string.StringEncoder
 
+/**
+ * Netty 服务端管道初始化器（装配编解码与业务处理器）
+ */
 class NettyServerInitializer(
     private val handler: NettyServerHandler,
 ) : ChannelInitializer<SocketChannel>() {

@@ -10,6 +10,9 @@ import org.java_websocket.client.WebSocketClient
 import java.net.URI
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Java-WebSocket 客户端 RxJava 封装
+ */
 object JavaWebSocketClientRx {
 
     private val webSocketMap = ConcurrentHashMap<String, WebSocketClient>()

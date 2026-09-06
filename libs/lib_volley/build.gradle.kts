@@ -13,6 +13,6 @@ dependencies {
     api(libs.volley)
     // OkHttp3
     api(libs.okhttp)
-    // OkHttp3 Logging
+    // OkHttp3 日志拦截器
     api(libs.okhttp.logging)
 }

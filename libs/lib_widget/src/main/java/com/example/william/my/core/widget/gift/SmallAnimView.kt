@@ -10,6 +10,9 @@ import android.widget.RelativeLayout
 import com.blankj.utilcode.util.ScreenUtils
 import com.example.william.my.core.widget.databinding.AnimItemBinding
 
+/**
+ * 礼物小动画视图（位移动画）
+ */
 class SmallAnimView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
@@ -25,7 +28,6 @@ class SmallAnimView @JvmOverloads constructor(
     }
 
     fun setImageUrl(imageUrl: String?) {
-        // mBinding.itemIvGift.loadImage(context, imageUrl)
     }
 
     fun addListener(listener: Animator.AnimatorListener?) {

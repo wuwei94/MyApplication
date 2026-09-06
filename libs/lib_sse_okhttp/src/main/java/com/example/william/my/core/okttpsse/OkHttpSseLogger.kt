@@ -2,6 +2,9 @@ package com.example.william.my.core.okttpsse
 
 import android.util.Log
 
+/**
+ * OkHttp SSE 日志工具类
+ */
 object OkHttpSseLogger {
     private const val TAG = "OkHttpSse"
 

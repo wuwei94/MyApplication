@@ -6,6 +6,9 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 import io.reactivex.rxjava3.core.ObservableEmitter
 
+/**
+ * Netty 客户端 RxJava 消息处理器（将消息转为 [NettyClientInfo] 事件）
+ */
 class NettyClientRxHandler(
     private val emitter: ObservableEmitter<NettyClientInfo>,
 ) : SimpleChannelInboundHandler<String?>() {

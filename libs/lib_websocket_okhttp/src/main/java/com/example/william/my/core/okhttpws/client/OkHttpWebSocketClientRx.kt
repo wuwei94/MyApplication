@@ -13,6 +13,9 @@ import java.io.EOFException
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeoutException
 
+/**
+ * OkHttp WebSocket 客户端 RxJava 封装
+ */
 object OkHttpWebSocketClientRx {
 
     private val defaultClient = OkHttpClient()

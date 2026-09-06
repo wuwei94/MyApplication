@@ -176,7 +176,7 @@ object PahoServiceClientManager {
             )
             current.close()
         } catch (_: Exception) {
-            // ignore
+            // 忽略异常
         } finally {
             client = null
             listener = null

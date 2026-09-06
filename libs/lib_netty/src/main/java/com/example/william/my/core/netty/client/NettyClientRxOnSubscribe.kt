@@ -11,6 +11,9 @@ import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import java.net.InetSocketAddress
 
+/**
+ * Netty 客户端 RxJava 连接订阅（建立连接并以 Observable 发射事件）
+ */
 class NettyClientRxOnSubscribe(
     private val host: String,
     private val port: Int,

@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    // Okhttp—WebSocket
+    // OkHttp-WebSocket
     api(libs.okhttp)
     // RxJava — Observable/Disposable 属于公开 API 类型
     api(libs.rxandroid)

@@ -6,6 +6,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * 基于 RxJava 的事件总线（支持粘性事件）
+ */
 object RxEventBus {
 
     val mStickyBus: MutableMap<Class<*>, Any> = ConcurrentHashMap()

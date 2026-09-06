@@ -4,6 +4,9 @@ import com.example.william.my.core.netty.NettyLogger
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 
+/**
+ * Netty 客户端消息处理器
+ */
 class NettyClientHandler : SimpleChannelInboundHandler<String?>() {
 
     var listener: OnMessageListener? = null
@@ -29,6 +32,9 @@ class NettyClientHandler : SimpleChannelInboundHandler<String?>() {
         ctx.close()
     }
 
+    /**
+     * 客户端消息监听器
+     */
     interface OnMessageListener {
         fun onConnected(remoteAddress: String) {}
         fun onMessage(message: String) {}

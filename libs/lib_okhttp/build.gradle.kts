@@ -11,7 +11,7 @@ android {
 }
 
 dependencies {
-    // core-ktx extension
+    // core-ktx 扩展
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.gson)
     api(libs.okhttp)

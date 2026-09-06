@@ -6,6 +6,9 @@ import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
 import java.net.InetSocketAddress
 
+/**
+ * Java-WebSocket 服务端封装（基于 org.java_websocket.server.WebSocketServer）
+ */
 object JavaWebSocketServer {
 
     private var server: WebSocketServer? = null

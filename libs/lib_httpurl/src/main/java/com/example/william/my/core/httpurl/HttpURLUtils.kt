@@ -6,6 +6,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
+/**
+ * 基于 HttpURLConnection 的网络请求工具类
+ */
 object HttpURLUtils {
 
     private const val TAG = "HttpURLUtils"
