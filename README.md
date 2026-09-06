@@ -74,7 +74,7 @@ MyApplication/
 ├── app                         # 壳工程（Hilt + ARouter 入口）
 ├── build-logic                 # Convention Plugin，统一插件配置
 ├── gradle/libs.versions.toml   # 统一版本目录
-├── docs                        # 文档（modules / libs / di / event / network / transfer / bluetooth / build-logic / conventions / modularization）
+├── docs                        # 文档（modules / libs / di / event / network / transfer / bluetooth / build-logic / conventions / modularization / engineering）
 ├── basic                       # 基础设施层
 │   ├── basic_lib               # BaseActivity / Fragment / ViewModel / 通用工具
 │   ├── basic_shared            # 通用 Bus、Router、内联日志 UI 脚手架与 JSON 格式化
@@ -485,8 +485,9 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **质量门禁**：`./tools/install-git-hooks.sh` 安装钩子，提交时校验提交信息格式，推送时执行 `spotlessCheck` 与变更模块 `lintProdDebug`
 - **代码规范**：Spotless + ktlint，执行 `./gradlew spotlessApply` 自动格式化
 - **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/testing.md`
+- **工程化实践**：基于 Now in Android 的构建与版本治理、测试三支柱、性能基准（Macrobenchmark + Baseline Profile）与门禁防御，详见 `docs/engineering.md`
 - **注释语言**：代码注释与文档默认使用中文
-- 详见 `docs/git.md`、`docs/conventions.md` 与 `docs/testing.md`
+- 详见 `docs/git.md`、`docs/conventions.md`、`docs/testing.md` 与 `docs/engineering.md`
 
 ---
 

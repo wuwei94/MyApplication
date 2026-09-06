@@ -2,7 +2,34 @@
 
 > 本文档基于 [android/nowinandroid](https://github.com/android/nowinandroid) 最新主干源码，逐项评估哪些实践可以落实到 MyApplication，并给出落地方案与优先级。
 >
-> 评估日期：2026-09-04
+> 首次评估：2026-09-04 ｜ **主干复核：2026-09-07**
+
+---
+
+## 零、落地进度与复核结论（2026-09-07）
+
+首轮评估（09-04）列出的第一批、第二批已基本落地，本轮复核聚焦**新增变化**。
+
+### 已落地（对照第三、五节）
+
+| 建议项 | 状态 | 证据 |
+|--------|------|------|
+| TYPESAFE_PROJECT_ACCESSORS | ✅ | `settings.gradle.kts:5`（`e4aec8e3`） |
+| pre-push 门禁 | ✅ | `tools/pre-push`（`e4aec8e3`） |
+| JankStats 掉帧监控 | ✅ | `module_performance/.../JankStatsActivity.kt` |
+| 自定义 Lint 规则 | ✅ | `lint` 模块 + `TestNamingDetectorTest`（`b991689b`） |
+| Turbine + 测试替身 | ✅ | `module_reactive` 4 个测试文件（`9febfeec`、`ed1211d7`） |
+| Roborazzi 截图测试 | ✅ | `1.73.0` + `module_compose` 截图测试（`9febfeec`） |
+
+### 未落地
+
+Navigation 3 示例、API-Impl 示范拆分、可插拔能力接口、Gradle 托管设备、JaCoCo 覆盖率。
+
+### 本轮复核的核心结论
+
+> **首轮报告对 AGP 的判断需要修正。** 原文写"AGP 9.1.0 → 9.3.x 可在后续常规升级中跟进，**无紧迫性**"——这个判断只看版本号，漏掉了真正的风险源：本项目 `gradle.properties` 中的 `android.newDsl=false` 与 `android.builtInKotlin=false` 是 AGP 9 的**临时逃生舱**，官方明确将在 **AGP 10.0（2026 年中）移除**。NiA 已于 2026-01 完成迁移。
+>
+> 这是当前唯一带**硬性截止日期**的技术债，详见下面新增的第六节。
 
 ---
 
@@ -39,7 +66,9 @@
 | Compose BOM | `2026.01.01` | `2025.09.01-alpha` | **本项目更新** |
 | 启动性能示例 | `StartupActivity`、`BaselineProfilesActivity` | 无对应页面 | **本项目独有** |
 
-**唯一落后的构建工具版本**：AGP 本项目 `9.1.0`，NiA 已到 `9.3.2`。可在后续常规升级中跟进，无紧迫性。
+**版本差异**：AGP 本项目 `9.1.0`，NiA 已到 `9.3.2`；Kotlin 本项目 `2.2.20`，NiA `2.3.0`。版本差本身不紧急，但见第六节——**AGP 迁移存在硬性截止日期**。
+
+**本项目领先于 NiA 的部分**：Roborazzi `1.73.0` vs NiA `1.56.0`；Compose BOM `2026.01.01` vs NiA `2025.09.01`。
 
 ---
 
@@ -213,33 +242,142 @@ NiA 的测试基建是最值得抄的部分，而且**恰好能补齐本项目�
 
 ## 五、建议推进顺序
 
-### 第一批：低风险、立竿见影
+> **2026-09-07 更新**：第一批、第二批已全部落地（见第零节），当前推进顺序重排如下。**AGP 10.0 迁移因其硬性截止日期被提至最前。**
 
-1. **TYPESAFE_PROJECT_ACCESSORS** — 1 行配置 + 批量替换
-2. **pre-push 门禁** — 照搬 `tools/pre-push`
-3. **JankStats + runtime-tracing** — 补上 `module_performance` 的监控闭环，同时提升 benchmarks 报告可读性
+### ✅ 已完成（第一批 / 第二批）
 
-### 第二批：补齐测试体系（本项目最大欠账）
+1. TYPESAFE_PROJECT_ACCESSORS
+2. pre-push 门禁
+3. JankStats 掉帧监控
+4. Turbine + 手写测试替身
+5. 测试命名 Lint 规则
+6. Roborazzi 截图测试（1.73.0）
 
-4. **Turbine + 手写测试替身** — 从 `module_reactive` 切入，天然契合
-5. **测试命名 Lint 规则** — 趁测试数为 0，现在建立规范成本最低
-6. **Roborazzi 截图测试** — 先覆盖 `module_widget_custom` / `module_compose`
+### 第零批：有截止日期，立即启动（新增）
+
+**0. AGP 10.0 迁移** — 见第六节
+- 0.1 **探测**：翻转两个 flag 收集报错清单（1 天内可完成）
+- 0.2 **kapt → KSP**：仅 `lib_image_loader` 一处，独立无风险
+- 0.3 **分批迁移**：用 `android.newDsl.optOut` 逐模块推进
+- 0.4 **Flutter 链路单独评估**：依赖上游，需最早开始摸底
 
 ### 第三批：架构示范补全
 
-7. **Navigation 3 示例** — 与 ARouter 形成对照，不触碰现有链路
-8. **API-Impl 示范拆分** — 让 `docs/modularization.md` 的方案 B 有代码实证
+7. **Navigation 3 示例** — 已 GA（1.0.0），与 ARouter 形成对照，不触碰现有链路
+8. **API-Impl 示范拆分** — 让 `docs/modularization.md` 的方案 B 有代码实证（NiA 也在收敛，仅做示范）
 9. **可插拔能力接口模式** — 抽象进 `basic_lib` 或 `module_di`
 
 ### 第四批：配套完善
 
 10. **Gradle 托管设备** — 配合插桩测试
 11. **JaCoCo 覆盖率** — 待测试有基础后引入
-12. **AGP 9.1.0 → 9.3.x** — 常规版本跟进
+12. **configuration-cache / isolated-projects** — 见第七节，需试点，不能无脑开
+13. **AGP 9.1.0 → 9.3.x、Kotlin 2.2.20 → 2.3.0** — 随第零批迁移一并跟进
 
 ---
 
-## 六、参考源码索引
+## 六、AGP 10.0 迁移倒计时（本轮新增，最高优先级）
+
+> 首轮报告将 AGP 升级归入"第四批：配套完善"并标注"无紧迫性"。**这个判断需要修正**——紧迫性不来自版本号，而来自 opt-out 的移除期限。
+
+### 背景：AGP 9.0 的两个破坏性变更
+
+AGP 9.0（2026-01 发布）引入两项默认启用的变更：
+
+| 变更 | 内容 | 退出开关 |
+|------|------|----------|
+| **newDsl** | 旧 DSL 类型（`BaseExtension` 等）与旧 Variant API 被新接口取代，旧类型标记弃用 | `android.newDsl=false` |
+| **builtInKotlin** | AGP 内置 Kotlin 支持，不再需要应用 `org.jetbrains.kotlin.android`；AGP 运行时依赖 KGP `2.2.10+` | `android.builtInKotlin=false` |
+
+**官方明确：两个退出开关将在 AGP 10.0（2026 年中）移除。** 届时无法再退回旧行为。
+
+### 本项目的真实处境
+
+`gradle.properties` 第 6 节写着：
+
+```properties
+android.builtInKotlin=false
+android.newDsl=false
+```
+
+注释将其描述为"Gradle 9.0+ / AGP 现代构建属性"——**这两行不是资产，是账单**。
+
+对照 NiA：2026-01-27 完成 "Finalize bump agp 9.0 (enable newDsl)"（含 protobuf 插件升级、Android library → Jvm library 改造），当前 `gradle.properties` 中**已无任何 opt-out flag**。
+
+### 迁移风险点（按风险排序）
+
+**1. Flutter add-to-app —— 最高风险，且不完全可控**
+
+本项目 `enableFlutter=true`，`module_flutter` 走 add-to-app 集成。
+
+- `flutter build` 时 Flutter 工具会自动向 `/android/gradle.properties` 写入两个 opt-out flag；但 **add-to-app 宿主是纯原生工程，Flutter 工具不参与其构建，不会写，只能手工维护**；
+- 更关键的是：Flutter 插件依赖树中**任意一个**未迁移的传递插件都足以阻塞整个构建（上游跟踪 issue #181383）。这部分**依赖生态进度，本项目无法自行解决**。
+
+**2. kapt —— 风险低，但必须处理**
+
+全项目仅 1 处：`libs/lib_image_loader` 的 `kapt(libs.glide.compiler)`。builtInKotlin 下 kapt 配置方式变化，建议直接迁 KSP（Glide 已提供 KSP 支持）。改动量极小，可独立于其他项先行。
+
+**3. 约定插件的 Kotlin 配置**
+
+`build-logic/.../nowinandroid/AndroidKotlin.kt` 通过 `KotlinAndroidProjectExtension` / `KotlinJvmProjectExtension` 配置 `compilerOptions`（jvmTarget、freeCompilerArgs）。builtInKotlin 下扩展获取方式变化，需验证。涉及 3 个约定插件：`AndroidApplicationConventionPlugin`、`AndroidLibraryConventionPlugin`、`AndroidTestConventionPlugin`。
+
+**4. 第三方老插件兼容性**
+
+ARouter（`gradlePluginArouter`）、GreenDAO、ObjectBox 均为历史较久的插件，`newDsl` 下可能触发：
+
+```
+ClassCastException: ApplicationExtensionImpl$AgpDecorated_Decorated
+                    cannot be cast to BaseExtension
+```
+
+这三类插件恰好是本项目区别于 NiA 的部分，NiA 无法提供参照，必须自行验证。
+
+### 推进方式
+
+AGP 9.4+ 支持 `android.newDsl.optOut=:module` **逐模块退出**，可渐进迁移，无需一次性切换：
+
+1. **先探测**：将两 flag 改为 `true` 后 sync / `assembleDebug --dry-run`，收集报错清单——这是获取完整问题清单的唯一手段；
+2. **分批迁移**：按模块推进，用 `optOut` 隔离未就绪模块；
+3. **单独评估 Flutter**：确认上游插件迁移状态后再决定整体节奏；
+4. **kapt → KSP 先行**：独立、无风险、可立即做。
+
+**建议 2026 Q4 内启动探测**，不要等 AGP 10.0 发布后被动迁移。
+
+---
+
+## 七、NiA 有而本项目未开的构建配置（本轮新增）
+
+| 配置 | NiA | 本项目 | 说明 |
+|------|-----|--------|------|
+| `org.gradle.configuration-cache=true` | ✅ 且 `problems=fail` | **注释掉** | 跳过配置阶段。本项目插件栈杂，需试点 |
+| `org.gradle.configuration-cache.parallel` | ✅ | **注释掉** | 同上 |
+| `org.gradle.isolated-projects=true` | ✅ | **无** | 隔离项目 / 并行配置。65 模块收益显著，但兼容性要求最高 |
+| `ksp.project.isolation.enabled=true` | ✅ | **无** | KSP 项目隔离 |
+| `kotlin.daemon.jvmargs` | ✅ 独立配置 | **无** | Kotlin 守护进程只继承 Gradle 的 `-Xmx`，其余需单独声明，否则大模块编译易 OOM |
+| `roborazzi.test.verify=true` | ✅ | **无** | 截图测试自动挂进 `test` 任务，避免"写完忘了 verify" |
+| `android.injected.androidTest.leaveApksInstalledAfterRun` | ✅ | **无** | 插桩测试后保留 APK，配合托管设备 |
+
+> ⚠️ `configuration-cache` 与 `isolated-projects` **不能无脑照搬**。NiA 能开是因为插件栈干净（Hilt / KSP / Room 均为官方维护）。本项目含 ARouter、GreenDAO、ObjectBox、Flutter，建议先开 configuration-cache 试跑并逐个排除违规插件，`isolated-projects` 放到最后。
+
+---
+
+## 八、API-Impl 收敛信号（印证首轮判断）
+
+NiA 于 2025-12 执行 "Refactor settings feature from api to impl"——当前 `settings.gradle.kts` 中 `feature:settings` **只有 `:impl`、没有 `:api`**，而其余 feature 仍是 api + impl 双模块。
+
+即 NiA 自身也在**收敛过度拆分**。首轮报告"不要全量 API-Impl 拆分，只选 1~2 个有业务属性的模块做示范"的判断得到佐证，维持原建议。
+
+---
+
+## 九、Navigation 3 已 GA（时机更新）
+
+NiA 版本目录中 `androidxNavigation3 = "1.0.0"`，**已正式发布**（首轮评估时仍为预发布版）。作为技术沉淀项目，示例应基于稳定版搭建——当前的版本风险已消除，Navigation 3 示例可随时启动。
+
+> 📌 附带观察：NiA 的 `AGENTS.md` 至今仍写着 "Navigation is handled by Jetpack Navigation 2 for Compose"，而源码早已是 Navigation 3。**文档滞后于代码是常态**，本项目 `docs/conventions.md` 不变量第 7 条已要求代码与文档同步，建议每次升级技术栈后例行复核。
+
+---
+
+## 十、参考源码索引
 
 | 关注点 | NiA 路径 |
 |--------|----------|

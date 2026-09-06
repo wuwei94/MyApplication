@@ -44,6 +44,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | docs/modularization.md | 现代组件化架构演进与技术选型（ARouter 停更原因、大厂主流方案、API-Impl 与 TheRouter） |
 | docs/nia-adoption.md | Now in Android 落地评估（能力落差对照、12 项落地方案与推进顺序、不建议照搬清单） |
 | docs/testing.md | 测试体系（Turbine + 手写测试替身、测试命名 Lint 规则、Roborazzi 截图测试） |
+| docs/engineering.md | 现代 Android 工程化实践指南（构建系统、静态治理、测试三支柱、性能基准、门禁防御） |
 | docs/git.md | Git 提交规范（Conventional Commits、提交模板、钩子门禁与历史遗留） |
 
 ## 不变量
