@@ -1,0 +1,39 @@
+# <type>(<scope>): <subject>
+#
+# ── 标题行 ──────────────────────────────────────────────
+# · 必填，建议 ≤ 72 字符（硬上限 100，超过会被拒绝），结尾不加句号
+# · subject 用祈使句，描述「这次提交做了什么」
+# · 默认使用中文书写（type / scope 与专有技术术语保留英文）
+#
+# ── 正文（可省略）────────────────────────────────────────
+# · 与标题空一行，说明「为什么这么做」而非复述代码改动
+# · 每行不超过 100 字符
+#
+# ── 页脚（可省略）────────────────────────────────────────
+# · BREAKING CHANGE: <不兼容变更说明>
+# · Closes #<issue>
+#
+# ── type 取值 ───────────────────────────────────────────
+#   feat     新增功能
+#   fix      修复缺陷
+#   docs     文档与注释
+#   style    格式调整（不影响代码逻辑，如 spotless / ktlint 批量格式化）
+#   refactor 重构（既不新增功能也不修复缺陷）
+#   perf     性能优化
+#   test     测试代码
+#   build    构建系统或外部依赖变更
+#   ci       CI 配置与脚本
+#   chore    其他杂项
+#   revert   回滚此前的提交
+#
+# ── scope 取值 ──────────────────────────────────────────
+# 模块名或领域名，小写、连字符分词：
+#   basic_lib / basic_shared / basic_repo / build-logic / ci / flutter
+#   module_<名称>（如 module_network / module_bluetooth）
+#   libs:lib_<名称>（如 libs:lib_okhttp）
+#
+# ── 本仓库真实示例 ───────────────────────────────────────
+#   feat(bluetooth): 新增 module_bluetooth 模块与 Flutter lib_bluetooth 封装库
+#   fix(network): 修复 Retrofit 并发请求参数覆盖缺陷
+#   style(spotless): 健全跨平台换行符与 ktlint 规范并格式化 basic_lib 模块
+#   docs(git): 新增提交信息规范与 commit-msg 校验钩子

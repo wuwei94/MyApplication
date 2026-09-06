@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+#
+# Git commit-msg 门禁
+#
+# 校验提交信息是否符合 Conventional Commits 规范：
+#   1. 标题不能为空
+#   2. 格式必须是 <type>(<scope>): <subject>
+#   3. 标题长度 ≤72 静默通过 / 73~100 仅提示 / >100 拒绝（中文按 1 个字符计）
+#   4. 标题结尾不加句号
+#   5. 标题建议用中文书写（仅提示，不阻断）
+#
+# 安装：./tools/install-git-hooks.sh
+# 临时跳过：git commit --no-verify     或     COMMIT_MSG_DISABLE=1 git commit
+#
+# 钩子由 Git 调用：$1 为提交信息临时文件路径。
+# 退出码非 0 会中止本次提交。
+
+set -uo pipefail
+
+if [[ "${COMMIT_MSG_DISABLE:-0}" == "1" ]]; then
+    echo "commit-msg: COMMIT_MSG_DISABLE=1，跳过提交信息校验"
+    exit 0
+fi
+
+msg_file="$1"
+
+# 允许的 type 列表
+types='feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert'
+
+# 标题行正则：<type>(<scope>)?: <subject>
+subject_re="^(${types})(\([^()[:space:]]+\))?!?: .+$"
+
+# 剥离注释行与空行后取第一行作为标题
+subject="$(grep -v '^#' "$msg_file" | grep -m1 '[^[:space:]]' || true)"
+
+# ---------------------------------------------------------------------------
+# 白名单：merge 与 git revert 自动生成的提交直接放行
+# ---------------------------------------------------------------------------
+case "$subject" in
+    "Merge branch"* | "Merge pull request"* | "Merge remote-tracking branch"* | 'Revert "'*)
+        exit 0
+        ;;
+esac
+
+# ---------------------------------------------------------------------------
+# 校验 1：标题不能为空
+# ---------------------------------------------------------------------------
+if [[ -z "$subject" ]]; then
+    echo "commit-msg: 提交信息为空" >&2
+    echo "" >&2
+    echo "  格式：<type>(<scope>): <subject>" >&2
+    echo "  示例：feat(module_network): 新增 OkHttp 拦截器链可视化示例" >&2
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# 校验 2：必须符合 Conventional Commits
+# ---------------------------------------------------------------------------
+if ! [[ "$subject" =~ $subject_re ]]; then
+    echo "commit-msg: 提交信息不符合 Conventional Commits 规范" >&2
+    echo "    $subject" >&2
+    echo "" >&2
+    echo "  正确格式：<type>(<scope>): <subject>" >&2
+    echo "  可用 type：${types//|/ /}" >&2
+    echo "  scope 示例：basic_lib / module_network / libs:lib_okhttp / flutter / ci" >&2
+    echo "" >&2
+    echo "  本仓库真实示例：" >&2
+    echo "    feat(bluetooth): 新增 module_bluetooth 模块与 Flutter lib_bluetooth 封装库" >&2
+    echo "    fix(network): 修复 Retrofit 并发请求参数覆盖缺陷" >&2
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# 校验 3：标题长度
+#   ≤ 72      理想长度，静默通过
+#   73 ~ 100  允许提交，仅打印建议（中文信息密度高，不做硬性限制）
+#   > 100     拒绝，细节应移入正文
+# ---------------------------------------------------------------------------
+# wc -m 在 UTF-8 locale 下按字符计数，中文同样计 1
+length="$(printf '%s' "$subject" | wc -m | tr -d '[:space:]')"
+if ((length > 100)); then
+    echo "commit-msg: 标题 ${length} 字符，超过 100 字符硬上限" >&2
+    echo "    $subject" >&2
+    echo "" >&2
+    echo "  请将细节移入正文，标题只保留一句话概括。" >&2
+    exit 1
+elif ((length > 72)); then
+    echo "commit-msg: 提示 —— 标题 ${length} 字符，建议精简至 72 字符以内"
+    echo "    $subject"
+fi
+
+# ---------------------------------------------------------------------------
+# 校验 4：标题结尾不加句号
+# ---------------------------------------------------------------------------
+if [[ "$subject" == *。 || "$subject" == *. ]]; then
+    echo "commit-msg: 标题结尾不需要句号" >&2
+    echo "    $subject" >&2
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# 校验 5：语言约定（阻断）—— 标题必须包含至少一个汉字
+# ---------------------------------------------------------------------------
+# 仓库约定 subject 与正文默认使用中文，type / scope 与专有技术术语保留英文。
+# glob 字符类 [一-龥] 覆盖 CJK 统一汉字，在 UTF-8 与 LC_ALL=C 下均可靠。
+case "$subject" in
+    *[一-龥]*) ;;
+    *)
+        echo "commit-msg: 提交信息必须使用中文（标题至少含一个汉字）" >&2
+        echo "    $subject" >&2
+        echo "" >&2
+        echo "  type / scope 与专有术语（OkHttp、ktlint 等）保留英文即可。" >&2
+        echo "  确认无误仍要提交可用 COMMIT_MSG_DISABLE=1 git commit 跳过。" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
