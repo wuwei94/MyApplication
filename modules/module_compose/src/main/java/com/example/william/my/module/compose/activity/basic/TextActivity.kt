@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.module.compose.ui.component.TextExample
 
+/**
+ * Text 组件基础样式示例页。
+ *
+ * 展示内容集中在 [TextExample]（顶层 Composable），本页只负责挂载与点击日志，
+ * 使同一组件可被 Roborazzi 截图测试在任意主题下渲染。
+ */
 @Route(path = RouterPath.Compose.Text)
 class TextActivity : ComponentActivity() {
 
@@ -26,25 +22,10 @@ class TextActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TextExample("Hello Text")
+            TextExample(
+                str = "Hello Text",
+                onClick = { Log.e(TAG, "clickable") },
+            )
         }
-    }
-
-    @Composable
-    fun TextExample(str: String) {
-        Text(
-            text = str,
-            modifier = Modifier
-                .padding(6.dp)
-                .clickable {
-                    Log.e(TAG, "clickable")
-                },
-            color = Color.Black,
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center,
-            textDecoration = TextDecoration.Underline,
-            fontStyle = FontStyle.Italic,
-            maxLines = 1,
-        )
     }
 }
