@@ -11,9 +11,11 @@ enum class FlavorDimension {
     contentType,
 }
 
-// The content for the app can either come from local static data which is useful for demo
-// purposes, or from a production backend server which supplies up-to-date, real content.
-// These two product flavors reflect this behaviour.
+/**
+ * 应用内容既可来自本地静态数据（适合演示），
+ * 也可来自提供最新真实内容的生产后端服务器。
+ * 这两个 product flavor 即反映此行为。
+ */
 @Suppress("EnumEntryName")
 enum class NiaFlavor(val dimension: FlavorDimension, val applicationIdSuffix: String? = null) {
     demo(FlavorDimension.contentType, applicationIdSuffix = ".demo"),

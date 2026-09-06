@@ -24,6 +24,11 @@ import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import java.io.File
 
+/**
+ * Room 数据库约定插件
+ *
+ * 配置 schema 目录与 KAPT 参数并注入 Room 依赖。
+ */
 class AndroidRoomConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -31,15 +36,15 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
             apply(plugin = "kotlin-kapt")
             // apply(plugin = "com.google.devtools.ksp")
             extensions.configure<RoomExtension> {
-                // The schemas directory contains a schema file for each version of the Room database.
-                // This is required to enable Room auto migrations.
-                // See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
+                // schemas 目录包含每个版本 Room 数据库的 schema 文件。
+                // 这是启用 Room 自动迁移所必需的。
+                // 见 https://developer.android.com/reference/kotlin/androidx/room/AutoMigration
                 schemaDirectory("$projectDir/schemas")
             }
             extensions.configure<KaptExtension> {
-                // The schemas directory contains a schema file for each version of the Room database.
-                // This is required to enable Room auto migrations.
-                // See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
+                // schemas 目录包含每个版本 Room 数据库的 schema 文件。
+                // 这是启用 Room 自动迁移所必需的。
+                // 见 https://developer.android.com/reference/kotlin/androidx/room/AutoMigration
                 arguments {
                     arg("room.schemaLocation", File(projectDir, "schemas").absolutePath)
                 }

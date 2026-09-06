@@ -20,6 +20,11 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
+/**
+ * ObjectBox 数据库约定插件
+ *
+ * 配置 KAPT 生成 ObjectBox 模型代码的参数。
+ */
 class AndroidObjectBoxConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

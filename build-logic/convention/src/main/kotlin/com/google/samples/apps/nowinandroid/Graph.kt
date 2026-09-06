@@ -51,7 +51,7 @@ private inline fun <T, R : Any> Iterable<T>.associateWithNotNull(transform: (T) 
 }
 
 /**
- * Generates module dependency graphs with `graphDump` task, and update the corresponding `README.md` file with `graphUpdate`.
+ * 通过 graphDump 任务生成模块依赖图，并通过 graphUpdate 更新对应的 README.md 文件。
  */
 private class Graph(
     private val root: Project,
@@ -96,7 +96,7 @@ private class Graph(
 }
 
 /**
- * Declaration order is important, as only the first match will be retained.
+ * 声明顺序很重要，因为只会保留第一个匹配项。
  */
 internal enum class PluginType(val id: String, val ref: String, val style: String) {
     AndroidApplication(
@@ -132,7 +132,7 @@ internal enum class PluginType(val id: String, val ref: String, val style: Strin
 }
 
 internal fun Project.configureGraphTasks() {
-    if (!buildFile.exists()) return // Ignore root modules without build file
+    if (!buildFile.exists()) return // 忽略没有 build 文件的根模块
     val dumpTask = tasks.register<GraphDumpTask>("graphDump") {
         val graph = Graph(this@configureGraphTasks).invoke()
         projectPath = this@configureGraphTasks.path
@@ -178,7 +178,7 @@ private abstract class GraphDumpTask : DefaultTask() {
     private fun mermaid() = buildString {
         val dependencies: Set<Dependency> = dependencies.get()
             .flatMapTo(mutableSetOf()) { (project, entries) -> entries.map { it.toDependency(project) } }
-        // FrontMatter configuration
+        // FrontMatter 配置
         appendLine(
             """
             ---
@@ -189,12 +189,12 @@ private abstract class GraphDumpTask : DefaultTask() {
             ---
             """.trimIndent(),
         )
-        // Graph declaration
+        // 图声明
         appendLine("graph TB")
-        // Nodes and subgraphs
+        // 节点与子图
         val (rootProjects, nestedProjects) = dependencies
             .map { listOf(it.project, it.dependency) }.flatten().toSet()
-            .plus(projectPath.get()) // Special case when this specific module has no other dependency
+            .plus(projectPath.get()) // 特殊场景：该模块没有其他依赖
             .groupBy { it.substringBeforeLast(":") }
             .entries.partition { it.key.isEmpty() }
 
@@ -234,12 +234,12 @@ private abstract class GraphDumpTask : DefaultTask() {
         rootProjects.flatMap { it.value }.sortedDescending().forEach {
             appendLine(it.alias(indent = 2, plugins.get().getValue(it)))
         }
-        // Links
+        // 连接线
         if (dependencies.isNotEmpty()) appendLine()
         dependencies
             .sortedWith(compareBy({ it.project }, { it.dependency }, { it.configuration }))
             .forEach { appendLine(it.link(indent = 2)) }
-        // Classes
+        // 类定义
         appendLine()
         PluginType.entries.forEach { appendLine(it.classDef()) }
     }

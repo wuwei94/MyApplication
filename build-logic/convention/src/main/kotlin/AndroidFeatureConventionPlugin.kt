@@ -22,6 +22,11 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
+/**
+ * 功能模块约定插件
+ *
+ * 组合 library、Hilt、ARouter 插件并注入基础依赖。
+ */
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

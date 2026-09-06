@@ -91,7 +91,7 @@ internal abstract class PrintApkLocationTask : DefaultTask() {
             }
         } ?: throw RuntimeException("Cannot check androidTest sources")
 
-        // Don't print APK location if there are no androidTest source files
+        // 没有 androidTest 源文件时不打印 APK 路径
         if (!hasFiles) {
             return
         }

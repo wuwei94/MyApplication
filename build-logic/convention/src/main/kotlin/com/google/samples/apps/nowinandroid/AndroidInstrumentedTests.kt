@@ -20,12 +20,12 @@ import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import org.gradle.api.Project
 
 /**
- * Disable unnecessary Android instrumented tests for the [project] if there is no `androidTest` folder.
- * Otherwise, these projects would be compiled, packaged, installed and ran only to end-up with the following message:
+ * 若 [project] 没有 `androidTest` 目录，则禁用不必要的 Android 仪器化测试。
+ * 否则这些项目会被编译、打包、安装并运行，最终只得到如下信息：
  *
  * > Starting 0 tests on AVD
  *
- * Note: this could be improved by checking other potential sourceSets based on buildTypes and flavors.
+ * 注意：可通过检查基于 buildTypes 与 flavors 的其他潜在 sourceSets 来进一步改进。
  */
 internal fun LibraryAndroidComponentsExtension.disableUnnecessaryAndroidTests(
     project: Project,

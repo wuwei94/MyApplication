@@ -23,6 +23,11 @@ import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import java.util.Locale
 
+/**
+ * EventBus 事件总线约定插件
+ *
+ * 按模块名生成 EventBus 索引并注入依赖。
+ */
 class AndroidEventBusConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

@@ -22,6 +22,11 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
+/**
+ * Android 测试模块约定插件
+ *
+ * 配置 com.android.test 模块的编译 SDK 与 Kotlin。
+ */
 class AndroidTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

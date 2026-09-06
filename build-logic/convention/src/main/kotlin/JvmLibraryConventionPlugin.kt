@@ -26,6 +26,11 @@ import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
+/**
+ * JVM 库约定插件
+ *
+ * 配置 JDK 17 编译目标与测试依赖。
+ */
 class JvmLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

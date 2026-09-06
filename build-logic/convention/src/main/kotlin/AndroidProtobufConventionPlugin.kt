@@ -22,14 +22,19 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
+/**
+ * Protobuf 约定插件
+ *
+ * 配置 protoc 编译器并依赖 lite 运行时。
+ */
 class AndroidProtobufConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = "com.google.protobuf")
-            // https://github.com/google/protobuf-gradle-plugin
+            // Protobuf Gradle 插件，见 https://github.com/google/protobuf-gradle-plugin
             extensions.configure<ProtobufExtension> {
                 protoc {
-                    // The artifact spec for the Protobuf Compiler
+                    // Protobuf 编译器的构件坐标
                     artifact = "com.google.protobuf:protoc:3.24.0"
                 }
                 generateProtoTasks {
@@ -43,7 +48,7 @@ class AndroidProtobufConventionPlugin : Plugin<Project> {
                 }
             }
             dependencies {
-                // You need to depend on the lite runtime library, not protobuf-java
+                // 需依赖 lite 运行时库，而非 protobuf-java
                 "implementation"(libs.findLibrary("google.protobuf.javalite").get())
             }
         }

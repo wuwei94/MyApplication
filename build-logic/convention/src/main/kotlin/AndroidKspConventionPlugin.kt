@@ -18,6 +18,11 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 
+/**
+ * KSP 注解处理约定插件
+ *
+ * 应用 KSP 插件以支持注解处理器。
+ */
 class AndroidKspConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

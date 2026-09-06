@@ -30,14 +30,14 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 /**
- * Configure base Kotlin with Android options
+ * 配置基础 Kotlin 与 Android 选项
  */
 internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension,
 ) {
     commonExtension.apply {
         compileOptions.apply {
-            // Up to Java 11 APIs are available through desugaring
+            // 通过脱糖（desugaring）可使用到 Java 11 的 API
             // https://developer.android.com/studio/write/java11-minimal-support-table
             sourceCompatibility = JavaVersion.VERSION_11
             targetCompatibility = JavaVersion.VERSION_11
@@ -57,11 +57,11 @@ internal fun Project.configureKotlinAndroid(
 }
 
 /**
- * Configure base Kotlin options for JVM (non-Android)
+ * 配置 JVM（非 Android）的基础 Kotlin 选项
  */
 internal fun Project.configureKotlinJvm() {
     extensions.configure<JavaPluginExtension> {
-        // Up to Java 11 APIs are available through desugaring
+        // 通过脱糖（desugaring）可使用到 Java 11 的 API
         // https://developer.android.com/studio/write/java11-minimal-support-table
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -71,11 +71,11 @@ internal fun Project.configureKotlinJvm() {
 }
 
 /**
- * Configure base Kotlin options
+ * 配置基础 Kotlin 选项
  */
 private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() = configure<T> {
-    // Treat all Kotlin warnings as errors (disabled by default)
-    // Override by setting warningsAsErrors=true in your ~/.gradle/gradle.properties
+    // 将全部 Kotlin 警告视为错误（默认关闭）
+    // 可在 ~/.gradle/gradle.properties 中设置 warningsAsErrors=true 覆盖
     val warningsAsErrors: String? by project
     when (this) {
         is KotlinAndroidProjectExtension -> compilerOptions
@@ -85,20 +85,19 @@ private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() =
         jvmTarget = JvmTarget.JVM_11
         allWarningsAsErrors = warningsAsErrors.toBoolean()
         freeCompilerArgs.add(
-            // Enable experimental coroutines APIs, including Flow
+            // 启用实验性协程 API，包括 Flow
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
         )
         freeCompilerArgs.add(
             /**
-             * Remove this args after Phase 3.
+             * 该参数在 Phase 3 之后移除。
              * https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-consistent-copy-visibility/#deprecation-timeline
              *
-             * Deprecation timeline
-             * Phase 3. (Supposedly Kotlin 2.2 or Kotlin 2.3).
-             * The default changes.
-             * Unless ExposedCopyVisibility is used, the generated 'copy' method has the same visibility as the primary constructor.
-             * The binary signature changes. The error on the declaration is no longer reported.
-             * '-Xconsistent-data-class-copy-visibility' compiler flag and ConsistentCopyVisibility annotation are now unnecessary.
+             * 废弃时间线：
+             * Phase 3（预计 Kotlin 2.2 或 2.3），默认行为发生变化。
+             * 除非使用 ExposedCopyVisibility，否则生成的 copy 方法与主构造函数可见性一致。
+             * 二进制签名变化，声明处的错误不再报告。
+             * '-Xconsistent-data-class-copy-visibility' 编译参数与 ConsistentCopyVisibility 注解不再需要。
              */
             "-Xconsistent-data-class-copy-visibility",
         )

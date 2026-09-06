@@ -21,6 +21,11 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.getByType
 
+/**
+ * Compose 应用约定插件
+ *
+ * 应用 Compose 编译器插件并配置 Compose 相关依赖。
+ */
 class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

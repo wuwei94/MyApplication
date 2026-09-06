@@ -22,6 +22,11 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
+/**
+ * Lint 约定插件
+ *
+ * 注入自定义 Lint 规则并开启 XML 与 SARIF 报告。
+ */
 class AndroidLintConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

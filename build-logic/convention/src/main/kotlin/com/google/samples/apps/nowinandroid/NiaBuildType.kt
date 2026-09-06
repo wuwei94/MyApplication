@@ -17,7 +17,7 @@
 package com.google.samples.apps.nowinandroid
 
 /**
- * This is shared between :app and :benchmarks module to provide configurations type safety.
+ * 供 :app 与 :benchmarks 模块共享，提供配置的类型安全。
  */
 enum class NiaBuildType(val applicationIdSuffix: String? = null) {
     DEBUG(".debug"),

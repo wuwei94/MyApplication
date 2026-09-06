@@ -17,6 +17,11 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+/**
+ * GreenDao 数据库约定插件（当前为占位）
+ *
+ * 集成代码已注释，待启用时取消注释。
+ */
 class AndroidGreenDaoConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

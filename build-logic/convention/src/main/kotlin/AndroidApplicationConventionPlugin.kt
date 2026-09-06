@@ -27,6 +27,11 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
+/**
+ * Android 应用模块约定插件
+ *
+ * 统一配置编译 SDK、Kotlin、flavor 与基础依赖。
+ */
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

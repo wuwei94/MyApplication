@@ -23,8 +23,8 @@ plugins {
 
 group = "com.google.samples.apps.nowinandroid.buildlogic"
 
-// Configure the build-logic plugins to target JDK 17
-// This matches the JDK used to build the project, and is not related to what is running on device.
+// 将 build-logic 插件编译目标设为 JDK 17
+// 与构建项目所用的 JDK 一致，与设备上运行的 JDK 无关。
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

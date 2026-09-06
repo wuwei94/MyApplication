@@ -1,4 +1,4 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// 顶层构建文件，用于添加对所有子项目/模块通用的配置选项。
 buildscript {
     dependencies {
         // 传统 Maven 构件插件依赖

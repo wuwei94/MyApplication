@@ -18,6 +18,11 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 
+/**
+ * Compose 功能模块约定插件
+ *
+ * 组合 feature 与 library.compose 约定插件。
+ */
 class AndroidFeatureComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

@@ -27,6 +27,11 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
+/**
+ * Android 库模块约定插件
+ *
+ * 统一配置编译 SDK、Kotlin、flavor 与基础依赖。
+ */
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -47,8 +52,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 configureFlavors(this)
                 configureDepsAndroid(this)
-                // The resource prefix is derived from the module name,
-                // so resources inside ":core:module1" must be prefixed with "core_module1_"
+                // 资源前缀由模块名派生，
+                // 因此 ":core:module1" 内的资源必须以 "core_module1_" 为前缀
                 // resourcePrefix =
                 //    path.split("""\W""".toRegex()).drop(1).distinct().joinToString(separator = "_")
                 //        .lowercase() + "_"

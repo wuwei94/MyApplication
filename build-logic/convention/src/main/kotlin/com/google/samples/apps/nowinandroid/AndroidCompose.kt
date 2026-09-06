@@ -24,7 +24,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 /**
- * Configure Compose-specific options
+ * 配置 Compose 专属选项
  */
 internal fun Project.configureAndroidCompose(
     commonExtension: CommonExtension,

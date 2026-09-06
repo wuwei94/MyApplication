@@ -21,6 +21,11 @@ import org.gradle.api.Project
 import org.gradle.api.configuration.BuildFeatures
 import javax.inject.Inject
 
+/**
+ * 根工程约定插件
+ *
+ * 生成模块依赖图并配置根工程的 Spotless。
+ */
 abstract class RootPlugin : Plugin<Project> {
     @get:Inject abstract val buildFeatures: BuildFeatures
 

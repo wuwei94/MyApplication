@@ -22,6 +22,11 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
+/**
+ * ARouter 路由框架约定插件
+ *
+ * 注入路由表生成所需的 KAPT 参数与 ARouter 依赖。
+ */
 class AndroidARouterConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
