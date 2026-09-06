@@ -114,6 +114,10 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.ksp.get().pluginId
             implementationClass = "AndroidKspConventionPlugin"
         }
+        register("androidKapt") {
+            id = libs.plugins.nowinandroid.android.kapt.get().pluginId
+            implementationClass = "AndroidKaptConventionPlugin"
+        }
 
         // =========================================================================
         // 4. 数据存储与持久化插件 (Data & Persistence Plugins)

@@ -37,7 +37,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         with(target) {
             apply(plugin = "com.android.application")
             apply(plugin = "kotlin-android")
-            apply(plugin = "kotlin-kapt")
             apply(plugin = "kotlin-parcelize")
             apply(plugin = "nowinandroid.android.lint")
             configureSpotlessForAndroid()

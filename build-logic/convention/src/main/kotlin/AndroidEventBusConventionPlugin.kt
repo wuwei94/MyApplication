@@ -27,11 +27,16 @@ import java.util.Locale
  * EventBus 事件总线约定插件
  *
  * 按模块名生成 EventBus 索引并注入依赖。
+ *
+ * 注意：EventBus 3.3.1 已停更，`eventbus-annotation-processor` 无 KSP 处理器，
+ * 故此处仍使用 kapt。AGP 10.0（builtInKotlin 强制）迁移前需处理——
+ * 可选方案：换 FlowEventBus / LiveEventBus，或去掉编译期索引退化为运行时反射。
  */
 class AndroidEventBusConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply(plugin = "kotlin-kapt")
+            // EventBus 3.3.1 无官方 KSP，仅 kapt（详见类注释）
+            apply(plugin = "nowinandroid.android.kapt")
             extensions.configure<KaptExtension> {
                 val eventBusClassPath = "com.example.william.my" +
                     project.path.replace(":", ".")

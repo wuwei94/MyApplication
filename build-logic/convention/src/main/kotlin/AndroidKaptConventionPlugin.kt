@@ -14,36 +14,26 @@
  *   limitations under the License.
  */
 
-import com.google.samples.apps.nowinandroid.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
 /**
- * ARouter 路由框架约定插件
+ * KAPT 注解处理约定插件
  *
- * 注入路由表生成所需的 KAPT 参数与 ARouter 依赖。
- *
- * 注意：ARouter 1.5.2 已停更，`arouter-compiler` 无官方 KSP 处理器，
- * 故此处仍使用 kapt。AGP 10.0（builtInKotlin 强制）迁移前需处理——
- * 可选第三方无侵入替代 `com.github.JailedBird:ArouterKspCompiler`。
+ * 统一应用 KAPT 插件并设置全局默认配置（correctErrorTypes=true，允许引用生成的代码），
+ * 供 ARouter / EventBus / Hilt / Room 等需要注解处理的约定插件复用，
+ * 避免在基础 Library / Application 插件中无条件引入 KAPT。
  */
-class AndroidARouterConventionPlugin : Plugin<Project> {
+class AndroidKaptConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            // ARouter 1.5.2 无官方 KSP，仅 kapt（详见类注释）
-            apply(plugin = "nowinandroid.android.kapt")
+            apply(plugin = "kotlin-kapt")
             extensions.configure<KaptExtension> {
-                arguments {
-                    arg("AROUTER_MODULE_NAME", project.name)
-                }
-            }
-            dependencies {
-                "implementation"(libs.findLibrary("arouter").get())
-                "kapt"(libs.findLibrary("arouter.compiler").get())
+                // 允许引用生成的代码
+                correctErrorTypes = true
             }
         }
     }

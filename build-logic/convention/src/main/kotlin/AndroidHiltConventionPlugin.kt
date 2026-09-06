@@ -21,7 +21,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
 /**
  * Hilt 依赖注入约定插件
@@ -31,19 +30,15 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply(plugin = "kotlin-kapt")
+            apply(plugin = "nowinandroid.android.ksp")
             apply(plugin = "com.google.dagger.hilt.android")
-            extensions.configure<KaptExtension> {
-                // 允许引用生成的代码
-                correctErrorTypes = true
-            }
             // 关闭聚合任务以规避 ARouter 编译问题，见 https://github.com/alibaba/ARouter/issues/1051
             extensions.configure<HiltExtension> {
                 enableAggregatingTask = false
             }
             dependencies {
                 "implementation"(libs.findLibrary("androidx.hilt.android").get())
-                "kapt"(libs.findLibrary("androidx.hilt.compiler").get())
+                "ksp"(libs.findLibrary("androidx.hilt.compiler").get())
             }
         }
     }

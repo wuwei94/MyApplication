@@ -222,7 +222,7 @@ mmkv = "2.3.0"
 # 超高性能 NoSQL 嵌入式对象数据库 ObjectBox
 # 官网: https://objectbox.io/
 # GitHub: https://github.com/objectbox/objectbox-java
-objectbox = "5.1.0"
+objectbox = "5.4.2"
 # 经典 SQLite ORM 框架 GreenDAO (本项目目前已全面转向 Room)
 # GitHub: https://github.com/greenrobot/greenDAO
 greendao = "3.3.0"
@@ -375,7 +375,7 @@ gradlePluginArouter = "1.0.2"
 # GreenDAO Gradle 插件
 gradlePluginGreenDao = "3.3.1"
 # ObjectBox 字节码编织 Gradle 插件
-gradlePluginObjectBox = "5.1.0"
+gradlePluginObjectBox = "5.4.2"
 # Kotlin Symbol Processing (KSP) 插件
 # GitHub: https://github.com/google/ksp
 gradlePluginKsp = "2.2.20-2.0.4"
@@ -619,8 +619,8 @@ slf4j = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
 # ==============================================================================
 # Glide 图片加载框架核心库
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-# Glide 注解处理器
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+# Glide KSP 注解处理器（Kotlin 项目推荐，替代 kapt）
+glide-ksp = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide" }
 # Coil 3 协程图片加载核心库
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 # Coil GIF 动图解码扩展
@@ -848,6 +848,7 @@ nowinandroid-android-eventbus = { id = "nowinandroid.android.eventbus" }
 nowinandroid-android-protobuf = { id = "nowinandroid.android.protobuf" }
 nowinandroid-android-hilt = { id = "nowinandroid.android.hilt" }
 nowinandroid-android-ksp = { id = "nowinandroid.android.ksp" }
+nowinandroid-android-kapt = { id = "nowinandroid.android.kapt" }
 
 # 4. 数据存储插件
 nowinandroid-android-room = { id = "nowinandroid.android.room" }

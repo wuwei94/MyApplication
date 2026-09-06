@@ -257,9 +257,9 @@ NiA 的测试基建是最值得抄的部分，而且**恰好能补齐本项目�
 
 **0. AGP 10.0 迁移** — 见第六节
 - 0.1 **探测**：翻转两个 flag 收集报错清单（1 天内可完成）
-- 0.2 **kapt → KSP**：仅 `lib_image_loader` 一处，独立无风险
+- 0.2 **kapt → KSP**：✅ 已完成（2026-09-07）。Glide 已迁 KSP；但 ARouter/EventBus/Hilt/Room 仍走 kapt（见第六节更正）
 - 0.3 **分批迁移**：用 `android.newDsl.optOut` 逐模块推进
-- 0.4 **Flutter 链路单独评估**：依赖上游，需最早开始摸底
+- 0.4 **Flutter 链路单独评估**：✅ 已完成（2026-09-07）。5 个 Flutter 插件全部已适配 built-in Kotlin，见第六节「Flutter 上游摸底」
 
 ### 第三批：架构示范补全
 
@@ -315,7 +315,9 @@ android.newDsl=false
 
 **2. kapt —— 风险低，但必须处理**
 
-全项目仅 1 处：`libs/lib_image_loader` 的 `kapt(libs.glide.compiler)`。builtInKotlin 下 kapt 配置方式变化，建议直接迁 KSP（Glide 已提供 KSP 支持）。改动量极小，可独立于其他项先行。
+> **2026-09-07 更新（迁移进度）**：直接 `kapt()` 只有 `lib_image_loader`（Glide），但 ARouter / EventBus / Hilt / Room 四个约定插件均注入注解处理器。**Glide / Hilt / Room 已迁 KSP ✅**；**ARouter / EventBus 无官方 KSP，是剩余 blocker**。
+>
+> **KSP 生态结论**：Hilt（Dagger 2.48+）、Room（2.5+）官方支持 KSP，同一编译器工件 `ksp`/`kapt` 双用；Glide 用独立 `glide:ksp` 工件（不生成 `GlideApp`，需 `GlideApp`→`Glide`）；**ARouter 1.5.2 停更无 KSP**（第三方 `JailedBird:ArouterKspCompiler` 可无侵入替代）；**EventBus 3.3.1 停更**，`eventbus-annotation-processor` 仅支持 kapt/annotationProcessor，无 KSP。
 
 **3. 约定插件的 Kotlin 配置**
 
@@ -323,14 +325,67 @@ android.newDsl=false
 
 **4. 第三方老插件兼容性**
 
-ARouter（`gradlePluginArouter`）、GreenDAO、ObjectBox 均为历史较久的插件，`newDsl` 下可能触发：
+ARouter、GreenDAO、ObjectBox 均为历史较久的插件，`newDsl` 下可能触发 `ClassCastException: ApplicationExtensionImpl$AgpDecorated_Decorated cannot be cast to BaseExtension`。
 
-```
-ClassCastException: ApplicationExtensionImpl$AgpDecorated_Decorated
-                    cannot be cast to BaseExtension
-```
+> **2026-09-07 探测修正**：GreenDAO 的 `apply(plugin = "org.greenrobot.greendao")` 在约定插件里已被注释、无模块实际使用，**风险消除**；ARouter 未使用 `register` 插件（`gradlePluginArouter`），风险集中在 `arouter-compiler` 的 kapt（已归入风险点 2）；**ObjectBox**（`io.objectbox`，仅 `module_database` 使用）已升级 5.4.2 并**实测确认 newDsl 兼容**（详见「Flutter 上游摸底」小节保留项 B）。
 
-这三类插件恰好是本项目区别于 NiA 的部分，NiA 无法提供参照，必须自行验证。
+### 探测结果（2026-09-07 实测，翻转两 flag 收集报错）
+
+按翻转顺序实测，报错链如下（均为**配置阶段**报错，`help` 任务即可复现，无需完整编译）：
+
+| 顺序 | 触发条件 | 报错 | 位置 | 结论 |
+|------|----------|------|------|------|
+| 1 | `newDsl=true` | `dev.flutter.flutter-gradle-plugin` 应用失败 `NullPointerException` | `flutter_demo/.android/Flutter/build.gradle` | Flutter 链路阻塞，依赖上游（0.4） |
+| 2 | `newDsl=true`（单独） | `ApplicationExtensionImpl$AgpDecorated_Decorated cannot be cast to BaseExtension` | `kotlin-android` 插件 | KGP 2.2.20 仍在用旧 `BaseExtension` API |
+| 3 | `builtInKotlin=true` | `'org.jetbrains.kotlin.android' plugin is no longer required since AGP 9.0` | `kotlin-android` 插件 | 必须移除 `kotlin-android` |
+| 4 | 移除 `kotlin-android` 后 | `'org.jetbrains.kotlin.kapt' plugin is not compatible with built-in Kotlin support` | `kotlin-kapt` 插件 | kapt 必须全部迁 KSP |
+
+**关键结论**：
+
+1. **builtInKotlin 强制 kapt 清零**——ARouter / EventBus / Hilt / Room 四类 kapt 处理器都必须迁 KSP，范围远大于 0.2 的 Glide（Hilt/Room 官方支持 KSP；ARouter 已停更、EventBus 需核实）。
+2. **`kotlin-android` 必须从 3 个约定插件移除**（Application / Library / Test），而非仅在 newDsl 下报 ClassCastException 的表象。
+3. **Flutter 是最先暴露的阻塞点**，与 builtInKotlin 无关，纯 `newDsl=true` 即触发。
+4. 风险点修正：GreenDAO 插件已被注释（无风险）；ARouter 未用 register 插件（风险集中在 `arouter-compiler` 的 kapt）；ObjectBox（`io.objectbox`，仅 `module_database` 使用）当时被 kapt 报错掩盖、未探测到——**现已升级 5.4.2 并单独实测确认 newDsl 兼容（🟢）**。
+
+### Flutter 上游摸底（0.4，2026-09-07 逐项查证）
+
+针对 `module_flutter`（add-to-app）依赖树中会应用 KGP、进而受 builtInKotlin / newDsl 影响的 5 个插件，逐个查证上游是否已发布 built-in Kotlin 适配版本：
+
+| 插件 | 本项目版本（pubspec.lock） | 依赖方式 | 适配状态 | 依据 |
+|------|---------------------------|----------|----------|------|
+| `android_id` | 0.5.2+1 | 直接 | ✅ 已适配 | 0.5.2 changelog「Support AGP 9 and Flutter's built-in Kotlin mode…Stop declaring plugin-owned AGP/KGP classpaths」，README 明确支持 |
+| `flutter_image_compress_common` | 1.1.1 | 传递（来自 `flutter_image_compress` 2.5.1） | ✅ 已适配 | 2.5.1 changelog「handle Gradle 9 Kotlin modes safely (#401)」 |
+| `flutter_udid` | 4.1.6 | 直接 | ✅ 已适配 | 4.1.3「Migrate AGP 9 Kotlin compatibility」→ 4.1.4「preserving Kotlin compilation when `android.builtInKotlin=false`」→ 4.1.5「use host app AGP」 |
+| `objectbox_flutter_libs` | 5.3.2 | 直接 | ✅ 无需适配 | 纯运行时 `.so` 库，不含 Kotlin 编译逻辑；真正的适配点在宿主工程的 `io.objectbox` 插件（见下） |
+| `photo_manager` | 3.12.0 | 传递 | ✅ 已适配 | 3.10.0「Migrate to Flutter's built-in Kotlin integration with `kotlin-android` fallback」→ 3.11.0「Fix Gradle 9 configuration failures…correctly select built-in Kotlin when `android.builtInKotlin` is unset」 |
+
+**结论：5 个插件全部已发布 built-in Kotlin 适配版本，且本项目锁定的版本均已覆盖。** Flutter 插件生态这一环不再阻塞 AGP 10.0 的 builtInKotlin 迁移。
+
+**但仍有两个保留项，不能因此放松节奏：**
+
+**保留项 A —— Flutter 框架自身的 newDsl 迁移未完成（与插件生态无关）**
+
+探测结果第 1 行：`dev.flutter.flutter-gradle-plugin` 在 `newDsl=true` 下报 `NullPointerException`。这是 Flutter 框架层面（tracking issue #180137），非任何第三方插件导致。当前缓解是 Flutter 3.44 通过 #184838 把 AGP DSL 配置为兼容旧类型（等价默认 `android.newDsl=false`）。**AGP 10.0 移除开关后，必须等 Flutter 框架完成 newDsl 迁移**，本项目无法自行解决——这是比插件生态更硬的约束。
+
+**保留项 B —— ObjectBox（`io.objectbox`）newDsl 兼容性（纯原生插件，非 Flutter）✅ 已实测确认（2026-09-07）**
+
+仅 `module_database` 使用的 `io.objectbox` 是字节码级 Gradle 插件。**原生侧版本已从 5.1.0 升级到 5.4.2**（`objectbox` + `gradlePluginObjectBox` 两处版本号），`flag=false` 下 `:modules:module_database:compileDemoDebugKotlin` BUILD SUCCESSFUL（实体 `ObjectBoxNote` 正常解析生成）。两 flag 状态如下：
+
+- **builtInKotlin：✅ 官方已支持。** ObjectBox 官方 Getting Started 明确给出两套配置——AGP 9.0+ 用 `com.android.legacy-kapt`（AGP 自带，替代 `org.jetbrains.kotlin.kapt`）；AGP 8.13- 用 `kotlin-kapt` + `kotlin-android`。即 builtInKotlin 下 ObjectBox 的注解处理器（`objectbox-processor`，仅 kapt、无 KSP）改走 `legacy-kapt` 即可继续工作。
+- **newDsl：✅ 已实测确认兼容。** 三层证据链：
+  1. **字节码**：主插件 `objectbox-gradle-plugin-5.4.2` 只引用新 Variant API（`AndroidComponentsExtension` + `android/build/api`），零引用 `BaseExtension`/`AppExtension`/`LibraryExtension`；唯一的旧类型引用集中在 `agp-wrapper-7-2` 的 `AndroidPlugin72`（该 wrapper 官方定位「仅用于字节码转换」）。
+  2. **源码 + 反编译**：`AndroidPlugin72.getFirstApplicationId()` 用 `ExtensionContainer.findByType(BaseExtension)` **安全查找**（查不到返回 null → Kotlin `when(null)` 走 `else -> null`，`checkcast null` 不抛异常），而非 kotlin-android 的 `cast to BaseExtension` 强转（后者才是探测报错的 `ClassCastException` 来源）；源码注释明确「as of 9.0 the extension types are deprecated」。核心 `registerTransform` 完全走新 Variant API。
+  3. **隔离实测**：独立纯 Java 模块 + `io.objectbox 5.4.2` + `newDsl=true`（AGP 9 默认即为 true），`help` 配置阶段与 `assembleDebug`（含 `transformDebugClassesWithAsm` 字节码转换）均 BUILD SUCCESSFUL。
+
+**结论：ObjectBox 不再阻塞 newDsl 迁移。** 唯一遗留：builtInKotlin=true 时需把 `kotlin-kapt` 换成 `com.android.legacy-kapt`（归属风险点 2 的 kapt 迁移范畴）。
+
+**对整体节奏的影响（三色灯）**
+
+| 环节 | 状态 | 说明 |
+|------|------|------|
+| Flutter 插件生态（5 个） | 🟢 绿灯 | 全部已适配，不再阻塞 |
+| Flutter 框架 newDsl | 🟡 黄灯 | #180137 未完成，靠 #184838 垫片维持 `newDsl=false`；AGP 10.0 前需 Flutter 完成迁移 |
+| ObjectBox newDsl | 🟢 绿灯 | 5.4.2 已实测确认（findByType 安全查找 + 新 Variant API），仅 builtInKotlin 需换 legacy-kapt |
 
 ### 推进方式
 

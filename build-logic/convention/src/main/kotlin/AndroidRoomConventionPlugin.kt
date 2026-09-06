@@ -15,13 +15,13 @@
  */
 
 import androidx.room.gradle.RoomExtension
+import com.google.devtools.ksp.gradle.KspExtension
 import com.google.samples.apps.nowinandroid.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import java.io.File
 
 /**
@@ -33,31 +33,25 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = "androidx.room")
-            apply(plugin = "kotlin-kapt")
-            // apply(plugin = "com.google.devtools.ksp")
+            apply(plugin = "nowinandroid.android.ksp")
             extensions.configure<RoomExtension> {
                 // schemas 目录包含每个版本 Room 数据库的 schema 文件。
                 // 这是启用 Room 自动迁移所必需的。
                 // 见 https://developer.android.com/reference/kotlin/androidx/room/AutoMigration
                 schemaDirectory("$projectDir/schemas")
             }
-            extensions.configure<KaptExtension> {
+            extensions.configure<KspExtension> {
+                // 生成 Kotlin 代码（替代 kapt 的 Java 存根）
+                arg("room.generateKotlin", "true")
                 // schemas 目录包含每个版本 Room 数据库的 schema 文件。
-                // 这是启用 Room 自动迁移所必需的。
-                // 见 https://developer.android.com/reference/kotlin/androidx/room/AutoMigration
-                arguments {
-                    arg("room.schemaLocation", File(projectDir, "schemas").absolutePath)
-                }
+                arg("room.schemaLocation", File(projectDir, "schemas").absolutePath)
             }
-            // extensions.configure<KspExtension> {
-            //    arg("room.generateKotlin", "true")
-            // }
             dependencies {
                 "implementation"(libs.findLibrary("androidx.room").get())
                 "implementation"(libs.findLibrary("androidx.room.ktx").get())
                 "implementation"(libs.findLibrary("androidx.room.rxjava3").get())
                 "implementation"(libs.findLibrary("androidx.room.paging").get())
-                "kapt"(libs.findLibrary("androidx.room.compiler").get())
+                "ksp"(libs.findLibrary("androidx.room.compiler").get())
             }
         }
     }

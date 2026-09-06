@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
+    alias(libs.plugins.nowinandroid.android.ksp)
 }
 
 android {
@@ -8,7 +9,7 @@ android {
 
 dependencies {
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.ksp)
     implementation(libs.coil)
     implementation(libs.coil.gif)
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -18,7 +19,6 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.example.william.my.core.imageloader.IImageLoader
 import com.example.william.my.core.imageloader.ImageOptions
-import com.example.william.my.core.imageloader.glide.module.GlideApp
 import java.io.File
 
 /**
@@ -28,28 +28,28 @@ object ImageLoader : IImageLoader {
 
     override fun pauseRequests(context: Context?) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .pauseRequests()
         }
     }
 
     override fun resumeRequests(context: Context?) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .resumeRequests()
         }
     }
 
     override fun ImageView.clear(context: Context?) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .clear(this)
         }
     }
 
     override fun ImageView.loadImage(context: Context?, resourceId: Int) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(resourceId)
                 .into(this)
         }
@@ -60,7 +60,7 @@ object ImageLoader : IImageLoader {
         bitmap: Bitmap?,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(bitmap)
                 .into(this)
         }
@@ -68,7 +68,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImage(context: Context?, uri: Uri) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(uri)
                 .into(this)
         }
@@ -76,7 +76,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImage(context: Context?, file: File) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(file)
                 .into(this)
         }
@@ -89,7 +89,7 @@ object ImageLoader : IImageLoader {
         onComplete: (() -> Unit)?,
     ) {
         context?.let {
-            val request = GlideApp.with(it)
+            val request = Glide.with(it)
                 .load(url)
 
             options?.toGlideRequestOptions()?.let { request.apply(it) }
@@ -128,7 +128,7 @@ object ImageLoader : IImageLoader {
         resourceId: Int,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(resourceId)
                 .transform(CircleCrop())
                 .into(this)
@@ -140,7 +140,7 @@ object ImageLoader : IImageLoader {
         bitmap: Bitmap?,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(bitmap)
                 .transform(CircleCrop())
                 .into(this)
@@ -149,7 +149,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImageRound(context: Context?, file: File) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(file)
                 .transform(CircleCrop())
                 .into(this)
@@ -158,7 +158,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImageRound(context: Context?, uri: Uri) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(uri)
                 .transform(CircleCrop())
                 .into(this)
@@ -170,7 +170,7 @@ object ImageLoader : IImageLoader {
         url: String?,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(url)
                 .transform(CircleCrop())
                 .into(this)
@@ -183,7 +183,7 @@ object ImageLoader : IImageLoader {
         radius: Int,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(resourceId)
                 .transform(CenterCrop(), RoundedCorners(radius))
                 .into(this)
@@ -196,7 +196,7 @@ object ImageLoader : IImageLoader {
         radius: Int,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(bitmap)
                 .transform(CenterCrop(), RoundedCorners(radius))
                 .into(this)
@@ -205,7 +205,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImageRadius(context: Context?, uri: Uri, radius: Int) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(uri)
                 .transform(CenterCrop(), RoundedCorners(radius))
                 .into(this)
@@ -214,7 +214,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadImageRadius(context: Context?, file: File, radius: Int) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(file)
                 .transform(CenterCrop(), RoundedCorners(radius))
                 .into(this)
@@ -227,7 +227,7 @@ object ImageLoader : IImageLoader {
         radius: Int,
     ) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(url)
                 .transform(CenterCrop(), RoundedCorners(radius))
                 .into(this)
@@ -236,7 +236,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadGif(context: Context?, resourceId: Int) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .asGif()
                 .load(resourceId)
                 .into(this)
@@ -245,7 +245,7 @@ object ImageLoader : IImageLoader {
 
     override fun ImageView.loadGif(context: Context?, url: String?) {
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .asGif()
                 .load(url)
                 .into(this)
@@ -261,7 +261,7 @@ object ImageLoader : IImageLoader {
             return
         }
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .load(url)
                 .into(object : CustomTarget<Drawable>() {
                     override fun onResourceReady(
@@ -286,7 +286,7 @@ object ImageLoader : IImageLoader {
             return
         }
         context?.let {
-            GlideApp.with(it)
+            Glide.with(it)
                 .asBitmap()
                 .load(url)
                 .into(object : CustomTarget<Bitmap>() {
