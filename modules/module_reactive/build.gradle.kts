@@ -19,4 +19,7 @@ dependencies {
 
     // 单元测试：把 Observable 转成 Flow 以复用 Turbine 断言（kotlinx-coroutines-rx3 互操作）
     testImplementation(libs.kotlinx.coroutines.rx3)
+    // Turbine Flow 断言 + 协程测试（runTest / TestDispatcher）
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

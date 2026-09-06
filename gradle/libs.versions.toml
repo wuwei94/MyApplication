@@ -16,6 +16,17 @@ androidDesugarJdkLibs = "2.1.5"
 # Kotlin 官方协程库（异步编程与流式处理）
 # GitHub: https://github.com/Kotlin/kotlinx.coroutines
 kotlinxCoroutines = "1.10.2"
+# Turbine: Kotlin Flow 测试断言库（StateFlow/SharedFlow 事件序列断言）
+# GitHub: https://github.com/cashapp/turbine
+turbine = "1.2.0"
+# Roborazzi: Compose 截图测试（record/verify 基准图，依赖 Robolectric 在 JVM 跑）
+# GitHub: https://github.com/takahirom/roborazzi
+# 最新发布 1.73.0（2026-08），兼容 Kotlin 2.2 / AGP 9.x / Gradle 9.3；如报 Kotlin 编译器插件版本不匹配需微调
+roborazzi = "1.73.0"
+# Robolectric: JVM 上模拟 Android 运行时（截图测试依赖）
+# 注：compileSdk = 37 下 4.16.0 已实测可跑截图测试（build 缓存 results-summary 为 unchanged）。
+# 4.17 在 Maven Central 目前仅有 beta（4.17-beta-4，stable 尚未发布），仅当测试启动报 SDK 不支持时再升。
+robolectric = "4.16.0"
 
 # ==============================================================================
 # 2. Google 核心基础库与 Material Design
@@ -349,6 +360,11 @@ ktlint = "1.4.0"
 # Android Gradle Plugin (AGP) 构建工具
 # 发行注记: https://developer.android.google.cn/studio/releases/gradle-plugin
 gradlePluginAndroid = "9.1.0"
+# Android Lint 工具链版本（com.android.tools.lint:* 系列：lint-api / lint-checks / lint-test-utils）
+# 注意：lint 工具链有独立版本号（当前 32.x），【不】跟随 AGP 的 9.x 版本。
+# 必须与 AGP 捆绑的 lint 版本严格一致，否则自定义 Detector 编译/运行会因 lint-api 版本错配失败。
+# 依据：AGP 9.1.0 的 POM 依赖 com.android.tools.lint:lint-model:32.1.0（同工具链版本），故固定 32.1.0。
+lint = "32.1.0"
 # Kotlin Gradle 编译插件
 # 发行注记: https://kotlinlang.org/docs/releases.html
 gradlePluginKotlin = "2.2.20"
@@ -380,6 +396,10 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 # Kotlin 协程与 RxJava 3 互操作扩展
 kotlinx-coroutines-rx3 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-rx3", version.ref = "kotlinxCoroutines" }
+# Kotlin 协程测试核心库（runTest / TestDispatcher，Turbine 测试依赖）
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+# Turbine Flow 断言库（StateFlow/SharedFlow 事件序列断言）
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 # ==============================================================================
 # 2. Google 核心基础库与 Material Design
@@ -502,6 +522,13 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 # Compose 测试清单配置
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+# Compose UI 测试（createComposeRule / onNodeWithText，截图测试用；版本由 Compose BOM 管理）
+androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+# Roborazzi 截图测试核心库（captureRoboImage）
+# 注意：2023 年后已从 JitPack(com.github.takahirom) 迁移至 Maven Central，group 改为 io.github.takahirom.roborazzi
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+# Robolectric JVM Android 运行时模拟（截图测试用 RobolectricTestRunner）
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 # Material Design 核心矢量图标
 androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
 # Material Design 扩展矢量图标集
@@ -725,6 +752,14 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 
+# Android Lint API（自定义规则编译；版本须与 AGP 捆绑的 lint 工具链一致，见 [versions].lint）
+lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
+# Android Lint 内置规则（自定义规则常需引用）
+lint-checks = { group = "com.android.tools.lint", name = "lint-checks", version.ref = "lint" }
+# Android Lint 测试工具（Detector 单元测试，LintDetectorTest 基类）
+# 构件名是 lint-tests（复数）；旧的 lint-test-utils 在 32.x 工具链已不存在（Google Maven 404）。
+lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
+
 # ==============================================================================
 # 14. Gradle 编译插件与依赖管理工具 (Included Build-logic 依赖)
 # ==============================================================================
@@ -766,6 +801,9 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "gradlePlu
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "gradlePluginKotlin" }
 # Android Lint 静态代码检查插件
 android-lint = { id = "com.android.lint", version.ref = "gradlePluginAndroid" }
+# Roborazzi 截图测试 Gradle 插件（提供 recordRoborazzi*/verifyRoborazzi* 任务）
+# 插件 id 已随 JitPack→Maven Central 迁移为 io.github.takahirom.roborazzi（旧 com.github.takahirom.roborazzi 在 Plugin Portal 已失效）
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 # Android Test 独立测试插件
 android-test = { id = "com.android.test", version.ref = "gradlePluginAndroid" }
 
@@ -860,4 +898,16 @@ testing-unit = [
 testing-android = [
     "androidx-test-ext",
     "androidx-test-espresso"
+]
+
+# 截图测试套件（Roborazzi 截图 + Robolectric 运行时 + Compose UI 测试）
+testing-screenshot = [
+    "roborazzi",
+    "robolectric",
+    "androidx-compose-ui-test"
+]
+# 自定义 Lint 规则编译/测试依赖套件（lint-api + lint-checks，版本跟随 AGP）
+lint-rules = [
+    "lint-api",
+    "lint-checks"
 ]

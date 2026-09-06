@@ -208,6 +208,8 @@ include(":modules:module_compose")
 
 // 性能优化基线与基准测试 (Macrobenchmark & Baseline Profile)
 include(":benchmarks")
+// 自定义 Lint 规则模块（测试命名规范等），通过 build-logic 的 lintChecks 注入各 Android 模块
+include(":lint")
 
 val enableFlutter = providers.gradleProperty("enableFlutter")
     .orElse("true")
