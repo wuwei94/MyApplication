@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mvi
+package com.example.william.my.module.arch.mvi
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,7 +11,6 @@ import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect
-import com.example.william.my.module.arch.mvi.data.ArticleViewState
 import com.example.william.my.module.arch.mvi.viewmodel.ArticleStateFlowViewModel
 import kotlinx.coroutines.launch
 
@@ -35,18 +34,15 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
                 // 监听 UI 状态
                 launch {
                     mViewModel.state.collect { state ->
-                        when (state) {
-                            is ArticleViewState.Loading -> {
-                                // 加载中状态
-                            }
+                        mAdapter?.submitList(state.articles)
+                        initRecyclerViewStateView()
 
-                            is ArticleViewState.Success -> {
-                                onDataSuccess(state.articles)
-                            }
-
-                            is ArticleViewState.Error -> {
-                                onDataFail()
-                            }
+                        val binding = getHostBinding()
+                        if (!state.isRefreshing) {
+                            binding.smartRefresh.finishRefresh()
+                        }
+                        if (!state.isLoadingMore) {
+                            binding.smartRefresh.finishLoadMore()
                         }
                     }
                 }
@@ -57,6 +53,7 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
                         when (effect) {
                             is ArticleUiEffect.ShowToast -> {
                                 showToast(effect.message)
+                                onDataFail()
                             }
                         }
                     }
