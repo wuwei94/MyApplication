@@ -3,6 +3,9 @@ package com.example.william.my.core.server.netty
 import com.example.william.my.core.netty.server.NettyServer
 import com.example.william.my.core.netty.server.NettyServerHandler
 
+/**
+ * Netty WebSocket 服务端封装（基于 Netty 框架）
+ */
 class NettyWebSocketServer {
 
     private var listener: OnMessageListener? = null

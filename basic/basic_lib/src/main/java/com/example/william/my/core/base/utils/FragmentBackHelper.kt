@@ -5,6 +5,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 
 /**
+ * Fragment 返回键分发帮助类
+ *
+ * 将返回键事件分发给 FragmentManager 中管理的子 Fragment。用法示例：
  * 1. 在Activity中覆盖onBackPressed()方法
  * public void onBackPressed() {
  * if (!BackHandlerHelper.handleBackPress(this)) {

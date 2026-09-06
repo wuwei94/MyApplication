@@ -6,6 +6,9 @@ import android.view.View
 import com.example.william.my.core.base.eventbus.EventBusHelper
 
 /**
+ * Fragment 基类
+ *
+ * 集成懒加载与 EventBus 注册/反注册。不同场景下 Fragment 可见性的回调方式：
  * add show hide
  * 当使用旧方式适配时，Fragment通过onHiddenChanged()方法
  * 当使用新方式适配时，Fragment通过onHiddenChanged()方法或者onResume()方法()

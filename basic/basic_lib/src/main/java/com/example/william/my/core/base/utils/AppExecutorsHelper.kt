@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledExecutorService
 
 /**
  * App 全局线程池
- * Global executor pools for the whole application.
  *
  * 避免任务饥饿，例如磁盘读取不会延迟网络请求。
  * 演示 Google Architecture Components 经典的单例并发执行器编排设计模式。

@@ -4,13 +4,13 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * RecyclerView 顶边距装饰器（仅首行设置上间距）
+ */
 class RItemDecorationEdgeTop(
     private val marginTop: Int,
 ) : RItemDecoration() {
 
-    /**
-     * padding
-     */
     override fun getItemOffsets(
         outRect: Rect,
         view: View,

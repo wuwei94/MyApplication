@@ -45,8 +45,6 @@ object HandlerUtils {
     interface OnReceiveMessageHandler {
         /**
          * 处理消息
-         *
-         * @param msg
          */
         fun handlerMessage(msg: Message)
     }

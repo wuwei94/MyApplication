@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 /**
- * FragmentTransaction.setMaxLifecycle()
+ * 懒加载 Fragment 基类（基于 FragmentTransaction.setMaxLifecycle 的新方案）
  */
 abstract class NewLazyFragment(private val layout: Int = 0) : Fragment() {
 

@@ -18,8 +18,7 @@ package com.example.william.my.basic.basic_repo.data.result
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult.Success
 
 /**
- * A generic class that holds a value with its loading status.
- * @param <T>
+ * 携带加载状态的结果封装（Success / Error / Loading）
  */
 sealed class NetworkResult<out R> {
 
@@ -35,7 +34,7 @@ sealed class NetworkResult<out R> {
 }
 
 /**
- * `true` if [NetworkResult] is of type [Success] & holds non-null [Success.data].
+ * 判断结果是否为 [Success] 且数据非空
  */
 val NetworkResult<*>.succeeded
     get() = this is Success && data != null

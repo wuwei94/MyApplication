@@ -14,8 +14,10 @@ import com.example.william.my.core.base.ui.recycler.handler.BaseRecyclerHandler
 import com.example.william.my.core.base.ui.recycler.host.RecyclerViewHost
 
 /**
+ * RecyclerView 列表 Fragment 基类（基于 BaseRecyclerViewAdapterHelper）
+ *
+ * 布局装配流水线：LayoutManager -> Adapter -> ItemDecoration -> OnScrollListener
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
- * LayoutManager -> Adapter -> ItemDecoration -> OnScrollListener
  */
 abstract class BaseRecyclerFragment<T : Any> :
     BaseVBFragment<BaseFragmentRecyclerViewBinding>(),

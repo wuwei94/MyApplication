@@ -8,6 +8,11 @@ import com.example.william.my.core.base.arch.mvvm.BaseViewModel
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
 
+/**
+ * ViewBinding + ViewModel Activity 基类
+ *
+ * 结合 ViewBinding 与 [BaseViewModel]，通过反射自动注入 ViewModel 并监听其 [BaseViewModel.error] 错误状态。
+ */
 abstract class BaseVMActivity<VB : ViewBinding?, VM : BaseViewModel> : BaseVBActivity<VB>() {
 
     private var _viewModel: VM? = null

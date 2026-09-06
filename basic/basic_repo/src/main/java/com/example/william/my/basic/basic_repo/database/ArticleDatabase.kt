@@ -24,9 +24,9 @@ import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.database.dao.ArticleDao
 
 /**
- * The Room Database that contains the Article table.
+ * 包含 Article 表的 Room 数据库
  *
- * Note that exportSchema should be true in production databases.
+ * 注意：生产环境数据库应将 exportSchema 设为 true。
  */
 @Database(
     entities = [ArticleDetailData::class],
@@ -74,7 +74,6 @@ abstract class ArticleDatabase : RoomDatabase() {
         ): ArticleDatabase {
             val result = if (inMemory) {
                 // 使用更快的内存中数据库进行测试
-                // Use a faster in-memory database for tests
                 Room.inMemoryDatabaseBuilder(
                     context.applicationContext,
                     ArticleDatabase::class.java,
@@ -82,8 +81,7 @@ abstract class ArticleDatabase : RoomDatabase() {
                     .allowMainThreadQueries()
                     .build()
             } else {
-                // 使用SQLite的真实数据库
-                // Real database using SQLite
+                // 使用 SQLite 的真实数据库
                 Room.databaseBuilder(
                     context.applicationContext,
                     ArticleDatabase::class.java,

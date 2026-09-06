@@ -26,7 +26,7 @@ import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Data Access Object for the article table.
+ * 文章表的数据访问对象（DAO）
  */
 @Dao
 interface ArticleDao {
@@ -47,18 +47,18 @@ interface ArticleDao {
     fun getArticleCountStream(): Flow<Int>
 
     /**
-     * Select all articles from the Articles table.
+     * 查询文章表中的全部文章。
      *
-     * @return all tasks.
+     * @return 全部文章。
      */
     @Query("SELECT * FROM Articles")
     suspend fun getArticles(): List<ArticleDetailData>
 
     /**
-     * Select articles for a specific page from the Articles table.
+     * 查询文章表中指定页码的文章。
      *
-     * @param page the page number.
-     * @return articles of the specified page.
+     * @param page 页码。
+     * @return 指定页码的文章。
      */
     @Query("SELECT * FROM Articles WHERE page = :page")
     suspend fun getArticlesByPage(page: Int): List<ArticleDetailData>
@@ -79,9 +79,9 @@ interface ArticleDao {
     suspend fun upsertArticle(article: ArticleDetailData)
 
     /**
-     * Insert articles in the database. If the articlse already exists, replace it.
+     * 批量插入文章，若已存在则替换。
      *
-     * @param articles the article to be inserted.
+     * @param articles 待插入的文章。
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticles(articles: List<ArticleDetailData>)
@@ -96,15 +96,15 @@ interface ArticleDao {
     fun insertArticlesSync(articles: List<ArticleDetailData>)
 
     /**
-     * Insert a article in the database. If the article already exists, replace it.
+     * 插入单篇文章，若已存在则替换。
      *
-     * @param article the article to be inserted.
+     * @param article 待插入的文章。
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticle(article: ArticleDetailData)
 
     /**
-     * Delete all articles.
+     * 删除全部文章。
      */
     @Query("DELETE FROM Articles")
     suspend fun deleteAllArticles()
@@ -119,15 +119,15 @@ interface ArticleDao {
     fun deleteAllArticlesSync()
 
     /**
-     * Delete articles for a specific page.
+     * 删除指定页码的文章
      *
-     * @param page the page number.
+     * @param page 页码
      */
     @Query("DELETE FROM Articles WHERE page = :page")
     suspend fun deleteArticlesByPage(page: Int)
 
     /**
-     * PagingSource
+     * 返回按页码排序的文章分页数据源（供 Paging 3 使用）
      */
     @Query("Select * From Articles Order By page")
     fun getArticlesPagingSource(): PagingSource<Int, ArticleDetailData>

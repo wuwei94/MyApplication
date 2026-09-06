@@ -23,10 +23,9 @@ import com.example.william.my.core.base.utils.DensityAdaptUtils
  */
 open class BaseActivity : AppCompatActivity() {
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 1. 属性与控制器
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
     protected val TAG: String = this.javaClass.simpleName
 
     /**
@@ -36,14 +35,12 @@ open class BaseActivity : AppCompatActivity() {
         WindowCompat.getInsetsController(window, window.decorView)
     }
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 2. Activity 生命周期
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
     override fun onCreate(savedInstanceState: Bundle?) {
         initEdgeToEdge()
         super.onCreate(savedInstanceState)
-        // setTheme(R.style.base_WindowAnimTheme_Slide)
 
         initARouter()
         initEventBus()
@@ -63,12 +60,10 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // EventBusHelper.register(this)
     }
 
     override fun onStop() {
         super.onStop()
-        // EventBusHelper.unregister(this)
     }
 
     @Suppress("DEPRECATION")
@@ -80,12 +75,14 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 3. 布局设置与 Insets 避让
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
+    /**
+     * 设置内容视图前启用 Window 级内容转场（Content Transitions，如 Explode/Slide/Fade）与共享元素转场，
+     * 使页面切换支持转场动画。两个重载分别接收 [View] 或布局资源 ID，逻辑一致。
+     */
     override fun setContentView(view: View?) {
-        // 启用 Window 级别的内容转场（Content Transitions，如 Explode/Slide/Fade）与共享元素转场
         window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
         super.setContentView(view)
@@ -93,7 +90,6 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
-        // 启用 Window 级别的内容转场（Content Transitions，如 Explode/Slide/Fade）与共享元素转场
         window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
         super.setContentView(layoutResID)
@@ -141,10 +137,9 @@ open class BaseActivity : AppCompatActivity() {
         insetsController.isAppearanceLightNavigationBars = navigationBarDarkIcon()
     }
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 4. 业务初始化模板方法（按 onCreate 实际调用先后顺序排列）
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
     private fun initEdgeToEdge() {
         if (enableEdgeToEdge()) {
             enableEdgeToEdge(statusBarStyle = getStatusBarStyle())
@@ -175,10 +170,9 @@ open class BaseActivity : AppCompatActivity() {
         // 子类重写实现 ViewModel 数据监听
     }
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 5. Edge-to-Edge & WindowInsets 行为配置挂钩（子类按需重写）
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
     /**
      * 是否启用 Edge-to-Edge 全屏沉浸式
      *
@@ -247,10 +241,9 @@ open class BaseActivity : AppCompatActivity() {
      */
     protected open fun onImeInsetsChanged(imeHeight: Int) {}
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 6. WindowInsetsController 常用操作便捷方法（供子类按需直接调用）
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
     /**
      * 动态设置状态栏文字与图标颜色
      *
@@ -338,9 +331,8 @@ open class BaseActivity : AppCompatActivity() {
         insetsController.hide(WindowInsetsCompat.Type.ime())
     }
 
-    // ==============================================================================
+    // ──────────────────────────────────────────────────────────────────────────────
     // 7. 屏幕与系统底层适配
-    // ==============================================================================
-
+    // ──────────────────────────────────────────────────────────────────────────────
     override fun getResources(): Resources = DensityAdaptUtils.adaptWidth(super.getResources(), 360f)
 }

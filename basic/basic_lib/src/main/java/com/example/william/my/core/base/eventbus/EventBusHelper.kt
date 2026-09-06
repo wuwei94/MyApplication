@@ -6,10 +6,12 @@ import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex
 
 /**
- * kotlin:
- * /build/generated/sources/kapt/debug/…EventBusHelper
- * java:
- * /build/generated/ap_generated_sources/debug/out/…EventBusHelper
+ * EventBus 封装帮助类（私有构造，仅通过伴生对象提供静态能力）
+ *
+ * 类中的占位订阅方法用于触发 EventBus APT 插件生成订阅者索引类（MyEventBusIndex），
+ * 加速运行时订阅者查找。生成的索引类路径如下：
+ * - Kotlin：/build/generated/sources/kapt/debug/…EventBusHelper
+ * - Java：/build/generated/ap_generated_sources/debug/out/…EventBusHelper
  */
 class EventBusHelper private constructor() {
 
@@ -71,15 +73,21 @@ class EventBusHelper private constructor() {
             }
         }
 
-        // 终止事件继续传递
+        /**
+         * 终止事件继续传递
+         */
         fun cancelDelivery(event: Any) {
             EventBus.getDefault().cancelEventDelivery(event)
         }
 
-        // 获取保存起来的粘性事件
+        /**
+         * 获取保存起来的粘性事件
+         */
         fun <T> getStickyEvent(classType: Class<T>): T = EventBus.getDefault().getStickyEvent(classType)
 
-        // 删除保存中的粘性事件
+        /**
+         * 删除保存中的粘性事件
+         */
         fun removeStickyEvent(event: Any) {
             EventBus.getDefault().removeStickyEvent(event)
         }

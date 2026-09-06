@@ -182,7 +182,7 @@ class CategoryActivity : RouterRecyclerActivity() {
     }
 
     /**
-     * Compose & Flutter
+     * Compose 与 Flutter
      * - Compose
      * - Flutter
      */

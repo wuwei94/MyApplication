@@ -6,6 +6,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+/**
+ * 文章详情数据（对应 Room 的 Articles 表实体）
+ */
 @Parcelize
 @Entity(tableName = "Articles")
 data class ArticleDetailData(

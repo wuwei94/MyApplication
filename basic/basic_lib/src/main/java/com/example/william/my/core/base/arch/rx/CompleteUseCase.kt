@@ -8,6 +8,8 @@ import io.reactivex.rxjava3.observers.DisposableCompletableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 /**
+ * Completable 类型的 RxJava UseCase 基类
+ *
  * 为什么要增加UserCase？
  * 随着业务的不断扩张，ViewModel的内容可能会不断膨胀，那么独立出ViewModel的业务逻辑，划分到不同的领域(Use Cases)当中是有必要的，符合单一职责的指导思想，也有利于case的复用。
  * 在ViewModel和Repository添加一个层级，里面包含了不同的case，ViewModel通过组合、依赖注入的方式获取Cases的能力。

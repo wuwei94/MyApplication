@@ -4,6 +4,9 @@ import com.alibaba.android.arouter.facade.template.IProvider
 import java.io.File
 import java.io.InputStream
 
+/**
+ * 文件读写路由服务接口
+ */
 interface FileIOUtilsService : IProvider {
 
     fun writeFileFromIS(file: File, inputStream: InputStream): Boolean

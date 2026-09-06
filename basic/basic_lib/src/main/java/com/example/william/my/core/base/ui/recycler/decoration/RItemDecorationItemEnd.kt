@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * LinearLayoutManager
+ * RecyclerView 右侧间距装饰器（每项设置右边距，可选是否包含末项）
  */
 class RItemDecorationItemEnd(
     private val space: Int,

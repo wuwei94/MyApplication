@@ -9,7 +9,9 @@ import com.example.william.my.core.base.BuildConfig
 import java.util.concurrent.Executors
 
 /**
- * Application
+ * 应用基类
+ *
+ * 统一调度各模块 BaseAppInit 的应用级初始化逻辑。
  */
 abstract class BaseApp : Application() {
 

@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
+/**
+ * RecyclerView 间距装饰器基类
+ *
+ * 提供 item 数量与列数（span）的通用计算能力，供子类实现具体的间距规则。
+ */
 open class RItemDecoration : RecyclerView.ItemDecoration() {
 
-    /**
-     * padding
-     */
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -21,16 +23,10 @@ open class RItemDecoration : RecyclerView.ItemDecoration() {
         super.getItemOffsets(outRect, view, parent, state)
     }
 
-    /**
-     * background
-     */
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
     }
 
-    /**
-     * above
-     */
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
     }

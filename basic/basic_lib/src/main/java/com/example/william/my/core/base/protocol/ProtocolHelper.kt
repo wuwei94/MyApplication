@@ -102,6 +102,9 @@ object ProtocolHelper {
         }
     }
 
+    /**
+     * 根据协议 page 字段获取对应页面的 Intent
+     */
     fun getPageIntent(activity: Activity?, page: String?): Intent? {
         if (activity == null || page.isNullOrBlank()) {
             return null

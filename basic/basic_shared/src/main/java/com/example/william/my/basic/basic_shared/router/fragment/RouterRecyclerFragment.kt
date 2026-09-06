@@ -15,6 +15,11 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 
+/**
+ * 路由列表 Fragment
+ *
+ * 展示由 [RouterRecyclerActivity] 传入的路由项列表，点击后通过 ARouter 跳转。
+ */
 @Route(path = RouterPath.Fragment.FragmentBasicRecycler)
 class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
 

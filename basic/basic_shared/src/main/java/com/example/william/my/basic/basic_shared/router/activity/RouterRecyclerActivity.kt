@@ -6,6 +6,11 @@ import com.example.william.my.basic.basic_shared.router.fragment.RouterRecyclerF
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 
+/**
+ * 路由列表 Activity 基类
+ *
+ * 通过 [buildRouter] 构建路由项列表，交由 [RouterRecyclerFragment] 展示与跳转。
+ */
 abstract class RouterRecyclerActivity : BaseFragmentActivity() {
 
     override fun setFragment(): Fragment {

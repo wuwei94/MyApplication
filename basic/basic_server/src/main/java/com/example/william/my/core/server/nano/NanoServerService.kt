@@ -7,6 +7,9 @@ import android.os.IBinder
 import com.example.william.my.basic.basic_shared.utils.Utils
 import java.io.IOException
 
+/**
+ * NanoHTTPD 服务器 Service（随服务启动/停止 HTTP 服务器）
+ */
 class NanoServerService : Service() {
 
     private var nanoServer: NanoServer? = null

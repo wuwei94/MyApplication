@@ -37,7 +37,7 @@ object AudioRecordPlayer {
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
 
-    // Record
+    // 录音
 
     fun startRecord(context: Context, callback: Callback) {
         mRecordCallback = callback
@@ -88,7 +88,7 @@ object AudioRecordPlayer {
         isRecorded = false
     }
 
-    // Play
+    // 播放相关
 
     fun startPlay(filePath: String?, callback: Callback) {
         mAudioRecordPath = filePath

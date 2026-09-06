@@ -8,6 +8,11 @@ import com.trello.lifecycle4.android.lifecycle.AndroidLifecycle
 import com.trello.rxlifecycle4.LifecycleProvider
 import java.lang.reflect.InvocationTargetException
 
+/**
+ * MVP 架构 Activity 基类
+ *
+ * 通过反射实例化 Presenter 并在 [onCreate] 时初始化，在 [onDestroy] 时释放。
+ */
 abstract class BaseMvpActivity<T : IBasePresenter?, V : IBaseView<T>?> : BaseActivity() {
 
     protected var mPresenter: T? = null

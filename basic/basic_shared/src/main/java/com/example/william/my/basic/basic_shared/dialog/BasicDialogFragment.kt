@@ -6,6 +6,9 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutDialogB
 import com.example.william.my.core.base.R
 import com.example.william.my.core.base.ui.dialog.BaseVBDialogFragment
 
+/**
+ * 通用消息弹窗 Fragment（带消息文本展示）
+ */
 class BasicDialogFragment : BaseVBDialogFragment<SharedLayoutDialogBinding>(R.style.base_Dialog_Translate_Slide_Alpha) {
 
     override fun getViewBinding(): SharedLayoutDialogBinding = SharedLayoutDialogBinding.inflate(layoutInflater)

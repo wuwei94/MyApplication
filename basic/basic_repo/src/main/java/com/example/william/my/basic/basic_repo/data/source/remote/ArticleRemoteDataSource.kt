@@ -68,10 +68,9 @@ class ArticleRemoteDataSourceImpl(
     private val articleRxApi: ArticleRxApi,
 ) : ArticleRemoteDataSource {
 
-    // =========================================================================
+    // ─────────────────────────────────────────────────────────────────────────
     // 1. 传统回调 API（教学对比演示）
-    // =========================================================================
-
+    // ─────────────────────────────────────────────────────────────────────────
     override fun getArticleCallback(
         page: Int,
         callback: ArticleRemoteDataSource.LoadArticleCallback,
@@ -100,10 +99,9 @@ class ArticleRemoteDataSourceImpl(
             })
     }
 
-    // =========================================================================
+    // ─────────────────────────────────────────────────────────────────────────
     // 2. 基础请求 API（Single 与 挂起函数）
-    // =========================================================================
-
+    // ─────────────────────────────────────────────────────────────────────────
     /**
      * RxJava3 Single：执行网络请求并返回单次响应流。
      */
@@ -118,10 +116,9 @@ class ArticleRemoteDataSourceImpl(
      */
     override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> = articleApi.getArticleSuspend(page)
 
-    // =========================================================================
+    // ─────────────────────────────────────────────────────────────────────────
     // 3. 业务数据挂起请求
-    // =========================================================================
-
+    // ─────────────────────────────────────────────────────────────────────────
     override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> {
         return try {
             val response = articleApi.getArticleSuspend(page)

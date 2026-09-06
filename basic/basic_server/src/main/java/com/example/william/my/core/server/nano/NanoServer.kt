@@ -6,6 +6,9 @@ import com.example.william.my.core.nanohttpd.NanoHttpServer
 import com.example.william.my.core.nanohttpd.ServerConfig
 import java.io.IOException
 
+/**
+ * NanoHTTPD 轻量级 HTTP 服务器（支持静态文件、登录与上传下载接口）
+ */
 class NanoServer(context: Application) : NanoHttpServer(context = context, config = ServerConfig(port = DEFAULT_SERVER_PORT)) {
 
     override fun serve(session: IHTTPSession): Response = parseRequest(session)

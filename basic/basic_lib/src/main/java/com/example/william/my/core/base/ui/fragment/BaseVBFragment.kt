@@ -6,6 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 
+/**
+ * ViewBinding Fragment 基类
+ *
+ * 通过 [getViewBinding] 绑定视图，并在视图销毁时自动释放 mBinding 引用。
+ */
 abstract class BaseVBFragment<VB : ViewBinding?>(layout: Int = 0) : BaseFragment(layout) {
 
     private var _binding: VB? = null

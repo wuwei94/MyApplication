@@ -7,6 +7,9 @@ import java.util.LinkedList
 import java.util.Locale
 import java.util.Objects
 
+/**
+ * 网络工具类（获取本机 IP 地址等）
+ */
 object NetworkUtils {
 
     /**
@@ -18,7 +21,7 @@ object NetworkUtils {
             val adds = LinkedList<InetAddress>()
             while (nis.hasMoreElements()) {
                 val ni = nis.nextElement()
-                // To prevent phone of xiaomi return "10.0.2.15"
+                // 防止小米手机返回 "10.0.2.15"
                 if (!ni.isUp || ni.isLoopback) {
                     continue
                 }

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
+/**
+ * 懒加载 Fragment 基类（基于 setUserVisibleHint 的 ViewPager 旧方案）
+ */
 abstract class LazyFragment(private val layout: Int = 0) : Fragment() {
 
     /**
@@ -25,7 +28,7 @@ abstract class LazyFragment(private val layout: Int = 0) : Fragment() {
 
     /**
      * 是否调用了setUserVisibleHint()方法
-     * add show hide 不调用此方法，不执行懒加载
+     * add/show/hide 方式下的隐藏状态回调 不调用此方法，不执行懒加载
      */
     private var isCallUserVisibleHint = false
 
@@ -42,7 +45,7 @@ abstract class LazyFragment(private val layout: Int = 0) : Fragment() {
     }
 
     /**
-     * add show hide
+     * add/show/hide 方式下的隐藏状态回调
      */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
@@ -51,7 +54,7 @@ abstract class LazyFragment(private val layout: Int = 0) : Fragment() {
     }
 
     /**
-     * ViewPager
+     * ViewPager 方式下的可见状态回调（已废弃）
      */
     @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")

@@ -4,6 +4,9 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * RecyclerView 网格间距装饰器（支持左右边距与底部边距）
+ */
 class RItemDecorationItemSpacing(
     private var spacing: Int,
     private var includeEdge: Boolean = false,

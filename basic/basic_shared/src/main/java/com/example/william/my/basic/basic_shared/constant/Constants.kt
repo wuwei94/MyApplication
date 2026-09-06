@@ -2,6 +2,9 @@ package com.example.william.my.basic.basic_shared.constant
 
 import com.example.william.my.basic.basic_shared.BuildConfig
 
+/**
+ * 全局常量（接口地址、资源 URL、密钥等）
+ */
 object Constants {
     const val Url_Base = "https://www.wanandroid.com/"
     const val Url_Login = Url_Base + "user/login"

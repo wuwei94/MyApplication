@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentManager
 import com.alibaba.android.arouter.launcher.ARouter
 
 /**
+ * 通用 DialogFragment 基类
+ *
+ * 集成 ARouter 依赖注入与 Dialog 属性配置。生命周期顺序：
  * onAttach -> onCreateDialog -> onCreateView -> onViewCreated -> onStart
  */
 abstract class BaseDialogFragment(
@@ -51,11 +54,6 @@ abstract class BaseDialogFragment(
 
     private fun initDialog() {
         dialog?.let { dialog ->
-            // 解决Dialog内存泄漏
-            // X，显示过后的Dialog在Activity回到后台再重新进入后会重新显示
-            // dialog.setOnDismissListener(null)
-            // dialog.setOnCancelListener(null)
-
             dialog.window?.let { window ->
                 setAttributes(window.attributes)
                 window.attributes = window.attributes

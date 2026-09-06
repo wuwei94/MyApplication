@@ -3,6 +3,11 @@
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding
 
+/**
+ * ViewBinding Activity 基类
+ *
+ * 通过 [getViewBinding] 绑定视图，并在销毁时自动释放 mBinding 引用。
+ */
 abstract class BaseVBActivity<VB : ViewBinding?> : BaseActivity() {
 
     private var _binding: VB? = null

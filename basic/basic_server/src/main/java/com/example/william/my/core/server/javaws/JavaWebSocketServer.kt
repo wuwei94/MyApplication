@@ -5,6 +5,9 @@ import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import com.example.william.my.core.javaws.server.JavaWebSocketServer as CoreJavaWebSocketServer
 
+/**
+ * Java-WebSocket 服务端封装（基于 org.java_websocket 库）
+ */
 class JavaWebSocketServer {
 
     private var listener: OnMessageListener? = null

@@ -15,6 +15,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
+ * 通用底部弹窗（BottomSheet）DialogFragment 基类
+ *
+ * 集成 ARouter 依赖注入与 BottomSheet 属性配置。生命周期顺序：
  * onAttach -> onCreateDialog -> onCreateView -> onViewCreated -> onStart
  */
 abstract class BaseBottomSheetDialogFragment(
@@ -59,11 +62,6 @@ abstract class BaseBottomSheetDialogFragment(
 
     private fun initDialog() {
         dialog?.let { dialog ->
-            // 解决Dialog内存泄漏
-            // X，显示过后的Dialog在Activity回到后台再重新进入后会重新显示
-            // dialog.setOnDismissListener(null)
-            // dialog.setOnCancelListener(null)
-
             behavior = (dialog as BottomSheetDialog).behavior
             dialog.dismissWithAnimation = true
 

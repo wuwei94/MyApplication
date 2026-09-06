@@ -6,6 +6,9 @@ import android.content.Intent
 import android.os.IBinder
 import com.example.william.my.basic.basic_shared.utils.Utils
 
+/**
+ * Java-WebSocket 服务端 Service（随服务启动/停止 WebSocket 服务器）
+ */
 class JavaWebSocketServerService : Service() {
 
     private var server: JavaWebSocketServer? = null
