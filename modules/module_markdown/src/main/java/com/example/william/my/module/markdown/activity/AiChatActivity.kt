@@ -383,7 +383,10 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
 
         // 1. 问候语语义识别
         if (lower in listOf("你好", "您好", "hi", "hello", "在吗", "早", "早上好", "下午好", "晚上好", "hey", "嗨") ||
-            lower.startsWith("你好") || lower.startsWith("您好") || lower.startsWith("hello") || lower.startsWith("hi ")
+            lower.startsWith("你好") ||
+            lower.startsWith("您好") ||
+            lower.startsWith("hello") ||
+            lower.startsWith("hi ")
         ) {
             return listOf(
                 "👋 **您好！我是您的 AI 流式对话与技术探索助手。**\n\n",
