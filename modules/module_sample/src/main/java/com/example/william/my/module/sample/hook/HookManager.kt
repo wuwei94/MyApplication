@@ -6,6 +6,11 @@ import android.view.View
 import com.example.william.my.basic.basic_shared.utils.Utils
 import java.lang.reflect.Proxy
 
+/**
+ * Hook 管理器
+ *
+ * 通过动态代理 Hook View 的点击事件。
+ */
 object HookManager {
 
     private val TAG = this.javaClass.simpleName
@@ -65,6 +70,11 @@ object HookManager {
     }
 
     // 直接在构造函数中传进来原来的OnClickListener(
+    /**
+     * 点击监听代理
+     *
+     * 实现 InvocationHandler 的点击监听代理。
+     */
     class OnClickListenerProxy(
         private val mOriginalListener: View.OnClickListener?,
     ) : View.OnClickListener {

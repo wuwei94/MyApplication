@@ -14,6 +14,9 @@ class ConcatFeedAdapter(
     val items: MutableList<Pair<String, String>>,
 ) : RecyclerView.Adapter<ConcatFeedAdapter.ViewHolder>() {
 
+    /**
+     * Feed 列表项 ViewHolder
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleView: TextView = view.findViewById(R.id.performance_concat_feed_title)
         val descView: TextView = view.findViewById(R.id.performance_concat_feed_desc)

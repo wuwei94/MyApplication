@@ -43,7 +43,13 @@ sealed interface OfflineFirstIntent {
  */
 sealed interface OfflineFirstUiEffect {
 
+    /**
+     * 展示 Toast 事件
+     */
     data class ShowToast(val message: String) : OfflineFirstUiEffect
 
+    /**
+     * 同步完成事件
+     */
     data class SyncComplete(val isSuccess: Boolean) : OfflineFirstUiEffect
 }

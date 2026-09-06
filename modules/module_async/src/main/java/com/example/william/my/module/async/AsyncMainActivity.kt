@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 异步模块入口页
+ *
+ * 展示 AsyncTask、HandlerThread 等异步机制的示例列表。
+ */
 @Route(path = RouterPath.Async.Main)
 class AsyncMainActivity : RouterRecyclerActivity() {
 

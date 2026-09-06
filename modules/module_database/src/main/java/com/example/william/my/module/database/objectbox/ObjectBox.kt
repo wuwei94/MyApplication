@@ -9,6 +9,11 @@ import io.objectbox.android.Admin
 import io.objectbox.exception.DbException
 import io.objectbox.exception.FileCorruptException
 
+/**
+ * ObjectBox 数据库管理
+ *
+ * 负责初始化 BoxStore，处理数据库文件损坏等异常，并在 debug 构建启用 Admin。
+ */
 object ObjectBox {
 
     private val TAG = this.javaClass.simpleName
@@ -20,18 +25,18 @@ object ObjectBox {
         if (::boxStore.isInitialized && !boxStore.isClosed) {
             return
         }
-        // On Android make sure to pass a Context when building the Store.
+        // 在 Android 上构建 Store 时必须传入 Context。
         boxStore = try {
             MyObjectBox.builder()
                 .androidContext(context.applicationContext)
                 .build()
         } catch (e: DbException) {
             if (e.javaClass == DbException::class.java || e is FileCorruptException) {
-                // Demonstrate handling issues caused by devices with a broken file system
+                // 演示如何处理设备文件系统损坏导致的问题
                 Log.w(TAG, "File corrupt, trying previous data snapshot...", e)
                 return
             } else {
-                // Failed to build BoxStore due to developer error.
+                // 由于开发者错误导致 BoxStore 构建失败。
                 throw e
             }
         }
@@ -45,8 +50,7 @@ object ObjectBox {
                     BoxStore.getVersionNative(),
                 ),
             )
-            // Enable ObjectBox Admin on debug builds.
-            // https://docs.objectbox.io/data-browser
+            // 在 debug 构建中启用 ObjectBox Admin（https://docs.objectbox.io/data-browser）。
             Admin(boxStore).start(context.applicationContext)
         }
     }

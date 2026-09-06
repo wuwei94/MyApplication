@@ -13,6 +13,11 @@ import com.example.william.my.core.widget.bottomsheet.ViewPagerBottomSheetDialog
 import com.example.william.my.module.widget_custom.R
 import com.example.william.my.module.widget_custom.databinding.DemoDialogBottomSheetBinding
 
+/**
+ * 底部弹窗
+ *
+ * 基于 ViewPagerBottomSheetDialogFragment 的底部弹窗。
+ */
 class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
 
     private lateinit var mBinding: DemoDialogBottomSheetBinding

@@ -115,6 +115,11 @@ class ChatAdapter(
         }
     }
 
+    /**
+     * 用户消息 ViewHolder
+     *
+     * 聊天列表中用户消息的列表项。
+     */
     class UserViewHolder(
         private val binding: MarkdownItemChatUserBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -123,6 +128,11 @@ class ChatAdapter(
         }
     }
 
+    /**
+     * 助手消息 ViewHolder
+     *
+     * 聊天列表中助手消息的列表项。
+     */
     class AssistantViewHolder(
         private val binding: MarkdownItemChatAssistantBinding,
     ) : RecyclerView.ViewHolder(binding.root) {

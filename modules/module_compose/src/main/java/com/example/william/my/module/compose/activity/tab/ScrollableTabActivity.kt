@@ -22,6 +22,21 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.launch
 
+/**
+ * ScrollableTabRow — 可滚动标签
+ *
+ * 演示 Compose 中可滚动的 Tab 标签行，配合分页内容切换。
+ *
+ * 核心特性：
+ * 1. 标签可横向滚动
+ * 2. 与 Pager 联动
+ *
+ * 适用场景：
+ * - 分类标签页
+ * - 频道切换
+ *
+ * https://developer.android.google.cn/develop/ui/compose/components/tab-row
+ */
 @Route(path = RouterPath.Compose.ScrollableTab)
 class ScrollableTabActivity : ComponentActivity() {
 

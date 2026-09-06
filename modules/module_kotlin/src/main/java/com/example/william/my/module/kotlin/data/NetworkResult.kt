@@ -19,13 +19,23 @@ import com.example.william.my.module.kotlin.data.NetworkResult.Success
 import com.google.gson.Gson
 
 /**
- * A generic class that holds a value with its loading status.
- * @param <T>
+ * 持有数据及其加载状态的通用密封结果类。
  */
 sealed class NetworkResult<out R> {
 
+    /**
+     * 加载成功结果
+     */
     data class Success<out T>(val data: T) : NetworkResult<T>()
+
+    /**
+     * 加载失败结果
+     */
     data class Error(val exception: Exception) : NetworkResult<Nothing>()
+
+    /**
+     * 加载中状态
+     */
     data object Loading : NetworkResult<Nothing>()
 
     fun string(): String = when (this) {
@@ -36,7 +46,7 @@ sealed class NetworkResult<out R> {
 }
 
 /**
- * `true` if [NetworkResult] is of type [Success] & holds non-null [Success.data].
+ * 当 [NetworkResult] 为 [Success] 类型且 [Success.data] 非空时返回 true。
  */
 val NetworkResult<*>.succeeded
     get() = this is Success && data != null

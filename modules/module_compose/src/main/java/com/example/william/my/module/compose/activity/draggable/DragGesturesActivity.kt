@@ -24,6 +24,19 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.roundToInt
 
+/**
+ * DragGestures — 拖拽手势
+ *
+ * 演示 Compose 中 drag 手势的检测与处理，实现元素拖拽。
+ *
+ * 核心特性：
+ * 1. detectDragGestures 检测拖拽
+ * 2. 实时更新元素偏移
+ *
+ * 适用场景：
+ * - 可拖拽组件
+ * - 手势交互
+ */
 @Route(path = RouterPath.Compose.DragGestures)
 class DragGesturesActivity : ComponentActivity() {
 

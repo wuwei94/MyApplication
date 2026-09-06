@@ -46,5 +46,10 @@ class PoolPagerAdapter(
         holder.recyclerView.adapter = adapter
     }
 
+    /**
+     * 分页 ViewHolder
+     *
+     * 承载子 RecyclerView 的页面容器。
+     */
     class PageViewHolder(val recyclerView: RecyclerView) : RecyclerView.ViewHolder(recyclerView)
 }

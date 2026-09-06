@@ -38,6 +38,19 @@ import com.loren.component.view.composesmartrefresh.SmartSwipeStateFlag
 import com.loren.component.view.composesmartrefresh.ThresholdScrollStrategy
 import com.loren.component.view.composesmartrefresh.rememberSmartSwipeRefreshState
 
+/**
+ * SmartRefresh — 下拉刷新
+ *
+ * 演示 Compose 中的下拉刷新与上拉加载更多。
+ *
+ * 核心特性：
+ * 1. 下拉刷新触发数据重载
+ * 2. 上拉加载更多分页
+ *
+ * 适用场景：
+ * - 列表刷新
+ * - 分页加载
+ */
 @ExperimentalFoundationApi
 @Route(path = RouterPath.Compose.SmartRefresh)
 class SmartRefreshActivity : ComponentActivity() {

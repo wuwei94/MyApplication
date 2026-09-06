@@ -39,7 +39,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun MyApplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    // 动态取色仅在 Android 12+ 可用
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
@@ -63,7 +63,7 @@ fun MyApplicationTheme(
 @Composable
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    // 动态取色仅在 Android 12+ 可用
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {

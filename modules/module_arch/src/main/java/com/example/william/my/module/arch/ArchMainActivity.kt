@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 架构模块入口页
+ *
+ * 展示 MVP/MVVM/MVI/Mavericks 等架构模式的示例列表。
+ */
 @Route(path = RouterPath.Arch.Main)
 class ArchMainActivity : RouterRecyclerActivity() {
 

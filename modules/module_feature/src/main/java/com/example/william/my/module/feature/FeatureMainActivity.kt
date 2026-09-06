@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 特性模块入口页
+ *
+ * 展示麦克风动画、转盘等特色功能的示例列表。
+ */
 @Route(path = RouterPath.Feature.Main)
 class FeatureMainActivity : RouterRecyclerActivity() {
 

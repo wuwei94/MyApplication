@@ -5,8 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.min
 
+/**
+ * 麦克风布局管理器
+ *
+ * 自定义 RecyclerView 布局管理器，实现麦克风波形的排列。
+ */
 class MicLayoutManager : RecyclerView.LayoutManager() {
 
+    /**
+     * 布局模式
+     *
+     * 麦克风布局的排列模式。
+     */
     enum class LayoutMode {
         MODE_A,
         MODE_B,

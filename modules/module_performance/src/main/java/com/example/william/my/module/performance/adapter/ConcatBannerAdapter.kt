@@ -15,6 +15,9 @@ class ConcatBannerAdapter(
     var bannerDesc: String = "由 BannerAdapter 驱动，点击顶部【下架/上线 Banner】可动态移除或重新插入",
 ) : RecyclerView.Adapter<ConcatBannerAdapter.ViewHolder>() {
 
+    /**
+     * Banner 列表项 ViewHolder
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleView: TextView = view.findViewById(R.id.performance_concat_banner_title)
         val descView: TextView = view.findViewById(R.id.performance_concat_banner_desc)

@@ -21,6 +21,21 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.launch
 
+/**
+ * HorizontalPager — 水平分页
+ *
+ * 演示 Compose 中 HorizontalPager 的分页滑动与程序化滚动。
+ *
+ * 核心特性：
+ * 1. 声明式分页容器
+ * 2. 支持手势与程序化滚动
+ *
+ * 适用场景：
+ * - 图片轮播
+ * - 引导页、卡片流
+ *
+ * https://developer.android.google.cn/jetpack/compose/layouts/pager
+ */
 @Route(path = RouterPath.Compose.HorizontalPager)
 class HorizontalPagerActivity : ComponentActivity() {
 
@@ -44,7 +59,7 @@ class HorizontalPagerActivity : ComponentActivity() {
                 // 禁用手势滑动
                 userScrollEnabled = true,
             ) { page ->
-                // Our page content
+                // 页面内容
                 Text(
                     text = "Page: $page",
                     modifier = Modifier
@@ -53,13 +68,13 @@ class HorizontalPagerActivity : ComponentActivity() {
                 )
             }
 
-            // scroll to page
+            // 滚动到指定页
             val coroutineScope = rememberCoroutineScope()
             Button(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 onClick = {
                     coroutineScope.launch {
-                        // Call scroll to on pagerState
+                        // 调用 pagerState 的滚动方法
                         pagerState.scrollToPage(5)
                     }
                 },

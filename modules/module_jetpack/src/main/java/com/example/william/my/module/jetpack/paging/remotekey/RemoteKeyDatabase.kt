@@ -23,9 +23,9 @@ import com.example.william.my.module.jetpack.paging.remotekey.dao.RemoteKeyDao
 import com.example.william.my.module.jetpack.paging.remotekey.data.RemoteKeyData
 
 /**
- * The Room Database that contains the Article table.
+ * 包含 Article 表的 Room 数据库。
  *
- * Note that exportSchema should be true in production databases.
+ * 注意：生产环境的数据库应将 exportSchema 置为 true。
  */
 @Database(
     entities = [RemoteKeyData::class],
@@ -51,7 +51,6 @@ abstract class RemoteKeyDatabase : RoomDatabase() {
         ): RemoteKeyDatabase {
             val result = if (inMemory) {
                 // 使用更快的内存中数据库进行测试
-                // Use a faster in-memory database for tests
                 Room.inMemoryDatabaseBuilder(
                     context.applicationContext,
                     RemoteKeyDatabase::class.java,
@@ -60,7 +59,6 @@ abstract class RemoteKeyDatabase : RoomDatabase() {
                     .build()
             } else {
                 // 使用SQLite的真实数据库
-                // Real database using SQLite
                 Room.databaseBuilder(
                     context.applicationContext,
                     RemoteKeyDatabase::class.java,

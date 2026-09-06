@@ -21,6 +21,21 @@ import androidx.navigation.compose.rememberNavController
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * NavigationBar — 底部导航栏
+ *
+ * 演示 Compose Material3 的 NavigationBar 底部导航。
+ *
+ * 核心特性：
+ * 1. 声明式导航项配置
+ * 2. 与 NavHost 联动切换页面
+ *
+ * 适用场景：
+ * - 底部多 Tab 导航
+ * - 一级页面切换
+ *
+ * https://developer.android.google.cn/develop/ui/compose/components/bottom-app-bar
+ */
 @Route(path = RouterPath.Compose.NavigationBar)
 class NavigationBarActivity : ComponentActivity() {
 

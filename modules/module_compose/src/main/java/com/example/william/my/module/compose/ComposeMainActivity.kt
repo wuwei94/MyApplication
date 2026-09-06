@@ -25,6 +25,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * Compose模块入口页
+ *
+ * 展示 Jetpack Compose 基础组件、手势、导航等示例列表。
+ */
 @Route(path = RouterPath.Compose.Main)
 class ComposeMainActivity : ComponentActivity() {
 
@@ -109,7 +114,7 @@ class ComposeMainActivity : ComponentActivity() {
 
     @Composable
     fun LazyColumnItemExample(routerItem: RouterItem? = null, onClick: () -> Unit) {
-        // 参考 shared_item_recycler 布局：无背景无边框，minHeight 48dp，文字垂直居中
+        // 参考 shared_item_recycler 布局：无背景无边框，固定高度 48dp，文字垂直居中
         Box(
             modifier = Modifier
                 .fillMaxWidth()

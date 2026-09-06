@@ -9,6 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.william.my.module.jetpack.R
 import com.example.william.my.module.jetpack.databinding.JetpackItemRecyclerBinding
 
+/**
+ * 分页加载状态适配器
+ *
+ * 展示分页加载、错误等页脚状态。
+ */
 class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<PagingStateAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
@@ -56,6 +61,9 @@ class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Pagin
         return ViewHolder(bind)
     }
 
+    /**
+     * 加载状态 ViewHolder
+     */
     class ViewHolder(bind: JetpackItemRecyclerBinding) : RecyclerView.ViewHolder(bind.root) {
         var mBinding: JetpackItemRecyclerBinding = bind
     }

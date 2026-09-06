@@ -100,11 +100,10 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
         mBinding.webView.settings.builtInZoomControls = true
         // 隐藏缩放按钮
         mBinding.webView.settings.displayZoomControls = false
-        // DOM Storage
+        // DOM Storage（DOM 存储）
         mBinding.webView.settings.domStorageEnabled = true
-        // 关闭file域访问，禁止file域对http域进行访问
-        // setAllowFileAccessFromFileURLs&setAllowUniversalAccessFromFileURLs
-        // Android 4.1版本之前这两个API默认是true，需要显式设置为false
+        // 关闭 file 域访问：禁止 WebView 通过 file:// 协议加载本地文件（minSdk 24 下默认开启，需显式关闭）
+        mBinding.webView.settings.allowFileAccess = false
         val headers = mapOf<String, String>()
         // 添加HTTP头信息
         mBinding.webView.loadUrl("https://www.baidu.com/", headers)

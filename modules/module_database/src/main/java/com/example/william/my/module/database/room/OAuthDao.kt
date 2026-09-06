@@ -10,6 +10,11 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * OAuth 数据访问对象
+ *
+ * Room 中 OAuth 表的数据访问接口。
+ */
 @Dao
 interface OAuthDao {
 

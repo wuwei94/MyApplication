@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 组件模块入口页
+ *
+ * 展示 ActivityResult、广播、Service 等 Android 组件的示例列表。
+ */
 @Route(path = RouterPath.Component.Main)
 class ComponentMainActivity : RouterRecyclerActivity() {
 

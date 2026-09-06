@@ -19,6 +19,9 @@ class PoolItemAdapter(
     private val onBindCallback: () -> Unit,
 ) : RecyclerView.Adapter<PoolItemAdapter.ViewHolder>() {
 
+    /**
+     * 池列表项 ViewHolder
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleView: TextView = view.findViewById(R.id.performance_pool_item_title)
         val descView: TextView = view.findViewById(R.id.performance_pool_item_desc)

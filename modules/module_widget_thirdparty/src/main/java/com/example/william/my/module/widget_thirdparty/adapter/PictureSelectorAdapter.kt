@@ -11,6 +11,11 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 
+/**
+ * 图片选择适配器
+ *
+ * 展示图片选择结果的适配器。
+ */
 class PictureSelectorAdapter(
     val data: ArrayList<LocalMedia?> = arrayListOf(),
     var maxSelect: Int = 9,
@@ -67,6 +72,9 @@ class PictureSelectorAdapter(
         data.size
     }
 
+    /**
+     * 图片项 ViewHolder
+     */
     class ViewHolder(val binding: WidgetThirdpartyItemPictureSelectorBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemViewType(position: Int): Int = if (isShowAddItem(position)) {
@@ -104,6 +112,9 @@ class PictureSelectorAdapter(
         mItemClickListener = listener
     }
 
+    /**
+     * 列表项点击监听接口
+     */
     interface OnItemClickListener {
         fun openPicture()
         fun onItemClick(v: View, position: Int)

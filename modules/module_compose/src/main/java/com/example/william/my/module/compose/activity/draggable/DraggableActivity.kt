@@ -21,6 +21,19 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.roundToInt
 
+/**
+ * Draggable — 拖拽修饰符
+ *
+ * 演示 Compose 中 Modifier.draggable 的单轴拖拽能力。
+ *
+ * 核心特性：
+ * 1. 单轴拖拽检测
+ * 2. 与手势状态集成
+ *
+ * 适用场景：
+ * - 滑杆、进度条
+ * - 拖拽排序
+ */
 @Route(path = RouterPath.Compose.Draggable)
 class DraggableActivity : ComponentActivity() {
 

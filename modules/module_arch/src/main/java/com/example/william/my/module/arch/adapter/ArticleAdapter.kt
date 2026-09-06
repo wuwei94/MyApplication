@@ -7,6 +7,11 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.module.arch.R
 
+/**
+ * 文章列表适配器
+ *
+ * 展示文章数据的 BaseQuickAdapter 适配器。
+ */
 class ArticleAdapter(data: ArrayList<ArticleDetailData>) : BaseQuickAdapter<ArticleDetailData, QuickViewHolder>(data) {
 
     override fun onBindViewHolder(

@@ -8,6 +8,8 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
+ * 应用入口 Activity，安装 SplashScreen 后路由到主目录页（DirectoryActivity）。
+ *
  * _______________#########_______________________
  * ______________############_____________________
  * ______________#############____________________

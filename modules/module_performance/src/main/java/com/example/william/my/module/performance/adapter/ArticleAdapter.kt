@@ -18,6 +18,9 @@ class ArticleAdapter(
     private val onItemClick: ((ArticleItem) -> Unit)? = null,
 ) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
+    /**
+     * 文章列表项 ViewHolder
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.performance_diff_title)
         val desc: TextView = view.findViewById(R.id.performance_diff_desc)

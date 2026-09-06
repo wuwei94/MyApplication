@@ -27,7 +27,6 @@ class CoroutinesUseCase(private val defaultDispatcher: CoroutineDispatcher) {
         ThreadUtils.isMainThread("CoroutinesUseCase login")
 
         // 阻塞网络请求
-        // Blocking network request code
         NetworkResult.Success(api.loginSuspend(username, password))
     }
 

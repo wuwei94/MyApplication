@@ -9,15 +9,20 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
+/**
+ * 文章 Rx 分页数据源
+ *
+ * 基于 RxJava 的分页数据源，实现 RxPagingSource 的加载逻辑。
+ */
 class ArticleRxPagingSource(
     private val networkApi: ArticleRxApi,
 ) : RxPagingSource<Int, ArticleDetailData>() {
 
     /**
-     * getArticleSingle
+     * 加载指定页码的文章数据
      */
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ArticleDetailData>> {
-        // Start refresh at page 1 if undefined.
+        // 如果未定义，从 0 开始刷新。
         val nextPageNumber = params.key ?: 0
 
         return networkApi
@@ -36,7 +41,7 @@ class ArticleRxPagingSource(
         return if (data != null) {
             LoadResult.Page(
                 data = data.datas,
-                prevKey = null, // Only paging forward.
+                prevKey = null, // 仅向前分页。
                 nextKey = data.curPage,
             )
         } else {
@@ -45,13 +50,11 @@ class ArticleRxPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, ArticleDetailData>): Int? {
-        // Try to find the page key of the closest page to anchorPosition, from
-        // either the prevKey or the nextKey, but you need to handle nullability
-        // here:
-        //  * prevKey == null -> anchorPage is the first page.
-        //  * nextKey == null -> anchorPage is the last page.
-        //  * both prevKey and nextKey null -> anchorPage is the initial page, so
-        //    just return null.
+        // 尝试找到距离 anchorPosition 最近的页的 key，从 prevKey 或 nextKey 中选取，
+        // 但需要在此处处理可空性：
+        //  * prevKey == null -> anchorPage 是第一页。
+        //  * nextKey == null -> anchorPage 是最后一页。
+        //  * prevKey 和 nextKey 都为 null -> anchorPage 是初始页，直接返回 null。
         val anchorPosition = state.anchorPosition
             ?: return null
 

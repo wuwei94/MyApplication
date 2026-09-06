@@ -15,10 +15,10 @@ dependencies {
 
     implementation(projects.basic.basicRepo)
 
-    //lifecycle
+    // Lifecycle
     implementation(libs.androidx.lifecycle.process)
 
-    //paging
+    // Paging 分页
     implementation(libs.autodispose)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.rxjava3)

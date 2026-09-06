@@ -46,6 +46,11 @@ import com.google.gson.Gson
 @Route(path = RouterPath.Kotlin.Inline)
 class MyInlineActivity : BasicResponseActivity() {
 
+    /**
+     * 用户数据
+     *
+     * 演示作用域函数与泛型实化的示例数据。
+     */
     data class UserData(var name: String = "", var score: Int = 0) {
         fun toJson(): String = Gson().toJson(this)
     }

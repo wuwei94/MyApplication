@@ -7,6 +7,11 @@ import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 import javax.inject.Inject
 
+/**
+ * Flutter 初始化实现
+ *
+ * 实现 IAppInit，预热并缓存 FlutterEngine。
+ */
 class FlutterInitImpl @Inject constructor() : IAppInit {
 
     private lateinit var mApp: Application
@@ -21,21 +26,17 @@ class FlutterInitImpl @Inject constructor() : IAppInit {
 
     private fun initFlutterEngine(app: Application) {
         // 实例化FlutterEngine。
-        // Instantiate a FlutterEngine.
         val flutterEngine = FlutterEngine(app)
 
         // 配置初始路由
-        // Configure an initial route.
         flutterEngine.navigationChannel.setInitialRoute("/")
 
         // 开始执行Dart代码来预热FlutterEngine
-        // Start executing Dart code to pre-warm the FlutterEngine.
         flutterEngine.dartExecutor.executeDartEntrypoint(
             DartExecutor.DartEntrypoint.createDefault(),
         )
 
         // 缓存FlutterActivity要使用的FlutterEngine。
-        // Cache the FlutterEngine to be used by FlutterActivity.
         FlutterEngineCache
             .getInstance()
             .put("cached_engine_id", flutterEngine)

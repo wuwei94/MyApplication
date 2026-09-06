@@ -11,6 +11,11 @@ import com.flyco.tablayout.SlidingTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 
+/**
+ * TabLayout 工具类
+ *
+ * 提供 TabLayout 初始化等工具方法。
+ */
 object TabLayoutUtils {
 
     fun initSlidingTab(

@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 示例模块入口页
+ *
+ * 展示 Hook、字体等示例。
+ */
 @Route(path = RouterPath.Sample.Main)
 class SampleMainActivity : RouterRecyclerActivity() {
 

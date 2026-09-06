@@ -11,6 +11,9 @@ import com.example.william.my.core.base.arch.mvp.IBaseView
  */
 interface ArticleContract {
 
+    /**
+     * 文章页 View 契约
+     */
     interface View : IBaseView<Presenter> {
 
         fun showArticle(articles: List<ArticleDetailData>)
@@ -18,6 +21,9 @@ interface ArticleContract {
         fun showNoArticle()
     }
 
+    /**
+     * 文章页 Presenter 契约
+     */
     interface Presenter : IBasePresenter {
 
         fun loadArticle(page: Int)

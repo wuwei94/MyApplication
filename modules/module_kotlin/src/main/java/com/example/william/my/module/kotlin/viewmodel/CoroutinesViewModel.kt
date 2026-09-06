@@ -166,6 +166,9 @@ class CoroutinesViewModel(private val useCase: CoroutinesUseCase) : ViewModel() 
     }
 }
 
+/**
+ * 协程 ViewModel 工厂
+ */
 object CoroutinesVMFactory : ViewModelProvider.Factory {
 
     private val useCase = CoroutinesUseCase(Dispatchers.IO)

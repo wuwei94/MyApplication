@@ -31,35 +31,29 @@ class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
         // 打印线程
         ThreadUtils.isMainThread("FlowUseCase login")
 
-        // Emits the result of the request to the flow
+        // 将请求结果发送到流
         emit(api.loginSuspend(username, password))
     }
-        // Executes on the IO dispatcher
+        // 在 IO 调度器上执行
         .flowOn(defaultDispatcher)
 
     /**
      * 2. 修改数据流
      * 这些操作是惰性的，不会触发流。它们只是转换流在该时间点发出的当前值。
-     * These operations are lazy and don't trigger the flow.
-     * They just transform the current value emitted by the flow at that point in time.
      */
     fun login(username: String, password: String): Flow<RetrofitResponse<LoginData>> = createFlow(username, password)
         // 在默认调度程序上执行
-        // Executes on the default dispatcher
         .map { news ->
             news
         }
         // 在默认调度程序上执行
-        // Executes on the default dispatcher
         .onEach {
         }
         // flowOn 影响上游的 flow
-        // flowOn affects the upstream flow ↑
         .flowOn(defaultDispatcher)
         // 下游的 flow 不受影响
-        // the downstream flow ↓ is not affected
         .catch { exception ->
-            // Executes in the consumer's context
+            // 在消费者的上下文中执行
             Utils.logcat(TAG, "exception : " + exception.message.toString())
         }
 

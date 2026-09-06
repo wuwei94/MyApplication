@@ -63,14 +63,14 @@ class ConstraintLayoutActivity : ComponentActivity() {
                     top.linkTo(button1.bottom, margin = 40.dp)
 
                     // 将 Text 摆放在 ConstraintLayout 水平中间
-                    // centerHorizontallyTo(parent)
+                    // centerHorizontallyTo(parent) 水平居中到父容器
 
                     // 将 Text 的中心摆放在 button1 右边界的位置
                     centerAround(button1.end)
                 },
             )
 
-            // Barrier
+            // Barrier（屏障）
             // 设置一个 button1 和 text 右边的一个栅栏，将两者放在栅栏的左侧
             val barrier = createEndBarrier(button1, text1)
 
@@ -84,7 +84,7 @@ class ConstraintLayoutActivity : ComponentActivity() {
                 Text(text = "button2")
             }
 
-            // Guide
+            // Guide（辅助线）
             val guideline = createGuidelineFromTop(fraction = 0.5f)
 
             Text(
@@ -94,7 +94,7 @@ class ConstraintLayoutActivity : ComponentActivity() {
                 },
             )
 
-            // Chain
+            // Chain（链）
             createHorizontalChain(box1, box2, box3, chainStyle = ChainStyle.SpreadInside)
 
             Box(

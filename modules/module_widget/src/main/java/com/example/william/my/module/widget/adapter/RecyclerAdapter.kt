@@ -5,6 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.william.my.module.widget.databinding.UiItemRecyclerViewBinding
 
+/**
+ * 通用列表适配器
+ *
+ * 展示文本列表的基础 RecyclerView 适配器。
+ */
 class RecyclerAdapter(private val data: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,5 +42,8 @@ class RecyclerAdapter(private val data: List<String>?) : RecyclerView.Adapter<Re
 
     override fun getItemCount(): Int = data?.size ?: 0
 
+    /**
+     * 列表项 ViewHolder
+     */
     class ViewHolder(val binding: UiItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 }

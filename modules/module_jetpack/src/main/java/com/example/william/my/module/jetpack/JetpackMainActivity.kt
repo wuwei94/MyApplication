@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * Jetpack模块入口页
+ *
+ * 展示 Lifecycle、ViewModel、Paging 等 Jetpack 组件的示例列表。
+ */
 @Route(path = RouterPath.Jetpack.Main)
 class JetpackMainActivity : RouterRecyclerActivity() {
 

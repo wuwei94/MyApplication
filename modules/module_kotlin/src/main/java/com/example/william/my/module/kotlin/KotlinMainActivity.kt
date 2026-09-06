@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * Kotlin模块入口页
+ *
+ * 展示协程、Flow、作用域函数、委托等 Kotlin 特性的示例列表。
+ */
 @Route(path = RouterPath.Kotlin.Main)
 class KotlinMainActivity : RouterRecyclerActivity() {
 

@@ -8,6 +8,11 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.william.my.module.widget_thirdparty.R
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyItemSwipeBinding
 
+/**
+ * 侧滑列表适配器
+ *
+ * 支持侧滑删除的列表适配器。
+ */
 class SwipeRecyclerAdapter(private var data: List<String>?) : RecyclerSwipeAdapter<SwipeRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,5 +43,8 @@ class SwipeRecyclerAdapter(private var data: List<String>?) : RecyclerSwipeAdapt
 
     override fun getSwipeLayoutResourceId(position: Int): Int = R.id.item_swipe_swipeLayout
 
+    /**
+     * 侧滑项 ViewHolder
+     */
     class ViewHolder(val binding: WidgetThirdpartyItemSwipeBinding) : RecyclerView.ViewHolder(binding.root)
 }

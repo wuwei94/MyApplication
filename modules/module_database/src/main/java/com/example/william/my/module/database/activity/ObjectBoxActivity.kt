@@ -77,7 +77,7 @@ class ObjectBoxActivity : BasicResponseActivity() {
 
     private fun initBox() {
         ObjectBox.init(this)
-        // Using ObjectBox Kotlin extension functions (https://docs.objectbox.io/kotlin-support)
+        // 使用 ObjectBox 的 Kotlin 扩展函数（https://docs.objectbox.io/kotlin-support）
         notesBox = ObjectBox.boxStore.boxFor(ObjectBoxNote::class.java)
     }
 

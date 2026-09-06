@@ -14,6 +14,9 @@ class ConcatFooterAdapter(
     var footerText: String = "— 【Footer 模块】已到达页面底部（FooterAdapter） —",
 ) : RecyclerView.Adapter<ConcatFooterAdapter.ViewHolder>() {
 
+    /**
+     * 页脚列表项 ViewHolder
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val footerTextView: TextView = view.findViewById(R.id.performance_concat_footer_text)
     }

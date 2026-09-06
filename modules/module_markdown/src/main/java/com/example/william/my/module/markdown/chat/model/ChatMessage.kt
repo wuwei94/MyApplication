@@ -16,12 +16,22 @@ data class ChatMessage(
     var status: Status = Status.COMPLETED,
     val timestamp: Long = System.currentTimeMillis(),
 ) {
+    /**
+     * 消息角色
+     *
+     * 区分用户与助手消息。
+     */
     enum class Role {
         USER,
         ASSISTANT,
         SYSTEM,
     }
 
+    /**
+     * 消息状态
+     *
+     * 消息的加载状态。
+     */
     enum class Status {
         SENDING,
         STREAMING,

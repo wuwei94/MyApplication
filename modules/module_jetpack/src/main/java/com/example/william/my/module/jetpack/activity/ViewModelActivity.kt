@@ -50,6 +50,11 @@ class ViewModelActivity : BaseActivity() {
         FactoryViewModel.DslFactory
     }
 
+    /**
+     * 视图模型示例 Fragment
+     *
+     * 演示 ViewModel 在 Fragment 中的使用。
+     */
     class ViewModelFragment : BaseFragment() {
 
         /**

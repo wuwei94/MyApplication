@@ -12,7 +12,11 @@ import com.example.william.my.module.widget_thirdparty.app.LoadSirApp
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 
 /**
- * gradlew :app:dependencies 查询app依赖
+ * 应用入口 Application。
+ *
+ * 负责注册各模块的 AppInit 初始化逻辑，并在启动时初始化崩溃捕获与 EventBus。
+ *
+ * 提示：gradlew :app:dependencies 可查询 app 依赖。
  */
 class App : BaseApp() {
 

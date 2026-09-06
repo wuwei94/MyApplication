@@ -46,7 +46,7 @@ class RememberActivity : ComponentActivity() {
         }
     }
 
-    // listSaver, mapSaver
+    // listSaver、mapSaver（rememberSaveable 的自定义 Saver）
     @Composable
     fun RememberExample() {
         val state = remember { mutableStateOf("") }

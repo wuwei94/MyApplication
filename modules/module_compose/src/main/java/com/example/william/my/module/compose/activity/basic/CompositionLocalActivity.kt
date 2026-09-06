@@ -25,6 +25,11 @@ class CompositionLocalActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 用户数据
+     *
+     * 用于演示 CompositionLocal 值传递的示例数据。
+     */
     data class User(val name: String)
 
     // 编译器会提示变量名应该以“Local”为前缀

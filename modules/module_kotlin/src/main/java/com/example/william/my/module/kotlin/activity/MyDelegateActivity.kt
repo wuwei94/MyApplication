@@ -78,14 +78,27 @@ class MyDelegateActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 1. 类委托
     // ─────────────────────────────────────────────
+    /**
+     * 打印接口
+     *
+     * 演示接口委托的目标接口。
+     */
     interface Printer {
         fun printMessage(): String
     }
 
+    /**
+     * 真实打印实现
+     */
     class RealPrinter : Printer {
         override fun printMessage(): String = "RealPrinter.printMessage() 执行"
     }
 
+    /**
+     * 委托打印实现
+     *
+     * 通过 by 关键字将接口实现委托给传入实例。
+     */
     class DelegatedPrinter(printer: Printer) : Printer by printer
 
     private fun testClassDelegate() {
@@ -96,6 +109,11 @@ class MyDelegateActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 2. 自定义属性委托
     // ─────────────────────────────────────────────
+    /**
+     * 字符串属性委托
+     *
+     * 实现 ReadWriteProperty 的自定义属性委托。
+     */
     class StringDelegate : ReadWriteProperty<Any?, String> {
         private var innerValue = "DefaultValue"
 
@@ -106,6 +124,9 @@ class MyDelegateActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 自定义委托持有类
+     */
     class CustomDelegateHolder {
         var text: String by StringDelegate()
     }
@@ -134,6 +155,11 @@ class MyDelegateActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 4. 可观察属性 Delegates.observable
     // ─────────────────────────────────────────────
+    /**
+     * 可观察用户
+     *
+     * 演示 Delegates.observable 委托。
+     */
     class ObservableUser(private val logCallback: (String) -> Unit) {
         var name: String by Delegates.observable("InitName") { prop, old, new ->
             logCallback("【Observable】属性 ${prop.name} 变更: $old -> $new")
@@ -149,6 +175,11 @@ class MyDelegateActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 5. 可否决属性 Delegates.vetoable
     // ─────────────────────────────────────────────
+    /**
+     * 可校验用户
+     *
+     * 演示 Delegates.vetoable 委托。
+     */
     class VetoableUser(private val logCallback: (String) -> Unit) {
         var age: Int by Delegates.vetoable(18) { prop, old, new ->
             val allow = new in 0..150
@@ -168,6 +199,11 @@ class MyDelegateActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 6. Map 映射属性委托
     // ─────────────────────────────────────────────
+    /**
+     * 映射配置
+     *
+     * 演示通过 Map 委托读取配置。
+     */
     class MapConfig(val map: Map<String, Any?>) {
         val title: String by map
         val version: Int by map
@@ -182,6 +218,11 @@ class MyDelegateActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 7. 属性别名重定向委托与 notNull 校验
     // ─────────────────────────────────────────────
+    /**
+     * 迁移 Bean
+     *
+     * 演示新旧属性迁移场景。
+     */
     class MyMigrationBean {
         var newFeatureName: String = "Kotlin-NextGen"
 

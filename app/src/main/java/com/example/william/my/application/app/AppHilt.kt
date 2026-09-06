@@ -11,6 +11,11 @@ import com.example.william.my.core.base.app.hilt.qualifier.MavericksInit
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
+/**
+ * Hilt 应用入口 Application。
+ *
+ * 通过 Hilt 注入各模块的 IAppInit 实现，并在 onCreate 中依次执行初始化。
+ */
 @HiltAndroidApp
 class AppHilt : Application() {
 

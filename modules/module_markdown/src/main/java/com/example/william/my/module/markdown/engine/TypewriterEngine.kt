@@ -23,6 +23,11 @@ import kotlin.coroutines.coroutineContext
  */
 class TypewriterEngine {
 
+    /**
+     * 打字机状态
+     *
+     * 打字机引擎的运行状态。
+     */
     enum class State {
         IDLE,
         TYPING,

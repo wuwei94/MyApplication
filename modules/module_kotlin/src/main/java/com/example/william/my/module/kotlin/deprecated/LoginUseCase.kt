@@ -26,14 +26,12 @@ class LoginUseCase(private val defaultDispatcher: CoroutineDispatcher) {
      * 2. 使用协程确保主线程安全
      * <p>
      * 将 协程 切换到 I/O 调度，确保主线程安全
-     * Move the execution of the coroutine to the I/O dispatcher
      */
     suspend fun login(username: String, password: String): NetworkResult<LoginData> = withContext(defaultDispatcher) {
         // 打印线程
         ThreadUtils.isMainThread("LoginUseCase login")
 
         // 阻塞网络请求
-        // Blocking network request code
         makeLoginRequest(username, password)
     }
 
@@ -41,7 +39,6 @@ class LoginUseCase(private val defaultDispatcher: CoroutineDispatcher) {
      * 1. 在后台线程中执行
      * <p>
      * 发出网络请求，阻塞当前线程
-     * Function that makes the network request, blocking the current thread
      */
     private fun makeLoginRequest(username: String, password: String): NetworkResult<LoginData> {
         // 打印线程
@@ -52,8 +49,6 @@ class LoginUseCase(private val defaultDispatcher: CoroutineDispatcher) {
         (url.openConnection() as? HttpURLConnection)?.run {
             requestMethod = "POST"
             setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-            // setRequestProperty("Content-Type", "application/json; utf-8")// 发送的实体数据的数据类型
-            // setRequestProperty("Accept", "application/json") // 希望接受的数据类型
             doOutput = true
             outputStream.write(jsonString.toByteArray())
             return NetworkResult.Success(parseInputStream(inputStream))

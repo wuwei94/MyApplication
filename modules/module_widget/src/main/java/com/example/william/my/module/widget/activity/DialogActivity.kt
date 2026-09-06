@@ -221,14 +221,14 @@ class DialogActivity : BasicResponseActivity() {
             }
 
             7 -> {
-                // AlertDialogDialogFragment
+                // AlertDialogDialogFragment（重写 onCreateDialog）
                 val dialogFragment = AlertDialogDialogFragment()
                 dialogFragment.show(supportFragmentManager, dialogFragment.tag)
                 appendLog("【AlertDialogDialogFragment】重写 onCreateDialog")
             }
 
             8 -> {
-                // CustomViewDialogFragment
+                // CustomViewDialogFragment（重写 onCreateView）
                 val dialogFragment = CustomViewDialogFragment()
                 dialogFragment.show(supportFragmentManager, dialogFragment.tag)
                 appendLog("【CustomViewDialogFragment】重写 onCreateView")

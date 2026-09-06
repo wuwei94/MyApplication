@@ -25,6 +25,11 @@ import android.os.Messenger
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.scheduler.activity.JobSchedulerActivity
 
+/**
+ * JobScheduler 服务
+ *
+ * 实现 JobService，处理调度任务的执行与停止。
+ */
 class MyJobSchedulerService : JobService() {
 
     private var mJobSchedulerMessenger: Messenger? = null
@@ -46,7 +51,7 @@ class MyJobSchedulerService : JobService() {
 
         Utils.toast("JobScheduler — 开始执行 Job ID: ${params.jobId}")
 
-        // Return true as there's more work to be done with this job.
+        // 返回 true 表示该任务还有后续工作要继续执行。
         return true
     }
 
@@ -55,7 +60,7 @@ class MyJobSchedulerService : JobService() {
 
         Utils.toast("JobScheduler — 停止 Job ID: ${params.jobId}")
 
-        // Return false to drop the job.
+        // 返回 false 表示丢弃该任务。
         return false
     }
 

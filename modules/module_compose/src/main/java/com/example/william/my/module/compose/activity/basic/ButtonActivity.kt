@@ -15,6 +15,20 @@ import androidx.compose.ui.unit.dp
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * Button — 按钮组件
+ *
+ * 演示 Compose Material3 中按钮组件的用法，包括不同类型与状态。
+ *
+ * 核心特性：
+ * 1. 多种按钮类型（Filled/Outlined/Text）
+ * 2. 支持图标、禁用态与点击事件
+ *
+ * 适用场景：
+ * - 表单提交、操作入口
+ *
+ * https://developer.android.google.cn/develop/ui/compose/components/button
+ */
 @Route(path = RouterPath.Compose.Button)
 class ButtonActivity : ComponentActivity() {
 

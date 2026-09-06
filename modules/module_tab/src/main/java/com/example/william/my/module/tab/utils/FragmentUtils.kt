@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 
+/**
+ * Fragment 工具类
+ *
+ * 提供 Fragment 切换等工具方法。
+ */
 object FragmentUtils {
 
     fun initFragment(

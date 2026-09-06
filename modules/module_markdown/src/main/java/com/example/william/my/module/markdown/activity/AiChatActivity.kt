@@ -306,7 +306,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
         mMockStreamJob = lifecycleScope.launch(Dispatchers.Default) {
             delay(260) // 模拟大模型首字 TTFT 思考耗时
             for (chunk in responseChunks) {
-                // 每次推 2 个字符，间隔 40ms（约 45 字符/秒），轻快敏捷流畅
+                // 每次推 2 个字符，间隔 40ms（约 50 字符/秒），轻快敏捷流畅
                 var i = 0
                 while (i < chunk.length) {
                     val tokenSize = minOf(2, chunk.length - i)

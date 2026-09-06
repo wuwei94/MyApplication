@@ -12,12 +12,12 @@ dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
 
-    //DataStore
+    // DataStore
     implementation(libs.androidx.datastore.runtime)
     implementation(libs.androidx.datastore.rxjava3)
     implementation(libs.androidx.datastore.preferences.runtime)
     implementation(libs.androidx.datastore.preferences.rxjava3)
 
-    //MMKV
+    // MMKV
     implementation(libs.mmkv)
 }

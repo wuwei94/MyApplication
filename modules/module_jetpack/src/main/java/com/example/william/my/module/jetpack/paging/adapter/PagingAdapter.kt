@@ -24,17 +24,25 @@ class PagingAdapter(diffCallback: DiffUtil.ItemCallback<ArticleDetailData>) : Pa
         return ViewHolder(bind)
     }
 
+    /**
+     * 分页列表项 ViewHolder
+     */
     class ViewHolder(bind: JetpackItemRecyclerBinding) : RecyclerView.ViewHolder(bind.root) {
         var binding: JetpackItemRecyclerBinding = bind
     }
 
+    /**
+     * 分页差异比较器
+     *
+     * 比较文章条目是否相同。
+     */
     class PagingComparator : DiffUtil.ItemCallback<ArticleDetailData>() {
 
         override fun areItemsTheSame(
             oldItem: ArticleDetailData,
             newItem: ArticleDetailData,
         ): Boolean {
-            // Id is unique.
+            // id 具有唯一性。
             return oldItem.id == newItem.id
         }
 

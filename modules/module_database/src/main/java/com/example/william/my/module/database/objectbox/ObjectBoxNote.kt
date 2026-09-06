@@ -7,6 +7,11 @@ import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import java.util.Date
 
+/**
+ * ObjectBox 笔记实体
+ *
+ * ObjectBox 存储的笔记实体类。
+ */
 @Entity
 data class ObjectBoxNote(
 

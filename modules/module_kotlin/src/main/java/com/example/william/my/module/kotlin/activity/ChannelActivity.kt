@@ -126,10 +126,18 @@ class ChannelActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 3. callbackFlow 传统回调桥接与 awaitClose 安全注销
     // ─────────────────────────────────────────────
+    /**
+     * 模拟定位监听器
+     */
     interface MockLocationListener {
         fun onLocationUpdate(latitude: Double, longitude: Double)
     }
 
+    /**
+     * 模拟定位管理器
+     *
+     * 通过回调模拟定位结果，演示 Channel 数据流。
+     */
     class MockLocationManager {
         private var listener: MockLocationListener? = null
         private var isRunning = false

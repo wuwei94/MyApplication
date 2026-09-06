@@ -6,6 +6,11 @@ import android.widget.TextView
 import com.example.william.my.basic.basic_shared.R
 import com.kingja.loadsir.callback.Callback
 
+/**
+ * 错误回调
+ *
+ * LoadSir 错误状态视图回调。
+ */
 class ErrorCallback : Callback() {
 
     override fun onCreateView(): Int = R.layout.shared_layout_response

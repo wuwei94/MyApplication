@@ -29,6 +29,11 @@ import kotlin.math.min
 class BleNativeQueueActivity : BasicResponseActivity() {
 
     // 模拟 BLE 操作请求
+    /**
+     * BLE 操作描述
+     *
+     * 封装一次 BLE 读写的操作类型与目标数据。
+     */
     data class BleOperation(
         val id: Int,
         val type: String, // READ / WRITE

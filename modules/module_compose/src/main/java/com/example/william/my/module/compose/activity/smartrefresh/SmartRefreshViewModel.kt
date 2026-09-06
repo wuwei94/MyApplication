@@ -7,6 +7,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * 刷新 ViewModel
+ *
+ * 管理刷新列表的加载状态与数据。
+ */
 class SmartRefreshViewModel : ViewModel() {
 
     private val _smartRefreshState: MutableLiveData<SmartRefreshStateData> = MutableLiveData()

@@ -15,6 +15,9 @@ class ConcatHeaderAdapter(
     var subtitle: String = "由 HeaderAdapter 独立驱动（ViewType = 0，已配置隔离）",
 ) : RecyclerView.Adapter<ConcatHeaderAdapter.ViewHolder>() {
 
+    /**
+     * 页眉列表项 ViewHolder
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleView: TextView = view.findViewById(R.id.performance_concat_header_title)
         val subtitleView: TextView = view.findViewById(R.id.performance_concat_header_subtitle)

@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 自定义控件模块入口页
+ *
+ * 展示自定义 Dialog、PopWindow、跑马灯等控件的示例列表。
+ */
 @Route(path = RouterPath.WidgetCustom.Main)
 class WidgetCustomMainActivity : RouterRecyclerActivity() {
 

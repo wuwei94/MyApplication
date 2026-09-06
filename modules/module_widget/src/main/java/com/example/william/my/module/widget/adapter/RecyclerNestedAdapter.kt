@@ -29,8 +29,16 @@ class RecyclerNestedAdapter(private var data: List<String>?) : RecyclerView.Adap
 
     override fun getItemCount(): Int = data?.size ?: 0
 
+    /**
+     * 嵌套列表项 ViewHolder
+     */
     class ViewHolder(val binding: UiItemRecyclerViewNestedBinding) : RecyclerView.ViewHolder(binding.root)
 
+    /**
+     * 嵌套列表适配器
+     *
+     * 演示嵌套 RecyclerView 的适配器。
+     */
     class RecyclerAdapter(private val mData: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -4,6 +4,11 @@ import android.util.SparseArray
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * RecyclerView 缓存扩展
+ *
+ * 实现 ViewCacheExtension 自定义缓存。
+ */
 class RecyclerCacheExtension : RecyclerView.ViewCacheExtension() {
 
     private val mViewCache: SparseArray<View> = SparseArray(4)

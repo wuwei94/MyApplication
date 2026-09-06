@@ -9,6 +9,11 @@ import com.example.william.my.core.base.eventbus.EventBusHelper
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 import javax.inject.Inject
 
+/**
+ * 应用初始化实现。
+ *
+ * 实现 IAppInit，在应用启动时初始化崩溃捕获与 EventBus。
+ */
 class AppInitImpl @Inject constructor() : IAppInit {
 
     private lateinit var mApp: Application

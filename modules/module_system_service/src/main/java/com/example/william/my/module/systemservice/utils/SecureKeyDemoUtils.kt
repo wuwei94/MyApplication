@@ -12,6 +12,11 @@ import java.security.KeyStore
 import java.security.Signature
 import java.security.spec.ECGenParameterSpec
 
+/**
+ * 安全密钥信息
+ *
+ * 封装密钥相关的元信息。
+ */
 data class SecureKeyInfo(
     val keyId: String,
     val publicKey: String,
@@ -21,6 +26,11 @@ data class SecureKeyInfo(
     val hardwareBacked: Boolean,
 )
 
+/**
+ * 安全签名结果
+ *
+ * 封装签名计算的结果。
+ */
 data class SecureSignatureResult(
     val keyId: String,
     val signature: String,
@@ -28,6 +38,11 @@ data class SecureSignatureResult(
     val challenge: String,
 )
 
+/**
+ * 安全密钥演示工具
+ *
+ * 提供密钥生成与签名等演示方法。
+ */
 object SecureKeyDemoUtils {
     private const val ANDROID_KEYSTORE = "AndroidKeyStore"
     private const val KEY_ALIAS = "demo_secure_key"

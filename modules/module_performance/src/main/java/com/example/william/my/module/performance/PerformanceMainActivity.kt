@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 性能模块入口页
+ *
+ * 展示启动优化、DiffUtil、异步加载等性能优化方案的示例列表。
+ */
 @Route(path = RouterPath.Performance.Main)
 class PerformanceMainActivity : RouterRecyclerActivity() {
 

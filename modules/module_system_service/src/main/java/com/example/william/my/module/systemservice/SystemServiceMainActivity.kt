@@ -5,6 +5,11 @@ import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerA
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * 系统服务模块入口页
+ *
+ * 展示通知、权限、安全密钥等系统服务的示例列表。
+ */
 @Route(path = RouterPath.SystemService.Main)
 class SystemServiceMainActivity : RouterRecyclerActivity() {
 

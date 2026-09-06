@@ -18,6 +18,21 @@ import androidx.compose.ui.platform.LocalContext
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * BackHandler — 返回键拦截
+ *
+ * BackHandler 在 Compose 中拦截系统返回键事件，用于实现自定义返回逻辑。
+ *
+ * 核心特性：
+ * 1. 声明式注册返回回调
+ * 2. 支持按优先级处理返回事件
+ *
+ * 适用场景：
+ * - 自定义返回行为
+ * - 二次确认退出
+ *
+ * https://developer.android.google.cn/jetpack/compose/navigation
+ */
 @Route(path = RouterPath.Compose.BackHandler)
 class BackHandlerActivity : ComponentActivity() {
 

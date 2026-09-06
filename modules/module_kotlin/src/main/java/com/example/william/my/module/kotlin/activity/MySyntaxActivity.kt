@@ -49,6 +49,11 @@ class MySyntaxActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 1. 操作符重载 (Operator Overloading)
     // ─────────────────────────────────────────────
+    /**
+     * 坐标点
+     *
+     * 演示 data class 的示例数据。
+     */
     data class Point(val x: Int, val y: Int) {
         // 重载 + 运算符 (p1 + p2)
         operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
@@ -107,9 +112,19 @@ class MySyntaxActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 3. 解构声明 (Destructuring Declarations)
     // ─────────────────────────────────────────────
+    /**
+     * 开发者数据
+     *
+     * 演示 data class 的示例数据。
+     */
     data class Developer(val name: String, val age: Int, val role: String)
 
     // 非 data class 通过实现 operator fun componentN 支持解构
+    /**
+     * 经纬度坐标
+     *
+     * 演示普通 class 的示例数据。
+     */
     class Coordinates(val latitude: Double, val longitude: Double) {
         operator fun component1(): Double = latitude
         operator fun component2(): Double = longitude
@@ -136,6 +151,11 @@ class MySyntaxActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 4. 密封接口与模式匹配 (Sealed Interface & when)
     // ─────────────────────────────────────────────
+    /**
+     * UI 结果密封接口
+     *
+     * 演示 sealed interface 的密封类型。
+     */
     sealed interface UiResult<out T> {
         object Idle : UiResult<Nothing>
         object Loading : UiResult<Nothing>
@@ -168,9 +188,17 @@ class MySyntaxActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 5. 类型安全 DSL 构建器 (Type-Safe Builder)
     // ─────────────────────────────────────────────
+    /**
+     * 布局 DSL 注解
+     *
+     * 用于 DSL 构建器的注解标记。
+     */
     @DslMarker
     annotation class LayoutDsl
 
+    /**
+     * 菜单项构建器
+     */
     @LayoutDsl
     class MenuItemBuilder {
         var name: String = ""
@@ -179,6 +207,11 @@ class MySyntaxActivity : BasicResponseActivity() {
         fun build(): String = "  - [条目] $name (路由: $route)"
     }
 
+    /**
+     * 菜单构建器
+     *
+     * 演示 DSL 风格构建。
+     */
     @LayoutDsl
     class MenuBuilder {
         var title: String = ""

@@ -15,7 +15,7 @@ dependencies {
 
     implementation(libs.androidx.asyncLayoutInflater)
 
-    // Startup & Baseline Profiles
+    // 启动与基线配置（Startup & Baseline Profiles）
     implementation(libs.androidx.startup)
     implementation(libs.androidx.profileinstaller)
 

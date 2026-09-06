@@ -14,6 +14,21 @@ import androidx.navigation.compose.rememberNavController
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
+/**
+ * NavHost — 导航容器
+ *
+ * 演示 Compose Navigation 中 NavHost 的路由切换与页面导航。
+ *
+ * 核心特性：
+ * 1. 声明式路由定义
+ * 2. 支持参数传递与返回栈
+ *
+ * 适用场景：
+ * - 多页面导航
+ * - 深链接
+ *
+ * https://developer.android.google.cn/jetpack/compose/navigation
+ */
 @Route(path = RouterPath.Compose.NavHost)
 class NavHostActivity : ComponentActivity() {
 

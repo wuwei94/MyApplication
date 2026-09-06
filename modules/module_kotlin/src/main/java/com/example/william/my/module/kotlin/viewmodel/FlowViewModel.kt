@@ -241,6 +241,9 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
     }
 }
 
+/**
+ * Flow ViewModel 工厂
+ */
 object FlowVMFactory : ViewModelProvider.Factory {
 
     private val useCase = FlowUseCase(Dispatchers.IO)

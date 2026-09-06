@@ -22,6 +22,11 @@ object KeyValue {
         return KeyValueManager(mmkv)
     }
 
+    /**
+     * MMKV 键值管理器
+     *
+     * 封装 MMKV 的读写操作。
+     */
     class KeyValueManager(val mmkv: MMKV) {
         @Suppress("UNCHECKED_CAST")
         fun put(key: String, value: Any) {

@@ -88,6 +88,11 @@ fun ScrapeLayerPage() {
 
 fun Modifier.scrapeLayer(startPath: Path, moveOffset: Offset) = this.then(ScrapeLayer(startPath, moveOffset))
 
+/**
+ * 刮刮卡涂层
+ *
+ * 实现刮刮卡擦除效果的绘制修饰符。
+ */
 class ScrapeLayer(private val strokePath: Path, private val moveOffset: Offset) : DrawModifier {
 
     private val pathPaint = Paint().apply {

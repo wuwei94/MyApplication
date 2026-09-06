@@ -27,6 +27,11 @@ class StreamTableRowSpan(
     private val widthProvider: () -> Int,
 ) : ReplacementSpan() {
 
+    /**
+     * 表格单元格
+     *
+     * 封装单元格对齐方式与文本。
+     */
     class Cell(val alignment: Layout.Alignment, val text: CharSequence)
 
     private val layouts = ArrayList<Layout>(cells.size)

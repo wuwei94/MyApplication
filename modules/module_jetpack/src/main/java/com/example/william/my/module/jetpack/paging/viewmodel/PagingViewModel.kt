@@ -27,6 +27,11 @@ import com.example.william.my.module.jetpack.paging.source.ArticleRxPagingSource
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * 分页 ViewModel
+ *
+ * 提供网络、数据库缓存等多种分页数据流。
+ */
 class PagingViewModel(
     private val articleDatabase: ArticleDatabase,
     private val remoteKeyDatabase: RemoteKeyDatabase,
@@ -34,10 +39,9 @@ class PagingViewModel(
     private val articleRxApi: ArticleRxApi,
 ) : ViewModel() {
 
-    // =========================================================================
+    // ─────────────────────────────────────────────────────────────────────────
     // 1. 网络 + 数据库缓存（RemoteMediator 模式，离线优先）
-    // =========================================================================
-
+    // ─────────────────────────────────────────────────────────────────────────
     /**
      * LiveData 流：通过 ArticleRemoteMediator 请求网络写入 Room，并监听 Room PagingSource
      */
@@ -63,8 +67,7 @@ class PagingViewModel(
         Pager(
             config = PagingConfig(pageSize = 20),
             pagingSourceFactory = {
-                // The pagingSourceFactory lambda should always return a brand new PagingSource
-                // when invoked as PagingSource instances are not reusable.
+                // pagingSourceFactory 每次调用都应返回全新的 PagingSource，因为 PagingSource 实例不可复用。
                 articleDatabase.articleDao().getArticlesPagingSource()
             },
             remoteMediator = ArticleRemoteMediator(
@@ -91,10 +94,9 @@ class PagingViewModel(
             ),
         ).flowable.cachedIn(viewModelScope)
 
-    // =========================================================================
+    // ─────────────────────────────────────────────────────────────────────────
     // 2. 纯网络直接加载（PagingSource 模式，无本地缓存）
-    // =========================================================================
-
+    // ─────────────────────────────────────────────────────────────────────────
     /**
      * LiveData 流：直接通过 ArticlePagingSource 加载网络数据
      */

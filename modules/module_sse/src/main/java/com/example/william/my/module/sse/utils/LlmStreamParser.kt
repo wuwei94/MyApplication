@@ -2,6 +2,11 @@ package com.example.william.my.module.sse.utils
 
 import org.json.JSONObject
 
+/**
+ * LLM 流解析器
+ *
+ * 解析 LLM 流式接口返回的 SSE 数据。
+ */
 object LlmStreamParser {
 
     const val DEFAULT_PROMPT = "请用一句话介绍你自己和你的核心优势"

@@ -98,6 +98,11 @@ class LoadSirFragment : Fragment() {
         }
     }
 
+    /**
+     * 加载状态列表适配器
+     *
+     * LoadSir 演示的列表适配器。
+     */
     class RecyclerAdapter(data: ArrayList<String> = arrayListOf()) : BaseQuickAdapter<String, QuickViewHolder>(data) {
 
         override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {

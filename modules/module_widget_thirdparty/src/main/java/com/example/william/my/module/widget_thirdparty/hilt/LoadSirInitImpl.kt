@@ -7,6 +7,11 @@ import com.example.william.my.module.widget_thirdparty.callback.ErrorCallback
 import com.kingja.loadsir.core.LoadSir
 import javax.inject.Inject
 
+/**
+ * LoadSir 初始化实现
+ *
+ * 实现 IAppInit，配置 LoadSir 默认状态视图。
+ */
 class LoadSirInitImpl @Inject constructor() : IAppInit {
 
     private lateinit var mApp: Application

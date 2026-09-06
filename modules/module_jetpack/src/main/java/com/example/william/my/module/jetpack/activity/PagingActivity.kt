@@ -173,6 +173,11 @@ class PagingActivity : BasicRecyclerActivity() {
         rxDisposable?.dispose()
     }
 
+    /**
+     * 分页模式
+     *
+     * 区分 Paging 示例的不同加载模式。
+     */
     enum class PagingMode {
         MEDIATOR_FLOW,
         MEDIATOR_RX,
