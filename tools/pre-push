@@ -174,7 +174,8 @@ fi
 echo ""
 echo "──▶ [2/2] 变更模块 Lint 静态分析（${#lint_targets[@]} 个任务）"
 printf '    %s\n' "${lint_targets[@]}"
-if ! ./gradlew "${lint_targets[@]}" --console=plain; then
+echo "    正在执行静态分析，请稍候..."
+if ! ./gradlew "${lint_targets[@]}" --console=plain --quiet; then
     echo ""
     echo "pre-push: Lint 未通过，请修复上述问题后再推送。"
     exit 1

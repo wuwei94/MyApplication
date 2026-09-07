@@ -43,8 +43,8 @@ class AndroidEventBusConventionPlugin : Plugin<Project> {
                 val eventBusClassName = "My" +
                     project.name.substringAfter("_", project.name)
                         .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } + "EventBusIndex"
-                println("eventBusClassPath : $eventBusClassPath")
-                println("eventBusClassName : $eventBusClassName")
+                logger.debug("eventBusClassPath : {}", eventBusClassPath)
+                logger.debug("eventBusClassName : {}", eventBusClassName)
                 arguments {
                     arg("eventBusIndex", "$eventBusClassPath.$eventBusClassName")
                 }
