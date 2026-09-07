@@ -26,6 +26,11 @@ import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDat
 import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSource
 import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSourceImpl
 import com.example.william.my.basic.basic_repo.database.ArticleDatabase
+import com.example.william.my.basic.basic_repo.sync.SyncManager
+import com.example.william.my.basic.basic_repo.sync.WorkManagerSyncManager
+import com.example.william.my.basic.basic_repo.sync.data.SyncPreferencesDataSource
+import com.example.william.my.core.base.network.ConnectivityManagerNetworkMonitor
+import com.example.william.my.core.base.network.NetworkMonitor
 import com.example.william.my.core.retrofit.createApi
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 
@@ -54,6 +59,21 @@ object ServiceLocator {
     @Volatile
     @VisibleForTesting
     var articleRepository: ArticleRepository? = null
+        @VisibleForTesting set
+
+    @Volatile
+    @VisibleForTesting
+    var syncPreferencesDataSource: SyncPreferencesDataSource? = null
+        @VisibleForTesting set
+
+    @Volatile
+    @VisibleForTesting
+    var syncManager: SyncManager? = null
+        @VisibleForTesting set
+
+    @Volatile
+    @VisibleForTesting
+    var networkMonitor: NetworkMonitor? = null
         @VisibleForTesting set
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -116,7 +136,34 @@ object ServiceLocator {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // 3. 测试桩（Test Doubles）重置 API
+    // 3. 响应式网络监听与后台同步 API（对齐 Now in Android）
+    // ─────────────────────────────────────────────────────────────────────────
+    fun provideSyncPreferencesDataSource(context: Context): SyncPreferencesDataSource {
+        synchronized(lock) {
+            return syncPreferencesDataSource ?: SyncPreferencesDataSource(context.applicationContext).also {
+                syncPreferencesDataSource = it
+            }
+        }
+    }
+
+    fun provideSyncManager(context: Context): SyncManager {
+        synchronized(lock) {
+            return syncManager ?: WorkManagerSyncManager(context.applicationContext).also {
+                syncManager = it
+            }
+        }
+    }
+
+    fun provideNetworkMonitor(context: Context): NetworkMonitor {
+        synchronized(lock) {
+            return networkMonitor ?: ConnectivityManagerNetworkMonitor(context.applicationContext).also {
+                networkMonitor = it
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 4. 测试桩（Test Doubles）重置 API
     // ─────────────────────────────────────────────────────────────────────────
     /**
      * 重置所有单例实例并清空数据库，主要供单元测试使用，避免测试用例间相互污染。
@@ -128,6 +175,9 @@ object ServiceLocator {
             articleApi = null
             articleRxApi = null
             articleDatabase = null
+            syncPreferencesDataSource = null
+            syncManager = null
+            networkMonitor = null
             // 清空并关闭真实单例数据库
             ArticleDatabase.resetDatabase()
         }

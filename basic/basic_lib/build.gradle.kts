@@ -39,4 +39,6 @@ dependencies {
     api(libs.google.gson)
     api(libs.google.guava)
     api(libs.rxlifecycle)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }

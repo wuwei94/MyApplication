@@ -20,6 +20,7 @@
 | 自定义 Lint 规则 | ✅ | `lint` 模块 + `TestNamingDetectorTest`（`b991689b`） |
 | Turbine + 测试替身 | ✅ | `module_reactive` 4 个测试文件（`9febfeec`、`ed1211d7`） |
 | Roborazzi 截图测试 | ✅ | `1.73.0` + `module_compose` 截图测试（`9febfeec`） |
+| 响应式网络监听与增量同步 | ✅ | `NetworkMonitor` + `Synchronizer` + `SyncWorker`（`module_arch` + `basic_repo`） |
 
 ### 未落地
 
@@ -227,7 +228,7 @@ NiA 的测试基建是最值得抄的部分，而且**恰好能补齐本项目�
 
 | NiA 实践 | 不建议的原因 / 落地现状 |
 |----------|--------------------------|
-| 全量 `Synchronizer` + `SyncWorker` 后台轮询调度 | NiA 针对多业务特性的 WorkManager 全局同步机制较重。本项目已在 `basic_repo` 与 `module_arch`（`OfflineFirstActivity`）落地了核心的 **Room 响应式流 + 网络写同步（SSOT / Offline-First）架构模式**，满足教学沉淀需求，无需照搬全套 WorkManager 轮询骨架 |
+| `Synchronizer` + `SyncWorker` 后台增量同步 | ✅ 已在 `basic_repo` 与 `module_arch`（`OfflineFirstActivity`）完整落地：以高阶契约配合 WorkManager 调度，基于 DataStore Preferences 维护版本游标（`ChangeListVersions`），实现带网络约束的后台幂等增量拉取 |
 | `demo` / `prod` product flavor | NiA 用 flavor 区分"本地静态数据"与"真实后端"。本项目不需要数据源切换，该维度无意义 |
 | Firebase Analytics / Crashlytics | 无后端，且会引入 `google-services.json` 配置负担 |
 | `app-nia-catalog` | NiA 把组件目录独立成 App。**本项目已有 `module_sample` + `DirectoryActivity` 目录入口**，职能等价 |

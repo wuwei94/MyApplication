@@ -21,12 +21,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -135,13 +133,21 @@ class OfflineFirstActivity : BaseActivity() {
                 color = MaterialTheme.colorScheme.background,
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    // 1. 顶部架构拓扑教学说明卡片
+                    // 1. 响应式离线横幅（由 NetworkMonitor isOnline 流驱动）
+                    NetworkOfflineBanner(isOnline = uiState.isOnline)
+
+                    // 2. 顶部架构拓扑教学说明卡片
                     ArchitectureBannerCard()
 
-                    // 2. SSOT 教学互动控制板（状态指标与验证按钮）
+                    // 3. SSOT 教学互动控制板（状态指标与验证按钮）
                     SsotControlDashboard(
                         uiState = uiState,
                         onSyncClick = { mViewModel.sendIntent(OfflineFirstIntent.Sync(0)) },
+                        onWorkManagerSyncClick = { mViewModel.sendIntent(OfflineFirstIntent.TriggerWorkManagerSync) },
+                        onSimulateRemoteNewVersionClick = {
+                            val mockTitle = "官方更新 #${System.currentTimeMillis() % 1000}"
+                            mViewModel.sendIntent(OfflineFirstIntent.SimulateRemoteNewVersion(mockTitle))
+                        },
                         onInsertClick = {
                             val mockTitle = "本地离线笔记 #${System.currentTimeMillis() % 1000}"
                             mViewModel.sendIntent(OfflineFirstIntent.AddLocalArticle(mockTitle))
@@ -190,6 +196,49 @@ class OfflineFirstActivity : BaseActivity() {
     }
 
     /**
+     * 响应式离线警告横幅（由 NetworkMonitor 驱动）
+     */
+    @Composable
+    private fun NetworkOfflineBanner(isOnline: Boolean) {
+        if (!isOnline) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFFEF3C7)),
+                shape = RoundedCornerShape(8.dp),
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = null,
+                        tint = Color(0xFFD97706),
+                        modifier = Modifier.size(16.dp),
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Column {
+                        Text(
+                            text = "设备当前处于离线状态（Offline Mode）",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF92400E),
+                        )
+                        Text(
+                            text = "UI 正在稳定呈现 Room 本地缓存（SSOT）；网络恢复后将自动自愈同步增量变更。",
+                            fontSize = 11.sp,
+                            color = Color(0xFFB45309),
+                            lineHeight = 15.sp,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * 顶部架构原理解析卡片
      */
     @Composable
@@ -197,31 +246,32 @@ class OfflineFirstActivity : BaseActivity() {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+                .padding(horizontal = 12.dp, vertical = 4.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFF3F4F6)),
             shape = RoundedCornerShape(8.dp),
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
+            Column(modifier = Modifier.padding(10.dp)) {
                 Text(
-                    text = "Now in Android 离线优先架构（SSOT 唯一数据源）",
-                    fontSize = 13.sp,
+                    text = "Now in Android 离线优先与增量同步架构（SSOT + Synchronizer）",
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1E293B),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "网络 API ──(Sync 写同步)──▶ Room 数据库 ──(Flow 响应式流)──▶ UI 呈现",
-                    fontSize = 11.sp,
+                    text = "NetworkMonitor ──(isOnline)──▶ UI 离线横幅 & 在线自愈\nWorkManager ──(SyncWorker)──▶ Synchronizer 游标增量拉取 ──▶ Room SSOT",
+                    fontSize = 10.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
                     color = Color(0xFF0284C7),
+                    lineHeight = 14.sp,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "• 读：UI 仅订阅 Room Flow，UI 状态与 Room 实时强绑定\n• 写：网络请求只负责更新 Room，不直接透传给 UI\n• 离线：进入页面优先展示 Room 缓存，断网秒开无阻碍",
-                    fontSize = 11.sp,
+                    text = "• 响应式网络监听：ConnectivityManager 封装 Flow，在线自动触发在线自愈同步\n• 增量同步（ChangeList）：按版本游标增量拉取，无新数据时 0 写开销（幂等）\n• 单一真实来源（SSOT）：UI 仅观察 Room Flow，断网秒开无阻碍",
+                    fontSize = 10.sp,
                     color = Color(0xFF64748B),
-                    lineHeight = 15.sp,
+                    lineHeight = 14.sp,
                 )
             }
         }
@@ -234,6 +284,8 @@ class OfflineFirstActivity : BaseActivity() {
     private fun SsotControlDashboard(
         uiState: OfflineFirstUiState,
         onSyncClick: () -> Unit,
+        onWorkManagerSyncClick: () -> Unit,
+        onSimulateRemoteNewVersionClick: () -> Unit,
         onInsertClick: () -> Unit,
         onClearClick: () -> Unit,
     ) {
@@ -246,7 +298,41 @@ class OfflineFirstActivity : BaseActivity() {
             shape = RoundedCornerShape(8.dp),
         ) {
             Column(modifier = Modifier.padding(10.dp)) {
-                // 实时状态指标栏
+                // 指标行 1：网络连通状态、版本游标、WorkManager 同步状态
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    val netColor = if (uiState.isOnline) Color(0xFF16A34A) else Color(0xFFDC2626)
+                    val netText = if (uiState.isOnline) "● 在线 (Online)" else "○ 离线 (Offline)"
+                    Text(
+                        text = netText,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = netColor,
+                    )
+
+                    Text(
+                        text = "版本游标: v${uiState.articleVersion}",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF0284C7),
+                    )
+
+                    val wmText = if (uiState.isWorkManagerSyncing) "WorkManager: 同步中..." else "WorkManager: 空闲"
+                    val wmColor = if (uiState.isWorkManagerSyncing) Color(0xFFEAB308) else Color(0xFF64748B)
+                    Text(
+                        text = wmText,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = wmColor,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // 指标行 2：Room 实时缓存条数与上次同步时间
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -254,25 +340,16 @@ class OfflineFirstActivity : BaseActivity() {
                 ) {
                     Text(
                         text = "Room 实时缓存: ${uiState.cacheCount} 条",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A),
-                    )
-
-                    val syncStatusText = if (uiState.isSyncing) "同步中..." else "空闲"
-                    val syncStatusColor = if (uiState.isSyncing) Color(0xFFEAB308) else Color(0xFF16A34A)
-                    Text(
-                        text = "状态: $syncStatusText",
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Medium,
-                        color = syncStatusColor,
+                        color = Color(0xFF0F172A),
                     )
 
                     val timeText = uiState.lastSyncTime?.let {
                         SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(it))
                     } ?: "未同步"
                     Text(
-                        text = "同步: $timeText",
+                        text = "上次同步: $timeText",
                         fontSize = 11.sp,
                         color = Color(0xFF94A3B8),
                     )
@@ -280,44 +357,68 @@ class OfflineFirstActivity : BaseActivity() {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // 互动验证按钮组
+                // 按钮行 1：WorkManager 增量同步 + 模拟服务端新版本
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Button(
-                        onClick = onSyncClick,
-                        modifier = Modifier.weight(1f).height(34.dp),
+                        onClick = onWorkManagerSyncClick,
+                        modifier = Modifier.weight(1.3f).height(32.dp),
                         contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp),
                         shape = RoundedCornerShape(6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2563EB)),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D9488)),
                     ) {
-                        Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(14.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("网络同步", fontSize = 11.sp)
+                        Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(13.dp))
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Text("WorkManager 增量同步", fontSize = 10.sp)
+                    }
+
+                    OutlinedButton(
+                        onClick = onSimulateRemoteNewVersionClick,
+                        modifier = Modifier.weight(1.1f).height(32.dp),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp),
+                        shape = RoundedCornerShape(6.dp),
+                    ) {
+                        Icon(Icons.Default.ArrowUpward, contentDescription = null, modifier = Modifier.size(13.dp))
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Text("模拟远端新版本", fontSize = 10.sp)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                // 按钮行 2：基础 SSOT 验证按钮组（全量拉取、本地插入、清空缓存）
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    OutlinedButton(
+                        onClick = onSyncClick,
+                        modifier = Modifier.weight(1f).height(30.dp),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 2.dp),
+                        shape = RoundedCornerShape(6.dp),
+                    ) {
+                        Text("全量写同步", fontSize = 10.sp)
                     }
 
                     OutlinedButton(
                         onClick = onInsertClick,
-                        modifier = Modifier.weight(1f).height(34.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp),
+                        modifier = Modifier.weight(1f).height(30.dp),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 2.dp),
                         shape = RoundedCornerShape(6.dp),
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("本地插入", fontSize = 11.sp)
+                        Text("本地插入验证", fontSize = 10.sp)
                     }
 
                     OutlinedButton(
                         onClick = onClearClick,
-                        modifier = Modifier.weight(1f).height(34.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp),
+                        modifier = Modifier.weight(1f).height(30.dp),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 2.dp),
                         shape = RoundedCornerShape(6.dp),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFDC2626)),
                     ) {
-                        Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(14.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("清空缓存", fontSize = 11.sp)
+                        Text("清空缓存", fontSize = 10.sp)
                     }
                 }
             }

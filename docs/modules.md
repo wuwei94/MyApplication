@@ -548,7 +548,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect） |
 | ComposeMviActivity | Compose MVI 架构模式（Jetpack Compose + StateFlow + SmartRefresh Compose） |
 | MavericksActivity | Mavericks 架构模式（Airbnb MVI，MavericksState + MavericksViewModel + MavericksRepository） |
-| OfflineFirstActivity | Offline-First 离线优先与 SSOT 唯一数据源架构模式（Room Flow + 网络写同步） |
+| OfflineFirstActivity | Offline-First 离线优先与 SSOT 单一数据源架构模式（Room Flow + NetworkMonitor 响应式网络监听/离线横幅/在线自愈 + Synchronizer / SyncWorker 增量游标幂等拉取） |
 
 ---
 

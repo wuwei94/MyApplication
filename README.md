@@ -8,7 +8,7 @@
 
 - **工程化与规范**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin（完全对齐 [Now in Android](https://github.com/android/nowinandroid)），多模块 Mermaid 依赖拓扑图自动化生成（`./gradlew generateModulesGraph`），Spotless + ktlint 统一代码规范格式化（`./gradlew spotlessApply`），Compose Compiler 稳定性配置（`compose_compiler_config.conf`）。
 - **性能优化与基准测试**：Jetpack Macrobenchmark + Baseline Profile 基准配置文件体系，AOT 预编译冷启动提速（30%+）与列表防掉帧，DiffUtil 差量刷新、LRU 缓存、协程 Dispatcher 性能对比。
-- **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架。
+- **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架；落地 Now in Android 离线优先（Offline-First / SSOT）、响应式网络监听（`NetworkMonitor` + UI 离线横幅 / 在线自愈）与声明式增量同步（`Synchronizer` + `SyncWorker` + WorkManager 版本游标幂等拉取）。
 - **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。

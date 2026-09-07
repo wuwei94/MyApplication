@@ -24,6 +24,7 @@ import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
 import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDataSource
 import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSource
+import com.example.william.my.basic.basic_repo.sync.Synchronizer
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.Dispatchers
@@ -229,5 +230,38 @@ class DefaultArticleRepository(
 
     override suspend fun clearLocalArticles() {
         articlesLocalDataSource.deleteAllArticles()
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 7. 增量变更同步（ChangeList）与 Syncable 契约实现（对齐 Now in Android）
+    // ─────────────────────────────────────────────────────────────────────────
+    override suspend fun syncWith(synchronizer: Synchronizer): Boolean = runCatching {
+        // 1. 读取本地当前持久化的版本游标
+        val currentVersion = synchronizer.getChangeListVersions().articleVersion
+
+        // 2. 从远端拉取严格大于本地游标的增量变更项（ChangeList）
+        val changeList = articlesRemoteDataSource.getArticleChangeList(currentVersion)
+
+        // 3. 幂等性保障：若远端无高于当前游标的变更，无需执行任何数据库写操作，直接返回成功
+        if (changeList.isEmpty()) {
+            return@runCatching true
+        }
+
+        // 4. 应用增量变更到本地 Room 数据库（对新增/更新项 Upsert，对删除项 Delete）
+        val upsertArticles = changeList.filter { !it.isDelete && it.article != null }.mapNotNull { it.article }
+        if (upsertArticles.isNotEmpty()) {
+            articlesLocalDataSource.saveArticles(upsertArticles)
+        }
+
+        // 5. 更新本地版本游标至本次拉取到的最高变更版本
+        val latestVersion = changeList.maxOf { it.changeListVersion }
+        synchronizer.updateChangeListVersions {
+            copy(articleVersion = maxOf(articleVersion, latestVersion))
+        }
+        true
+    }.getOrDefault(false)
+
+    override fun simulateRemoteNewVersion(title: String) {
+        articlesRemoteDataSource.simulateRemoteNewVersion(title)
     }
 }

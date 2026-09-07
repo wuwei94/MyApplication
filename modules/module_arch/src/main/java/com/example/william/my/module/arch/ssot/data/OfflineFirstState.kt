@@ -15,6 +15,9 @@ data class OfflineFirstUiState(
     val cacheCount: Int = 0,
     val isSyncing: Boolean = false,
     val lastSyncTime: Long? = null,
+    val isOnline: Boolean = true,
+    val articleVersion: Int = 0,
+    val isWorkManagerSyncing: Boolean = false,
 )
 
 /**
@@ -26,6 +29,16 @@ sealed interface OfflineFirstIntent {
      * 触发网络同步（拉取远端数据写入 Room 本地数据库，不直传 UI）
      */
     data class Sync(val page: Int = 0) : OfflineFirstIntent
+
+    /**
+     * 触发 WorkManager 后台增量同步（基于版本游标 ChangeListVersions）
+     */
+    data object TriggerWorkManagerSync : OfflineFirstIntent
+
+    /**
+     * 模拟远端发布新版本数据（用于演示增量拉取与游标版本递增）
+     */
+    data class SimulateRemoteNewVersion(val title: String) : OfflineFirstIntent
 
     /**
      * 模拟本地插入（绕过网络直接向 Room 写入测试文章，验证 UI 是否自动响应）

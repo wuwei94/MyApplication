@@ -20,6 +20,7 @@ import com.example.william.my.basic.basic_repo.api.ArticleRxApi
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
+import com.example.william.my.basic.basic_repo.sync.model.NetworkChangeList
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
@@ -58,6 +59,18 @@ interface ArticleRemoteDataSource {
      * 业务数据挂起请求并包装为 [NetworkResult]。
      */
     suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>>
+
+    /**
+     * 按版本游标拉取增量数据变更列表（ChangeList）。
+     *
+     * @param afterVersion 客户端本地已持久化的版本游标。若远端无高于此版本的变更，则返回空列表。
+     */
+    suspend fun getArticleChangeList(afterVersion: Int): List<NetworkChangeList>
+
+    /**
+     * 模拟服务端发布更高版本的数据（教学演练专用，用于驱动增量拉取与游标递增）。
+     */
+    fun simulateRemoteNewVersion(title: String): NetworkChangeList
 }
 
 /**
@@ -129,5 +142,49 @@ class ArticleRemoteDataSourceImpl(
         } catch (e: Exception) {
             NetworkResult.Error(e)
         }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 4. 增量同步变更列表（ChangeList）API（对齐 Now in Android）
+    // ─────────────────────────────────────────────────────────────────────────
+    private val remoteVersionChanges = mutableListOf<NetworkChangeList>()
+    private var simulatedVersionCounter = 0
+
+    override suspend fun getArticleChangeList(afterVersion: Int): List<NetworkChangeList> {
+        // 如果本地版本游标为初始状态（afterVersion <= 0），先拉取首批基础数据作为初始版本（Version 1）
+        if (afterVersion <= 0 && remoteVersionChanges.isEmpty()) {
+            val networkResult = getArticleResult(0)
+            if (networkResult is NetworkResult.Success) {
+                val initialList = networkResult.data.map { item ->
+                    NetworkChangeList(
+                        id = item.id,
+                        changeListVersion = 1,
+                        isDelete = false,
+                        article = item,
+                    )
+                }
+                remoteVersionChanges.addAll(initialList)
+                simulatedVersionCounter = 1
+            }
+        }
+        // 增量同步核心契约：仅返回版本号严格大于客户端游标 afterVersion 的数据变更项
+        return remoteVersionChanges.filter { it.changeListVersion > afterVersion }
+    }
+
+    override fun simulateRemoteNewVersion(title: String): NetworkChangeList {
+        simulatedVersionCounter++
+        val newChange = NetworkChangeList(
+            id = "simulated_${System.currentTimeMillis()}",
+            changeListVersion = simulatedVersionCounter,
+            isDelete = false,
+            article = ArticleDetailData(
+                id = "simulated_${System.currentTimeMillis()}",
+                title = "【增量变更 v$simulatedVersionCounter】$title",
+                link = "https://www.wanandroid.com",
+                page = 0,
+            ),
+        )
+        remoteVersionChanges.add(newChange)
+        return newChange
     }
 }

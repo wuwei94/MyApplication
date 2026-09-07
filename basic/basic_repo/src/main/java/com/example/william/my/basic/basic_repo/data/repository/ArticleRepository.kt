@@ -19,6 +19,7 @@ import androidx.lifecycle.LiveData
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.result.NetworkResult
+import com.example.william.my.basic.basic_repo.sync.Syncable
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
@@ -31,9 +32,9 @@ import kotlinx.coroutines.flow.Flow
  * 2. MVVM          -> 基础请求与响应式流 API ([getArticleSingle], [getArticleSuspend], [getArticleLiveData] 等)
  * 3. MVI           -> Flow 响应式数据流 API ([getArticleFlow] 等)
  * 4. Mavericks     -> 挂起函数 API ([getArticleSuspend])，由专用的 [ArticleMavericksRepository] 包装驱动状态
- * 5. Offline-First -> Room 响应式流 ([getArticlesStream]) + 网络写同步 ([syncArticles])，实现单一真实数据源（SSOT）
+ * 5. Offline-First -> Room 响应式流 ([getArticlesStream]) + 网络写同步 ([syncArticles]) + 增量后台同步 ([syncWith])，实现单一真实数据源（SSOT）
  */
-interface ArticleRepository {
+interface ArticleRepository : Syncable {
 
     interface LoadArticleCallback {
         fun onArticleLoaded(articles: List<ArticleDetailData>)
@@ -151,4 +152,11 @@ interface ArticleRepository {
      * 清空 Room 数据库，用于验证 UI 是否即时随底层数据表清空而变为空视图。
      */
     suspend fun clearLocalArticles()
+
+    /**
+     * 模拟服务端产生新的增量版本数据（教学验证专用）。
+     *
+     * 用于驱动服务端版本号递增，验证客户端增量同步时仅拉取大于本地游标的变更数据。
+     */
+    fun simulateRemoteNewVersion(title: String)
 }

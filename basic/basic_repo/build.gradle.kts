@@ -18,4 +18,9 @@ dependencies {
 
     api(libs.androidx.lifecycle.livedata)
     api(libs.kotlinx.coroutines.rx3)
+
+    api(libs.androidx.workmanager.ktx)
+    implementation(libs.androidx.datastore.preferences.runtime)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }
