@@ -677,7 +677,7 @@ sequenceDiagram
 NiA 原生脚本多为全量扫描，在多模块下推送等待过久。在 `tools/pre-push` 实现**增量感知算法**：
 1. **全量格式校验**：执行 `spotlessCheck`，保证全仓代码排版与 ktlint 规则绝对一致；
 2. **增量模块计算**：通过 `git diff` 自动解析当前待推送的分支相对于远端基线涉及变更的文件；
-3. **精准 Lint 分析**：映射受影响的子模块，仅对涉及模块执行 `:<module>:lintProdDebug`（纯 JVM 模块如 `lint` 自动豁免）；
+3. **精准 Lint 分析**：映射受影响的子模块，Android 模块执行 `:<module>:lintProdDebug`，纯 JVM 模块执行 `:<module>:lint`（自定义规则模块 `:lint` 自身自动豁免）；
 4. **逃生通道**：极端紧急情况下支持 `git push --no-verify` 或 `PRE_PUSH_DISABLE=1 git push` 跳过。
 
 ---
