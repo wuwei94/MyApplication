@@ -1,13 +1,6 @@
 package com.example.william.my.basic.basic_repo.bean
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 /**
- * 文章列表数据（当前页码 + 文章详情列表）
+ * 向后兼容别名：已解耦迁移至 [com.example.william.my.basic.basic_network.model.ArticleData]
  */
-@Parcelize
-data class ArticleData(
-    val curPage: Int = 0,
-    val datas: List<ArticleDetailData> = emptyList(),
-) : Parcelable
+typealias ArticleData = com.example.william.my.basic.basic_network.model.ArticleData

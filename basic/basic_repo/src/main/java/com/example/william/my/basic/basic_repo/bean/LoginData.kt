@@ -1,14 +1,6 @@
 package com.example.william.my.basic.basic_repo.bean
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 /**
- * 登录用户信息数据
+ * 向后兼容别名：已解耦迁移至 [com.example.william.my.basic.basic_network.model.LoginData]
  */
-@Parcelize
-data class LoginData(
-    val id: String = "",
-    val email: String = "",
-    val nickname: String = "",
-) : Parcelable
+typealias LoginData = com.example.william.my.basic.basic_network.model.LoginData

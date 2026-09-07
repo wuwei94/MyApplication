@@ -18,6 +18,7 @@ dependencies {
     implementation(projects.basic.basicShared)
 
     implementation(projects.basic.basicRepo)
+    implementation(projects.basic.basicSync)
 
     implementation(libs.mavericks)
     implementation(libs.smartrefresh.compose)

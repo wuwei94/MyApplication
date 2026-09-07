@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_repo.sync.model
+package com.example.william.my.basic.basic_model
 
 /**
  * 增量同步版本游标（ChangeList Versions）

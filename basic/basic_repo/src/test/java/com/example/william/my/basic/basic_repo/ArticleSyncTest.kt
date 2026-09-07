@@ -1,11 +1,11 @@
 package com.example.william.my.basic.basic_repo
 
+import com.example.william.my.basic.basic_database.ArticleLocalDataSource
+import com.example.william.my.basic.basic_network.datasource.ArticleRemoteDataSource
+import com.example.william.my.basic.basic_network.result.NetworkResult
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.data.repository.DefaultArticleRepository
-import com.example.william.my.basic.basic_repo.data.result.NetworkResult
-import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDataSource
-import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSource
 import com.example.william.my.basic.basic_repo.sync.TestSynchronizer
 import com.example.william.my.basic.basic_repo.sync.model.NetworkChangeList
 import com.example.william.my.core.retrofit.response.RetrofitResponse
@@ -100,7 +100,9 @@ class ArticleSyncTest {
 
         override fun getArticleCountStream(): Flow<Int> = articlesFlow.map { it.size }
 
-        override suspend fun getArticleResult(page: Int): NetworkResult<List<ArticleDetailData>> = NetworkResult.Success(cachedArticles.values.toList())
+        override suspend fun getArticles(): List<ArticleDetailData> = cachedArticles.values.toList()
+
+        override suspend fun getArticlesByPage(page: Int): List<ArticleDetailData> = cachedArticles.values.filter { it.page == page }
 
         override suspend fun saveArticle(article: ArticleDetailData) {
             writeCount++

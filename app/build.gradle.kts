@@ -91,6 +91,11 @@ dependencies {
     // 基础公共层
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
+    implementation(projects.basic.basicModel)
+    implementation(projects.basic.basicDatastore)
+    implementation(projects.basic.basicDatabase)
+    implementation(projects.basic.basicNetwork)
+    implementation(projects.basic.basicSync)
 
     // 应用启动与启动页
     implementation(libs.androidx.core.splashscreen)

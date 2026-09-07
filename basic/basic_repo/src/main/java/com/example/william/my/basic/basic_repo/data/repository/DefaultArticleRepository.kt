@@ -19,11 +19,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import com.example.william.my.basic.basic_database.ArticleLocalDataSource
+import com.example.william.my.basic.basic_network.datasource.ArticleRemoteDataSource
+import com.example.william.my.basic.basic_network.result.NetworkResult
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_repo.data.result.NetworkResult
-import com.example.william.my.basic.basic_repo.data.source.local.ArticleLocalDataSource
-import com.example.william.my.basic.basic_repo.data.source.remote.ArticleRemoteDataSource
 import com.example.william.my.basic.basic_repo.sync.Synchronizer
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import io.reactivex.rxjava3.core.Single
@@ -161,9 +161,9 @@ class DefaultArticleRepository(
                 return NetworkResult.Error(ex)
             }
         } else {
-            val localResult = articlesLocalDataSource.getArticleResult(page)
-            if (localResult is NetworkResult.Success && localResult.data.isNotEmpty()) {
-                return localResult
+            val localArticles = articlesLocalDataSource.getArticlesByPage(page)
+            if (localArticles.isNotEmpty()) {
+                return NetworkResult.Success(localArticles)
             }
             // 本地无缓存或为空，自动回退拉取远端数据并缓存
             try {
@@ -172,7 +172,8 @@ class DefaultArticleRepository(
                 return NetworkResult.Error(ex)
             }
         }
-        return articlesLocalDataSource.getArticleResult(page)
+        val finalArticles = articlesLocalDataSource.getArticlesByPage(page)
+        return NetworkResult.Success(finalArticles)
     }
 
     /**

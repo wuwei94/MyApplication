@@ -89,9 +89,14 @@ include(":app")
 include(":basic:basic_lib")
 include(":basic:basic_shared")
 
-// 数据仓库层
+// 数据模型、存储、数据库与网络层
+include(":basic:basic_model")
+include(":basic:basic_datastore")
+include(":basic:basic_database")
+include(":basic:basic_network")
 include(":basic:basic_repo")
 include(":basic:basic_server")
+include(":basic:basic_sync")
 
 // HTTP 客户端（基础）
 include(":libs:lib_httpurl")

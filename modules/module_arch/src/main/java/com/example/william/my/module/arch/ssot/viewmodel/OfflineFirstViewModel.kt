@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.william.my.basic.basic_datastore.SyncPreferencesDataSource
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.basic.basic_repo.sync.SyncManager
-import com.example.william.my.basic.basic_repo.sync.data.SyncPreferencesDataSource
+import com.example.william.my.basic.basic_sync.Sync
 import com.example.william.my.core.base.network.NetworkMonitor
 import com.example.william.my.module.arch.ssot.data.OfflineFirstIntent
 import com.example.william.my.module.arch.ssot.data.OfflineFirstUiEffect
@@ -160,8 +161,8 @@ class OfflineFirstViewModel(
                 OfflineFirstViewModel(
                     repository = ServiceLocator.provideArticleRepository(application),
                     networkMonitor = ServiceLocator.provideNetworkMonitor(application),
-                    syncManager = ServiceLocator.provideSyncManager(application),
-                    syncPreferences = ServiceLocator.provideSyncPreferencesDataSource(application),
+                    syncManager = Sync.provideSyncManager(application),
+                    syncPreferences = Sync.provideSyncPreferencesDataSource(application),
                 )
             }
         }

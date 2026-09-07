@@ -16,7 +16,12 @@ app/                          # 入口（SplashScreen → DirectoryActivity）
 basic/                        # 基础层
 ├── basic_lib/                # 基类（BaseActivity、BaseVBActivity、权限管理）
 ├── basic_shared/             # 路由（RouterPath）、共享 Layout、Utils
-└── basic_repo/               # 数据仓库层
+├── basic_model/              # 纯领域模型层（JVM 库，零 Android 依赖，领域实体与版本游标）
+├── basic_datastore/          # 键值与偏好存储（Tencent MMKV、游标持久化与 StateFlow 响应式流）
+├── basic_database/           # 本地持久化数据库层（Room 实体、DAO、Database 实例）
+├── basic_network/            # 远程网络数据通信层（Retrofit API、网络 DTO、远程数据源）
+├── basic_repo/               # 数据仓库层（纯数据仓库聚合门面、SSOT、离线拉取契约）
+└── basic_sync/               # 增量同步调度层（WorkManager 离线增量调度、Sync 门面）
 flutter/                      # Flutter 层
 ├── flutter_demo/             # Flutter Demo Catalog 子工程（Flutter module，add-to-app 集成）
 └── flutter_libs/             # Flutter 本地库（lib_network_dio / lib_network_http / lib_image_loader / lib_event_bus / lib_storage / lib_bluetooth 独立封装）
@@ -34,6 +39,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | docs/libs.md | 库封装层职责索引 |
 | docs/di.md | 依赖注入方案对比（Hilt vs Koin 原理、语法、作用域与选型） |
 | docs/event.md | 事件总线方案对比（EventBus / RxEventBus / LiveEventBus / FlowEventBus 特性与选型） |
+| docs/architecture.md | 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First） |
 | docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
 | docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |
 | docs/bluetooth.md | 低功耗蓝牙（BLE 客户端）开发指南、8 大核心功能与三方库对比 |

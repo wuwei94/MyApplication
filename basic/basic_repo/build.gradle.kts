@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
-    alias(libs.plugins.nowinandroid.android.room)
 }
 
 android {
@@ -11,16 +10,13 @@ android {
 dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
-
-    api(projects.libs.libOkhttp)
-    api(projects.libs.libRetrofit)
-    api(projects.libs.libRetrofitRx)
+    api(projects.basic.basicModel)
+    api(projects.basic.basicDatabase)
+    api(projects.basic.basicNetwork)
 
     api(libs.androidx.lifecycle.livedata)
     api(libs.kotlinx.coroutines.rx3)
 
-    api(libs.androidx.workmanager.ktx)
-    implementation(libs.androidx.datastore.preferences.runtime)
 
     testImplementation(libs.kotlinx.coroutines.test)
 }

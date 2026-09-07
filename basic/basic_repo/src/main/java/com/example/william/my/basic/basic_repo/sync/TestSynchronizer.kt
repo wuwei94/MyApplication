@@ -1,6 +1,6 @@
 package com.example.william.my.basic.basic_repo.sync
 
-import com.example.william.my.basic.basic_repo.sync.model.ChangeListVersions
+import com.example.william.my.basic.basic_model.ChangeListVersions
 
 /**
  * 单元测试专用同步器调度替身（Test Double）

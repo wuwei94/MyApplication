@@ -1,10 +1,11 @@
-package com.example.william.my.basic.basic_repo.sync
+package com.example.william.my.basic.basic_sync
 
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.example.william.my.basic.basic_repo.sync.work.SyncWorker
+import com.example.william.my.basic.basic_repo.sync.SyncManager
+import com.example.william.my.basic.basic_sync.work.SyncWorker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package com.example.william.my.basic.basic_repo.sync.work
+package com.example.william.my.basic.basic_sync.work
 
 import android.content.Context
 import androidx.work.Constraints
@@ -12,10 +12,11 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.example.william.my.basic.basic_model.ChangeListVersions
 import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.sync.Syncable
 import com.example.william.my.basic.basic_repo.sync.Synchronizer
-import com.example.william.my.basic.basic_repo.sync.model.ChangeListVersions
+import com.example.william.my.basic.basic_sync.Sync
 import java.util.concurrent.TimeUnit
 
 /**
@@ -34,7 +35,7 @@ class SyncWorker(
     Synchronizer {
 
     private val syncPreferences by lazy {
-        ServiceLocator.provideSyncPreferencesDataSource(applicationContext)
+        Sync.provideSyncPreferencesDataSource(applicationContext)
     }
 
     override suspend fun getChangeListVersions(): ChangeListVersions = syncPreferences.getChangeListVersions()

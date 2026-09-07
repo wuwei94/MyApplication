@@ -1,6 +1,6 @@
 package com.example.william.my.basic.basic_repo.sync
 
-import com.example.william.my.basic.basic_repo.sync.model.ChangeListVersions
+import com.example.william.my.basic.basic_model.ChangeListVersions
 
 /**
  * 高阶同步调度契约接口（对齐 Google Now in Android 同步架构）
