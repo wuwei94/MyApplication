@@ -279,11 +279,39 @@ lint/
 
 ---
 
-### 3. 项目级 Lint 基线与严格门禁
+### 3. 项目级 Lint 基线与多模块边界设计
 
 * **`lint.xml` 项目级规则配置**：统一配置各个 Issue 的严重级别（Severity），严禁模块各自为政；
 * **`lint-baseline.xml` 增量治理基线**：对于历史代码中的既有告警生成基线快照，**老代码不报错，新提交新增的任何违规直接中断构建**，确保技术债务不再新增；
 * **严格门禁**：在 CI 中开启 `abortOnError = true` 与 `warningsAsErrors = true`，杜绝警告带病上线。
+
+#### 多模块 Lint 边界设计与 `checkDependencies` 深度实践
+
+在 AGP（Android Gradle Plugin）中，`lint.checkDependencies` 用于控制静态代码分析是否递归深入扫描当前模块所依赖的所有 Gradle 子工程源码。
+
+##### 1. NiA 官方机制与适用前提
+Google 官方开源项目 Now in Android (NiA) 在 `AndroidLintConventionPlugin` 中配置了 `checkDependencies = true`。NiA 能够这样配置的前提是：
+* **100% 第一方原生工程**：所有子模块（`core:*`、`feature:*`）均由 Google 团队自行编写，外部依赖全走 Maven 远程 AAR 二进制；
+* **CI 单一根节点驱动**：NiA 在 GitHub Actions CI 中只执行一次全量命令 `./gradlew :app:lintProdRelease`，依赖 `:app` 自顶向下穿透分析所有子模块代码。
+
+##### 2. 本项目（大型多模块 + Flutter 混编）为什么必须设为 `false`
+本项目在落地现代工程化时，明确将 `checkDependencies` 关闭（设为 `false`），根因在于解决真实工业界场景下的三大冲突：
+1. **隔离混编外部源码子工程**：
+   Flutter Add-to-App 机制（`include_flutter.groovy`）会将所有 Pub 插件（如 `geolocator_android`、`flutter_blue_plus_android`）以**本地 Gradle 源码子工程**形式挂载到根工程中。若开启 `checkDependencies = true`，Lint 会将这些不可控的第三方插件 Java 源码当成第一方代码进行严苛扫描，因第三方插件未在 Java 层书写 `checkSelfPermission` 而触发数十处 `MissingPermission` 错误，导致合法构建被异常阻断；
+2. **避免多模块重复交叉扫描的算力黑洞**：
+   本项目包含 30+ 功能模块，若每个模块都开启穿透扫描且均依赖 `basic_lib`，全量执行时底层基础库会被重复分析 30+ 次，构建耗时呈指数级膨胀；
+3. **与本地增量门禁（`tools/pre-push`）完美自洽**：
+   工程引入了客户端 `pre-push` 增量门禁，通过 `git diff` 逆向映射变更文件，仅对受影响的子模块独立触发 `:<module>:lintProdDebug`。各模块“自扫门前雪”，确保本地推送前在 10~20 秒内极速完成静态审查，杜绝等待焦虑。
+
+##### 3. `checkDependencies` 选型矩阵与决策建议
+
+| 场景 | 推荐配置 | 核心决策理由 |
+| :--- | :--- | :--- |
+| **日常增量门禁 / 本地提交（`pre-push`）** | `checkDependencies = false` | 保证单模块静态检查边界清晰、轻量极速，在本地秒级闭环。 |
+| **所有 Library 子模块（基础层、功能模块）** | `checkDependencies = false` | 杜绝各模块重复穿透基础依赖，避免构建算力浪费。 |
+| **混合开发工程（含 Flutter / RN 等源码子工程）** | `checkDependencies = false` | 物理隔离第三方未抑制的代码告警，避免外部不可控代码阻断构建。 |
+| **纯原生单一入口 CI 门禁（如 NiA）** | 仅 `:app` 开启 `true` | 在不跑子模块 Lint 任务的前提下，由 `:app` 统一穿透覆盖全工程第一方代码。 |
+| **发版前全局审计（`UnusedResources` / Merged Manifest）** | 仅 `:app` 发版流水线开启 `true` | 站在整包最终合并产物的“上帝视角”进行全量无用资源清理与清单冲突排查。 |
 
 ---
 

@@ -59,6 +59,11 @@ class AndroidLintConventionPlugin : Plugin<Project> {
 private fun Lint.configure() {
     xmlReport = true
     sarifReport = true
-    checkDependencies = true
+    // 多模块工程配合 pre-push 增量门禁，各模块独立负责自身的静态代码质量。
+    // 关闭 checkDependencies（AGP 默认即为 false），避免：
+    // 1. 各 feature 模块反复重复穿透扫描底层基础库，严重拖慢本地与 CI 构建效率；
+    // 2. 将 Flutter Add-to-App 动态挂载的第三方插件源码子工程（如 geolocator_android）
+    //    误当作第一方源码扫描，导致外部不可控的未抑制告警异常阻断构建。
+    checkDependencies = false
     disable += "GradleDependency"
 }

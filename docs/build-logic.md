@@ -174,7 +174,7 @@ build-logic/convention/src/main/kotlin/
 
 配置 Lint 静态分析：
 - 生成 XML 和 SARIF 报告
-- 检查依赖模块
+- 各模块独立静态分析（关闭 `checkDependencies`，契合多模块增量门禁并隔离 Flutter 等外部源码子工程干扰）
 - 禁用 `GradleDependency` 检查
 
 ---
