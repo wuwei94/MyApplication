@@ -24,9 +24,7 @@ turbine = "1.2.0"
 # 最新发布 1.73.0（2026-08），兼容 Kotlin 2.2 / AGP 9.x / Gradle 9.3；如报 Kotlin 编译器插件版本不匹配需微调
 roborazzi = "1.73.0"
 # Robolectric: JVM 上模拟 Android 运行时（截图测试依赖）
-# 注：compileSdk = 37 下 4.16.0 已实测可跑截图测试（build 缓存 results-summary 为 unchanged）。
-# 4.17 在 Maven Central 目前仅有 beta（4.17-beta-4，stable 尚未发布），仅当测试启动报 SDK 不支持时再升。
-robolectric = "4.16.0"
+robolectric = "4.16.1"
 
 # ==============================================================================
 # 2. Google 核心基础库与 Material Design
