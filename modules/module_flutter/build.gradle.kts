@@ -17,10 +17,10 @@ android {
         getByName("main") {
             if (enableFlutter) {
                 manifest.srcFile("src/flutter/AndroidManifest.xml")
-                java.srcDirs("src/main/java", "src/flutter/java")
+                java.directories.addAll(listOf("src/main/java", "src/flutter/java"))
             } else {
                 manifest.srcFile("src/noFlutter/AndroidManifest.xml")
-                java.srcDirs("src/main/java", "src/noFlutter/java")
+                java.directories.addAll(listOf("src/main/java", "src/noFlutter/java"))
             }
         }
     }
@@ -31,6 +31,6 @@ dependencies {
     implementation(projects.basic.basicShared)
 
     if (enableFlutter) {
-        implementation(projects.flutter)
+        implementation(project(":flutter"))
     }
 }
