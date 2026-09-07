@@ -3,6 +3,47 @@ package com.example.william.my.core.base.utils
 import android.content.res.Resources
 
 /**
+ * 屏幕适配计算结果
+ *
+ * @property density 屏幕密度（像素比例）
+ * @property scaledDensity 字型缩放因子（考虑用户系统字号设置）
+ * @property densityDpi 屏幕每英寸像素点数
+ */
+data class DensityResult(
+    val density: Float,
+    val scaledDensity: Float,
+    val densityDpi: Int,
+)
+
+/**
+ * 屏幕适配纯函数算法
+ *
+ * 依据公式：`px = dp * density`，将目标宽度等分为 [designWidthDp] 份。
+ * 同步依据系统原生字体缩放比例计算 [DensityResult.scaledDensity]，确保 `sp` 等比缩放且尊重系统无障碍字号设置。
+ *
+ * @param widthPixels 屏幕或当前窗口的像素宽度
+ * @param noncompatDensity 系统未被篡改前的原生 density
+ * @param noncompatScaledDensity 系统未被篡改前的原生 scaledDensity
+ * @param designWidthDp 设计基准宽度（dp），默认 360dp
+ */
+fun calculateDensity(
+    widthPixels: Int,
+    noncompatDensity: Float,
+    noncompatScaledDensity: Float,
+    designWidthDp: Float = DensityAdaptUtils.DEFAULT_DESIGN_WIDTH_DP,
+): DensityResult {
+    val targetDensity = widthPixels / designWidthDp
+    val fontScale = if (noncompatDensity > 0f) noncompatScaledDensity / noncompatDensity else 1.0f
+    val targetScaledDensity = targetDensity * fontScale
+    val targetDensityDpi = (160 * targetDensity).toInt()
+    return DensityResult(
+        density = targetDensity,
+        scaledDensity = targetScaledDensity,
+        densityDpi = targetDensityDpi,
+    )
+}
+
+/**
  * 屏幕适配工具类（基于修改 density 的今日头条方案）
  *
  * 设计基准宽度：360dp（对应 1080px 设计稿在 3x 密度下的标准宽度 360dp）
@@ -36,9 +77,10 @@ import android.content.res.Resources
  *      - 系统弹窗、Toast 以及使用 Application Context 渲染的第三方 SDK 依然运行在系统原生 density 下，
  *        从而兼顾了“业务页面精准等比还原”与“系统控件安全不失真”。
  */
+@Suppress("DEPRECATION")
 object DensityAdaptUtils {
 
-    private const val DEFAULT_DESIGN_WIDTH_DP = 360f
+    const val DEFAULT_DESIGN_WIDTH_DP: Float = 360f
 
     /**
      * 适配 Resources 的 DisplayMetrics 与 Configuration
@@ -49,12 +91,17 @@ object DensityAdaptUtils {
      */
     fun adaptWidth(resources: Resources, designWidthDp: Float = DEFAULT_DESIGN_WIDTH_DP): Resources {
         val dm = resources.displayMetrics
-        val targetDensity = dm.widthPixels / designWidthDp
-        val targetDensityDpi = (160 * targetDensity).toInt()
+        val result = calculateDensity(
+            widthPixels = dm.widthPixels,
+            noncompatDensity = dm.density,
+            noncompatScaledDensity = dm.scaledDensity,
+            designWidthDp = designWidthDp,
+        )
 
-        dm.density = targetDensity
-        dm.densityDpi = targetDensityDpi
-        resources.configuration.densityDpi = targetDensityDpi
+        dm.density = result.density
+        dm.scaledDensity = result.scaledDensity
+        dm.densityDpi = result.densityDpi
+        resources.configuration.densityDpi = result.densityDpi
 
         return resources
     }

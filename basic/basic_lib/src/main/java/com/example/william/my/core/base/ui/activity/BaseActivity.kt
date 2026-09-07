@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.activity
+package com.example.william.my.core.base.ui.activity
 
 import android.content.Intent
 import android.content.res.Resources

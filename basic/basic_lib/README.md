@@ -50,7 +50,7 @@ com.example.william.my.core.base/
 │
 └── utils/                # 【基础工具】纯算法与专项系统能力
     ├── AudioRecordPlayer.kt # 音频录制与播放封装
-    ├── DensityAdaptUtils.kt # 今日头条 360dp 屏幕适配（附与 Blankj pt 方案详尽对比）
+    ├── DensityAdaptUtils.kt # 今日头条 360dp 屏幕适配（含 scaledDensity 字体等比缩放）
     ├── FragmentBackHelper.kt # 嵌套 childFragmentManager 递归返回键分发
     ├── NetworkChangeHelper.kt # observeNetwork(context): Flow<Boolean> 响应式网络监听
     ├── DeflaterUtils.kt  # 纯内存 Deflater 字符串压缩与解压

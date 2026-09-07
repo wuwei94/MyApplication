@@ -2,10 +2,10 @@ package com.example.william.my.application
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.core.base.ui.activity.BaseActivity
 
 /**
  * 应用入口 Activity，安装 SplashScreen 后路由到主目录页（DirectoryActivity）。
@@ -49,7 +49,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * │ Ctrl│    │Alt │         Space         │ Alt│    │    │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
  * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
