@@ -5,8 +5,9 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.example.william.my.basic.basic_database.model.ArticleEntity
+import com.example.william.my.basic.basic_database.model.asEntity
 import com.example.william.my.basic.basic_repo.api.ArticleApi
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.database.ArticleDatabase
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
@@ -29,7 +30,7 @@ class ArticleRemoteMediator(
     private val articleDatabase: ArticleDatabase,
     private val remoteKeyDatabase: RemoteKeyDatabase,
     private val networkApi: ArticleApi,
-) : RemoteMediator<Int, ArticleDetailData>() {
+) : RemoteMediator<Int, ArticleEntity>() {
 
     private val articleDao = articleDatabase.articleDao()
     private val remoteKeyDao = remoteKeyDatabase.remoteKeyDao()
@@ -54,7 +55,7 @@ class ArticleRemoteMediator(
      */
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleDetailData>,
+        state: PagingState<Int, ArticleEntity>,
     ): MediatorResult {
         return try {
             val loadKey = when (loadType) {
@@ -107,7 +108,7 @@ class ArticleRemoteMediator(
                 }
                 articleDao.insertArticles(
                     articles.map { article ->
-                        article.copy(page = curPage)
+                        article.copy(page = curPage).asEntity()
                     },
                 )
             }

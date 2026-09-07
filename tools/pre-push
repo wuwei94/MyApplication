@@ -99,10 +99,11 @@ mapfile -t included_projects < <(
     sed -n 's/^[[:space:]]*include("\([^"]*\)").*/\1/p' settings.gradle.kts
 )
 
-# 不提供 lintProdDebug 任务的工程：
+# 不参与代码 Lint 的工程：
 #   :benchmarks —— com.android.test 模块，未应用 Android Lint 插件
 #   :flutter    —— 由 Flutter Gradle 插件托管的外部模块
-lint_excluded=(":benchmarks" ":flutter")
+#   :lint       —— 自定义 Lint 规则定义模块自身（在 :lint:test 中测试）
+lint_excluded=(":benchmarks" ":flutter" ":lint")
 
 is_in() {
     local needle="$1"
@@ -128,14 +129,40 @@ project_of_file() {
     return 1
 }
 
+# 解析模块对应的 Lint 任务名：纯 JVM 模块无 Variant，使用 :<module>:lint；Android 模块使用 :<module>:lintProdDebug
+lint_task_for_project() {
+    local project="$1"
+    local dir="${project#:}"
+    dir="${dir//://}"
+    local build_file=""
+    if [[ -f "$dir/build.gradle.kts" ]]; then
+        build_file="$dir/build.gradle.kts"
+    elif [[ -f "$dir/build.gradle" ]]; then
+        build_file="$dir/build.gradle"
+    else
+        return 1
+    fi
+
+    # 纯 JVM 模块（如 :basic:basic_model）无 Android Variant，其 Lint 任务为 :<module>:lint
+    if grep -q -E 'nowinandroid\.jvm\.library|org\.jetbrains\.kotlin\.jvm' "$build_file"; then
+        printf '%s:lint' "$project"
+        return 0
+    fi
+
+    # Android 模块（Application / Library）执行 prodDebug 变体的 Lint 任务
+    printf '%s:lintProdDebug' "$project"
+    return 0
+}
+
 lint_targets=()
 for file in "${changed_files[@]}"; do
     project="$(project_of_file "$file")" || continue
     [[ -z "$project" ]] && continue
     is_in "$project" "${included_projects[@]:-}" || continue
     is_in "$project" "${lint_excluded[@]}" && continue
-    is_in "${project}:lintProdDebug" "${lint_targets[@]:-}" && continue
-    lint_targets+=("${project}:lintProdDebug")
+    task="$(lint_task_for_project "$project")" || continue
+    is_in "$task" "${lint_targets[@]:-}" && continue
+    lint_targets+=("$task")
 done
 
 if [[ ${#lint_targets[@]} -eq 0 ]]; then
@@ -145,7 +172,7 @@ if [[ ${#lint_targets[@]} -eq 0 ]]; then
 fi
 
 echo ""
-echo "──▶ [2/2] lintProdDebug（${#lint_targets[@]} 个变更模块）"
+echo "──▶ [2/2] 变更模块 Lint 静态分析（${#lint_targets[@]} 个任务）"
 printf '    %s\n' "${lint_targets[@]}"
 if ! ./gradlew "${lint_targets[@]}" --console=plain; then
     echo ""

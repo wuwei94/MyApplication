@@ -4,8 +4,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxRemoteMediator
+import com.example.william.my.basic.basic_database.model.ArticleEntity
+import com.example.william.my.basic.basic_database.model.asEntity
 import com.example.william.my.basic.basic_repo.api.ArticleRxApi
-import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_repo.database.ArticleDatabase
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.jetpack.paging.remotekey.RemoteKeyDatabase
@@ -30,7 +31,7 @@ class ArticleRxRemoteMediator(
     private val articleDatabase: ArticleDatabase,
     private val remoteKeyDatabase: RemoteKeyDatabase,
     private val networkApi: ArticleRxApi,
-) : RxRemoteMediator<Int, ArticleDetailData>() {
+) : RxRemoteMediator<Int, ArticleEntity>() {
 
     private val articleDao = articleDatabase.articleDao()
     private val remoteKeyDao = remoteKeyDatabase.remoteKeyDao()
@@ -56,7 +57,7 @@ class ArticleRxRemoteMediator(
      */
     override fun loadSingle(
         loadType: LoadType,
-        state: PagingState<Int, ArticleDetailData>,
+        state: PagingState<Int, ArticleEntity>,
     ): Single<MediatorResult> = when (loadType) {
         LoadType.REFRESH -> {
             Utils.logcat("RemoteMediator", "LoadType REFRESH")
@@ -119,7 +120,7 @@ class ArticleRxRemoteMediator(
                 }
                 articleDao.insertArticlesSync(
                     articles.map { article ->
-                        article.copy(page = curPage)
+                        article.copy(page = curPage).asEntity()
                     },
                 )
             }

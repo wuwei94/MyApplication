@@ -3,6 +3,7 @@ package com.example.william.my.module.jetpack.paging.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -12,8 +13,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.liveData
+import androidx.paging.map
 import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.flowable
+import com.example.william.my.basic.basic_database.model.asExternalModel
 import com.example.william.my.basic.basic_repo.api.ArticleApi
 import com.example.william.my.basic.basic_repo.api.ArticleRxApi
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
@@ -26,6 +29,7 @@ import com.example.william.my.module.jetpack.paging.source.ArticlePagingSource
 import com.example.william.my.module.jetpack.paging.source.ArticleRxPagingSource
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 /**
  * 分页 ViewModel
@@ -57,7 +61,11 @@ class PagingViewModel(
                 remoteKeyDatabase,
                 articleApi,
             ),
-        ).liveData.cachedIn(viewModelScope)
+        ).liveData
+            .cachedIn(viewModelScope)
+            .map { pagingData ->
+                pagingData.map { it.asExternalModel() }
+            }
 
     /**
      * 协程 Flow 流：通过 ArticleRemoteMediator 请求网络写入 Room，并监听 Room PagingSource
@@ -75,7 +83,11 @@ class PagingViewModel(
                 remoteKeyDatabase,
                 articleApi,
             ),
-        ).flow.cachedIn(viewModelScope)
+        ).flow
+            .map { pagingData ->
+                pagingData.map { it.asExternalModel() }
+            }
+            .cachedIn(viewModelScope)
 
     /**
      * RxJava Flowable 流：通过 ArticleRxRemoteMediator 请求网络写入 Room，并监听 Room PagingSource
@@ -92,7 +104,11 @@ class PagingViewModel(
                 remoteKeyDatabase,
                 articleRxApi,
             ),
-        ).flowable.cachedIn(viewModelScope)
+        ).flowable
+            .map { pagingData ->
+                pagingData.map { it.asExternalModel() }
+            }
+            .cachedIn(viewModelScope)
 
     // ─────────────────────────────────────────────────────────────────────────
     // 2. 纯网络直接加载（PagingSource 模式，无本地缓存）
