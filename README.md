@@ -58,11 +58,11 @@
 已接入两套方案的模块（`@XxxInit` 与 `registerAppInit` 一一对应）：
 
 - `module_event`：`EventApp`（手动）/ `EventInitImpl` + `EventModule`（Hilt）
-- `module_widget_thirdparty`：`LoadSirApp` / `LoadSirInitImpl` + `LoadSirModule`
+- `module_widget_thirdparty`：`WidgetThirdpartyApp` / `LoadSirInitImpl` + `LoadSirModule`
 - `module_flutter`：`FlutterApp` / `FlutterInitImpl` + `FlutterModule`
-- `module_arch`：`MavericksApp` / `MavericksInitImpl` + `MavericksModule`
+- `module_arch`：`ArchApp` / `MavericksInitImpl` + `MavericksModule`
 
-> 手动方案在 `App.initApp()` 中注册 `EventApp / MavericksApp / LoadSirApp / FlutterApp`；
+> 手动方案在 `App.initApp()` 中注册 `EventApp / ArchApp / WidgetThirdpartyApp / FlutterApp`；
 > Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → eventInit → mavericksInit → loadSirInit → flutterInit` 顺序调用。
 
 ---
@@ -492,7 +492,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/testing.md`
 - **工程化实践**：基于 Now in Android 的构建与版本治理、测试三支柱、性能基准（Macrobenchmark + Baseline Profile）与门禁防御，详见 `docs/engineering.md`
 - **注释语言**：代码注释与文档默认使用中文
-- 详见 `docs/git.md`、`docs/conventions.md`、`docs/architecture.md`、`docs/testing.md` 与 `docs/engineering.md`
+- 完整技术文档导航详见 [docs/README.md](docs/README.md)，专项规范参见 `docs/git.md`、`docs/conventions.md`、`docs/architecture.md`、`docs/testing.md` 与 `docs/engineering.md`
 
 ---
 

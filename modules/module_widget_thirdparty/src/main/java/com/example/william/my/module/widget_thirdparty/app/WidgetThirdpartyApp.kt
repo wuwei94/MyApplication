@@ -6,11 +6,11 @@ import com.example.william.my.module.widget_thirdparty.callback.ErrorCallback
 import com.kingja.loadsir.core.LoadSir
 
 /**
- * LoadSir 初始化
+ * WidgetThirdparty 模块 Application 初始化
  *
  * 在应用启动时初始化 LoadSir 状态视图配置。
  */
-class LoadSirApp : BaseAppInit() {
+class WidgetThirdpartyApp : BaseAppInit() {
 
     override fun init() {
         super.init()

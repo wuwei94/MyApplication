@@ -5,10 +5,10 @@ import com.example.william.my.basic.basic_lib.MyLibEventBusIndex
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.app.BaseApp
 import com.example.william.my.core.base.eventbus.EventBusHelper
-import com.example.william.my.module.arch.app.MavericksApp
+import com.example.william.my.module.arch.app.ArchApp
 import com.example.william.my.module.event.app.EventApp
 import com.example.william.my.module.flutter.app.FlutterApp
-import com.example.william.my.module.widget_thirdparty.app.LoadSirApp
+import com.example.william.my.module.widget_thirdparty.app.WidgetThirdpartyApp
 import com.example.william.my.modules.module_event.MyEventEventBusIndex
 
 /**
@@ -30,9 +30,9 @@ class App : BaseApp() {
 
     override fun initApp() {
         registerAppInit(EventApp::class.java)
-        registerAppInit(MavericksApp::class.java)
+        registerAppInit(ArchApp::class.java)
 
-        registerAppInit(LoadSirApp::class.java)
+        registerAppInit(WidgetThirdpartyApp::class.java)
 
         registerAppInit(FlutterApp::class.java) // FlutterEngine
     }
