@@ -21,6 +21,7 @@ basic/                        # 基础层
 ├── basic_database/           # 本地持久化数据库层（Room 实体、DAO、Database 实例）
 ├── basic_network/            # 远程网络数据通信层（Retrofit API、网络 DTO、远程数据源）
 ├── basic_repo/               # 数据仓库层（纯数据仓库聚合门面、SSOT、离线拉取契约）
+├── basic_server/             # 本地嵌入式服务端（NanoHTTPD / WebSocket / Netty，供 Socket 客户端联调打靶）
 └── basic_sync/               # 增量同步调度层（WorkManager 离线增量调度、Sync 门面）
 flutter/                      # Flutter 层
 ├── flutter_demo/             # Flutter Demo Catalog 子工程（Flutter module，add-to-app 集成）

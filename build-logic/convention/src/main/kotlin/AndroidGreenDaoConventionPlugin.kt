@@ -18,9 +18,15 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 /**
- * GreenDao 数据库约定插件（当前为占位）
+ * GreenDAO 数据库约定插件（保留模板）
  *
- * 集成代码已注释，待启用时取消注释。
+ * 【设计说明】
+ * 此插件及其依赖配置（包含 libs.versions.toml 中的依赖与插件声明）特意保留完整结构，
+ * 作为现代 Gradle 多模块工程中集成 GreenDAO 的标准配置模板与最佳实践样例，
+ * 方便后续在其他项目或需要接入 GreenDAO 的项目中直接参考挪用（包含 GreendaoOptions
+ * 参数配置、代码生成目录指定、以及针对 Kotlin / kapt 编译任务的 dependsOn 依赖编排）。
+ *
+ * 在本工程中若需重新激活，取消内部集成代码注释并将插件应用到目标模块即可。
  */
 class AndroidGreenDaoConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {

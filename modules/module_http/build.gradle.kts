@@ -11,7 +11,6 @@ android {
 dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
-    implementation(projects.basic.basicServer)
     implementation(projects.basic.basicRepo)
 
     implementation(projects.libs.libHttpurl)

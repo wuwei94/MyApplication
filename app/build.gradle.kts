@@ -95,6 +95,7 @@ dependencies {
     implementation(projects.basic.basicDatastore)
     implementation(projects.basic.basicDatabase)
     implementation(projects.basic.basicNetwork)
+    implementation(projects.basic.basicRepo)
     implementation(projects.basic.basicSync)
 
     // 应用启动与启动页

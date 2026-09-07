@@ -16,8 +16,6 @@ dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
 
-    // TensorFlow Lite
-    implementation(libs.tensorflow.lite)
-    implementation(libs.tensorflow.lite.gpu)
-    implementation(libs.tensorflow.lite.gpu.api)
+    // LiteRT / TensorFlow Lite 端侧推理与 GPU 加速套件
+    implementation(libs.bundles.tensorflow.lite)
 }

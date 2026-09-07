@@ -1,4 +1,4 @@
-# `:modules:module_socket`
+# `:lint`
 
 ## Module dependency graph
 
@@ -11,36 +11,7 @@ config:
     nodePlacementStrategy: SIMPLE
 ---
 graph TB
-  subgraph :modules
-    direction TB
-    :modules:module_socket[module_socket]:::android-library
-  end
-  subgraph :basic
-    direction TB
-    :basic:basic_lib[basic_lib]:::android-library
-    :basic:basic_server[basic_server]:::android-library
-    :basic:basic_shared[basic_shared]:::android-library
-  end
-  subgraph :libs
-    direction TB
-    :libs:lib_nanohttpd[lib_nanohttpd]:::android-library
-    :libs:lib_netty[lib_netty]:::android-library
-    :libs:lib_websocket_java[lib_websocket_java]:::android-library
-    :libs:lib_websocket_okhttp[lib_websocket_okhttp]:::android-library
-  end
-
-  :basic:basic_server -.-> :basic:basic_lib
-  :basic:basic_server -.-> :basic:basic_shared
-  :basic:basic_server -.-> :libs:lib_nanohttpd
-  :basic:basic_server -.-> :libs:lib_netty
-  :basic:basic_server -.-> :libs:lib_websocket_java
-  :basic:basic_shared -.-> :basic:basic_lib
-  :modules:module_socket -.-> :basic:basic_lib
-  :modules:module_socket -.-> :basic:basic_server
-  :modules:module_socket -.-> :basic:basic_shared
-  :modules:module_socket -.-> :libs:lib_netty
-  :modules:module_socket -.-> :libs:lib_websocket_java
-  :modules:module_socket -.-> :libs:lib_websocket_okhttp
+  :lint[lint]:::jvm-library
 
 classDef android-application fill:#CAFFBF,stroke:#000,stroke-width:2px,color:#000;
 classDef android-feature fill:#FFD6A5,stroke:#000,stroke-width:2px,color:#000;

@@ -28,7 +28,7 @@ build-logic/convention/src/main/kotlin/
 ├── AndroidKspConventionPlugin.kt               # KSP 注解处理插件
 ├── AndroidLintConventionPlugin.kt              # Lint 静态分析插件
 ├── AndroidRoomConventionPlugin.kt              # Room 数据库插件
-├── AndroidGreenDaoConventionPlugin.kt          # GreenDao ORM 插件（已禁用）
+├── AndroidGreenDaoConventionPlugin.kt          # GreenDAO ORM 插件
 ├── AndroidProtobufConventionPlugin.kt          # Protocol Buffers 插件
 ├── AndroidObjectBoxConventionPlugin.kt         # ObjectBox 数据库插件
 ├── AndroidLibraryComposeConventionPlugin.kt    # Library Compose 插件

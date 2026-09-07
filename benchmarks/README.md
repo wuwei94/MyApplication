@@ -125,17 +125,28 @@ graph TB
   end
   subgraph :basic
     direction TB
+    :basic:basic_database[basic_database]:::android-library
+    :basic:basic_datastore[basic_datastore]:::android-library
     :basic:basic_lib[basic_lib]:::android-library
+    :basic:basic_model[basic_model]:::jvm-library
+    :basic:basic_network[basic_network]:::android-library
     :basic:basic_repo[basic_repo]:::android-library
     :basic:basic_server[basic_server]:::android-library
     :basic:basic_shared[basic_shared]:::android-library
+    :basic:basic_sync[basic_sync]:::android-library
   end
   :flutter[flutter]:::unknown
   :benchmarks[benchmarks]:::android-test
   :app[app]:::android-application
 
+  :app -.-> :basic:basic_database
+  :app -.-> :basic:basic_datastore
   :app -.-> :basic:basic_lib
+  :app -.-> :basic:basic_model
+  :app -.-> :basic:basic_network
+  :app -.-> :basic:basic_repo
   :app -.-> :basic:basic_shared
+  :app -.-> :basic:basic_sync
   :app -.-> :modules:module_anim
   :app -.-> :modules:module_arch
   :app -.-> :modules:module_async
@@ -168,17 +179,33 @@ graph TB
   :app -.-> :modules:module_widget
   :app -.-> :modules:module_widget_custom
   :app -.-> :modules:module_widget_thirdparty
+  :basic:basic_database -.-> :basic:basic_lib
+  :basic:basic_database --> :basic:basic_model
+  :basic:basic_database -.-> :basic:basic_shared
+  :basic:basic_datastore -.-> :basic:basic_lib
+  :basic:basic_datastore --> :basic:basic_model
+  :basic:basic_datastore -.-> :basic:basic_shared
+  :basic:basic_network -.-> :basic:basic_lib
+  :basic:basic_network --> :basic:basic_model
+  :basic:basic_network -.-> :basic:basic_shared
+  :basic:basic_network --> :libs:lib_okhttp
+  :basic:basic_network --> :libs:lib_retrofit
+  :basic:basic_network --> :libs:lib_retrofit_rx
+  :basic:basic_repo --> :basic:basic_database
   :basic:basic_repo -.-> :basic:basic_lib
+  :basic:basic_repo --> :basic:basic_model
+  :basic:basic_repo --> :basic:basic_network
   :basic:basic_repo -.-> :basic:basic_shared
-  :basic:basic_repo --> :libs:lib_okhttp
-  :basic:basic_repo --> :libs:lib_retrofit
-  :basic:basic_repo --> :libs:lib_retrofit_rx
   :basic:basic_server -.-> :basic:basic_lib
   :basic:basic_server -.-> :basic:basic_shared
   :basic:basic_server -.-> :libs:lib_nanohttpd
   :basic:basic_server -.-> :libs:lib_netty
   :basic:basic_server -.-> :libs:lib_websocket_java
   :basic:basic_shared -.-> :basic:basic_lib
+  :basic:basic_sync --> :basic:basic_datastore
+  :basic:basic_sync -.-> :basic:basic_lib
+  :basic:basic_sync --> :basic:basic_repo
+  :basic:basic_sync -.-> :basic:basic_shared
   :benchmarks -.->|testedApks| :app
   :libs:lib_mqtt_hivemq --> :libs:lib_mqtt
   :libs:lib_mqtt_paho_service --> :libs:lib_mqtt
@@ -192,6 +219,7 @@ graph TB
   :modules:module_arch -.-> :basic:basic_lib
   :modules:module_arch -.-> :basic:basic_repo
   :modules:module_arch -.-> :basic:basic_shared
+  :modules:module_arch -.-> :basic:basic_sync
   :modules:module_async -.-> :basic:basic_lib
   :modules:module_async -.-> :basic:basic_shared
   :modules:module_bluetooth -.-> :basic:basic_lib
@@ -214,7 +242,6 @@ graph TB
   :modules:module_flutter -.-> :flutter
   :modules:module_http -.-> :basic:basic_lib
   :modules:module_http -.-> :basic:basic_repo
-  :modules:module_http -.-> :basic:basic_server
   :modules:module_http -.-> :basic:basic_shared
   :modules:module_http -.-> :libs:lib_httpurl
   :modules:module_http -.-> :libs:lib_ktor
@@ -256,6 +283,7 @@ graph TB
   :modules:module_scheduler -.-> :basic:basic_lib
   :modules:module_scheduler -.-> :basic:basic_shared
   :modules:module_socket -.-> :basic:basic_lib
+  :modules:module_socket -.-> :basic:basic_server
   :modules:module_socket -.-> :basic:basic_shared
   :modules:module_socket -.-> :libs:lib_netty
   :modules:module_socket -.-> :libs:lib_websocket_java

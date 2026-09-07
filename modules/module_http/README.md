@@ -17,17 +17,17 @@ graph TB
   end
   subgraph :basic
     direction TB
+    :basic:basic_database[basic_database]:::android-library
     :basic:basic_lib[basic_lib]:::android-library
+    :basic:basic_model[basic_model]:::jvm-library
+    :basic:basic_network[basic_network]:::android-library
     :basic:basic_repo[basic_repo]:::android-library
-    :basic:basic_server[basic_server]:::android-library
     :basic:basic_shared[basic_shared]:::android-library
   end
   subgraph :libs
     direction TB
     :libs:lib_httpurl[lib_httpurl]:::android-library
     :libs:lib_ktor[lib_ktor]:::android-library
-    :libs:lib_nanohttpd[lib_nanohttpd]:::android-library
-    :libs:lib_netty[lib_netty]:::android-library
     :libs:lib_okhttp[lib_okhttp]:::android-library
     :libs:lib_retrofit[lib_retrofit]:::android-library
     :libs:lib_retrofit_rx[lib_retrofit_rx]:::android-library
@@ -35,19 +35,22 @@ graph TB
     :libs:lib_rx_request[lib_rx_request]:::android-library
     :libs:lib_rx_upload[lib_rx_upload]:::android-library
     :libs:lib_volley[lib_volley]:::android-library
-    :libs:lib_websocket_java[lib_websocket_java]:::android-library
   end
 
+  :basic:basic_database -.-> :basic:basic_lib
+  :basic:basic_database --> :basic:basic_model
+  :basic:basic_database -.-> :basic:basic_shared
+  :basic:basic_network -.-> :basic:basic_lib
+  :basic:basic_network --> :basic:basic_model
+  :basic:basic_network -.-> :basic:basic_shared
+  :basic:basic_network --> :libs:lib_okhttp
+  :basic:basic_network --> :libs:lib_retrofit
+  :basic:basic_network --> :libs:lib_retrofit_rx
+  :basic:basic_repo --> :basic:basic_database
   :basic:basic_repo -.-> :basic:basic_lib
+  :basic:basic_repo --> :basic:basic_model
+  :basic:basic_repo --> :basic:basic_network
   :basic:basic_repo -.-> :basic:basic_shared
-  :basic:basic_repo --> :libs:lib_okhttp
-  :basic:basic_repo --> :libs:lib_retrofit
-  :basic:basic_repo --> :libs:lib_retrofit_rx
-  :basic:basic_server -.-> :basic:basic_lib
-  :basic:basic_server -.-> :basic:basic_shared
-  :basic:basic_server -.-> :libs:lib_nanohttpd
-  :basic:basic_server -.-> :libs:lib_netty
-  :basic:basic_server -.-> :libs:lib_websocket_java
   :basic:basic_shared -.-> :basic:basic_lib
   :libs:lib_retrofit --> :libs:lib_okhttp
   :libs:lib_retrofit_rx --> :libs:lib_retrofit
@@ -56,7 +59,6 @@ graph TB
   :libs:lib_rx_upload --> :libs:lib_retrofit_rx
   :modules:module_http -.-> :basic:basic_lib
   :modules:module_http -.-> :basic:basic_repo
-  :modules:module_http -.-> :basic:basic_server
   :modules:module_http -.-> :basic:basic_shared
   :modules:module_http -.-> :libs:lib_httpurl
   :modules:module_http -.-> :libs:lib_ktor

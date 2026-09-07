@@ -221,7 +221,7 @@ mmkv = "2.3.0"
 # 官网: https://objectbox.io/
 # GitHub: https://github.com/objectbox/objectbox-java
 objectbox = "5.4.2"
-# 经典 SQLite ORM 框架 GreenDAO (本项目目前已全面转向 Room)
+# 经典 SQLite ORM 框架 GreenDAO (本项目已全面转向 Room，保留配置供其他项目接入挪用参考)
 # GitHub: https://github.com/greenrobot/greenDAO
 greendao = "3.3.0"
 
@@ -637,7 +637,7 @@ coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref 
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 # ObjectBox 嵌入式对象数据库 Kotlin 支持库
 objectbox = { group = "io.objectbox", name = "objectbox-kotlin", version.ref = "objectbox" }
-# GreenDAO 实体 ORM 核心库
+# GreenDAO 实体 ORM 核心库 (保留供其他项目接入挪用参考)
 greendao = { group = "org.greenrobot", name = "greendao", version.ref = "greendao" }
 
 # ==============================================================================
@@ -771,7 +771,7 @@ gradlePlugin-compose = { group = "org.jetbrains.kotlin", name = "compose-compile
 gradlePlugin-protobuf = { group = "com.google.protobuf", name = "protobuf-gradle-plugin", version.ref = "gradlePluginProtobuf" }
 # ARouter 注册插件构件
 gradlePlugin-arouter = { group = "com.alibaba", name = "arouter-register", version.ref = "gradlePluginArouter" }
-# GreenDAO Gradle 插件构件
+# GreenDAO Gradle 插件构件 (保留供其他项目接入挪用参考)
 gradlePlugin-greendao = { group = "org.greenrobot", name = "greendao-gradle-plugin", version.ref = "gradlePluginGreenDao" }
 # ObjectBox Gradle 插件构件
 gradlePlugin-objectbox = { group = "io.objectbox", name = "objectbox-gradle-plugin", version.ref = "gradlePluginObjectBox" }
@@ -885,6 +885,22 @@ smartrefresh = [
     "smartrefresh-layout",
     "smartrefresh-header",
     "smartrefresh-footer"
+]
+
+# CameraX 官方相机组件套件（核心 API + Camera2 底层驱动 + 生命周期感知 + 取景 View + 视频录制）
+androidx-camerax = [
+    "androidx-camera-core",
+    "androidx-camera-camera2",
+    "androidx-camera-lifecycle",
+    "androidx-camera-view",
+    "androidx-camera-video"
+]
+
+# LiteRT / TensorFlow Lite 端侧推理与 GPU 硬件加速套件
+tensorflow-lite = [
+    "tensorflow-lite",
+    "tensorflow-lite-gpu",
+    "tensorflow-lite-gpu-api"
 ]
 
 # 单元测试基础套件（JUnit 4 运行环境 + 协程测试核心库）
