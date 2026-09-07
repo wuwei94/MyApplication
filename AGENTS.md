@@ -33,25 +33,29 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 
 ## 文档目录
 
-| 文档 | 内容 |
-|------|------|
-| docs/modules.md | 功能模块详情（30 个模块，每个模块的 Activity 列表） |
-| docs/libs.md | 库封装层职责索引 |
-| docs/di.md | 依赖注入方案对比（Hilt vs Koin 原理、语法、作用域与选型） |
-| docs/event.md | 事件总线方案对比（EventBus / RxEventBus / LiveEventBus / FlowEventBus 特性与选型） |
-| docs/architecture.md | 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First） |
-| docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
-| docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |
-| docs/bluetooth.md | 低功耗蓝牙（BLE 客户端）开发指南、8 大核心功能与三方库对比 |
-| docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
-| docs/conventions.md | 关键约定（路由、模块结构、示例页面、Activity 基类、构建命令） |
-| docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
-| docs/comments.md | 代码注释规范（语言、KDoc 格式、内容层次） |
-| docs/modularization.md | 现代组件化架构演进与技术选型（ARouter 停更原因、大厂主流方案、API-Impl 与 TheRouter） |
-| docs/nia-adoption.md | Now in Android 落地评估（能力落差对照、12 项落地方案与推进顺序、不建议照搬清单） |
-| docs/testing.md | 测试体系（Turbine + 手写测试替身、测试命名 Lint 规则、Roborazzi 截图测试） |
-| docs/engineering.md | 现代 Android 工程化实践指南（构建系统、静态治理、测试三支柱、性能基准、门禁防御） |
-| docs/git.md | Git 提交规范（Conventional Commits、提交模板、钩子门禁与历史遗留） |
+> 完整四维导览与技术全景详见 [docs/README.md](docs/README.md)。
+
+| 分类 | 文档 | 内容 |
+|------|------|------|
+| **工程基建** | docs/conventions.md | 关键约定（路由、模块结构、示例页面、Activity 基类、构建命令） |
+| | docs/comments.md | 代码注释规范（语言、KDoc 格式、内容层次、保护准则） |
+| | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
+| | docs/git.md | Git 提交规范（Conventional Commits、提交模板、钩子门禁与历史遗留） |
+| | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
+| | docs/engineering.md | 现代 Android 工程化实践指南（构建系统、静态治理、测试三支柱、性能基准、门禁防御） |
+| **架构评估** | docs/architecture.md | 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First） |
+| | docs/modularization.md | 现代组件化架构演进与技术选型（ARouter 停更原因、大厂主流方案、API-Impl 与 TheRouter） |
+| | docs/nia-adoption.md | Now in Android 落地评估（能力落差对照、12 项落地方案与推进顺序、不建议照搬清单） |
+| | docs/testing.md | 测试体系（Turbine + 手写测试替身、测试命名 Lint 规则、Roborazzi 截图测试） |
+| **专项指南** | docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
+| | docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |
+| | docs/bluetooth.md | 低功耗蓝牙（BLE 客户端）开发指南、8 大核心功能与三方库对比 |
+| | docs/di.md | 依赖注入方案对比（Hilt vs Koin 原理、语法、作用域与选型） |
+| | docs/event.md | 事件总线方案对比（EventBus / RxEventBus / LiveEventBus / FlowEventBus 特性与选型） |
+| | docs/ml.md | 端侧机器学习开发指南（LiteRT / TensorFlow Lite 图像分类与生成） |
+| | docs/performance.md | 性能优化实践指南（基准测试、掉帧治理、AOT 与优化矩阵） |
+| **仓内清单** | docs/modules.md | 功能模块详情（30 个模块，每个模块的 Activity 列表） |
+| | docs/libs.md | 库封装层职责索引 |
 
 ## 不变量
 
