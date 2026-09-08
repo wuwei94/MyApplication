@@ -152,3 +152,95 @@
 | **异步布局解析预加载** | [`AsyncLayoutInflaterActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/AsyncLayoutInflaterActivity.kt) | `/Sample/AsyncLayoutInflater` | `AsyncLayoutInflater` 后台异步解析 XML、主线程回调挂载与视图预加载池模式 |
 | **跨列表共享视图池** | [`RecycledViewPoolActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/RecycledViewPoolActivity.kt) | `/Sample/RecycledViewPool` | `RecycledViewPool` 跨 Tab/嵌套列表共用 ViewHolder 缓存池与容量扩容 |
 | **多模块列表拼装与隔离** | [`ConcatAdapterActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/ConcatAdapterActivity.kt) | `/Sample/ConcatAdapter` | `ConcatAdapter` 多 Adapter 拼装、`isolateViewTypes` 类型隔离与单模块独立局部刷新 |
+
+---
+
+## 八、基准度量与运行时监控（Macrobenchmark / JankStats / Tracing）
+
+现代性能工程化将优化从"凭感觉猜测"转为"基于量化数据验证"的闭环。
+
+### 1. Macrobenchmark 与 Baseline Profile（基线配置文件） 【已落地】
+
+#### 原理与价值
+* **AOT 编译优化**：Android 运行时（ART）在应用安装或空闲时通过 Profile 引导预编译热点方法；
+* **收益**：冷启动提速 **30% 以上**，初次进入页面免去 JIT 解释器编译开销，滑动列表掉帧率显著下降。
+
+#### 落地结构 (`benchmarks` 模块)
+独立测试工程 `:benchmarks`，声明：
+```kotlin
+// benchmarks/build.gradle.kts
+plugins {
+    alias(libs.plugins.baselineprofile)
+    alias(libs.plugins.nowinandroid.android.test)
+}
+
+android {
+    targetProjectPath = ":app"
+    experimentalProperties["android.experimental.self-instrumenting"] = true
+}
+```
+
+#### 两大核心基准测试
+1. **启动性能基准（`StartupBenchmark`）`【已落地】`**：
+   对比 `CompilationMode.None()`（无优化冷启动）与 `CompilationMode.Partial()`（加载 Baseline Profile）下的精确耗时分布：
+   ```kotlin
+   benchmarkRule.measureRepeated(
+       packageName = "com.example.william.my.application",
+       metrics = listOf(StartupTimingMetric()),
+       compilationMode = compilationMode,
+       iterations = 5,
+       startupMode = StartupMode.COLD,
+   ) {
+       pressHome()
+       startActivityAndWait()
+   }
+   ```
+2. **列表滑动基准（`ScrollBenchmark`）`【已落地】`**：
+   通过 UI Automator 模拟列表连续快速滑动，测量 `FrameTimingMetric`，输出 50th、90th、99th 百分位帧耗时与掉帧比例。
+
+### 2. JankStats 运行时掉帧监控闭环 【部分落地】
+
+Macrobenchmark 适用于发布前压测，而 **JankStats** 负责应用在真实环境下的运行时掉帧持续观测。
+
+* **逐帧回调采集 `【已落地】`**：`JankStats.createAndTrack(window, frameListener)`，在后台线程逐帧计算渲染耗时是否超出预期显示周期（16ms / 8.3ms）；
+* **UI 状态归因（`PerformanceMetricsState`）`【已落地】`**：
+  仅记录掉帧没有意义，关键是知道"掉帧时用户在哪个页面、处于什么状态"：
+  ```kotlin
+  // 在用户交互区注入上下文状态
+  metricsStateHolder.state?.putState("Screen", "JankStatsActivity")
+  metricsStateHolder.state?.putState("ScrollState", "Flinging")
+  ```
+  掉帧发生时，`FrameData` 中会携带上述上下文键值对，直接输出到卡顿日志，快速归因。
+
+#### `TrackDisposableJank` 标准化 Composable 容器 【演进规划 - 待落地】
+* **现状痛点**：在 Compose 中手工调用 `putState` / `removeState` 容易因未配对执行或缺少生命周期解绑而产生状态残留（如页面已跳出，但其状态依旧附带在后续帧上）；
+* **设计规范**：参考 NiA 封装通用的生命周期感知 Composable：
+  ```kotlin
+  @Composable
+  fun TrackDisposableJank(
+      stateHolder: StateHolder,
+      stateKey: String,
+      stateValue: String,
+      content: @Composable () -> Unit
+  ) {
+      DisposableEffect(stateHolder, stateKey, stateValue) {
+          val state = stateHolder.state
+          state?.putState(stateKey, stateValue)
+          onDispose {
+              state?.removeState(stateKey)
+          }
+      }
+      content()
+  }
+  ```
+* **落地价值**：使业务界面仅需包裹根布局即可自动绑定当前路由与滚动状态，并在退出或切换时自动清理，杜绝状态污染。
+
+### 3. AndroidX Tracing 与 Perfetto 联动 【已落地】
+
+在关键代码路径注入 Trace Section：
+```kotlin
+trace("JankStatsDemo:heavyWork") {
+    // 耗时计算逻辑
+}
+```
+结合 Compose 的 `runtime-tracing`，系统追踪工具（Perfetto / Android Studio Profiler）能精确展开带有业务方法名、UI 节点与卡顿帧的泳道图，彻底消除无源码调试的猜测。

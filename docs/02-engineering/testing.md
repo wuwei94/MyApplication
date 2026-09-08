@@ -98,6 +98,15 @@ src/test/
    }
    ```
    自动拦截触控区域小于 48dp、文本与背景对比度不达标（< 4.5:1）、缺少 `contentDescription` 等无障碍合规缺陷。
+6. **多设备规格覆盖（`captureMultiDevice`）`【已落地】`**：一份 UI 组件测试同时生成三档物理设备形态的渲染快照：
+   ```kotlin
+   enum class DefaultTestDevices(val description: String, val spec: String) {
+       PHONE("phone", "spec:shape=Normal,width=640,height=360,unit=dp,dpi=480"),
+       FOLDABLE("foldable", "spec:shape=Normal,width=673,height=841,unit=dp,dpi=480"),
+       TABLET("tablet", "spec:shape=Normal,width=1280,height=800,unit=dp,dpi=480"),
+   }
+   ```
+7. **自动化联动开关 `【已落地】`**：在 `gradle.properties` 配置 `roborazzi.test.verify=true`，使得常规 `./gradlew test` 会自动联动触发截图比对，杜绝"代码改了却忘记跑视觉回归"的隐患。
 
 ### 共享测试替身演进（`basic:basic_testing`）`【演进规划 - 待落地】`
 
@@ -109,6 +118,43 @@ src/test/
 
 - Robolectric 4.16 无 `RobolectricDeviceQualifiers` 常量类，用 qualifiers 字符串替代；
 - Roborazzi 1.73 兼容 AGP 9（1.56.0 起修复 `Variant.unitTest` 废弃 API），升级 AGP 时注意对应关系。
+
+## 四、自动化设备与覆盖率基建
+
+### Gradle 托管设备（GMD）`【演进规划 - 待落地】`
+
+插桩测试如果依赖开发者手动启动本地模拟器，容易因模拟器状态污染、系统版本差异导致测试偶发失败。在构建插件中引入 GMD 声明：
+
+```kotlin
+// build-logic 中的托管设备配置
+android.testOptions.managedDevices.devices {
+    create<ManagedVirtualDevice>("pixel6api31aosp") {
+        device = "Pixel 6"
+        apiLevel = 31
+        systemImageSource = "aosp"
+    }
+}
+```
+
+* **命令**：`./gradlew pixel6api31aospDebugAndroidTest`
+* **优势**：Gradle 自动从官方源拉取纯净镜像、无头启动、执行测试用例、拉取报告并自动销毁容器，保障插桩测试结果 100% 可复现。
+
+### 禁用测试动画 `【已落地】`
+
+在测试配置中固定配置：
+
+```kotlin
+android.testOptions.animationsDisabled = true
+```
+
+全面禁用系统窗口动画、过渡动画与矢量动画，彻底消除插桩测试因动画延迟造成的 Flaky 偶发报错。
+
+### 代码覆盖率（JaCoCo 约定插件）`【已落地】`
+
+编写 `AndroidLibraryJacocoConventionPlugin` 与 `AndroidApplicationJacocoConventionPlugin`：
+* 自动为各模块挂载 `testDebugUnitTest` 与插桩测试的任务绑定；
+* 统一排除生成的 R 类、Dagger/Hilt 工厂代码与 BuildConfig 文件；
+* 生成统一的模块及全工程聚合 HTML / XML 覆盖率报告，提供 CI 质量看板。
 
 ## 命令速查
 

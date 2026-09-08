@@ -50,7 +50,7 @@ lib/
 - 包装器只关闭自己创建的底层 Client；注入实例始终由调用方管理，包装器关闭后不可复用
 - package:http 使用 `Uri` 规则解析 base URL、相对路径和绝对 URL
 
-完整能力对齐表见仓库根目录 `docs/libs.md`。
+完整能力对齐表见仓库根目录 `docs/05-catalog/libs.md`。
 
 ## 快速开始
 

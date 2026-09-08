@@ -46,7 +46,7 @@
 - **基础依赖**：Coroutines、Gson、Guava、Material、AndroidX（Core、Activity、Fragment、AppCompat、ConstraintLayout、RecyclerView、ViewPager2）、BRVAH、SmartRefresh
 - **测试依赖**：JUnit、AndroidX Test、Espresso
 - **功能模块依赖**：每个功能模块自动依赖其他所有功能模块（通过 `configureFeatureAndroid`）
-- **Convention Plugin**：13 个插件统一管理构建配置，详见 `docs/build-logic.md`
+- **Convention Plugin**：13 个插件统一管理构建配置，详见 `docs/02-engineering/build-logic.md`
 
 ## Activity 基类
 
@@ -120,7 +120,7 @@
 - 标题不超过 72 字符、结尾不加句号；正文写「为什么」而非复述改动
 - 常用 type：`feat` / `fix` / `docs` / `style` / `refactor` / `perf` / `test` / `build` / `ci` / `chore` / `revert`
 - scope 取模块名或领域名（`basic_lib` / `module_network` / `libs:lib_okhttp` / `flutter` / `ci`）
-- 完整规则、作者身份统一与历史遗留说明见 `docs/git.md`
+- 完整规则、作者身份统一与历史遗留说明见 `docs/01-rules/git.md`
 
 ## 构建与质量维护
 
@@ -158,11 +158,11 @@
 
 | 修改内容 | 需更新的文档 |
 |---------|------------|
-| 新增/删除/移动 Activity | `docs/modules.md` + `README.md` |
-| 新增/删除模块 | `docs/modules.md` + `README.md` + `AGENTS.md` |
-| 修改模块职责 | `docs/modules.md` + `README.md` |
-| 修改库封装 | `docs/libs.md` + 对应专题文档 + `README.md` |
-| 修改 OkHttp、Retrofit、Retrofit Rx 或 Ktor | `docs/network.md` + `docs/libs.md` + `README.md` |
-| 修改 Convention Plugin | `docs/build-logic.md` |
-| 修改关键约定 | `docs/conventions.md` |
+| 新增/删除/移动 Activity | `docs/05-catalog/modules.md` + `README.md` |
+| 新增/删除模块 | `docs/05-catalog/modules.md` + `README.md` + `AGENTS.md` |
+| 修改模块职责 | `docs/05-catalog/modules.md` + `README.md` |
+| 修改库封装 | `docs/05-catalog/libs.md` + 对应专题文档 + `README.md` |
+| 修改 OkHttp、Retrofit、Retrofit Rx 或 Ktor | `docs/04-domains/network.md` + `docs/05-catalog/libs.md` + `README.md` |
+| 修改 Convention Plugin | `docs/02-engineering/build-logic.md` |
+| 修改关键约定 | `docs/01-rules/conventions.md` |
 | 修改架构或技术栈 | `README.md` |

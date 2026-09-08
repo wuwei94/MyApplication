@@ -87,6 +87,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| WidgetMainActivity | 模块入口，导航到标准控件示例页面 |
 | AppBarActivity | AppBarLayout + CollapsingToolbarLayout + TabLayout |
 | DialogActivity | AlertDialog、DatePickerDialog、DialogFragment |
 | PopWindowActivity | PopupWindow 弹窗 |
@@ -107,6 +108,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| TabMainActivity | 模块入口，导航到多种 Tab 导航实现页面 |
 | TabHostActivity | FragmentTabHost 选项卡 |
 | FrameLayoutTabActivity | FrameLayout + RadioGroup Tab |
 | ViewPagerTabActivity | ViewPager + NoScrollViewPager + RadioGroup 联动 |
@@ -142,6 +144,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| WidgetCustomMainActivity | 模块入口，导航到自定义控件示例页面 |
 | AlertDialogActivity | 自定义 IosAlertDialog/BottomSheetDialog |
 | CustomPopWindowActivity | 自定义 PopupWindow 封装 |
 | BlurViewActivity | 自定义高斯模糊控件 |
@@ -185,6 +188,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| ComponentMainActivity | 模块入口，导航到组件交互与系统能力示例页面 |
 | BroadcastActivity | BroadcastReceiver 广播注册与发送 |
 | ActivityResultActivity | ActivityResultContracts 新版结果回调 API |
 | ActivityResultActivity2 | ActivityResultActivity 的目标页 |
@@ -278,7 +282,7 @@
 
 ### module_ml（机器学习 / AI）
 
-演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、真实模型推理、硬件加速与落地实践。详细技术指南参见 [docs/ml.md](file:///E:/StudioProjects/MyApplication/docs/ml.md)。
+演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、真实模型推理、硬件加速与落地实践。详细技术指南参见 [ml.md](file:///E:/StudioProjects/MyApplication/docs/04-domains/ml.md)。
 
 | Activity | 功能 |
 |----------|------|
@@ -320,6 +324,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| SseMainActivity | 模块入口，导航到 OkHttp / Ktor SSE 流式示例页面 |
 | OkHttpSseClientActivity | OkHttp SSE 原始回调版本（DeepSeek POST Prompt $\rightarrow$ 逐 Token 流式输出 $\rightarrow$ 收到 `[DONE]` 结束） |
 | OkHttpSseClientRxActivity | OkHttp SSE RxJava 封装版本（DeepSeek POST Observable 流 $\rightarrow$ 收到 `[DONE]` 触发 `onComplete()`） |
 | OkHttpSseClientFlowActivity | OkHttp SSE Coroutines Flow 封装版本（DeepSeek POST Flow $\rightarrow$ 协程生命周期感知与逐字打字机效果） |
@@ -334,6 +339,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| SocketMainActivity | 模块入口，导航到 WebSocket / TCP Socket 各方案示例页面 |
 | OkHttpWebSocketClientActivity | OkHttp WebSocket 普通版本（连接外部服务器） |
 | OkHttpWebSocketClientRxActivity | OkHttp WebSocket RxJava 封装版本 |
 | OkHttpWebSocketClientFlowActivity | OkHttp WebSocket Coroutines Flow 封装版本 |
@@ -391,6 +397,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| EventMainActivity | 模块入口，导航到各事件总线实现示例页面 |
 | EventBusActivity | EventBus（GreenRobot） |
 | RxEventBusActivity | RxEventBus（基于 RxJava） |
 | LiveEventBusActivity | LiveEventBus（基于 LiveData） |
@@ -458,6 +465,7 @@
 
 | Activity | 功能 |
 |----------|------|
+| KotlinMainActivity | 模块入口，导航到 Kotlin 语言特性示例页面 |
 | CoroutinesActivity | Kotlin 协程（线程切换、async/await 并发、supervisorScope 异常隔离、超时取消与 CoroutineExceptionHandler） |
 | FlowActivity | Kotlin Flow 数据流（冷流收集、数据变换、zip/combine 双流组合、debounce/flatMapLatest 防抖搜索、StateFlow/SharedFlow 热流与 catch/retry 重试） |
 | ChannelActivity | Kotlin Channel 与回调桥接（4 种缓冲模式、produce 生产消费模型、callbackFlow 回调防漏桥接与 channelFlow 跨协程并发发射） |
@@ -474,6 +482,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 | Activity | 功能 |
 |----------|------|
+| ReactiveMainActivity | 模块入口，导航到 Flow / RxJava 操作符对照示例页面 |
 | FlowOperatorsActivity | Kotlin Flow 操作符（flowOf/asFlow 创建、map/flatMapConcat/buffer 变换、filter/take/distinct 过滤、zip/combine 组合、catch 错误降级） |
 | RxJavaOperatorsActivity | RxJava 3 操作符（just/range 创建、map/flatMap/buffer 变换、filter/take/distinct 过滤、zip/concat 组合、onErrorReturn 错误恢复） |
 
@@ -538,7 +547,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_arch（架构模式）
 
-演示 Android 主流架构模式（MVP、MVVM、MVI、Compose MVI、Airbnb Mavericks 与 Offline-First & SSOT）。各架构模式在 `module_arch` 下分包并列管理，详见 [架构模式演进与选型指南](architecture.md)。
+演示 Android 主流架构模式（MVP、MVVM、MVI、Compose MVI、Airbnb Mavericks 与 Offline-First & SSOT）。各架构模式在 `module_arch` 下分包并列管理，详见 [架构模式演进与选型指南](../03-architecture/architecture.md)。
 
 | Activity | 功能 |
 |----------|------|

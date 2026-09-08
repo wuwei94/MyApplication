@@ -297,7 +297,7 @@ MyApplication/
 
 ### module_http（HTTP 网络请求）
 
-集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call / 协程 / RxJava）以及 Rx 动态请求与文件传输。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加响应、日志与原位更新进度；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/network.md)，上传、下载与并发约定详见 [文件上传与下载](docs/transfer.md)。
+集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call / 协程 / RxJava）以及 Rx 动态请求与文件传输。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加响应、日志与原位更新进度；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/04-domains/network.md)，上传、下载与并发约定详见 [文件上传与下载](docs/04-domains/transfer.md)。
 
 - `httpurl`：HttpURLConnection 原生网络请求
 - `volley`：Volley 基础请求
@@ -489,10 +489,10 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **提交信息**：遵循 Conventional Commits（`<type>(<scope>): <subject>`），由 `tools/commit-msg` 自动校验
 - **质量门禁**：`./tools/install-git-hooks.sh` 安装钩子，提交时校验提交信息格式，推送时执行 `spotlessCheck` 与变更模块 `lintProdDebug`
 - **代码规范**：Spotless + ktlint，执行 `./gradlew spotlessApply` 自动格式化
-- **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/testing.md`
-- **工程化实践**：基于 Now in Android 的构建与版本治理、测试三支柱、性能基准（Macrobenchmark + Baseline Profile）与门禁防御，详见 `docs/engineering.md`
+- **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/02-engineering/testing.md`
+- **工程化实践**：基于 Now in Android 的构建与版本治理、测试三支柱、性能基准（Macrobenchmark + Baseline Profile）与门禁防御，详见 `docs/02-engineering/engineering.md`（总览）与 `docs/02-engineering/engineering-build.md`（分册）
 - **注释语言**：代码注释与文档默认使用中文
-- 完整技术文档导航详见 [docs/README.md](docs/README.md)，专项规范参见 `docs/git.md`、`docs/conventions.md`、`docs/architecture.md`、`docs/testing.md` 与 `docs/engineering.md`
+- 完整技术文档导航详见 [docs/README.md](docs/README.md)，专项规范参见 `docs/01-rules/git.md`、`docs/01-rules/conventions.md`、`docs/03-architecture/architecture.md`、`docs/02-engineering/testing.md` 与 `docs/02-engineering/engineering.md`
 
 ---
 

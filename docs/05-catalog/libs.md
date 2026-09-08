@@ -6,15 +6,15 @@
 
 | 模块 | 职责 | 主要依赖 | 详细文档 |
 |------|------|----------|----------|
-| `lib_okhttp` | OkHttp Client DSL、配置适配和 Interceptor | OkHttp | [Android 网络请求封装](network.md) |
-| `lib_retrofit` | Retrofit DSL、响应转换和统一异常 | Retrofit、`lib_okhttp` | [Android 网络请求封装](network.md) |
-| `lib_retrofit_rx` | Retrofit 注解接口的 RxJava3 调用、默认调度与回调 | RxJava3、`lib_retrofit` | [Android 网络请求封装](network.md) |
-| `lib_rx_request` | 运行时动态 Retrofit 请求 Builder | `lib_retrofit_rx` | [Android 网络请求封装](network.md) |
-| `lib_ktor` | 固定使用 OkHttp Engine 的 Ktor 项目封装 | Ktor、OkHttp | [Android 网络请求封装](network.md) |
+| `lib_okhttp` | OkHttp Client DSL、配置适配和 Interceptor | OkHttp | [Android 网络请求封装](../04-domains/network.md) |
+| `lib_retrofit` | Retrofit DSL、响应转换和统一异常 | Retrofit、`lib_okhttp` | [Android 网络请求封装](../04-domains/network.md) |
+| `lib_retrofit_rx` | Retrofit 注解接口的 RxJava3 调用、默认调度与回调 | RxJava3、`lib_retrofit` | [Android 网络请求封装](../04-domains/network.md) |
+| `lib_rx_request` | 运行时动态 Retrofit 请求 Builder | `lib_retrofit_rx` | [Android 网络请求封装](../04-domains/network.md) |
+| `lib_ktor` | 固定使用 OkHttp Engine 的 Ktor 项目封装 | Ktor、OkHttp | [Android 网络请求封装](../04-domains/network.md) |
 | `lib_volley` | 轻量级 HTTP 请求封装 | Volley | - |
 | `lib_httpurl` | `HttpURLConnection` 基础请求工具 | Android SDK | - |
-| `lib_rx_download` | Retrofit + Rx 单/批量下载、业务级并发、断点续传和聚合进度 | `lib_retrofit_rx` | [文件上传与下载](transfer.md) |
-| `lib_rx_upload` | Retrofit + Rx 链式 Multipart 单/多文件上传和进度 | `lib_retrofit_rx` | [文件上传与下载](transfer.md) |
+| `lib_rx_download` | Retrofit + Rx 单/批量下载、业务级并发、断点续传和聚合进度 | `lib_retrofit_rx` | [文件上传与下载](../04-domains/transfer.md) |
+| `lib_rx_upload` | Retrofit + Rx 链式 Multipart 单/多文件上传和进度 | `lib_retrofit_rx` | [文件上传与下载](../04-domains/transfer.md) |
 | `lib_websocket_okhttp` | OkHttp WebSocket 客户端 | OkHttp WebSocket | - |
 | `lib_websocket_java` | Java-WebSocket 客户端与服务端 | Java-WebSocket | - |
 | `lib_netty` | Netty TCP 客户端与服务端 | Netty | - |
@@ -28,9 +28,9 @@
 | `lib_eventbus` | 事件总线封装 | EventBus | - |
 | `lib_widget` | 自定义 Widget 集合 | Android View | - |
 | `lib_ninepatch` | NinePatch 图片处理 | Android Graphics | - |
-| `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../flutter/flutter_libs/lib_network_dio/README.md) |
-| `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../flutter/flutter_libs/lib_network_http/README.md) |
-| `lib_storage` | Flutter 键值存储封装（内核可切换，默认 Hive） | Hive、shared_preferences | [package README](../flutter/flutter_libs/lib_storage/README.md) |
+| `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../../flutter/flutter_libs/lib_network_dio/README.md) |
+| `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../../flutter/flutter_libs/lib_network_http/README.md) |
+| `lib_storage` | Flutter 键值存储封装（内核可切换，默认 Hive） | Hive、shared_preferences | [package README](../../flutter/flutter_libs/lib_storage/README.md) |
 
 ## 通用约定
 
@@ -88,7 +88,7 @@ com.example.william.my.core.rx.request/
 
 ### lib_rx_upload
 
-通过 `RxUpload.builder()` 创建固定使用 Retrofit `POST @Body` 的不可变 Multipart 上传请求，支持通过 `addFile()` 或 `addFiles()` 添加单/多文件、表单字段、Header 和整体请求体进度，成功结果统一为 `UploadResult`。`RxUploadCallback` 与下载回调一样只描述业务状态，由请求对象负责适配 RxJava 订阅；库会为上传派生关闭连接失败重试的 Retrofit，其他可能重放请求的机制由调用方控制。详细调用与行为约束见[文件上传与下载](transfer.md)。
+通过 `RxUpload.builder()` 创建固定使用 Retrofit `POST @Body` 的不可变 Multipart 上传请求，支持通过 `addFile()` 或 `addFiles()` 添加单/多文件、表单字段、Header 和整体请求体进度，成功结果统一为 `UploadResult`。`RxUploadCallback` 与下载回调一样只描述业务状态，由请求对象负责适配 RxJava 订阅；库会为上传派生关闭连接失败重试的 Retrofit，其他可能重放请求的机制由调用方控制。详细调用与行为约束见[文件上传与下载](../04-domains/transfer.md)。
 
 ### WebSocket、TCP、MQTT 与 HTTP Server
 
