@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  模板页通用列表项（目录导航 / 操作列表共用）
+  行样式：可点击水波纹 + 56dp 最小行高 + 底部分割线
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/shared_dp_48"
-        android:paddingStart="@dimen/shared_dp_8"
-        android:paddingEnd="@dimen/shared_dp_8" />
+        android:minHeight="@dimen/shared_dp_item_height"
+        android:paddingStart="@dimen/shared_dp_16"
+        android:paddingEnd="@dimen/shared_dp_16"
+        android:textSize="@dimen/shared_sp_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/shared_dp_divider"
+        android:background="?attr/colorOutlineVariant" />
 
 </LinearLayout>

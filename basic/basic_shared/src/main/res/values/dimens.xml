@@ -10,6 +10,7 @@
     <dimen name="shared_dp_56">56dp</dimen>
     <dimen name="shared_dp_64">64dp</dimen>
     <dimen name="shared_dp_72">72dp</dimen>
+    <dimen name="shared_dp_300">300dp</dimen>
 
     <!-- 文字大小（sp） -->
     <dimen name="shared_sp_12">12sp</dimen>
@@ -32,16 +33,15 @@
     <!-- 底部导航栏 / Tab 高度（Material 3 标准高度为 80dp） -->
     <dimen name="shared_dp_tab_height">80dp</dimen>
 
-    <!-- 图片 / 响应展示区 -->
+    <!-- 图片尺寸 -->
     <dimen name="shared_dp_image_size">200dp</dimen>
-    <dimen name="shared_dp_response_size">300dp</dimen>
-
+    <!-- 操作列表统一固定高度 -->
+    <dimen name="shared_dp_operation_height">300dp</dimen>
     <!-- 头像 / 大图标 -->
     <dimen name="shared_dp_avatar_size">80dp</dimen>
 
     <!-- 悬浮窗 -->
-    <dimen name="shared_dp_float_window_size">96dp</dimen>
-
+    <dimen name="shared_dp_float_size">96dp</dimen>
     <!-- 加载弹窗 -->
     <dimen name="shared_dp_loading_size">120dp</dimen>
 

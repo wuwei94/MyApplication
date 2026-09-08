@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/basics_response_container"
         android:layout_width="0dp"
-        android:layout_height="@dimen/shared_dp_response_size"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/shared_dp_8"
         android:background="@drawable/shared_bg_response_console"
         app:layout_constraintBottom_toTopOf="@id/basics_recycler"
@@ -91,7 +91,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/basics_recycler"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/shared_dp_operation_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

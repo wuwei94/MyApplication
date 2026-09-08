@@ -19,7 +19,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/basics_recycler"
         android:layout_width="0dp"
-        android:layout_height="@dimen/shared_dp_response_size"
+        android:layout_height="@dimen/shared_dp_operation_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
