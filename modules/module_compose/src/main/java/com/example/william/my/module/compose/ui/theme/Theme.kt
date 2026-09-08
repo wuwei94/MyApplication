@@ -8,11 +8,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Density
-import com.example.william.my.module.compose.utils.dynamicDensity
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -57,38 +53,5 @@ fun MyApplicationTheme(
         colorScheme = colorScheme,
         typography = Typography,
         content = content,
-    )
-}
-
-@Composable
-fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // 动态取色仅在 Android 12+ 可用
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit,
-) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
-    val appDensity = Density(
-        density = dynamicDensity(360f, 640f),
-        fontScale = LocalDensity.current.fontScale,
-    )
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = {
-            CompositionLocalProvider(LocalDensity provides appDensity) {
-                content()
-            }
-        },
     )
 }

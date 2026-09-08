@@ -46,7 +46,6 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | | docs/engineering.md | 现代 Android 工程化实践指南（构建系统、静态治理、测试三支柱、性能基准、门禁防御） |
 | **架构评估** | docs/architecture.md | 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First） |
 | | docs/modularization.md | 现代组件化架构演进与技术选型（ARouter 停更原因、大厂主流方案、API-Impl 与 TheRouter） |
-| | docs/nia-adoption.md | Now in Android 落地评估（能力落差对照、12 项落地方案与推进顺序、不建议照搬清单） |
 | | docs/testing.md | 测试体系（Turbine + 手写测试替身、测试命名 Lint 规则、Roborazzi 截图测试） |
 | **专项指南** | docs/network.md | OkHttp、Retrofit、Retrofit Rx 与 Ktor 的使用约定和功能边界 |
 | | docs/transfer.md | Rx 文件上传、下载、断点续传与并发队列约定 |

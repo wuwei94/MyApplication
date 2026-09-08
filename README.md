@@ -15,7 +15,7 @@
 - **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / SSE / Provider / GetX / BloC。
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
 - **自定义 View & 图表**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等；MPAndroidChart 折线/柱状/饼图/雷达图与多图表全景看板联动。
-- **Compose**：Navigation、BackHandler、手势 / 拖拽 / `rememberSaveable`、SmartRefresh、Canvas 自绘贝塞尔折线/分组圆角柱状/甜甜圈/雷达图等多图表联动。
+- **Compose**：Navigation 2.8+ 类型安全导航与 Nav3、Edge-to-Edge 沉浸与 Insets 软键盘避让、Material 3 完整组件体系、手势/缩放/拖拽、SmartRefresh、Canvas 自绘贝塞尔折线/柱状/饼图/雷达图等多图表全景看板。
 
 ---
 

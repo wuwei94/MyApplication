@@ -16,6 +16,9 @@ androidDesugarJdkLibs = "2.1.5"
 # Kotlin 官方协程库（异步编程与流式处理）
 # GitHub: https://github.com/Kotlin/kotlinx.coroutines
 kotlinxCoroutines = "1.10.2"
+# Kotlin 官方高性能多平台 JSON 序列化库
+# GitHub: https://github.com/Kotlin/kotlinx.serialization
+kotlinxSerialization = "1.8.1"
 # Turbine: Kotlin Flow 测试断言库（StateFlow/SharedFlow 事件序列断言）
 # GitHub: https://github.com/cashapp/turbine
 turbine = "1.2.0"
@@ -398,6 +401,8 @@ kotlinx-coroutines-rx3 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 # Turbine Flow 断言库（StateFlow/SharedFlow 事件序列断言）
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+# Kotlin 官方 JSON 序列化库（Navigation 强类型路由与数据解析）
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 # ==============================================================================
 # 2. Google 核心基础库与 Material Design
@@ -809,6 +814,8 @@ android-test = { id = "com.android.test", version.ref = "gradlePluginAndroid" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "gradlePluginKotlin" }
 # Kotlin Compose 编译器插件 (Kotlin 2.0+)
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "gradlePluginKotlin" }
+# Kotlin 官方序列化编译器插件 (用于 Navigation 2.8+ 类型安全路由)
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "gradlePluginKotlin" }
 
 # Google KSP (Kotlin Symbol Processing) 注解处理插件
 android-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePluginKsp" }

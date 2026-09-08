@@ -2,33 +2,47 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".activity.ComposeActivity" />
-        <activity android:name=".activity.ComposeViewActivity" />
         <activity android:name=".ComposeMainActivity" />
+        <activity android:name=".activity.composeview.ComposeViewActivity" />
+        <activity android:name=".activity.androidview.AndroidViewActivity" />
         <activity android:name=".activity.basic.TextActivity" />
         <activity android:name=".activity.basic.ButtonActivity" />
+        <activity android:name=".activity.selection.SelectionActivity" />
+        <activity android:name=".activity.chip.ChipActivity" />
+        <activity android:name=".activity.menu.MenuActivity" />
+        <activity android:name=".activity.progress.ProgressActivity" />
         <activity android:name=".activity.basic.ImageActivity" />
-        <activity android:name=".activity.basic.CanvasActivity" />
+        <activity android:name=".activity.textfield.TextFieldActivity" />
+        <activity android:name=".activity.theme.ThemeActivity" />
+        <activity android:name=".activity.canvas.CanvasActivity" />
         <activity android:name=".activity.basic.EffectActivity" />
-        <activity android:name=".activity.chart.ComposeLineChartActivity" />
-        <activity android:name=".activity.chart.ComposeBarChartActivity" />
-        <activity android:name=".activity.chart.ComposePieChartActivity" />
-        <activity android:name=".activity.chart.ComposeRadarChartActivity" />
-        <activity android:name=".activity.chart.ComposeChartLinkageActivity" />
+        <activity android:name=".activity.collapsingtopbar.CollapsingTopBarActivity" />
         <activity android:name=".activity.basic.ConstraintLayoutActivity" />
-        <activity android:name=".activity.basic.HorizontalPagerActivity" />
+        <activity android:name=".activity.insets.InsetsActivity" />
         <activity android:name=".activity.basic.CompositionLocalActivity" />
-        <activity android:name=".activity.coordinator.CoordinatorLayoutActivity" />
-        <activity android:name=".activity.draggable.DraggableActivity" />
+        <activity android:name=".activity.bottomsheet.BottomSheetActivity" />
+        <activity android:name=".activity.dialog.DialogActivity" />
+        <activity android:name=".activity.adaptive.AdaptiveActivity" />
+        <activity android:name=".activity.remember.RememberActivity" />
+        <activity android:name=".activity.animation.AnimationActivity" />
+        <activity android:name=".activity.performance.PerformanceActivity" />
         <activity android:name=".activity.draggable.DragGesturesActivity" />
+        <activity android:name=".activity.transformgestures.TransformGesturesActivity" />
+        <activity android:name=".activity.anchoreddraggable.AnchoredDraggableActivity" />
         <activity android:name=".activity.dragging.GuaguaCardActivity" />
-        <activity android:name=".activity.backhandler.BackHandlerActivity" />
         <activity android:name=".activity.navhost.NavHostActivity" />
         <activity android:name=".activity.navigation.NavigationBarActivity" />
-        <activity android:name=".activity.remember.RememberActivity" />
-        <activity android:name=".activity.swipeable.AnchoredDraggableActivity" />
-        <activity android:name=".activity.smartrefresh.SmartRefreshActivity" />
+        <activity android:name=".activity.nav3.Nav3Activity" />
+        <activity android:name=".activity.sharedelement.SharedElementActivity" />
         <activity android:name=".activity.tab.ScrollableTabActivity" />
+        <activity android:name=".activity.smartrefresh.SmartRefreshActivity" />
+        <activity android:name=".activity.staggeredgrid.StaggeredGridActivity" />
+        <activity android:name=".activity.lazylayout.LazyLayoutActivity" />
+        <activity android:name=".activity.chart.LineChartActivity" />
+        <activity android:name=".activity.chart.BarChartActivity" />
+        <activity android:name=".activity.chart.PieChartActivity" />
+        <activity android:name=".activity.chart.RadarChartActivity" />
+        <activity android:name=".activity.chart.ChartLinkageActivity" />
     </application>
 
 </manifest>

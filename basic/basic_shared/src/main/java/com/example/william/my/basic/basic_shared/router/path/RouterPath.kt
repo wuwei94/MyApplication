@@ -489,39 +489,48 @@ object RouterPath {
 
         const val Main = "$PATH/Main"
 
-        const val ComposeActivity = "$PATH/ComposeActivity"
+        // ── 基础组件与混排 ──
         const val ComposeViewActivity = "$PATH/ComposeViewActivity"
-
+        const val AndroidView = "$PATH/AndroidView"
         const val Text = "$PATH/Text"
         const val Button = "$PATH/Button"
+        const val Selection = "$PATH/Selection"
+        const val Chip = "$PATH/Chip"
+        const val Menu = "$PATH/Menu"
+        const val Progress = "$PATH/Progress"
         const val Image = "$PATH/Image"
+        const val TextField = "$PATH/TextField"
+        const val Theme = "$PATH/Theme"
         const val Canvas = "$PATH/Canvas"
+        const val Effect = "$PATH/Effect"
 
+        // ── 布局与容器机制 ──
+        const val CollapsingTopBar = "$PATH/CollapsingTopBar"
         const val ConstraintLayout = "$PATH/ConstraintLayout"
-        const val HorizontalPager = "$PATH/HorizontalPager"
-
-        const val BackHandler = "$PATH/BackHandler"
-
+        const val Insets = "$PATH/Insets"
         const val CompositionLocal = "$PATH/CompositionLocal"
+        const val BottomSheet = "$PATH/BottomSheet"
+        const val Dialog = "$PATH/Dialog"
+        const val Adaptive = "$PATH/Adaptive"
 
-        const val CoordinatorLayout = "$PATH/CoordinatorLayout"
-
-        const val Draggable = "$PATH/Draggable"
+        // ── 状态与手势交互 ──
+        const val Remember = "$PATH/Remember"
+        const val Animation = "$PATH/Animation"
+        const val Performance = "$PATH/Performance"
         const val DragGestures = "$PATH/DragGestures"
-
+        const val TransformGestures = "$PATH/TransformGestures"
+        const val AnchoredDraggable = "$PATH/AnchoredDraggable"
         const val GuaguaCard = "$PATH/GuaguaCard"
 
+        // ── 现代导航与列表 ──
         const val NavHost = "$PATH/NavHost"
-
         const val NavigationBar = "$PATH/NavigationBar"
-
-        const val Remember = "$PATH/Remember"
-
-        const val AnchoredDraggable = "$PATH/AnchoredDraggable"
-
-        const val SmartRefresh = "$PATH/SmartRefresh"
-
+        const val Nav3 = "$PATH/Nav3"
+        const val SharedElement = "$PATH/SharedElement"
         const val ScrollableTab = "$PATH/ScrollableTab"
+        const val SmartRefresh = "$PATH/SmartRefresh"
+        const val StaggeredGrid = "$PATH/StaggeredGrid"
+        const val LazyLayout = "$PATH/LazyLayout"
 
         // ── 数据可视化图表 (Compose Canvas) ──
         const val LineChart = "$PATH/LineChart"

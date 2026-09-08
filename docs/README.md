@@ -1,4 +1,4 @@
-﻿# MyApplication 技术文档导航
+# MyApplication 技术文档导航
 
 > 本目录收录项目的所有技术规范、架构决策、技术选型对比与专项开发指南。
 > 采用**「物理平铺、逻辑分层」**结构，所有文档均位于 `docs/` 根目录下，通过本文件进行四维逻辑导航。
@@ -20,7 +20,6 @@ mindmap
     架构设计与评估
       architecture.md["六大架构模式演进与选型"]
       modularization.md["组件化架构与路由演进"]
-      nia-adoption.md["Now in Android 落地评估"]
       testing.md["测试体系与命名 Lint 门禁"]
     专项技术指南
       network.md["网络通信规范 (Retrofit / Ktor)"]
@@ -60,7 +59,6 @@ mindmap
 | :--- | :--- | :--- |
 | [architecture.md](architecture.md) | **架构模式演进与选型** | MVP、MVVM、MVI、Compose MVI、Airbnb Mavericks 与 Offline-First 全景对比及选型树 |
 | [modularization.md](modularization.md) | **现代组件化演进** | ARouter 现状、业界主流解耦方案（TheRouter / WMRouter）、API-Impl 架构设计 |
-| [nia-adoption.md](nia-adoption.md) | **Now in Android 落地评估** | 12 项能力落差对照、AGP 10.0 迁移风险识别、渐进式落地推进计划 |
 | [testing.md](testing.md) | **测试体系** | Turbine 流测试、手写测试替身、自定义方法名 Lint 门禁、Roborazzi 截图回归 |
 
 ---

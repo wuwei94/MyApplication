@@ -554,37 +554,51 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_compose（Compose UI）
 
-演示 Jetpack Compose 组件。
+演示 Jetpack Compose 基础组件、运行时机制、布局与现代架构体系。
 
 | Activity | 功能 |
 |----------|------|
 | ComposeMainActivity | Compose 模块入口导航页 |
-| ComposeActivity | Compose 入门（声明式 UI / 组件复用） |
-| ComposeViewActivity | ComposeView 在传统 View 中嵌入 Compose 混排 |
-| TextActivity | Text 组件 |
-| ButtonActivity | Button 组件 |
-| ImageActivity | Image 组件 |
-| CanvasActivity | Canvas 自定义绘制 |
-| EffectActivity | 副作用 API |
-| ConstraintLayoutActivity | ConstraintLayout |
-| HorizontalPagerActivity | HorizontalPager |
-| CompositionLocalActivity | CompositionLocal |
-| CoordinatorLayoutActivity | CoordinatorLayout |
-| DraggableActivity | draggable 修饰符 |
-| DragGesturesActivity | detectDragGestures 手势 |
-| GuaguaCardActivity | 刮刮卡效果 |
-| BackHandlerActivity | BackHandler |
-| NavHostActivity | Navigation NavHost |
-| NavigationBarActivity | NavigationBar（Material 3 底部导航栏） |
-| RememberActivity | 状态管理（remember） |
-| AnchoredDraggableActivity | 锚定拖拽 |
-| SmartRefreshActivity | 下拉刷新 |
-| ScrollableTabActivity | 可滚动标签页 |
-| ComposeLineChartActivity | Compose Canvas 折线图（贝塞尔平滑曲线、渐变面积填充与 pointerInput 十字吸附 Tooltip） |
-| ComposeBarChartActivity | Compose Canvas 柱状图（drawRoundRect 分组圆角矩形柱、触控高亮与达成率分析） |
-| ComposePieChartActivity | Compose Canvas 环形饼图（drawArc 甜甜圈图、animateFloatAsState 扇区外扩动画与中心数字） |
-| ComposeRadarChartActivity | Compose Canvas 雷达图（4 层蛛网正多边形自绘、双数据集对比与能力等级评估） |
-| ComposeChartLinkageActivity | Compose Canvas 多图表联动看板（主控时间轴状态提升、跨组件数据流与实时重组） |
+| ComposeViewActivity | View 宿主中嵌入 Compose（老工程/XML 渐进式接入，配置 DisposeOnViewTreeLifecycleDestroyed 生命周期策略与双向通信） |
+| AndroidViewActivity | Compose 树中嵌入原生 View（老控件/地图/视频等互操作，实现双向状态同步与生命周期托管） |
+| TextActivity | Text 文本排版（Material 3 Typography 体系、AnnotatedString 富文本与超链接、SelectionContainer 选中复制与截断控制） |
+| ButtonActivity | Button 交互控件（Material 3 五大按钮类型、带图标按钮、IconButton 家族、FAB 与异步加载态） |
+| SelectionActivity | Selection 选择器与开关（Checkbox 与 TriStateCheckbox 三态全选联动、带状态图标 Switch、RadioButton 单选组、离散与连续 Slider 及 RangeSlider） |
+| ChipActivity | Chip 标签芯片（Material 3 四大标准芯片：FilterChip 多选过滤、InputChip 输入卡片与删除、SuggestionChip 联想词、AssistChip 辅助操作及 Elevated 变体） |
+| MenuActivity | Menu 弹出菜单与表单选择（DropdownMenu 标准上下文浮层、快捷键提示与 ExposedDropdownMenuBox 现代化只读下拉选择框） |
+| ProgressActivity | Progress 进度指示器（LinearProgressIndicator 线性进度条、CircularProgressIndicator 圆形环状进度条、确定态/非确定态与圆角端点定制） |
+| ImageActivity | Image 图像处理（ContentScale 缩放策略、CircleShape/圆角裁剪描边与 ColorFilter 着色滤镜） |
+| TextFieldActivity | TextField 表单输入（输入框形态对比、FocusRequester 焦点控制、软键盘行为与格式化分段） |
+| ThemeActivity | Theme 动态样式（Material 3 动态取色、深浅色模式热切换与 Typography 排版规范） |
+| CanvasActivity | Canvas 原子自绘（DrawScope 原生绘图 API：点/线/矩形/圆/弧/渐变与贝塞尔路径基石） |
+| RememberActivity | 状态管理（remember 组合内状态记忆、rememberSaveable 跨进程与配置变更持久化、derivedStateOf 派生状态） |
+| EffectActivity | 副作用 API 体系（LaunchedEffect 挂起协程与 Key 重启、SideEffect 非挂起状态同步、DisposableEffect 生命周期注销与 rememberUpdatedState 防陈旧闭包值） |
+| CompositionLocalActivity | CompositionLocal 数据穿透（隐式向下跨层级传递组合数据、compositionLocalOf 细粒度重组 vs staticCompositionLocalOf 全量重组机制对比与内置 Local 工具） |
+| PerformanceActivity | Performance 性能优化（@Immutable/@Stable 稳定性注解、SideEffect 重组执行计数对比、derivedStateOf 滚动状态削峰防抖） |
+| ConstraintLayoutActivity | ConstraintLayout 约束布局（ConstraintSet 引用绑定、屏障与链式排布） |
+| InsetsActivity | Insets 边到边沉浸与安全区避让（Android 15+ Edge-to-Edge 规范、statusBars / navigationBars 实时高度、imePadding 软键盘平滑避让与 imeNestedScroll 连带滚动） |
+| AdaptiveActivity | Adaptive 自适应布局（WindowSizeClass 断点适配、手机单栏与平板/折叠屏 List-Detail 双窗格响应式重排） |
+| CollapsingTopBarActivity | CollapsingTopBar 折叠吸顶标题栏（Material 3 LargeTopAppBar、exitUntilCollapsedScrollBehavior 与 nestedScroll 嵌套视差滚动） |
+| BottomSheetActivity | BottomSheet 模态底栏（Material 3 ModalBottomSheet、手势拖拽半展开/全展开与关闭联动） |
+| DialogActivity | Dialog 对话框（AlertDialog 确认弹窗、自定义卡片弹窗与带 Action 的 Snackbar 浮动提示条） |
+| LazyLayoutActivity | LazyLayout 列表高级进阶（stickyHeader 字母/分组吸顶悬浮标题、Modifier.animateItem 增删重排平滑动效与触底加载指示器） |
+| StaggeredGridActivity | StaggeredGrid 交错瀑布流（LazyVerticalStaggeredGrid、多列与自适应列策略、滚动感知回到顶部） |
+| SmartRefreshActivity | SmartRefresh 下拉刷新（LazyColumn 列表下拉刷新与上拉加载更多适配） |
+| ScrollableTabActivity | ScrollableTabRow 与 HorizontalPager 联动（可滚动标签栏、分页容器双向手势联动、圆点指示器与程序化跳页） |
+| AnimationActivity | Animation 声明式动画（AnimatedVisibility 出入场动效、animateContentSize 尺寸形变与 Crossfade 过渡） |
+| DragGesturesActivity | 拖拽手势原语（Modifier.draggable 单轴约束拖拽与 detectDragGestures 自由全向拖拽原语） |
+| TransformGesturesActivity | TransformGestures 多指复合手势（detectTransformGestures 双指缩放/旋转/平移、graphicsLayer 硬件加速矩阵变换与实时参数看板） |
+| AnchoredDraggableActivity | AnchoredDraggable 锚定拖拽（多锚点磁吸吸附、列表项 Swipe-to-Reveal 侧滑露出操作项与编程式复位） |
+| GuaguaCardActivity | 刮刮卡擦除实战（手势擦除与 Canvas BlendMode 图层混合遮罩动效实战） |
+| NavHostActivity | Navigation 2.x 路由宿主（Navigation 2.8+ 时代：NavController 集中控制、强类型安全路由模型与编译期参数解析） |
+| Nav3Activity | Navigation 3.x 声明式架构（Navigation 3.0 时代：推翻黑盒控制器，纯状态提升返回栈 SnapshotStateList 与 NavDisplay 解耦渲染） |
+| NavigationBarActivity | Material 3 底部导航栏 UI（纯视觉交互组件，展示 Tab 标签切换、BadgedBox 未读角标与多返回栈联动驱动） |
+| SharedElementActivity | SharedElement 共享元素转场（Compose 官方 SharedTransitionLayout、图片连续缩放与卡片平滑扩散） |
+| LineChartActivity | Compose Canvas 折线图（贝塞尔平滑曲线、渐变面积填充与 pointerInput 十字吸附 Tooltip） |
+| BarChartActivity | Compose Canvas 柱状图（drawRoundRect 分组圆角矩形柱、触控高亮与达成率分析） |
+| PieChartActivity | Compose Canvas 环形饼图（drawArc 甜甜圈图、animateFloatAsState 扇区外扩动画与中心数字） |
+| RadarChartActivity | Compose Canvas 雷达图（4 层蛛网正多边形自绘、双数据集对比与能力等级评估） |
+| ChartLinkageActivity | Compose Canvas 多图表联动看板（主控时间轴状态提升、跨组件数据流与实时重组） |
 
 ---
 

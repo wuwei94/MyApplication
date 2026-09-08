@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.nowinandroid.android.eventbus)
     // Roborazzi 截图测试（提供 recordRoborazziDemoDebug / verifyRoborazziDemoDebug 任务）
     alias(libs.plugins.roborazzi)
+    // Kotlin 官方序列化插件（用于 Navigation 2.8+ 类型安全导航路由模型）
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -27,6 +29,9 @@ roborazzi {
 dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
+
+    // Kotlin 官方序列化解析（Navigation 类型安全路由参数解析）
+    implementation(libs.kotlinx.serialization.json)
 
     // Compose 下拉刷新扩展组件
     implementation(libs.smartrefresh.compose)
