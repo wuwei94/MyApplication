@@ -46,7 +46,7 @@ mindmap
 | [comments.md](comments.md) | **代码注释规范** | 中文优先、KDoc 结构分层、选型与约束注释保护、最小修改切片 |
 | [design.md](design.md) | **设计规范** | 4dp 网格间距、字体阶梯、圆角规范、统一图标尺寸系统 |
 | [git.md](git.md) | **Git 提交规范** | Conventional Commits 格式要求、标题字数与中文门禁、本地钩子安装 |
-| [build-logic.md](build-logic.md) | **构建逻辑** | 22 个 Convention Plugin 插件配置、依赖聚合与构建隔离 |
+| [build-logic.md](build-logic.md) | **构建逻辑** | 19 个 Convention Plugin 插件配置、依赖聚合与构建隔离 |
 | [engineering.md](engineering.md) | **现代工程化实践** | 构建系统演进、静态语法治理、测试三支柱、基准配置文件与门禁防御 |
 
 ---

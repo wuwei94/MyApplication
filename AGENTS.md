@@ -42,7 +42,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | | docs/comments.md | 代码注释规范（语言、KDoc 格式、内容层次、保护准则） |
 | | docs/design.md | 设计规范（间距、文字、圆角、图标尺寸体系） |
 | | docs/git.md | Git 提交规范（Conventional Commits、提交模板、钩子门禁与历史遗留） |
-| | docs/build-logic.md | 构建逻辑（22 个 Convention Plugin 配置详情） |
+| | docs/build-logic.md | 构建逻辑（19 个 Convention Plugin 配置详情） |
 | | docs/engineering.md | 现代 Android 工程化实践指南（构建系统、静态治理、测试三支柱、性能基准、门禁防御） |
 | **架构评估** | docs/architecture.md | 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First） |
 | | docs/modularization.md | 现代组件化架构演进与技术选型（ARouter 停更原因、大厂主流方案、API-Impl 与 TheRouter） |

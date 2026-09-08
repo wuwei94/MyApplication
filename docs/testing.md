@@ -90,6 +90,20 @@ src/test/
    - sdk 固定（34），避免多 SDK 下字体度量差异。
 3. **按需引入**：`testing-screenshot` bundle 只在截图测试模块声明（`testImplementation(platform(compose-bom))` + bundle），不进全局公共依赖，避免拖慢其它模块编译。
 4. **覆盖矩阵**：每个组件至少亮 / 暗主题两张（`MyApplicationTheme(darkTheme = ...)`）。
+5. **同步无障碍检查（RoboAccessibility + ATF）`【演进规划 - 待落地】`**：
+   在 UI 截图的同时，挂载 Accessibility Testing Framework 进行静态无障碍断言：
+   ```kotlin
+   captureRoboImage(filePath) {
+       checkRoboAccessibility(AccessibilityCheckPreset.LATEST)
+   }
+   ```
+   自动拦截触控区域小于 48dp、文本与背景对比度不达标（< 4.5:1）、缺少 `contentDescription` 等无障碍合规缺陷。
+
+### 共享测试替身演进（`basic:basic_testing`）`【演进规划 - 待落地】`
+
+当前测试替身（如 `FakeNumberSource`）散落在业务模块单测目录下。后续规划参考 Google NiA 的 `:core:testing`，建立全局独立的纯测试共享库 `:basic:basic_testing`：
+* 集中提供全局 `MainDispatcherRule` 与 `TestDispatchersModule`（通过 `@TestInstallIn` 自动替换 Hilt 生产调度器）；
+* 统一下沉跨模块通用的 Fake Repository、Fake 监视器（`FakeNetworkMonitor` / `FakeTimeZoneMonitor`）及测试数据集工厂。
 
 ### 已知边界
 

@@ -17,25 +17,30 @@ build-logic/convention/src/main/kotlin/
 │   ├── AndroidInstrumentedTests.kt     # 禁用空测试模块
 │   ├── Graph.kt                        # 依赖拓扑图生成逻辑
 │   └── Spotless.kt                     # Spotless + ktlint 代码格式化配置
-├── AndroidLibraryConventionPlugin.kt           # Library 模块插件
-├── AndroidApplicationConventionPlugin.kt       # Application 模块插件
-├── AndroidFeatureConventionPlugin.kt           # Feature 业务功能模块插件
-├── AndroidFeatureComposeConventionPlugin.kt   # Feature Compose 业务功能模块插件
-├── JvmLibraryConventionPlugin.kt               # 纯 Kotlin/JVM 模块插件
-├── AndroidARouterConventionPlugin.kt           # ARouter 路由插件
-├── AndroidEventBusConventionPlugin.kt          # EventBus 事件总线插件
-├── AndroidHiltConventionPlugin.kt              # Hilt 依赖注入插件
-├── AndroidKspConventionPlugin.kt               # KSP 注解处理插件
-├── AndroidLintConventionPlugin.kt              # Lint 静态分析插件
-├── AndroidRoomConventionPlugin.kt              # Room 数据库插件
-├── AndroidGreenDaoConventionPlugin.kt          # GreenDAO ORM 插件
-├── AndroidProtobufConventionPlugin.kt          # Protocol Buffers 插件
-├── AndroidObjectBoxConventionPlugin.kt         # ObjectBox 数据库插件
-├── AndroidLibraryComposeConventionPlugin.kt    # Library Compose 插件
-├── AndroidApplicationComposeConventionPlugin.kt # Application Compose 插件
-├── AndroidTestConventionPlugin.kt              # 测试模块插件
-└── RootPlugin.kt                               # 根工程全局管理插件（拓扑图与 Spotless）
+├── AndroidLibraryConventionPlugin.kt           # Library 模块插件 【已落地】
+├── AndroidApplicationConventionPlugin.kt       # Application 模块插件 【已落地】
+├── AndroidFeatureConventionPlugin.kt           # Feature 业务功能模块插件 【已落地】
+├── AndroidFeatureComposeConventionPlugin.kt   # Feature Compose 业务功能模块插件 【已落地】
+├── AndroidLibraryComposeConventionPlugin.kt    # Library Compose 插件 【已落地】
+├── AndroidApplicationComposeConventionPlugin.kt # Application Compose 插件 【已落地】
+├── AndroidHiltConventionPlugin.kt              # Hilt 依赖注入插件 【已落地】
+├── AndroidRoomConventionPlugin.kt              # Room 数据库插件 【已落地】
+├── AndroidLintConventionPlugin.kt              # Lint 静态分析插件 【已落地】
+├── AndroidTestConventionPlugin.kt              # 测试模块插件 【已落地】
+├── AndroidARouterConventionPlugin.kt           # ARouter 路由插件 【已落地】
+├── AndroidEventBusConventionPlugin.kt          # EventBus 事件总线插件 【已落地】
+├── AndroidGreenDaoConventionPlugin.kt          # GreenDAO ORM 插件 【已落地】
+├── AndroidObjectBoxConventionPlugin.kt         # ObjectBox 数据库插件 【已落地】
+├── AndroidProtobufConventionPlugin.kt          # Protocol Buffers 插件 【已落地】
+├── AndroidKspConventionPlugin.kt               # KSP 注解处理插件 【已落地】
+├── AndroidKaptConventionPlugin.kt              # Kapt 遗留注解处理插件 【已落地】
+├── JvmLibraryConventionPlugin.kt               # 纯 Kotlin/JVM 模块插件 【已落地】
+└── RootPlugin.kt                               # 根工程全局管理插件（拓扑图与 Spotless） 【已落地】
 ```
+
+> **架构演进规划中插件 `【演进规划 - 待落地】`**：
+> * `AndroidFeatureApiConventionPlugin.kt`：轻量对外接口契约层模块插件；
+> * `AndroidFeatureImplConventionPlugin.kt`：业务实现层模块插件（内部私有实现 + DI 装配）。
 
 ---
 
