@@ -28,7 +28,7 @@ class SocketMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Java-WebSocket (Flow 封装)", RouterPath.Socket.JavaWebSocketClientFlow))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── Netty TCP Socket ──", ""))
-        routerItems.add(RouterItem("Netty TCP Socket（内置本地服务端）", RouterPath.Socket.NettyTcpSocketClient))
+        routerItems.add(RouterItem("Netty TCP Socket", RouterPath.Socket.NettyTcpSocketClient))
         routerItems.add(RouterItem("Netty TCP Socket (RxJava 封装)", RouterPath.Socket.NettyTcpSocketClientRx))
         routerItems.add(RouterItem("Netty TCP Socket (Flow 封装)", RouterPath.Socket.NettyTcpSocketClientFlow))
         return routerItems

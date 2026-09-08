@@ -6,6 +6,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecyclerResponseBinding
@@ -57,6 +58,12 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      */
     protected fun showDescription(description: String) {
         runOnUiThread {
+            // 说明为短文本：恢复父级宽度以保持水平居中（日志模式为不折行 wrap_content）
+            val params = mBinding.basicsResponse.layoutParams
+            if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT
+                mBinding.basicsResponse.layoutParams = params
+            }
             mBinding.basicsResponse.text = description
             mBinding.basicsResponse.gravity = Gravity.CENTER
             mBinding.basicsResponse.setTextColor(
@@ -155,6 +162,12 @@ abstract class BasicResponseActivity : BasicControlActivity() {
     }
 
     private fun renderLogs() {
+        // 日志按行不折行展示：宽度改为 wrap_content，超长行由外层 HorizontalScrollView 横向滑动
+        val params = mBinding.basicsResponse.layoutParams
+        if (params.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
+            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            mBinding.basicsResponse.layoutParams = params
+        }
         val content = SpannableStringBuilder(mLog)
         mUpdatingLogs.values.forEach { message -> content.appendLine(message) }
         mBinding.basicsResponse.text = content

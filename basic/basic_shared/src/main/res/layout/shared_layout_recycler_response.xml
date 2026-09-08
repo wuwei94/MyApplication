@@ -74,15 +74,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/basics_response_divider">
 
-            <TextView
-                android:id="@+id/basics_response"
+            <!-- 日志按行不折行展示，超出可视宽度时横向滑动查看 -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lineSpacingExtra="3dp"
-                android:textColor="@color/shared_color_console_text"
-                android:textSize="@dimen/shared_sp_12"
-                android:typeface="monospace" />
+                android:fillViewport="false"
+                android:scrollbars="horizontal">
+
+                <TextView
+                    android:id="@+id/basics_response"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|start"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/shared_color_console_text"
+                    android:textSize="@dimen/shared_sp_12"
+                    android:typeface="monospace" />
+
+            </HorizontalScrollView>
 
         </androidx.core.widget.NestedScrollView>
 

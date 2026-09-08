@@ -1,14 +1,17 @@
 package com.example.william.my.module.socket.activity.tcpsocket.netty
 
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.R as SharedR
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.server.NettyServerService
 import com.example.william.my.core.netty.client.NettyClient
 import com.example.william.my.core.netty.client.NettyClientHandler
 import com.example.william.my.core.netty.server.NettyServer
+import com.example.william.my.core.netty.server.NettyServerHandler
 import com.example.william.my.module.socket.utils.NetworkUtils
 
 /**
@@ -51,6 +54,11 @@ import com.example.william.my.module.socket.utils.NetworkUtils
  * NettyClient.disconnect()
  * ```
  *
+ * 服务端日志展示方式：
+ * - 内置服务端运行在进程内 Service 中，主控制台按真实时间合并展示客户端与服务端两侧日志；
+ * - 页面在 onStart/onStop 通过 [NettyServer]（进程级单例）订阅服务端事件，
+ *   事件以「【服务端】前缀 + 强调色」追加进同一控制台，与服务端收发时序一一对应。
+ *
  * 适用场景：
  * - 高并发网络应用
  * - 实时通信
@@ -69,6 +77,56 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
     private val host: String get() = NetworkUtils.getIPAddress(true)
     private val port: Int = 5567
     private val serverUrl: String get() = "$host:$port"
+
+    /**
+     * 事件类型 → 控制台颜色（均为深色控制台背景上可读的颜色）：
+     * - 生命周期（启动/停止）：强调色 Sky #38BDF8
+     * - 建立连接（客户端接入）：成功绿 #5FB84F
+     * - 断开连接（客户端断开）：主题红 #FF4A26（与异常一致）
+     * - 业务收发（收到消息）：警示黄 #FFE14D
+     * - 异常错误：主题红 #FF4A26
+     */
+    private val colorState: Int by lazy { ContextCompat.getColor(this, SharedR.color.shared_color_console_accent) }
+    private val colorConnect: Int by lazy { ContextCompat.getColor(this, SharedR.color.shared_color_success) }
+    private val colorMessage: Int by lazy { ContextCompat.getColor(this, SharedR.color.shared_color_primary_special1) }
+    private val colorError: Int by lazy { ContextCompat.getColor(this, SharedR.color.shared_color_accent) }
+
+    /**
+     * 服务端事件订阅：内置服务端运行在进程内 Service 中（NettyServer 为进程级单例），
+     * 页面在 onStart/onStop 订阅/退订，事件合并进主控制台展示。
+     */
+    private val serverLogListener = object : NettyServerHandler.OnMessageListener {
+        override fun onStarted(port: Int) {
+            appendServerLog("已启动，监听端口：$port", colorState)
+        }
+
+        override fun onStopped() {
+            appendServerLog("已停止", colorState)
+        }
+
+        override fun onClientConnected(remoteAddress: String) {
+            appendServerLog("客户端连接：$remoteAddress", colorConnect)
+        }
+
+        override fun onClientDisconnected(remoteAddress: String) {
+            appendServerLog("客户端断开：$remoteAddress", colorError)
+        }
+
+        override fun onMessage(remoteAddress: String, message: String) {
+            appendServerLog("收到 $remoteAddress：$message", colorMessage)
+        }
+
+        override fun onError(remoteAddress: String, throwable: Throwable) {
+            appendServerLog("${if (remoteAddress.isEmpty()) "" else "$remoteAddress "}${throwable.message}", colorError)
+        }
+    }
+
+    /**
+     * 以指定类型颜色追加一行服务端日志（自动带【服务端】前缀与时间戳）。
+     */
+    private fun appendServerLog(message: String, color: Int) {
+        appendLog("【服务端】$message", color)
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -94,6 +152,16 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        NettyServer.addListener(serverLogListener)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        NettyServer.removeListener(serverLogListener)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         NettyClient.disconnect()
@@ -102,12 +170,14 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
 
     private fun startServer() {
         nettyServerService?.startServer(this)
-        appendLog("【服务端】已启动，地址：$serverUrl")
+        // 启动为异步操作，真实结果由服务端事件（【服务端】已启动）写入控制台
+        appendLog("【操作】已发起启动服务端，等待就绪...")
     }
 
     private fun stopServer() {
         nettyServerService?.stopServer(this)
-        appendLog("【服务端】已停止")
+        // 停止结果由服务端事件（【服务端】已停止）写入控制台
+        appendLog("【操作】已发起停止服务端...")
     }
 
     private fun connect() {

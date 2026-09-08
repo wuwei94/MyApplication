@@ -59,8 +59,15 @@ class NettyServerHandler : SimpleChannelInboundHandler<String>() {
 
     /**
      * 服务端消息监听器
+     *
+     * 连接级事件（接入/断开/收发/异常）由 [NettyServerHandler] 触发；
+     * 生命周期事件（启动/停止）由 [NettyServer] 触发，默认空实现，按需覆写。
      */
     interface OnMessageListener {
+        fun onStarted(port: Int) {}
+
+        fun onStopped() {}
+
         fun onClientConnected(remoteAddress: String) {}
         fun onClientDisconnected(remoteAddress: String) {}
         fun onMessage(remoteAddress: String, message: String) {}
