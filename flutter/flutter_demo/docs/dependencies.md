@@ -139,6 +139,14 @@
 - [Flutter Linkify](https://pub.dev/packages/flutter_linkify) — 链接识别
 - [Time Machine](https://pub.dev/packages/time_machine) — 时间处理
 
+## Markdown 富文本与代码高亮
+
+对标 Android `module_markdown`，示例直接依赖以下三方包（`lib/demos/markdown/`）：
+
+- [flutter_markdown_plus](https://pub.dev/packages/flutter_markdown_plus) — Markdown 渲染组件；flutter_markdown（Google 维护）已停更，本包为其社区延续维护版，API 兼容；默认 GitHub Flavored：标题/引用/列表/表格/任务清单复选/删除线/脚注/网络图片/链接，通过 `MarkdownStyleSheet` 定制主题、`SyntaxHighlighter` 单独控制代码块文字
+- [flutter_highlight](https://pub.dev/packages/flutter_highlight) — 代码高亮 Widget，多语言多主题（暗黑 atom-one-dark / 明亮 github 等）
+- [highlight](https://pub.dev/packages/highlight) — flutter_highlight 底层纯 Dart 词法分析库（`highlight.parse`），供耗时评测直接调用
+
 ## 图表库
 
 - [fl_chart](https://pub.dev/packages/fl_chart) — 强大的 Flutter 数据可视化图表库（支持折线图、柱状图、饼图、雷达图、散点图与触摸 Tooltip 联动）

@@ -151,6 +151,16 @@ dependencies:
   # https://pub.dev/packages/chewie
   chewie: ^1.13.0
 
+  # lib/demos/markdown
+  # flutter_markdown 官方包已停更，flutter_markdown_plus 为社区延续维护版（API 兼容），
+  # 默认 GitHub Flavored：表格 / 任务清单复选 / 删除线 / 脚注 / 网络图片 / 链接
+  # https://pub.dev/packages/flutter_markdown_plus
+  flutter_markdown_plus: ^1.0.12
+  # https://pub.dev/packages/flutter_highlight
+  flutter_highlight: ^0.7.0
+  # https://pub.dev/packages/highlight
+  highlight: ^0.7.0
+
   # lib/demos/packages/layout
   # https://pub.dev/packages/flutter_screenutil
   flutter_screenutil: ^5.9.3

@@ -7,6 +7,7 @@ import 'package:flutter_demo/demos/chart/catalog.dart';
 import 'package:flutter_demo/demos/engine/catalog.dart';
 import 'package:flutter_demo/demos/image/catalog.dart';
 import 'package:flutter_demo/demos/layout/catalog.dart';
+import 'package:flutter_demo/demos/markdown/catalog.dart';
 import 'package:flutter_demo/demos/ml/catalog.dart';
 import 'package:flutter_demo/demos/network/catalog.dart';
 import 'package:flutter_demo/demos/packages/catalog.dart';
@@ -33,6 +34,7 @@ final List<CatalogSection> catalogSections = <CatalogSection>[
   mlCatalog,
   chartCatalog,
   packagesCatalog,
+  markdownCatalog,
   showcaseCatalog,
 ];
 

@@ -19,6 +19,7 @@
 | ml | 端侧机器学习与 GPU 加速 | 4 |
 | chart | 复杂图表与触摸 Tooltip 联动 | 5 |
 | packages | 常用三方包示例 | 大量 |
+| markdown | 富文本渲染、代码高亮与 AI 流式交互 | 4 |
 | showcase | 杂项展示类示例 | 少量 |
 
 ---
@@ -179,6 +180,17 @@ TensorFlow Lite 端侧推理与 GPU 加速示例。
 ### packages（三方包）
 
 常用三方包示例，包含通知、权限、WebView、URL 启动器、屏幕适配、下拉刷新等。
+
+### markdown（富文本渲染与 AI 流式交互）
+
+对标 Android `module_markdown` 的 4 个示例页面，业务逻辑保持一致。渲染引擎使用 `flutter_markdown_plus`（flutter_markdown 停更后的社区延续维护版，默认 GitHub Flavored：表格 / 任务清单复选 / 删除线 / 网络图片 / 链接），代码高亮使用 `flutter_highlight`。
+
+| 示例 | 说明 |
+|------|------|
+| markdown-basic | Markdown 基础与扩展渲染（标题 / 引用 / 表格 / 任务清单 / 删除线 / 链接与网络图片 / 自定义主题 / 综合长文档，7 个案例切换） |
+| markdown-highlight | 多语言代码语法高亮（Kotlin / Java / Python / JS / SQL / Bash / C++，暗黑 atom-one-dark 与明亮 github 主题对比、解析耗时评测） |
+| markdown-typewriter | 流式打字机与语法容错（TypewriterEngine 自适应积压调速 + 标点呼吸停顿 + 暂停/恢复/跳过，MarkdownStreamFixer 未闭合语法自动补齐，实时指标栏） |
+| markdown-chat | AI 流式对话完整实战（用户/助手气泡、Markdown 富文本、快捷提示词、停止生成、智能吸底 + 回到底部悬浮按钮、全文复制，六类语义 Mock 回复） |
 
 ### showcase（杂项展示）
 
