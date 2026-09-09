@@ -12,7 +12,8 @@
 │   ├── 控件：标准控件、自定义控件、第三方控件
 │   ├── 导航：Tab 导航
 │   ├── 动画：原生动画与第三方动画库（PAG、Lottie、SVGA）
-│   └── 图片加载：Coil、Glide、lib_image_loader
+│   ├── 图片加载：Coil、Glide、lib_image_loader
+│   └── 图片滤镜：GPUImage（GPU 实时滤镜处理）
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -67,6 +68,7 @@
 | module_bluetooth | 蓝牙通信（BLE 客户端） | BluetoothMainActivity | /Bluetooth |
 | module_event | 事件总线 | EventMainActivity | /Event |
 | module_image_loader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
+| module_gpuimage | GPU 图像滤镜处理（GPUImage） | GpuImageMainActivity | /GpuImage |
 | module_kotlin | Kotlin 特性 | KotlinMainActivity | /Kotlin |
 | module_reactive | 响应式编程 | ReactiveMainActivity | /Reactive |
 | module_jetpack | Jetpack 组件 | JetpackMainActivity | /Jetpack |
@@ -415,6 +417,19 @@
 | CoilActivity | Coil 3 原生加载（基础 / crossfade / placeholder / error） |
 | GlideActivity | Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade） |
 | ImageLoaderActivity | `lib_image_loader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
+
+---
+
+### module_gpuimage（GPU 图像滤镜处理）
+
+演示移植自 iOS GPUImage 的 Android OpenGL ES 实时图像滤镜库（GPUImageView + GPUImageFilter 子类，内置滤镜 shader 与 iOS 版保持一致）。
+
+| Activity | 功能 |
+|----------|------|
+| GpuImageMainActivity | 模块入口，导航到滤镜预览、参数调节与滤镜链页面 |
+| GpuImageFilterActivity | 滤镜实时预览（GPUImageView `setImage` 载入 assets/相册图片、`setFilter` 切换 16 种滤镜、后台 `capture()` 取帧保存相册） |
+| GpuImageAdjustActivity | 滤镜参数实时调节（亮度/对比度/饱和度/伽马/曝光/色相/锐度/像素化/色调分离 9 种参数 setter 连续调节） |
+| GpuImageGroupActivity | GPUImageFilterGroup 多级滤镜链（两级滤镜串联，FBO 离屏过渡渲染） |
 
 ---
 

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GPUImageFilterGroup 滤镜链"
+            android:textColor="@color/gpuimage_black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="将多个滤镜按顺序串联渲染：第 1 层输出作为第 2 层输入，中间经 FBO 离屏过渡"
+            android:textColor="@color/gpuimage_gray"
+            android:textSize="12sp" />
+
+        <!-- GPU 渲染预览卡片 (4:3) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <jp.co.cyberagent.android.gpuimage.GPUImageView
+                    android:id="@+id/gpuImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tvChainLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:layout_margin="10dp"
+                    android:background="@color/gpuimage_overlay_bg"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="链路: 高斯模糊 → 怀旧"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="① 基础滤镜（链的第 1 层）"
+            android:textColor="@color/gpuimage_black"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/chipBase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="② 叠加滤镜（链的第 2 层，可选“无”）"
+            android:textColor="@color/gpuimage_black"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/chipOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- 滤镜链说明 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/gpuimage_bg_card"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="1dp">
+
+            <TextView
+                android:id="@+id/tvChainDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="5dp"
+                android:padding="12dp"
+                android:text="当前链路：原图 → 高斯模糊 → 怀旧\nAPI：GPUImageFilterGroup(filters)"
+                android:textColor="@color/gpuimage_black"
+                android:textSize="13sp" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"
+            android:text="提示：GPUImageFilterGroup 把一组滤镜包成单一 GPUImageFilter 使用，链内每级渲染到 FBO 再作为下一级纹理输入；此页模拟“磨皮 → 复古”等后期工作流。"
+            android:textColor="@color/gpuimage_gray"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>

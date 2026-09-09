@@ -117,7 +117,8 @@ MyApplication/
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   ├── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
-    │   └── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
+    │   ├── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
+    │   └── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
@@ -344,6 +345,14 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 - Coil：Coil 3 原生加载（基础 / crossfade / placeholder / error）
 - Glide：Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade）
 - ImageLoader：`lib_image_loader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换）
+
+### module_gpuimage（GPU 图像滤镜处理）
+
+演示基于 OpenGL ES 的 GPU 图像滤镜库 GPUImage（GPUImageView + GPUImageFilter 子类，与 iOS GPUImage 同源 shader）。
+
+- **滤镜实时预览**：GPUImageView 载入图片后 `setFilter()` 无缝切换 16 种内置滤镜（怀旧 / 黑白 / 素描 / 卡通 / 边缘检测 / 像素画等），`capture()` 后台取帧并保存系统相册
+- **滤镜参数实时调节**：复用滤镜实例连续调用参数 setter（亮度 / 对比度 / 饱和度 / 伽马 / 曝光 / 色相 / 锐度 / 像素化 / 色调分离）
+- **滤镜链组合**：GPUImageFilterGroup 多级滤镜串联渲染（FBO 离屏过渡），模拟后期工作流
 
 ### module_widget_thirdparty（UI 库）
 

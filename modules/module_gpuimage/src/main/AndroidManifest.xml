@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".GpuImageMainActivity" />
+        <activity android:name=".filter.GpuImageFilterActivity" />
+        <activity android:name=".adjust.GpuImageAdjustActivity" />
+        <activity android:name=".group.GpuImageGroupActivity" />
+    </application>
+
+</manifest>

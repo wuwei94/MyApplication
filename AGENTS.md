@@ -60,7 +60,7 @@ build-logic/                  # 构建逻辑层（Convention Plugin + 依赖配�
 | | docs/04-domains/markdown.md | Markdown 渲染与 AI 流式交互指南（Markwon / Prism4j / 流式打字机 / AI 聊天实战） |
 | | docs/04-domains/ml.md | 端侧机器学习开发指南（LiteRT / TensorFlow Lite 图像分类与生成） |
 | | docs/04-domains/performance.md | 性能优化实践指南（优化实战 + Macrobenchmark / JankStats 基准度量） |
-| **仓内清单** | docs/05-catalog/modules.md | 功能模块详情（30 个模块，每个模块的 Activity 列表） |
+| **仓内清单** | docs/05-catalog/modules.md | 功能模块详情（每个模块的 Activity 列表） |
 | | docs/05-catalog/libs.md | 库封装层职责索引 |
 
 ## 不变量

@@ -54,6 +54,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * - 导航：Tab
      * - 动画：Anim（原生动画 + 第三方动画库）
      * - 图片加载：ImageLoader（Coil / Glide / lib_image_loader）
+     * - 图片滤镜：GpuImage（GPUImage 基于 OpenGL 的实时滤镜处理）
      */
     private fun buildUiCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -68,6 +69,8 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("动画", RouterPath.Anim.Main))
         items.add(RouterItem("── 图片加载 ──", ""))
         items.add(RouterItem("图片加载", RouterPath.ImageLoader.Main))
+        items.add(RouterItem("── 图片滤镜 ──", ""))
+        items.add(RouterItem("GPU 图像滤镜处理（GPUImage）", RouterPath.GpuImage.Main))
         return items
     }
 

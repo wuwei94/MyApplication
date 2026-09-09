@@ -155,6 +155,16 @@ object RouterPath {
         const val ImageLoader = "$PATH/ImageLoader"
     }
 
+    // GPU 图像滤镜处理
+    object GpuImage {
+        private const val PATH = "/GpuImage"
+
+        const val Main = "$PATH/Main"
+        const val Filter = "$PATH/Filter"
+        const val Adjust = "$PATH/Adjust"
+        const val Group = "$PATH/Group"
+    }
+
     // ───────────────────────────────────────────
     // 平台能力与系统服务
     // ───────────────────────────────────────────

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gpuimage_black">#212121</color>
+    <color name="gpuimage_gray">#757575</color>
+    <color name="gpuimage_primary">#1976D2</color>
+    <color name="gpuimage_bg_card">#F8F9FA</color>
+    <color name="gpuimage_chip_selected_bg">#1976D2</color>
+    <color name="gpuimage_chip_default_bg">#ECEFF1</color>
+    <color name="gpuimage_overlay_bg">#66000000</color>
+</resources>

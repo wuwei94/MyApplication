@@ -12,7 +12,7 @@
 | 给项目提交代码 / 新写模块 | [01-rules/conventions.md](01-rules/conventions.md) → [git.md](01-rules/git.md) | 硬性约定：路由、模块结构、提交格式与门禁 |
 | 摸清工程化全貌与各能力落地状态 | [02-engineering/engineering.md](02-engineering/engineering.md) | 全景图 + 成熟度矩阵 + 各维度入口 |
 | 做技术选型 / 想对比方案 | 跳到「选型对比速查」表 | 全仓对比类文档一张表聚合 |
-| 查某个模块有哪些页面 | [05-catalog/modules.md](05-catalog/modules.md) | 30 个模块 × Activity 清单，Ctrl+F 直达 |
+| 查某个模块有哪些页面 | [05-catalog/modules.md](05-catalog/modules.md) | 各功能模块 × Activity 清单，Ctrl+F 直达 |
 | 查某个 libs 库怎么用 | [05-catalog/libs.md](05-catalog/libs.md) | 库职责 + 专题文档索引 |
 
 > 各文档普遍采用「先结论后细节」结构（核心结论速览 / 对比矩阵 / 决策树在正文前部），按需跳读章节即可。
@@ -51,7 +51,7 @@ mindmap
       ml.md["端侧 AI（LiteRT / TFLite）"]
       performance.md["性能优化与基准度量"]
     05-catalog
-      modules.md["30 个模块与 Activity 清单"]
+      modules.md["各功能模块与 Activity 清单"]
       libs.md["库封装层职责索引"]
 ```
 

@@ -25,6 +25,7 @@
 - **底层能力 vs 第三方 UI 控件**：
   - `module_media`：聚焦系统原生 API 与硬件能力（CameraX 拍照/录像、Intent 系统裁剪）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
   - `module_image_loader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_image_loader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
+  - `module_gpuimage`：聚焦 GPU 图像滤镜/后期处理引擎（GPUImage，OpenGL ES 渲染：GPUImageView 实时滤镜、参数调节与 FilterGroup 滤镜链）；与图片「加载」无关的滤镜类处理均归此模块。
   - `module_widget_thirdparty`：集中收纳第三方可复用 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
 - **Jetpack 组件按主题归位原则**：
   - `module_jetpack` 专门承载**未被具体技术领域模块吸纳的通用 Jetpack 架构与生命周期数据流组件**（如 Lifecycle、Paging、ViewModel 等），且**不包含 UI 控件**。
