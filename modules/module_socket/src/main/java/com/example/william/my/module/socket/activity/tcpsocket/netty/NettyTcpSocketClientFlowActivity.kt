@@ -5,7 +5,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.R as SharedR
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.server.NettyServerService
@@ -16,6 +15,7 @@ import com.example.william.my.core.netty.server.NettyServerHandler
 import com.example.william.my.module.socket.utils.NetworkUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
  * Netty Coroutines Flow 封装示例（TCP Socket）

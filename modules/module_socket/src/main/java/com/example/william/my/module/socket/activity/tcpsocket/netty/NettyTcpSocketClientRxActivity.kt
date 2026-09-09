@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.R as SharedR
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.server.NettyServerService
@@ -13,6 +12,7 @@ import com.example.william.my.core.netty.client.NettyClientRxObserver
 import com.example.william.my.core.netty.server.NettyServer
 import com.example.william.my.core.netty.server.NettyServerHandler
 import com.example.william.my.module.socket.utils.NetworkUtils
+import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
  * Netty RxJava 封装示例（TCP Socket）
