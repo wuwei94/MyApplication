@@ -1,5 +1,6 @@
-package com.example.william.my.module.media.activity
+package com.example.william.my.module.feature.activity
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -7,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -33,6 +35,13 @@ import java.io.File
  * 2. com.android.camera.action.CROP 为 Android 非公开标准 Intent（部分厂商定制 ROM 可能未内置裁剪 App）
  *    实际商业应用建议优先使用 UCrop 等成熟内嵌裁剪库
  * 3. 结果回调已全面迁移至 AndroidX registerForActivityResult
+ * 4. Android 11+ (API 30+) 包可见性过滤：queryIntentActivities 查询 com.android.camera.action.CROP
+ *    会被直接过滤为空列表，必须在 Manifest 中声明 <queries>（本模块 AndroidManifest.xml 已声明该 action），
+ *    否则下方 grantUriPermission 授权循环不执行，裁剪应用读不到 source URI 而失败
+ * 5. CAMERA 运行时权限：ACTION_IMAGE_CAPTURE 由相机应用执行拍摄，调用方本不需要声明 CAMERA；
+ *    但本 App 因 CameraX 采集页面已在 Manifest 声明该权限，按官方文档
+ *    「targetSdk M+ 且声明了 CAMERA 却未授权时，调用该 action 会抛 SecurityException」，
+ *    拍照路径必须先做运行时申请，否则异常会被 catch 吞成「启动相机失败」的静默失败
  *
  * 基本用法：
  * ```kotlin
@@ -52,11 +61,26 @@ import java.io.File
  * - 图片编辑、分享
  * - 需要图片裁剪的场景
  */
-@Route(path = RouterPath.Media.Crop)
+@Route(path = RouterPath.Feature.Crop)
 class CropActivity : BasicImageActivity() {
 
     private var photoCaptureUri: Uri? = null
     private var cropDestinationUri: Uri? = null
+
+    /** 待执行的拍照动作：权限弹窗回调是异步的，需暂存以便授权通过后继续 */
+    private var pendingCameraAction: (() -> Unit)? = null
+
+    // 0. CAMERA 运行时权限 Launcher
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        val action = pendingCameraAction
+        pendingCameraAction = null
+        when {
+            granted && action != null -> action()
+            !granted -> Utils.toast("未授予相机权限，无法拍照裁剪")
+        }
+    }
 
     // 1. 图库选择 Launcher
     private val albumLauncher = registerForActivityResult(
@@ -122,8 +146,27 @@ class CropActivity : BasicImageActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> pickFromAlbum()
-            1 -> captureThumbnail()
-            2 -> captureFullPhoto()
+            1 -> ensureCameraPermission { captureThumbnail() }
+            2 -> ensureCameraPermission { captureFullPhoto() }
+        }
+    }
+
+    /**
+     * 拍照裁剪前置检查
+     *
+     * ACTION_IMAGE_CAPTURE 不要求调用方声明 CAMERA，但本 App 已声明该权限，
+     * 未授权时调用会抛 SecurityException，故先申请再执行拍照动作。
+     */
+    private fun ensureCameraPermission(action: () -> Unit) {
+        val granted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA,
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) {
+            action()
+        } else {
+            pendingCameraAction = action
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 

@@ -272,6 +272,7 @@ object RouterPath {
 
         const val Turntable = "$PATH/Turntable"
         const val MicAnimation = "$PATH/MicAnimation"
+        const val Crop = "$PATH/Crop"
     }
 
     // 多媒体
@@ -281,7 +282,6 @@ object RouterPath {
         const val Main = "$PATH/Main"
         const val Photo = "$PATH/Photo"
         const val Video = "$PATH/Video"
-        const val Crop = "$PATH/Crop"
     }
 
     // 机器学习 / AI (TensorFlow Lite / 端侧推理)

@@ -8,7 +8,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * 特性模块入口页
  *
- * 展示麦克风动画、转盘等特色功能的示例列表。
+ * 展示麦克风动画、转盘、图片裁剪等特色功能的示例列表。
  */
 @Route(path = RouterPath.Feature.Main)
 class FeatureMainActivity : RouterRecyclerActivity() {
@@ -17,6 +17,7 @@ class FeatureMainActivity : RouterRecyclerActivity() {
         val routerItems: ArrayList<RouterItem> = arrayListOf()
         routerItems.add(RouterItem("Turntable（幸运大转盘实战）", RouterPath.Feature.Turntable))
         routerItems.add(RouterItem("MicAnimation（麦位光波音量动画）", RouterPath.Feature.MicAnimation))
+        routerItems.add(RouterItem("Crop（图片裁剪实战）", RouterPath.Feature.Crop))
         return routerItems
     }
 }

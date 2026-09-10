@@ -122,7 +122,7 @@ MyApplication/
     ├── [多媒体]
     │   ├── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
     │   ├── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜）
-    │   └── module_media        # 相机采集（CameraX 拍照 / 录像 / 图片裁剪）
+    │   └── module_media        # 相机采集（CameraX 拍照 / 录像）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
@@ -162,7 +162,7 @@ MyApplication/
     │
     └── [Sample & Feature]
         ├── module_sample       # 技术示例（Hook / Typeface）
-        └── module_feature      # 业务功能（转盘 / 麦位动画）
+        └── module_feature      # 业务功能（转盘 / 麦位动画 / 图片裁剪）
 ```
 
 ---
@@ -276,7 +276,6 @@ MyApplication/
 
 - **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
 - **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
-- **图片裁剪**：Intent 调用系统裁剪（图库选择 / 拍照裁剪）
 
 ### module_http（HTTP 网络请求）
 
@@ -498,6 +497,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 
 - 转盘抽奖（旋转动画）
 - 麦位动画（自定义 LayoutManager）
+- 图片裁剪（Intent 调用系统裁剪，图库选择 / 拍照裁剪 + FileProvider 授权）
 
 ---
 

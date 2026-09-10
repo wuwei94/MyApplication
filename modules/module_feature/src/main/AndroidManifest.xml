@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
+        Android 11+（API 30）包可见性声明。
+        CropActivity.startCrop() 需要先 queryIntentActivities 找出能响应
+        com.android.camera.action.CROP 的裁剪应用，再逐个 grantUriPermission 授予源图 / 输出图的
+        临时读写权限。未声明 <queries> 时该查询被包可见性过滤，恒返回空列表，
+        授权循环不执行，裁剪应用读不到 source URI 而失败。
+    -->
+    <queries>
+        <intent>
+            <action android:name="com.android.camera.action.CROP" />
+        </intent>
+    </queries>
+
     <application>
         <activity android:name=".FeatureMainActivity" />
         <activity android:name=".activity.TurntableActivity" />
         <activity android:name=".activity.MicAnimationActivity" />
+        <activity android:name=".activity.CropActivity" />
     </application>
 
 </manifest>

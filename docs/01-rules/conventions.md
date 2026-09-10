@@ -25,7 +25,7 @@
 - **媒体域聚合（「多媒体」一级分类）**：`module_image_loader`（图片加载管道）、`module_gpuimage`（图像处理引擎）、`module_media`（相机采集）同属媒体域，统一挂「多媒体」分类，按「图片加载 / 图像处理 / 相机采集」分组展示。三者分别是资源库、处理引擎与硬件采集能力，既不是 UI 控件、也不属「系统能力」——媒体域内容不应拆分到其他一级分类。
 - **AI 域聚合（「AI 与机器学习」一级分类）**：`module_ml`（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速、张量内存架构）挂「AI 与机器学习」分类；端侧模型推理与 AI 能力相关示例归此分类，不属「系统能力」——推理虽运行于系统之上，但主题是 AI 算法与推理框架。
 - **底层能力 vs 第三方 UI 控件**：
-  - `module_media`：聚焦系统原生 API 与硬件能力（CameraX 拍照/录像、Intent 系统裁剪）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
+  - `module_media`：聚焦系统原生相机采集能力（CameraX 拍照 / 录像）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
   - `module_image_loader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_image_loader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
   - `module_gpuimage`：聚焦 GPU 图像滤镜/后期处理引擎（GPUImage，OpenGL ES 渲染：GPUImageView 实时滤镜、参数调节、FilterGroup 滤镜链与相机实时帧滤镜）；与图片「加载」无关的滤镜类处理均归此模块。
   - `module_widget_thirdparty`：集中收纳**通用可复用**的第三方 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
@@ -41,7 +41,7 @@
     - `App Startup`、`Baseline Profiles`、`AsyncLayoutInflater`、`ConcatAdapter`、`DiffUtil` → `module_performance`（启动、布局解析与列表渲染性能优化）
 - **探索与实战模块边界（Sample & Feature）**：
   - `module_sample`（技术技巧与底层探索）：收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码（如 Hook 反射、自定义 Typeface 等）。保持轻量独立，不污染通用架构模块。
-  - `module_feature`（实战业务场景脱敏）：收纳从公司真实项目中抽离、脱敏出的典型复合业务场景（如抽奖转盘、麦位动画等）。展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。
+  - `module_feature`（实战业务场景脱敏）：收纳从公司真实项目中抽离、脱敏出的典型复合业务场景（如抽奖转盘、麦位动画、图片裁剪等）。展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。系统 Intent 图片裁剪（图库选择 / 拍照 → 裁剪）属典型业务场景，归此模块，不进 `module_media`（后者只保留 CameraX 采集）。
 
 ## 全局依赖（build-logic/convention）
 

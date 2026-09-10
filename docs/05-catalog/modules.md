@@ -17,7 +17,7 @@
 ├── 多媒体
 │   ├── 图片加载：Coil、Glide、lib_image_loader
 │   ├── 图像处理：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧）
-│   └── 相机采集：CameraX 拍照 / 录像、图片裁剪
+│   └── 相机采集：CameraX 拍照 / 录像
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -255,10 +255,9 @@
 
 | Activity | 功能 |
 |----------|------|
-| MediaMainActivity | 模块入口，导航到拍照、录像、图片裁剪示例页面 |
+| MediaMainActivity | 模块入口，导航到拍照、录像示例页面 |
 | MediaPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
 | MediaVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
-| CropActivity | 图片裁剪（Intent 调用系统裁剪，支持图库选择与拍照） |
 
 ---
 
@@ -652,6 +651,7 @@ Flutter 嵌入页入口。
 
 | Activity | 功能 |
 |----------|------|
-| FeatureMainActivity | 模块入口，导航到抽奖转盘与麦位动画示例页面 |
+| FeatureMainActivity | 模块入口，导航到抽奖转盘、麦位动画与图片裁剪示例页面 |
 | TurntableActivity | 转盘抽奖（旋转动画） |
 | MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
+| CropActivity | 图片裁剪（Intent 调用系统裁剪，支持图库选择与拍照） |

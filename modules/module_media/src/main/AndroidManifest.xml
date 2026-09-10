@@ -13,7 +13,6 @@
         <activity android:name=".MediaMainActivity" />
         <activity android:name=".activity.MediaPhotoActivity" />
         <activity android:name=".activity.MediaVideoActivity" />
-        <activity android:name=".activity.CropActivity" />
     </application>
 
 </manifest>
