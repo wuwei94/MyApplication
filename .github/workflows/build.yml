@@ -1,14 +1,33 @@
 name: Android CI
 
+# Android 侧 CI 并行矩阵：格式检查 / 静态分析 / 单元测试 / 依赖守卫 / 打包，五条独立 Job 并行执行。
+#
+# 设计要点：
+#   1. 缓存优先：统一使用 gradle/actions/setup-gradle 复用 Gradle User Home 缓存。
+#      拆 Job 的收益以缓存为前提——否则每个 Job 都要重新下载 Gradle 与依赖，总时长反而更长。
+#   2. 职责划分：本地 pre-push 已拦截全量格式与增量 Lint（10~20 秒），
+#      CI 侧做全量兜底，并补齐本地做不了的项：release 混淆打包、依赖膨胀、全量单元测试。
+#   3. Flutter 集成：Android 侧统一传 -PenableFlutter=false，纯 Android 改动不被 Flutter 构建拖慢；
+#      Flutter 自身的 analyze / test / build 由 flutter.yml 独立流水线负责。
+#
+# 未纳入本矩阵（演进规划）：Roborazzi 截图验证、checkBadging。
+
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
+# 同一分支的连续推送只保留最新一次运行，避免排队堆积
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  spotless:
+    name: Spotless 格式检查
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
@@ -22,14 +41,117 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Lint Debug
-        run: ./gradlew lintProdDebug -PenableFlutter=false --no-daemon
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Assemble Debug
-        run: ./gradlew assembleProdDebug -PenableFlutter=false --no-daemon
+      - name: Spotless Check
+        run: ./gradlew spotlessCheck -PenableFlutter=false
 
-      - name: Upload APK
+  lint:
+    name: Android Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Lint Prod Debug
+        run: ./gradlew lintProdDebug -PenableFlutter=false
+
+  test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # 排除 :modules:module_compose：该模块含 Roborazzi 截图测试，
+      # 基准图与运行环境的字体、渲染相关，需先在本 CI 环境重新生成基准后再纳入门禁。
+      - name: Unit Test Prod Debug
+        run: ./gradlew testProdDebugUnitTest -PenableFlutter=false -x :modules:module_compose:testProdDebugUnitTest
+
+  dependency-guard:
+    name: Dependency Guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # 校验 prodDebug / prodRelease 运行时依赖树是否与 app/dependencies 下的基线一致，防止依赖膨胀
+      - name: Dependency Guard
+        run: ./gradlew dependencyGuard -PenableFlutter=false
+
+  assemble:
+    name: Assemble APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # release 侧启用 R8 混淆与资源缩减，混淆规则问题只会在 release 构建暴露；
+      # 本地发布使用 debug 签名作为默认凭证，故 CI 无需注入 keystore。
+      - name: Assemble Debug and Release
+        run: ./gradlew assembleProdDebug assembleProdRelease -PenableFlutter=false
+
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: debug-apk
           path: app/build/outputs/apk/prod/debug/*.apk
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: app/build/outputs/apk/prod/release/*.apk

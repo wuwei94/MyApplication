@@ -151,7 +151,7 @@ sequenceDiagram
         else 检查通过
             LocalHook->>Remote: 推送成功
             Remote->>CI: 触发构建与回归矩阵
-            CI->>CI: spotlessCheck + assemble + test + verifyRoborazzi + badging
+            CI->>CI: spotlessCheck + lint + test + dependencyGuard + assemble
         end
     end
 ```
@@ -159,7 +159,7 @@ sequenceDiagram
 * **commit-msg / pre-push 钩子**：格式规则、安装方式与跳过通道（`--no-verify` / `COMMIT_MSG_DISABLE=1` / `PRE_PUSH_DISABLE=1`）详见 [git.md](../01-rules/git.md)。
 * **pre-push 增量算法**：全量 `spotlessCheck` → `git diff` 计算受影响模块 → 精准执行 `:<module>:lintProdDebug`（纯 JVM 模块执行 `:<module>:lint`，自定义规则模块 `:lint` 自身豁免），10~20 秒内完成本地门禁。
 * **APK 产物基线与权限卫士（Badging）`【演进规划 - 待落地】`**：规划注册 `checkBadging` 任务，通过 AAPT2 dump APK 的 `badging`（`permissions`、`features`、`exported` 组件等）与入库基线（如 `app/badging/release.txt`）比对，依赖一旦隐式引入危险权限（如 `READ_EXTERNAL_STORAGE`、`ACCESS_FINE_LOCATION`）即拦截并输出 diff。
-* **CI 并行矩阵 `【已落地】`**：Job 1 `spotlessCheck` → Job 2 `lintProdDebug` → Job 3 `testProdDebugUnitTest` → Job 4 `verifyRoborazziProdDebug` → Job 5 `dependencyGuard` / `checkBadging`（演进规划）→ Job 6 `assembleProdRelease`；Renovate / Dependabot 周期性扫描 `libs.versions.toml` 自动发起升级 PR 并跑全量回归矩阵。
+* **CI 并行矩阵 `【已落地】`**：`.github/workflows/build.yml` 拆为五条并行 Job —— `spotlessCheck`、`lintProdDebug`、`testProdDebugUnitTest`、`dependencyGuard`、`assembleProdDebug + assembleProdRelease`（APK 产物归档）；统一经 `gradle/actions/setup-gradle` 复用 Gradle User Home 缓存，并配置 `concurrency` 取消同分支的过期运行。**拆 Job 的收益以缓存为前提**——缺少缓存时各 Job 冷启动会拉长总时长。`verifyRoborazziProdDebug` 与 `checkBadging` 仍属演进规划：前者需先在 CI 环境重新生成截图基准（基准图与运行环境的字体、渲染相关），后者需先引入 badging 插件。
 
 ---
 
