@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -13,6 +14,9 @@
         <activity android:name=".adjust.GpuImageAdjustActivity" />
         <activity android:name=".group.GpuImageGroupActivity" />
         <activity android:name=".camera.GpuImageCameraFilterActivity" />
+        <activity android:name=".photo.GpuImagePhotoActivity" />
+        <activity android:name=".effect.GpuImageCameraEffectActivity" />
+        <activity android:name=".codec.GpuImageCodecRecordActivity" />
     </application>
 
 </manifest>

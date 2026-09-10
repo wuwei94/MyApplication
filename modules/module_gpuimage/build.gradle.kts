@@ -19,8 +19,6 @@ dependencies {
     // GPUImage 基于 OpenGL 的实时图像/滤镜处理库
     implementation(libs.gpuimage)
 
-    // CameraX：相机实时帧滤镜页取流（ImageAnalysis），不使用 PreviewView 与 VideoCapture
-    implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
+    // CameraX 官方全套组件（核心 API + Camera2 底层 + 生命周期感知 + PreviewView 取景 + VideoCapture 录制 + CameraEffect 特效）
+    implementation(libs.bundles.androidx.camerax)
 }

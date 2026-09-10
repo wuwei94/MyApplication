@@ -16,8 +16,8 @@
 │   └── 数据可视化：MPAndroidChart（折线 / 柱状 / 饼图 / 雷达）
 ├── 多媒体
 │   ├── 图片加载：Coil、Glide、lib_image_loader
-│   ├── 图像处理：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧）
-│   └── 相机采集：CameraX 拍照 / 录像
+│   ├── 相机采集：CameraX 拍照 / 录像
+│   └── 图像处理：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧 / 滤镜拍录）
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -59,8 +59,8 @@
 | UI 交互 | module_anim | 动画（原生与第三方） | AnimMainActivity | /Anim |
 | UI 交互 | module_markdown | Markdown 渲染与 AI 流式交互 | MarkdownMainActivity | /Markdown |
 | 多媒体 | module_image_loader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
+| 多媒体 | module_media | 多媒体（相机采集） | MediaMainActivity | /Media |
 | 多媒体 | module_gpuimage | GPU 图像滤镜处理（GPUImage） | GpuImageMainActivity | /GpuImage |
-| 多媒体 | module_media | 多媒体 | MediaMainActivity | /Media |
 | 网络通信 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
 | 网络通信 | module_sse | SSE 流式推送 | SseMainActivity | /SSE |
 | 网络通信 | module_socket | WebSocket & TCP Socket | SocketMainActivity | /Socket |
@@ -235,21 +235,7 @@
 
 ---
 
-### module_gpuimage（GPU 图像滤镜处理）
-
-演示移植自 iOS GPUImage 的 Android OpenGL ES 实时图像滤镜库（GPUImageView + GPUImageFilter 子类，内置滤镜 shader 与 iOS 版保持一致）。
-
-| Activity | 功能 |
-|----------|------|
-| GpuImageMainActivity | 模块入口，导航到滤镜预览、参数调节、滤镜链与相机实时帧页面 |
-| GpuImageFilterActivity | 滤镜实时预览（GPUImageView `setImage` 载入 assets/相册图片、`setFilter` 切换 16 种滤镜、后台 `capture()` 取帧保存相册） |
-| GpuImageAdjustActivity | 滤镜参数实时调节（亮度/对比度/饱和度/伽马/曝光/色相/锐度/像素化/色调分离 9 种参数 setter 连续调节） |
-| GpuImageGroupActivity | GPUImageFilterGroup 多级滤镜链（两级滤镜串联，FBO 离屏过渡渲染） |
-| GpuImageCameraFilterActivity | 相机实时帧滤镜（CameraX `ImageAnalysis` 连续取帧 → `GPUImageRenderer#onPreviewFrame` 上传纹理 → 16 种滤镜逐帧渲染，不产出文件） |
-
----
-
-### module_media（多媒体）
+### module_media（多媒体 / 相机采集）
 
 演示 Android 原生底层多媒体能力（硬件/系统 API），按用例（UseCase）拆分为独立示例页。第三方图片选择器（如 PictureSelector）归入 `module_widget_thirdparty`。
 
@@ -258,6 +244,23 @@
 | MediaMainActivity | 模块入口，导航到拍照、录像示例页面 |
 | MediaPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
 | MediaVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
+
+---
+
+### module_gpuimage（GPU 图像滤镜处理）
+
+演示移植自 iOS GPUImage 的 Android OpenGL ES 实时图像滤镜库（GPUImageView + GPUImageFilter 子类，内置滤镜 shader 与 iOS 版保持一致）。
+
+| Activity | 功能 |
+|----------|------|
+| GpuImageMainActivity | 模块入口，导航到滤镜预览、参数调节、滤镜链、相机实时帧、滤镜拍照与录像页面 |
+| GpuImageFilterActivity | 滤镜实时预览（GPUImageView `setImage` 载入 assets/相册图片、`setFilter` 切换 16 种滤镜、后台 `capture()` 取帧保存相册） |
+| GpuImageAdjustActivity | 滤镜参数实时调节（亮度/对比度/饱和度/伽马/曝光/色相/锐度/像素化/色调分离 9 种参数 setter 连续调节） |
+| GpuImageGroupActivity | GPUImageFilterGroup 多级滤镜链（两级滤镜串联，FBO 离屏过渡渲染） |
+| GpuImageCameraFilterActivity | 相机实时帧滤镜（CameraX `ImageAnalysis` 连续取帧 → `GPUImageRenderer#onPreviewFrame` 上传纹理 → 16 种滤镜逐帧渲染，不产出文件） |
+| GpuImagePhotoActivity | 全像素滤镜拍照（CameraX `ImageCapture` 拍摄全分辨率原图，由 `GPUImage` 离屏渲染管线应用 OpenGL 滤镜后无损保存相册） |
+| GpuImageCameraEffectActivity | CameraX 特效滤镜录像（CameraX 1.3+ `CameraEffect` + `SurfaceProcessor` 注入硬件滤镜 Shader，输出端直通 PreviewView 与 VideoCapture，支持带滤镜的高清 MP4 录像与实时回放） |
+| GpuImageCodecRecordActivity | 经典 EGL + MediaCodec 滤镜录像（`GLSurfaceView` 渲染线程双 EGLSurface 切换，直通 `MediaCodec.InputSurface` H.264 视频硬编，搭配 AudioRecord AAC 音频硬编与 MediaMuxer 混流录制 MP4 与实时回放） |
 
 ---
 

@@ -121,8 +121,8 @@ MyApplication/
     │
     ├── [多媒体]
     │   ├── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
-    │   ├── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜）
-    │   └── module_media        # 相机采集（CameraX 拍照 / 录像）
+    │   ├── module_media        # 相机采集（CameraX 拍照 / 录像）
+    │   └── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜 / 滤镜拍录）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）

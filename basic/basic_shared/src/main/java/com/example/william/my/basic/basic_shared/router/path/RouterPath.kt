@@ -170,6 +170,9 @@ object RouterPath {
         const val Adjust = "$PATH/Adjust"
         const val Group = "$PATH/Group"
         const val CameraFilter = "$PATH/CameraFilter"
+        const val Photo = "$PATH/Photo"
+        const val CameraEffect = "$PATH/CameraEffect"
+        const val CodecRecord = "$PATH/CodecRecord"
     }
 
     // ───────────────────────────────────────────
