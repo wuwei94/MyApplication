@@ -68,7 +68,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * 多媒体
      * - 图片加载：ImageLoader（Coil / Glide / lib_image_loader）
      * - 相机采集：Media（CameraX 拍照 / 录像）
-     * - 图像处理：GpuImage（GPUImage 基于 OpenGL 的滤镜引擎，静态图与相机实时帧）
+     * - 图像处理：Graphics（原生 RenderEffect / RenderScript）/ GpuImage（GPUImage 基于 OpenGL 的滤镜引擎）
      */
     private fun buildMediaCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -77,6 +77,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("── 相机采集 ──", ""))
         items.add(RouterItem("相机采集（CameraX 拍照 / 录像）", RouterPath.Media.Main))
         items.add(RouterItem("── 图像处理 ──", ""))
+        items.add(RouterItem("原生图像渲染与特效（RenderEffect / RenderScript）", RouterPath.Graphics.Main))
         items.add(RouterItem("GPU 图像滤镜处理（GPUImage）", RouterPath.GpuImage.Main))
         return items
     }

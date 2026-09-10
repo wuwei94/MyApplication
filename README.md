@@ -122,6 +122,7 @@ MyApplication/
     ├── [多媒体]
     │   ├── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
     │   ├── module_media        # 相机采集（CameraX 拍照 / 录像）
+    │   ├── module_graphics     # 原生图像渲染与特效（RenderEffect 模糊与 HardwareRenderer 离屏渲染 / RenderScript 历史计算）
     │   └── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜 / 滤镜拍录）
     │
     ├── [网络通信]
@@ -237,8 +238,6 @@ MyApplication/
 - AnimatorSet 动画组合（顺序/同时/Builder 编排）
 - ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator
 - 视图过渡动画（ChangeBounds / Fade / Slide / AutoTransition）
-- RenderEffect 渲染效果（Android 12+）
-- RenderScript 图像处理（已废弃）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
 - PAG 动画播放器（腾讯 libpag）
 - Lottie 动画播放器（Airbnb Lottie）
@@ -276,6 +275,13 @@ MyApplication/
 
 - **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
 - **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
+
+### module_graphics（原生图像渲染与特效）
+
+演示 Android 原生底层图形图像处理、着色器与渲染特效。
+
+- RenderEffect 渲染效果（Android 12+，View 模糊与 HardwareRenderer 离屏渲染）
+- RenderScript 图像处理（已废弃，历史参考）
 
 ### module_http（HTTP 网络请求）
 

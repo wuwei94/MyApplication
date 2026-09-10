@@ -17,7 +17,7 @@
 ├── 多媒体
 │   ├── 图片加载：Coil、Glide、lib_image_loader
 │   ├── 相机采集：CameraX 拍照 / 录像
-│   └── 图像处理：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧 / 滤镜拍录）
+│   └── 图像处理：Graphics（原生 RenderEffect / RenderScript 图像渲染与图形计算）、GPUImage（GPU 实时滤镜处理）
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -60,6 +60,7 @@
 | UI 交互 | module_markdown | Markdown 渲染与 AI 流式交互 | MarkdownMainActivity | /Markdown |
 | 多媒体 | module_image_loader | 图片加载 | ImageLoaderMainActivity | /ImageLoader |
 | 多媒体 | module_media | 多媒体（相机采集） | MediaMainActivity | /Media |
+| 多媒体 | module_graphics | 原生图像渲染与特效（RenderEffect / RenderScript） | GraphicsMainActivity | /Graphics |
 | 多媒体 | module_gpuimage | GPU 图像滤镜处理（GPUImage） | GpuImageMainActivity | /GpuImage |
 | 网络通信 | module_http | HTTP 网络请求（含 Ktor） | HttpMainActivity | /Http |
 | 网络通信 | module_sse | SSE 流式推送 | SseMainActivity | /SSE |
@@ -200,8 +201,6 @@
 | ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
 | TransitionFirstActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
 | TransitionSecondActivity | 视图过渡动画目标页 |
-| RenderEffectActivity | RenderEffect 渲染效果（Android 12+） |
-| RenderScriptActivity | RenderScript 图像处理（已废弃） |
 | PagActivity | PAG 动画播放器 |
 | LottieActivity | Lottie 动画播放器 |
 | SvgaPlayerActivity | SVGA 动画播放器 |
@@ -244,6 +243,18 @@
 | MediaMainActivity | 模块入口，导航到拍照、录像示例页面 |
 | MediaPhotoActivity | CameraX 拍照（ImageCapture 用例：预览取景 + 单张照片捕获） |
 | MediaVideoActivity | CameraX 录像（VideoCapture 用例：多级分辨率回退 + 录像回放） |
+
+---
+
+### module_graphics（原生图像渲染与特效）
+
+演示 Android 原生底层图形图像处理、着色器与渲染特效（RenderEffect / RenderScript）。
+
+| Activity | 功能 |
+|----------|------|
+| GraphicsMainActivity | 模块入口，导航到原生图像渲染与图形计算特效页面 |
+| RenderEffectActivity | RenderEffect 渲染效果（Android 12+，View 模糊与 HardwareRenderer 离屏渲染） |
+| RenderScriptActivity | RenderScript 图像处理（已废弃，历史参考） |
 
 ---
 

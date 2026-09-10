@@ -146,6 +146,8 @@ include(":libs:lib_ninepatch")
 include(":modules:module_tab")
 // 动画（原生动画 + 第三方动画库）
 include(":modules:module_anim")
+// 图形渲染（底层渲染特效与着色计算）
+include(":modules:module_graphics")
 // UI 控件
 include(":modules:module_widget")
 // 自定义控件

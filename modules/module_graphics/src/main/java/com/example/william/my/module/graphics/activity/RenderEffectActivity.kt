@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+package com.example.william.my.module.graphics.activity
 
 import android.graphics.Bitmap
 import android.graphics.HardwareRenderer
@@ -46,7 +46,7 @@ import kotlin.math.min
  *
  * @see RenderScriptActivity RenderScript 模糊方案（已废弃）
  */
-@Route(path = RouterPath.Anim.RenderEffect)
+@Route(path = RouterPath.Graphics.RenderEffect)
 class RenderEffectActivity : BasicImageActivity() {
 
     private lateinit var originalBitmap: Bitmap

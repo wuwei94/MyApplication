@@ -86,13 +86,21 @@ object RouterPath {
         const val ValueAnimator = "$PATH/ValueAnimator"
         const val Transition = "$PATH/Transition"
         const val Transition2 = "$PATH/Transition2"
-        const val RenderEffect = "$PATH/RenderEffect"
-        const val RenderScript = "$PATH/RenderScript"
 
         // 第三方动画库
         const val Pag = "$PATH/Pag"
         const val Lottie = "$PATH/Lottie"
         const val SvgaPlayer = "$PATH/SvgaPlayer"
+    }
+
+    // 图形与渲染特效（RenderEffect / RenderScript / 图像与图形着色计算）
+    object Graphics {
+        private const val PATH = "/Graphics"
+
+        const val Main = "$PATH/Main"
+
+        const val RenderEffect = "$PATH/RenderEffect"
+        const val RenderScript = "$PATH/RenderScript"
     }
 
     // 自定义控件

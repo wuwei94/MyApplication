@@ -94,6 +94,7 @@ graph TB
     :modules:module_arch[module_arch]:::android-library
     :modules:module_async[module_async]:::android-library
     :modules:module_bluetooth[module_bluetooth]:::android-library
+    :modules:module_chart[module_chart]:::android-library
     :modules:module_component[module_component]:::android-library
     :modules:module_compose[module_compose]:::android-library
     :modules:module_database[module_database]:::android-library
@@ -101,6 +102,8 @@ graph TB
     :modules:module_event[module_event]:::android-library
     :modules:module_feature[module_feature]:::android-library
     :modules:module_flutter[module_flutter]:::android-library
+    :modules:module_gpuimage[module_gpuimage]:::android-library
+    :modules:module_graphics[module_graphics]:::android-library
     :modules:module_http[module_http]:::android-library
     :modules:module_image_loader[module_image_loader]:::android-library
     :modules:module_ipc[module_ipc]:::android-library
@@ -151,6 +154,7 @@ graph TB
   :app -.-> :modules:module_arch
   :app -.-> :modules:module_async
   :app -.-> :modules:module_bluetooth
+  :app -.-> :modules:module_chart
   :app -.-> :modules:module_component
   :app -.-> :modules:module_compose
   :app -.-> :modules:module_database
@@ -158,6 +162,8 @@ graph TB
   :app -.-> :modules:module_event
   :app -.-> :modules:module_feature
   :app -.-> :modules:module_flutter
+  :app -.-> :modules:module_gpuimage
+  :app -.-> :modules:module_graphics
   :app -.-> :modules:module_http
   :app -.-> :modules:module_image_loader
   :app -.-> :modules:module_ipc
@@ -224,6 +230,8 @@ graph TB
   :modules:module_async -.-> :basic:basic_shared
   :modules:module_bluetooth -.-> :basic:basic_lib
   :modules:module_bluetooth -.-> :basic:basic_shared
+  :modules:module_chart -.-> :basic:basic_lib
+  :modules:module_chart -.-> :basic:basic_shared
   :modules:module_component -.-> :basic:basic_lib
   :modules:module_component -.-> :basic:basic_shared
   :modules:module_compose -.-> :basic:basic_lib
@@ -240,6 +248,10 @@ graph TB
   :modules:module_flutter -.-> :basic:basic_lib
   :modules:module_flutter -.-> :basic:basic_shared
   :modules:module_flutter -.-> :flutter
+  :modules:module_gpuimage -.-> :basic:basic_lib
+  :modules:module_gpuimage -.-> :basic:basic_shared
+  :modules:module_graphics -.-> :basic:basic_lib
+  :modules:module_graphics -.-> :basic:basic_shared
   :modules:module_http -.-> :basic:basic_lib
   :modules:module_http -.-> :basic:basic_repo
   :modules:module_http -.-> :basic:basic_shared

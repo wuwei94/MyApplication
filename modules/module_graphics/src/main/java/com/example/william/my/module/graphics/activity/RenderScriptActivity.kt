@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+package com.example.william.my.module.graphics.activity
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -37,7 +37,7 @@ import kotlin.math.min
  *
  * @see RenderEffectActivity RenderEffect 替代方案
  */
-@Route(path = RouterPath.Anim.RenderScript)
+@Route(path = RouterPath.Graphics.RenderScript)
 class RenderScriptActivity : BasicImageActivity() {
 
     private var renderScript: RenderScript? = null

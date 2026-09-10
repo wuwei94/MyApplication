@@ -20,8 +20,6 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ObjectAnimator（对象属性动画）", RouterPath.Anim.ObjectAnimator))
         routerItems.add(RouterItem("AnimatorSet（组合动画集合）", RouterPath.Anim.AnimatorSet))
         routerItems.add(RouterItem("Transition（转场过渡动画）", RouterPath.Anim.Transition))
-        routerItems.add(RouterItem("RenderEffect（Android 12+ 渲染特效）", RouterPath.Anim.RenderEffect))
-        routerItems.add(RouterItem("RenderScript（底层模糊与图形计算）", RouterPath.Anim.RenderScript))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 第三方动画库 ──", ""))
         routerItems.add(RouterItem("PAG（Tencent 动效文件渲染）", RouterPath.Anim.Pag))
