@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget_thirdparty.activity.chart
+﻿package com.example.william.my.module.chart.activity
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -7,8 +7,8 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityMpRadarChartBinding
-import com.example.william.my.module.widget_thirdparty.view.CustomChartMarkerView
+import com.example.william.my.module.chart.databinding.ChartActivityMpRadarChartBinding
+import com.example.william.my.module.chart.view.CustomChartMarkerView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -30,14 +30,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.WidgetThirdparty.MPRadarChart)
-class MPRadarChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpRadarChartBinding>() {
+@Route(path = RouterPath.Chart.MPRadarChart)
+class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() {
 
     private val radarDims = listOf("架构设计", "性能优化", "源码理解", "跨端实战", "工程运维", "团队协作")
     private val radarSelf = listOf(92f, 88f, 85f, 95f, 78f, 89f)
     private val radarTarget = listOf(85f, 80f, 90f, 85f, 75f, 80f)
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpRadarChartBinding = WidgetThirdpartyActivityMpRadarChartBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ChartActivityMpRadarChartBinding = ChartActivityMpRadarChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

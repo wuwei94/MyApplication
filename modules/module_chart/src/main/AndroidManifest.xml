@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".ChartMainActivity" />
+        <activity android:name=".activity.MPLineChartActivity" />
+        <activity android:name=".activity.MPBarChartActivity" />
+        <activity android:name=".activity.MPPieChartActivity" />
+        <activity android:name=".activity.MPRadarChartActivity" />
+        <activity android:name=".activity.MPChartLinkageActivity" />
+    </application>
+
+</manifest>

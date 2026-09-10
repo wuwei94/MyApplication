@@ -110,12 +110,13 @@ MyApplication/
 │   └── lib_widget              # 自定义 Widget 控件集合
 └── modules                     # Feature 模块（按技术领域分组）
     │
-    ├── [UI 组件]
+    ├── [UI 交互]
     │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView / FloatWindow）
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
     │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
+    │   ├── module_chart        # 数据可视化（MPAndroidChart：折线图 / 柱状图 / 饼图 / 雷达图 / 多图表联动看板）
     │   └── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
     │
     ├── [多媒体]
@@ -125,9 +126,10 @@ MyApplication/
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
-    │   ├── module_websocket    # WebSocket 专项示例
+    │   ├── module_sse          # SSE 流式推送（OkHttp / Ktor 两条线，DeepSeek 大模型流式对话）
+    │   ├── module_socket       # Socket 长连接（WebSocket：OkHttp / Java-WebSocket；TCP：Netty）
     │   ├── module_mqtt         # MQTT 发布 / 订阅专项示例
-    │   └── module_bluetooth    # 蓝牙通信（BLE 客户端：原生 SDK 方案 + Nordic 官方库方案）
+    │   └── module_bluetooth    # 蓝牙通信（BLE 客户端：原生 SDK / Nordic / FastBle / RxAndroidBle 四套方案）
     │
     ├── [数据存储]
     │   ├── module_database     # 数据库（Room / ObjectBox）
@@ -177,6 +179,46 @@ MyApplication/
 - ViewFlipper / WebView
 - 悬浮窗（WindowManager 系统级浮层 + 拖拽 + 贴边吸附）
 
+### module_widget_custom（自定义控件）
+
+演示项目自定义实现的 UI 控件。
+
+- 高斯模糊（BlurView）
+- 裸眼 3D 效果（Sensor3D）
+- 跑马灯（MarqueeView）
+- 无限滚动 ImageView
+- 验证码控件
+- BottomSheetDialog / AlertDialog
+- PopupWindow 封装（CustomPopWindow）
+- Spinner / TitleBar
+- 九宫格拉伸图片（NinePatch）
+
+### module_widget_thirdparty（UI 库）
+
+第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件、复合 UI 选择器与第三方页面多状态管理。
+
+- 轮播：Banner
+- 倒计时：CountdownView
+- 悬浮窗：EasyFloat
+- 图片缩放：PhotoView
+- 阴影：ShadowLayout
+- 侧滑：SwipeLayout
+- 模糊：RealtimeBlurView
+- 选择器 / 多媒体：CityPicker（城市选择器）/ PickerView（滚动选择器）/ PictureSelector（图片选择器）
+- 多状态管理：LoadSir（Activity / Fragment 多状态管理、Loading / Error / Success 切换与点击重试）
+
+### module_chart（数据可视化）
+
+第三方图表库 MPAndroidChart 专项演示，覆盖基础图表与多图表联动看板。
+
+- **LineChart**：双曲线收支对比、Cubic 贝塞尔平滑曲线、渐变面积填充与自定义 MarkerView 悬浮 Tooltip
+- **BarChart**：季度目标 vs 实际销售额分组柱状图、柱顶圆角与达成率联动分析
+- **PieChart**：成本预算环形甜甜圈图、中心总额标注与扇区点击外扩动画
+- **RadarChart**：六维技术能力评估模型、双数据集半透明覆盖对比
+- **ChartLinkage**：时间轴折线图主控，联动部门成本柱状图与渠道获客饼图实时重绘
+
+> 同主题的 Compose Canvas 自绘图表见 `module_compose`（LineChart / BarChart / PieChart / RadarChart / ChartLinkage）。
+
 ### module_tab（Tab 导航）
 
 演示 Fragment + Tab 导航的多种实现方式。
@@ -202,145 +244,14 @@ MyApplication/
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
 
-### module_widget_custom（自定义控件）
+### module_markdown（Markdown 渲染与 AI 流式交互）
 
-演示项目自定义实现的 UI 控件。
+原生高性能 Markdown 渲染、Prism4j 多语言代码高亮、打字机流控与大模型 AI 聊天流式交互。
 
-- 高斯模糊（BlurView）
-- 裸眼 3D 效果（Sensor3D）
-- 跑马灯（MarqueeView）
-- 无限滚动 ImageView
-- 验证码控件
-- BottomSheetDialog / AlertDialog
-- PopupWindow 封装（CustomPopWindow）
-- Spinner / TitleBar
-- 九宫格拉伸图片（NinePatch）
-
-### module_async（异步处理）
-
-演示 Android 线程/协程层面的异步机制。
-
-- AsyncTask 异步任务
-- HandlerThread 线程间通信
-
-### module_scheduler（后台任务调度）
-
-演示 Android 后台任务调度，聚焦「任务调度」主题。
-
-- JobScheduler 定时任务调度
-- WorkManager 现代化可靠后台任务调度与加急前台服务
-
-### module_component（组件交互）
-
-演示 Android 四大组件间的交互机制。
-
-- BroadcastReceiver 广播注册与发送
-- ActivityResultContracts 新版结果回调 API
-- OnBackPressedDispatcher 返回键拦截
-- Service 绑定（bindService）与前台服务
-
-### module_ipc（跨进程通信）
-
-演示 Android 跨进程通信（IPC）的两种基于 Binder 的方案。
-
-- AIDL 跨进程通信（绑定 / 解绑 / 远程调用）
-- Messenger 跨进程通信（IPC）
-
-### module_system_service（系统服务）
-
-演示 Android 系统级服务与底层安全密钥机制。
-
-- NotificationChannel 通知渠道创建与通知发送
-- 运行时权限批量申请
-- Android Keystore 安全密钥创建与 ECDSA 硬件签名
-
-### module_sample（技术示例）
-
-技术技巧与底层探索。收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码，保持轻量独立，不污染通用架构模块。
-
-- **View Hook**：反射技术（动态代理替换 OnClickListener）
-- **自定义字体**：字体加载（Typeface.createFromAsset）
-
-### module_performance（性能优化）
-
-演示 Android 启动与初始化、布局解析与列表渲染等多维度的性能优化与深度调度机制。
-
-- **ContentProvider**：启动早期无侵入自动初始化时序机制与冷启动多 Provider 耗时分析
-- **App Startup**：Jetpack 应用初始化组件（单个 InitializationProvider 聚合托管与 DAG 依赖拓扑排序）
-- **Baseline Profiles**：Jetpack 基线配置文件（ART 运行时 AOT 预编译提速与 ProfileInstaller 诊断）
-- **IdleHandler**：主线程空闲调度（单次/持续监听与延迟初始化）
-- **AsyncLayoutInflater**：异步布局解析与 ViewPreloadManager 视图预加载池（0ms 秒开）
-- **LruCache**：内存缓存设计模式（Cache-Aside 回源与容量淘汰）
-- **ConcatAdapter**：模块化列表组合与 ViewType 隔离刷新
-- **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
-- **DiffUtil**：列表差量计算与 Payload 细粒度局部刷新
-- **JankStats + Tracing**：JankStats 运行时卡顿采集、PerformanceMetricsState UI 状态归因、自定义 trace section，可在 System Trace / Perfetto 中对齐查看
-
-### module_media（多媒体）
-
-演示 Android 多媒体能力，按用例（UseCase）拆分为独立示例页。
-
-- **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
-- **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
-- **图片裁剪**：Intent 调用系统裁剪（图库选择 / 拍照裁剪）
-
-### module_ml（机器学习）
-
-演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、硬件加速与落地实践。
-
-- **基础张量与数值回归**：Direct ByteBuffer 内存映射、连续函数数值拟合与批量推理延迟测试
-- **图像预处理与分类**：Bitmap 裁剪缩放、RGB 像素归一化、Softmax 分布与 Top-K 置信度标签解析
-- **GPU 硬件加速与 Benchmark**：CompatibilityList 兼容性检查、CPU 单/多线程 vs GPU Delegate 多轮基准性能对比
-- **LiteRT 架构演进**：从 TFLite 到 LiteRT 演进、FlatBuffers 零拷贝 mmap、模型量化收益与端侧大模型 SLM 落地架构
-
-### module_feature（业务功能）
-
-实战业务场景脱敏。收纳从公司真实商业项目中抽离、脱敏出的典型复合业务场景，展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。
-
-- 转盘抽奖（旋转动画）
-- 麦位动画（自定义 LayoutManager）
-
-### module_http（HTTP 网络请求）
-
-集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call / 协程 / RxJava）以及 Rx 动态请求与文件传输。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加响应、日志与原位更新进度；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/04-domains/network.md)，上传、下载与并发约定详见 [文件上传与下载](docs/04-domains/transfer.md)。
-
-- `httpurl`：HttpURLConnection 原生网络请求
-- `volley`：Volley 基础请求
-- `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
-- `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
-- `retrofit_coroutine`：Retrofit 协程挂起函数原生调用与 `lib_retrofit` DSL
-- `retrofit_rx`：RxJava 原生订阅与默认网络策略
-- `request`：`RxRequestActivity` 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
-- `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，展示条件断点续传与单/多文件并发下载
-- `upload`：`RxUploadActivity` 复用页面级 Rx Retrofit 和统一 `RxUploadCallback`，展示单/多文件 POST Multipart 上传
-
-### module_websocket（WebSocket & TCP Socket）
-
-WebSocket 与 Netty TCP Socket 专项功能演示。
-
-- **OkHttp WebSocket**：OkHttp 原生连接与 RxJava 封装
-- **Java-WebSocket**：Java-WebSocket 客户端、RxJava 封装与内置本地服务端（Port 5566）
-- **Netty TCP Socket**：Netty TCP 客户端、RxJava 封装与内置本地服务端（Port 5567）
-
-### module_mqtt（MQTT 发布 / 订阅）
-
-MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供两种客户端实现对比。
-
-- **HiveMQ MQTT Client**：`lib_mqtt_hivemq` 封装，异步 API（流式 Builder + CompletableFuture 回调），依赖 Netty
-- **Eclipse Paho Android Service**：`lib_mqtt_paho_service` 封装，MqttAndroidClient 绑定 MqttService（BroadcastReceiver + Service 通信）；采用 hannesa2 维护 fork（官方 1.1.1 已停更，在 targetSdk 34+ 上会因 Receiver 注册缺少导出标志崩溃）
-
-两者均覆盖：连接、订阅、发布（QoS 0/1/2）与断开。
-
-### module_event（事件总线）
-
-从各架构/框架中抽离出的**消息总线专项模块**，统一展示四种 EventBus 实现的差异。
-
-| Bus          | Delayed | Ordered | Sticky | Lifecycle | Cross-process | Thread dispatch |
-|--------------|---------|---------|--------|-----------|---------------|-----------------|
-| EventBus     | ❌      | ✅      | ✅     | ❌        | ❌            | ✅              |
-| RxEventBus   | ❌      | ✅      | ✅     | ❌        | ❌            | ✅              |
-| LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
-| FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
+- **Markwon 基础与扩展渲染**：基于 AST 解析的高性能原生 Spannable 渲染、GFM 表格、任务清单、HTML 标签、Glide 图片与自定义主题样式
+- **Prism4j 多语言代码高亮**：Kotlin / Java / Python / JS / SQL / Shell / C++ 多语言词法分析语法着色、Darkula 暗黑与 Light 明亮主题定制、协程后台异步染色优化
+- **流式打字机与语法容错**：`TypewriterEngine` 动态自适应时钟流控（积压自适应调速 + 标点呼吸停顿 + 暂停/跳过）、`MarkdownStreamFixer` 未闭合代码块与行内标签虚拟自动补全、呼吸闪烁光标
+- **AI 流式对话完整实战**：`RecyclerView Payload` 局部细粒度增量刷新（0 掉帧、0 重绘闪烁）、智能吸底滚动与手势打断识别、悬浮“回到最新内容”按钮、多轮对话管理、一键复制代码与多场景大模型推流联调
 
 ### module_image_loader（图片加载）
 
@@ -359,55 +270,61 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 - **滤镜链组合**：GPUImageFilterGroup 多级滤镜串联渲染（FBO 离屏过渡），模拟后期工作流
 - **相机实时帧滤镜**：CameraX `ImageAnalysis` 连续取帧，经 `GPUImageRenderer#onPreviewFrame` 上传纹理后由滤镜逐帧渲染（图像源由静态图扩展为相机帧流）
 
-### module_widget_thirdparty（UI 库）
+### module_media（多媒体）
 
-第三方 UI 控件库集中展示，聚焦可复用的 View/ViewGroup 控件、复合 UI 选择器与第三方页面多状态管理。
+演示 Android 多媒体能力，按用例（UseCase）拆分为独立示例页。
 
-- 轮播：Banner
-- 倒计时：CountdownView
-- 悬浮窗：EasyFloat
-- 图片缩放：PhotoView
-- 阴影：ShadowLayout
-- 侧滑：SwipeLayout
-- 模糊：RealtimeBlurView
-- 选择器 / 多媒体：CityPicker（城市选择器）/ PickerView（滚动选择器）/ PictureSelector（图片选择器）
-- 多状态管理：LoadSir（Activity / Fragment 多状态管理、Loading / Error / Success 切换与点击重试）
+- **拍照**：ImageCapture 用例（预览取景 + 单张照片捕获 + 结果预览）
+- **录像**：VideoCapture 用例（多级分辨率回退 + 音频可选 + 录像回放）
+- **图片裁剪**：Intent 调用系统裁剪（图库选择 / 拍照裁剪）
 
-### module_markdown（Markdown 渲染与 AI 流式交互）
+### module_http（HTTP 网络请求）
 
-原生高性能 Markdown 渲染、Prism4j 多语言代码高亮、打字机流控与大模型 AI 聊天流式交互。
+集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call / 协程 / RxJava）以及 Rx 动态请求与文件传输。请求页统一使用 `BasicResponseActivity` 居中展示初始说明，并在运行后内联追加响应、日志与原位更新进度；各网络封装的职责、生命周期与差异详见 [Android 网络请求封装](docs/04-domains/network.md)，上传、下载与并发约定详见 [文件上传与下载](docs/04-domains/transfer.md)。
 
-- **Markwon 基础与扩展渲染**：基于 AST 解析的高性能原生 Spannable 渲染、GFM 表格、任务清单、HTML 标签、Glide 图片与自定义主题样式
-- **Prism4j 多语言代码高亮**：Kotlin / Java / Python / JS / SQL / Shell / C++ 多语言词法分析语法着色、Darkula 暗黑与 Light 明亮主题定制、协程后台异步染色优化
-- **流式打字机与语法容错**：`TypewriterEngine` 动态自适应时钟流控（积压自适应调速 + 标点呼吸停顿 + 暂停/跳过）、`MarkdownStreamFixer` 未闭合代码块与行内标签虚拟自动补全、呼吸闪烁光标
-- **AI 流式对话完整实战**：`RecyclerView Payload` 局部细粒度增量刷新（0 掉帧、0 重绘闪烁）、智能吸底滚动与手势打断识别、悬浮“回到最新内容”按钮、多轮对话管理、一键复制代码与多场景大模型推流联调
+- `httpurl`：HttpURLConnection 原生网络请求
+- `volley`：Volley 基础请求
+- `okhttp`：`lib_okhttp` DSL 与 OkHttp 原生请求
+- `retrofit`：Retrofit 原生 `Call` 与 `lib_retrofit` DSL
+- `retrofit_coroutine`：Retrofit 协程挂起函数原生调用与 `lib_retrofit` DSL
+- `retrofit_rx`：RxJava 原生订阅与默认网络策略
+- `request`：`RxRequestActivity` 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求
+- `download`：`RxDownloadActivity` 复用页面级 Rx Retrofit 和统一 `RxDownloadCallback`，展示条件断点续传与单/多文件并发下载
+- `upload`：`RxUploadActivity` 复用页面级 Rx Retrofit 和统一 `RxUploadCallback`，展示单/多文件 POST Multipart 上传
 
-### module_kotlin（Kotlin 语言特性）
+### module_sse（SSE 流式推送）
 
-Kotlin 语言特性在 Android 上的实践。
+演示 Server-Sent Events (SSE) 协议在现代 AI 大模型（DeepSeek 官方 API）对话场景下的流式落地，覆盖 OkHttp 与 Ktor 两条客户端线。
 
-- **Coroutines 协程**：结构化并发、线程切换调度（Dispatchers）、async/await 并行提速、supervisorScope 异常隔离、withTimeoutOrNull 超时协作式取消与 CoroutineExceptionHandler
-- **Flow 数据流**：冷流收集（repeatOnLifecycle）、变换操作符（map/filter/take）、zip/combine 双流组合、debounce + flatMapLatest 搜索防抖、StateFlow vs SharedFlow 热流机制、catch 异常捕获与 retry 自动重试
-- **Channel 通道与回调桥接**：Channel 4 种缓冲模式（RENDEZVOUS/BUFFERED/CONFLATED/UNLIMITED）、produce 生产消费模型、callbackFlow 传统监听器桥接（awaitClose 优雅反注册防泄漏）与 channelFlow 跨协程并发发射
-- **Concurrency 并发与同步**：Mutex 非阻塞互斥挂起锁（杜绝线程阻塞与死锁）、Semaphore 信号量最大并发度限流、select 多路复用异步竞速与 withContext(NonCancellable) 关键清理保障
-- **Delegate 委托机制**：类委托（by base）、自定义 ReadWriteProperty、by lazy 延迟初始化、observable 变更监听、vetoable 条件拦截、Map 映射委托、属性别名重定向与 notNull 非空校验
-- **Inline 内联函数**：作用域函数对比（with/let/run/also/apply）、reified 泛型实化与 JSON 解析、自定义内联高阶扩展、noinline 与 crossinline 修饰符
-- **Syntax 现代语法与 DSL**：操作符重载（+/*/[ ]/in/invoke）、中缀函数（infix fun）、解构声明（Data Class 与 componentN）、密封接口（Sealed Interface）when 编译器穷举与 @DslMarker 类型安全 DSL 构建器
+- **OkHttp SSE**：原始回调、RxJava Observable 封装与 Coroutines Flow 协程生命周期感知三种版本
+- **Ktor SSE**：Ktor Client + SSE Plugin 的原始回调与 Coroutines Flow 封装版本
+- 两条线均以 DeepSeek POST Prompt 为链路：逐 Token 流式输出，收到 `[DONE]` 结束
 
-### module_reactive（响应式编程）
+### module_socket（WebSocket & TCP Socket）
 
-Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，便于对比学习。
+WebSocket 与 Netty TCP Socket 专项功能演示。
 
-- **Flow 操作符**：flowOf/asFlow 创建、map/flatMapConcat/buffer 变换、filter/take/distinct 过滤、zip/combine 组合、catch 错误降级
-- **RxJava 3 操作符**：just/range 创建、map/flatMap/buffer 变换、filter/take/distinct 过滤、zip/concat 组合、onErrorReturn 错误恢复
+- **OkHttp WebSocket**：OkHttp 原生连接与 RxJava 封装
+- **Java-WebSocket**：Java-WebSocket 客户端、RxJava 封装与内置本地服务端（Port 5566）
+- **Netty TCP Socket**：Netty TCP 客户端、RxJava 封装与内置本地服务端（Port 5567）
 
-### module_jetpack（Jetpack 组件库）
+### module_mqtt（MQTT 发布 / 订阅）
 
-Jetpack 通用基础架构与生命周期数据流组件。
+MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供两种客户端实现对比。
 
-- **Lifecycle**：生命周期感知（DefaultLifecycleObserver、ProcessLifecycleOwner 全局前后台、repeatOnLifecycle / flowWithLifecycle 安全数据流收集）
-- **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
-- **ViewModel**：ViewModel / ViewModelProvider.Factory 多种创建方式（标准 Factory、DSL viewModelFactory、SavedStateHandle 与 Fragment 作用域共享）
+- **HiveMQ MQTT Client**：`lib_mqtt_hivemq` 封装，异步 API（流式 Builder + CompletableFuture 回调），依赖 Netty
+- **Eclipse Paho Android Service**：`lib_mqtt_paho_service` 封装，MqttAndroidClient 绑定 MqttService（BroadcastReceiver + Service 通信）；采用 hannesa2 维护 fork（官方 1.1.1 已停更，在 targetSdk 34+ 上会因 Receiver 注册缺少导出标志崩溃）
+
+两者均覆盖：连接、订阅、发布（QoS 0/1/2）与断开。
+
+### module_bluetooth（蓝牙通信）
+
+低功耗蓝牙（Bluetooth Low Energy, BLE）客户端开发，四套方案并列对比。
+
+- **原生 SDK**：扫描（动态权限 / 扫描模式 / RSSI 与广播数据解析）、连接与 GATT 交互（服务发现 / MTU 协商 / 读写特征与 Notify）、协程队列与分包传输
+- **Nordic 官方库**：BleManager 工业级架构、扫描与设备发现、挂起式连接与读写、`.split()` / `.merge()` 大数据流式分包拼包
+- **FastBle**：链式扫描与规则过滤（BleScanRuleConfig）、链式连接与 UUID 驱动读写回调
+- **RxAndroidBle**：Observable 响应式扫描与过滤、`establishConnection` 管道连接与 RxJava 流控
 
 ### module_database（数据库）
 
@@ -423,12 +340,52 @@ Jetpack 通用基础架构与生命周期数据流组件。
 - **DataStore**：Jetpack 现代化键值存储（Preferences / Proto 两种存储）
 - **MMKV**：腾讯开源高性能键值存储，基于 mmap 内存映射
 
-### module_di（依赖注入）
+### module_async（异步处理）
 
-主流依赖注入方案对比与实战。
+演示 Android 线程/协程层面的异步机制。
 
-- **Hilt**：基于 Dagger 2 的编译期依赖注入，覆盖构造注入、接口绑定（@Binds）、第三方对象构建（@Provides）、限定符（@Qualifier）、上下文限定符（@ApplicationContext / @ActivityContext）、作用域生命周期（@Singleton / @ActivityScoped）、@HiltViewModel 及非组件入口点（@EntryPoint）
-- **Koin**：基于 Kotlin DSL 的实用主义运行时依赖注入，覆盖 singleOf / factoryOf 声明、接口绑定（bind）、具名限定符（named）、动态参数注入（parametersOf）、Koin ViewModel（viewModelOf / by viewModel）及 Scope 作用域管理
+- AsyncTask 异步任务
+- HandlerThread 线程间通信
+
+### module_component（组件交互）
+
+演示 Android 四大组件间的交互机制。
+
+- BroadcastReceiver 广播注册与发送
+- ActivityResultContracts 新版结果回调 API
+- OnBackPressedDispatcher 返回键拦截
+- Service 绑定（bindService）与前台服务
+
+### module_system_service（系统服务）
+
+演示 Android 系统级服务与底层安全密钥机制。
+
+- NotificationChannel 通知渠道创建与通知发送
+- 运行时权限批量申请
+- Android Keystore 安全密钥创建与 ECDSA 硬件签名
+
+### module_scheduler（后台任务调度）
+
+演示 Android 后台任务调度，聚焦「任务调度」主题。
+
+- JobScheduler 定时任务调度
+- WorkManager 现代化可靠后台任务调度与加急前台服务
+
+### module_ipc（跨进程通信）
+
+演示 Android 跨进程通信（IPC）的两种基于 Binder 的方案。
+
+- AIDL 跨进程通信（绑定 / 解绑 / 远程调用）
+- Messenger 跨进程通信（IPC）
+
+### module_ml（机器学习）
+
+演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、硬件加速与落地实践。
+
+- **基础张量与数值回归**：Direct ByteBuffer 内存映射、连续函数数值拟合与批量推理延迟测试
+- **图像预处理与分类**：Bitmap 裁剪缩放、RGB 像素归一化、Softmax 分布与 Top-K 置信度标签解析
+- **GPU 硬件加速与 Benchmark**：CompatibilityList 兼容性检查、CPU 单/多线程 vs GPU Delegate 多轮基准性能对比
+- **LiteRT 架构演进**：从 TFLite 到 LiteRT 演进、FlatBuffers 零拷贝 mmap、模型量化收益与端侧大模型 SLM 落地架构
 
 ### module_arch（架构模式）
 
@@ -441,6 +398,66 @@ Jetpack 通用基础架构与生命周期数据流组件。
 | MVI | 单向数据流：State → UI → Intent → ViewModel → State |
 | Compose MVI | Jetpack Compose + MVI 单向数据流 + SmartRefresh 下拉刷新与分页 |
 | Mavericks | 基于 Airbnb [Mavericks](https://airbnb.io/mavericks/) 框架的 MVI 实现，包含不可变状态、状态持久化与异步请求 |
+
+### module_di（依赖注入）
+
+主流依赖注入方案对比与实战。
+
+- **Hilt**：基于 Dagger 2 的编译期依赖注入，覆盖构造注入、接口绑定（@Binds）、第三方对象构建（@Provides）、限定符（@Qualifier）、上下文限定符（@ApplicationContext / @ActivityContext）、作用域生命周期（@Singleton / @ActivityScoped）、@HiltViewModel 及非组件入口点（@EntryPoint）
+- **Koin**：基于 Kotlin DSL 的实用主义运行时依赖注入，覆盖 singleOf / factoryOf 声明、接口绑定（bind）、具名限定符（named）、动态参数注入（parametersOf）、Koin ViewModel（viewModelOf / by viewModel）及 Scope 作用域管理
+
+### module_event（事件总线）
+
+从各架构/框架中抽离出的**消息总线专项模块**，统一展示四种 EventBus 实现的差异。
+
+| Bus          | Delayed | Ordered | Sticky | Lifecycle | Cross-process | Thread dispatch |
+|--------------|---------|---------|--------|-----------|---------------|-----------------|
+| EventBus     | ❌      | ✅      | ✅     | ❌        | ❌            | ✅              |
+| RxEventBus   | ❌      | ✅      | ✅     | ❌        | ❌            | ✅              |
+| LiveEventBus | ✅      | ✅      | ✅     | ✅        | ✅            | ❌              |
+| FlowEventBus | ✅      | ✅      | ✅     | ✅        | ❌            | ✅              |
+
+### module_reactive（响应式编程）
+
+Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，便于对比学习。
+
+- **Flow 操作符**：flowOf/asFlow 创建、map/flatMapConcat/buffer 变换、filter/take/distinct 过滤、zip/combine 组合、catch 错误降级
+- **RxJava 3 操作符**：just/range 创建、map/flatMap/buffer 变换、filter/take/distinct 过滤、zip/concat 组合、onErrorReturn 错误恢复
+
+### module_performance（性能优化）
+
+演示 Android 启动与初始化、布局解析与列表渲染等多维度的性能优化与深度调度机制。
+
+- **ContentProvider**：启动早期无侵入自动初始化时序机制与冷启动多 Provider 耗时分析
+- **App Startup**：Jetpack 应用初始化组件（单个 InitializationProvider 聚合托管与 DAG 依赖拓扑排序）
+- **Baseline Profiles**：Jetpack 基线配置文件（ART 运行时 AOT 预编译提速与 ProfileInstaller 诊断）
+- **IdleHandler**：主线程空闲调度（单次/持续监听与延迟初始化）
+- **AsyncLayoutInflater**：异步布局解析与 ViewPreloadManager 视图预加载池（0ms 秒开）
+- **LruCache**：内存缓存设计模式（Cache-Aside 回源与容量淘汰）
+- **ConcatAdapter**：模块化列表组合与 ViewType 隔离刷新
+- **RecycledViewPool**：RecyclerView 跨列表/Tab 共享视图池复用
+- **DiffUtil**：列表差量计算与 Payload 细粒度局部刷新
+- **JankStats + Tracing**：JankStats 运行时卡顿采集、PerformanceMetricsState UI 状态归因、自定义 trace section，可在 System Trace / Perfetto 中对齐查看
+
+### module_kotlin（Kotlin 语言特性）
+
+Kotlin 语言特性在 Android 上的实践。
+
+- **Coroutines 协程**：结构化并发、线程切换调度（Dispatchers）、async/await 并行提速、supervisorScope 异常隔离、withTimeoutOrNull 超时协作式取消与 CoroutineExceptionHandler
+- **Flow 数据流**：冷流收集（repeatOnLifecycle）、变换操作符（map/filter/take）、zip/combine 双流组合、debounce + flatMapLatest 搜索防抖、StateFlow vs SharedFlow 热流机制、catch 异常捕获与 retry 自动重试
+- **Channel 通道与回调桥接**：Channel 4 种缓冲模式（RENDEZVOUS/BUFFERED/CONFLATED/UNLIMITED）、produce 生产消费模型、callbackFlow 传统监听器桥接（awaitClose 优雅反注册防泄漏）与 channelFlow 跨协程并发发射
+- **Concurrency 并发与同步**：Mutex 非阻塞互斥挂起锁（杜绝线程阻塞与死锁）、Semaphore 信号量最大并发度限流、select 多路复用异步竞速与 withContext(NonCancellable) 关键清理保障
+- **Delegate 委托机制**：类委托（by base）、自定义 ReadWriteProperty、by lazy 延迟初始化、observable 变更监听、vetoable 条件拦截、Map 映射委托、属性别名重定向与 notNull 非空校验
+- **Inline 内联函数**：作用域函数对比（with/let/run/also/apply）、reified 泛型实化与 JSON 解析、自定义内联高阶扩展、noinline 与 crossinline 修饰符
+- **Syntax 现代语法与 DSL**：操作符重载（+/*/[ ]/in/invoke）、中缀函数（infix fun）、解构声明（Data Class 与 componentN）、密封接口（Sealed Interface）when 编译器穷举与 @DslMarker 类型安全 DSL 构建器
+
+### module_jetpack（Jetpack 组件库）
+
+Jetpack 通用基础架构与生命周期数据流组件。
+
+- **Lifecycle**：生命周期感知（DefaultLifecycleObserver、ProcessLifecycleOwner 全局前后台、repeatOnLifecycle / flowWithLifecycle 安全数据流收集）
+- **Paging 3**：分页加载（含 RemoteMediator + RemoteKey 方案）
+- **ViewModel**：ViewModel / ViewModelProvider.Factory 多种创建方式（标准 Factory、DSL viewModelFactory、SavedStateHandle 与 Fragment 作用域共享）
 
 ### module_compose（Compose 示例）
 
@@ -467,6 +484,20 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
 - **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
 - **引擎层特性**：CustomPainter 粒子系统、贝塞尔签名板、自定义 RenderObject 环形布局、交错动画、GLSL 片段着色器、沿路径动画、3D 翻转卡片、双指缩放旋转手势识别
+
+### module_sample（技术示例）
+
+技术技巧与底层探索。收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码，保持轻量独立，不污染通用架构模块。
+
+- **View Hook**：反射技术（动态代理替换 OnClickListener）
+- **自定义字体**：字体加载（Typeface.createFromAsset）
+
+### module_feature（业务功能）
+
+实战业务场景脱敏。收纳从公司真实商业项目中抽离、脱敏出的典型复合业务场景，展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。
+
+- 转盘抽奖（旋转动画）
+- 麦位动画（自定义 LayoutManager）
 
 ---
 

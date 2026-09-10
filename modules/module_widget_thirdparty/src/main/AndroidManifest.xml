@@ -10,11 +10,6 @@
         <activity android:name=".activity.widget.ShadowLayoutActivity" />
         <activity android:name=".activity.widget.SwipeLayoutActivity" />
         <activity android:name=".activity.widget.RealtimeBlurViewActivity" />
-        <activity android:name=".activity.chart.MPLineChartActivity" />
-        <activity android:name=".activity.chart.MPBarChartActivity" />
-        <activity android:name=".activity.chart.MPPieChartActivity" />
-        <activity android:name=".activity.chart.MPRadarChartActivity" />
-        <activity android:name=".activity.chart.MPChartLinkageActivity" />
         <activity android:name=".activity.picker.CityPickerActivity" />
         <activity android:name=".activity.picker.PickerViewActivity" />
         <activity android:name=".activity.picker.PictureSelectorActivity" />

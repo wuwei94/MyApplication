@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget_thirdparty.activity.chart
+﻿package com.example.william.my.module.chart.activity
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityMpChartLinkageBinding
+import com.example.william.my.module.chart.databinding.ChartActivityMpChartLinkageBinding
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -34,8 +34,8 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.WidgetThirdparty.MPChartLinkage)
-class MPChartLinkageActivity : BaseVBActivity<WidgetThirdpartyActivityMpChartLinkageBinding>() {
+@Route(path = RouterPath.Chart.MPChartLinkage)
+class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding>() {
 
     private val months = listOf("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月")
     private val revenueTrend = listOf(45f, 52f, 48f, 65f, 78f, 85f, 80f, 92f, 88f, 105f, 98f, 120f)
@@ -49,7 +49,7 @@ class MPChartLinkageActivity : BaseVBActivity<WidgetThirdpartyActivityMpChartLin
         Color.parseColor("#EC4899"),
     )
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpChartLinkageBinding = WidgetThirdpartyActivityMpChartLinkageBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ChartActivityMpChartLinkageBinding = ChartActivityMpChartLinkageBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

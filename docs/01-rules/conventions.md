@@ -21,14 +21,15 @@
 示例模块的归类遵循「主题优先、来源标注、职责分明」原则，新增模块或示例页前先按此判据确定归属：
 
 - **一级按技术主题**：模块挂到 `Category` 定义的 10 大技术领域分组（UI 交互 / 多媒体 / 网络通信 / 数据存储 / 系统能力 / AI 与机器学习 / 架构与工程 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature），目录页与分类页共用该枚举，标题不重复维护。
-- **二级按技术来源或主题**：同一能力的不同实现按来源分组（控件分「官方控件 / 自定义控件 / 第三方 UI 库」），不同技术点按主题分组（网络分「HTTP / 流式推送 / Socket / 消息队列 / 蓝牙通信」，多媒体分「图片加载 / 图像处理 / 相机采集」）；分组标题以「便于横向对比、快速定位」为准。
+- **二级按技术来源或主题**：同一能力的不同实现按来源分组（控件分「官方控件 / 自定义控件 / 第三方 UI 库」），不同技术点按主题分组（UI 交互分「控件 / 导航 / 动画 / 内容渲染 / 数据可视化」，网络分「HTTP / 流式推送 / Socket / 消息队列 / 蓝牙通信」，多媒体分「图片加载 / 图像处理 / 相机采集」）；分组标题以「便于横向对比、快速定位」为准。
 - **媒体域聚合（「多媒体」一级分类）**：`module_image_loader`（图片加载管道）、`module_gpuimage`（图像处理引擎）、`module_media`（相机采集）同属媒体域，统一挂「多媒体」分类，按「图片加载 / 图像处理 / 相机采集」分组展示。三者分别是资源库、处理引擎与硬件采集能力，既不是 UI 控件、也不属「系统能力」——媒体域内容不应拆分到其他一级分类。
 - **AI 域聚合（「AI 与机器学习」一级分类）**：`module_ml`（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速、张量内存架构）挂「AI 与机器学习」分类；端侧模型推理与 AI 能力相关示例归此分类，不属「系统能力」——推理虽运行于系统之上，但主题是 AI 算法与推理框架。
 - **底层能力 vs 第三方 UI 控件**：
   - `module_media`：聚焦系统原生 API 与硬件能力（CameraX 拍照/录像、Intent 系统裁剪）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
   - `module_image_loader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_image_loader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
   - `module_gpuimage`：聚焦 GPU 图像滤镜/后期处理引擎（GPUImage，OpenGL ES 渲染：GPUImageView 实时滤镜、参数调节、FilterGroup 滤镜链与相机实时帧滤镜）；与图片「加载」无关的滤镜类处理均归此模块。
-  - `module_widget_thirdparty`：集中收纳第三方可复用 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
+  - `module_widget_thirdparty`：集中收纳**通用可复用**的第三方 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
+  - `module_chart`：专门承载第三方**图表 / 数据可视化**库（MPAndroidChart：折线图 / 柱状图 / 饼图 / 雷达图与多图表联动看板）。图表是独立的技术主题，不随「第三方 UI 控件」混装——正如同 `OkHttp` / `Retrofit` 各自独立成模块，第三方库按「一库一主题」拆分。
 - **Jetpack 组件按主题归位原则**：
   - `module_jetpack` 专门承载**未被具体技术领域模块吸纳的通用 Jetpack 架构与生命周期数据流组件**（如 Lifecycle、Paging、ViewModel 等），且**不包含 UI 控件**。
   - 具有明确技术领域的 Jetpack 组件必须归入对应主题模块：

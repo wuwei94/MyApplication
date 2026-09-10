@@ -152,6 +152,8 @@ include(":modules:module_widget")
 include(":modules:module_widget_custom")
 // 第三方控件
 include(":modules:module_widget_thirdparty")
+// 数据可视化图表（MPAndroidChart）
+include(":modules:module_chart")
 // GPU 图像滤镜处理（GPUImage）
 include(":modules:module_gpuimage")
 

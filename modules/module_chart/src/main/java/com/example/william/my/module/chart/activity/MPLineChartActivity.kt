@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget_thirdparty.activity.chart
+﻿package com.example.william.my.module.chart.activity
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -7,8 +7,8 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityMpLineChartBinding
-import com.example.william.my.module.widget_thirdparty.view.CustomChartMarkerView
+import com.example.william.my.module.chart.databinding.ChartActivityMpLineChartBinding
+import com.example.william.my.module.chart.view.CustomChartMarkerView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -30,14 +30,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.WidgetThirdparty.MPLineChart)
-class MPLineChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpLineChartBinding>() {
+@Route(path = RouterPath.Chart.MPLineChart)
+class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {
 
     private val months = listOf("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月")
     private val incomeData = listOf(28.5f, 35.2f, 31.0f, 42.8f, 48.6f, 55.0f, 51.2f, 63.4f, 59.8f, 72.0f, 68.5f, 84.2f)
     private val expenseData = listOf(18.0f, 22.4f, 26.8f, 28.0f, 34.5f, 38.2f, 35.0f, 41.5f, 39.0f, 46.2f, 44.0f, 52.6f)
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpLineChartBinding = WidgetThirdpartyActivityMpLineChartBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ChartActivityMpLineChartBinding = ChartActivityMpLineChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

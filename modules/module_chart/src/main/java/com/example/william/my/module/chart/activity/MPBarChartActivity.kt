@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget_thirdparty.activity.chart
+﻿package com.example.william.my.module.chart.activity
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -7,8 +7,8 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityMpBarChartBinding
-import com.example.william.my.module.widget_thirdparty.view.CustomChartMarkerView
+import com.example.william.my.module.chart.databinding.ChartActivityMpBarChartBinding
+import com.example.william.my.module.chart.view.CustomChartMarkerView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -31,14 +31,14 @@ import kotlin.math.abs
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.WidgetThirdparty.MPBarChart)
-class MPBarChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpBarChartBinding>() {
+@Route(path = RouterPath.Chart.MPBarChart)
+class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {
 
     private val quarters = listOf("Q1 第一季度", "Q2 第二季度", "Q3 第三季度", "Q4 第四季度")
     private val targetSales = listOf(120f, 150f, 180f, 220f)
     private val actualSales = listOf(135.5f, 142f, 210.8f, 245f)
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpBarChartBinding = WidgetThirdpartyActivityMpBarChartBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ChartActivityMpBarChartBinding = ChartActivityMpBarChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

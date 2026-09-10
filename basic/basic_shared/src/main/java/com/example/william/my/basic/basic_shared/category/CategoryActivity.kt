@@ -45,6 +45,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * - 导航：Tab
      * - 动画：Anim（原生动画 + 第三方动画库）
      * - 内容渲染：Markdown 渲染与 AI 流式交互
+     * - 数据可视化：Chart（MPAndroidChart 折线 / 柱状 / 饼图 / 雷达）
      */
     private fun buildUiCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -58,6 +59,8 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("动画", RouterPath.Anim.Main))
         items.add(RouterItem("── 内容渲染 ──", ""))
         items.add(RouterItem("Markdown 渲染与 AI 流式交互", RouterPath.Markdown.Main))
+        items.add(RouterItem("── 数据可视化 ──", ""))
+        items.add(RouterItem("数据可视化图表（MPAndroidChart）", RouterPath.Chart.Main))
         return items
     }
 

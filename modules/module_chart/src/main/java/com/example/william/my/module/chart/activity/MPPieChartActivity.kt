@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget_thirdparty.activity.chart
+﻿package com.example.william.my.module.chart.activity
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -7,7 +7,7 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityMpPieChartBinding
+import com.example.william.my.module.chart.databinding.ChartActivityMpPieChartBinding
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -29,8 +29,8 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.WidgetThirdparty.MPPieChart)
-class MPPieChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpPieChartBinding>() {
+@Route(path = RouterPath.Chart.MPPieChart)
+class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
 
     private val pieCategories = listOf("云计算研发", "市场营销", "人力薪酬", "办公行政", "流动储备")
     private val pieAmounts = listOf(45.8f, 32.5f, 68.2f, 18.0f, 25.5f)
@@ -42,7 +42,7 @@ class MPPieChartActivity : BaseVBActivity<WidgetThirdpartyActivityMpPieChartBind
         Color.parseColor("#8B5CF6"),
     )
 
-    override fun getViewBinding(): WidgetThirdpartyActivityMpPieChartBinding = WidgetThirdpartyActivityMpPieChartBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ChartActivityMpPieChartBinding = ChartActivityMpPieChartBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

@@ -127,13 +127,6 @@ object RouterPath {
         const val ShadowLayout = "$PATH/ShadowLayout"
         const val SwipeLayout = "$PATH/SwipeLayout"
 
-        // ── 数据可视化图表 (MPAndroidChart) ──
-        const val MPLineChart = "$PATH/MPLineChart"
-        const val MPBarChart = "$PATH/MPBarChart"
-        const val MPPieChart = "$PATH/MPPieChart"
-        const val MPRadarChart = "$PATH/MPRadarChart"
-        const val MPChartLinkage = "$PATH/MPChartLinkage"
-
         // ── 选择器 / 多媒体选择 ──
         const val CityPicker = "$PATH/CityPicker"
         const val PickerView = "$PATH/PickerView"
@@ -142,6 +135,19 @@ object RouterPath {
         // ── 页面状态管理 ──
         const val LoadSir = "$PATH/LoadSir"
         const val LoadSirFragment = "$PATH/LoadSirFragment"
+    }
+
+    // 数据可视化（第三方图表库 MPAndroidChart）
+    object Chart {
+        private const val PATH = "/Chart"
+
+        const val Main = "$PATH/Main"
+
+        const val MPLineChart = "$PATH/MPLineChart"
+        const val MPBarChart = "$PATH/MPBarChart"
+        const val MPPieChart = "$PATH/MPPieChart"
+        const val MPRadarChart = "$PATH/MPRadarChart"
+        const val MPChartLinkage = "$PATH/MPChartLinkage"
     }
 
     // 图片加载

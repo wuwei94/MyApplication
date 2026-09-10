@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.chart.MPPieChartActivity">
+    tools:context=".activity.MPRadarChartActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- 饼图卡片 -->
+            <!-- 雷达图卡片 -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="年度各项成本预算占比"
+                        android:text="六维技术能力评估模型 (100分制)"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -44,12 +44,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="环形甜甜圈图、点击扇区凸起外扩与中心指标标注"
+                        android:text="双数据集半透明雷达网格、自我评定 vs 团队基准线"
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="12sp" />
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pieChart"
+                    <com.github.mikephil.charting.charts.RadarChart
+                        android:id="@+id/radarChart"
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
                         android:layout_marginTop="16dp" />
@@ -63,10 +63,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#0D3B82F6"
+                app:cardBackgroundColor="#0D009688"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#333B82F6"
+                app:strokeColor="#33009688"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -86,7 +86,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="品类成本细分 — 云计算研发"
+                            android:text="维度能力评定 — 架构设计"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -96,12 +96,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shared_shape_primary"
-                            android:backgroundTint="#3B82F6"
+                            android:backgroundTint="#8B5CF6"
                             android:paddingStart="8dp"
                             android:paddingTop="3dp"
                             android:paddingEnd="8dp"
                             android:paddingBottom="3dp"
-                            android:text="占比 24.1%"
+                            android:text="达标 (+7)"
                             android:textColor="#FFFFFF"
                             android:textSize="11sp"
                             android:textStyle="bold" />
@@ -123,17 +123,17 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="品类名称"
+                                android:text="评定得分"
                                 android:textColor="?android:attr/textColorSecondary"
                                 android:textSize="11sp" />
 
                             <TextView
-                                android:id="@+id/tvCategoryName"
+                                android:id="@+id/tvScore"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="云计算研发"
-                                android:textColor="#3B82F6"
+                                android:text="92 分"
+                                android:textColor="#009688"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -147,16 +147,40 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="支出预算"
+                                android:text="基准期望"
                                 android:textColor="?android:attr/textColorSecondary"
                                 android:textSize="11sp" />
 
                             <TextView
-                                android:id="@+id/tvAmount"
+                                android:id="@+id/tvTargetScore"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="45.8 万"
+                                android:text="85 分"
+                                android:textColor="#FFA000"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="分值差距"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvGap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="+7 分"
                                 android:textColor="#10B981"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -171,41 +195,17 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="总预算额"
+                                android:text="能力评估"
                                 android:textColor="?android:attr/textColorSecondary"
                                 android:textSize="11sp" />
 
                             <TextView
-                                android:id="@+id/tvTotal"
+                                android:id="@+id/tvLevel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="190.0 万"
-                                android:textColor="?android:attr/textColorPrimary"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="全盘占比"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvPct"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="24.1%"
-                                android:textColor="#8B5CF6"
+                                android:text="专家级别"
+                                android:textColor="#8E24AA"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -213,10 +213,11 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvRemark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="交互提示：点击饼图扇区可触发高亮外扩，并查看对应品类明细"
+                        android:text="维度解析：架构设计评定分值为 92 分，高于岗位基准要求 7 分。"
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="11sp" />
 
