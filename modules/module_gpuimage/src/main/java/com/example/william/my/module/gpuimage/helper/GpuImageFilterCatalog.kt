@@ -24,9 +24,10 @@ import jp.co.cyberagent.android.gpuimage.filter.GPUImageVignetteFilter
 /**
  * GPUImage 滤镜目录
  *
- * 集中管理两个演示页使用的滤镜清单，避免页面各自维护重复列表。
+ * 集中管理各演示页使用的滤镜清单，避免页面各自维护重复列表。
  *
- * - [FILTERS]：滤镜浏览页的「一键滤镜库」，每个滤镜通过 [FilterSpec.factory] 惰性创建。
+ * - [FILTERS]：滤镜浏览页的「一键滤镜库」，每个滤镜通过 [FilterSpec.factory] 惰性创建，
+ *   相机实时帧滤镜页同样复用该清单（同一批滤镜作用于相机帧流）。
  *   GPUImage 所有滤镜均为 `GPUImageFilter` 子类，可直接传入
  *   `GPUImageView#setFilter(GPUImageFilter)`；无参构造的 `GPUImageFilter()`
  *   即“直通滤镜”（显示原图）。

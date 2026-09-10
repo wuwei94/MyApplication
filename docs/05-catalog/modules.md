@@ -13,7 +13,7 @@
 │   ├── 导航：Tab 导航
 │   ├── 动画：原生动画与第三方动画库（PAG、Lottie、SVGA）
 │   ├── 图片加载：Coil、Glide、lib_image_loader
-│   └── 图片滤镜：GPUImage（GPU 实时滤镜处理）
+│   └── 图片滤镜：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧）
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -426,10 +426,11 @@
 
 | Activity | 功能 |
 |----------|------|
-| GpuImageMainActivity | 模块入口，导航到滤镜预览、参数调节与滤镜链页面 |
+| GpuImageMainActivity | 模块入口，导航到滤镜预览、参数调节、滤镜链与相机实时帧页面 |
 | GpuImageFilterActivity | 滤镜实时预览（GPUImageView `setImage` 载入 assets/相册图片、`setFilter` 切换 16 种滤镜、后台 `capture()` 取帧保存相册） |
 | GpuImageAdjustActivity | 滤镜参数实时调节（亮度/对比度/饱和度/伽马/曝光/色相/锐度/像素化/色调分离 9 种参数 setter 连续调节） |
 | GpuImageGroupActivity | GPUImageFilterGroup 多级滤镜链（两级滤镜串联，FBO 离屏过渡渲染） |
+| GpuImageCameraFilterActivity | 相机实时帧滤镜（CameraX `ImageAnalysis` 连续取帧 → `GPUImageRenderer#onPreviewFrame` 上传纹理 → 16 种滤镜逐帧渲染，不产出文件） |
 
 ---
 

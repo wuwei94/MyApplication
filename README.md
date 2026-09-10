@@ -39,7 +39,7 @@
 | Others      | WorkManager · Paging 3 · SplashScreen · MMKV |
 | Performance | Jetpack Macrobenchmark · Baseline Profile · Compose Compiler Stability · DiffUtil · LruCache |
 | Quality     | Spotless · ktlint · Dependency Guard · Android Lint |
-| CI/CD       | GitHub Actions（lint + assemble） |
+| CI/CD       | GitHub Actions（格式检查 / Lint / 单测 / 依赖守卫 / 打包 并行矩阵） |
 
 > 各库版本详见 `gradle/libs.versions.toml`。
 
@@ -118,7 +118,7 @@ MyApplication/
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   ├── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
     │   ├── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
-    │   └── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链）
+    │   └── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
@@ -353,6 +353,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 - **滤镜实时预览**：GPUImageView 载入图片后 `setFilter()` 无缝切换 16 种内置滤镜（怀旧 / 黑白 / 素描 / 卡通 / 边缘检测 / 像素画等），`capture()` 后台取帧并保存系统相册
 - **滤镜参数实时调节**：复用滤镜实例连续调用参数 setter（亮度 / 对比度 / 饱和度 / 伽马 / 曝光 / 色相 / 锐度 / 像素化 / 色调分离）
 - **滤镜链组合**：GPUImageFilterGroup 多级滤镜串联渲染（FBO 离屏过渡），模拟后期工作流
+- **相机实时帧滤镜**：CameraX `ImageAnalysis` 连续取帧，经 `GPUImageRenderer#onPreviewFrame` 上传纹理后由滤镜逐帧渲染（图像源由静态图扩展为相机帧流）
 
 ### module_widget_thirdparty（UI 库）
 

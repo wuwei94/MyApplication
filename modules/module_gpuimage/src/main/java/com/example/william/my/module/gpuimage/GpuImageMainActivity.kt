@@ -14,10 +14,12 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 通过 `GPUImageView` + `GPUImageFilter` 子类在 GPU 上逐帧渲染，
  * 内置 60+ 种滤镜（shader 与 iOS 版保持一致），并支持滤镜链组合。
  *
- * 本模块演示三条核心使用链路：
+ * 本模块演示四条核心使用链路：
  * 1. 滤镜实时预览：GPUImageView 载入图片后 `setFilter()` 无缝切换 16 种内置滤镜
  * 2. 参数实时调节：复用滤镜实例，连续调用参数 setter（亮度/对比度/色相等 9 种）
  * 3. 滤镜链组合：GPUImageFilterGroup 将多级滤镜串成单一滤镜渲染管线
+ * 4. 相机实时帧滤镜：CameraX ImageAnalysis 连续取帧，经 `GPUImageRenderer#onPreviewFrame`
+ *    上传纹理后由滤镜逐帧渲染（图像源从静态图扩展为相机帧流）
  */
 @Route(path = RouterPath.GpuImage.Main)
 class GpuImageMainActivity : RouterRecyclerActivity() {
@@ -30,6 +32,9 @@ class GpuImageMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 滤镜链组合 ──", ""))
         routerItems.add(RouterItem("GPUImageFilterGroup 多级滤镜链", RouterPath.GpuImage.Group))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── 相机实时帧 ──", ""))
+        routerItems.add(RouterItem("相机实时帧滤镜（CameraX 取帧 + onPreviewFrame）", RouterPath.GpuImage.CameraFilter))
         return routerItems
     }
 }
