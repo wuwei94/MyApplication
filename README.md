@@ -116,9 +116,12 @@ MyApplication/
     │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
-    │   ├── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
+    │   └── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
+    │
+    ├── [多媒体]
     │   ├── module_image_loader # 图片加载（Coil / Glide / lib_image_loader）
-    │   └── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜）
+    │   ├── module_gpuimage     # GPU 图像滤镜处理（GPUImage：滤镜实时预览 / 参数调节 / FilterGroup 滤镜链 / 相机实时帧滤镜）
+    │   └── module_media        # 相机采集（CameraX 拍照 / 录像 / 图片裁剪）
     │
     ├── [网络通信]
     │   ├── module_http         # HTTP 网络请求（HttpURLConnection / Volley / OkHttp / Retrofit / Rx 动态请求与文件传输 / Ktor）
@@ -135,7 +138,6 @@ MyApplication/
     │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
     │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / Android Keystore 安全密钥）
-    │   ├── module_media        # 多媒体（CameraX 拍照 / 录像 / 图片裁剪）
     │   ├── module_ml           # 机器学习（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速与端侧 AI）
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │

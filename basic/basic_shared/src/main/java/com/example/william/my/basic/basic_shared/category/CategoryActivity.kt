@@ -26,6 +26,7 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     private fun getCategoryTitle(): String = when (category) {
         "ui" -> "UI 交互"
+        "media" -> "多媒体"
         "network" -> "网络通信"
         "storage" -> "数据存储"
         "system" -> "系统能力"
@@ -38,6 +39,7 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> = when (category) {
         "ui" -> buildUiCategory()
+        "media" -> buildMediaCategory()
         "network" -> buildNetworkCategory()
         "storage" -> buildStorageCategory()
         "system" -> buildSystemCategory()
@@ -53,8 +55,7 @@ class CategoryActivity : RouterRecyclerActivity() {
      * - 控件：官方控件（Widget）/ 自定义控件（WidgetCustom）/ 第三方控件（WidgetThirdparty）
      * - 导航：Tab
      * - 动画：Anim（原生动画 + 第三方动画库）
-     * - 图片加载：ImageLoader（Coil / Glide / lib_image_loader）
-     * - 图片滤镜：GpuImage（GPUImage 基于 OpenGL 的实时滤镜处理）
+     * - 内容渲染：Markdown 渲染与 AI 流式交互
      */
     private fun buildUiCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -62,15 +63,29 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("官方控件", RouterPath.Widget.Main))
         items.add(RouterItem("自定义控件", RouterPath.WidgetCustom.Main))
         items.add(RouterItem("第三方 UI 库", RouterPath.WidgetThirdparty.Main))
-        items.add(RouterItem("Markdown 渲染与 AI 流式交互", RouterPath.Markdown.Main))
         items.add(RouterItem("── 导航 ──", ""))
         items.add(RouterItem("Tab 导航", RouterPath.Tab.Main))
         items.add(RouterItem("── 动画 ──", ""))
         items.add(RouterItem("动画", RouterPath.Anim.Main))
+        items.add(RouterItem("── 内容渲染 ──", ""))
+        items.add(RouterItem("Markdown 渲染与 AI 流式交互", RouterPath.Markdown.Main))
+        return items
+    }
+
+    /**
+     * 多媒体
+     * - 图片加载：ImageLoader（Coil / Glide / lib_image_loader）
+     * - 图像处理：GpuImage（GPUImage 基于 OpenGL 的滤镜引擎，静态图与相机实时帧）
+     * - 相机采集：Media（CameraX 拍照 / 录像 / 图片裁剪）
+     */
+    private fun buildMediaCategory(): ArrayList<RouterItem> {
+        val items = arrayListOf<RouterItem>()
         items.add(RouterItem("── 图片加载 ──", ""))
         items.add(RouterItem("图片加载", RouterPath.ImageLoader.Main))
-        items.add(RouterItem("── 图片滤镜 ──", ""))
+        items.add(RouterItem("── 图像处理 ──", ""))
         items.add(RouterItem("GPU 图像滤镜处理（GPUImage）", RouterPath.GpuImage.Main))
+        items.add(RouterItem("── 相机采集 ──", ""))
+        items.add(RouterItem("多媒体", RouterPath.Media.Main))
         return items
     }
 
@@ -112,8 +127,8 @@ class CategoryActivity : RouterRecyclerActivity() {
     /**
      * 系统能力
      * - 系统原生：Async, Component, SystemService, Scheduler
-     * - 多媒体：Media（CameraX 拍照 / 录像 / 图片裁剪）
      * - 跨进程通信：Ipc（AIDL / Messenger）
+     * - 机器学习：Ml（TFLite / LiteRT）
      */
     private fun buildSystemCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -122,8 +137,6 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("组件交互", RouterPath.Component.Main))
         items.add(RouterItem("系统服务", RouterPath.SystemService.Main))
         items.add(RouterItem("任务调度", RouterPath.Scheduler.Main))
-        items.add(RouterItem("── 多媒体 ──", ""))
-        items.add(RouterItem("多媒体", RouterPath.Media.Main))
         items.add(RouterItem("── 跨进程通信 ──", ""))
         items.add(RouterItem("跨进程通信", RouterPath.Ipc.Main))
         items.add(RouterItem("── 机器学习 ──", ""))

@@ -20,6 +20,7 @@ class DirectoryActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> = arrayListOf(
         createCategoryItem("UI 交互", "ui"),
+        createCategoryItem("多媒体", "media"),
         createCategoryItem("网络通信", "network"),
         createCategoryItem("数据存储", "storage"),
         createCategoryItem("系统能力", "system"),

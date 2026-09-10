@@ -12,8 +12,11 @@
 │   ├── 控件：标准控件、自定义控件、第三方控件
 │   ├── 导航：Tab 导航
 │   ├── 动画：原生动画与第三方动画库（PAG、Lottie、SVGA）
+│   └── 内容渲染：Markdown 渲染与 AI 流式交互
+├── 多媒体
 │   ├── 图片加载：Coil、Glide、lib_image_loader
-│   └── 图片滤镜：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧）
+│   ├── 图像处理：GPUImage（GPU 实时滤镜处理，静态图 / 相机实时帧）
+│   └── 相机采集：CameraX 拍照 / 录像、图片裁剪
 ├── 网络通信
 │   ├── HTTP 请求：HTTP 网络请求（基础、OkHttp、Retrofit、RxRetrofit、Ktor）
 │   ├── Socket 通信：WebSocket & TCP Socket
@@ -23,7 +26,6 @@
 │   └── 键值存储：DataStore、MMKV
 ├── 系统能力
 │   ├── 系统原生：异步处理、任务调度、组件交互、系统服务
-│   ├── 多媒体：相机、图片裁剪
 │   ├── 跨进程通信：AIDL、Messenger
 │   └── 机器学习：TensorFlow Lite、LiteRT
 ├── 架构与工程
