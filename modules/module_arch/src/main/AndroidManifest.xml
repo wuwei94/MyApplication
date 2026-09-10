@@ -8,6 +8,7 @@
         <activity android:name=".mvi.MviActivity" />
         <activity android:name=".compose.ComposeMviActivity" />
         <activity android:name=".mavericks.MavericksActivity" />
+        <activity android:name=".ssot.OfflineFirstActivity" />
     </application>
 
 </manifest>

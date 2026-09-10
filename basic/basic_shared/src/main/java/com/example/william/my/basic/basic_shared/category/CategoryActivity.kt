@@ -77,7 +77,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("── 图像处理 ──", ""))
         items.add(RouterItem("GPU 图像滤镜处理（GPUImage）", RouterPath.GpuImage.Main))
         items.add(RouterItem("── 相机采集 ──", ""))
-        items.add(RouterItem("多媒体", RouterPath.Media.Main))
+        items.add(RouterItem("相机采集（CameraX 拍照 / 录像 / 裁剪）", RouterPath.Media.Main))
         return items
     }
 
