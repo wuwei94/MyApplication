@@ -138,8 +138,10 @@ MyApplication/
     │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
     │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / Android Keystore 安全密钥）
-    │   ├── module_ml           # 机器学习（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速与端侧 AI）
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
+    │
+    ├── [AI 与机器学习]
+    │   └── module_ml           # 机器学习（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速与端侧 AI）
     │
     ├── [架构与工程]
     │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Compose MVI / Mavericks 并列分包）

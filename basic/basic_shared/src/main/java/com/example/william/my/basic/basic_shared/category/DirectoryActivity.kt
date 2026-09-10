@@ -24,6 +24,7 @@ class DirectoryActivity : RouterRecyclerActivity() {
         createCategoryItem("网络通信", "network"),
         createCategoryItem("数据存储", "storage"),
         createCategoryItem("系统能力", "system"),
+        createCategoryItem("AI 与机器学习", "ai"),
         createCategoryItem("架构与工程", "engineering"),
         createCategoryItem("Kotlin & Jetpack", "kotlin_jetpack"),
         createCategoryItem("Compose & Flutter", "compose_flutter"),

@@ -26,8 +26,9 @@
 │   └── 键值存储：DataStore、MMKV
 ├── 系统能力
 │   ├── 系统原生：异步处理、任务调度、组件交互、系统服务
-│   ├── 跨进程通信：AIDL、Messenger
-│   └── 机器学习：TensorFlow Lite、LiteRT
+│   └── 跨进程通信：AIDL、Messenger
+├── AI 与机器学习
+│   └── 端侧推理：TensorFlow Lite、LiteRT
 ├── 架构与工程
 │   ├── 架构模式：MVP、MVVM、MVI、Mavericks
 │   ├── 依赖注入：Hilt、Koin

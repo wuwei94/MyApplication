@@ -30,6 +30,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         "network" -> "网络通信"
         "storage" -> "数据存储"
         "system" -> "系统能力"
+        "ai" -> "AI 与机器学习"
         "engineering" -> "架构与工程"
         "kotlin_jetpack" -> "Kotlin & Jetpack"
         "compose_flutter" -> "Compose & Flutter"
@@ -43,6 +44,7 @@ class CategoryActivity : RouterRecyclerActivity() {
         "network" -> buildNetworkCategory()
         "storage" -> buildStorageCategory()
         "system" -> buildSystemCategory()
+        "ai" -> buildAiCategory()
         "engineering" -> buildEngineeringCategory()
         "kotlin_jetpack" -> buildKotlinJetpackCategory()
         "compose_flutter" -> buildComposeFlutterCategory()
@@ -128,7 +130,6 @@ class CategoryActivity : RouterRecyclerActivity() {
      * 系统能力
      * - 系统原生：Async, Component, SystemService, Scheduler
      * - 跨进程通信：Ipc（AIDL / Messenger）
-     * - 机器学习：Ml（TFLite / LiteRT）
      */
     private fun buildSystemCategory(): ArrayList<RouterItem> {
         val items = arrayListOf<RouterItem>()
@@ -139,7 +140,16 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("任务调度", RouterPath.Scheduler.Main))
         items.add(RouterItem("── 跨进程通信 ──", ""))
         items.add(RouterItem("跨进程通信", RouterPath.Ipc.Main))
-        items.add(RouterItem("── 机器学习 ──", ""))
+        return items
+    }
+
+    /**
+     * AI 与机器学习
+     * - 端侧推理：Ml（TensorFlow Lite / LiteRT 视觉模型实战、GPU 硬件加速与张量内存架构）
+     */
+    private fun buildAiCategory(): ArrayList<RouterItem> {
+        val items = arrayListOf<RouterItem>()
+        items.add(RouterItem("── 端侧推理 ──", ""))
         items.add(RouterItem("机器学习（TFLite / LiteRT）", RouterPath.Ml.Main))
         return items
     }

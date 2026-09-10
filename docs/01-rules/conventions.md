@@ -20,9 +20,10 @@
 
 示例模块的归类遵循「主题优先、来源标注、职责分明」原则，新增模块或示例页前先按此判据确定归属：
 
-- **一级按技术主题**：模块挂到 `DirectoryActivity` 的 9 大技术领域分组（UI 交互 / 多媒体 / 网络通信 / 数据存储 / 系统能力 / 架构与工程 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature）。
+- **一级按技术主题**：模块挂到 `DirectoryActivity` 的 10 大技术领域分组（UI 交互 / 多媒体 / 网络通信 / 数据存储 / 系统能力 / AI 与机器学习 / 架构与工程 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature）。
 - **二级按技术来源**：分组内用「系统原生 / Jetpack / 第三方」标注示例来源，便于横向对比。
 - **媒体域聚合（「多媒体」一级分类）**：`module_image_loader`（图片加载管道）、`module_gpuimage`（图像处理引擎）、`module_media`（相机采集）同属媒体域，统一挂「多媒体」分类，按「图片加载 / 图像处理 / 相机采集」分组展示。三者分别是资源库、处理引擎与硬件采集能力，既不是 UI 控件、也不属「系统能力」——媒体域内容不应拆分到其他一级分类。
+- **AI 域聚合（「AI 与机器学习」一级分类）**：`module_ml`（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速、张量内存架构）挂「AI 与机器学习」分类；端侧模型推理与 AI 能力相关示例归此分类，不属「系统能力」——推理虽运行于系统之上，但主题是 AI 算法与推理框架。
 - **底层能力 vs 第三方 UI 控件**：
   - `module_media`：聚焦系统原生 API 与硬件能力（CameraX 拍照/录像、Intent 系统裁剪）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
   - `module_image_loader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_image_loader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
