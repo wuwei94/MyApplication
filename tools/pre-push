@@ -6,6 +6,10 @@
 #   1. spotlessCheck —— 全工程 Kotlin / KTS 格式规范检查（ktlint）
 #   2. lintProdDebug —— 仅对本次推送涉及变更的模块执行 Android Lint
 #
+# 两处 Gradle 调用均传 -PenableFlutter=false：本地门禁只校验 Android 侧代码，
+# Flutter 自身由 .github/workflows/flutter.yml 独立流水线负责；开启 Flutter 集成
+# （flutter.gradle.kts）会让 :app 的 Lint 连带分析 Flutter 产物，单次门禁耗时从分钟级升到十几分钟。
+#
 # 安装：./tools/install-git-hooks.sh
 # 临时跳过：git push --no-verify     或     PRE_PUSH_DISABLE=1 git push
 #
@@ -20,6 +24,9 @@ if [[ "${PRE_PUSH_DISABLE:-0}" == "1" ]]; then
     echo "pre-push: PRE_PUSH_DISABLE=1，跳过全部检查"
     exit 0
 fi
+
+# Gradle 调用统一参数（见文件头说明）
+gradle_args=(-PenableFlutter=false)
 
 # ---------------------------------------------------------------------------
 # 1. 采集本次推送涉及的变更文件
@@ -84,7 +91,7 @@ echo "pre-push: 本次推送涉及 ${#changed_files[@]} 个变更文件"
 
 echo ""
 echo "──▶ [1/2] spotlessCheck（全工程格式规范）"
-if ! ./gradlew spotlessCheck --console=plain --quiet; then
+if ! ./gradlew spotlessCheck "${gradle_args[@]}" --console=plain --quiet; then
     echo ""
     echo "pre-push: 格式检查未通过。执行 ./gradlew spotlessApply 自动修复后重新提交。"
     exit 1
@@ -175,7 +182,7 @@ echo ""
 echo "──▶ [2/2] 变更模块 Lint 静态分析（${#lint_targets[@]} 个任务）"
 printf '    %s\n' "${lint_targets[@]}"
 echo "    正在执行静态分析，请稍候..."
-if ! ./gradlew "${lint_targets[@]}" --console=plain --quiet; then
+if ! ./gradlew "${lint_targets[@]}" "${gradle_args[@]}" --console=plain --quiet; then
     echo ""
     echo "pre-push: Lint 未通过，请修复上述问题后再推送。"
     exit 1
