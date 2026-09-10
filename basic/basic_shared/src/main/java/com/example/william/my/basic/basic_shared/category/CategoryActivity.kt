@@ -10,7 +10,8 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * 分类页面 — 根据分类 ID 显示对应的模块列表
  *
- * 通过 ARouter 传入 category 参数，动态构建对应分类的模块列表。
+ * 通过 ARouter 传入 category 参数（取值见 [Category]）动态构建模块列表；
+ * 页面标题同样取自 [Category.title]，与目录页共用同一份分类定义。
  */
 @Route(path = RouterPath.Category_Main)
 class CategoryActivity : RouterRecyclerActivity() {
@@ -21,35 +22,21 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = getCategoryTitle()
+        title = Category.fromId(category)?.title ?: "模块列表"
     }
 
-    private fun getCategoryTitle(): String = when (category) {
-        "ui" -> "UI 交互"
-        "media" -> "多媒体"
-        "network" -> "网络通信"
-        "storage" -> "数据存储"
-        "system" -> "系统能力"
-        "ai" -> "AI 与机器学习"
-        "engineering" -> "架构与工程"
-        "kotlin_jetpack" -> "Kotlin & Jetpack"
-        "compose_flutter" -> "Compose & Flutter"
-        "sample_feature" -> "Sample & Feature"
-        else -> "模块列表"
-    }
-
-    override fun buildRouter(): ArrayList<RouterItem> = when (category) {
-        "ui" -> buildUiCategory()
-        "media" -> buildMediaCategory()
-        "network" -> buildNetworkCategory()
-        "storage" -> buildStorageCategory()
-        "system" -> buildSystemCategory()
-        "ai" -> buildAiCategory()
-        "engineering" -> buildEngineeringCategory()
-        "kotlin_jetpack" -> buildKotlinJetpackCategory()
-        "compose_flutter" -> buildComposeFlutterCategory()
-        "sample_feature" -> buildSampleFeatureCategory()
-        else -> arrayListOf()
+    override fun buildRouter(): ArrayList<RouterItem> = when (Category.fromId(category)) {
+        Category.UI -> buildUiCategory()
+        Category.MEDIA -> buildMediaCategory()
+        Category.NETWORK -> buildNetworkCategory()
+        Category.STORAGE -> buildStorageCategory()
+        Category.SYSTEM -> buildSystemCategory()
+        Category.AI -> buildAiCategory()
+        Category.ENGINEERING -> buildEngineeringCategory()
+        Category.KOTLIN_JETPACK -> buildKotlinJetpackCategory()
+        Category.COMPOSE_FLUTTER -> buildComposeFlutterCategory()
+        Category.SAMPLE_FEATURE -> buildSampleFeatureCategory()
+        null -> arrayListOf()
     }
 
     /**

@@ -20,8 +20,8 @@
 
 示例模块的归类遵循「主题优先、来源标注、职责分明」原则，新增模块或示例页前先按此判据确定归属：
 
-- **一级按技术主题**：模块挂到 `DirectoryActivity` 的 10 大技术领域分组（UI 交互 / 多媒体 / 网络通信 / 数据存储 / 系统能力 / AI 与机器学习 / 架构与工程 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature）。
-- **二级按技术来源**：分组内用「系统原生 / Jetpack / 第三方」标注示例来源，便于横向对比。
+- **一级按技术主题**：模块挂到 `Category` 定义的 10 大技术领域分组（UI 交互 / 多媒体 / 网络通信 / 数据存储 / 系统能力 / AI 与机器学习 / 架构与工程 / Kotlin & Jetpack / Compose & Flutter / Sample & Feature），目录页与分类页共用该枚举，标题不重复维护。
+- **二级按技术来源或主题**：同一能力的不同实现按来源分组（控件分「官方控件 / 自定义控件 / 第三方 UI 库」），不同技术点按主题分组（网络分「HTTP / 流式推送 / Socket / 消息队列 / 蓝牙通信」，多媒体分「图片加载 / 图像处理 / 相机采集」）；分组标题以「便于横向对比、快速定位」为准。
 - **媒体域聚合（「多媒体」一级分类）**：`module_image_loader`（图片加载管道）、`module_gpuimage`（图像处理引擎）、`module_media`（相机采集）同属媒体域，统一挂「多媒体」分类，按「图片加载 / 图像处理 / 相机采集」分组展示。三者分别是资源库、处理引擎与硬件采集能力，既不是 UI 控件、也不属「系统能力」——媒体域内容不应拆分到其他一级分类。
 - **AI 域聚合（「AI 与机器学习」一级分类）**：`module_ml`（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速、张量内存架构）挂「AI 与机器学习」分类；端侧模型推理与 AI 能力相关示例归此分类，不属「系统能力」——推理虽运行于系统之上，但主题是 AI 算法与推理框架。
 - **底层能力 vs 第三方 UI 控件**：
@@ -150,7 +150,7 @@
 ## 快速查找
 
 - **新增 Activity**：复制目标模块中已有的 Activity，更新 `@Route`，在 `AndroidManifest.xml` 注册，在入口 Activity 的 `buildRouter()` 中添加路由项
-- **新增模块**：复制已有模块结构，在 `settings.gradle.kts` 注册，在 `RouterPath.kt` 添加路由，在 `CategoryActivity.kt` 对应分类中添加入口
+- **新增模块**：复制已有模块结构，在 `settings.gradle.kts` 注册，在 `RouterPath.kt` 添加路由，在 `CategoryActivity.kt` 对应分类中添加入口；若新增一级分类，先在 `Category.kt` 定义 id 与标题（目录页与分类页共用）
 - **路由路径**：`basic/basic_shared/.../RouterPath.kt`
 - **主入口列表**：`basic/basic_shared/.../DirectoryActivity.kt`（目录）/ `CategoryActivity.kt`（分类）
 - **基类**：`basic/basic_lib/.../activity/`
