@@ -1,10 +1,10 @@
-package com.example.william.my.module.systemservice.activity
+package com.example.william.my.module.security.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.systemservice.utils.SecureKeyDemoUtils
+import com.example.william.my.module.security.utils.SecureKeyDemoUtils
 
 /**
  * Android Keystore — 安全密钥管理
@@ -17,7 +17,7 @@ import com.example.william.my.module.systemservice.utils.SecureKeyDemoUtils
  * 3. 安全签名：支持 ECDSA、RSA 等签名算法
  * 4. 防重放：支持 challenge-response 机制，防止重放攻击
  */
-@Route(path = RouterPath.SystemService.SecureKey)
+@Route(path = RouterPath.Security.SecureKey)
 class SecureKeyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -169,6 +169,8 @@ include(":modules:module_component")
 include(":modules:module_ipc")
 // 系统服务
 include(":modules:module_system_service")
+// 安全（密钥 / 签名 / 加密）
+include(":modules:module_security")
 
 // 示例
 include(":modules:module_sample")

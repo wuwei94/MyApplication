@@ -117,6 +117,7 @@ graph TB
     :modules:module_reactive[module_reactive]:::android-library
     :modules:module_sample[module_sample]:::android-library
     :modules:module_scheduler[module_scheduler]:::android-library
+    :modules:module_security[module_security]:::android-library
     :modules:module_socket[module_socket]:::android-library
     :modules:module_sse[module_sse]:::android-library
     :modules:module_storage[module_storage]:::android-library
@@ -177,6 +178,7 @@ graph TB
   :app -.-> :modules:module_reactive
   :app -.-> :modules:module_sample
   :app -.-> :modules:module_scheduler
+  :app -.-> :modules:module_security
   :app -.-> :modules:module_socket
   :app -.-> :modules:module_sse
   :app -.-> :modules:module_storage
@@ -294,6 +296,8 @@ graph TB
   :modules:module_sample -.-> :basic:basic_shared
   :modules:module_scheduler -.-> :basic:basic_lib
   :modules:module_scheduler -.-> :basic:basic_shared
+  :modules:module_security -.-> :basic:basic_lib
+  :modules:module_security -.-> :basic:basic_shared
   :modules:module_socket -.-> :basic:basic_lib
   :modules:module_socket -.-> :basic:basic_server
   :modules:module_socket -.-> :basic:basic_shared

@@ -120,6 +120,7 @@ class CategoryActivity : RouterRecyclerActivity() {
     /**
      * 系统能力
      * - 系统原生：Async, Component, SystemService, Scheduler
+     * - 安全：Security（密钥 / 签名 / 加密）
      * - 跨进程通信：Ipc（AIDL / Messenger）
      */
     private fun buildSystemCategory(): ArrayList<RouterItem> {
@@ -129,6 +130,8 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("组件交互", RouterPath.Component.Main))
         items.add(RouterItem("系统服务", RouterPath.SystemService.Main))
         items.add(RouterItem("任务调度", RouterPath.Scheduler.Main))
+        items.add(RouterItem("── 安全 ──", ""))
+        items.add(RouterItem("安全加密", RouterPath.Security.Main))
         items.add(RouterItem("── 跨进程通信 ──", ""))
         items.add(RouterItem("跨进程通信", RouterPath.Ipc.Main))
         return items

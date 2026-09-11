@@ -237,6 +237,14 @@ object RouterPath {
         const val Notification = "$PATH/Notification"
         const val Permission = "$PATH/Permission"
         const val PermissionX = "$PATH/PermissionX"
+    }
+
+    // 安全（密钥 / 签名 / 加密）
+    object Security {
+        private const val PATH = "/Security"
+
+        const val Main = "$PATH/Main"
+
         const val SecureKey = "$PATH/SecureKey"
     }
 

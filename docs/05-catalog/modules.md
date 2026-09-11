@@ -27,6 +27,7 @@
 │   └── 键值存储：DataStore、MMKV
 ├── 系统能力
 │   ├── 系统原生：异步处理、任务调度、组件交互、系统服务
+│   ├── 安全：Android Keystore 密钥管理与 ECDSA 签名
 │   └── 跨进程通信：AIDL、Messenger
 ├── AI 与机器学习
 │   └── 端侧推理：TensorFlow Lite、LiteRT
@@ -72,6 +73,7 @@
 | 系统能力 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | 系统能力 | module_component | 组件交互 | ComponentMainActivity | /Component |
 | 系统能力 | module_system_service | 系统服务 | SystemServiceMainActivity | /SystemService |
+| 系统能力 | module_security | 安全（Android Keystore 密钥管理与签名） | SecurityMainActivity | /Security |
 | 系统能力 | module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | 系统能力 | module_ipc | 跨进程通信 | IpcMainActivity | /Ipc |
 | AI 与机器学习 | module_ml | 机器学习（TFLite / LiteRT） | MlMainActivity | /Ml |
@@ -425,15 +427,25 @@
 
 ### module_system_service（系统服务）
 
-演示 Android 系统级服务与底层安全密钥机制。
+演示 Android 系统级服务。
 
 | Activity | 功能 |
 |----------|------|
-| SystemServiceMainActivity | 模块入口，导航到系统服务与安全密钥示例页面 |
+| SystemServiceMainActivity | 模块入口，导航到通知与权限示例页面 |
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
 | PermissionActivity | 运行时权限申请（Jetpack ActivityResult 契约模式） |
 | PermissionXActivity | 运行时权限申请（PermissionX 链式开源库模式） |
-| SecureKeyActivity | Android Keystore 安全密钥创建与签名（硬件保护与 ECDSA 签名） |
+
+---
+
+### module_security（安全）
+
+**定位：系统安全边界内的密钥与签名能力**。演示 Android Keystore 硬件级密钥管理：私钥在 TEE / StrongBox 中生成并保存，不出系统安全边界，配合 ECDSA challenge 签名支撑 challenge-response 防重放场景。
+
+| Activity | 功能 |
+|----------|------|
+| SecurityMainActivity | 模块入口，导航到安全密钥示例页面 |
+| SecureKeyActivity | Android Keystore 安全密钥创建与签名（密钥创建 / 信息读取 / ECDSA challenge 签名 / 删除，含安全级别与信任等级解析） |
 
 ---
 

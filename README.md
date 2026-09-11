@@ -140,7 +140,8 @@ MyApplication/
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread）
     │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
-    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / Android Keystore 安全密钥）
+    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission）
+    │   ├── module_security     # 安全（Android Keystore 硬件级安全密钥与 ECDSA 签名）
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
     ├── [AI 与机器学习]
@@ -363,11 +364,19 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 
 ### module_system_service（系统服务）
 
-演示 Android 系统级服务与底层安全密钥机制。
+演示 Android 系统级服务。
 
 - NotificationChannel 通知渠道创建与通知发送
-- 运行时权限批量申请
-- Android Keystore 安全密钥创建与 ECDSA 硬件签名
+- 运行时权限批量申请（Jetpack 契约与 PermissionX 链式开源库两套方案）
+
+### module_security（安全）
+
+演示 Android 系统安全边界内的密钥管理与签名能力（Android Keystore 硬件级密钥，私钥不出系统安全边界）。
+
+- 安全密钥创建：EC P-256 密钥对生成与复用检测
+- 密钥信息读取：安全级别与信任等级解析（StrongBox / TEE / 软件）
+- ECDSA challenge 签名：challenge-response 防重放签名场景
+- 密钥删除：测试重置、设备解绑与账号切换场景
 
 ### module_scheduler（后台任务调度）
 

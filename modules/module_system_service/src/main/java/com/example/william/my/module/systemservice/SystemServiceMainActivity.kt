@@ -8,7 +8,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * 系统服务模块入口页
  *
- * 展示通知、权限、安全密钥等系统服务的示例列表。
+ * 展示通知、权限等系统服务的示例列表。
  */
 @Route(path = RouterPath.SystemService.Main)
 class SystemServiceMainActivity : RouterRecyclerActivity() {
@@ -18,7 +18,6 @@ class SystemServiceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Notification（通知渠道与前台通知）", RouterPath.SystemService.Notification))
         routerItems.add(RouterItem("Permission（运行时权限 Jetpack 契约）", RouterPath.SystemService.Permission))
         routerItems.add(RouterItem("PermissionX（运行时权限 链式开源库）", RouterPath.SystemService.PermissionX))
-        routerItems.add(RouterItem("SecureKey（Android Keystore 硬件级安全密钥）", RouterPath.SystemService.SecureKey))
         return routerItems
     }
 }
