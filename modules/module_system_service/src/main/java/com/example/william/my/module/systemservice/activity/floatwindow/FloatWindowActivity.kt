@@ -2,7 +2,6 @@ package com.example.william.my.module.systemservice.activity.floatwindow
 
 import android.content.Intent
 import android.graphics.PixelFormat
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -11,11 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.net.toUri
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.systemservice.R
-import androidx.core.net.toUri
 
 /**
  * 悬浮窗 — 系统级悬浮窗实现
