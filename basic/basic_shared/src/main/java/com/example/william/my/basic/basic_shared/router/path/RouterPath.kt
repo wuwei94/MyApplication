@@ -58,7 +58,6 @@ object RouterPath {
         const val ViewPager2 = "$PATH/ViewPager2"
         const val WebView = "$PATH/WebView"
         const val RecyclerViewNested = "$PATH/RecyclerViewNested"
-        const val FloatWindow = "$PATH/FloatWindow"
     }
 
     // Tab 导航
@@ -129,7 +128,6 @@ object RouterPath {
 
         const val Banner = "$PATH/Banner"
         const val CountdownView = "$PATH/CountdownView"
-        const val EasyFloat = "$PATH/EasyFloat"
         const val PhotoView = "$PATH/PhotoView"
         const val RealtimeBlurView = "$PATH/RealtimeBlurView"
         const val ShadowLayout = "$PATH/ShadowLayout"
@@ -234,9 +232,16 @@ object RouterPath {
 
         const val Main = "$PATH/Main"
 
+        // 通知
         const val Notification = "$PATH/Notification"
+
+        // 权限
         const val Permission = "$PATH/Permission"
         const val PermissionX = "$PATH/PermissionX"
+
+        // 悬浮窗
+        const val FloatWindow = "$PATH/FloatWindow"
+        const val EasyFloat = "$PATH/EasyFloat"
     }
 
     // 安全（密钥 / 签名 / 加密）

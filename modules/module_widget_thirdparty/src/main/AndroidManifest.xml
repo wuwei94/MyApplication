@@ -5,7 +5,6 @@
         <activity android:name=".WidgetThirdpartyMainActivity" />
         <activity android:name=".activity.widget.BannerActivity" />
         <activity android:name=".activity.widget.CountdownActivity" />
-        <activity android:name=".activity.widget.EasyFloatActivity" />
         <activity android:name=".activity.widget.PhotoViewActivity" />
         <activity android:name=".activity.widget.ShadowLayoutActivity" />
         <activity android:name=".activity.widget.SwipeLayoutActivity" />

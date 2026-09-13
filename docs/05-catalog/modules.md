@@ -72,7 +72,7 @@
 | 数据存储 | module_storage | 存储 | StorageMainActivity | /Storage |
 | 系统能力 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | 系统能力 | module_component | 组件交互 | ComponentMainActivity | /Component |
-| 系统能力 | module_system_service | 系统服务 | SystemServiceMainActivity | /SystemService |
+| 系统能力 | module_system_service | 系统服务（通知 / 权限 / 悬浮窗） | SystemServiceMainActivity | /SystemService |
 | 系统能力 | module_security | 安全（Android Keystore 密钥管理与签名） | SecurityMainActivity | /Security |
 | 系统能力 | module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | 系统能力 | module_ipc | 跨进程通信 | IpcMainActivity | /Ipc |
@@ -110,7 +110,6 @@
 | ViewPagerActivity | ViewPager 翻页 |
 | ViewPager2Activity | ViewPager2 + TabLayoutMediator |
 | WebViewActivity | WebView 配置、JS 交互、SSL 处理 |
-| FloatWindowActivity | 系统级悬浮窗（WindowManager + 拖拽 + 贴边吸附动画） |
 
 ---
 
@@ -145,7 +144,6 @@
 | WidgetThirdpartyMainActivity | 模块入口，导航到各 UI 库示例页面 |
 | BannerActivity | Youth Banner 轮播图 |
 | CountdownActivity | CountdownView 倒计时 |
-| EasyFloatActivity | EasyFloat 悬浮窗 |
 | PhotoViewActivity | PhotoView 图片手势缩放 |
 | ShadowLayoutActivity | ShadowLayout 阴影布局 |
 | SwipeLayoutActivity | AndroidSwipeLayout 侧滑 |
@@ -427,14 +425,16 @@
 
 ### module_system_service（系统服务）
 
-演示 Android 系统级服务。
+演示 Android 系统级服务。示例页按「通知 / 权限 / 悬浮窗」三个主题分包于 `activity/` 下。
 
 | Activity | 功能 |
 |----------|------|
-| SystemServiceMainActivity | 模块入口，导航到通知与权限示例页面 |
+| SystemServiceMainActivity | 模块入口，导航到通知、权限与悬浮窗示例页面 |
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
 | PermissionActivity | 运行时权限申请（Jetpack ActivityResult 契约模式） |
 | PermissionXActivity | 运行时权限申请（PermissionX 链式开源库模式） |
+| FloatWindowActivity | 系统级悬浮窗（WindowManager + TYPE_APPLICATION_OVERLAY + 拖拽 + 贴边吸附动画） |
+| EasyFloatActivity | 应用内悬浮窗（EasyFloat 第三方开源库，免权限） |
 
 ---
 

@@ -25,7 +25,6 @@ class WidgetMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("ViewPager2（新版基于 RV 分页滑动）", RouterPath.Widget.ViewPager2))
         routerItems.add(RouterItem("ViewFlipper（视图翻转轮播）", RouterPath.Widget.ViewFlipper))
         routerItems.add(RouterItem("WebView（网页加载与 JS 交互）", RouterPath.Widget.WebView))
-        routerItems.add(RouterItem("FloatWindow（系统悬浮窗权限与实现）", RouterPath.Widget.FloatWindow))
         return routerItems
     }
 }

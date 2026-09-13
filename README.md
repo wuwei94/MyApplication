@@ -111,11 +111,11 @@ MyApplication/
 └── modules                     # Feature 模块（按技术领域分组）
     │
     ├── [UI 交互]
-    │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView / FloatWindow）
+    │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
     │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 PAG / Lottie / SVGA）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
-    │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / EasyFloat / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
+    │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   ├── module_chart        # 数据可视化（MPAndroidChart：折线图 / 柱状图 / 饼图 / 雷达图 / 多图表联动看板）
     │   └── module_markdown     # Markdown 渲染与 AI 流式交互（Markwon 渲染 / Prism4j 代码高亮 / 流式打字机 / AI 聊天）
     │
@@ -140,7 +140,7 @@ MyApplication/
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread）
     │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
-    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission）
+    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / FloatWindow）
     │   ├── module_security     # 安全（Android Keystore 硬件级安全密钥与 ECDSA 签名）
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
@@ -179,7 +179,6 @@ MyApplication/
 - RecyclerView（基础 / 嵌套滚动）
 - ViewPager / ViewPager2
 - ViewFlipper / WebView
-- 悬浮窗（WindowManager 系统级浮层 + 拖拽 + 贴边吸附）
 
 ### module_widget_custom（自定义控件）
 
@@ -201,7 +200,6 @@ MyApplication/
 
 - 轮播：Banner
 - 倒计时：CountdownView
-- 悬浮窗：EasyFloat
 - 图片缩放：PhotoView
 - 阴影：ShadowLayout
 - 侧滑：SwipeLayout
@@ -368,6 +366,8 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 
 - NotificationChannel 通知渠道创建与通知发送
 - 运行时权限批量申请（Jetpack 契约与 PermissionX 链式开源库两套方案）
+- 系统级悬浮窗：WindowManager + TYPE_APPLICATION_OVERLAY、拖拽与边缘自动吸附、SYSTEM_ALERT_WINDOW 授权
+- 悬浮窗框架：EasyFloat（应用内悬浮窗，免权限；库亦支持全局悬浮窗）
 
 ### module_security（安全）
 

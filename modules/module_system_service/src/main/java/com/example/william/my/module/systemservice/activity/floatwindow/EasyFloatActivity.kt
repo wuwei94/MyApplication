@@ -1,10 +1,10 @@
-package com.example.william.my.module.widget_thirdparty.activity.widget
+package com.example.william.my.module.systemservice.activity.floatwindow
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.widget_thirdparty.R
+import com.example.william.my.module.systemservice.R
 import com.lzf.easyfloat.EasyFloat
 
 /**
@@ -34,9 +34,19 @@ import com.lzf.easyfloat.EasyFloat
  * - 客服悬浮球、反馈入口
  * - 画中画、小窗口播放
  *
+ * 显示模式与权限（共 4 种显示模式、2 类权限归属）：
+ * 1. CURRENT_ACTIVITY：只在当前 Activity 显示（默认值），应用内浮窗，无需权限
+ * 2. FOREGROUND：仅应用前台时显示，系统级浮窗，需 SYSTEM_ALERT_WINDOW
+ * 3. BACKGROUND：仅应用后台时显示，系统级浮窗，需 SYSTEM_ALERT_WINDOW
+ * 4. ALL_TIME：不分前后台一直显示，系统级浮窗，需 SYSTEM_ALERT_WINDOW
+ *
+ * 分界线在 EasyFloat.Builder.show() 的分支顺序上：只有 CURRENT_ACTIVITY 直接创建、跳过权限检查，
+ * 其余三种经 PermissionUtils.checkPermission()，未授权时由库内无界面 Fragment 跳转系统授权页申请。
+ * 本页沿用默认的 CURRENT_ACTIVITY，演示的是免权限的应用内浮窗。
+ *
  * https://github.com/princekin-f/EasyFloat
  */
-@Route(path = RouterPath.WidgetThirdparty.EasyFloat)
+@Route(path = RouterPath.SystemService.EasyFloat)
 class EasyFloatActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -63,7 +73,7 @@ class EasyFloatActivity : BasicResponseActivity() {
 
     private fun showEasyFloat() {
         EasyFloat.with(this)
-            .setLayout(R.layout.widget_thirdparty_layout_float)
+            .setLayout(R.layout.systemservice_layout_float)
             .show()
     }
 }

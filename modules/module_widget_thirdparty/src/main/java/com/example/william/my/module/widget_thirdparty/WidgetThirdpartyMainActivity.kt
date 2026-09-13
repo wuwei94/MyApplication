@@ -18,7 +18,6 @@ class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("── 基础与动效控件 ──", ""))
         routerItems.add(RouterItem("Banner（轮播图）", RouterPath.WidgetThirdparty.Banner))
         routerItems.add(RouterItem("CountdownView（倒计时）", RouterPath.WidgetThirdparty.CountdownView))
-        routerItems.add(RouterItem("EasyFloat（全局/应用内悬浮窗）", RouterPath.WidgetThirdparty.EasyFloat))
         routerItems.add(RouterItem("PhotoView（手势缩放图片）", RouterPath.WidgetThirdparty.PhotoView))
         routerItems.add(RouterItem("RealtimeBlurView（实时动态高斯模糊）", RouterPath.WidgetThirdparty.RealtimeBlurView))
         routerItems.add(RouterItem("ShadowLayout（万能阴影与圆角布局）", RouterPath.WidgetThirdparty.ShadowLayout))

@@ -29,7 +29,7 @@
   - `module_media`：聚焦系统原生相机采集能力（CameraX 拍照 / 录像）；第三方复合 UI 选择器（如 `PictureSelector`）归入 `module_widget_thirdparty`。
   - `module_image_loader`：聚焦网络图片加载管道与引擎（Coil / Glide / `lib_image_loader` 加载、缓存与内核切换）；手势缩放/平移 View 控件（如 `PhotoView`）归入 `module_widget_thirdparty`。
   - `module_gpuimage`：聚焦 GPU 图像滤镜/后期处理引擎（GPUImage，OpenGL ES 渲染：GPUImageView 实时滤镜、参数调节、FilterGroup 滤镜链与相机实时帧滤镜）；与图片「加载」无关的滤镜类处理均归此模块。
-  - `module_widget_thirdparty`：集中收纳**通用可复用**的第三方 View/ViewGroup 控件与复合 UI 库（Banner、EasyFloat、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。
+  - `module_widget_thirdparty`：集中收纳**通用可复用**的第三方 View/ViewGroup 控件与复合 UI 库（Banner、ShadowLayout、SwipeLayout、RealtimeBlurView、CityPicker、PickerView、PictureSelector 以及页面多状态管理 `LoadSir`）。第三方**悬浮窗**方案（如 EasyFloat）不按「第三方库」归此模块，而按**能力主题**归 `module_system_service`，与 WindowManager 原生悬浮窗并列。
   - `module_chart`：专门承载第三方**图表 / 数据可视化**库（MPAndroidChart：折线图 / 柱状图 / 饼图 / 雷达图与多图表联动看板）。图表是独立的技术主题，不随「第三方 UI 控件」混装——正如同 `OkHttp` / `Retrofit` 各自独立成模块，第三方库按「一库一主题」拆分。
 - **Jetpack 组件按主题归位原则**：
   - `module_jetpack` 专门承载**未被具体技术领域模块吸纳的通用 Jetpack 架构与生命周期数据流组件**（如 Lifecycle、Paging、ViewModel 等），且**不包含 UI 控件**。
@@ -44,7 +44,7 @@
   - `module_sample`（技术技巧与底层探索）：收纳不依赖特定业务场景的单点技术技巧、底层 API 机制探索与实验性代码（如 Hook 反射、自定义 Typeface 等）。保持轻量独立，不污染通用架构模块。
   - `module_feature`（实战业务场景脱敏）：收纳从公司真实项目中抽离、脱敏出的典型复合业务场景（如抽奖转盘、麦位动画、图片裁剪等）。展示端到端的真实业务落地能力（UI + 业务逻辑 + 状态联动），不追求强行抽象为纯通用控件。系统 Intent 图片裁剪（图库选择 / 拍照 → 裁剪）属典型业务场景，归此模块，不进 `module_media`（后者只保留 CameraX 采集）。
 - **系统能力内部边界（系统服务 vs 安全）**：
-  - `module_system_service`：系统服务框架能力（Notification 通知渠道、运行时权限），不含密钥类内容。
+  - `module_system_service`：系统服务框架能力（Notification 通知渠道、运行时权限）与窗口层能力（悬浮窗：WindowManager 系统级悬浮窗、EasyFloat 悬浮窗框架）；示例页在 `activity/` 下按「通知 / 权限 / 悬浮窗」三个主题分包。不含密钥类内容。
   - `module_security`：系统安全边界内的密钥与签名能力（Android Keystore 密钥管理、ECDSA challenge 签名）。密钥 / 签名 / 加密类示例归此模块，不进 `module_system_service`。
   - **通用判据**：示例页的归属取决于**页面叙事形态**（平台 API 手册页 vs 端到端业务链路），而不是知识来源（「公司项目里用过」不构成归属依据，否则通知、权限、网络、数据库都可主张进 `module_feature`）。
 

@@ -14,4 +14,5 @@ dependencies {
     implementation(projects.basic.basicShared)
 
     implementation(libs.permission)
+    implementation(libs.easyfloat)
 }

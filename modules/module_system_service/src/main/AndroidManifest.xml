@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- 悬浮窗：WindowManager 系统级悬浮窗与 EasyFloat 全局悬浮窗 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application>
         <activity android:name=".SystemServiceMainActivity" />
-        <activity android:name=".activity.NotificationActivity" />
-        <activity android:name=".activity.PermissionActivity" />
-        <activity android:name=".activity.PermissionXActivity" />
+        <activity android:name=".activity.notification.NotificationActivity" />
+        <activity android:name=".activity.permission.PermissionActivity" />
+        <activity android:name=".activity.permission.PermissionXActivity" />
+        <activity android:name=".activity.floatwindow.FloatWindowActivity" />
+        <activity android:name=".activity.floatwindow.EasyFloatActivity" />
     </application>
 
 </manifest>
