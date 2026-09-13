@@ -119,8 +119,10 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 ### 4. 现代 Gradle / AGP 深度优化与极速构建 【已落地】
 
-#### 配置缓存（Configuration Cache）与并行配置
-在 `gradle.properties` 中开启：
+> 本节描述**本仓 `gradle.properties` 的实际配置**。凡与 NiA（Now in Android）不一致处，均在条目下以「**与 NiA 的差异**」说明原因——这些差异多为本仓有意为之，动手修改前务必先读。
+
+#### 配置缓存（Configuration Cache）【本仓不开启】
+NiA 在 `gradle.properties` 中开启：
 ```properties
 # 开启配置缓存，在构建脚本未变更时完全跳过 Gradle 配置期
 org.gradle.configuration-cache=true
@@ -131,32 +133,101 @@ org.gradle.configuration-cache.problems=fail
 ```
 * **核心原理**：Gradle 将 Task 图的计算结果序列化到磁盘，后续构建跳过所有 `build.gradle.kts` 的执行，秒级直达 Task 执行期；
 * **约束规范**：任何自定义 Task 严禁在运行期引用 `project`、`gradle` 等动态对象，所有入参和出参必须使用 `Property<T>`、`Provider<T>`、`RegularFileProperty` 显式声明。
+* **与 NiA 的差异（本仓保持关闭）**：上表三行在本仓**均为注释状态**。原因是本仓有两个第三方任务尚未适配配置缓存，一旦真正执行就会直接失败：
+  1. `:flutter:compileFlutterBuildDebug`（Flutter 集成）——**执行期访问 `Task.project`**；Dart 侧有改动、Flutter 产物需重建时必然执行，与本仓 `enableFlutter=true` 的默认配置冲突；
+  2. `:modules:module_database:objectboxPrepareBuild`（ObjectBox）——**无法序列化 `Project`**。
+  实测开启后 `:app:assembleDemoDebug` 报 `Invocation of 'Task.project' by task ':flutter:compileFlutterBuildDebug' at execution time is unsupported with the configuration cache` 并失败；此时 `problems=fail` 与否都不改变结果（任务本身执行失败，不只是缓存条目被丢弃）。待两个上游插件适配后再开启。
 
-#### 项目隔离（Isolated Projects）与 KSP 隔离
+#### 项目隔离（Isolated Projects） 【已落地】
 ```properties
-# 开启项目隔离配置，实现各个模块配置期的完全物理隔离与并发计算
+# 各子项目在配置期完全隔离，禁止跨项目直接读写状态，从而允许配置计算并发展开
 org.gradle.isolated-projects=true
-# 开启 KSP 项目隔离模式
-ksp.project.isolation.enabled=true
 ```
 在超多模块工程中，项目隔离禁止跨 Project 间直接访问状态，解绑各个子项目的配置计算依赖，带来巨大的配置并发提速。
+* **适配基础**：本仓 `build-logic` 已按隔离要求书写——`RootPlugin.kt` 用 `BuildFeatures.isolatedProjects.active` 判定开关，跨项目目录访问走 `isolated.rootProject` 而非 `project.rootProject`（`AndroidCompose.kt`）。
+* **代价**：依赖拓扑图任务 `generateModulesGraph` 需遍历所有子项目的 configurations，与项目隔离互斥，隔离开启后**不再注册**（`RootPlugin.kt` 中显式跳过）。需要生成或更新依赖拓扑图时，以 `-Dorg.gradle.isolated-projects=false` 临时关闭隔离执行。
+* **验证**：`help`（配置期）与 `:app:assembleDemoDebug`（含 kapt / KSP / Room / Spotless 与 Flutter 集成）均已实测通过，无隔离违规。
 
-#### 编译器守护进程独立内存配置
+#### KSP 项目隔离 【已落地】
+对齐 NiA，在 `gradle.properties` 中显式声明：
 ```properties
-# Kotlin 守护进程只继承 Gradle 的 -Xmx，其余参数需单独声明，防止大型多模块编译 OOM
-kotlin.daemon.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -XX:+UseParallelGC
+# 开启 KSP 项目隔离模式（对齐 NiA，保障 Project Isolation 环境下 KSP 稳定并发）
+ksp.project.isolation.enabled=true
 ```
+* **与 NiA 保持一致**：显式声明该属性后与 NiA 完全对齐，消除对 KSP 隐式跟随行为的依赖，保障在 Gradle Project Isolation 开启时 KSP 的配置解耦与并发编译行为更明确、更稳健。
+* 版本前提：该属性由 KSP 2.3.x 引入（要求 KGP ≥ 2.3.0）。本仓采用 Kotlin 2.4.0 + KSP 2.3.9，完全满足该特性的运行要求。
+
+#### Kotlin 警告门禁控制（warningsAsErrors） 【已落地】
+对齐 NiA 规范，在 `gradle.properties` 中提供统一声明：
+```properties
+# 是否将 Kotlin 编译警告视为错误（默认 false，可本地或 CI 通过 -PwarningsAsErrors=true 严格校验，对齐 NiA）
+warningsAsErrors=false
+```
+* **实现联动**：`build-logic` 的 `AndroidKotlin.kt` 已内置读取该属性（`val warningsAsErrors: String? by project`，联动 `kotlinOptions.allWarningsAsErrors`）；
+* **收益与灵活性**：本地日常开发默认设为 `false` 保障开发流畅度，在 CI 门禁或严格质量检查阶段可通过 `-PwarningsAsErrors=true` 拦截所有告警，杜绝告警带病合入。
+
+#### 守护进程内存配置（Gradle Daemon 与 Kotlin Daemon） 【已落地】
+```properties
+# Gradle 守护进程：G1 + 软引用按需回收 + 加大代码缓存，堆上下限对齐
+org.gradle.jvmargs=-Dfile.encoding=UTF-8 -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=1 -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Xmx4g -Xms4g
+# Kotlin 守护进程：只继承 Gradle 的 -Xmx，其余参数需单独声明，防止大型多模块编译 OOM
+kotlin.daemon.jvmargs=-Dfile.encoding=UTF-8 -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=1 -XX:ReservedCodeCacheSize=320m -XX:+HeapDumpOnOutOfMemoryError -Xmx4g -Xms4g
+```
+* 两者取值均与 NiA 一致。Gradle 守护进程与 Kotlin 守护进程是**两个彼此独立的 JVM**，后者只从 Gradle 继承 `-Xmx`，元空间 / GC / 代码缓存必须单独声明（故代码缓存取 320m 而非 256m，同样照 NiA）。
+* `-XX:SoftRefLRUPolicyMSPerMB=1`：把软引用存活时间压到「每 MB 堆约 1 毫秒」（默认值 1000，在 4GB 堆下相当于约 51 分钟），使构建期产生的软引用能按需及时回收；
+* `-XX:ReservedCodeCacheSize`：平台默认的 32-48m 在类数量庞大的多模块工程中容易写满并退化为解释执行，故显式加大；
+* `-Xms` 与 `-Xmx` 对齐，避免运行期扩缩堆带来的额外开销。
+
+#### BuildFeatures 默认值收窄与测试属性 【已落地】
+```properties
+# 本仓未使用 resValues 与 shaders，显式关闭（二者默认为 true）
+android.defaults.buildfeatures.resvalues=false
+android.defaults.buildfeatures.shaders=false
+# 常规单元测试自动联动 Roborazzi 截图比对，杜绝漏跑视觉回归
+roborazzi.test.verify=true
+# 仪器化测试结束后不卸载被测应用，避免每个测试类重复安装
+android.injected.androidTest.leaveApksInstalledAfterRun=true
+```
+* 四项取值均与 NiA 一致；收窄 `resValues` / `shaders` 默认值是 AGP 官方推荐的构建加速手段。
+
+#### build-logic 复合构建的独立属性 【已落地】
+Gradle 的 `gradle.properties` **不会传递给 `includeBuild` 引入的复合构建**（[gradle/gradle#2534](https://github.com/gradle/gradle/issues/2534)），故 NiA 为 `build-logic` 单独声明了一份属性文件。本仓 `build-logic/gradle.properties` 与之保持一致，让约定插件的编译同样享受并行、构建缓存与配置缓存。
 
 #### 现代 AGP 特性适配（BuiltIn Kotlin 与 New DSL）
-现代 Android 构建工具链已深度融合 Kotlin：
-* **`android.builtInKotlin=true`**：由 AGP 原生内置 Kotlin 编译配置，直接基于 Kotlin 现代编译器选项，无需单独声明旧版 Kotlin 插件配置；
-* **`android.newDsl=true`**：切换至新版 Variant API 与扩展契约，淘汰旧版 `BaseExtension` 转型，保障与最新 Gradle 及 AGP 的前向兼容；
-* **非传递性 R 类与编译时 R 类**：
-  ```properties
-  android.nonTransitiveRClass=true
-  android.enableAppCompileTimeRClass=true
-  ```
-  每个模块仅生成自身声明的 R 类符号，避免上游模块的资源 ID 级联穿透，极大缩短多模块增量编译耗时。
+```properties
+# 本仓由 KGP（org.jetbrains.kotlin.android）提供 Kotlin 支持，故关闭 AGP 内置 Kotlin
+android.builtInKotlin=false
+# 本仓沿用 legacy DSL：新版 DSL 不再提供 legacy 实现类，而 KGP 应用时会将其投影为 BaseExtension
+android.newDsl=false
+# 编译时 R 类
+android.enableAppCompileTimeRClass=true
+```
+* **与 NiA 的差异（BuiltIn Kotlin / New DSL）**：NiA 取 `android.builtInKotlin=true` + `android.newDsl=true`，由 AGP 原生内置 Kotlin 编译配置、并切换至新版 Variant API 与扩展契约。本仓两项均**有意取 `false`**，且互相绑定——`newDsl=true` 后 AGP 不再提供 `BaseExtension` 等 legacy 实现类，而 KGP（`kotlin-android`）应用时会把它投影为 `BaseExtension`，直接抛 `ClassCastException`，故开 `newDsl` 就必须改走 AGP 内置 Kotlin；而 `builtInKotlin=true` 时应用 KGP 会构建失败，本仓 ARouter 1.5.2 / EventBus 3.3.1 **仅有 kapt 处理器、无官方 KSP**，因此**二者须与 kapt→KSP 迁移同步推进**，属 AGP 10.0 强制前必须处理的事项。
+* **收益**：编译时 R 类进一步加速构建。
+
+#### 非传递 R 类（Non-Transitive R Class） 【已落地】
+```properties
+# 各模块的 R 类仅包含自身声明的资源，跨模块与依赖库的资源须显式限定其 R 类
+android.nonTransitiveRClass=true
+```
+* **与 NiA 一致**：AGP 8.0 起 `true` 即为默认值，NiA 同样取 `true`。本仓此前因历史代码直接引用传递 R 符号而显式取 `false`，现已完成迁移并回归默认。
+* **引用规则（迁移后必须遵守）**：开启后 `R.xxx` 只解析本模块声明的资源，凡引用其他模块或依赖库的资源，都必须把该资源所属的 R 类写全：
+  * 本工程模块：`com.example.william.my.basic.basic_shared.R.color.shared_color_primary`；
+  * 依赖库：`com.google.android.material.R.attr.bottomSheetStyle`、`com.luck.picture.lib.R.drawable.ps_image_placeholder`。
+  依赖库自身的 R 类仍在编译类路径上，可被消费者直接引用（已实测 `:libs:lib_widget:compileDemoDebugJavaWithJavac` 通过）。
+* **迁移范围**：共 34 处。其中 `lib_widget` 的 22 处为 bottom sheet 组件自 Material 移植时留下的传递符号（`Widget_Design_BottomSheet_Modal`、`mtrl_min_touch_target_size`、`design_bottom_sheet_peek_height_min`、`bottomSheetStyle`、`bottomSheetDialogTheme`、`Theme_Material3_Light_BottomSheetDialog` 与 `BottomSheetBehavior_Layout` 系列 styleable），统一限定为 `com.google.android.material.R`；其余 12 处为 `module_compose` 的 `ImageActivity`、`module_jetpack` 的 `PagingStateAdapter`、`module_widget_thirdparty` 的 `PictureSelectorAdapter` 引用 `basic_shared` 的 `shared_*` 资源，以及 `GlideEngine` 引用 PictureSelector 的占位图。
+* **排查手段**：这类违规在编译器报错前即可静态发现——逐文件判定其 `R` 实际指向哪个 R 类（显式 `import *.R` 优先，否则为本模块自身），再核对引用名是否在该 R 类所属模块的 `res` 中声明；未声明者即为传递引用。
+* **收益**：每个模块的 R 类仅含自身声明的符号，避免上游模块的资源 ID 级联穿透，显著缩短多模块增量编译耗时，并让「资源归属」在代码里显式可见。
+
+#### 资源收缩与非 final 资源 ID（release 打包前提） 【已落地】
+```properties
+# R8 优化资源收缩要求资源 ID 为非 final；本仓显式声明（AGP 8.0 起默认即为 true），放此处更直观
+android.nonFinalResIds=true
+```
+* **硬约束**：`:app` 的 release 变体已开启 `isMinifyEnabled` 与 `isShrinkResources`，此时 R8 优化资源收缩要求资源 ID 为非 final；
+* **不要显式设置 `android.nonFinalResIds=false`**：AGP 9.1 已将该取值标记为 deprecated、并将在 AGP 10 移除。一旦取 false，release 构建会在 `minify*ReleaseWithR8` 阶段**直接失败**而非自动降级——它是一条构建门禁，不是可选的优化开关；
+* **代价**：非 final 资源 ID 不能用于 Java `switch-case`、`const` 常量等编译期常量语境（本仓无此类用法，`lib_widget` 的 `DEF_STYLE_RES` 仅作方法实参传递）；
+* **与 NiA 的差异**：NiA 未声明该属性（依赖默认值）；本仓**显式声明**，以便就地注释它是 R8 资源收缩的前提。
 
 ---
 

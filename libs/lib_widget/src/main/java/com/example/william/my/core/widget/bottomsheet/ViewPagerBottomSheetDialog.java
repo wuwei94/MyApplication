@@ -277,11 +277,19 @@ public class ViewPagerBottomSheetDialog extends AppCompatDialog {
         if (themeId == 0) {
             // If the provided theme is 0, then retrieve the dialogTheme from our theme
             TypedValue outValue = new TypedValue();
-            if (context.getTheme().resolveAttribute(R.attr.bottomSheetDialogTheme, outValue, true)) {
+            // 本类由 Material 的 BottomSheetDialog 移植而来，这两个符号取自 Material 资源，
+            // 非传递 R 类下须显式限定为 com.google.android.material.R
+            if (context.getTheme()
+                    .resolveAttribute(
+                            com.google.android.material.R.attr.bottomSheetDialogTheme,
+                            outValue,
+                            true)) {
                 themeId = outValue.resourceId;
             } else {
                 // bottomSheetDialogTheme is not provided; we default to our light theme
-                themeId = R.style.Theme_Material3_Light_BottomSheetDialog;
+                themeId =
+                        com.google.android.material.R.style
+                                .Theme_Material3_Light_BottomSheetDialog;
             }
         }
         return themeId;

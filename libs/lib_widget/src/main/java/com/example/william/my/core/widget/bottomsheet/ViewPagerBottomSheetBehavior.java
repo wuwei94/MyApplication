@@ -249,7 +249,8 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
 
     private ValueAnimator interpolatorAnimator;
 
-    private static final int DEF_STYLE_RES = R.style.Widget_Design_BottomSheet_Modal;
+    private static final int DEF_STYLE_RES =
+            com.google.android.material.R.style.Widget_Design_BottomSheet_Modal;
 
     int expandedOffset;
 
@@ -313,16 +314,31 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
     public ViewPagerBottomSheetBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        // 本类由 Material 的 BottomSheetBehavior 移植而来，直接使用了其 styleable 与尺寸资源。
+        // 非传递 R 类下这些符号不再出现在本模块的 R 中，须显式限定为 com.google.android.material.R。
         peekHeightGestureInsetBuffer =
-                context.getResources().getDimensionPixelSize(R.dimen.mtrl_min_touch_target_size);
+                context.getResources()
+                        .getDimensionPixelSize(
+                                com.google.android.material.R.dimen.mtrl_min_touch_target_size);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BottomSheetBehavior_Layout);
-        this.shapeThemingEnabled = a.hasValue(R.styleable.BottomSheetBehavior_Layout_shapeAppearance);
-        boolean hasBackgroundTint = a.hasValue(R.styleable.BottomSheetBehavior_Layout_backgroundTint);
+        TypedArray a =
+                context.obtainStyledAttributes(
+                        attrs, com.google.android.material.R.styleable.BottomSheetBehavior_Layout);
+        this.shapeThemingEnabled =
+                a.hasValue(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_shapeAppearance);
+        boolean hasBackgroundTint =
+                a.hasValue(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_backgroundTint);
         if (hasBackgroundTint) {
             ColorStateList bottomSheetColor =
                     MaterialResources.getColorStateList(
-                            context, a, R.styleable.BottomSheetBehavior_Layout_backgroundTint);
+                            context,
+                            a,
+                            com.google.android.material.R.styleable
+                                    .BottomSheetBehavior_Layout_backgroundTint);
             createMaterialShapeDrawable(context, attrs, hasBackgroundTint, bottomSheetColor);
         } else {
             createMaterialShapeDrawable(context, attrs, hasBackgroundTint);
@@ -330,36 +346,74 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
         createShapeValueAnimator();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.elevation = a.getDimension(R.styleable.BottomSheetBehavior_Layout_android_elevation, -1);
+            this.elevation =
+                    a.getDimension(
+                            com.google.android.material.R.styleable
+                                    .BottomSheetBehavior_Layout_android_elevation,
+                            -1);
         }
 
-        TypedValue value = a.peekValue(R.styleable.BottomSheetBehavior_Layout_behavior_peekHeight);
+        TypedValue value =
+                a.peekValue(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_peekHeight);
         if (value != null && value.data == PEEK_HEIGHT_AUTO) {
             setPeekHeight(value.data);
         } else {
             setPeekHeight(
                     a.getDimensionPixelSize(
-                            R.styleable.BottomSheetBehavior_Layout_behavior_peekHeight, PEEK_HEIGHT_AUTO));
+                            com.google.android.material.R.styleable
+                                    .BottomSheetBehavior_Layout_behavior_peekHeight,
+                            PEEK_HEIGHT_AUTO));
         }
-        setHideable(a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_hideable, false));
+        setHideable(
+                a.getBoolean(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_hideable,
+                        false));
         setGestureInsetBottomIgnored(
-                a.getBoolean(R.styleable.BottomSheetBehavior_Layout_gestureInsetBottomIgnored, false));
+                a.getBoolean(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_gestureInsetBottomIgnored,
+                        false));
         setFitToContents(
-                a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_fitToContents, true));
+                a.getBoolean(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_fitToContents,
+                        true));
         setSkipCollapsed(
-                a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_skipCollapsed, false));
-        setDraggable(a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_draggable, true));
-        setSaveFlags(a.getInt(R.styleable.BottomSheetBehavior_Layout_behavior_saveFlags, SAVE_NONE));
+                a.getBoolean(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_skipCollapsed,
+                        false));
+        setDraggable(
+                a.getBoolean(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_draggable,
+                        true));
+        setSaveFlags(
+                a.getInt(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_saveFlags,
+                        SAVE_NONE));
         setHalfExpandedRatio(
-                a.getFloat(R.styleable.BottomSheetBehavior_Layout_behavior_halfExpandedRatio, 0.5f));
+                a.getFloat(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_halfExpandedRatio,
+                        0.5f));
 
-        value = a.peekValue(R.styleable.BottomSheetBehavior_Layout_behavior_expandedOffset);
+        value =
+                a.peekValue(
+                        com.google.android.material.R.styleable
+                                .BottomSheetBehavior_Layout_behavior_expandedOffset);
         if (value != null && value.type == TypedValue.TYPE_FIRST_INT) {
             setExpandedOffset(value.data);
         } else {
             setExpandedOffset(
                     a.getDimensionPixelOffset(
-                            R.styleable.BottomSheetBehavior_Layout_behavior_expandedOffset, 0));
+                            com.google.android.material.R.styleable
+                                    .BottomSheetBehavior_Layout_behavior_expandedOffset,
+                            0));
         }
         a.recycle();
         ViewConfiguration configuration = ViewConfiguration.get(context);
@@ -414,7 +468,10 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
         if (viewRef == null) {
             // First layout with this behavior.
             peekHeightMin =
-                    parent.getResources().getDimensionPixelSize(R.dimen.design_bottom_sheet_peek_height_min);
+                    parent.getResources()
+                            .getDimensionPixelSize(
+                                    com.google.android.material.R.dimen
+                                            .design_bottom_sheet_peek_height_min);
             setSystemGestureInsets(child);
             viewRef = new WeakReference<>(child);
             // Only set MaterialShapeDrawable as background if shapeTheming is enabled, otherwise will
@@ -1295,7 +1352,11 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
             ColorStateList bottomSheetColor) {
         if (this.shapeThemingEnabled) {
             this.shapeAppearanceModelDefault =
-                    ShapeAppearanceModel.builder(context, attrs, R.attr.bottomSheetStyle, DEF_STYLE_RES)
+                    ShapeAppearanceModel.builder(
+                                    context,
+                                    attrs,
+                                    com.google.android.material.R.attr.bottomSheetStyle,
+                                    DEF_STYLE_RES)
                             .build();
 
             this.materialShapeDrawable = new MaterialShapeDrawable(shapeAppearanceModelDefault);

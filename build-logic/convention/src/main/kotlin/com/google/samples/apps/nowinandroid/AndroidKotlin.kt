@@ -90,14 +90,13 @@ private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() =
         )
         freeCompilerArgs.add(
             /**
-             * 该参数在 Phase 3 之后移除。
+             * 提前启用 data class 的 copy 方法可见性对齐（Phase 3 的默认行为）。
              * https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-consistent-copy-visibility/#deprecation-timeline
              *
-             * 废弃时间线：
-             * Phase 3（预计 Kotlin 2.2 或 2.3），默认行为发生变化。
-             * 除非使用 ExposedCopyVisibility，否则生成的 copy 方法与主构造函数可见性一致。
-             * 二进制签名变化，声明处的错误不再报告。
-             * '-Xconsistent-data-class-copy-visibility' 编译参数与 ConsistentCopyVisibility 注解不再需要。
+             * Phase 3 落地后默认行为变化：除非标注 ExposedCopyVisibility，否则生成的 copy 方法与主构造函数
+             * 可见性一致（二进制签名随之变化，声明处的报错不再提示），届时该编译参数与 ConsistentCopyVisibility
+             * 注解均失去意义。该阶段落在哪个版本尚无定论（官方文档标注为推测值，以 KT-11914 跟踪为准）；
+             * 本仓当前 Kotlin 版本下该行为仍未默认开启，故显式打开。
              */
             "-Xconsistent-data-class-copy-visibility",
         )

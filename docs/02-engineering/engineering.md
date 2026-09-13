@@ -1,6 +1,6 @@
 # 现代 Android 工程化实践（总览）
 
-> 本文档系统梳理 Google 官方旗舰开源项目 [Now in Android (NiA)](https://github.com/android/nowinandroid) 的工程化底座，结合现代大型多模块 Android 研发演进，阐述**构建系统、代码规范、测试体系、架构解耦、性能度量与交付安全**六大维度的工程化设计与落地。
+> 本文档以 Google 官方旗舰开源项目 [Now in Android (NiA)](https://github.com/android/nowinandroid) 的工程化底座为参照，结合现代大型多模块 Android 研发演进，阐述**本工程**在**构建系统、代码规范、测试体系、架构解耦、性能度量与交付安全**六大维度的工程化设计与落地。**各维度凡本仓与 NiA 不一致处，均就地加注说明**（含差异原因）。
 >
 > **阅读指引**：本篇为**工程化总览**，承载全景图、成熟度矩阵与命令速查。各维度的完整实践已按主题拆分到分册与专题文档，入口见下表——按需跳读，无需通读。
 
@@ -86,10 +86,10 @@ flowchart TD
 | 维度 | 能力项 | 技术栈 / 规范方案 | 落地成熟度 | 当前代码落点 / 演进规划说明 |
 | :--- | :--- | :--- | :---: | :--- |
 | **1. 构建系统与依赖治理** | Version Catalog 治理 | TOML 14 类分层单一真实源 | `【已落地】` | `gradle/libs.versions.toml` |
-| | Convention Plugins 复合构建 | build-logic 约定优于配置 | `【已落地】` | `build-logic/convention/`（共 18 个插件文件） |
+| | Convention Plugins 复合构建 | build-logic 约定优于配置 | `【已落地】` | `build-logic/convention/`（共 19 个插件文件） |
 | | 类型安全项目访问器 | TYPESAFE_PROJECT_ACCESSORS | `【已落地】` | `settings.gradle.kts` |
-| | 极速构建调优与项目隔离 | Configuration Cache + Parallel + BuiltIn Kotlin | `【已落地】` | `gradle.properties` |
-| | 依赖拓扑可视化 | Mermaid 拓扑图生成任务 | `【已落地】` | `RootPlugin.kt`（`./gradlew generateModulesGraph`） |
+| | 极速构建调优与项目隔离 | 并行与缓存构建 + Isolated Projects | `【部分落地】` | `gradle.properties`；项目隔离与 KSP 项目隔离均已落地，配置缓存因 Flutter / ObjectBox 任务未适配而保持关闭，BuiltIn Kotlin / New DSL 本仓有意偏离 NiA，原因见 `engineering-build.md` §4 |
+| | 依赖拓扑可视化 | Mermaid 拓扑图生成任务 | `【已落地】` | `RootPlugin.kt`（`./gradlew generateModulesGraph`；项目隔离开启后该任务不再注册，见 `engineering-build.md` §4） |
 | | 空测试模块任务剔除 | 检测 androidTest 源码自动关闭任务 | `【已落地】` | `AndroidInstrumentedTests.kt` |
 | | 模块依赖漂移防护 | Dependency Guard 版本基线锁定 | `【部分落地】` | `app/dependencies/*.txt` 已生成，子模块全面接入与 CI 比对推进中 |
 | | 纯领域模型 KMP 跨平台演进 | Kotlin Multiplatform 跨平台架构 | `【演进规划 - 待落地】` | `basic/basic_model` 为纯 JVM 库，规范已确立，规划升级为 KMP |

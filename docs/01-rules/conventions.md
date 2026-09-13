@@ -15,6 +15,7 @@
 - 命名空间：`com.example.william.my.module.<模块名>`
 - 资源前缀：`<模块名>_`
 - 依赖：必须依赖 `basic_lib` 和 `basic_shared`
+- 资源引用：本仓开启非传递 R 类（`android.nonTransitiveRClass=true`），`R.xxx` **只解析本模块声明的资源**；引用 `basic_shared` / `basic_lib` 或其他依赖库的资源时必须写全其 R 类，如 `com.example.william.my.basic.basic_shared.R.color.shared_color_primary`、`com.google.android.material.R.attr.bottomSheetStyle`
 
 ## 分类判据与模块边界
 
@@ -55,7 +56,7 @@
 - **基础依赖**：Coroutines、Gson、Guava、Material、AndroidX（Core、Activity、Fragment、AppCompat、ConstraintLayout、RecyclerView、ViewPager2）、BRVAH、SmartRefresh
 - **测试依赖**：JUnit、AndroidX Test、Espresso
 - **功能模块依赖**：每个功能模块自动依赖其他所有功能模块（通过 `configureFeatureAndroid`）
-- **Convention Plugin**：13 个插件统一管理构建配置，详见 `docs/02-engineering/build-logic.md`
+- **Convention Plugin**：19 个插件统一管理构建配置，详见 `docs/02-engineering/build-logic.md`
 
 ## Activity 基类
 
@@ -135,7 +136,7 @@
 
 - `./gradlew assembleDebug` — 全量构建（Spotless 不在此流程中阻塞构建）
 - `./gradlew :modules:<模块名>:assembleDebug` — 单模块构建
-- `./gradlew generateModulesGraph` — 自动分析全工程模块依赖并生成/更新各模块 `README.md` 中的 Mermaid 依赖拓扑图
+- `./gradlew generateModulesGraph` — 自动分析全工程模块依赖并生成/更新各模块 `README.md` 中的 Mermaid 依赖拓扑图（该任务与项目隔离互斥，需附加 `-Dorg.gradle.isolated-projects=false`）
 - `./gradlew spotlessCheck` — 执行全工程 Spotless + ktlint 格式规范静态检查
 - `./gradlew :<模块路径>:spotlessCheck` — 执行指定单模块的 Spotless 检查（如 `./gradlew :basic:basic_lib:spotlessCheck`）
 - `./gradlew spotlessApply` — 自动修复并格式化全工程 Kotlin / KTS 代码风格（统一换行符为 LF）

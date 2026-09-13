@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.william.my.module.jetpack.R
 import com.example.william.my.module.jetpack.databinding.JetpackItemRecyclerBinding
 
 /**
@@ -28,7 +27,7 @@ class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Pagin
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.shared_color_primary,
+                        com.example.william.my.basic.basic_shared.R.color.shared_color_primary,
                     ),
                 )
             }
@@ -48,7 +47,7 @@ class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Pagin
                 holder.mBinding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        R.color.shared_color_primary_dark,
+                        com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark,
                     ),
                 )
             }

@@ -68,8 +68,8 @@ class MainActivity : BaseActivity() {
         ARouter.getInstance()
             .build(RouterPath.Directory_Main)
             .withTransition(
-                R.anim.base_anim_slide_in_left,
-                R.anim.base_anim_slide_out_right,
+                com.example.william.my.core.base.R.anim.base_anim_slide_in_left,
+                com.example.william.my.core.base.R.anim.base_anim_slide_out_right,
             )
             .withString("param_key", "param_value")
             .navigation()

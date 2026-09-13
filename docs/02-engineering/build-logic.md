@@ -209,7 +209,7 @@ build-logic/convention/src/main/kotlin/
 ### RootPlugin.kt
 
 根工程全局管理插件，负责：
-- 注册 `generateModulesGraph` 任务自动生成 Mermaid 模块依赖拓扑图；
+- 注册 `generateModulesGraph` 任务自动生成 Mermaid 模块依赖拓扑图（该任务需遍历所有子项目，与项目隔离互斥：隔离开启时 RootPlugin 跳过注册）；
 - 注册根工程全局 Spotless 任务。
 
 ### AndroidGreenDaoConventionPlugin.kt
@@ -222,10 +222,12 @@ GreenDao ORM 配置（当前已禁用，所有代码已注释）。
 
 ### 1. `gradle.properties` 性能调优体系
 
-参考 Google `nowinandroid` 最佳实践，构建环境划分为 7 大板块，核心优化项包括：
+参考 Google `nowinandroid` 最佳实践，构建环境划分为 8 大规范板块，核心优化项包括：
 - `org.gradle.parallel=true`：开启多模块并行构建，充分利用多核 CPU 并发编译无依赖的子模块；
-- `org.gradle.caching=true`：开启本地任务缓存，避免重复执行代码未改动的编译任务；
-- `org.gradle.vfs.watch=true`：开启文件系统监视，跳过增量构建时的全量文件比对；
+- `org.gradle.caching=true`：开启本地与远程构建任务缓存，避免重复执行代码未改动的编译任务；
+- `org.gradle.vfs.watch=true`：开启文件系统监控，跳过增量构建时的全量文件比对；
+- `org.gradle.isolated-projects=true` 与 `ksp.project.isolation.enabled=true`：开启项目隔离与 KSP 项目隔离，配置期解耦并发计算（对齐 NiA）；
+- `warningsAsErrors=false`：Kotlin 编译警告统一管控开关，本地开发保持流畅，CI 或严格卡点支持 `-PwarningsAsErrors=true` 拦截（对齐 NiA）；
 - `android.enableJetifier=true`：因 ARouter Compiler 1.5.2 内部保留旧 `support.v4.app.Fragment` 类签名校验，保留 Jetifier 对注解处理器字节码进行平滑转换，保障 `@Route` 在 Fragment 上的稳定性。
 
 ### 2. Version Catalogs `[bundles]` 依赖成组规范

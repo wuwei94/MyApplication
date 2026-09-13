@@ -24,7 +24,7 @@ kotlinxSerialization = "1.8.1"
 turbine = "1.2.0"
 # Roborazzi: Compose 截图测试（record/verify 基准图，依赖 Robolectric 在 JVM 跑）
 # GitHub: https://github.com/takahirom/roborazzi
-# 最新发布 1.73.0（2026-08），兼容 Kotlin 2.2 / AGP 9.x / Gradle 9.3；如报 Kotlin 编译器插件版本不匹配需微调
+# 本仓实测基线：Kotlin 2.4.0 / AGP 9.1.0 / Gradle 9.3.1 下录图与校验均通过；其 Compose 支持带 Kotlin 编译器插件，若报插件版本不匹配须同步升级本库
 roborazzi = "1.73.0"
 # Robolectric: JVM 上模拟 Android 运行时（截图测试依赖）
 robolectric = "4.16.1"
@@ -368,7 +368,8 @@ gradlePluginAndroid = "9.1.0"
 lint = "32.1.0"
 # Kotlin Gradle 编译插件
 # 发行注记: https://kotlinlang.org/docs/releases.html
-gradlePluginKotlin = "2.2.20"
+# 与 flutter/flutter_demo/.android 生成工程的 Kotlin 版本保持一致
+gradlePluginKotlin = "2.4.0"
 # Google Protocol Buffers Gradle 插件
 gradlePluginProtobuf = "0.9.6"
 # 阿里 ARouter 路由自动注册插件
@@ -379,7 +380,7 @@ gradlePluginGreenDao = "3.3.1"
 gradlePluginObjectBox = "5.4.2"
 # Kotlin Symbol Processing (KSP) 插件
 # GitHub: https://github.com/google/ksp
-gradlePluginKsp = "2.2.20-2.0.4"
+gradlePluginKsp = "2.3.9"
 # Dropbox 出品依赖守卫插件（监控和检测发版依赖树异常变动）
 # GitHub: https://github.com/dropbox/dependency-guard
 dependencyGuard = "0.5.0"

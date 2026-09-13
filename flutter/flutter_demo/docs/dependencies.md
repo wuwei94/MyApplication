@@ -72,7 +72,7 @@
 
 ## 插件 compileSdkVersion 固定
 
-宿主工程（Gradle 9 + AGP 9，`android.newDsl=true`）以 add-to-app 方式构建时，部分插件（如 `camera_android_camerax`、`flutter_plugin_android_lifecycle`、`image_picker_android` 等）的 `android/build.gradle.kts` 在配置阶段无法解析 `flutter.compileSdkVersion`，报 `Unresolved reference 'compileSdkVersion'`；模块独立构建（`flutter build apk/aar`）不受影响。
+宿主工程（Gradle 9 + AGP 9）以 add-to-app 方式构建时，部分插件（如 `camera_android_camerax`、`flutter_plugin_android_lifecycle`、`image_picker_android` 等）的 `android/build.gradle.kts` 在配置阶段无法解析 `flutter.compileSdkVersion`，报 `Unresolved reference 'compileSdkVersion'`；模块独立构建（`flutter build apk/aar`）不受影响。
 
 由 `tools/android/apply_android_flutter_compile_sdk.dart` 在 `flutter pub get` 之后统一处理：扫描 `.flutter-plugins-dependencies` 中实际参与构建的插件，把 `flutter.compileSdkVersion` 替换为从当前 Flutter SDK `FlutterExtension.kt` 解析出的字面值（当前为 37，与宿主工程 `compileSdk = 37` 一致），已注册进 `dart tools/apply_android_fixes.dart`。
 

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.william.my.module.widget_thirdparty.R
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyItemPictureSelectorBinding
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -35,7 +34,9 @@ class PictureSelectorAdapter(
         val binding = (holder as ViewHolder).binding
         if (getItemViewType(position) == TYPE_CAMERA) {
             binding.itemIvDel.visibility = View.INVISIBLE
-            binding.itemIvPic.setImageResource(R.drawable.shared_ic_launcher)
+            binding.itemIvPic.setImageResource(
+                com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher,
+            )
             binding.itemIvPic.setOnClickListener {
                 mItemClickListener?.openPicture()
             }

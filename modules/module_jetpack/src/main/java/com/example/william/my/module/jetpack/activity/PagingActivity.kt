@@ -119,7 +119,7 @@ class PagingActivity : BasicRecyclerActivity() {
      * 动态切换数据流模式
      *
      * @SuppressLint("AutoDispose") — AutoDispose 2.2.1 使用 Kotlin 1.9.0 编译，
-     * 与当前项目的 Kotlin 2.2.20 不兼容（编译时找不到 com.uber 包）。
+     * 与当前项目的 Kotlin 2.4.0 不兼容（编译时找不到 com.uber 包）。
      * 此处手动管理 Disposable 生命周期，在 onDestroy() 中 dispose。
      */
     @SuppressLint("AutoDispose")

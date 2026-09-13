@@ -36,7 +36,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.compose.R
 
 /**
  * Image — 图片显示与变换特性
@@ -131,7 +130,7 @@ class ImageActivity : ComponentActivity() {
                         // 原图
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(R.drawable.shared_ic_launcher),
+                                painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                                 contentDescription = "原图",
                                 modifier = Modifier.size(64.dp),
                             )
@@ -142,7 +141,7 @@ class ImageActivity : ComponentActivity() {
                         // 圆角裁剪 + 描边
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(R.drawable.shared_ic_launcher),
+                                painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                                 contentDescription = "圆角矩形",
                                 modifier = Modifier
                                     .size(64.dp)
@@ -156,7 +155,7 @@ class ImageActivity : ComponentActivity() {
                         // 圆形裁剪头像 + 描边
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(R.drawable.shared_ic_launcher),
+                                painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                                 contentDescription = "圆形头像",
                                 modifier = Modifier
                                     .size(64.dp)
@@ -197,7 +196,7 @@ class ImageActivity : ComponentActivity() {
                         // 原始色彩
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(R.drawable.shared_ic_launcher),
+                                painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                                 contentDescription = "原始色彩",
                                 modifier = Modifier.size(64.dp),
                             )
@@ -208,7 +207,7 @@ class ImageActivity : ComponentActivity() {
                         // ColorFilter.tint
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(R.drawable.shared_ic_launcher),
+                                painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                                 contentDescription = "Tint 着色",
                                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
                                 modifier = Modifier.size(64.dp),
@@ -220,7 +219,7 @@ class ImageActivity : ComponentActivity() {
                         // 半透明 Alpha
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(R.drawable.shared_ic_launcher),
+                                painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                                 contentDescription = "半透明",
                                 alpha = 0.35f,
                                 modifier = Modifier.size(64.dp),
@@ -245,7 +244,7 @@ class ImageActivity : ComponentActivity() {
                 contentAlignment = Alignment.Center,
             ) {
                 Image(
-                    painter = painterResource(R.drawable.shared_ic_launcher),
+                    painter = painterResource(com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher),
                     contentDescription = name,
                     contentScale = scale,
                     modifier = Modifier.fillMaxSize(),
