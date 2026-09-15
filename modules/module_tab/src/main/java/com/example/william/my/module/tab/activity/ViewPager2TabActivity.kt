@@ -22,33 +22,13 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBin
  *
  * 使用 ViewPager2 + RadioGroup 实现 Tab 切换，支持 Fragment 页面切换。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. ViewPager2 联动：Tab 和 ViewPager2 联动切换
  * 2. Fragment 支持：支持 Fragment 页面切换
  * 3. 禁用滑动：支持禁用用户手动滑动
  * 4. 页面同步：支持页面变化同步到 Tab
  *
- * 基本用法：
- * ```kotlin
- * // 设置 ViewPager2 适配器
- * viewPager2.adapter = ViewPagerFragmentAdapter2(supportFragmentManager, lifecycle, fragments)
- *
- * // 禁用用户手动滑动
- * viewPager2.isUserInputEnabled = false
- *
- * // 注册页面变化回调
- * viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
- *     override fun onPageSelected(position: Int) {
- *         // 同步 Tab
- *     }
- * })
- * ```
- *
- * 适用场景：
- * - Tab 切换
- * - 底部导航栏
- * - 多 Tab 页面切换
- * - 需要禁用滑动的场景
+ * https://developer.android.com/reference/androidx/viewpager2/widget/ViewPager2
  */
 @Route(path = RouterPath.Tab.ViewPager2Tab)
 class ViewPager2TabActivity :
@@ -57,7 +37,7 @@ class ViewPager2TabActivity :
 
     override fun getViewBinding(): TabActivityViewPager2TabBinding = TabActivityViewPager2TabBinding.inflate(layoutInflater)
 
-    private val mTitles: ArrayList<String> by lazy {
+    private val titles: ArrayList<String> by lazy {
         arrayListOf(
             getString(R.string.tab_title_home),
             getString(R.string.tab_title_discover),
@@ -66,16 +46,16 @@ class ViewPager2TabActivity :
         )
     }
 
-    private val mIcons: ArrayList<Int> = arrayListOf(
+    private val icons: ArrayList<Int> = arrayListOf(
         R.drawable.tab_ic_tab1,
         R.drawable.tab_ic_tab2,
         R.drawable.tab_ic_tab4,
         R.drawable.tab_ic_tab3,
     )
 
-    private val mTabs: ArrayList<RadioButton> = arrayListOf()
+    private val tabs: ArrayList<RadioButton> = arrayListOf()
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -91,15 +71,15 @@ class ViewPager2TabActivity :
     }
 
     private fun initFragment() {
-        mBinding.viewPager2.offscreenPageLimit = 4
-        mBinding.viewPager2.adapter =
-            ViewPagerFragmentAdapter2(supportFragmentManager, lifecycle, mFragments)
+        binding.viewPager2.offscreenPageLimit = 4
+        binding.viewPager2.adapter =
+            ViewPagerFragmentAdapter2(supportFragmentManager, lifecycle, fragments)
 
         // 禁止手动滑动，只通过 RadioGroup 切换
-        mBinding.viewPager2.isUserInputEnabled = false
+        binding.viewPager2.isUserInputEnabled = false
 
         // 同步 ViewPager2 页面变化到 RadioGroup
-        mBinding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 switchTab(position)
             }
@@ -107,17 +87,17 @@ class ViewPager2TabActivity :
     }
 
     private fun initTab() {
-        mBinding.navigate.setOnCheckedChangeListener(this)
-        for (i in 0 until mBinding.navigate.childCount) {
-            val radioButton: RadioButton = mBinding.navigate.getChildAt(i) as RadioButton
-            radioButton.text = mTitles[i]
+        binding.navigate.setOnCheckedChangeListener(this)
+        for (i in 0 until binding.navigate.childCount) {
+            val radioButton: RadioButton = binding.navigate.getChildAt(i) as RadioButton
+            radioButton.text = titles[i]
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
                     R.color.tab_selector_check_primary_dark,
                 ),
             )
-            val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
+            val drawable = ContextCompat.getDrawable(this, icons[i])?.mutate()
             drawable?.let {
                 DrawableCompat.setTintList(
                     it,
@@ -125,13 +105,13 @@ class ViewPager2TabActivity :
                 )
                 radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
             }
-            mTabs.add(radioButton)
+            tabs.add(radioButton)
         }
     }
 
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
-        for (i in 0 until mBinding.navigate.childCount) {
-            val child = mBinding.navigate.getChildAt(i) as? RadioButton
+        for (i in 0 until binding.navigate.childCount) {
+            val child = binding.navigate.getChildAt(i) as? RadioButton
             val isChecked = child?.id == checkedId
             child?.typeface = if (isChecked) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             if (isChecked) {
@@ -142,10 +122,10 @@ class ViewPager2TabActivity :
     }
 
     private fun switchTab(position: Int) {
-        mBinding.navigate.check(mTabs[position].id)
+        binding.navigate.check(tabs[position].id)
     }
 
     private fun switchFragment(position: Int) {
-        mBinding.viewPager2.currentItem = position
+        binding.viewPager2.currentItem = position
     }
 }

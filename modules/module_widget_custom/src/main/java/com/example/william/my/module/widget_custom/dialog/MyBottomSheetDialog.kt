@@ -20,9 +20,9 @@ import com.example.william.my.module.widget_custom.databinding.DemoDialogBottomS
  */
 class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
 
-    private lateinit var mBinding: DemoDialogBottomSheetBinding
+    private lateinit var binding: DemoDialogBottomSheetBinding
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -36,8 +36,8 @@ class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mBinding = DemoDialogBottomSheetBinding.inflate(layoutInflater)
-        return mBinding.root
+        binding = DemoDialogBottomSheetBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,13 +47,13 @@ class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
     }
 
     private fun initViewPager() {
-        mBinding.viewPager.offscreenPageLimit = mFragments.size
-        mBinding.viewPager.adapter =
-            ViewPagerFragmentAdapter(childFragmentManager, mFragments)
-        mBinding.viewPager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
+        binding.viewPager.offscreenPageLimit = fragments.size
+        binding.viewPager.adapter =
+            ViewPagerFragmentAdapter(childFragmentManager, fragments)
+        binding.viewPager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                onPageChange(mBinding.viewPager)
+                onPageChange(binding.viewPager)
             }
         })
     }

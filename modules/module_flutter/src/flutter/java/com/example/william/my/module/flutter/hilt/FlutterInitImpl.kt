@@ -14,15 +14,15 @@ import javax.inject.Inject
  */
 class FlutterInitImpl @Inject constructor() : IAppInit {
 
-    private lateinit var mApp: Application
+    private lateinit var app: Application
 
     override fun init(app: Application) {
-        this.mApp = app
+        this.app = app
 
         initFlutterEngine(app)
     }
 
-    override fun getApp(): Application = mApp
+    override fun getApp(): Application = app
 
     private fun initFlutterEngine(app: Application) {
         // 实例化FlutterEngine。

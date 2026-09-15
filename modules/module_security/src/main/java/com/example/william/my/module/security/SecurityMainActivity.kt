@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 安全模块入口页
+ * 安全模块入口 — 导航到系统密钥与签名等示例页面。
  *
  * 展示系统安全边界内的密钥管理与签名等安全能力的示例列表。
  */

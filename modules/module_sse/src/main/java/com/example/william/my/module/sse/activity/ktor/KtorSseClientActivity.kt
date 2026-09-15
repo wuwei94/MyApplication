@@ -10,9 +10,19 @@ import com.example.william.my.core.ktorsse.KtorSseListener
 import com.example.william.my.module.sse.utils.LlmStreamParser
 
 /**
- * Ktor SSE 客户端示例（普通回调版本 - DeepSeek 大模型流式对话）
+ * Ktor SSE — 原生 Listener 回调版流式客户端
  *
- * 演示使用 KtorSseClient + KtorSseListener 发起 POST 请求直接连接 DeepSeek 官方流式接口。
+ * 使用 Ktor Client 的 SSE 插件，通过 KtorSseListener 回调建立 SSE 长连接，
+ * 直接对接 DeepSeek 官方 POST + SSE 流式对话接口。与 OkHttp 方案对比，
+ * Ktor 原生支持 Kotlin 协程与挂起函数。
+ *
+ * 核心机制与避坑点：
+ * 1. Ktor SSE 插件：HttpClient 内置 SSE 支持，无需额外依赖
+ * 2. 事件回调：KtorSseListener 回调 onOpen / onEvent / onClosed / onFailure
+ * 3. 逐 Token 解析：从 data 帧提取 delta.content，累积为完整回答
+ * 4. 会话终止：收到 [DONE] 后主动 cancel，或页面销毁时自动断开
+ *
+ * https://ktor.io/docs/client-server-sent-events.html
  */
 @Route(path = RouterPath.SSE.KtorSseClient)
 class KtorSseClientActivity : BasicResponseActivity() {
@@ -74,7 +84,7 @@ class KtorSseClientActivity : BasicResponseActivity() {
                     if (data?.trim() == "[DONE]") {
                         removeUpdatingLog("deepseek_response")
                         appendLogAccent("【AI 完整回答】\n$responseBuffer")
-                        appendLog("【完成】收到 [DONE] 标志，DeepSeek 模型生成完毕！")
+                        appendLog("✓ 收到 [DONE] 标志，DeepSeek 模型生成完毕！")
                         KtorSseClient.cancel(serverUrl)
                         return
                     }
@@ -92,7 +102,7 @@ class KtorSseClientActivity : BasicResponseActivity() {
 
                 override fun onFailure(t: Throwable) {
                     removeUpdatingLog("deepseek_response")
-                    appendLog("【错误】${t.message ?: "未知异常"}")
+                    appendLog("✗ ${t.message ?: "未知异常"}")
                 }
             },
         )
@@ -101,6 +111,6 @@ class KtorSseClientActivity : BasicResponseActivity() {
     private fun cancelStream() {
         KtorSseClient.cancel(serverUrl)
         removeUpdatingLog("deepseek_response")
-        appendLog("【中断】已主动取消当前大模型流式输出")
+        appendLog("→ 已主动取消当前大模型流式输出")
     }
 }

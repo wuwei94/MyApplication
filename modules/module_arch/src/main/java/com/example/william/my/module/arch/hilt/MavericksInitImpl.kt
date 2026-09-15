@@ -16,15 +16,15 @@ import javax.inject.Inject
  */
 class MavericksInitImpl @Inject constructor() : IAppInit {
 
-    private lateinit var mApp: Application
+    private lateinit var app: Application
 
     override fun init(app: Application) {
-        this.mApp = app
+        this.app = app
 
         initMavericks(app)
     }
 
-    override fun getApp(): Application = mApp
+    override fun getApp(): Application = app
 
     private fun initMavericks(app: Application) {
         Mavericks.initialize(app)

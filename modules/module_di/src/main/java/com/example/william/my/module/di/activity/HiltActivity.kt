@@ -23,7 +23,7 @@ import javax.inject.Inject
 /**
  * Hilt — Android 官方推荐依赖注入框架（基于 Dagger 2）
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 编译期依赖图生成：所有依赖注入在编译期静态校验并生成工厂代码，零运行时反射开销
  * 2. 标准化生命周期组件：预置 SingletonComponent、ActivityRetainedComponent、ActivityComponent、ViewModelComponent 等
  * 3. 简化 Android 集成：原生支持 @AndroidEntryPoint、@HiltViewModel 以及 @ApplicationContext/@ActivityContext
@@ -39,6 +39,8 @@ import javax.inject.Inject
  * - @Qualifier：自定义限定符，用于区分同类型的不同依赖实例
  * - @HiltViewModel：标注 Jetpack ViewModel 支持构造函数依赖注入
  * - @EntryPoint：定义入口点接口，用于非标准组件获取容器中的依赖
+ *
+ * https://dagger.dev/hilt
  */
 @Route(path = RouterPath.Di.Hilt)
 @AndroidEntryPoint

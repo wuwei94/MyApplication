@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 控件模块入口页
+ * 控件模块入口 — 导航到 Dialog、RecyclerView、ViewPager、WebView 等示例页面。
  *
  * 展示 Dialog、RecyclerView、ViewPager、WebView 等控件的示例列表。
  */

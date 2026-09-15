@@ -16,41 +16,20 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  *
  * 使用 BottomNavigationView 实现底部导航栏，支持 Fragment 切换。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. Material Design：遵循 Material Design 设计规范
  * 2. Fragment 切换：支持 Fragment 切换，保持状态
  * 3. 图标支持：支持图标和文字组合
  * 4. 选中状态：支持选中/未选中状态切换
  *
- * 基本用法：
- * ```kotlin
- * // XML 中使用
- * <com.google.android.material.bottomnavigation.BottomNavigationView
- *     android:layout_width="match_parent"
- *     android:layout_height="wrap_content"
- *     app:menu="@menu/bottom_nav_menu" />
- *
- * // 代码中设置监听
- * bottomNav.setOnItemSelectedListener { item ->
- *     when (item.itemId) {
- *         R.id.nav_home -> switchFragment(homeFragment)
- *         R.id.nav_search -> switchFragment(searchFragment)
- *     }
- *     true
- * }
- * ```
- *
- * 适用场景：
- * - 应用主导航
- * - 多 Tab 页面切换
- * - 底部导航栏
+ * https://material.io/components/bottom-navigation/android
  */
 @Route(path = RouterPath.Tab.BottomNavigation)
 class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBinding>() {
 
     override fun getViewBinding(): TabActivityBottomNavigationBinding = TabActivityBottomNavigationBinding.inflate(layoutInflater)
 
-    private val mTitles by lazy {
+    private val titles by lazy {
         arrayListOf(
             getString(R.string.tab_title_home),
             getString(R.string.tab_title_discover),
@@ -59,7 +38,7 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
         )
     }
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -78,13 +57,13 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
             savedInstanceState,
             supportFragmentManager,
             R.id.frameLayout,
-            mFragments,
-            mTitles,
+            fragments,
+            titles,
         )
     }
 
     private fun initTab() {
-        mBinding.bottomNav.setOnItemSelectedListener { item ->
+        binding.bottomNav.setOnItemSelectedListener { item ->
             val index = when (item.itemId) {
                 R.id.nav_tab1 -> 0
                 R.id.nav_tab2 -> 1
@@ -98,6 +77,6 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
     }
 
     private fun switchFragment(position: Int) {
-        FragmentUtils.switchFragment(supportFragmentManager, mFragments, position)
+        FragmentUtils.switchFragment(supportFragmentManager, fragments, position)
     }
 }

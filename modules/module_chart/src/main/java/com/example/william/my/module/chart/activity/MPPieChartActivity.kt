@@ -21,11 +21,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 /**
  * MPAndroidChart — 饼图/环形甜甜圈图 (PieChart)
  *
- * 核心特性：
- * 1. 环形甜甜圈 (HoleRadius) 与中心数据标注
- * 2. 扇区点击触发外扩动画 (selectionShift)
- * 3. 百分比数值格式化与图例展示
- * 4. 实时联动底部品类明细与预算占比
+ * PieChart 是 MPAndroidChart 的饼图视图，支持环形甜甜圈样式、百分比格式化与扇区交互。
+ * 本页演示企业成本构成的环形图，点击扇区联动底部品类明细。
+ *
+ * 核心机制与避坑点：
+ * 1. 环形甜甜圈：isDrawHoleEnabled + holeRadius 挖空中心，setDrawCenterText 展示汇总
+ * 2. 扇区外扩：selectionShift 控制选中扇区的偏移量，isHighlightPerTapEnabled 开启点选
+ * 3. 百分比格式化：setUsePercentValues + PercentFormatter 按占比显示数值
+ * 4. 数据联动：OnChartValueSelectedListener 响应扇区选中，刷新底部品类明细
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
@@ -52,7 +55,7 @@ class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
     }
 
     private fun initPieChart() {
-        mBinding.pieChart.apply {
+        binding.pieChart.apply {
             description.isEnabled = false
             setUsePercentValues(true)
             isDrawHoleEnabled = true
@@ -94,7 +97,7 @@ class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
                 colors = pieColors
                 sliceSpace = 3f
                 selectionShift = 8f
-                valueFormatter = PercentFormatter(mBinding.pieChart)
+                valueFormatter = PercentFormatter(binding.pieChart)
                 valueTextSize = 11f
                 valueTextColor = Color.WHITE
             }
@@ -112,13 +115,13 @@ class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
         val total = pieAmounts.sum()
         val pct = (amount / total) * 100
 
-        mBinding.tvMetricsTitle.text = "品类成本细分 — $name"
-        mBinding.tvBadgeStatus.text = "占比 ${String.format("%.1f", pct)}%"
-        mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(pieColors[index])
+        binding.tvMetricsTitle.text = "品类成本细分 — $name"
+        binding.tvBadgeStatus.text = "占比 ${String.format("%.1f", pct)}%"
+        binding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(pieColors[index])
 
-        mBinding.tvCategoryName.text = name
-        mBinding.tvAmount.text = "$amount 万"
-        mBinding.tvTotal.text = "${String.format("%.1f", total)} 万"
-        mBinding.tvPct.text = "${String.format("%.1f", pct)}%"
+        binding.tvCategoryName.text = name
+        binding.tvAmount.text = "$amount 万"
+        binding.tvTotal.text = "${String.format("%.1f", total)} 万"
+        binding.tvPct.text = "${String.format("%.1f", pct)}%"
     }
 }

@@ -20,36 +20,11 @@ import com.example.william.my.module.widget.databinding.UiActivityWebviewBinding
  *
  * WebView 是 Android 内置的网页加载控件，用于展示网页内容。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 网页加载：支持加载 URL、本地 HTML、JavaScript
  * 2. 交互支持：支持 JavaScript 与原生代码交互
  * 3. 缓存机制：支持网页缓存，提升加载速度
  * 4. 安全控制：支持 SSL 证书处理、文件访问控制
- *
- * 基本用法：
- * ```kotlin
- * // 加载网页
- * webView.loadUrl("https://www.example.com")
- *
- * // 启用 JavaScript
- * webView.settings.javaScriptEnabled = true
- *
- * // 添加 JavaScript 接口
- * webView.addJavascriptInterface(MyInterface(), "Android")
- *
- * // 设置 WebViewClient
- * webView.webViewClient = object : WebViewClient() {
- *     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
- *         view.loadUrl(url)
- *         return true
- *     }
- * }
- * ```
- *
- * 适用场景：
- * - 加载网页内容
- * - 混合开发（Hybrid App）
- * - 展示富文本内容
  */
 @Route(path = RouterPath.Widget.WebView)
 class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
@@ -65,8 +40,8 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (mBinding.webView.canGoBack()) {
-                        mBinding.webView.goBack()
+                    if (binding.webView.canGoBack()) {
+                        binding.webView.goBack()
                     } else {
                         isEnabled = false
                         onBackPressedDispatcher.onBackPressed()
@@ -77,7 +52,7 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
     }
 
     override fun onDestroy() {
-        mBinding.webView.apply {
+        binding.webView.apply {
             stopLoading()
             destroy()
         }
@@ -87,27 +62,27 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     private fun initWebView() {
         // 隐藏滚动条
-        mBinding.webView.isVerticalScrollBarEnabled = true
-        mBinding.webView.isHorizontalScrollBarEnabled = true
+        binding.webView.isVerticalScrollBarEnabled = true
+        binding.webView.isHorizontalScrollBarEnabled = true
 
         // 启用JavaScript
-        mBinding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.javaScriptEnabled = true
         // 启用视图支持
-        mBinding.webView.settings.useWideViewPort = true
+        binding.webView.settings.useWideViewPort = true
         // 适应屏幕宽度
-        mBinding.webView.settings.loadWithOverviewMode = true
+        binding.webView.settings.loadWithOverviewMode = true
         // 手势缩放
-        mBinding.webView.settings.builtInZoomControls = true
+        binding.webView.settings.builtInZoomControls = true
         // 隐藏缩放按钮
-        mBinding.webView.settings.displayZoomControls = false
+        binding.webView.settings.displayZoomControls = false
         // DOM Storage（DOM 存储）
-        mBinding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.domStorageEnabled = true
         // 关闭 file 域访问：禁止 WebView 通过 file:// 协议加载本地文件（minSdk 24 下默认开启，需显式关闭）
-        mBinding.webView.settings.allowFileAccess = false
+        binding.webView.settings.allowFileAccess = false
         val headers = mapOf<String, String>()
         // 添加HTTP头信息
-        mBinding.webView.loadUrl("https://www.baidu.com/", headers)
-        mBinding.webView.webViewClient = object : WebViewClient() {
+        binding.webView.loadUrl("https://www.baidu.com/", headers)
+        binding.webView.webViewClient = object : WebViewClient() {
             /**
              * 拦截资源请求
              */
@@ -143,9 +118,9 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
                 super.onPageFinished(view, url)
             }
         }
-        mBinding.webView.webChromeClient = object : WebChromeClient() {
+        binding.webView.webChromeClient = object : WebChromeClient() {
         }
-        mBinding.webView.addJavascriptInterface(
+        binding.webView.addJavascriptInterface(
             object :
                 WebViewInterface(object : WebViewJsCallback() {
                     override fun closeWebViewPage() {

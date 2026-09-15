@@ -14,16 +14,16 @@ import javax.inject.Inject
  */
 class BaseInitImpl @Inject constructor() : IAppInit {
 
-    private lateinit var mApp: Application
+    private lateinit var app: Application
 
     override fun init(app: Application) {
-        this.mApp = app
+        this.app = app
         BaseApp.setApp(app)
 
         initARouter(app)
     }
 
-    override fun getApp(): Application = mApp
+    override fun getApp(): Application = app
 
     private fun initARouter(app: Application) {
         if (BuildConfig.DEBUG) { // 这两行必须写在init之前，否则这些配置在init过程中将无效

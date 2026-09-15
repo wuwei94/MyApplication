@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
  *
  * WorkManager 用于处理可靠的、带约束条件的后台异步与定时工作。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 可靠性：即使应用退出或设备重启，任务也会可靠执行；
  * 2. 约束条件：支持网络类型、充电状态、空闲状态、电量等约束；
  * 3. 任务链式编排：支持 beginWith -> then 串并行编排；
@@ -35,6 +35,8 @@ import java.util.concurrent.TimeUnit
  * - WorkManager：需要跨进程/重启持久化可靠执行的任务、带约束后台任务、加急前台 Worker；
  * - JobScheduler：系统级定时 JobService；
  * - HandlerThread / 协程：应用内生命周期相关的轻量异步并发。
+ *
+ * https://developer.android.google.cn/topic/libraries/architecture/workmanager
  */
 @Route(path = RouterPath.Scheduler.WorkManager)
 class WorkManagerActivity : BasicResponseActivity() {

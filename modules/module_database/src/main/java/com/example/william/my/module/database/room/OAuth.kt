@@ -34,5 +34,5 @@ data class OAuth(
      * 不需要添加到数据表中的属性
      */
     @Ignore
-    private val mRemark: String? = null
+    private val remark: String? = null
 }

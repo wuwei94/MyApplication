@@ -62,11 +62,13 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * TextField — 输入框与软键盘交互示例页
  *
- * 聚合展示 Compose 中表单输入的核心体系：
- * 1. **三种形态**：填充型 (TextField)、轮廓型 (OutlinedTextField) 与完全自定义 (BasicTextField)；
- * 2. **焦点控制**：通过 FocusRequester 程序化索取焦点，FocusManager 清除焦点收起键盘；
- * 3. **键盘与动作联动**：KeyboardOptions 配置键盘类型与 IME 动作，KeyboardActions 监听回车事件；
- * 4. **视觉转换 (VisualTransformation)**：密码掩码显隐切换、手机号 3-4-4 动态分段格式化。
+ * 聚合展示 Compose 中表单输入的核心体系。
+ *
+ * 核心机制与避坑点：
+ * 1. 三种形态：填充型 (TextField)、轮廓型 (OutlinedTextField) 与完全自定义 (BasicTextField)；
+ * 2. 焦点控制：通过 FocusRequester 程序化索取焦点，FocusManager 清除焦点收起键盘；
+ * 3. 键盘与动作联动：KeyboardOptions 配置键盘类型与 IME 动作，KeyboardActions 监听回车事件；
+ * 4. 视觉转换 VisualTransformation：密码掩码显隐切换、手机号 3-4-4 动态分段格式化。
  *
  * https://developer.android.google.cn/develop/ui/compose/text/user-input
  */

@@ -8,13 +8,17 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.bean.UserProfile
 
 /**
- * LruCache 内存缓存设计与标准写法
+ * LruCache — 基于 LinkedHashMap 的最近最少使用内存缓存
  *
- * 本示例演示 LruCache 在 Repository 数据层中的标准设计与实践：
- * 1. 缓存读取策略（Cache-Aside Pattern）：先读内存缓存 -> 命中则立即返回 -> 未命中回源拉取并写入缓存。
- * 2. sizeOf(key, value)：自定义缓存条目的权重计算（如按对象数或按字节大小）。
- * 3. entryRemoved(evicted, key, oldValue, newValue)：监听条目被淘汰或移除事件，用于释放下层关联资源。
- * 4. evictAll()：清空内存缓存。
+ * 本示例演示 LruCache 在 Repository 数据层中的标准设计与实践。
+ *
+ * 核心机制与避坑点：
+ * 1. 缓存读取策略（Cache-Aside Pattern）：先读内存缓存 -> 命中则立即返回 -> 未命中回源拉取并写入缓存
+ * 2. sizeOf(key, value)：自定义缓存条目的权重计算（如按对象数或按字节大小）
+ * 3. entryRemoved(evicted, key, oldValue, newValue)：监听条目被淘汰或移除事件，用于释放下层关联资源
+ * 4. evictAll()：清空内存缓存
+ *
+ * https://developer.android.com/reference/android/util/LruCache
  */
 @Route(path = RouterPath.Performance.LruCache)
 class LruCacheActivity : BasicResponseActivity() {

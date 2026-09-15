@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 动画模块入口页
+ * 动画模块入口 — 导航到属性动画、过渡动画、Lottie、SVGA、PAG 等示例页面。
  *
  * 展示各类动画技术的示例列表，点击列表项跳转到对应的示例页。
  */

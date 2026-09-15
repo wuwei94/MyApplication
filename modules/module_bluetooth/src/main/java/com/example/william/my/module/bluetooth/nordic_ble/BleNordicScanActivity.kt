@@ -16,30 +16,45 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Nordic BLE 扫描与过滤示例
+ * Nordic BLE 扫描与过滤 — Android-BLE-Library
  *
- * 【Nordic Android-BLE-Library —— 工业级全能型（重型卡车）】
- * - 功能覆盖：全都有，而且在稳定性、边缘异常处理上最强。
- * - 特点：由蓝牙芯片原厂（Nordic）官方维护。
- *   • 队列最稳：彻底解决多任务并发冲突。
- *   • 大包自动化：内置了自动按 MTU 切包（.split()）和自动拼包（.merge()），不用自己算 offset。
- *   • 现代化：支持 Kotlin 协程 suspend 挂起调用，代码不用写一层层回调。
- * - 适合谁：智能硬件大厂、医疗设备、车载、OTA 固件升级、对稳定性要求极高的项目。
+ * Nordic 官方库，队列与分包工业级可靠；本页聚焦扫描过滤与广播类型区分。
  *
- * 演示特性：
- * 1. 动态过滤已知 Nordic UART / 标准 GATT 服务的设备
- * 2. 区分连接型广播 (Connectable) 与不可连接信标 (Non-connectable Beacon)
- * 3. 实时 RSSI 信号强度原位平滑刷新
+ * 库选型定位（四栈横评中的 Nordic）：
+ * - 维护方：蓝牙芯片原厂 Nordic 官方维护，稳定性与边缘异常处理最强
+ * - 能力要点：请求队列解决多任务并发冲突；内置 MTU 自动切包（split）/ 拼包（merge），
+ *   无需自行计算 offset；支持 Kotlin 协程 suspend 挂起调用
+ * - 适合：智能硬件大厂、医疗设备、车载、OTA 固件升级、对稳定性要求极高的项目
+ *
+ * 核心特性：
+ * 1. 服务过滤：Nordic UART / 标准 GATT Service UUID
+ * 2. 广播类型：Connectable 与 Non-connectable Beacon
+ * 3. RSSI 平滑：高频扫描结果原位 updateLog
+ * 4. 与连接/传输页共用同一库栈，便于串联
+ *
+ * 基本用法：
+ * ```kotlin
+ * scanner = Scanner(context, scanCallback, scanSettings)
+ * scanner.setScanFilters(filters)
+ * scanner.startScanning()
+ * ```
+ *
+ * 适用场景：
+ * - 医疗 / 车载 / OTA 等高稳定要求
+ * - 需要官方维护的 BLE 栈
+ * - 与原生 / Rx / FastBle 扫描对比
+ *
+ * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
 @SuppressLint("MissingPermission")
 @Route(path = RouterPath.Bluetooth.NordicScan)
 class BleNordicScanActivity : BasicResponseActivity() {
 
-    private var mBluetoothAdapter: BluetoothAdapter? = null
-    private var mBleScanner: BluetoothLeScanner? = null
-    private var mIsScanning = false
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private var bleScanner: BluetoothLeScanner? = null
+    private var isScanning = false
 
-    private val mScanCallback = object : ScanCallback() {
+    private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
             super.onScanResult(callbackType, result)
             result ?: return
@@ -55,22 +70,22 @@ class BleNordicScanActivity : BasicResponseActivity() {
 
             updateLog(
                 address,
-                "📡 [Nordic]  () | RSSI: dBm | Connectable: ",
+                "📡 [Nordic] $name ($address) | RSSI: ${rssi}dBm | Connectable: $isConnectable",
             )
         }
 
         override fun onScanFailed(errorCode: Int) {
             super.onScanFailed(errorCode)
-            mIsScanning = false
-            appendLog("✗ Nordic BLE 扫描失败: errorCode=")
+            isScanning = false
+            appendLog("✗ Nordic BLE 扫描失败: errorCode=$errorCode")
         }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-        mBluetoothAdapter = bluetoothManager?.adapter
-        mBleScanner = mBluetoothAdapter?.bluetoothLeScanner
+        bluetoothAdapter = bluetoothManager?.adapter
+        bleScanner = bluetoothAdapter?.bluetoothLeScanner
 
         showDescription(
             "Nordic BLE 扫描与设备发现示例\n\n" +
@@ -96,13 +111,13 @@ class BleNordicScanActivity : BasicResponseActivity() {
     }
 
     private fun startScan(isFilter: Boolean) {
-        val scanner = mBleScanner
+        val scanner = bleScanner
         if (scanner == null) {
             appendLog("✗ 无法获取 BLE 扫描器，请确认蓝牙已开启")
             return
         }
 
-        if (mIsScanning) {
+        if (isScanning) {
             appendLog("⚠ 扫描已在进行中")
             return
         }
@@ -118,31 +133,31 @@ class BleNordicScanActivity : BasicResponseActivity() {
                     .setServiceUuid(ParcelUuid(NordicBleManager.SERVICE_UUID))
                     .build(),
             )
-            appendLog("正在启动 Nordic UART 服务过滤扫描 (UUID: )...")
+            appendLog("正在启动 Nordic UART 服务过滤扫描 (UUID: ${NordicBleManager.SERVICE_UUID})...")
         } else {
             appendLog("正在启动全量 BLE 设备扫描...")
         }
 
         try {
-            scanner.startScan(filters, settings, mScanCallback)
-            mIsScanning = true
+            scanner.startScan(filters, settings, scanCallback)
+            isScanning = true
             appendLog("✓ 扫描已启动，设备信息将在上方实时原位更新")
         } catch (e: Exception) {
-            appendLog("✗ 启动扫描异常: ")
+            appendLog("✗ 启动扫描异常: ${e.message}")
         }
     }
 
     private fun stopScan() {
-        if (!mIsScanning) {
+        if (!isScanning) {
             appendLog("当前未在扫描")
             return
         }
         try {
-            mBleScanner?.stopScan(mScanCallback)
-            mIsScanning = false
+            bleScanner?.stopScan(scanCallback)
+            isScanning = false
             appendLog("✓ 已停止扫描")
         } catch (e: Exception) {
-            appendLog("✗ 停止扫描异常: ")
+            appendLog("✗ 停止扫描异常: ${e.message}")
         }
     }
 
@@ -155,11 +170,11 @@ class BleNordicScanActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mIsScanning) {
+        if (isScanning) {
             try {
-                mBleScanner?.stopScan(mScanCallback)
+                bleScanner?.stopScan(scanCallback)
             } catch (_: Exception) {}
-            mIsScanning = false
+            isScanning = false
         }
     }
 }

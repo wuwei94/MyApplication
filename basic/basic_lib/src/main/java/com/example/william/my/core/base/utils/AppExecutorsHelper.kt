@@ -22,17 +22,17 @@ object AppExecutorsHelper {
     /**
      * UI线程
      */
-    private val mMain: Executor = MainThreadExecutor()
+    private val main: Executor = MainThreadExecutor()
 
     /**
      * 磁盘IO线程
      */
-    private val mDiskIO: ExecutorService = Executors.newSingleThreadExecutor()
+    private val diskIO: ExecutorService = Executors.newSingleThreadExecutor()
 
     /**
      * 网络IO线程
      */
-    private val mNetworkIO: ExecutorService = Executors.newFixedThreadPool(3)
+    private val networkIO: ExecutorService = Executors.newFixedThreadPool(3)
 
     /**
      * 定时任务线程池
@@ -41,11 +41,11 @@ object AppExecutorsHelper {
         Runtime.getRuntime().availableProcessors() * 3 + 2,
     )
 
-    fun main(): Executor = mMain
+    fun main(): Executor = main
 
-    fun diskIO(): ExecutorService = mDiskIO
+    fun diskIO(): ExecutorService = diskIO
 
-    fun networkIO(): ExecutorService = mNetworkIO
+    fun networkIO(): ExecutorService = networkIO
 
     /**
      * 定时(延时)任务线程池

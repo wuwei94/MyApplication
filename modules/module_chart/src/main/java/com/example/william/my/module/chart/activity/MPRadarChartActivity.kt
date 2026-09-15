@@ -22,11 +22,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 /**
  * MPAndroidChart — 六维雷达能力评估图 (RadarChart)
  *
- * 核心特性：
- * 1. 蛛网正多边形自绘与刻度管理
- * 2. 双数据集半透明填充重叠对比（自我评定 vs 团队基准）
- * 3. 顶点触控与自定义 MarkerView 弹窗
- * 4. 实时联动底部维度解析与差距分析
+ * RadarChart 是 MPAndroidChart 的雷达图（蛛网图）视图，适合多维度能力/指标的对比评估。
+ * 本页演示自我评定 vs 团队基准的六维雷达对比，并联动底部维度解析看板。
+ *
+ * 核心机制与避坑点：
+ * 1. 蛛网多边形：webLineWidth / webColor 自绘正多边形网格与刻度
+ * 2. 双数据集叠加：两个 RadarDataSet 半透明填充重叠，直观对比两组数据
+ * 3. 顶点触控：setDrawHighlightCircleEnabled + MarkerView 弹窗展示选中顶点
+ * 4. 维度联动：OnChartValueSelectedListener 响应顶点选中，刷新底部差距分析
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
@@ -47,7 +50,7 @@ class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() 
     }
 
     private fun initRadarChart() {
-        mBinding.radarChart.apply {
+        binding.radarChart.apply {
             description.isEnabled = false
             webLineWidth = 1.5f
             webColor = Color.LTGRAY
@@ -125,22 +128,22 @@ class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() 
         val target = radarTarget[index]
         val diff = self - target
 
-        mBinding.tvMetricsTitle.text = "维度能力评定 — $name"
-        mBinding.tvBadgeStatus.text = if (diff >= 0) "达标 (+${diff.toInt()})" else "待提升 (${diff.toInt()})"
-        mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
+        binding.tvMetricsTitle.text = "维度能力评定 — $name"
+        binding.tvBadgeStatus.text = if (diff >= 0) "达标 (+${diff.toInt()})" else "待提升 (${diff.toInt()})"
+        binding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
             if (diff >= 0) Color.parseColor("#10B981") else Color.parseColor("#EF4444"),
         )
 
-        mBinding.tvScore.text = "${self.toInt()} 分"
-        mBinding.tvTargetScore.text = "${target.toInt()} 分"
-        mBinding.tvGap.text = "${if (diff > 0) "+" else ""}${diff.toInt()} 分"
-        mBinding.tvLevel.text = if (self >= 90) {
+        binding.tvScore.text = "${self.toInt()} 分"
+        binding.tvTargetScore.text = "${target.toInt()} 分"
+        binding.tvGap.text = "${if (diff > 0) "+" else ""}${diff.toInt()} 分"
+        binding.tvLevel.text = if (self >= 90) {
             "专家级别"
         } else if (self >= 80) {
             "熟练骨干"
         } else {
             "发展成长"
         }
-        mBinding.tvRemark.text = "维度解析：$name 评定分值为 ${self.toInt()} 分，高于岗位基准要求 ${diff.toInt()} 分。"
+        binding.tvRemark.text = "维度解析：$name 评定分值为 ${self.toInt()} 分，高于岗位基准要求 ${diff.toInt()} 分。"
     }
 }

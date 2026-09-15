@@ -24,7 +24,17 @@ import com.example.william.my.module.media.utils.VideoCaptureHelper
 import java.io.File
 
 /**
- * 录像示例 — 基于 CameraX 的 VideoCapture 用例，演示预览取景、录像与视频回放。
+ * CameraX — VideoCapture 录像用例
+ *
+ * 基于 CameraX 的 VideoCapture 用例，演示预览取景、录像与视频回放的完整流程。
+ *
+ * 核心机制与避坑点：
+ * 1. 预览取景：PreviewView 实时预览相机画面
+ * 2. 录像控制：一键启动/停止录像，输出 MP4 文件
+ * 3. 视频回放：内置 MediaPlayer 回放录制结果
+ * 4. 权限处理：运行时申请 CAMERA 权限
+ *
+ * https://developer.android.com/media/camera/camerax/get-started
  */
 @Route(path = RouterPath.Media.Video)
 class MediaVideoActivity :
@@ -35,7 +45,7 @@ class MediaVideoActivity :
     private var currentVideoFile: File? = null
 
     private val videoCaptureHelper by lazy {
-        VideoCaptureHelper(this, mBinding.previewView)
+        VideoCaptureHelper(this, binding.previewView)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -56,10 +66,10 @@ class MediaVideoActivity :
 
         checkAndRequestPermissions()
 
-        mBinding.btnRecord.setOnClickListener(this)
-        mBinding.btnClosePreview.setOnClickListener(this)
+        binding.btnRecord.setOnClickListener(this)
+        binding.btnClosePreview.setOnClickListener(this)
 
-        mBinding.previewTexture.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+        binding.previewTexture.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
             override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
                 currentVideoFile?.let {
                     adjustTextureTransform(it)
@@ -85,7 +95,7 @@ class MediaVideoActivity :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (mBinding.layoutPreview.isVisible) {
+                    if (binding.layoutPreview.isVisible) {
                         closePreview()
                     } else {
                         isEnabled = false
@@ -98,7 +108,7 @@ class MediaVideoActivity :
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnRecord -> {
+            binding.btnRecord -> {
                 if (videoCaptureHelper.isRecording()) {
                     Utils.toast("录像已停止，正在生成预览...")
                     updateRecordButtonState(false)
@@ -113,7 +123,7 @@ class MediaVideoActivity :
                 }
             }
 
-            mBinding.btnClosePreview -> {
+            binding.btnClosePreview -> {
                 closePreview()
             }
         }
@@ -121,11 +131,11 @@ class MediaVideoActivity :
 
     private fun updateRecordButtonState(isRecording: Boolean) {
         if (isRecording) {
-            mBinding.btnRecord.setImageResource(R.drawable.media_ic_record_stop)
-            mBinding.btnRecord.contentDescription = "停止录像"
+            binding.btnRecord.setImageResource(R.drawable.media_ic_record_stop)
+            binding.btnRecord.contentDescription = "停止录像"
         } else {
-            mBinding.btnRecord.setImageResource(R.drawable.media_ic_record_start)
-            mBinding.btnRecord.contentDescription = "开始录像"
+            binding.btnRecord.setImageResource(R.drawable.media_ic_record_start)
+            binding.btnRecord.contentDescription = "开始录像"
         }
     }
 
@@ -157,11 +167,11 @@ class MediaVideoActivity :
             return
         }
 
-        mBinding.layoutPreview.visibility = View.VISIBLE
+        binding.layoutPreview.visibility = View.VISIBLE
 
         currentVideoFile = videoFile
-        if (mBinding.previewTexture.isAvailable) {
-            mBinding.previewTexture.surfaceTexture?.let { surfaceTexture ->
+        if (binding.previewTexture.isAvailable) {
+            binding.previewTexture.surfaceTexture?.let { surfaceTexture ->
                 startTexturePlayer(Surface(surfaceTexture), videoFile)
             }
         }
@@ -191,9 +201,9 @@ class MediaVideoActivity :
     }
 
     private fun adjustTextureTransform(videoFile: File) {
-        mBinding.previewTexture.post {
-            val viewWidth = mBinding.previewTexture.width
-            val viewHeight = mBinding.previewTexture.height
+        binding.previewTexture.post {
+            val viewWidth = binding.previewTexture.width
+            val viewHeight = binding.previewTexture.height
             if (viewWidth <= 0 || viewHeight <= 0) return@post
 
             var videoWidth = 0.0
@@ -244,7 +254,7 @@ class MediaVideoActivity :
 
             val matrix = Matrix()
             matrix.setScale(scaleX, scaleY, viewWidth / 2f, viewHeight / 2f)
-            mBinding.previewTexture.setTransform(matrix)
+            binding.previewTexture.setTransform(matrix)
         }
     }
 
@@ -266,8 +276,8 @@ class MediaVideoActivity :
     private fun closePreview() {
         stopTexturePlayer()
         currentVideoFile = null
-        mBinding.layoutPreview.visibility = View.GONE
-        mBinding.previewTexture.setTransform(Matrix())
+        binding.layoutPreview.visibility = View.GONE
+        binding.previewTexture.setTransform(Matrix())
     }
 
     override fun fitsSystemWindows(): Boolean = false

@@ -48,11 +48,13 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Jetpack Compose — 折线图 (LineChart)
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. `Canvas` 三次贝塞尔曲线 (`cubicTo`) 平滑插值绘制
  * 2. `Brush.verticalGradient` 渐变面积填充
  * 3. `pointerInput` 手势拖拽/点击动态吸附十字辅助虚线
  * 4. 响应式联动底部收支/利润/利润率指标卡片
+ *
+ * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 @Route(path = RouterPath.Compose.LineChart)
 class LineChartActivity : ComponentActivity() {

@@ -8,29 +8,25 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.lang.ref.WeakReference
 
 /**
- * AsyncTask（已废弃）— 异步任务演示
+ * AsyncTask — 经典异步任务机制（已废弃）
  *
- * ⚠️ 历史参考：AsyncTask 在 API 30 已废弃，生产代码应使用 Kotlin Coroutines 替代。
- * 保留此页面作为历史参考，展示废弃 API 的用法。
+ * ⚠️ 历史参考：AsyncTask 在 API 30 已废弃，生产代码应使用 Kotlin 协程（Coroutines）替代。
+ * 本页保留展示其三泛型参数设计、生命周期回调时序与现代协程迁移方案。
  *
- * 泛型参数：<Params, Progress, Result>
- *   - Params: doInBackground 入参类型
- *   - Progress: onProgressUpdate 入参类型（publishProgress 发送）
- *   - Result: doInBackground 返回值类型，onPostExecute 入参
+ * 核心机制与避坑点：
+ * 1. 三泛型设计：`<Params, Progress, Result>` 分别对应入参、进度与最终结果类型
+ * 2. 回调顺序：onPreExecute（主线程）→ doInBackground（工作线程）→ onProgressUpdate（主线程）→ onPostExecute（主线程）
+ * 3. 线程切换：内部基于静态线程池与 Handler 实现主后台线程切换
+ * 4. 协程迁移：使用 viewModelScope.launch + withContext(Dispatchers.IO) 代替 execute
  *
- * 回调顺序：onPreExecute → doInBackground → onProgressUpdate → onPostExecute
+ * 协程现代替代方案见 [CoroutinesActivity]。
  *
- * 迁移方案：
- * - 使用 viewModelScope.launch {} 替代 execute()
- * - 使用 withContext(Dispatchers.IO) 替代 doInBackground
- * - 使用 Flow 或 LiveData 替代 publishProgress
- *
- * @see CoroutinesActivity 协程替代方案
+ * https://developer.android.google.cn/reference/android/os/AsyncTask
  */
 @Route(path = RouterPath.Async.AsyncTask)
 class AsyncTaskActivity : BasicResponseActivity() {
 
-    private var mAsyncTask: MyAsyncTask? = null
+    private var asyncTask: MyAsyncTask? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -48,14 +44,14 @@ class AsyncTaskActivity : BasicResponseActivity() {
     }
 
     private fun executeAsyncTask() {
-        mAsyncTask?.cancel(true)
-        mAsyncTask = MyAsyncTask(this)
-        mAsyncTask?.execute()
+        asyncTask?.cancel(true)
+        asyncTask = MyAsyncTask(this)
+        asyncTask?.execute()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mAsyncTask?.cancel(true)
+        asyncTask?.cancel(true)
     }
 
     @Suppress("deprecation")

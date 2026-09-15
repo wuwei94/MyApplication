@@ -59,11 +59,15 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 /**
  * Insets — 现代 Edge-to-Edge 边到边与系统栏避让
  *
- * 全面演示现代 Android（尤其是 Android 15 强制 Edge-to-Edge）下的 Compose 视口安全区处理：
- * 1. [WindowInsets.Companion.statusBars] 与 [WindowInsets.Companion.navigationBars]：状态栏与手势导航栏尺寸检测；
- * 2. [Modifier.statusBarsPadding] 与 [Modifier.navigationBarsPadding]：安全区留白修饰符；
- * 3. [WindowInsets.Companion.ime] 与 [Modifier.imePadding]：软键盘弹起高度监听与底部控件平滑上推避让；
- * 4. [Modifier.imeNestedScroll]：列表滑动连带关闭/驱动软键盘体验。
+ * 全面演示现代 Android（尤其是 Android 15 强制 Edge-to-Edge）下的 Compose 视口安全区处理。
+ *
+ * 核心机制与避坑点：
+ * 1. 系统栏尺寸检测：[WindowInsets.Companion.statusBars] 与 [WindowInsets.Companion.navigationBars]；
+ * 2. 安全区留白修饰符：[Modifier.statusBarsPadding] 与 [Modifier.navigationBarsPadding]；
+ * 3. 软键盘避让：[WindowInsets.Companion.ime] 与 [Modifier.imePadding] 监听键盘高度并平滑上推底部控件；
+ * 4. 键盘嵌套滚动：[Modifier.imeNestedScroll] 列表滑动连带关闭/驱动软键盘体验。
+ *
+ * https://developer.android.google.cn/develop/ui/compose/layouts/insets
  */
 @Route(path = RouterPath.Compose.Insets)
 class InsetsActivity : ComponentActivity() {

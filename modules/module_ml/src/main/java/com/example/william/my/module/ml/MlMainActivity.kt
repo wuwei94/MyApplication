@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 机器学习 / 端侧 AI 入口（TensorFlow Lite / LiteRT 实战演练）
+ * 端侧 AI 模块入口 — 导航到 TensorFlow Lite / LiteRT 手写识别、图像分类、GPU 跑分等示例页面。
  *
  * 官方文档: https://www.tensorflow.org/lite
  *

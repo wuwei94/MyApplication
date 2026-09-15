@@ -9,7 +9,7 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  * 布局/视图容器类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：ConstraintLayout 动态视图展示容器（[mContainer] / [mBinding.basicsResponseContainer]）
+ * - 上方展示：ConstraintLayout 动态视图展示容器（[mContainer] / [binding.basicsResponseContainer]）
  * - 下方列表：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
@@ -19,26 +19,26 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  */
 abstract class BasicLayoutActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutRecyclerLayoutBinding
-    protected lateinit var mContainer: ConstraintLayout
+    protected lateinit var binding: SharedLayoutRecyclerLayoutBinding
+    protected lateinit var container: ConstraintLayout
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutRecyclerLayoutBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
-        mRecycler = mBinding.basicsRecycler
-        mContainer = mBinding.basicsResponseContainer
+        binding = SharedLayoutRecyclerLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recycler = binding.basicsRecycler
+        container = binding.basicsResponseContainer
     }
 
     /**
      * 清空容器并设置新的 View（充满容器）
      */
     protected fun setView(view: View) {
-        mContainer.removeAllViews()
+        container.removeAllViews()
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT,
         )
-        mContainer.addView(view, params)
+        container.addView(view, params)
     }
 
     /**
@@ -46,9 +46,9 @@ abstract class BasicLayoutActivity : BasicControlActivity() {
      */
     protected fun addView(view: View, params: ViewGroup.LayoutParams? = null) {
         if (params != null) {
-            mContainer.addView(view, params)
+            container.addView(view, params)
         } else {
-            mContainer.addView(view)
+            container.addView(view)
         }
     }
 
@@ -56,6 +56,6 @@ abstract class BasicLayoutActivity : BasicControlActivity() {
      * 清空容器中的全部 View
      */
     protected fun clearContainer() {
-        mContainer.removeAllViews()
+        container.removeAllViews()
     }
 }

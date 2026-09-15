@@ -24,14 +24,19 @@ import com.example.william.my.module.gpuimage.helper.GpuImageChipHelper
 import java.io.File
 
 /**
- * CameraX 1.3+ 官方 CameraEffect 特效滤镜录像示例
+ * GPUImage — CameraX CameraEffect 特效滤镜录像
  *
- * 核心技术链路：
- * 1. 使用 [CameraEffect] + [GpuImageSurfaceProcessor] 将 OpenGL 滤镜挂载在
- *    相机硬件输出流与 [PreviewView] / [VideoCapture] 之间，实现 GPU 纹理级零拷贝实时着色。
- * 2. 视频录制直接交由 CameraX VideoCapture 与 Recorder，自动实现高质量音频采集、
- *    硬件 H.264 编码与音画同步混流。
- * 3. 录像回放：内嵌卡片式浮层，支持无缝重放生成的 MP4 视频。
+ * 使用 CameraX 1.3+ 官方 CameraEffect API，将 OpenGL 滤镜挂载在相机硬件输出流
+ * 与 PreviewView / VideoCapture 之间，实现 GPU 纹理级零拷贝实时着色与录像。
+ *
+ * 核心机制与避坑点：
+ * 1. CameraEffect 挂载：SurfaceProcessor 拦截相机输出纹理，GPUImage 逐帧着色
+ * 2. 零拷贝渲染：滤镜直接作用于 OES 纹理，无 CPU 侧像素拷贝
+ * 3. 高质量录像：CameraX VideoCapture + Recorder 自动采集音频、H.264 硬编码与混流
+ * 4. 录像回放：内嵌卡片式浮层，MediaPlayer + TextureView 无缝重放 MP4
+ *
+ * https://developer.android.com/media/camera/camerax
+ * https://github.com/cats-oss/android-gpuimage
  */
 @Route(path = RouterPath.GpuImage.CameraEffect)
 class GpuImageCameraEffectActivity :
@@ -39,7 +44,7 @@ class GpuImageCameraEffectActivity :
     View.OnClickListener {
 
     private val cameraEffectHelper by lazy {
-        GpuImageCameraEffectHelper(this, mBinding.previewView)
+        GpuImageCameraEffectHelper(this, binding.previewView)
     }
 
     private var mediaPlayer: MediaPlayer? = null
@@ -76,19 +81,19 @@ class GpuImageCameraEffectActivity :
         super.initView(savedInstanceState)
 
         GpuImageChipHelper.populate(
-            container = mBinding.chipContainer,
+            container = binding.chipContainer,
             names = filterSpecs.map { it.first },
             initialIndex = 0,
         ) { index ->
             val spec = filterSpecs[index]
             cameraEffectHelper.setFilterType(spec.second)
-            mBinding.tvCurrentFilter.text = spec.first
+            binding.tvCurrentFilter.text = spec.first
         }
 
-        mBinding.btnRecord.setOnClickListener(this)
-        mBinding.btnClosePreview.setOnClickListener(this)
+        binding.btnRecord.setOnClickListener(this)
+        binding.btnClosePreview.setOnClickListener(this)
 
-        mBinding.previewTexture.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+        binding.previewTexture.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
             override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
                 currentVideoFile?.let {
                     adjustTextureTransform(it)
@@ -112,7 +117,7 @@ class GpuImageCameraEffectActivity :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (mBinding.layoutPreview.isVisible) {
+                    if (binding.layoutPreview.isVisible) {
                         closePreview()
                     } else {
                         isEnabled = false
@@ -127,7 +132,7 @@ class GpuImageCameraEffectActivity :
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnRecord -> {
+            binding.btnRecord -> {
                 if (cameraEffectHelper.isRecording()) {
                     updateRecordButton(false)
                     Utils.toast("正在停止录像并处理视频...")
@@ -142,7 +147,7 @@ class GpuImageCameraEffectActivity :
                 }
             }
 
-            mBinding.btnClosePreview -> {
+            binding.btnClosePreview -> {
                 closePreview()
             }
         }
@@ -150,11 +155,11 @@ class GpuImageCameraEffectActivity :
 
     private fun updateRecordButton(recording: Boolean) {
         if (recording) {
-            mBinding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_stop)
-            mBinding.btnRecord.contentDescription = "停止录像"
+            binding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_stop)
+            binding.btnRecord.contentDescription = "停止录像"
         } else {
-            mBinding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_start)
-            mBinding.btnRecord.contentDescription = "开始录像"
+            binding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_start)
+            binding.btnRecord.contentDescription = "开始录像"
         }
     }
 
@@ -173,11 +178,11 @@ class GpuImageCameraEffectActivity :
     }
 
     private fun showVideoPreview(videoFile: File) {
-        mBinding.layoutPreview.visibility = View.VISIBLE
+        binding.layoutPreview.visibility = View.VISIBLE
 
         currentVideoFile = videoFile
-        if (mBinding.previewTexture.isAvailable) {
-            mBinding.previewTexture.surfaceTexture?.let { st ->
+        if (binding.previewTexture.isAvailable) {
+            binding.previewTexture.surfaceTexture?.let { st ->
                 startTexturePlayer(Surface(st), videoFile)
             }
         }
@@ -207,9 +212,9 @@ class GpuImageCameraEffectActivity :
     }
 
     private fun adjustTextureTransform(videoFile: File) {
-        mBinding.previewTexture.post {
-            val viewWidth = mBinding.previewTexture.width
-            val viewHeight = mBinding.previewTexture.height
+        binding.previewTexture.post {
+            val viewWidth = binding.previewTexture.width
+            val viewHeight = binding.previewTexture.height
             if (viewWidth <= 0 || viewHeight <= 0) return@post
 
             var videoWidth = 0.0
@@ -260,7 +265,7 @@ class GpuImageCameraEffectActivity :
 
             val matrix = Matrix()
             matrix.setScale(scaleX, scaleY, viewWidth / 2f, viewHeight / 2f)
-            mBinding.previewTexture.setTransform(matrix)
+            binding.previewTexture.setTransform(matrix)
         }
     }
 
@@ -280,8 +285,8 @@ class GpuImageCameraEffectActivity :
     private fun closePreview() {
         stopTexturePlayer()
         currentVideoFile = null
-        mBinding.layoutPreview.visibility = View.GONE
-        mBinding.previewTexture.setTransform(Matrix())
+        binding.layoutPreview.visibility = View.GONE
+        binding.previewTexture.setTransform(Matrix())
     }
 
     override fun fitsSystemWindows(): Boolean = false

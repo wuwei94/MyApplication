@@ -24,71 +24,71 @@ import org.json.JSONObject
  */
 class VolleyBuilder<T> {
 
-    private lateinit var mUrl: String
-    private lateinit var mClazz: Class<T>
-    private var mMethod: Int = Method.GET
-    private val mHeader: MutableMap<String, String> = mutableMapOf()
-    private val mParameter: MutableMap<String, String> = mutableMapOf()
-    private var mJsonObject: JSONObject? = null
-    private var mTag: String = TAG_GENERATOR.getAndIncrement().toString()
+    private lateinit var url: String
+    private lateinit var clazz: Class<T>
+    private var method: Int = Method.GET
+    private val header: MutableMap<String, String> = mutableMapOf()
+    private val parameter: MutableMap<String, String> = mutableMapOf()
+    private var jsonObject: JSONObject? = null
+    private var tag: String = TAG_GENERATOR.getAndIncrement().toString()
 
     fun url(api: String): VolleyBuilder<T> {
-        mUrl = api
+        url = api
         return this
     }
 
     fun clazz(clazz: Class<T>): VolleyBuilder<T> {
-        mClazz = clazz
+        this.clazz = clazz
         return this
     }
 
     fun get(): VolleyBuilder<T> {
-        mMethod = Method.GET
+        method = Method.GET
         return this
     }
 
     fun post(): VolleyBuilder<T> {
-        mMethod = Method.POST
+        method = Method.POST
         return this
     }
 
     fun delete(): VolleyBuilder<T> {
-        mMethod = Method.DELETE
+        method = Method.DELETE
         return this
     }
 
     fun put(): VolleyBuilder<T> {
-        mMethod = Method.PUT
+        method = Method.PUT
         return this
     }
 
     fun addHeader(key: String, value: String): VolleyBuilder<T> {
-        mHeader[key] = value
+        header[key] = value
         return this
     }
 
     fun addHeader(header: MutableMap<String, String>): VolleyBuilder<T> {
-        mHeader.putAll(header)
+        this.header.putAll(header)
         return this
     }
 
     fun addParam(key: String, value: String): VolleyBuilder<T> {
-        mParameter[key] = value
+        parameter[key] = value
         return this
     }
 
     fun addParams(params: MutableMap<String, String>): VolleyBuilder<T> {
-        mParameter.putAll(params)
+        parameter.putAll(params)
         return this
     }
 
     fun addJsonObject(jsonObject: JSONObject): VolleyBuilder<T> {
-        mJsonObject = jsonObject
+        this.jsonObject = jsonObject
         return this
     }
 
     fun tag(tag: String): VolleyBuilder<T> {
-        mTag = tag
+        this.tag = tag
         return this
     }
 
@@ -99,32 +99,32 @@ class VolleyBuilder<T> {
      * @param listener 响应回调
      */
     fun build(context: Context, listener: VolleyListener<T>) {
-        check(::mUrl.isInitialized) { "url 未设置，请调用 .url()" }
-        check(::mClazz.isInitialized) { "clazz 未设置，请调用 .clazz()" }
+        check(::url.isInitialized) { "url 未设置，请调用 .url()" }
+        check(::clazz.isInitialized) { "clazz 未设置，请调用 .clazz()" }
 
         val finalUrl = buildUrl()
-        val request = if (mJsonObject != null) {
+        val request = if (jsonObject != null) {
             JsonRequest(
-                mMethod,
+                method,
                 finalUrl,
-                mClazz,
-                mHeader,
-                mJsonObject,
-                listener.mListener,
-                listener.mErrorListener,
+                clazz,
+                header,
+                jsonObject,
+                listener.listener,
+                listener.errorListener,
             )
         } else {
             FromRequest(
-                mMethod,
+                method,
                 finalUrl,
-                mClazz,
-                mHeader,
-                mParameter,
-                listener.mListener,
-                listener.mErrorListener,
+                clazz,
+                header,
+                parameter,
+                listener.listener,
+                listener.errorListener,
             )
         }
-        request.tag = mTag
+        request.tag = tag
         VolleySingleton.getInstance(context).addToRequestQueue(request)
     }
 
@@ -132,11 +132,11 @@ class VolleyBuilder<T> {
      * GET/DELETE 将 params 拼到 URL 上，POST/PUT 直接返回原 URL。
      */
     private fun buildUrl(): String {
-        if (mParameter.isEmpty()) return mUrl
-        if (mMethod != Method.GET && mMethod != Method.DELETE) return mUrl
-        val separator = if (mUrl.contains("?")) "&" else "?"
-        val query = mParameter.entries.joinToString("&") { "${it.key}=${it.value}" }
-        return "$mUrl$separator$query"
+        if (parameter.isEmpty()) return url
+        if (method != Method.GET && method != Method.DELETE) return url
+        val separator = if (url.contains("?")) "&" else "?"
+        val query = parameter.entries.joinToString("&") { "${it.key}=${it.value}" }
+        return "$url$separator$query"
     }
 
     companion object {

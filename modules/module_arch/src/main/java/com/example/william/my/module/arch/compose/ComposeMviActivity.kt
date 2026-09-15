@@ -62,17 +62,21 @@ import java.util.Locale
 /**
  * Compose MVI — Jetpack Compose 现代化响应式 MVI 架构
  *
- * 结合声明式 UI（Jetpack Compose）与单向数据流（Model-View-Intent）的最佳实践：
- * 1. Intent（意图）：由 UI 事件触发并通过协程 Channel 发送给 ViewModel（如 Refresh / LoadMore）；
- * 2. State（状态）：ViewModel 汇聚业务与分页数据，通过不可变的 StateFlow 单向驱动 Compose 渲染；
- * 3. Effect（副作用）：单次瞬时事件（如刷新/加载完成、网络错误 Toast）通过独立 Channel 管道分发，避免重组重放与状态去重问题；
- * 4. 下拉刷新：使用 SmartRefresh Compose（[SmartSwipeRefresh]）配合经典样式 [ClassicsRefreshHeader] / [ClassicsRefreshFooter]，完成时序与传统 XML 架构页面（MviActivity）的 ClassicsHeader（保留 500ms 完成提示再平滑收起）保持完全一致；
- * 5. UI 与基类规范：继承 [BaseActivity] 保证沉浸式状态栏与屏幕密度适配与各架构示例统一，列表项高度 48dp 且文本居中对齐（14sp），与传统 View 架构示例（arch_item_recycler）保持视觉完全一致。
+ * 结合声明式 UI（Jetpack Compose）与单向数据流（Model-View-Intent）的最佳实践。
+ *
+ * 核心机制与避坑点：
+ * 1. Intent 意图分发：UI 事件封装为 Intent 通过协程 Channel 发送给 ViewModel（如 Refresh / LoadMore）
+ * 2. StateFlow 状态驱动：不可变 StateFlow 单向驱动 Compose 声明式渲染，UI 仅作为状态的纯函数映射
+ * 3. Channel 瞬时副作用：单次事件（如 Toast 弹窗 / 刷新完成标记）通过独立 Channel 管道分发，彻底杜绝重组重放与状态去重问题
+ * 4. 下拉刷新协同：使用 SmartRefresh Compose（[SmartSwipeRefresh]）配合经典样式，完成时序与传统 XML 架构页面（MviActivity）保持完全一致
+ * 5. 视觉规范统一：继承 [BaseActivity] 保证沉浸式状态栏与屏幕适配，列表项高度 48dp 且文本居中，与传统 View 架构示例保持视觉完全一致
+ *
+ * https://developer.android.google.cn/topic/architecture/ui-layer
  */
 @Route(path = RouterPath.Arch.ComposeMVI)
 class ComposeMviActivity : BaseActivity() {
 
-    private val mViewModel: ArticleComposeViewModel by viewModels {
+    private val viewModel: ArticleComposeViewModel by viewModels {
         ArticleComposeViewModel.Factory
     }
 
@@ -84,7 +88,7 @@ class ComposeMviActivity : BaseActivity() {
                 this.needFirstRefresh = true
             }
             val scrollState = rememberLazyListState()
-            val uiState by mViewModel.state.collectAsState()
+            val uiState by viewModel.state.collectAsState()
 
             var displayRefreshFlag by remember { mutableStateOf<SmartSwipeStateFlag?>(null) }
             var displayLoadMoreFlag by remember { mutableStateOf<SmartSwipeStateFlag?>(null) }
@@ -101,7 +105,7 @@ class ComposeMviActivity : BaseActivity() {
 
             // 监听单次副作用事件（如刷新完成、加载更多完成、Toast 提示）
             LaunchedEffect(Unit) {
-                mViewModel.effect.collect { effect ->
+                viewModel.effect.collect { effect ->
                     when (effect) {
                         is ArticleComposeUiEffect.RefreshComplete -> {
                             val flag = if (effect.isSuccess) {
@@ -147,12 +151,12 @@ class ComposeMviActivity : BaseActivity() {
                     modifier = Modifier.fillMaxSize(),
                     onRefresh = {
                         lifecycleScope.launch {
-                            mViewModel.intent.send(ArticleComposeIntent.Refresh)
+                            viewModel.intent.send(ArticleComposeIntent.Refresh)
                         }
                     },
                     onLoadMore = {
                         lifecycleScope.launch {
-                            mViewModel.intent.send(ArticleComposeIntent.LoadMore)
+                            viewModel.intent.send(ArticleComposeIntent.LoadMore)
                         }
                     },
                     state = refreshState,

@@ -17,13 +17,13 @@ class BasicDialogFragment : BaseVBDialogFragment<SharedLayoutDialogBinding>(R.st
         super.initView(view, state)
         val message = arguments?.getString(KEY_MESSAGE)
         if (!message.isNullOrEmpty()) {
-            mBinding.dialog.basicsResponse.text = message
+            binding.dialog.basicsResponse.text = message
         }
     }
 
     fun showMessage(message: String?) {
         if (isAdded && view != null) {
-            mBinding.dialog.basicsResponse.text = message
+            binding.dialog.basicsResponse.text = message
         } else {
             arguments = (arguments ?: Bundle()).apply {
                 putString(KEY_MESSAGE, message)

@@ -1289,25 +1289,6 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
         return Math.abs(newTop - collapsedOffset) / (float) peek > HIDE_THRESHOLD;
     }
 
-//    
-//    @VisibleForTesting
-//    View findScrollingChild(View view) {
-//        if (ViewCompat.isNestedScrollingEnabled(view)) {
-//            return view;
-//        }
-//        if (view instanceof ViewGroup) {
-//            ViewGroup group = (ViewGroup) view;
-//            for (int i = 0, count = group.getChildCount(); i < count; i++) {
-//                View scrollingChild = findScrollingChild(group.getChildAt(i));
-//                if (scrollingChild != null) {
-//                    return scrollingChild;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
-
     @VisibleForTesting
     View findScrollingChild(View view) {
         if (ViewCompat.isNestedScrollingEnabled(view)) {

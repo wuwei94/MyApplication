@@ -11,10 +11,15 @@ import com.example.william.my.module.performance.provider.AutoInitSdk
 /**
  * ContentProvider — 启动早期无侵入自动初始化与冷启动耗时剖析
  *
- * 核心机制与性能分析：
- * 1. 【无侵入初始化模式】：利用系统在 `Application.onCreate` 之前优先执行 `ContentProvider.onCreate` 的机制，自动捕获 Context 完成 SDK 初始化；
- * 2. 【冷启动耗时痛点】：每个 ContentProvider 在 AMS 与 ActivityThread 层面均存在反射拉起、Binder 绑定与 IPC 开销（单个约 1~5ms），大量 SDK 各自注册 Provider 会导致冷启动白屏明显拉长；
- * 3. 【演进趋势】：由此催生了 Jetpack App Startup，通过单个 InitializationProvider 统一聚合管理所有库初始化。
+ * 演示利用 ContentProvider.onCreate 优先时序完成 SDK 自动初始化，
+ * 并剖析多 Provider 对冷启动的负面影响与治理演进。
+ *
+ * 核心机制与避坑点：
+ * 1. 无侵入初始化模式：利用系统在 Application.onCreate 之前优先执行 ContentProvider.onCreate 的机制，自动捕获 Context 完成 SDK 初始化
+ * 2. 冷启动耗时痛点：每个 ContentProvider 在 AMS 与 ActivityThread 层面均存在反射拉起、Binder 绑定与 IPC 开销（单个约 1~5ms），大量 SDK 各自注册 Provider 会导致冷启动白屏明显拉长
+ * 3. 演进趋势：由此催生 Jetpack App Startup，通过单个 InitializationProvider 统一聚合管理所有库初始化
+ *
+ * https://developer.android.com/guide/components/content-providers
  */
 @Route(path = RouterPath.Performance.ContentProvider)
 class ContentProviderActivity : BasicResponseActivity() {

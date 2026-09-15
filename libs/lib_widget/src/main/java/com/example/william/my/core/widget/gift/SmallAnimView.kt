@@ -19,8 +19,8 @@ class SmallAnimView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    private var mListener: Animator.AnimatorListener? = null
-    private val mBinding =
+    private var listener: Animator.AnimatorListener? = null
+    private val binding =
         AnimItemBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
@@ -31,34 +31,34 @@ class SmallAnimView @JvmOverloads constructor(
     }
 
     fun addListener(listener: Animator.AnimatorListener?) {
-        this.mListener = listener
+        this.listener = listener
     }
 
     fun play() {
         val animatorSet = AnimatorSet()
-        val mTranslationIn = ObjectAnimator.ofFloat(
+        val translationIn = ObjectAnimator.ofFloat(
             this,
             "translationX",
             ScreenUtils.getScreenWidth().toFloat(),
             0f,
         )
-        mTranslationIn.setDuration(1200)
-        val mTranslationOut = ObjectAnimator.ofFloat(
+        translationIn.setDuration(1200)
+        val translationOut = ObjectAnimator.ofFloat(
             this,
             "translationX",
             0f,
             -ScreenUtils.getScreenWidth().toFloat(),
         )
-        mTranslationOut.setDuration(1200)
-        val mTranslationWait = ObjectAnimator.ofFloat(
+        translationOut.setDuration(1200)
+        val translationWait = ObjectAnimator.ofFloat(
             this,
             "translationX",
             0f,
             0f,
         )
-        mTranslationWait.setDuration(6000)
-        animatorSet.playSequentially(mTranslationIn, mTranslationWait, mTranslationOut)
-        animatorSet.addListener(mListener)
+        translationWait.setDuration(6000)
+        animatorSet.playSequentially(translationIn, translationWait, translationOut)
+        animatorSet.addListener(listener)
         animatorSet.start()
     }
 }

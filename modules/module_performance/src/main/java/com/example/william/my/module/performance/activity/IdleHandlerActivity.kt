@@ -9,13 +9,18 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * IdleHandler 主线程空闲调度示例
+ * IdleHandler — 主线程 MessageQueue 空闲调度
  *
- * 本示例演示 IdleHandler 的标准用法与核心机制：
- * 1. 核心机制：当主线程 MessageQueue 处于空闲状态（无即时消息处理或处于延时等待）时触发回调。
- * 2. 单次执行（返回 false）：执行完毕后自动从队列中移除，常用于延迟初始化次要 SDK、预加载次级数据。
- * 3. 持续监听（返回 true）：执行完毕后仍保留在队列中，每次空闲都会再次触发，常用于分片任务调度与内存清理。
- * 4. 显式注销（removeIdleHandler）：在组件销毁时主动移除持续监听的 IdleHandler，避免内存泄漏。
+ * 当主线程 MessageQueue 空闲（无即时消息或处于延时等待）时触发回调，
+ * 适合把非关键路径任务推迟到空闲期执行。
+ *
+ * 核心机制与避坑点：
+ * 1. 核心机制：当主线程 MessageQueue 处于空闲状态（无即时消息处理或处于延时等待）时触发回调
+ * 2. 单次执行（返回 false）：执行完毕后自动从队列中移除，常用于延迟初始化次要 SDK、预加载次级数据
+ * 3. 持续监听（返回 true）：执行完毕后仍保留在队列中，每次空闲都会再次触发，常用于分片任务调度与内存清理
+ * 4. 显式注销（removeIdleHandler）：在组件销毁时主动移除持续监听的 IdleHandler，避免内存泄漏
+ *
+ * https://developer.android.com/reference/android/os/MessageQueue.IdleHandler
  */
 @Route(path = RouterPath.Performance.IdleHandler)
 class IdleHandlerActivity : BasicResponseActivity() {

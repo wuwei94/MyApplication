@@ -32,10 +32,10 @@ import com.example.william.my.module.scheduler.activity.JobSchedulerActivity
  */
 class MyJobSchedulerService : JobService() {
 
-    private var mJobSchedulerMessenger: Messenger? = null
+    private var jobSchedulerMessenger: Messenger? = null
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        mJobSchedulerMessenger = intent.getParcelableExtra(JobSchedulerActivity.KEY_MESSENGER)
+        jobSchedulerMessenger = intent.getParcelableExtra(JobSchedulerActivity.KEY_MESSENGER)
         return START_NOT_STICKY
     }
 
@@ -65,7 +65,7 @@ class MyJobSchedulerService : JobService() {
     }
 
     private fun sendMessage(id: Int, params: Any) {
-        mJobSchedulerMessenger?.let { messenger ->
+        jobSchedulerMessenger?.let { messenger ->
 
             val message = Message.obtain()
 

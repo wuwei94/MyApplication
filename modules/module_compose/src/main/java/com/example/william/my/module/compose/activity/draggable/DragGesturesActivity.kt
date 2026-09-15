@@ -42,11 +42,15 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.roundToInt
 
 /**
- * 拖拽手势交互示例页 (DragGesturesActivity)
+ * DragGestures — 拖拽手势交互示例页
  *
- * 聚合展示 Compose 中两大拖拽 API 方案的实现与对比：
- * 1. **单轴拖拽 (`Modifier.draggable`)**：限制在单一维度（水平/垂直），适合进度条、滑动删除等场景；
- * 2. **全向自由拖拽 (`detectDragGestures`)**：通过底层 pointerInput 监听二维平面的自由位移，适合悬浮窗、画布拖拽等场景。
+ * 聚合展示 Compose 中两大拖拽 API 方案的实现与对比。
+ *
+ * 核心机制与避坑点：
+ * 1. 单轴拖拽 `Modifier.draggable`：限制在单一维度（水平/垂直），适合进度条、滑动删除等场景；
+ * 2. 全向自由拖拽 `detectDragGestures`：通过底层 pointerInput 监听二维平面的自由位移，适合悬浮窗、画布拖拽等场景。
+ *
+ * https://developer.android.google.cn/develop/ui/compose/touch-input/pointer-input/drag-swipe-fling
  */
 @Route(path = RouterPath.Compose.DragGestures)
 class DragGesturesActivity : ComponentActivity() {

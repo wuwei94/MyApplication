@@ -18,17 +18,19 @@ import com.example.william.my.core.imageloader.glide.ImageLoader as GlideImageLo
  * 本页演示同一套 `IImageLoader` 接口在不同底层实现之间的无感切换，
  * 调用方无需关心底层是 Coil 还是 Glide。
  *
- * 核心 API：
+ * 核心机制与避坑点：
  * - loadImage：普通加载
  * - loadImageRound：圆形加载
  * - loadImageRadius：圆角加载
  * - clear：清除图片
+ *
+ * https://github.com/bumptech/glide
  */
 @Route(path = RouterPath.ImageLoader.ImageLoader)
 class ImageLoaderActivity : BasicImageActivity() {
 
     // 默认使用 Glide 实现，列表第一项可切换为 Coil 实现
-    private var mImageLoader: IImageLoader = GlideImageLoader
+    private var imageLoader: IImageLoader = GlideImageLoader
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -57,37 +59,37 @@ class ImageLoaderActivity : BasicImageActivity() {
     }
 
     private fun switchLoader() {
-        mImageLoader = if (mImageLoader === GlideImageLoader) CoilImageLoader else GlideImageLoader
+        imageLoader = if (imageLoader === GlideImageLoader) CoilImageLoader else GlideImageLoader
         loadImage()
     }
 
     private fun loadImage() {
-        with(mImageLoader) {
-            mBinding.basicsImage.loadImage(this@ImageLoaderActivity, Constants.Url_Image1)
+        with(imageLoader) {
+            binding.basicsImage.loadImage(this@ImageLoaderActivity, Constants.Url_Image1)
         }
     }
 
     private fun loadRound() {
-        with(mImageLoader) {
-            mBinding.basicsImage.loadImageRound(this@ImageLoaderActivity, Constants.Url_Image2)
+        with(imageLoader) {
+            binding.basicsImage.loadImageRound(this@ImageLoaderActivity, Constants.Url_Image2)
         }
     }
 
     private fun loadRadius() {
-        with(mImageLoader) {
-            mBinding.basicsImage.loadImageRadius(this@ImageLoaderActivity, Constants.Url_Image1, 48)
+        with(imageLoader) {
+            binding.basicsImage.loadImageRadius(this@ImageLoaderActivity, Constants.Url_Image1, 48)
         }
     }
 
     private fun clear() {
-        with(mImageLoader) {
-            mBinding.basicsImage.clear(this@ImageLoaderActivity)
+        with(imageLoader) {
+            binding.basicsImage.clear(this@ImageLoaderActivity)
         }
     }
 
     private fun loadError() {
-        with(mImageLoader) {
-            mBinding.basicsImage.loadImage(this@ImageLoaderActivity, "https://invalid-url.example.com/not_exist.png")
+        with(imageLoader) {
+            binding.basicsImage.loadImage(this@ImageLoaderActivity, "https://invalid-url.example.com/not_exist.png")
         }
     }
 }

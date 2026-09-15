@@ -9,12 +9,12 @@ import androidx.viewbinding.ViewBinding
 /**
  * ViewBinding Fragment 基类
  *
- * 通过 [getViewBinding] 绑定视图，并在视图销毁时自动释放 mBinding 引用。
+ * 通过 [getViewBinding] 绑定视图，并在视图销毁时自动释放 binding 引用。
  */
 abstract class BaseVBFragment<VB : ViewBinding?>(layout: Int = 0) : BaseFragment(layout) {
 
     private var _binding: VB? = null
-    protected val mBinding get() = _binding!!
+    protected val binding get() = _binding!!
 
     protected abstract fun getViewBinding(): VB
 
@@ -24,7 +24,7 @@ abstract class BaseVBFragment<VB : ViewBinding?>(layout: Int = 0) : BaseFragment
         savedInstanceState: Bundle?,
     ): View? {
         _binding = getViewBinding()
-        return mBinding.root
+        return binding.root
     }
 
     override fun onDestroyView() {

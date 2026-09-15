@@ -23,6 +23,13 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBi
  *
  * RecyclerView 是 Android 最重要的列表控件，用于展示大量数据。
  *
+ * 核心机制与避坑点：
+ * 1. 灵活布局：Linear / Grid / StaggeredGrid 等 LayoutManager 控制 Item 排列方式
+ * 2. 项装饰：ItemDecoration 添加分割线、间距等装饰
+ * 3. 变更动画：ItemAnimator 处理 add/remove/move/change 动画
+ * 4. 入场动画：LayoutAnimation 在列表首次显示时播放
+ * 5. 滑动吸附：SnapHelper 控制滑动停止时的对齐（线性吸附 / 翻页）
+ *
  * 核心组件：
  * 1. LayoutManager：布局管理器，控制 Item 的排列方式
  *    - LinearLayoutManager：线性布局，单列
@@ -44,22 +51,7 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBi
  *    - LinearSnapHelper：支持快速滑动，像吸附效果
  *    - PagerSnapHelper：一次只能滑动一页，像翻页效果
  *
- * 基本用法：
- * ```kotlin
- * // 设置布局管理器
- * recyclerView.layoutManager = LinearLayoutManager(context)
- *
- * // 设置适配器
- * recyclerView.adapter = MyAdapter(data)
- *
- * // 添加装饰器
- * recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
- * ```
- *
- * 适用场景：
- * - 列表展示、网格展示
- * - 瀑布流布局
- * - 大量数据展示
+ * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
 @Route(path = RouterPath.Widget.RecyclerView)
 class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
@@ -74,7 +66,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
 
     private fun initRecyclerView() {
         // 固定大小，item 尺寸不变时跳过重新测量
-        mBinding.recycleView.setHasFixedSize(true)
+        binding.recycleView.setHasFixedSize(true)
         // 布局管理器（必须最先设置）
         initLayoutManager(LayoutManagerType.LINEAR)
         // 装饰器（影响测量，应在 Adapter 之前）
@@ -105,7 +97,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
                 gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
             }
         }
-        mBinding.recycleView.layoutManager = manager
+        binding.recycleView.layoutManager = manager
     }
 
     /**
@@ -113,7 +105,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
      * - DividerItemDecoration: 分割线
      */
     private fun initItemDecoration() {
-        mBinding.recycleView.addItemDecoration(
+        binding.recycleView.addItemDecoration(
             DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
                 setDrawable(ContextCompat.getDrawable(this@RecyclerViewActivity, R.drawable.ui_divider)!!)
             },
@@ -125,7 +117,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
      * - DefaultItemAnimator: 默认动画，处理 add/remove/move/change
      */
     private fun initItemAnimator() {
-        mBinding.recycleView.itemAnimator = DefaultItemAnimator()
+        binding.recycleView.itemAnimator = DefaultItemAnimator()
     }
 
     /**
@@ -136,7 +128,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
         val data = (1..59).map { "POSITION $it" }.toMutableList()
         val adapter = RecyclerAdapter(data)
         adapter.setHasStableIds(true)
-        mBinding.recycleView.adapter = adapter
+        binding.recycleView.adapter = adapter
     }
 
     /**
@@ -152,7 +144,7 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
         )
         controller.order = LayoutAnimationController.ORDER_NORMAL
         controller.delay = 0.2f
-        mBinding.recycleView.layoutAnimation = controller
+        binding.recycleView.layoutAnimation = controller
     }
 
     private enum class SnapHelperType { NONE, LINEAR, PAGER }
@@ -165,8 +157,8 @@ class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
      */
     private fun initSnapHelper(type: SnapHelperType) {
         when (type) {
-            SnapHelperType.LINEAR -> LinearSnapHelper().attachToRecyclerView(mBinding.recycleView)
-            SnapHelperType.PAGER -> PagerSnapHelper().attachToRecyclerView(mBinding.recycleView)
+            SnapHelperType.LINEAR -> LinearSnapHelper().attachToRecyclerView(binding.recycleView)
+            SnapHelperType.PAGER -> PagerSnapHelper().attachToRecyclerView(binding.recycleView)
             SnapHelperType.NONE -> { }
         }
     }

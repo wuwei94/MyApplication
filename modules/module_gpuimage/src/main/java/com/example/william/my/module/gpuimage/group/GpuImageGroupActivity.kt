@@ -30,16 +30,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * GPUImageFilterGroup 多级滤镜链
+ * GPUImage — GPUImageFilterGroup 多级滤镜链
  *
- * 滤镜链模拟真实后期工作流：把多个滤镜按顺序叠加。核心类 [GPUImageFilterGroup]
- * 将一组 GPUImageFilter 包成“一个”滤镜，内部用 FBO（Frame Buffer Object）离屏
- * 渲染：第 N 级滤镜的输出纹理作为第 N+1 级滤镜的输入，首尾相接。
+ * GPUImageFilterGroup 将多个 GPUImageFilter 包成「一个」滤镜，内部用 FBO
+ * （Frame Buffer Object）离屏渲染：第 N 级滤镜的输出纹理作为第 N+1 级的输入，
+ * 首尾相接。本页提供基础滤镜（第 1 层）与叠加滤镜（第 2 层）两级选择。
  *
- * 页面提供两组选择：
- * - ① 基础滤镜（第 1 层）：模糊 / 素描 / 浮雕等“底子”效果；
- * - ② 叠加滤镜（第 2 层）：反色 / 晕影等作用于上一级结果的调整。
- * 两级选中后构建 `GPUImageFilterGroup(listOf(a, b))` 一次性应用到 GPUImageView。
+ * 核心机制与避坑点：
+ * 1. 滤镜链组合：GPUImageFilterGroup(listOf(a, b)) 将多级滤镜串联为单一滤镜
+ * 2. FBO 离屏渲染：中间结果写入帧缓冲对象，逐级传递纹理
+ * 3. 两级选择：基础滤镜（模糊/素描等）+ 叠加滤镜（反色/晕影等）
+ * 4. 动态重建：切换任一层后重新组装 FilterGroup 并应用到 GPUImageView
+ *
+ * https://github.com/cats-oss/android-gpuimage
  */
 @Route(path = RouterPath.GpuImage.Group)
 class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {
@@ -79,7 +82,7 @@ class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {
         super.initView(savedInstanceState)
 
         GpuImageChipHelper.populate(
-            container = mBinding.chipBase,
+            container = binding.chipBase,
             names = baseFilters.map { it.name },
             initialIndex = baseIndex,
         ) { index ->
@@ -87,7 +90,7 @@ class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {
             rebuildChain()
         }
         GpuImageChipHelper.populate(
-            container = mBinding.chipOverlay,
+            container = binding.chipOverlay,
             names = overlayFilters.map { it?.name ?: "无叠加" },
             initialIndex = overlayIndex,
         ) { index ->
@@ -102,7 +105,7 @@ class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {
             if (bitmap != null) {
                 currentBitmap?.recycle()
                 currentBitmap = bitmap
-                mBinding.gpuImageView.setImage(bitmap)
+                binding.gpuImageView.setImage(bitmap)
             }
             rebuildChain()
         }
@@ -114,9 +117,9 @@ class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {
         val overlay = overlayFilters[overlayIndex]
         overlay?.let { chain += it.factory() }
 
-        mBinding.gpuImageView.setFilter(GPUImageFilterGroup(chain))
-        mBinding.tvChainLabel.text = "链路: ${baseFilters[baseIndex].name}" + (overlay?.let { " → ${it.name}" } ?: "")
-        mBinding.tvChainDesc.text =
+        binding.gpuImageView.setFilter(GPUImageFilterGroup(chain))
+        binding.tvChainLabel.text = "链路: ${baseFilters[baseIndex].name}" + (overlay?.let { " → ${it.name}" } ?: "")
+        binding.tvChainDesc.text =
             "当前链路：原图 → ${baseFilters[baseIndex].name}" +
             (overlay?.let { " → ${it.name}" } ?: "") +
             "\nAPI：GPUImageFilterGroup(filters) 共 ${chain.size} 级，逐级 FBO 离屏串联"
@@ -124,12 +127,12 @@ class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {
 
     override fun onPause() {
         super.onPause()
-        mBinding.gpuImageView.onPause()
+        binding.gpuImageView.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        mBinding.gpuImageView.onResume()
+        binding.gpuImageView.onResume()
     }
 
     override fun onDestroy() {

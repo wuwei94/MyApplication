@@ -78,6 +78,14 @@ sealed interface NavRoute {
  * NavHost — 官方类型安全导航（Type-Safe Navigation）
  *
  * 演示 Jetpack Navigation 2.8+ 官方强类型目的地声明、参数传递、转场动效与返回栈控制。
+ *
+ * 核心机制与避坑点：
+ * 1. 强类型路由模型：sealed interface + @Serializable 声明目的地，弃用字符串 URL 拼接；
+ * 2. 编译期参数安全：复杂参数经 Kotlin Serialization 自动反序列化（如 Detail 的 articleId/title/author）；
+ * 3. 声明式转场：NavHost 配置 slideIn/slideOut + fade 的进出场动画；
+ * 4. 返回栈跳转：NavController.navigate / popBackStack 与 toRoute 强类型取参。
+ *
+ * https://developer.android.google.cn/guide/navigation/design/type-safety
  */
 @Route(path = RouterPath.Compose.NavHost)
 class NavHostActivity : ComponentActivity() {

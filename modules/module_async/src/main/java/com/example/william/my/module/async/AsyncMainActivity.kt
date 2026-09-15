@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 异步模块入口页
+ * 异步模块入口 — 导航到 AsyncTask、HandlerThread 等示例页面。
  *
  * 展示 AsyncTask、HandlerThread 等异步机制的示例列表。
  */

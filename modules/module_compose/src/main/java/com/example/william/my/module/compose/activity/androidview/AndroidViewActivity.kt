@@ -47,11 +47,13 @@ import kotlin.math.roundToInt
  * 1. **ComposeView**：在传统 XML/View 体系中开辟 Compose 渲染树；
  * 2. **AndroidView**：在 Compose 声明式树中托管原生 Android View（常用于地图 SDK、Player Surface、复杂三方原生图表等无法纯 Compose 化的场景）。
  *
- * 核心机制：
+ * 核心机制与避坑点：
  * - `factory`：只在首次挂载时执行一次，用于实例化原生 View 并完成初始化配置；
  * - `update`：在关联的 Compose State 发生变化引起重组时被反复调用，执行属性更新。
  *
  * https://developer.android.google.cn/develop/ui/compose/migrate/interoperability-apis/views-in-compose
+ *
+ * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
 @Route(path = RouterPath.Compose.AndroidView)
 class AndroidViewActivity : ComponentActivity() {

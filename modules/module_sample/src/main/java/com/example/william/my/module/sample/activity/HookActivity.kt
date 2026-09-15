@@ -10,7 +10,16 @@ import com.example.william.my.module.sample.hook.HookHelper
 /**
  * 反射 Hook OnClickListener — 动态代理机制演示
  *
- * 通过反射和动态代理技术，拦截 View 的点击事件。
+ * 通过反射和动态代理技术，拦截 View 的点击事件，
+ * 演示 Android 系统层面的事件分发 Hook 原理。
+ *
+ * 核心机制与避坑点：
+ * 1. 反射获取：通过反射获取 View 内部 mListenerInfo.mOnClickListener
+ * 2. 动态代理：使用 Proxy.newProxyInstance 创建代理 Listener
+ * 3. 事件拦截：在代理中插入自定义逻辑后转发原始事件
+ * 4. 可还原：支持恢复原始 Listener
+ *
+ * https://developer.android.com/reference/java/lang/reflect/Proxy
  */
 @Route(path = RouterPath.Sample.Hook)
 class HookActivity : BasicResponseActivity() {

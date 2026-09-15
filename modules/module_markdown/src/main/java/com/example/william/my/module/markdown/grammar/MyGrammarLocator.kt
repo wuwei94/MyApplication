@@ -24,7 +24,7 @@ import java.util.regex.Pattern
  */
 class MyGrammarLocator : GrammarLocator {
 
-    private val mGrammars = HashMap<String, Prism4j.Grammar>()
+    private val grammars = HashMap<String, Prism4j.Grammar>()
 
     init {
         initGrammars()
@@ -32,19 +32,19 @@ class MyGrammarLocator : GrammarLocator {
 
     override fun grammar(prism4j: Prism4j, language: String): Prism4j.Grammar? {
         val key = language.lowercase().trim()
-        return mGrammars[key] ?: when (key) {
-            "kt", "kts" -> mGrammars["kotlin"]
-            "js", "ts", "typescript" -> mGrammars["javascript"]
-            "py" -> mGrammars["python"]
-            "sh", "zsh" -> mGrammars["bash"]
-            "c++", "cc", "cxx", "h", "hpp" -> mGrammars["cpp"]
-            "xml", "svg" -> mGrammars["html"]
-            "md" -> mGrammars["markdown"]
-            else -> mGrammars["clike"]
+        return grammars[key] ?: when (key) {
+            "kt", "kts" -> grammars["kotlin"]
+            "js", "ts", "typescript" -> grammars["javascript"]
+            "py" -> grammars["python"]
+            "sh", "zsh" -> grammars["bash"]
+            "c++", "cc", "cxx", "h", "hpp" -> grammars["cpp"]
+            "xml", "svg" -> grammars["html"]
+            "md" -> grammars["markdown"]
+            else -> grammars["clike"]
         }
     }
 
-    override fun languages(): Set<String> = mGrammars.keys
+    override fun languages(): Set<String> = grammars.keys
 
     private fun initGrammars() {
         // 1. C-Like 基类
@@ -88,7 +88,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["clike"] = clike
+        grammars["clike"] = clike
 
         // 2. Java
         val java = grammar(
@@ -127,7 +127,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["java"] = java
+        grammars["java"] = java
 
         // 3. Kotlin
         val kotlin = grammar(
@@ -170,7 +170,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["kotlin"] = kotlin
+        grammars["kotlin"] = kotlin
 
         // 4. Python
         val python = grammar(
@@ -212,7 +212,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["python"] = python
+        grammars["python"] = python
 
         // 5. JavaScript / TypeScript
         val javascript = grammar(
@@ -251,7 +251,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["javascript"] = javascript
+        grammars["javascript"] = javascript
 
         // 6. JSON
         val json = grammar(
@@ -277,7 +277,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}:,]")),
             ),
         )
-        mGrammars["json"] = json
+        grammars["json"] = json
 
         // 7. SQL
         val sql = grammar(
@@ -311,7 +311,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["sql"] = sql
+        grammars["sql"] = sql
 
         // 8. Bash / Shell
         val bash = grammar(
@@ -345,7 +345,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["bash"] = bash
+        grammars["bash"] = bash
 
         // 9. C / C++
         val cpp = grammar(
@@ -384,7 +384,7 @@ class MyGrammarLocator : GrammarLocator {
                 pattern(Pattern.compile("[\\[\\]{}();,.:]")),
             ),
         )
-        mGrammars["cpp"] = cpp
-        mGrammars["c"] = cpp
+        grammars["cpp"] = cpp
+        grammars["c"] = cpp
     }
 }

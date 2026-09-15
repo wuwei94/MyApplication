@@ -65,12 +65,14 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Animation — 声明式动画与状态平滑过渡示例页
  *
- * 聚合展示 Compose 中现代动画 API 的核心体系：
- * 1. **可见性动画 (AnimatedVisibility)**：元素进出场的淡入淡出 (fadeIn/fadeOut) 与垂直展开折叠；
- * 2. **容器尺寸形变 (animateContentSize)**：布局尺寸随内容动态增减时的平滑形变；
- * 3. **状态交叉淡入淡出 (Crossfade)**：不同状态或视图切页时的平滑交替过渡；
- * 4. **值动画 (animate*AsState)**：颜色与尺寸根据布尔状态平滑过渡插值；
- * 5. **无限循环动效 (rememberInfiniteTransition)**：呼吸灯与 360° 无限旋转 Loading 指示器。
+ * 聚合展示 Compose 中现代动画 API 的核心体系。
+ *
+ * 核心机制与避坑点：
+ * 1. 可见性动画 AnimatedVisibility：元素进出场的淡入淡出 (fadeIn/fadeOut) 与垂直展开折叠；
+ * 2. 容器尺寸形变 animateContentSize：布局尺寸随内容动态增减时的平滑形变；
+ * 3. 状态交叉淡入淡出 Crossfade：不同状态或视图切页时的平滑交替过渡；
+ * 4. 值动画 animate*AsState：颜色与尺寸根据布尔状态平滑过渡插值；
+ * 5. 无限循环动效 rememberInfiniteTransition：呼吸灯与 360° 无限旋转 Loading 指示器。
  *
  * https://developer.android.google.cn/develop/ui/compose/animation
  */

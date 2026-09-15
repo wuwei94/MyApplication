@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException
  */
 abstract class BaseMvpActivity<T : IBasePresenter?, V : IBaseView<T>?> : BaseActivity() {
 
-    protected var mPresenter: T? = null
+    protected var presenter: T? = null
 
     private lateinit var provider: LifecycleProvider<Lifecycle.Event>
 
@@ -41,7 +41,7 @@ abstract class BaseMvpActivity<T : IBasePresenter?, V : IBaseView<T>?> : BaseAct
     private fun initPresenter() {
         try {
             val constructor = presenterClass.getConstructor(viewClass)
-            mPresenter = constructor.newInstance(this)
+            presenter = constructor.newInstance(this)
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
@@ -57,7 +57,7 @@ abstract class BaseMvpActivity<T : IBasePresenter?, V : IBaseView<T>?> : BaseAct
     }
 
     private fun clearPresenter() {
-        mPresenter?.clear()
-        mPresenter = null
+        presenter?.clear()
+        presenter = null
     }
 }

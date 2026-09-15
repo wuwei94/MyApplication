@@ -60,13 +60,14 @@ data class UnstableUser(
 /**
  * Performance — 性能调优与重组跳过实战
  *
- * 深入演示 Compose 运行时性能优化关键机制：
- * 1. 编译器稳定性（Stability）：[@Immutable] 注解与参数稳定性对 Smart Recomposition 跳过重组的影响；
+ * 深入演示 Compose 运行时性能优化关键机制。
+ *
+ * 核心机制与避坑点：
+ * 1. 编译器稳定性 Stability：[@Immutable] 注解与参数稳定性对 Smart Recomposition 跳过重组的影响；
  * 2. 局部重组计数：通过 [SideEffect] 捕获组件真实执行次数，直观比对稳定与不稳定类型的重组差异；
  * 3. 削峰防抖 [derivedStateOf]：将高频流式状态（如滚动 offset 每像素变动）折叠为低频离散状态，阻断级联重组；
  * 4. 最佳实践指南：Compose Compiler Metrics、强跳过模式（Strong Skipping Mode）与 Baseline Profile。
  *
- * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/performance
  */
 @Route(path = RouterPath.Compose.Performance)

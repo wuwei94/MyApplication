@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
  */
 class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
-    private val mViewModel: ArticleStateFlowViewModel by viewModels {
+    private val viewModel: ArticleStateFlowViewModel by viewModels {
         ArticleStateFlowViewModel.Factory
     }
 
@@ -34,7 +34,7 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // 监听 UI 状态
                 launch {
-                    mViewModel.state.collect { state ->
+                    viewModel.state.collect { state ->
                         when (state) {
                             is ArticleViewState.Loading -> {
                                 // 加载中状态
@@ -53,7 +53,7 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
                 // 监听单次副作用事件（如 Toast）
                 launch {
-                    mViewModel.effect.collect { effect ->
+                    viewModel.effect.collect { effect ->
                         when (effect) {
                             is ArticleUiEffect.ShowToast -> {
                                 showToast(effect.message)
@@ -70,7 +70,7 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
     override fun queryData() {
         super.queryData()
         viewLifecycleOwner.lifecycleScope.launch {
-            mViewModel.intent.send(ArticleIntent.LoadArticleIntent(mPage))
+            viewModel.intent.send(ArticleIntent.LoadArticleIntent(page))
         }
     }
 }

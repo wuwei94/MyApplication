@@ -62,13 +62,14 @@ data class ContactItem(
 /**
  * LazyLayout — 列表高级特性实战
  *
- * 演示 Jetpack Compose Lazy 列表核心进阶能力：
+ * 演示 Jetpack Compose Lazy 列表核心进阶能力。
+ *
+ * 核心机制与避坑点：
  * 1. 吸顶悬浮分组：[stickyHeader] 字母/分类头部贴顶吸附；
  * 2. 列表项动效：[Modifier.animateItem] 实现列表元素增删与重排平滑过渡动画；
  * 3. 动态数据驱动：支持动态随机插入、局部删除与乱序（Shuffle）重排；
  * 4. 触底加载状态：模拟分页加载进度与状态卡片。
  *
- * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/lists#item-animations
  */
 @Route(path = RouterPath.Compose.LazyLayout)

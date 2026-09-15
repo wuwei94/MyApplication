@@ -49,10 +49,12 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Jetpack Compose — 多图表全景联动看板 (Chart Linkage Dashboard)
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 顶部时间轴折线图作为主控驱动器 (Master Controller)
  * 2. 状态提升 (State Hoisting) 与跨组件单向数据流分发
  * 3. 中部部门柱状图与底部获客渠道饼图毫秒级响应重组
+ *
+ * https://developer.android.com/develop/ui/compose/state-hoisting
  */
 @Route(path = RouterPath.Compose.ChartLinkage)
 class ChartLinkageActivity : ComponentActivity() {

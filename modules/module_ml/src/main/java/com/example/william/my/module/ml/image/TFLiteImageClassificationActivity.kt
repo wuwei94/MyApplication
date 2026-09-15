@@ -23,16 +23,19 @@ import java.nio.ByteOrder
 import kotlin.system.measureNanoTime
 
 /**
- * MobileNet 图像分类与物体识别实战
+ * TensorFlow Lite — MobileNet 图像分类与物体识别
  *
- * 官方文档: https://www.tensorflow.org/lite/examples/image_classification/overview
+ * 官方轻量级端侧推理框架实战，演示从模型加载、图像预处理到 Top-5 分类结果展示的完整流程，
+ * 支持 CPU 与 GPU Delegate 硬件加速无缝切换。
  *
- * 核心技术流程：
+ * 核心机制与避坑点：
  * 1. 从 Assets 加载 mobilenet_v1_1.0_224_quant.tflite 与 ImageNet labels.txt
  * 2. 支持 CPU (多线程+XNNPACK) 与 GPU Delegate 硬件加速无缝切换
  * 3. 支持预置 4:3 实物样本与系统相册自选图片输入
  * 4. Center-Crop 居中等比裁剪、224x224 RGB 像素 Direct ByteBuffer 封装
  * 5. 解析输出张量，计算 Softmax 概率并进行 Top-5 字符等宽排序展示
+ *
+ * https://www.tensorflow.org/lite/examples/image_classification/overview
  */
 @Route(path = RouterPath.Ml.ImageClassification)
 class TFLiteImageClassificationActivity :
@@ -60,12 +63,12 @@ class TFLiteImageClassificationActivity :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mBinding.btnSample1.setOnClickListener(this)
-        mBinding.btnSample2.setOnClickListener(this)
-        mBinding.btnSample3.setOnClickListener(this)
-        mBinding.btnPickImage.setOnClickListener(this)
+        binding.btnSample1.setOnClickListener(this)
+        binding.btnSample2.setOnClickListener(this)
+        binding.btnSample3.setOnClickListener(this)
+        binding.btnPickImage.setOnClickListener(this)
 
-        mBinding.switchGpu.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchGpu.setOnCheckedChangeListener { _, isChecked ->
             useGpu = isChecked
             rebuildInterpreter()
         }
@@ -88,7 +91,7 @@ class TFLiteImageClassificationActivity :
                     loadSampleImage(1)
                 }
             } catch (e: Exception) {
-                mBinding.tvTop5Results.text = "初始化模型失败: ${e.message}"
+                binding.tvTop5Results.text = "初始化模型失败: ${e.message}"
             }
         }
     }
@@ -118,16 +121,16 @@ class TFLiteImageClassificationActivity :
                         val delegate = GpuDelegate(gpuOptions)
                         options.addDelegate(delegate)
                         gpuDelegate = delegate
-                        mBinding.tvEngineInfo.text = "推理引擎: GPU Delegate 硬件加速 (FP16)"
+                        binding.tvEngineInfo.text = "推理引擎: GPU Delegate 硬件加速 (FP16)"
                     } catch (e: Exception) {
                         options.setNumThreads(4)
                         options.setUseXNNPACK(true)
-                        mBinding.tvEngineInfo.text = "GPU 创建失败，回退到 CPU: ${e.message}"
+                        binding.tvEngineInfo.text = "GPU 创建失败，回退到 CPU: ${e.message}"
                     }
                 } else {
                     options.setNumThreads(4)
                     options.setUseXNNPACK(true)
-                    mBinding.tvEngineInfo.text = "推理引擎: CPU (4 线程 + XNNPACK)"
+                    binding.tvEngineInfo.text = "推理引擎: CPU (4 线程 + XNNPACK)"
                 }
 
                 interpreter = Interpreter(modelBuffer, options)
@@ -139,17 +142,17 @@ class TFLiteImageClassificationActivity :
                     currentBitmap?.let { runClassification(it) }
                 }
             } catch (e: Exception) {
-                mBinding.tvEngineInfo.text = "切换加速引擎失败: ${e.message}"
+                binding.tvEngineInfo.text = "切换加速引擎失败: ${e.message}"
             }
         }
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnSample1 -> loadSampleImage(1)
-            mBinding.btnSample2 -> loadSampleImage(2)
-            mBinding.btnSample3 -> loadSampleImage(3)
-            mBinding.btnPickImage -> pickImageLauncher.launch("image/*")
+            binding.btnSample1 -> loadSampleImage(1)
+            binding.btnSample2 -> loadSampleImage(2)
+            binding.btnSample3 -> loadSampleImage(3)
+            binding.btnPickImage -> pickImageLauncher.launch("image/*")
         }
     }
 
@@ -175,7 +178,7 @@ class TFLiteImageClassificationActivity :
 
             if (bitmap != null) {
                 currentBitmap = bitmap
-                mBinding.ivPreview.setImageBitmap(bitmap)
+                binding.ivPreview.setImageBitmap(bitmap)
                 runClassification(bitmap)
             }
         }
@@ -194,7 +197,7 @@ class TFLiteImageClassificationActivity :
             }
             if (bitmap != null) {
                 currentBitmap = bitmap
-                mBinding.ivPreview.setImageBitmap(bitmap)
+                binding.ivPreview.setImageBitmap(bitmap)
                 runClassification(bitmap)
             }
         }
@@ -240,7 +243,7 @@ class TFLiteImageClassificationActivity :
                     Triple(topK, preprocessTime / 1_000_000.0, inferenceTime / 1_000_000.0)
                 }
 
-                mBinding.tvTimeDetails.text =
+                binding.tvTimeDetails.text =
                     "预处理耗时: ${"%.2f".format(preprocessMs)} ms | 模型推理耗时: ${"%.2f".format(inferenceMs)} ms"
 
                 val sb = StringBuilder()
@@ -249,9 +252,9 @@ class TFLiteImageClassificationActivity :
                     val percent = "%.2f".format(prob * 100).padStart(5, ' ')
                     sb.append("Top ${rank + 1}:  $percent%  ──  $label\n")
                 }
-                mBinding.tvTop5Results.text = sb.toString().trimEnd()
+                binding.tvTop5Results.text = sb.toString().trimEnd()
             } catch (e: Exception) {
-                mBinding.tvTop5Results.text = "图像识别异常: ${e.message}"
+                binding.tvTop5Results.text = "图像识别异常: ${e.message}"
             }
         }
     }

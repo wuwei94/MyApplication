@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 系统服务模块入口页
+ * 系统服务模块入口 — 导航到通知、权限、悬浮窗等示例页面。
  *
  * 展示通知、权限、悬浮窗等系统服务的示例列表。
  */

@@ -7,7 +7,7 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  * 图片/动画类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：ImageView 图片/动画展示区（[mBinding.basicsImage]）
+ * - 上方展示：ImageView 图片/动画展示区（[binding.basicsImage]）
  * - 下方列表：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
@@ -17,12 +17,12 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  */
 abstract class BasicImageActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutRecyclerImageBinding
+    protected lateinit var binding: SharedLayoutRecyclerImageBinding
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutRecyclerImageBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
-        mRecycler = mBinding.basicsRecycler
+        binding = SharedLayoutRecyclerImageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recycler = binding.basicsRecycler
     }
 
     /**
@@ -30,7 +30,7 @@ abstract class BasicImageActivity : BasicControlActivity() {
      */
     protected fun showImage(bitmap: Bitmap?) {
         runOnUiThread {
-            mBinding.basicsImage.setImageBitmap(bitmap)
+            binding.basicsImage.setImageBitmap(bitmap)
         }
     }
 
@@ -39,7 +39,7 @@ abstract class BasicImageActivity : BasicControlActivity() {
      */
     protected fun showImage(resId: Int) {
         runOnUiThread {
-            mBinding.basicsImage.setImageResource(resId)
+            binding.basicsImage.setImageResource(resId)
         }
     }
 }

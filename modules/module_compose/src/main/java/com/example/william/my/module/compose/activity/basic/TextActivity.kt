@@ -42,14 +42,15 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 /**
  * Text — 文本组件与排版实战
  *
- * 演示 Compose Material 3 体系下 Text 的核心能力与排版特性：
+ * 演示 Compose Material 3 体系下 Text 的核心能力与排版特性。
+ *
+ * 核心机制与避坑点：
  * 1. 独立被测组件挂载：集成 [TextExample]（供 Roborazzi 截图测试）；
  * 2. 富文本构建：[buildAnnotatedString] 混排颜色、背景色、字重、字距与超链接 [LinkAnnotation]；
  * 3. 文本选择容器：[SelectionContainer] 与局部禁用选择 [DisableSelection]；
  * 4. 文本溢出与截断控制：[TextOverflow.Ellipsis]、[TextOverflow.Clip] 与行数限制；
  * 5. Material 3 标准排版系统：展示 Typography 各级别文字阶梯。
  *
- * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/text/style-text
  */
 @Route(path = RouterPath.Compose.Text)

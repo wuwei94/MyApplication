@@ -72,18 +72,22 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * 离线优先与单一真实来源（Offline-First & SSOT）架构模式示例
+ * 离线优先与单一真实来源 — Offline-First & SSOT 架构实战
  *
- * 对齐 Google 官方 [Now in Android](https://github.com/android/nowinandroid) 数据层最佳实践：
- * 1. 【SSOT 唯一数据源】：UI 永远只观察 Room 数据库通过 Flow 暴露的流，ViewModel 与 UI 绝不直接持有网络 DTO；
- * 2. 【网络写同步（Write-Only Sync）】：网络请求拉取后直接写入 Room 本地数据库，通过 Room 的 InvalidationTracker 自动推流触发 UI 重组；
- * 3. 【离线高可用（Offline-First）】：进入页面即刻展现 Room 本地缓存，断网或无网络环境下依然秒开可用；
- * 4. 【全链路可观测互动】：提供【网络同步】、【本地插入】、【清空数据库】操作，读者可直观验证 UI 数据变更全由 Room 驱动。
+ * 对齐 Google 官方 Now in Android 数据层最佳实践，演示基于 Room 与 Flow 构建的响应式数据同步闭环。
+ *
+ * 核心机制与避坑点：
+ * 1. SSOT 唯一数据源：UI 永远只观察 Room 数据库通过 Flow 暴露的流，ViewModel 与 UI 绝不直接持有网络 DTO
+ * 2. 仅写入网络同步（Write-Only Sync）：网络拉取后直接写入 Room，由 Room 的 InvalidationTracker 自动推流触发 UI 重组
+ * 3. 离线高可用（Offline-First）：优先展现 Room 本地持久化缓存，断网或无网络环境下依然秒开可用
+ * 4. 全链路可观测互动：提供网络同步、本地插入、清空数据库操作，直观验证 UI 数据变更全由 Room 驱动
+ *
+ * https://github.com/android/nowinandroid
  */
 @Route(path = RouterPath.Arch.OfflineFirst)
 class OfflineFirstActivity : BaseActivity() {
 
-    private val mViewModel: OfflineFirstViewModel by viewModels {
+    private val viewModel: OfflineFirstViewModel by viewModels {
         OfflineFirstViewModel.Factory
     }
 
@@ -91,7 +95,7 @@ class OfflineFirstActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val uiState by mViewModel.uiState.collectAsState()
+            val uiState by viewModel.uiState.collectAsState()
             val refreshState = rememberSmartSwipeRefreshState().apply {
                 this.needFirstRefresh = true
             }
@@ -106,7 +110,7 @@ class OfflineFirstActivity : BaseActivity() {
 
             // 监听单次副作用事件（Toast / 同步状态）
             LaunchedEffect(Unit) {
-                mViewModel.effect.collect { effect ->
+                viewModel.effect.collect { effect ->
                     when (effect) {
                         is OfflineFirstUiEffect.ShowToast -> {
                             Toast.makeText(this@OfflineFirstActivity, effect.message, Toast.LENGTH_SHORT).show()
@@ -142,17 +146,17 @@ class OfflineFirstActivity : BaseActivity() {
                     // 3. SSOT 教学互动控制板（状态指标与验证按钮）
                     SsotControlDashboard(
                         uiState = uiState,
-                        onSyncClick = { mViewModel.sendIntent(OfflineFirstIntent.Sync(0)) },
-                        onWorkManagerSyncClick = { mViewModel.sendIntent(OfflineFirstIntent.TriggerWorkManagerSync) },
+                        onSyncClick = { viewModel.sendIntent(OfflineFirstIntent.Sync(0)) },
+                        onWorkManagerSyncClick = { viewModel.sendIntent(OfflineFirstIntent.TriggerWorkManagerSync) },
                         onSimulateRemoteNewVersionClick = {
                             val mockTitle = "官方更新 #${System.currentTimeMillis() % 1000}"
-                            mViewModel.sendIntent(OfflineFirstIntent.SimulateRemoteNewVersion(mockTitle))
+                            viewModel.sendIntent(OfflineFirstIntent.SimulateRemoteNewVersion(mockTitle))
                         },
                         onInsertClick = {
                             val mockTitle = "本地离线笔记 #${System.currentTimeMillis() % 1000}"
-                            mViewModel.sendIntent(OfflineFirstIntent.AddLocalArticle(mockTitle))
+                            viewModel.sendIntent(OfflineFirstIntent.AddLocalArticle(mockTitle))
                         },
-                        onClearClick = { mViewModel.sendIntent(OfflineFirstIntent.ClearLocalCache) },
+                        onClearClick = { viewModel.sendIntent(OfflineFirstIntent.ClearLocalCache) },
                     )
 
                     HorizontalDivider(thickness = 0.5.dp, color = Color(0xFFE0E0E0))
@@ -161,7 +165,7 @@ class OfflineFirstActivity : BaseActivity() {
                     SmartSwipeRefresh(
                         modifier = Modifier.fillMaxSize(),
                         onRefresh = {
-                            mViewModel.sendIntent(OfflineFirstIntent.Sync(0))
+                            viewModel.sendIntent(OfflineFirstIntent.Sync(0))
                         },
                         state = refreshState,
                         headerIndicator = {

@@ -11,21 +11,23 @@ import okhttp3.Response
 import okhttp3.WebSocket
 
 /**
- * OkHttp WebSocket 客户端示例（普通版本）
+ * OkHttp WebSocket — 基于 OkHttp 的全双工实时通信客户端
  *
  * WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，适合实时应用场景。
+ * 本示例使用 OkHttpWebSocketClient 封装进行 WebSocket 通信，
+ * 演示连接、发送消息、断开连接的基本操作。
+ *
+ * 核心机制与避坑点：
+ * 1. HTTP Upgrade：一次握手后升级为全双工帧通信
+ * 2. 服务端推送：连接建立后服务器可主动下发消息
+ * 3. 封装客户端：OkHttpWebSocketClient 统一 connect/send/cancel
+ * 4. 监听回调：OkHttpWebSocketClientListener 回报打开/消息/关闭/失败
  *
  * 与 HTTP 的区别：
  * - HTTP：请求-响应模式，单向通信
  * - WebSocket：全双向通信，服务器可主动推送
  *
- * 典型应用场景：
- * - 实时聊天、即时通讯
- * - 在线游戏、实时数据推送
- * - 股票行情、实时监控
- *
- * 本示例使用 OkHttpWebSocketClient 封装进行 WebSocket 通信，
- * 演示连接、发送消息、断开连接的基本操作。
+ * https://square.github.io/okhttp/features/websockets
  */
 @Route(path = RouterPath.Socket.OkHttpWebSocketClient)
 class OkHttpWebSocketClientActivity : BasicResponseActivity() {
@@ -82,7 +84,7 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
 
                 override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                     runOnUiThread {
-                        appendLogAccent("【错误】${t.message}")
+                        appendLogAccent("✗ ${t.message}")
                     }
                 }
             },
@@ -95,7 +97,7 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

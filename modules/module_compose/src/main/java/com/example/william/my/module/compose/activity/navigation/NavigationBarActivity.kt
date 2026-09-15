@@ -41,10 +41,12 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 演示 Compose Material 3 与 Navigation 2.8+ 官方强类型声明、Multi-BackStack 状态保存与恢复。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 强类型一级 Tab 路由（[TopLevelDestination]）
  * 2. 切换 Tab 自动保存状态（`saveState = true`, `restoreState = true`）
  * 3. 支持在特定 Tab 内压入二级子页面，切换其他 Tab 再切回时，二级页面状态完美保持
+ *
+ * https://developer.android.com/develop/ui/compose/navigation
  */
 @Route(path = RouterPath.Compose.NavigationBar)
 class NavigationBarActivity : ComponentActivity() {

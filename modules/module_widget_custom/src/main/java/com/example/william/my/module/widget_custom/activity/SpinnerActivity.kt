@@ -15,7 +15,7 @@ import com.example.william.my.module.widget_custom.R
  *
  * 下拉菜单控件，支持弹出式列表选择与锚点宽度自适应。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 弹出式列表：支持从指定锚点 View 下方展开浮层
  * 2. 自定义样式：支持自定义列表项样式与高亮选中
  * 3. 点击事件：支持列表项点击回调与数据回填
@@ -28,8 +28,8 @@ class SpinnerActivity : BasicLayoutActivity() {
     private lateinit var selectedTextView: TextView
     private lateinit var resultTextView: TextView
 
-    private var mSpinner: Spinner? = null
-    private val mData = arrayOf("Kotlin 协程开发", "Jetpack Compose 进阶", "Android 性能优化实战", "Flutter 混合工程架构")
+    private var spinner: Spinner? = null
+    private val data = arrayOf("Kotlin 协程开发", "Jetpack Compose 进阶", "Android 性能优化实战", "Flutter 混合工程架构")
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -38,7 +38,7 @@ class SpinnerActivity : BasicLayoutActivity() {
 
     private fun initPreviewCard() {
         val previewView = LayoutInflater.from(this)
-            .inflate(R.layout.widget_layout_spinner_preview, mContainer, false)
+            .inflate(R.layout.widget_layout_spinner_preview, container, false)
 
         anchorView = previewView.findViewById(R.id.widget_spinner_anchor)
         selectedTextView = previewView.findViewById(R.id.widget_spinner_selected_text)
@@ -65,11 +65,11 @@ class SpinnerActivity : BasicLayoutActivity() {
     }
 
     private fun showSpinner() {
-        mSpinner = Spinner(this@SpinnerActivity, mData.toList())
-        mSpinner?.width = anchorView.width
-        mSpinner?.showAsDropDown(anchorView)
-        mSpinner?.setItemListener { position ->
-            val selected = mData[position]
+        spinner = Spinner(this@SpinnerActivity, data.toList())
+        spinner?.width = anchorView.width
+        spinner?.showAsDropDown(anchorView)
+        spinner?.setItemListener { position ->
+            val selected = data[position]
             selectedTextView.text = selected
             resultTextView.text = "当前已选：$selected（索引: $position）"
         }

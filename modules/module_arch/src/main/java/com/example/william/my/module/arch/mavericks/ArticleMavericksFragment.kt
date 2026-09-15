@@ -50,7 +50,7 @@ class ArticleMavericksFragment :
 
     override fun queryData() {
         super.queryData()
-        viewModel.loadArticle(mPage)
+        viewModel.loadArticle(page)
     }
 
     /**

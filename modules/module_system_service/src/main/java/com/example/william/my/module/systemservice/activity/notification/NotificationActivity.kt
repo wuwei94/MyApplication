@@ -11,34 +11,31 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 通知渠道 — NotificationChannel 创建与通知发送
+ * NotificationChannel — 通知渠道创建与通知发送
  *
  * Android 8.0（API 26）起，所有通知必须绑定到 NotificationChannel。
- * 用户可以在系统设置中按渠道精细控制通知行为（如是否振动、是否显示角标等）。
+ * 用户可在系统设置中按渠道精细控制通知行为（振动、角标、重要性等级等）。
  *
- * 核心原理：
- * 1. 创建 NotificationChannel（id + name + importance）
+ * 核心机制与避坑点：
+ * 1. 渠道创建：NotificationChannel（id + name + importance）
  *    - IMPORTANCE_HIGH：弹出悬浮通知 + 提示音（适合即时消息）
  *    - IMPORTANCE_DEFAULT：有提示音但不弹出（适合一般推送）
  *    - IMPORTANCE_LOW：无提示音无弹出（适合后台进度）
- * 2. NotificationManager.createNotificationChannel() 注册渠道（重复调用安全）
- * 3. 通过 NotificationCompat.Builder(context, channelId) 构建通知并绑定渠道
- * 4. NotificationManager.notify(id, notification) 发送通知，相同 id 会替换旧通知
+ * 2. 渠道注册：NotificationManager.createNotificationChannel() 注册渠道（重复调用安全）
+ * 3. 通知构建：通过 NotificationCompat.Builder(context, channelId) 构建通知并绑定渠道
+ * 4. 通知发送：NotificationManager.notify(id, notification) 发送通知，相同 id 会替换旧通知
  *
- * 适用场景：
- * - 应用通知发送的标准实现
- * - 多渠道分类管理通知（如聊天、系统、营销等不同渠道）
- * - Android 8.0+ 通知兼容性适配
+ * https://developer.android.com/develop/ui/views/notifications
  */
 @Route(path = RouterPath.SystemService.Notification)
 class NotificationActivity : BasicResponseActivity() {
 
-    private var mNotificationManager: NotificationManager? = null
+    private var notificationManager: NotificationManager? = null
     private var notificationId = 0
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         createChannel()
         showDescription("NotificationChannel 通知渠道\n\n点击下方按钮发送通知")
     }
@@ -60,7 +57,7 @@ class NotificationActivity : BasicResponseActivity() {
         )
         channel.setShowBadge(true)
         channel.description = CHANNEL_DESCRIPTION
-        mNotificationManager?.createNotificationChannel(channel)
+        notificationManager?.createNotificationChannel(channel)
     }
 
     private fun sendNotification() {
@@ -71,7 +68,7 @@ class NotificationActivity : BasicResponseActivity() {
             .setAutoCancel(true)
             .build()
 
-        mNotificationManager?.notify(++notificationId, notification)
+        notificationManager?.notify(++notificationId, notification)
         appendLog("发送通知成功（ID: $notificationId）")
     }
 

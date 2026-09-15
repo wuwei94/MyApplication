@@ -48,12 +48,14 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 /**
  * CompositionLocal 是通过组合隐式向下传递数据的工具
  *
- * 核心机制与选型对比：
+ * 核心机制与避坑点：
  * 1. [compositionLocalOf]：细粒度重组追踪。当提供的数值改变时，只有实际读取了 [Local.current] 的可组合项会发生重组，
  *    适合频繁变化的数据；
  * 2. [staticCompositionLocalOf]：全量重组。当提供的数值改变时，整个 Provider 作用域子树都会无条件全量重组，
  *    适合极少变更的设计系统标尺（如主题配色、间距规范），读取时无需建立订阅依赖，读取性能更优；
  * 3. 常见内置 Local：展示 [LocalContext]、[LocalDensity]、[LocalConfiguration] 等系统级环境变量的获取与应用。
+ *
+ * https://developer.android.com/develop/ui/compose/composition-local
  */
 @Route(path = RouterPath.Compose.CompositionLocal)
 class CompositionLocalActivity : ComponentActivity() {

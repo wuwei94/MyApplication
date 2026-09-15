@@ -27,10 +27,13 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 /**
  * MPAndroidChart — 多图表全景联动看板 (Chart Linkage Dashboard)
  *
- * 核心特性：
- * 1. 顶部时间轴折线图作为主控制器 (Scrubbing / Tap)
- * 2. 中部部门成本柱状图响应所选月份动态刷新
- * 3. 底部渠道获客饼图响应所选月份动态重绘
+ * 演示同一页面内多个 MPAndroidChart 图表的联动编排：以折线图为主控制器，
+ * 驱动柱状图与饼图随所选时间轴同步刷新，构建全景数据看板。
+ *
+ * 核心机制与避坑点：
+ * 1. 主控折线图：顶部时间轴折线图作为控制器，Scrubbing / Tap 选择月份
+ * 2. 子图柱状图：中部部门成本柱状图响应所选月份，动态重建 BarData 并播放动画
+ * 3. 子图饼图：底部渠道获客饼图响应所选月份，按因子重算占比后重绘
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
@@ -62,7 +65,7 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
     }
 
     private fun initMasterLineChart() {
-        mBinding.lineChart.apply {
+        binding.lineChart.apply {
             description.isEnabled = false
             setTouchEnabled(true)
             isDragEnabled = true
@@ -118,7 +121,7 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
     }
 
     private fun initBarChart() {
-        mBinding.barChart.apply {
+        binding.barChart.apply {
             description.isEnabled = false
             setTouchEnabled(false)
             legend.isEnabled = false
@@ -138,7 +141,7 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
     }
 
     private fun initPieChart() {
-        mBinding.pieChart.apply {
+        binding.pieChart.apply {
             description.isEnabled = false
             setUsePercentValues(true)
             isDrawHoleEnabled = true
@@ -156,35 +159,35 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
     @SuppressLint("SetTextI18n")
     private fun updateSubCharts(monthIdx: Int) {
         if (monthIdx !in months.indices) return
-        val mName = months[monthIdx]
+        val monthName = months[monthIdx]
         val factor = 1.0f + (monthIdx * 0.08f)
 
         // 1. 刷新柱状图
-        mBinding.tvBarTitle.text = "$mName 部门成本支出 (万元)"
+        binding.tvBarTitle.text = "$monthName 部门成本支出 (万元)"
         val deptCosts = listOf(18f * factor, 12f * factor, 8f * factor, 5f * factor)
         val barEntries = deptCosts.mapIndexed { idx, v -> BarEntry(idx.toFloat(), v) }
         val barSet = BarDataSet(barEntries, "成本").apply {
             color = Color.parseColor("#10B981")
             valueTextSize = 10f
         }
-        mBinding.barChart.data = BarData(barSet)
-        mBinding.barChart.animateY(400)
-        mBinding.barChart.invalidate()
+        binding.barChart.data = BarData(barSet)
+        binding.barChart.animateY(400)
+        binding.barChart.invalidate()
 
         // 2. 刷新饼图
-        mBinding.tvPieTitle.text = "$mName 获客渠道构成占比"
+        binding.tvPieTitle.text = "$monthName 获客渠道构成占比"
         val channelShares = listOf(35f + monthIdx % 5, 25f - monthIdx % 3, 20f + monthIdx % 4, 20f - monthIdx % 2)
         val pieEntries = channelShares.mapIndexed { idx, v -> PieEntry(v, channels[idx]) }
         val pieSet = PieDataSet(pieEntries, "").apply {
             colors = channelColors
             sliceSpace = 2f
-            valueFormatter = PercentFormatter(mBinding.pieChart)
+            valueFormatter = PercentFormatter(binding.pieChart)
             valueTextSize = 10f
             valueTextColor = Color.WHITE
         }
-        mBinding.pieChart.data = PieData(pieSet)
-        mBinding.pieChart.centerText = "$mName\n渠道"
-        mBinding.pieChart.animateY(400)
-        mBinding.pieChart.invalidate()
+        binding.pieChart.data = PieData(pieSet)
+        binding.pieChart.centerText = "$monthName\n渠道"
+        binding.pieChart.animateY(400)
+        binding.pieChart.invalidate()
     }
 }

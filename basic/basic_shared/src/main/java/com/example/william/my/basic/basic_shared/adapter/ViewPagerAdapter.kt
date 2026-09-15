@@ -12,11 +12,11 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRespons
  * PagerAdapter: 需要手动管理 View 的创建和销毁
  * 适合简单的页面切换场景
  *
- * @param mData 页面数据列表
+ * @param data 页面数据列表
  */
-class ViewPagerAdapter(private val mData: List<String> = emptyList()) : PagerAdapter() {
+class ViewPagerAdapter(private val data: List<String> = emptyList()) : PagerAdapter() {
 
-    override fun getCount(): Int = mData.size
+    override fun getCount(): Int = data.size
 
     override fun isViewFromObject(view: View, obj: Any): Boolean = view === obj
 
@@ -26,7 +26,7 @@ class ViewPagerAdapter(private val mData: List<String> = emptyList()) : PagerAda
             container,
             true,
         )
-        binding.basicsResponse.text = mData.getOrNull(position) ?: ""
+        binding.basicsResponse.text = data.getOrNull(position) ?: ""
         return binding.root
     }
 

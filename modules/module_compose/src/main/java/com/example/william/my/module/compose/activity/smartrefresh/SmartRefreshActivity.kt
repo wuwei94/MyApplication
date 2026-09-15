@@ -39,23 +39,40 @@ import com.loren.component.view.composesmartrefresh.ThresholdScrollStrategy
 import com.loren.component.view.composesmartrefresh.rememberSmartSwipeRefreshState
 
 /**
- * SmartRefresh — 下拉刷新
+ * SmartRefresh — Compose 下拉刷新与上拉加载
  *
- * 演示 Compose 中的下拉刷新与上拉加载更多。
+ * 演示在 Jetpack Compose 中使用 SmartSwipeRefresh 实现列表下拉刷新与上拉分页加载。
  *
  * 核心特性：
- * 1. 下拉刷新触发数据重载
- * 2. 上拉加载更多分页
+ * 1. 状态绑定：使用 rememberSmartSwipeRefreshState 驱动刷新与加载中状态
+ * 2. 阈值策略：通过 ThresholdScrollStrategy 配置阻尼与回弹阈值
+ * 3. 结果标记：通过 SmartSwipeStateFlag 反馈刷新成功/失败状态并自动收起
+ *
+ * 基本用法：
+ * ```kotlin
+ * val refreshState = rememberSmartSwipeRefreshState()
+ * SmartSwipeRefresh(
+ *     state = refreshState,
+ *     onRefresh = { viewModel.refresh() },
+ *     onLoadMore = { viewModel.loadMore() },
+ *     header = { MyRefreshHeader(it) },
+ *     footer = { MyRefreshFooter(it) },
+ * ) {
+ *     LazyColumn { /* 列表条目 */ }
+ * }
+ * ```
  *
  * 适用场景：
- * - 列表刷新
- * - 分页加载
+ * - Compose 列表下拉刷新与上拉加载
+ * - 自定义刷新动画与状态指示器
+ *
+ * https://github.com/Loren-Yi/SmartSwipeRefresh-Compose
  */
 @ExperimentalFoundationApi
 @Route(path = RouterPath.Compose.SmartRefresh)
 class SmartRefreshActivity : ComponentActivity() {
 
-    private val mViewModel by viewModels<SmartRefreshViewModel>()
+    private val viewModel by viewModels<SmartRefreshViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +83,7 @@ class SmartRefreshActivity : ComponentActivity() {
             }
             val scrollState = rememberLazyListState()
 
-            val mainUiState = mViewModel.smartRefreshState.observeAsState()
+            val mainUiState = viewModel.smartRefreshState.observeAsState()
 
             // 快速滚动头尾允许的阈值
             with(LocalDensity.current) {
@@ -82,10 +99,10 @@ class SmartRefreshActivity : ComponentActivity() {
                 SmartSwipeRefresh(
                     modifier = Modifier.fillMaxSize(),
                     onRefresh = {
-                        mViewModel.queryData(true)
+                        viewModel.queryData(true)
                     },
                     onLoadMore = {
-                        mViewModel.queryData(false)
+                        viewModel.queryData(false)
                     },
                     state = refreshState,
                     headerIndicator = {

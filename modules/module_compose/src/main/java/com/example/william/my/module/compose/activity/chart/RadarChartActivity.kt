@@ -48,11 +48,13 @@ import kotlin.math.sin
 /**
  * Jetpack Compose — 六维能力评估雷达图 (RadarChart)
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 4 层蛛网正多边形三角函数计算自绘
  * 2. 双数据集半透明填充覆盖对比（自我评定 vs 团队基准）
  * 3. 顶点触控即时切换维度高亮
  * 4. 实时联动能力等级判定与差距分析
+ *
+ * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 @Route(path = RouterPath.Compose.RadarChart)
 class RadarChartActivity : ComponentActivity() {

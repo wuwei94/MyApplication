@@ -18,15 +18,22 @@ import kotlinx.coroutines.launch
 import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
- * Netty Coroutines Flow 封装示例（TCP Socket）
+ * Netty TCP + Flow — 传输层 TCP 协程流式事件消费
  *
- * 演示使用 NettyClientFlow 进行 TCP 通信
- * 使用 Kotlin Coroutines Flow 收集 TCP 事件
- * 需要先启动本地服务端
+ * 演示使用 NettyClientFlow 进行 TCP 通信，
+ * 使用 Kotlin Coroutines Flow 收集 TCP 事件。需要先启动本地服务端。
+ *
+ * 核心机制与避坑点：
+ * 1. 冷流桥接：createSocket 返回可 collect 的 TCP 事件流
+ * 2. 事件密封：NettyClientInfo 统一承载连接/消息/关闭/错误
+ * 3. 结构化取消：collect 所在 Job 取消即停止消费
+ * 4. 本地打靶：与进程内 Netty 服务端联调，无需公网服务器
  *
  * 服务端日志展示方式：与 NettyTcpSocketClientActivity 一致——
  * 页面 onStart/onStop 通过 NettyServer（进程级单例）订阅服务端事件，
  * 以【服务端】前缀 + 类型配色合并进主控制台。
+ *
+ * https://github.com/netty/netty
  */
 @Route(path = RouterPath.Socket.NettyTcpSocketClientFlow)
 class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
@@ -167,7 +174,7 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
                             appendLog("【关闭】已关闭：${info.reason}")
                         }
                         is NettyClientInfo.Error -> {
-                            appendLog("【错误】${info.exception.message}")
+                            appendLog("✗ ${info.exception.message}")
                         }
                     }
                 }
@@ -186,7 +193,7 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

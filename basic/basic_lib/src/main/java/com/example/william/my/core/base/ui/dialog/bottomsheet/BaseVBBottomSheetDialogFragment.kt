@@ -9,7 +9,7 @@ import androidx.viewbinding.ViewBinding
 /**
  * ViewBinding 底部弹窗（BottomSheet）基类
  *
- * 通过 [getViewBinding] 绑定视图，并在视图销毁时自动释放 mBinding 引用。
+ * 通过 [getViewBinding] 绑定视图，并在视图销毁时自动释放 binding 引用。
  */
 abstract class BaseVBBottomSheetDialogFragment<VB : ViewBinding?>(
     windowAnimationsRes: Int = 0,
@@ -19,7 +19,7 @@ abstract class BaseVBBottomSheetDialogFragment<VB : ViewBinding?>(
 ) {
 
     private var _binding: VB? = null
-    protected val mBinding get() = _binding!!
+    protected val binding get() = _binding!!
 
     protected abstract fun getViewBinding(): VB
 
@@ -29,7 +29,7 @@ abstract class BaseVBBottomSheetDialogFragment<VB : ViewBinding?>(
         savedInstanceState: Bundle?,
     ): View {
         _binding = getViewBinding()
-        return mBinding.root
+        return binding.root
     }
 
     override fun onDestroyView() {

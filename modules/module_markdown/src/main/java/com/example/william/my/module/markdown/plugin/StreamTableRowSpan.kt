@@ -14,7 +14,7 @@ import io.noties.markwon.ext.tables.TableTheme
 /**
  * 高性能流式 GFM 表格行 Span (StreamTableRowSpan)
  *
- * 核心机制：
+ * 核心特性：
  * 1. 在 getSize() 首轮测量期即通过 [widthProvider] 获取宿主可用宽度并即时构建 StaticLayout；
  * 2. 测量期精准上报真实的 fm.ascent = -(measuredHeight + 2 * padding)，让 Android 系统在第 1 帧就分配充足行高；
  * 3. draw() 阶段按标准绘制边框与背景，内容严格上下左右留白 cellPadding，彻底杜绝内容压线与行间重叠。

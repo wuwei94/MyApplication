@@ -21,12 +21,15 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * Kotlin 协程高阶并发控制与非阻塞同步
+ * Kotlin 协程 — 高阶并发控制与非阻塞同步
  *
- * 演示特性：
+ * 演示协程生态中替代 Java synchronized / CountDownLatch 的现代并发原语：
+ * Mutex 挂起锁、Semaphore 限流、select 多路复用与 NonCancellable 清理保障。
+ *
+ * 核心机制与避坑点：
  * 1. Mutex 互斥锁：非阻塞挂起锁，避免 Java synchronized 导致的线程阻塞与死锁
- * 2. Semaphore 信号量：高并发任务最大并行度限流
- * 3. select 多路复用：竞速模式，谁先就绪优先响应
+ * 2. Semaphore 信号量：高并发任务最大并行度限流，控制同时执行的任务数
+ * 3. select 多路复用：竞速模式，监听多个 Deferred 谁先就绪优先响应
  * 4. NonCancellable 上下文：协程取消后保证关键清理/上报逻辑完整执行
  *
  * https://kotlinlang.org/docs/shared-mutable-state-and-concurrency.html

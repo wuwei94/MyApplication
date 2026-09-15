@@ -20,14 +20,14 @@ object NetworkChangeHelper {
 
     private val TAG = this.javaClass.simpleName
 
-    private var mNetworkChangeListener: NetworkChangeListener? = null
-    private var mNetworkCallback: NetworkCallback? = null
+    private var networkChangeListener: NetworkChangeListener? = null
+    private var networkCallback: NetworkCallback? = null
 
     /**
      * 注册网络变化监听（传统监听器模式）
      */
-    fun register(context: Context, networkChangeListener: NetworkChangeListener?) {
-        mNetworkChangeListener = networkChangeListener
+    fun register(context: Context, listener: NetworkChangeListener?) {
+        networkChangeListener = listener
         val connectivityManager =
             context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
                 ?: return
@@ -35,12 +35,12 @@ object NetworkChangeHelper {
         val callback = object : NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                mNetworkChangeListener?.onNetworkStatusChange(true)
+                networkChangeListener?.onNetworkStatusChange(true)
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                mNetworkChangeListener?.onNetworkStatusChange(false)
+                networkChangeListener?.onNetworkStatusChange(false)
             }
 
             override fun onCapabilitiesChanged(
@@ -55,7 +55,7 @@ object NetworkChangeHelper {
                 }
             }
         }
-        mNetworkCallback = callback
+        networkCallback = callback
         connectivityManager.registerDefaultNetworkCallback(callback)
     }
 
@@ -65,15 +65,15 @@ object NetworkChangeHelper {
     fun unregister(context: Context) {
         val connectivityManager =
             context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
-        mNetworkCallback?.let {
+        networkCallback?.let {
             try {
                 connectivityManager?.unregisterNetworkCallback(it)
             } catch (e: Exception) {
                 Log.e(TAG, "unregisterNetworkCallback error", e)
             }
-            mNetworkCallback = null
+            networkCallback = null
         }
-        mNetworkChangeListener = null
+        networkChangeListener = null
     }
 
     /**

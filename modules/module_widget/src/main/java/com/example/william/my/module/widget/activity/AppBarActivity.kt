@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
  *
  * 使用 AppBarLayout + CollapsingToolbarLayout 实现 Material Design 应用栏。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 折叠效果：支持 CollapsingToolbarLayout 折叠效果
  * 2. 滚动标志：支持多种滚动标志控制滚动行为
  * 3. Tab 支持：支持 TabLayout + ViewPager 联动
@@ -38,24 +38,21 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
  * 1. MODE_FIXED：固定均分，所有 Tab 等宽排列，适合少量固定 Tab（3-5 个）
  * 2. MODE_SCROLLABLE：可滚动，Tab 按内容宽度排列，数量多时可左右滑动
  *
- * 适用场景：
- * - Material Design 应用栏
- * - 折叠效果
- * - Tab 切换
+ * https://developer.android.com/develop/ui/views/components/app-bar
  */
 @Route(path = RouterPath.Widget.Appbar)
 class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
 
     override fun getViewBinding(): UiActivityAppBarBinding = UiActivityAppBarBinding.inflate(layoutInflater)
 
-    private val mTitles: ArrayList<String> = arrayListOf(
+    private val titles: ArrayList<String> = arrayListOf(
         "primary1",
         "primaryDark1",
         "primary2",
         "primaryDark2",
     )
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -69,23 +66,23 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
     }
 
     private fun initAppBar() {
-        setSupportActionBar(mBinding.toolbar)
-        mBinding.toolbarLayout.title = title
+        setSupportActionBar(binding.toolbar)
+        binding.toolbarLayout.title = title
 
-        mBinding.viewPager.adapter =
-            ViewPagerFragmentAdapter(supportFragmentManager, mFragments, mTitles)
+        binding.viewPager.adapter =
+            ViewPagerFragmentAdapter(supportFragmentManager, fragments, titles)
 
         // 设置TabLayout可滚动，保证Tab数量过多时也可正常显示
-        mBinding.tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+        binding.tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
         // 设置TabLayout选中Tab下划线颜色
-        mBinding.tabLayout.setSelectedTabIndicatorColor(
+        binding.tabLayout.setSelectedTabIndicatorColor(
             ContextCompat.getColor(
                 this,
                 com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark,
             ),
         )
         // 两个参数分别对应Tab未选中的文字颜色和选中的文字颜色
-        mBinding.tabLayout.setTabTextColors(
+        binding.tabLayout.setTabTextColors(
             ContextCompat.getColor(
                 this,
                 com.example.william.my.basic.basic_shared.R.color.shared_color_primary,
@@ -96,12 +93,12 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
             ),
         )
         // 绑定ViewPager
-        mBinding.tabLayout.setupWithViewPager(mBinding.viewPager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
 
         // 设置TabLayout的选择监听
-        mBinding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+        binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                mBinding.viewPager.currentItem = tab.position
+                binding.viewPager.currentItem = tab.position
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}

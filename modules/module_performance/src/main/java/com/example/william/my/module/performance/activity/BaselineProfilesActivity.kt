@@ -11,11 +11,16 @@ import java.util.concurrent.Executors
 /**
  * Jetpack Baseline Profiles — 基线配置文件与 AOT 预编译优化
  *
- * 核心设计与优化价值：
- * 1. 【AOT 提前编译】：在应用安装或后台空闲时，指导 ART 将关键代码路径（CUJ）直接预编译为机器码，消除首次执行的 JIT 编译抖动与解释执行耗时；
- * 2. 【冷启动提速】：相比纯 JIT 模式，通常可减少 20%~40% 的冷启动时间；
- * 3. 【流畅度提升】：显著降低首次进入复杂页面、滚动列表时的丢帧率（Jank Rate）；
- * 4. 【ProfileInstaller】：无缝集成在 APK 内，由 Play Store 分发 Cloud Profile，或通过 profileinstaller 库在本地触发 baseline profile 安装。
+ * Baseline Profiles 在安装或后台空闲时指导 ART 将关键代码路径预编译为机器码，
+ * 消除首次执行的 JIT 抖动，本页同时演示 ProfileInstaller 本地写入与诊断。
+ *
+ * 核心机制与避坑点：
+ * 1. AOT 提前编译：指导 ART 将关键代码路径（CUJ）直接预编译为机器码，消除首次执行的 JIT 编译抖动与解释执行耗时
+ * 2. 冷启动提速：相比纯 JIT 模式，通常可减少 20%~40% 的冷启动时间
+ * 3. 流畅度提升：显著降低首次进入复杂页面、滚动列表时的丢帧率（Jank Rate）
+ * 4. ProfileInstaller：无缝集成在 APK 内，由 Play Store 分发 Cloud Profile，或通过 profileinstaller 库在本地触发 baseline profile 安装
+ *
+ * https://developer.android.com/topic/performance/baselineprofiles
  */
 @Route(path = RouterPath.Performance.BaselineProfiles)
 class BaselineProfilesActivity : BasicResponseActivity() {

@@ -13,7 +13,7 @@ import com.example.william.my.module.event.event.StickyEvent
  *
  * 利用 LiveData 的生命周期感知能力实现的事件总线，自动管理订阅生命周期。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 生命周期感知：页面销毁后自动取消订阅，无需手动解绑
  * 2. 粘性事件：支持粘性事件，新订阅者也能收到
  * 3. 跨进程：支持跨进程通信（使用 LiveData 的跨进程版本）
@@ -22,21 +22,7 @@ import com.example.william.my.module.event.event.StickyEvent
  * 特性对比：
  * 延迟发送: ✅ | 有序接收: ✅ | Sticky: ✅ | 生命周期感知: ✅ | 可跨进程: ✅ | 线程分发: ❌
  *
- * 基本用法：
- * ```kotlin
- * // 订阅事件
- * LiveEventBus.observeEvent<MessageEvent>(this) { event ->
- *     // 处理事件
- * }
- *
- * // 发送事件
- * LiveEventBus.postEvent(this, MessageEvent("Hello"))
- * ```
- *
- * 适用场景：
- * - 需要生命周期感知的事件通信
- * - 替代 EventBus，更安全可靠
- * - 跨组件、跨页面通信
+ * https://github.com/JeremyLiao/LiveEventBus
  */
 @Route(path = RouterPath.Event.LiveEventBus)
 class LiveEventBusActivity : BasicResponseActivity() {

@@ -21,8 +21,8 @@ import io.noties.markwon.Markwon
  * 3. 结合 MarkdownStreamFixer 实现流式未闭合语法容错与呼吸光标。
  */
 class ChatAdapter(
-    private val mMarkwon: Markwon,
-    private val mOnCopyClickListener: (content: String) -> Unit,
+    private val markwon: Markwon,
+    private val onCopyClickListener: (content: String) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -30,29 +30,29 @@ class ChatAdapter(
         private const val TYPE_ASSISTANT = 2
     }
 
-    private val mMessages = mutableListOf<ChatMessage>()
+    private val messages = mutableListOf<ChatMessage>()
 
     fun setMessages(list: List<ChatMessage>) {
-        mMessages.clear()
-        mMessages.addAll(list)
+        messages.clear()
+        messages.addAll(list)
         notifyDataSetChanged()
     }
 
     fun addMessage(message: ChatMessage) {
-        mMessages.add(message)
-        notifyItemInserted(mMessages.size - 1)
+        messages.add(message)
+        notifyItemInserted(messages.size - 1)
     }
 
     fun addMessages(vararg messages: ChatMessage) {
         if (messages.isEmpty()) return
-        val startPos = mMessages.size
-        mMessages.addAll(messages)
+        val startPos = this.messages.size
+        this.messages.addAll(messages)
         notifyItemRangeInserted(startPos, messages.size)
     }
 
     fun updateMessage(index: Int, message: ChatMessage, payload: String? = null) {
-        if (index in 0 until mMessages.size) {
-            mMessages[index] = message
+        if (index in 0 until messages.size) {
+            messages[index] = message
             if (payload != null) {
                 notifyItemChanged(index, payload)
             } else {
@@ -61,11 +61,11 @@ class ChatAdapter(
         }
     }
 
-    fun getMessage(index: Int): ChatMessage? = mMessages.getOrNull(index)
+    fun getMessage(index: Int): ChatMessage? = messages.getOrNull(index)
 
-    override fun getItemCount(): Int = mMessages.size
+    override fun getItemCount(): Int = messages.size
 
-    override fun getItemViewType(position: Int): Int = when (mMessages[position].role) {
+    override fun getItemViewType(position: Int): Int = when (messages[position].role) {
         ChatMessage.Role.USER -> TYPE_USER
         else -> TYPE_ASSISTANT
     }
@@ -90,7 +90,7 @@ class ChatAdapter(
         position: Int,
         payloads: List<Any>,
     ) {
-        val message = mMessages[position]
+        val message = messages[position]
 
         if (holder is UserViewHolder) {
             holder.bind(message)
@@ -102,7 +102,7 @@ class ChatAdapter(
                 for (payload in payloads) {
                     when (payload) {
                         ChatMessage.PAYLOAD_STREAM_CONTENT -> {
-                            holder.updateStreamContent(mMarkwon, message)
+                            holder.updateStreamContent(markwon, message)
                         }
                         ChatMessage.PAYLOAD_STATUS -> {
                             holder.updateStatus(message)
@@ -110,7 +110,7 @@ class ChatAdapter(
                     }
                 }
             } else {
-                holder.bindFull(mMarkwon, message, mOnCopyClickListener)
+                holder.bindFull(markwon, message, onCopyClickListener)
             }
         }
     }

@@ -25,34 +25,37 @@ import kotlinx.coroutines.withContext
 import kotlin.system.measureTimeMillis
 
 /**
- * Prism4j 多语言代码语法高亮示例
+ * Prism4j — 多语言代码语法高亮
  *
- * Markwon 结合 Prism4j 词法分析器，在 Android 原生端实现纯 Java/Kotlin 离线代码语法高亮。
+ * Markwon 结合 Prism4j 词法分析器，在 Android 原生端实现纯 Java/Kotlin 离线代码语法高亮，
+ * 无需 WebView，内存极轻。
  *
- * 核心特性与技术亮点：
+ * 核心机制与避坑点：
  * 1. 多语言语法表覆盖：Kotlin、Java、Python、JavaScript、TypeScript、JSON、SQL、Bash、C/C++ 等
  * 2. 丰富的主题色彩：支持 Prism4jThemeDarkula（暗黑主题）与 Prism4jThemeDefault（明亮主题）
  * 3. 异步染色解析：展示如何将 CPU 密集的 AST 构建与词法正则匹配派发到后台协程（Dispatchers.Default），避免主线程掉帧
  * 4. 原生 Spannable：语法着色结果直接以 ForegroundColorSpan 渲染在 TextView 中，内存极轻、无 WebView 损耗
+ *
+ * ```
  *
  * https://github.com/noties/Prism4j
  */
 @Route(path = RouterPath.Markdown.MarkwonHighlight)
 class MarkwonHighlightActivity : BasicLayoutActivity() {
 
-    private lateinit var mHighlightBinding: MarkdownActivityHighlightBinding
-    private lateinit var mTextView: TextView
+    private lateinit var highlightBinding: MarkdownActivityHighlightBinding
+    private lateinit var textView: TextView
 
-    private lateinit var mPrism4j: Prism4j
-    private lateinit var mDarkulaMarkwon: Markwon
-    private lateinit var mLightMarkwon: Markwon
+    private lateinit var prism4j: Prism4j
+    private lateinit var darkulaMarkwon: Markwon
+    private lateinit var lightMarkwon: Markwon
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mHighlightBinding = MarkdownActivityHighlightBinding.inflate(LayoutInflater.from(this))
-        mTextView = mHighlightBinding.markdownHighlightTextView
-        setView(mHighlightBinding.root)
+        highlightBinding = MarkdownActivityHighlightBinding.inflate(LayoutInflater.from(this))
+        textView = highlightBinding.markdownHighlightTextView
+        setView(highlightBinding.root)
 
         initPrism4j()
 
@@ -61,7 +64,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
     }
 
     private fun initPrism4j() {
-        mPrism4j = Prism4j(MyGrammarLocator())
+        prism4j = Prism4j(MyGrammarLocator())
 
         val tableTheme = TableTheme.Builder()
             .tableBorderWidth(dpToPx(1))
@@ -73,18 +76,18 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
 
         // 1. Darkula 暗黑代码主题
         val darkulaTheme = Prism4jThemeDarkula.create()
-        mDarkulaMarkwon = Markwon.builder(this)
+        darkulaMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
             .usePlugin(TablePlugin.create(tableTheme))
-            .usePlugin(SyntaxHighlightPlugin.create(mPrism4j, darkulaTheme))
+            .usePlugin(SyntaxHighlightPlugin.create(prism4j, darkulaTheme))
             .build()
 
         // 2. Default 明亮代码主题
         val defaultTheme = Prism4jThemeDefault.create()
-        mLightMarkwon = Markwon.builder(this)
+        lightMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
             .usePlugin(TablePlugin.create(tableTheme))
-            .usePlugin(SyntaxHighlightPlugin.create(mPrism4j, defaultTheme))
+            .usePlugin(SyntaxHighlightPlugin.create(prism4j, defaultTheme))
             .build()
     }
 
@@ -153,10 +156,10 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             public class ThreadPoolManager {
                 private static final int CORE_POOL_SIZE = 4;
                 private static final int MAX_POOL_SIZE = 8;
-                private final ExecutorService mExecutor;
+                private final ExecutorService executor;
 
                 public ThreadPoolManager() {
-                    this.mExecutor = new ThreadPoolExecutor(
+                    this.executor = new ThreadPoolExecutor(
                         CORE_POOL_SIZE,
                         MAX_POOL_SIZE,
                         60L, TimeUnit.SECONDS,
@@ -172,13 +175,13 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
                         } catch (Exception e) {
                             throw new CompletionException(e);
                         }
-                    }, mExecutor);
+                    }, executor);
                 }
             }
             ```
         """.trimIndent()
 
-        mDarkulaMarkwon.setMarkdown(mTextView, markdown)
+        darkulaMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -241,7 +244,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             ```
         """.trimIndent()
 
-        mDarkulaMarkwon.setMarkdown(mTextView, markdown)
+        darkulaMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -295,7 +298,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             ```
         """.trimIndent()
 
-        mDarkulaMarkwon.setMarkdown(mTextView, markdown)
+        darkulaMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -317,23 +320,23 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             class SafeResourcePool {
             public:
                 void push(std::unique_ptr<T> resource) {
-                    std::lock_guard<std::mutex> lock(mMtx);
-                    mPool.push_back(std::move(resource));
+                    std::lock_guard<std::mutex> lock(mtx);
+                    pool.push_back(std::move(resource));
                 }
 
                 std::unique_ptr<T> pop() {
-                    std::lock_guard<std::mutex> lock(mMtx);
-                    if (mPool.empty()) {
+                    std::lock_guard<std::mutex> lock(mtx);
+                    if (pool.empty()) {
                         return nullptr;
                     }
-                    auto item = std::move(mPool.back());
-                    mPool.pop_back();
+                    auto item = std::move(pool.back());
+                    pool.pop_back();
                     return item;
                 }
 
             private:
-                std::vector<std::unique_ptr<T>> mPool;
-                std::mutex mMtx;
+                std::vector<std::unique_ptr<T>> pool;
+                std::mutex mtx;
             };
 
             int main() {
@@ -345,7 +348,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             ```
         """.trimIndent()
 
-        mDarkulaMarkwon.setMarkdown(mTextView, markdown)
+        darkulaMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -382,7 +385,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             ```
         """.trimIndent()
 
-        mDarkulaMarkwon.setMarkdown(mTextView, markdown)
+        darkulaMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -419,7 +422,7 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
             ```
         """.trimIndent()
 
-        mLightMarkwon.setMarkdown(mTextView, markdown)
+        lightMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -467,15 +470,15 @@ class MarkwonHighlightActivity : BasicLayoutActivity() {
                 // 1. 在后台线程执行 CPU 密集型解析与 Prism4j 正则高亮
                 spanned = withContext(Dispatchers.Default) {
                     parseTime = measureTimeMillis {
-                        val node = mDarkulaMarkwon.parse(heavyMarkdown)
-                        mDarkulaMarkwon.render(node)
+                        val node = darkulaMarkwon.parse(heavyMarkdown)
+                        darkulaMarkwon.render(node)
                     }
-                    mDarkulaMarkwon.toMarkdown(heavyMarkdown)
+                    darkulaMarkwon.toMarkdown(heavyMarkdown)
                 }
             }
 
             // 2. 主线程极速渲染
-            mDarkulaMarkwon.setParsedMarkdown(mTextView, spanned)
+            darkulaMarkwon.setParsedMarkdown(textView, spanned)
 
             Toast.makeText(
                 this@MarkwonHighlightActivity,

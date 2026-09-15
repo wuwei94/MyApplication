@@ -47,11 +47,13 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Theme — Material 3 动态主题与深浅色模式示例页
  *
- * 聚合展示 Compose 中现代样式系统的设计精髓：
- * 1. **深浅色模式热切换**：浅色 (Light)、深色 (Dark) 以及跟随系统 (System Default) 即时响应；
- * 2. **多套品牌配色矩阵**：极简经典蓝、活力翡翠绿、优雅日落橙等多套 Material 3 ColorScheme 调色板动态替换；
- * 3. **Typography 字体排版阶梯**：从 Display、Headline、Title、Body 到 Label 的规范展示；
- * 4. **语义化色彩容器**：展示 primary, secondary, tertiary 与 surfaceVariant 容器层级映射。
+ * 聚合展示 Compose 中现代样式系统的设计精髓。
+ *
+ * 核心机制与避坑点：
+ * 1. 深浅色模式热切换：浅色 (Light)、深色 (Dark) 以及跟随系统 (System Default) 即时响应；
+ * 2. 多套品牌配色矩阵：极简经典蓝、活力翡翠绿、优雅日落橙等多套 Material 3 ColorScheme 调色板动态替换；
+ * 3. Typography 字体排版阶梯：从 Display、Headline、Title、Body 到 Label 的规范展示；
+ * 4. 语义化色彩容器：展示 primary、secondary、tertiary 与 surfaceVariant 容器层级映射。
  *
  * https://developer.android.google.cn/develop/ui/compose/designsystems/material3
  */

@@ -22,22 +22,38 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.UUID
 
 /**
- * 原生 BLE 扫描与过滤示例
+ * 原生 BLE 扫描与过滤 — BluetoothLeScanner
  *
- * 演示 Android 原生 BluetoothLeScanner 的扫描生命周期与广播数据解析：
- * 1. 运行时权限检查（兼容 Android 12+ BLUETOOTH_SCAN 与 Android 11- ACCESS_FINE_LOCATION）
- * 2. BluetoothAdapter 适配器状态感知
- * 3. 扫描模式设置（SCAN_MODE_LOW_LATENCY, SCAN_MODE_LOW_POWER 等）
- * 4. ScanFilter 规则过滤（Service UUID、设备名称过滤）
- * 5. ScanResult 广播数据解析（RSSI 实时更新、Service UUIDs、Manufacturer Data 厂商自定义数据）
+ * 演示 Android 原生 BLE 扫描生命周期与广播数据解析，不依赖第三方蓝牙库。
+ *
+ * 核心特性：
+ * 1. 运行时权限：兼容 Android 12+ BLUETOOTH_SCAN 与 Android 11- ACCESS_FINE_LOCATION
+ * 2. 适配器状态：BluetoothAdapter 可用性感知
+ * 3. 扫描模式：SCAN_MODE_LOW_LATENCY / LOW_POWER 等
+ * 4. 规则过滤：ScanFilter（Service UUID、设备名）
+ * 5. 广播解析：RSSI、Service UUIDs、Manufacturer Data
+ *
+ * 基本用法：
+ * ```kotlin
+ * scanner.startScan(filters, settings, scanCallback)
+ * // onScanResult 中解析 result.scanRecord 后 updateLog(key, ...)
+ * scanner.stopScan(scanCallback)
+ * ```
+ *
+ * 适用场景：
+ * - 发现周边 BLE 设备并解析广播
+ * - 需要系统原生 API、不引入三方库的项目
+ * - 与连接/队列示例串联的扫描入口
+ *
+ * https://developer.android.google.cn/guide/topics/connectivity/bluetooth/ble
  */
 @SuppressLint("MissingPermission")
 @Route(path = RouterPath.Bluetooth.NativeScan)
 class BleNativeScanActivity : BasicResponseActivity() {
 
-    private var mBluetoothAdapter: BluetoothAdapter? = null
-    private var mBleScanner: BluetoothLeScanner? = null
-    private var mIsScanning = false
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private var bleScanner: BluetoothLeScanner? = null
+    private var isScanning = false
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions(),
@@ -50,7 +66,7 @@ class BleNativeScanActivity : BasicResponseActivity() {
         }
     }
 
-    private val mScanCallback = object : ScanCallback() {
+    private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
             super.onScanResult(callbackType, result)
             result ?: return
@@ -63,34 +79,34 @@ class BleNativeScanActivity : BasicResponseActivity() {
             // 使用 updateLog 原位更新设备列表，避免高频刷屏
             updateLog(
                 address,
-                "📡 [] () | RSSI: dBm | UUIDs: ",
+                "📡 [$name] ($address) | RSSI: ${rssi}dBm | UUIDs: $serviceUuids",
             )
         }
 
         override fun onBatchScanResults(results: MutableList<ScanResult>?) {
             super.onBatchScanResults(results)
-            appendLog("收到批量扫描结果，数量: ")
+            appendLog("收到批量扫描结果，数量: ${results?.size ?: 0}")
         }
 
         override fun onScanFailed(errorCode: Int) {
             super.onScanFailed(errorCode)
-            mIsScanning = false
+            isScanning = false
             val errorMsg = when (errorCode) {
                 SCAN_FAILED_ALREADY_STARTED -> "扫描已在运行中"
                 SCAN_FAILED_APPLICATION_REGISTRATION_FAILED -> "应用注册失败"
                 SCAN_FAILED_FEATURE_UNSUPPORTED -> "设备不支持此扫描模式"
                 SCAN_FAILED_INTERNAL_ERROR -> "蓝牙底层内部错误"
-                else -> "未知错误 ()"
+                else -> "未知错误 ($errorCode)"
             }
-            appendLog("✗ 扫描失败: ")
+            appendLog("✗ 扫描失败: $errorMsg")
         }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-        mBluetoothAdapter = bluetoothManager?.adapter
-        mBleScanner = mBluetoothAdapter?.bluetoothLeScanner
+        bluetoothAdapter = bluetoothManager?.adapter
+        bleScanner = bluetoothAdapter?.bluetoothLeScanner
 
         showDescription(
             "Android 原生 BLE 扫描示例\n\n" +
@@ -145,30 +161,30 @@ class BleNativeScanActivity : BasicResponseActivity() {
     }
 
     private fun checkBluetoothAdapterState() {
-        val adapter = mBluetoothAdapter
+        val adapter = bluetoothAdapter
         if (adapter == null) {
             appendLog("✗ 当前设备不支持蓝牙功能")
             return
         }
         val isEnabled = adapter.isEnabled
         val stateDesc = if (isEnabled) "已开启 (ON)" else "已关闭 (OFF)"
-        appendLog("蓝牙适配器状态: , 扫描器实例: ")
+        appendLog("蓝牙适配器状态: $stateDesc, 扫描器实例: $bleScanner")
     }
 
     private fun startBleScan(isFilter: Boolean) {
-        if (mBleScanner == null) {
+        if (bleScanner == null) {
             val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-            mBluetoothAdapter = bluetoothManager?.adapter
-            mBleScanner = mBluetoothAdapter?.bluetoothLeScanner
+            bluetoothAdapter = bluetoothManager?.adapter
+            bleScanner = bluetoothAdapter?.bluetoothLeScanner
         }
 
-        val scanner = mBleScanner
+        val scanner = bleScanner
         if (scanner == null) {
             appendLog("✗ 无法获取 BluetoothLeScanner，请确认蓝牙已开启")
             return
         }
 
-        if (mIsScanning) {
+        if (isScanning) {
             appendLog("⚠ 扫描已在运行中，请先停止再启动")
             return
         }
@@ -193,25 +209,25 @@ class BleNativeScanActivity : BasicResponseActivity() {
         }
 
         try {
-            scanner.startScan(filters, settings, mScanCallback)
-            mIsScanning = true
+            scanner.startScan(filters, settings, scanCallback)
+            isScanning = true
             appendLog("✓ 扫描已开启，正在监听广播信号 (设备条目将在上方原位更新)...")
         } catch (e: Exception) {
-            appendLog("✗ 启动扫描异常: ")
+            appendLog("✗ 启动扫描异常: ${e.message}")
         }
     }
 
     private fun stopBleScan() {
-        if (!mIsScanning) {
+        if (!isScanning) {
             appendLog("当前未处于扫描状态")
             return
         }
         try {
-            mBleScanner?.stopScan(mScanCallback)
-            mIsScanning = false
+            bleScanner?.stopScan(scanCallback)
+            isScanning = false
             appendLog("✓ 已停止 BLE 扫描")
         } catch (e: Exception) {
-            appendLog("✗ 停止扫描异常: ")
+            appendLog("✗ 停止扫描异常: ${e.message}")
         }
     }
 
@@ -227,11 +243,11 @@ class BleNativeScanActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mIsScanning) {
+        if (isScanning) {
             try {
-                mBleScanner?.stopScan(mScanCallback)
+                bleScanner?.stopScan(scanCallback)
             } catch (_: Exception) {}
-            mIsScanning = false
+            isScanning = false
         }
     }
 }

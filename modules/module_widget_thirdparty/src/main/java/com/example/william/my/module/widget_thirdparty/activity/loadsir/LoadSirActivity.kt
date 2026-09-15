@@ -16,11 +16,13 @@ import com.kingja.loadsir.core.LoadSir
  *
  * LoadSir 是一个轻量级的多状态页面管理库，统一管理加载中、空页面、错误页、内容页。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 无侵入：目标视图无侵入解耦包裹，不修改原有业务布局
  * 2. 多状态管理：统一管理加载中、空页面、错误页、内容页
  * 3. 重试机制：支持重试点击事件，方便错误恢复
  * 4. 状态转换器：支持自定义状态转换逻辑
+ *
+ * https://github.com/kingja/LoadSir
  */
 @Route(path = RouterPath.WidgetThirdparty.LoadSir)
 class LoadSirActivity : BasicLayoutActivity() {
@@ -34,7 +36,7 @@ class LoadSirActivity : BasicLayoutActivity() {
 
     private fun initTargetContent() {
         val targetContentView = LayoutInflater.from(this)
-            .inflate(R.layout.widget_thirdparty_layout_loadsir_target, mContainer, false)
+            .inflate(R.layout.widget_thirdparty_layout_loadsir_target, container, false)
 
         // 注册 LoadSir，无侵入包裹目标 View
         loadService = LoadSir.getDefault().register(targetContentView) {

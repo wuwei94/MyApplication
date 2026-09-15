@@ -47,11 +47,13 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Jetpack Compose — 饼图/环形甜甜圈图 (PieChart)
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. `drawArc` 环形自绘与扇区间隔
  * 2. `animateFloatAsState` 点击扇区放大外扩动画
  * 3. 中心区域动态显示总额与选中百分比
  * 4. 实时联动品类明细与预算分析
+ *
+ * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 @Route(path = RouterPath.Compose.PieChart)
 class PieChartActivity : ComponentActivity() {

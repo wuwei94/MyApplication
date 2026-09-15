@@ -20,16 +20,19 @@ import java.nio.ByteOrder
 import kotlin.system.measureNanoTime
 
 /**
- * GPU 硬件加速与多核 / XNNPACK Benchmark 性能实测
+ * TensorFlow Lite — GPU 硬件加速与多核 / XNNPACK Benchmark
  *
- * 官方文档: https://www.tensorflow.org/lite/performance/gpu
+ * 通过 2×3 科学对照矩阵实测不同推理后端性能，演示 CPU 多线程、XNNPACK 指令集优化
+ * 与 GPU Delegate 硬件加速的量化差异，为端侧 AI 选型提供数据支撑。
  *
- * 核心技术对照矩阵：
- * 1. 单核 1T (Baseline): 1 线程，禁用 XNNPACK
- * 2. 单核 + XNN: 1 线程，启用 XNNPACK ARM NEON 汇编指令集优化
- * 3. 多核 4T: 4 线程纯并发，禁用 XNNPACK
- * 4. 多核 + XNN: 4 线程并发 + 启用 XNNPACK 指令集优化
- * 5. GPU Delegate: 手机显卡 OpenCL / Vulkan 硬件着色器并行
+ * 核心机制与避坑点：
+ * 1. 单核 1T (Baseline)：1 线程，禁用 XNNPACK
+ * 2. 单核 + XNN：1 线程，启用 XNNPACK ARM NEON 汇编指令集优化
+ * 3. 多核 4T：4 线程纯并发，禁用 XNNPACK
+ * 4. 多核 + XNN：4 线程并发 + 启用 XNNPACK 指令集优化
+ * 5. GPU Delegate：手机显卡 OpenCL / Vulkan 硬件着色器并行
+ *
+ * https://www.tensorflow.org/lite/performance/gpu
  */
 @Route(path = RouterPath.Ml.GpuDelegate)
 class TFLiteGpuDelegateActivity :
@@ -49,12 +52,12 @@ class TFLiteGpuDelegateActivity :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mBinding.btnCpuSingle.setOnClickListener(this)
-        mBinding.btnCpuSingleXnn.setOnClickListener(this)
-        mBinding.btnCpuMulti.setOnClickListener(this)
-        mBinding.btnCpuMultiXnn.setOnClickListener(this)
-        mBinding.btnGpu.setOnClickListener(this)
-        mBinding.btnRunAll.setOnClickListener(this)
+        binding.btnCpuSingle.setOnClickListener(this)
+        binding.btnCpuSingleXnn.setOnClickListener(this)
+        binding.btnCpuMulti.setOnClickListener(this)
+        binding.btnCpuMultiXnn.setOnClickListener(this)
+        binding.btnGpu.setOnClickListener(this)
+        binding.btnRunAll.setOnClickListener(this)
 
         checkGpuCompatibility()
     }
@@ -71,17 +74,17 @@ class TFLiteGpuDelegateActivity :
                 append("• 推荐配置: 精度模式 FP16=${bestOptions.isPrecisionLossAllowed}")
             }
         }
-        mBinding.tvGpuCompatInfo.text = info.toString()
+        binding.tvGpuCompatInfo.text = info.toString()
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnCpuSingle -> runBenchmark(Mode.CPU_SINGLE)
-            mBinding.btnCpuSingleXnn -> runBenchmark(Mode.CPU_SINGLE_XNN)
-            mBinding.btnCpuMulti -> runBenchmark(Mode.CPU_MULTI)
-            mBinding.btnCpuMultiXnn -> runBenchmark(Mode.CPU_MULTI_XNN)
-            mBinding.btnGpu -> runBenchmark(Mode.GPU_DELEGATE)
-            mBinding.btnRunAll -> runAllBenchmarks()
+            binding.btnCpuSingle -> runBenchmark(Mode.CPU_SINGLE)
+            binding.btnCpuSingleXnn -> runBenchmark(Mode.CPU_SINGLE_XNN)
+            binding.btnCpuMulti -> runBenchmark(Mode.CPU_MULTI)
+            binding.btnCpuMultiXnn -> runBenchmark(Mode.CPU_MULTI_XNN)
+            binding.btnGpu -> runBenchmark(Mode.GPU_DELEGATE)
+            binding.btnRunAll -> runAllBenchmarks()
         }
     }
 
@@ -95,7 +98,7 @@ class TFLiteGpuDelegateActivity :
 
     private fun runBenchmark(mode: Mode) {
         setButtonsEnabled(false)
-        mBinding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
         lifecycleScope.launch {
             val title = when (mode) {
@@ -136,15 +139,15 @@ class TFLiteGpuDelegateActivity :
                 appendLog("✗ $title 执行失败，请检查设备驱动或日志。")
             }
 
-            mBinding.progressBar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
             setButtonsEnabled(true)
         }
     }
 
     private fun runAllBenchmarks() {
         setButtonsEnabled(false)
-        mBinding.progressBar.visibility = View.VISIBLE
-        mBinding.tvBenchmarkLogs.text = "════════ 启动全量真机性能 Benchmark ════════"
+        binding.progressBar.visibility = View.VISIBLE
+        binding.tvBenchmarkLogs.text = "════════ 启动全量真机性能 Benchmark ════════"
 
         lifecycleScope.launch {
             val modes = listOf(
@@ -197,7 +200,7 @@ class TFLiteGpuDelegateActivity :
             }
             appendLog("👉 选型建议: 连续相机流首选 GPU；低频任务首选 多核+XNN。")
 
-            mBinding.progressBar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
             setButtonsEnabled(true)
         }
     }
@@ -293,19 +296,19 @@ class TFLiteGpuDelegateActivity :
     )
 
     private fun appendLog(log: String) {
-        val current = mBinding.tvBenchmarkLogs.text.toString()
-        mBinding.tvBenchmarkLogs.text = "$current\n$log"
-        mBinding.scrollView.post {
-            mBinding.scrollView.fullScroll(View.FOCUS_DOWN)
+        val current = binding.tvBenchmarkLogs.text.toString()
+        binding.tvBenchmarkLogs.text = "$current\n$log"
+        binding.scrollView.post {
+            binding.scrollView.fullScroll(View.FOCUS_DOWN)
         }
     }
 
     private fun setButtonsEnabled(enabled: Boolean) {
-        mBinding.btnCpuSingle.isEnabled = enabled
-        mBinding.btnCpuSingleXnn.isEnabled = enabled
-        mBinding.btnCpuMulti.isEnabled = enabled
-        mBinding.btnCpuMultiXnn.isEnabled = enabled
-        mBinding.btnGpu.isEnabled = enabled
-        mBinding.btnRunAll.isEnabled = enabled
+        binding.btnCpuSingle.isEnabled = enabled
+        binding.btnCpuSingleXnn.isEnabled = enabled
+        binding.btnCpuMulti.isEnabled = enabled
+        binding.btnCpuMultiXnn.isEnabled = enabled
+        binding.btnGpu.isEnabled = enabled
+        binding.btnRunAll.isEnabled = enabled
     }
 }

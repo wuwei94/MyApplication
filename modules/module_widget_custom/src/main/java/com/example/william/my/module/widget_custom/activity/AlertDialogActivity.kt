@@ -20,36 +20,13 @@ import com.example.william.my.module.widget_custom.dialog.MyBottomSheetDialog
  * 2. IosAlertItemDialog：iOS 风格的列表对话框，支持多个选项
  * 3. MyBottomSheetDialog：底部弹出对话框，支持 ViewPager
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 自定义样式：支持自定义标题、内容、按钮样式
  * 2. 多种交互：支持点击、选择等多种交互方式
  * 3. 动画效果：支持弹出、关闭动画
  * 4. 灵活配置：支持取消、点击外部关闭等配置
  *
- * 基本用法：
- * ```kotlin
- * // IosAlertDialog
- * IosAlertDialog(context)
- *     .builder()
- *     .setTitle("标题")
- *     .setMsg("内容")
- *     .setLeftButton("取消") { /* 处理点击 */ }
- *     .setRightButton("确定") { /* 处理点击 */ }
- *     .show()
- *
- * // IosAlertItemDialog
- * IosAlertItemDialog(context)
- *     .builder()
- *     .setTitle("标题")
- *     .addAlertItem("选项1") { /* 处理选择 */ }
- *     .addAlertItem("选项2") { /* 处理选择 */ }
- *     .show()
- * ```
- *
- * 适用场景：
- * - 确认对话框、提示对话框
- * - 列表选择对话框
- * - 底部弹出对话框
+ * https://developer.android.com/develop/ui/views/components/dialogs
  */
 @Route(path = RouterPath.WidgetCustom.AlertDialog)
 class AlertDialogActivity : BasicResponseActivity() {

@@ -9,12 +9,20 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.permissionx.guolindev.PermissionX
 
 /**
- * 运行时权限（PermissionX 链式开源库方案）
+ * 运行时权限 — PermissionX 链式开源库方案
  *
- * 演示使用 PermissionX 链式 API 请求 App 基础运行时权限（通知与多媒体存储），并提供：
- * - 声明式权限申请与回调
- * - 解释申请理由弹窗 (onExplainRequestReason)
- * - 前往设置页引导弹窗 (onForwardToSettings)
+ * PermissionX 是郭霖开源的运行时权限请求库，在 Jetpack ActivityResult 之上
+ * 封装了链式 API、理由解释弹窗与永久拒绝后的设置页引导，大幅简化权限申请流程。
+ * 与原生契约方案对比：PermissionX 额外提供 onExplainRequestReason 与
+ * onForwardToSettings 两个弹窗能力，原生方案需自行实现这些 UI。
+ *
+ * 核心机制与避坑点：
+ * 1. 链式调用：init → permissions → request 三步完成权限申请
+ * 2. 理由弹窗：onExplainRequestReason 在拒绝后弹窗解释申请原因
+ * 3. 设置引导：onForwardToSettings 永久拒绝后引导用户跳转系统设置
+ * 4. 前置解释：explainReasonBeforeRequest 在首次申请前即展示理由弹窗
+ *
+ * https://github.com/guolindev/PermissionX
  */
 @Route(path = RouterPath.SystemService.PermissionX)
 class PermissionXActivity : BasicResponseActivity() {
@@ -55,9 +63,9 @@ class PermissionXActivity : BasicResponseActivity() {
             .permissions(Manifest.permission.POST_NOTIFICATIONS)
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
-                    appendLogAccent("【成功】通知权限已授予：$grantedList")
+                    appendLogAccent("✓ 通知权限已授予：$grantedList")
                 } else {
-                    appendLog("【拒绝】通知权限被拒绝：$deniedList")
+                    appendLog("✗ 通知权限被拒绝：$deniedList")
                 }
             }
     }
@@ -80,9 +88,9 @@ class PermissionXActivity : BasicResponseActivity() {
             }
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
-                    appendLogAccent("【成功】存储权限已全部授予：$grantedList")
+                    appendLogAccent("✓ 存储权限已全部授予：$grantedList")
                 } else {
-                    appendLog("【拒绝】存储权限被拒绝：$deniedList")
+                    appendLog("✗ 存储权限被拒绝：$deniedList")
                 }
             }
     }
@@ -114,9 +122,9 @@ class PermissionXActivity : BasicResponseActivity() {
             }
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
-                    appendLogAccent("【成功】存储权限已全部授予：$grantedList")
+                    appendLogAccent("✓ 存储权限已全部授予：$grantedList")
                 } else {
-                    appendLog("【拒绝】存储权限被拒绝：$deniedList")
+                    appendLog("✗ 存储权限被拒绝：$deniedList")
                 }
             }
     }
@@ -151,9 +159,9 @@ class PermissionXActivity : BasicResponseActivity() {
             }
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
-                    appendLogAccent("【成功】所有基础常用权限已全部授予！")
+                    appendLogAccent("✓ 所有基础常用权限已全部授予！")
                 } else {
-                    appendLog("【拒绝】仍有基础权限未授予：$deniedList")
+                    appendLog("✗ 仍有基础权限未授予：$deniedList")
                 }
             }
     }

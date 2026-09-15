@@ -42,15 +42,15 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 /**
  * Canvas — 自定义基础图形与路径绘制
  *
- * 全面展示 Compose [Canvas] 组件的底层基础绘图 API（DrawScope 原语）：
- * 1. 线段绘制：[drawLine] 线宽、端点形状（[StrokeCap.Round]）与颜色；
- * 2. 圆形与圆环：[drawCircle] 实心填充与 [Stroke] 空心圆环；
- * 3. 矩形与圆角矩形：[drawRect]、[drawRoundRect] 结合 [Brush.linearGradient] 渐变着色；
- * 4. 弧线与扇区：[drawArc] 角度跨度与 [useCenter] 闭合形态；
- * 5. 几何路径：[drawPath] 二次贝塞尔曲线与折线几何体；
- * 6. 点集绘制：[drawPoints] 离散点阵与连线模式。
+ * 全面展示 Compose [Canvas] 组件的底层基础绘图 API（DrawScope 原语）。
  *
- * 官方文档：
+ * 核心机制与避坑点：
+ * 1. 线段与点集：[drawLine] 线宽与端点形状（[StrokeCap.Round]）、[drawPoints] 离散点阵与连线模式；
+ * 2. 圆形与圆环：[drawCircle] 实心填充与 [Stroke] 空心圆环；
+ * 3. 矩形与渐变：[drawRect]、[drawRoundRect] 结合 [Brush.linearGradient] 渐变着色；
+ * 4. 弧线与扇区：[drawArc] 角度跨度与 [useCenter] 闭合形态；
+ * 5. 几何路径：[drawPath] 二次贝塞尔曲线与折线几何体。
+ *
  * https://developer.android.google.cn/develop/ui/compose/graphics/draw/overview
  */
 @Route(path = RouterPath.Compose.Canvas)

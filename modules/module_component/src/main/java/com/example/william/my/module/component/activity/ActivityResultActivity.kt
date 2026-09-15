@@ -15,7 +15,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * ActivityResultContracts 是 AndroidX 提供的新版结果回调 API，替代已废弃的 startActivityForResult。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 类型安全：使用泛型确保输入输出类型安全
  * 2. 生命周期感知：自动处理生命周期，避免内存泄漏
  * 3. 代码简洁：无需重写 onActivityResult，代码更简洁
@@ -29,35 +29,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 5. TakePicture：拍照并获取原图
  * 6. TakeVideo：录像并获取视频
  *
- * 基本用法：
- * ```kotlin
- * // 注册回调
- * val launcher = registerForActivityResult(StartActivityForResult()) { result ->
- *     if (result.resultCode == RESULT_OK) {
- *         // 处理结果
- *     }
- * }
- *
- * // 启动 Activity
- * launcher.launch(intent)
- *
- * // 自定义 Contract
- * class MyContract : ActivityResultContract<String, String?>() {
- *     override fun createIntent(context: Context, input: String): Intent {
- *         return Intent(context, TargetActivity::class.java).apply {
- *             putExtra("input", input)
- *         }
- *     }
- *     override fun parseResult(resultCode: Int, intent: Intent?): String? {
- *         return if (resultCode == RESULT_OK) intent?.getStringExtra("result") else null
- *     }
- * }
- * ```
- *
- * 适用场景：
- * - Activity 间数据传递
- * - 权限请求
- * - 拍照、录像、选择图片
+ * https://developer.android.com/training/basics/intents/result
  */
 @Route(path = RouterPath.Component.ActivityResult)
 class ActivityResultActivity : BasicResponseActivity() {

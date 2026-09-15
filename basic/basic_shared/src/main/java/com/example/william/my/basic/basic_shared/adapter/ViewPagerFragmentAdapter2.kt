@@ -12,19 +12,19 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  *
  * @param fm FragmentManager
  * @param lifecycle Activity/Fragment 的 Lifecycle
- * @param mFragments Fragment 列表
- * @param mTitles 可选的标题列表，配合 TabLayoutMediator 使用
+ * @param fragments Fragment 列表
+ * @param titles 可选的标题列表，配合 TabLayoutMediator 使用
  */
 class ViewPagerFragmentAdapter2(
     fm: FragmentManager,
     lifecycle: Lifecycle,
-    private val mFragments: List<Fragment> = emptyList(),
-    private val mTitles: List<String>? = null,
+    private val fragments: List<Fragment> = emptyList(),
+    private val titles: List<String>? = null,
 ) : FragmentStateAdapter(fm, lifecycle) {
 
-    override fun getItemCount(): Int = mFragments.size
+    override fun getItemCount(): Int = fragments.size
 
-    override fun createFragment(position: Int): Fragment = mFragments[position]
+    override fun createFragment(position: Int): Fragment = fragments[position]
 
-    fun getPageTitle(position: Int): CharSequence? = mTitles?.getOrNull(position)
+    fun getPageTitle(position: Int): CharSequence? = titles?.getOrNull(position)
 }

@@ -13,43 +13,43 @@ abstract class BaseQuickSwipeAdapter<T : Any, VH : RecyclerView.ViewHolder> :
     SwipeItemMangerInterface,
     SwipeAdapterInterface {
 
-    private var mItemManger: SwipeItemRecyclerMangerImpl = SwipeItemRecyclerMangerImpl(this)
+    private var itemManger: SwipeItemRecyclerMangerImpl = SwipeItemRecyclerMangerImpl(this)
 
     override fun onBindViewHolder(holder: VH, position: Int, item: T?) {
         if (holder.itemView is SwipeLayout) {
-            mItemManger.bindView(holder.itemView, position)
+            itemManger.bindView(holder.itemView, position)
         }
     }
 
     override fun openItem(position: Int) {
-        mItemManger.openItem(position)
+        itemManger.openItem(position)
     }
 
     override fun closeItem(position: Int) {
-        mItemManger.closeItem(position)
+        itemManger.closeItem(position)
     }
 
     override fun closeAllExcept(layout: SwipeLayout?) {
-        mItemManger.closeAllExcept(layout)
+        itemManger.closeAllExcept(layout)
     }
 
     override fun closeAllItems() {
-        mItemManger.closeAllItems()
+        itemManger.closeAllItems()
     }
 
-    override fun getOpenItems(): MutableList<Int?>? = mItemManger.openItems
+    override fun getOpenItems(): MutableList<Int?>? = itemManger.openItems
 
-    override fun getOpenLayouts(): MutableList<SwipeLayout?>? = mItemManger.openLayouts
+    override fun getOpenLayouts(): MutableList<SwipeLayout?>? = itemManger.openLayouts
 
     override fun removeShownLayouts(layout: SwipeLayout?) {
-        mItemManger.removeShownLayouts(layout)
+        itemManger.removeShownLayouts(layout)
     }
 
-    override fun isOpen(position: Int): Boolean = mItemManger.isOpen(position)
+    override fun isOpen(position: Int): Boolean = itemManger.isOpen(position)
 
-    override fun getMode(): Attributes.Mode? = mItemManger.mode
+    override fun getMode(): Attributes.Mode? = itemManger.mode
 
     override fun setMode(mode: Attributes.Mode?) {
-        mItemManger.setMode(mode)
+        itemManger.setMode(mode)
     }
 }

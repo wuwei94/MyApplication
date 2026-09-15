@@ -50,13 +50,14 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 /**
  * Chip — Material 3 标签芯片实战
  *
- * 全景展示 Compose Material 3 官方四大标准芯片（Chips）交互形态与语义应用场景：
- * 1. 过滤芯片 [FilterChip]：多选筛选项（支持勾选动画与带阴影的 [ElevatedFilterChip]）；
- * 2. 输入芯片 [InputChip]：实体信息卡片（如收件人标签、带关闭删除图标与用户头像）；
- * 3. 建议芯片 [SuggestionChip]：快速联想推荐与搜索引导（如“Compose M3 实战”）；
+ * 全景展示 Compose Material 3 官方四大标准芯片（Chips）交互形态与语义应用场景。
+ *
+ * 核心机制与避坑点：
+ * 1. 过滤芯片 [FilterChip]：多选筛选项，支持勾选动画与带阴影的 [ElevatedFilterChip]；
+ * 2. 输入芯片 [InputChip]：实体信息卡片（如收件人标签），可带关闭删除图标与用户头像；
+ * 3. 建议芯片 [SuggestionChip]：快速联想推荐与搜索引导；
  * 4. 辅助芯片 [AssistChip]：上下文辅助操作触发项（如“添加到日历”、“一键分享”及 [ElevatedAssistChip]）。
  *
- * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/components/chip
  */
 @Route(path = RouterPath.Compose.Chip)

@@ -27,16 +27,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * GPUImage 滤镜参数实时调节
+ * GPUImage — 滤镜参数实时调节
  *
- * GPUImage 的带参滤镜（亮度 / 对比度 / 饱和度 / 伽马 / 曝光 / 色相 / 锐度 /
- * 像素化 / 色调分离）通过各自的 float / int 参数 setter 调节效果强度。
+ * GPUImage 的带参滤镜（亮度 / 对比度 / 饱和度等 9 种）通过各自的 float / int
+ * 参数 setter 调节效果强度。本页演示「同实例调参」的连续调节模式：
+ * 复用同一个滤镜实例，拖动 SeekBar 实时更新参数并请求重绘。
  *
- * 页面演示「同实例调参」的连续调节模式：
- * 1. 选择滤镜种类时，以默认参数 [AdjustKind.def] 创建一次滤镜实例；
- * 2. 拖动 SeekBar 将进度线性映射到参数区间，调用对应 setter 更新滤镜；
- * 3. GPUImageView 默认逐帧渲染，参数在下一帧即生效；同时显式
- *    [GPUImageView.requestRender] 保证 WHEN_DIRTY 渲染模式下也能立即刷新。
+ * 核心机制与避坑点：
+ * 1. 同实例调参：选择滤镜种类时以默认参数创建一次实例，后续仅更新参数
+ * 2. 参数映射：SeekBar 进度线性映射到参数区间 [min, max]
+ * 3. 即时生效：GPUImageView 默认逐帧渲染，参数在下一帧即生效
+ * 4. 显式重绘：requestRender() 保证 WHEN_DIRTY 渲染模式下也能立即刷新
+ *
+ * https://github.com/cats-oss/android-gpuimage
  */
 @Route(path = RouterPath.GpuImage.Adjust)
 class GpuImageAdjustActivity :
@@ -55,11 +58,11 @@ class GpuImageAdjustActivity :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mBinding.btnReset.setOnClickListener(this)
-        mBinding.seekBar.setOnSeekBarChangeListener(this)
+        binding.btnReset.setOnClickListener(this)
+        binding.seekBar.setOnSeekBarChangeListener(this)
 
         GpuImageChipHelper.populate(
-            container = mBinding.chipContainer,
+            container = binding.chipContainer,
             names = GpuImageFilterCatalog.AdjustKind.entries.map { it.title },
             initialIndex = selectedKind.ordinal,
         ) { index -> onKindSelected(GpuImageFilterCatalog.AdjustKind.entries[index]) }
@@ -73,15 +76,15 @@ class GpuImageAdjustActivity :
             if (bitmap != null) {
                 currentBitmap?.recycle()
                 currentBitmap = bitmap
-                mBinding.gpuImageView.setImage(bitmap)
+                binding.gpuImageView.setImage(bitmap)
                 // 图片就绪后重放当前滤镜
-                currentFilter?.let { mBinding.gpuImageView.setFilter(it) }
+                currentFilter?.let { binding.gpuImageView.setFilter(it) }
             }
         }
     }
 
     override fun onClick(v: View?) {
-        if (v == mBinding.btnReset) {
+        if (v == binding.btnReset) {
             // 重置为默认参数
             onKindSelected(selectedKind)
         }
@@ -90,12 +93,12 @@ class GpuImageAdjustActivity :
     private fun onKindSelected(kind: GpuImageFilterCatalog.AdjustKind) {
         selectedKind = kind
         currentFilter = kind.newFilter(kind.def)
-        mBinding.gpuImageView.setFilter(currentFilter)
+        binding.gpuImageView.setFilter(currentFilter)
 
-        mBinding.tvParamLabel.text = "${kind.title} · ${kind.api}"
-        mBinding.tvParamRange.text = "参数区间: [${kind.min}, ${kind.max}]"
-        mBinding.seekBar.progress = toProgress(kind.def)
-        mBinding.tvParamValue.text = formatValue(kind.def)
+        binding.tvParamLabel.text = "${kind.title} · ${kind.api}"
+        binding.tvParamRange.text = "参数区间: [${kind.min}, ${kind.max}]"
+        binding.seekBar.progress = toProgress(kind.def)
+        binding.tvParamValue.text = formatValue(kind.def)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -104,8 +107,8 @@ class GpuImageAdjustActivity :
 
         // 同一滤镜实例连续调用参数 setter，并请求一帧重绘
         updateFilterParameter(filter, value)
-        mBinding.gpuImageView.requestRender()
-        mBinding.tvParamValue.text = formatValue(value)
+        binding.gpuImageView.requestRender()
+        binding.tvParamValue.text = formatValue(value)
     }
 
     /** 将滑块进度映射到当前滤镜种类的参数 setter */
@@ -137,12 +140,12 @@ class GpuImageAdjustActivity :
 
     override fun onPause() {
         super.onPause()
-        mBinding.gpuImageView.onPause()
+        binding.gpuImageView.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        mBinding.gpuImageView.onResume()
+        binding.gpuImageView.onResume()
     }
 
     override fun onDestroy() {

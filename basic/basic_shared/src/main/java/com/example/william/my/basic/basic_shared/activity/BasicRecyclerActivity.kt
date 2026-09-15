@@ -9,8 +9,8 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  * 列表/数据展示类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：ConstraintLayout 容器（[mContainer] / [mBinding.basicsResponseContainer]），高度为 0dp 自适应撑满，内部包含数据展示列表（[mDataRecycler] / [mBinding.basicsDataRecycler]）
- * - 下方列表：RecyclerView 操作列表（[mRecycler] / [mBinding.basicsRecycler]），固定高度为 300dp（通过 [buildList] 与 [onRecyclerClick] 触发操作）
+ * - 上方展示：ConstraintLayout 容器（[mContainer] / [binding.basicsResponseContainer]），高度为 0dp 自适应撑满，内部包含数据展示列表（[mDataRecycler] / [binding.basicsDataRecycler]）
+ * - 下方列表：RecyclerView 操作列表（[mRecycler] / [binding.basicsRecycler]），固定高度为 300dp（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
  * 1. 继承类通过 [mDataRecycler] 或 [setAdapter] 配置上方区域的数据展示列表。
@@ -19,16 +19,16 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  */
 abstract class BasicRecyclerActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutRecyclerRecyclerBinding
-    protected lateinit var mContainer: ConstraintLayout
-    protected lateinit var mDataRecycler: RecyclerView
+    protected lateinit var binding: SharedLayoutRecyclerRecyclerBinding
+    protected lateinit var container: ConstraintLayout
+    protected lateinit var dataRecycler: RecyclerView
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutRecyclerRecyclerBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
-        mRecycler = mBinding.basicsRecycler
-        mContainer = mBinding.basicsResponseContainer
-        mDataRecycler = mBinding.basicsDataRecycler
+        binding = SharedLayoutRecyclerRecyclerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recycler = binding.basicsRecycler
+        container = binding.basicsResponseContainer
+        dataRecycler = binding.basicsDataRecycler
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class BasicRecyclerActivity : BasicControlActivity() {
         adapter: RecyclerView.Adapter<*>,
         layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this),
     ) {
-        mDataRecycler.layoutManager = layoutManager
-        mDataRecycler.adapter = adapter
+        dataRecycler.layoutManager = layoutManager
+        dataRecycler.adapter = adapter
     }
 }

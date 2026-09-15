@@ -12,14 +12,18 @@ import com.example.william.my.module.performance.manager.RecycledViewPoolManager
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
- * RecyclerView.RecycledViewPool 跨列表/Tab 共享视图池示例
+ * RecycledViewPool — 跨列表/Tab 共享视图池
  *
- * 本示例演示 RecycledViewPool 在多列表/跨页面场景下的真实渲染与 RecycledViewPoolManager 全局管理：
+ * 本示例演示 RecycledViewPool 在多列表/跨页面场景下的真实渲染与 RecycledViewPoolManager 全局管理。
+ *
+ * 核心机制与避坑点：
  * 1. 核心机制：RecyclerView 默认各自拥有独立的 RecycledViewPool。在 ViewPager2 多 Tab 或多页面跳转场景中，
- *    各列表若拥有相同的 Item 样式，可通过共享 RecycledViewPoolManager 单例，实现 ViewHolder 跨列表直接复用。
- * 2. 性能收益：大幅减少滑动与切页时的 `onCreateViewHolder` 次数与内存开销，彻底消除切 Tab 时的创建视图卡顿。
- * 3. setMaxRecycledViews(viewType, maxCount)：针对高频 Item 类型调大缓存容量（默认 5，本例调至 15）。
- * 4. 生命周期管理：列表退出或数据源销毁时适时调用 `RecycledViewPoolManager.clear()` 清空池内引用。
+ *    各列表若拥有相同的 Item 样式，可通过共享 RecycledViewPoolManager 单例，实现 ViewHolder 跨列表直接复用
+ * 2. 性能收益：大幅减少滑动与切页时的 onCreateViewHolder 次数与内存开销，彻底消除切 Tab 时的创建视图卡顿
+ * 3. setMaxRecycledViews(viewType, maxCount)：针对高频 Item 类型调大缓存容量（默认 5，本例调至 15）
+ * 4. 生命周期管理：列表退出或数据源销毁时适时调用 RecycledViewPoolManager.clear() 清空池内引用
+ *
+ * https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.RecycledViewPool
  */
 @Route(path = RouterPath.Performance.RecycledViewPool)
 class RecycledViewPoolActivity : BasicRecyclerActivity() {
@@ -47,8 +51,8 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
     }
 
     private fun initViewPager() {
-        mContainer.removeAllViews()
-        poolBinding = PerformanceLayoutPoolPagerBinding.inflate(layoutInflater, mContainer, true)
+        container.removeAllViews()
+        poolBinding = PerformanceLayoutPoolPagerBinding.inflate(layoutInflater, container, true)
 
         val tabTitles = listOf("推荐专区 (Tab 1)", "热门专区 (Tab 2)")
 

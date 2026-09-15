@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 事件总线演示入口
+ * 事件总线模块入口 — 导航到 EventBus、RxEventBus、LiveEventBus、FlowEventBus 等示例页面。
  *
  * 聚合了主流事件总线方案（EventBus、RxJava、LiveData、Flow）的演示示例。
  */

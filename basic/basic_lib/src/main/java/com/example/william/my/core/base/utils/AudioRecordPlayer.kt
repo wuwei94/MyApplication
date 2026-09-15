@@ -23,44 +23,44 @@ object AudioRecordPlayer {
     private const val MAGIC_NUMBER = 500
     private const val MIN_RECORD_DURATION = 1000
 
-    var mAudioRecordPath: String? = null
+    var audioRecordPath: String? = null
         private set
 
-    private var mRecorder: MediaRecorder? = null
+    private var recorder: MediaRecorder? = null
 
-    private var mPlayer: MediaPlayer? = null
+    private var player: MediaPlayer? = null
 
     var isRecorded: Boolean = false
 
     val isPlaying: Boolean
-        get() = mPlayer != null && mPlayer?.isPlaying == true
+        get() = player != null && player?.isPlaying == true
 
-    private val mHandler: Handler = Handler(Looper.getMainLooper())
+    private val handler: Handler = Handler(Looper.getMainLooper())
 
     // 录音
 
     fun startRecord(context: Context, callback: Callback) {
-        mRecordCallback = callback
+        recordCallback = callback
         try {
-            mAudioRecordPath =
+            audioRecordPath =
                 context.applicationContext.externalCacheDir.toString() + File.separator +
                 "auto_" + System.currentTimeMillis() + ".m4a"
-            mRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            recorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 MediaRecorder(context)
             } else {
                 @Suppress("DEPRECATION")
                 MediaRecorder()
             }
-            mRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
+            recorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
             // 使用mp4容器并且后缀改为.m4a，来兼容小程序的播放
-            mRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-            mRecorder?.setOutputFile(mAudioRecordPath)
-            mRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            mRecorder?.prepare()
-            mRecorder?.start()
+            recorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            recorder?.setOutputFile(audioRecordPath)
+            recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            recorder?.prepare()
+            recorder?.start()
             // 最大录制时间之后需要停止录制
-            mHandler.removeCallbacksAndMessages(null)
-            mHandler.postDelayed({
+            handler.removeCallbacksAndMessages(null)
+            handler.postDelayed({
                 show("已达到最大语音长度")
                 stopRecord(true)
             }, (DEFAULT_AUDIO_RECORD_MAX_TIME * 1000).toLong())
@@ -73,37 +73,37 @@ object AudioRecordPlayer {
     fun stopRecord(completed: Boolean = true) {
         stopInternalRecord()
         onRecordCompleted(completed)
-        mRecordCallback = null
+        recordCallback = null
     }
 
     private fun stopInternalRecord() {
-        mHandler.removeCallbacksAndMessages(null)
-        mRecorder?.release()
-        mRecorder = null
+        handler.removeCallbacksAndMessages(null)
+        recorder?.release()
+        recorder = null
     }
 
     private fun onRecordCompleted(success: Boolean) {
-        mRecordCallback?.onCompletion(success)
-        mRecorder = null
+        recordCallback?.onCompletion(success)
+        recorder = null
         isRecorded = false
     }
 
     // 播放相关
 
     fun startPlay(filePath: String?, callback: Callback) {
-        mAudioRecordPath = filePath
-        mPlayCallback = callback
+        audioRecordPath = filePath
+        playCallback = callback
         try {
-            mPlayer = MediaPlayer()
-            mPlayer?.setDataSource(mAudioRecordPath)
-            mPlayer?.setOnCompletionListener {
+            player = MediaPlayer()
+            player?.setDataSource(audioRecordPath)
+            player?.setOnCompletionListener {
                 stopPlay(true)
             }
-            mPlayer?.setOnPreparedListener {
-                mPlayCallback?.onStart()
-                mPlayer?.start()
+            player?.setOnPreparedListener {
+                playCallback?.onStart()
+                player?.start()
             }
-            mPlayer?.prepareAsync()
+            player?.prepareAsync()
         } catch (e: Exception) {
             println("startPlay failed")
             show("语音文件已损坏或不存在")
@@ -114,30 +114,30 @@ object AudioRecordPlayer {
     fun stopPlay(completed: Boolean = false) {
         stopInternalPlay()
         onPlayCompleted(completed)
-        mPlayCallback = null
+        playCallback = null
     }
 
     private fun stopInternalPlay() {
-        mPlayer?.release()
-        mPlayer = null
+        player?.release()
+        player = null
     }
 
     private fun onPlayCompleted(success: Boolean) {
-        mPlayCallback?.onCompletion(success)
-        mPlayer = null
+        playCallback?.onCompletion(success)
+        player = null
     }
 
     // 语音长度如果是59s多，因为外部会/1000取整，会一直显示59'，所以这里对长度进行处理，达到四舍五入的效果
 
     fun getDuration(): Int {
-        if (TextUtils.isEmpty(mAudioRecordPath)) {
+        if (TextUtils.isEmpty(audioRecordPath)) {
             return 0
         }
         var duration = 0
         var mp: MediaPlayer? = null
         try {
             mp = MediaPlayer()
-            mp.setDataSource(mAudioRecordPath)
+            mp.setDataSource(audioRecordPath)
             mp.prepare()
             duration = mp.duration
             // 语音长度如果是59s多，因为外部会/1000取整，会一直显示59'，所以这里对长度进行处理，达到四舍五入的效果
@@ -161,8 +161,8 @@ object AudioRecordPlayer {
         return duration
     }
 
-    private var mRecordCallback: Callback? = null
-    private var mPlayCallback: Callback? = null
+    private var recordCallback: Callback? = null
+    private var playCallback: Callback? = null
 
     interface Callback {
         fun onStart()

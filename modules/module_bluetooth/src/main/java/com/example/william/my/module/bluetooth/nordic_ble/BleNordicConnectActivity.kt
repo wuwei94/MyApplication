@@ -19,36 +19,46 @@ import no.nordicsemi.android.ble.ktx.suspend
 import no.nordicsemi.android.ble.observer.ConnectionObserver
 
 /**
- * Nordic BLE 连接与挂起调用示例
+ * Nordic BLE 连接与挂起调用 — BleManager + suspend
  *
- * 【Nordic Android-BLE-Library —— 工业级全能型（重型卡车）】
- * - 功能覆盖：全都有，而且在稳定性、边缘异常处理上最强。
- * - 特点：由蓝牙芯片原厂（Nordic）官方维护。
- *   • 队列最稳：彻底解决多任务并发冲突。
- *   • 大包自动化：内置了自动按 MTU 切包（.split()）和自动拼包（.merge()），不用自己算 offset。
- *   • 现代化：支持 Kotlin 协程 suspend 挂起调用，代码不用写一层层回调。
- * - 适合谁：智能硬件大厂、医疗设备、车载、OTA 固件升级、对稳定性要求极高的项目。
+ * 基于 NordicBleManager 演示连接生命周期、重试重连与协程挂起 API。
  *
- * 演示特性：
- * 1. [NordicBleManager] 工业级生命周期管理
- * 2. 链式配置：超时控制 (timeout)、失败重试 (retry)、自动重连 (autoConnect)
- * 3. [ConnectionObserver] 连接状态与断开原因细粒度监听
- * 4. 协程挂起扩展 [suspend]：将异步回调转换为 Kotlin 挂起函数，直接同步风格获取结果
+ * 核心特性：
+ * 1. Manager 生命周期：[NordicBleManager] 统一 GATT 管道
+ * 2. 链式策略：timeout / retry / autoConnect
+ * 3. 状态细听：[ConnectionObserver] 区分断开原因
+ * 4. 挂起扩展：`suspend` 将回调转为同步风格协程调用
+ *
+ * 基本用法：
+ * ```kotlin
+ * manager.connect(device)
+ *     .timeout(10_000)
+ *     .retry(3, 100)
+ *     .enqueue()
+ * // 或：withContext(IO) { manager.connect(device).suspend() }
+ * ```
+ *
+ * 适用场景：
+ * - 高可靠连接与自动重连
+ * - 协程优先的 BLE 业务层
+ * - 与原生/Rx/FastBle 连接模型对比
+ *
+ * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
 @SuppressLint("MissingPermission")
 @Route(path = RouterPath.Bluetooth.NordicConnect)
 class BleNordicConnectActivity : BasicResponseActivity() {
 
-    private var mBluetoothAdapter: BluetoothAdapter? = null
-    private lateinit var mBleManager: NordicBleManager
-    private var mTargetDevice: BluetoothDevice? = null
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private lateinit var bleManager: NordicBleManager
+    private var targetDevice: BluetoothDevice? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-        mBluetoothAdapter = bluetoothManager?.adapter
+        bluetoothAdapter = bluetoothManager?.adapter
 
-        mBleManager = NordicBleManager(this).apply {
+        bleManager = NordicBleManager(this).apply {
             onLogListener = { logMsg -> appendLog(logMsg) }
             onDataReceivedListener = { dataMsg -> appendLog("🔔 [Nordic Notify] ") }
             setConnectionObserver(object : ConnectionObserver {
@@ -102,7 +112,7 @@ class BleNordicConnectActivity : BasicResponseActivity() {
     }
 
     private fun scanAndConnectNordic() {
-        val scanner = mBluetoothAdapter?.bluetoothLeScanner
+        val scanner = bluetoothAdapter?.bluetoothLeScanner
         if (scanner == null) {
             appendLog("✗ 无法获取 BLE 扫描器，请确认蓝牙已开启")
             return
@@ -115,12 +125,12 @@ class BleNordicConnectActivity : BasicResponseActivity() {
                     try {
                         scanner.stopScan(this)
                     } catch (_: Exception) {}
-                    mTargetDevice = device
+                    targetDevice = device
                     val name = device.name ?: "未知设备"
-                    appendLog("找到设备:  ()，使用 Nordic BleManager 发起连接...")
+                    appendLog("找到设备: $name (${device.address})，使用 Nordic BleManager 发起连接...")
 
                     // Nordic 工业级连接调用链：设置重试次数、重试延迟、超时时间
-                    mBleManager.connect(device)
+                    bleManager.connect(device)
                         .retry(3, 200)
                         .timeout(10000)
                         .useAutoConnect(false)
@@ -131,13 +141,13 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         try {
             scanner.startScan(scanCallback)
         } catch (e: Exception) {
-            appendLog("✗ 扫描启动失败: ")
+            appendLog("✗ 扫描启动失败: ${e.message}")
         }
     }
 
     private fun readCharacteristicSuspend() {
-        val char = mBleManager.targetCharacteristic
-        if (char == null || !mBleManager.isConnected) {
+        val char = bleManager.targetCharacteristic
+        if (char == null || !bleManager.isConnected) {
             appendLog("✗ 设备未连接或无可用特征值")
             return
         }
@@ -147,7 +157,7 @@ class BleNordicConnectActivity : BasicResponseActivity() {
                 appendLog("▶ 正在通过 suspend 挂起函数读取特征值...")
                 // 使用 Nordic 提供的 suspend 扩展函数
                 val data = withContext(Dispatchers.IO) {
-                    mBleManager.read(char).suspend()
+                    bleManager.read(char).suspend()
                 }
                 val hex = data.value?.joinToString(" ") { String.format("%02X", it) } ?: ""
                 val text = data.getStringValue(0) ?: ""
@@ -159,8 +169,8 @@ class BleNordicConnectActivity : BasicResponseActivity() {
     }
 
     private fun writeCharacteristicSuspend() {
-        val char = mBleManager.targetCharacteristic
-        if (char == null || !mBleManager.isConnected) {
+        val char = bleManager.targetCharacteristic
+        if (char == null || !bleManager.isConnected) {
             appendLog("✗ 设备未连接或无可用特征值")
             return
         }
@@ -171,19 +181,19 @@ class BleNordicConnectActivity : BasicResponseActivity() {
                 appendLog("▶ 正在通过 suspend 挂起函数写入数据: \"$sendText\"...")
                 val sendData = sendText.toByteArray(Charsets.UTF_8)
                 withContext(Dispatchers.IO) {
-                    mBleManager.write(char, sendData).suspend()
+                    bleManager.write(char, sendData).suspend()
                 }
                 appendLog("✓ [suspend 写入成功] 数据已由 Nordic 队列安全发送并收到确认")
             } catch (e: Exception) {
-                appendLog("✗ [suspend 写入失败] 异常: ")
+                appendLog("✗ [suspend 写入失败] 异常: ${e.message}")
             }
         }
     }
 
     private fun disconnectNordic() {
-        if (mBleManager.isConnected) {
+        if (bleManager.isConnected) {
             appendLog("正在断开 Nordic BLE 连接...")
-            mBleManager.disconnect().enqueue()
+            bleManager.disconnect().enqueue()
         } else {
             appendLog("当前未处于连接状态")
         }
@@ -191,6 +201,6 @@ class BleNordicConnectActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mBleManager.close()
+        bleManager.close()
     }
 }

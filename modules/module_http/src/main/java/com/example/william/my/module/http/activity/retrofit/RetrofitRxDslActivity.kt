@@ -14,7 +14,16 @@ import com.example.william.my.core.retrofit.rx.api.withNetworkDefaults
 import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 
 /**
- * 封装后 Retrofit + RxJava 方式（含生命周期绑定）
+ * Retrofit + RxJava（DSL）— 封装后回调式网络请求
+ *
+ * 使用项目内 DSL 封装创建已安装 RxJava3 CallAdapter 的 Retrofit，
+ * 并通过 withNetworkDefaults(owner) 统一异常处理、线程切换与生命周期绑定。
+ *
+ * 核心机制与避坑点：
+ * 1. DSL 创建：rxRetrofit { } 一行得到可用 Retrofit 实例
+ * 2. 类型安全 API：createRxApi 创建接口代理，编译期检查方法签名
+ * 3. 统一默认项：withNetworkDefaults 完成线程切换与异常归一
+ * 4. 生命周期感知：owner 销毁后自动释放订阅
  *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
@@ -36,13 +45,10 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
     }
 
     private fun loginSingle(username: String, password: String) {
-        // 创建已安装 RxJava3 CallAdapter 的 Retrofit 实例
         val retrofit = rxRetrofit { }
-
-        // 创建 API 接口实例
         val api = createRxApi(NetworkApi::class.java, retrofit)
 
-        // 调用接口方法，通过 withNetworkDefaults(owner) 统一异常处理、线程切换和生命周期绑定
+        // withNetworkDefaults(owner) 统一异常处理、线程切换与生命周期绑定
         api.loginSingle(username, password)
             .withNetworkDefaults(this)
             .subscribe(object : ResponseCallback<LoginData>() {

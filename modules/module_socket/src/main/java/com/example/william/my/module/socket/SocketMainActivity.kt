@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Socket 长连接示例入口（WebSocket & TCP Socket）
+ * Socket 模块入口 — 导航到 OkHttp WebSocket、Java-WebSocket、Netty TCP 等示例页面。
  *
  * 通过下方列表选择不同的 Socket 通信实现：
  * - WebSocket（应用层）：OkHttp WebSocket / Java-WebSocket（普通 / RxJava / Flow）

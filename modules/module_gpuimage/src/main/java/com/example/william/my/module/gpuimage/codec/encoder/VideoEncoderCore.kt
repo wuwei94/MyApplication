@@ -9,7 +9,7 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 /**
  * 硬件视频编码核心类（基于 MediaCodec InputSurface）
  *
- * 核心机制：
+ * 核心特性：
  * 1. 配置 H.264 (video/avc) 编码器，颜色格式为 [MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface]；
  * 2. 导出 [inputSurface]，由 OpenGL 渲染线程将其包裹为 EGLWindowSurface 直接绘制，
  *    实现显存到编码器的 GPU 零拷贝流水线；

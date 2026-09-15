@@ -18,7 +18,16 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * 原生 Retrofit + RxJava 方式
+ * Retrofit + RxJava — 原生回调式网络请求
+ *
+ * 使用 Retrofit.Builder 手动装配 Gson 转换器与 RxJava3 CallAdapter，
+ * 将接口方法返回值桥接为 Single，由页面自行管理线程与订阅释放。
+ *
+ * 核心机制与避坑点：
+ * 1. CallAdapter：RxJava3CallAdapterFactory 将 Call 桥接为 Single/Observable
+ * 2. 线程控制：subscribeOn(io) + observeOn(main) 显式切换
+ * 3. 订阅管理：CompositeDisposable 在 onDestroy 统一 dispose
+ * 4. 原生装配：不依赖项目 DSL，便于对照 Retrofit 原生 API
  *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit

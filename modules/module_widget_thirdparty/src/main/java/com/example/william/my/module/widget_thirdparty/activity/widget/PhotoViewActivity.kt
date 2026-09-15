@@ -12,27 +12,11 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  *
  * PhotoView 是一个支持手势缩放、平移的 ImageView 替代品。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 手势缩放：支持双击缩放、双指缩放
  * 2. 平移拖拽：缩放后可拖拽查看细节
  * 3. 边界检测：缩放后自动检测边界，防止超出范围
  * 4. 兼容性好：可作为普通 ImageView 使用
- *
- * 基本用法：
- * ```kotlin
- * // XML 中使用
- * <com.github.chrisbanes.photoview.PhotoView
- *     android:layout_width="match_parent"
- *     android:layout_height="match_parent" />
- *
- * // 代码中设置图片
- * photoView.setImageResource(R.drawable.image)
- * ```
- *
- * 适用场景：
- * - 图片详情页、大图预览
- * - 地图、长图查看
- * - 需要缩放查看细节的场景
  *
  * https://github.com/chrisbanes/PhotoView
  */
@@ -48,6 +32,6 @@ class PhotoViewActivity : BaseVBActivity<WidgetThirdpartyActivityPhotoViewBindin
     }
 
     private fun showPhotoView() {
-        mBinding.photoView.setImageResource(R.drawable.shared_ic_launcher)
+        binding.photoView.setImageResource(R.drawable.shared_ic_launcher)
     }
 }

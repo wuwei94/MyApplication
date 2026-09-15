@@ -56,11 +56,15 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 /**
  * Menu — 现代弹出菜单与表单下拉选择
  *
- * 全面演示 Material 3 菜单体系与表单选择组件：
+ * 全面演示 Material 3 菜单体系与表单选择组件。
+ *
+ * 核心机制与避坑点：
  * 1. [DropdownMenu]：标准悬浮上下文菜单，支持 leadingIcon 图标、trailingIcon 快捷键提示、
  *    [HorizontalDivider] 视觉分组与禁用项控制；
  * 2. [ExposedDropdownMenuBox]：Material 3 官方推荐表单下拉菜单（取代传统 Android Spinner 控件），
  *    支持只读输入框触发、展开箭头旋转动画及选项高亮状态。
+ *
+ * https://developer.android.google.cn/develop/ui/compose/components/menus
  */
 @Route(path = RouterPath.Compose.Menu)
 class MenuActivity : ComponentActivity() {

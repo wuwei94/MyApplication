@@ -17,16 +17,19 @@ import java.nio.ByteOrder
 import kotlin.system.measureNanoTime
 
 /**
- * MNIST 手写数字实时识别演示
+ * TensorFlow Lite — MNIST 手写数字实时识别
  *
- * 官方文档: https://www.tensorflow.org/lite/examples/digit_classification/overview
+ * 基于画板涂鸦输入，演示从自定义 View 笔迹捕获、图像预处理到 TFLite 前向推理
+ * 的端侧 AI 完整链路，实时展示 0~9 置信度分布。
  *
- * 核心技术流程：
+ * 核心机制与避坑点：
  * 1. 初始化 TensorFlow Lite Interpreter 加载 mnist.tflite 模型 (28x28 FP32)
  * 2. 捕获 FingerDrawView 笔迹并等比缩放为 28x28 灰度 Bitmap
  * 3. 构造 Direct Memory 的 Native ByteBuffer 输入张量 [1, 28, 28, 1]
  * 4. 在后台协程执行前向推理与 Softmax 概率归一
  * 5. 解析输出张量 [1, 10]，实时展示置信度最高的数字与 0~9 概率分布
+ *
+ * https://www.tensorflow.org/lite/examples/digit_classification/overview
  */
 @Route(path = RouterPath.Ml.DigitClassifier)
 class TFLiteDigitClassifierActivity :
@@ -41,11 +44,11 @@ class TFLiteDigitClassifierActivity :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mBinding.btnClear.setOnClickListener(this)
-        mBinding.btnRecognize.setOnClickListener(this)
+        binding.btnClear.setOnClickListener(this)
+        binding.btnRecognize.setOnClickListener(this)
 
         // 抬笔时自动触发识别
-        mBinding.drawView.onStrokeFinishedListener = {
+        binding.drawView.onStrokeFinishedListener = {
             runClassification()
         }
 
@@ -63,37 +66,37 @@ class TFLiteDigitClassifierActivity :
                     setUseXNNPACK(true)
                 }
                 interpreter = Interpreter(modelBuffer, options)
-                mBinding.tvPrediction.text = "识别结果: 准备就绪，请在画板上写字"
+                binding.tvPrediction.text = "识别结果: 准备就绪，请在画板上写字"
             } catch (e: Exception) {
-                mBinding.tvPrediction.text = "初始化模型失败: ${e.message}"
+                binding.tvPrediction.text = "初始化模型失败: ${e.message}"
             }
         }
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnClear -> {
-                mBinding.drawView.clear()
-                mBinding.tvPrediction.text = "识别结果: 画板已清空"
-                mBinding.tvLatency.text = "推理耗时: - ms"
-                mBinding.tvDistribution.text = "0: -\n1: -\n2: -\n3: -\n4: -\n5: -\n6: -\n7: -\n8: -\n9: -"
+            binding.btnClear -> {
+                binding.drawView.clear()
+                binding.tvPrediction.text = "识别结果: 画板已清空"
+                binding.tvLatency.text = "推理耗时: - ms"
+                binding.tvDistribution.text = "0: -\n1: -\n2: -\n3: -\n4: -\n5: -\n6: -\n7: -\n8: -\n9: -"
             }
 
-            mBinding.btnRecognize -> {
+            binding.btnRecognize -> {
                 runClassification()
             }
         }
     }
 
     private fun runClassification() {
-        if (mBinding.drawView.isCanvasEmpty()) {
-            mBinding.tvPrediction.text = "识别结果: 画布为空，请先绘制数字"
+        if (binding.drawView.isCanvasEmpty()) {
+            binding.tvPrediction.text = "识别结果: 画布为空，请先绘制数字"
             return
         }
 
-        val bitmap = mBinding.drawView.exportBitmap(28, 28) ?: return
+        val bitmap = binding.drawView.exportBitmap(28, 28) ?: return
         val currentInterpreter = interpreter ?: run {
-            mBinding.tvPrediction.text = "识别失败: Interpreter 尚未就绪"
+            binding.tvPrediction.text = "识别失败: Interpreter 尚未就绪"
             return
         }
 
@@ -120,8 +123,8 @@ class TFLiteDigitClassifierActivity :
                 val predictedDigit = resultProbabilities.indices.maxByOrNull { resultProbabilities[it] } ?: 0
                 val confidence = resultProbabilities[predictedDigit] * 100
 
-                mBinding.tvPrediction.text = "识别结果: 【 $predictedDigit 】 (置信度: ${"%.1f".format(confidence)}%)"
-                mBinding.tvLatency.text = "推理耗时: ${"%.2f".format(elapsedMs)} ms (CPU + XNNPACK)"
+                binding.tvPrediction.text = "识别结果: 【 $predictedDigit 】 (置信度: ${"%.1f".format(confidence)}%)"
+                binding.tvLatency.text = "推理耗时: ${"%.2f".format(elapsedMs)} ms (CPU + XNNPACK)"
 
                 // 构建 0~9 概率分布条形图效果
                 val sb = StringBuilder()
@@ -133,9 +136,9 @@ class TFLiteDigitClassifierActivity :
                     val isTop = if (i == predictedDigit) " 👈 (Top)" else ""
                     sb.append("数字 $i: $bar $percent%$isTop\n")
                 }
-                mBinding.tvDistribution.text = sb.toString().trimEnd()
+                binding.tvDistribution.text = sb.toString().trimEnd()
             } catch (e: Exception) {
-                mBinding.tvPrediction.text = "识别异常: ${e.message}"
+                binding.tvPrediction.text = "识别异常: ${e.message}"
             }
         }
     }

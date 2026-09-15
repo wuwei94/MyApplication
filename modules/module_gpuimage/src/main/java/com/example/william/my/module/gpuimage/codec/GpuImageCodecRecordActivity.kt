@@ -25,13 +25,20 @@ import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
 import java.io.File
 
 /**
- * 经典 EGL 共享上下文 + MediaCodec 滤镜录像示例
+ * GPUImage — EGL 共享上下文 + MediaCodec 硬编滤镜录像
  *
- * 核心技术链路：
- * 1. 取景：CameraX ImageAnalysis 连续取帧，经 JNI 转换后上传 NV21 纹理，GLSurfaceView 逐帧渲染；
- * 2. 录像：GL 线程捕获当前 EGLContext，创建指向 [android.media.MediaCodec] InputSurface 的
- *    EGLWindowSurface，在绘制屏幕帧的同时重放绘制到编码器，配合 AudioRecord 采样与 MediaMuxer 混流封装为 MP4；
- * 3. 视频回放：内嵌卡片式浮层，支持无缝重放生成的 MP4 视频。
+ * 经典 OpenGL 滤镜录像方案：GL 线程捕获当前 EGLContext，创建指向 MediaCodec
+ * InputSurface 的 EGLWindowSurface，在绘制屏幕帧的同时重放绘制到编码器，
+ * 配合 AudioRecord 采样与 MediaMuxer 混流封装为 MP4。与 CameraEffect 方案
+ * 相比，本方案完全掌控 EGL 上下文与编码管线。
+ *
+ * 核心机制与避坑点：
+ * 1. EGL 共享上下文：从 GLSurfaceView 的 EGLContext 派生编码器 Surface 的上下文
+ * 2. 双路渲染：同一帧先绘制到屏幕 GLSurfaceView，再重放到 MediaCodec InputSurface
+ * 3. 硬编码混流：MediaCodec H.264 硬编 + AudioRecord 采样 + MediaMuxer 封装 MP4
+ * 4. 录像回放：内嵌卡片式浮层，MediaPlayer + TextureView 无缝重放 MP4
+ *
+ * https://github.com/cats-oss/android-gpuimage
  */
 @Route(path = RouterPath.GpuImage.CodecRecord)
 class GpuImageCodecRecordActivity :
@@ -39,7 +46,7 @@ class GpuImageCodecRecordActivity :
     View.OnClickListener {
 
     private val codecRecordHelper by lazy {
-        GpuImageCodecRecordHelper(this, mBinding.glSurfaceView)
+        GpuImageCodecRecordHelper(this, binding.glSurfaceView)
     }
 
     private var mediaPlayer: MediaPlayer? = null
@@ -66,19 +73,19 @@ class GpuImageCodecRecordActivity :
         super.initView(savedInstanceState)
 
         GpuImageChipHelper.populate(
-            container = mBinding.chipContainer,
+            container = binding.chipContainer,
             names = GpuImageFilterCatalog.FILTERS.map { it.name },
             initialIndex = 0,
         ) { index ->
             val spec = GpuImageFilterCatalog.FILTERS[index]
             codecRecordHelper.setFilter(spec.factory)
-            mBinding.tvCurrentFilter.text = spec.name
+            binding.tvCurrentFilter.text = spec.name
         }
 
-        mBinding.btnRecord.setOnClickListener(this)
-        mBinding.btnClosePreview.setOnClickListener(this)
+        binding.btnRecord.setOnClickListener(this)
+        binding.btnClosePreview.setOnClickListener(this)
 
-        mBinding.previewTexture.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+        binding.previewTexture.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
             override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
                 currentVideoFile?.let {
                     adjustTextureTransform(it)
@@ -102,7 +109,7 @@ class GpuImageCodecRecordActivity :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (mBinding.layoutPreview.isVisible) {
+                    if (binding.layoutPreview.isVisible) {
                         closePreview()
                     } else {
                         isEnabled = false
@@ -117,7 +124,7 @@ class GpuImageCodecRecordActivity :
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnRecord -> {
+            binding.btnRecord -> {
                 if (codecRecordHelper.isRecording()) {
                     updateRecordButton(false)
                     Utils.toast("正在停止录像并处理 MP4...")
@@ -132,7 +139,7 @@ class GpuImageCodecRecordActivity :
                 }
             }
 
-            mBinding.btnClosePreview -> {
+            binding.btnClosePreview -> {
                 closePreview()
             }
         }
@@ -140,11 +147,11 @@ class GpuImageCodecRecordActivity :
 
     private fun updateRecordButton(recording: Boolean) {
         if (recording) {
-            mBinding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_stop)
-            mBinding.btnRecord.contentDescription = "停止录像"
+            binding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_stop)
+            binding.btnRecord.contentDescription = "停止录像"
         } else {
-            mBinding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_start)
-            mBinding.btnRecord.contentDescription = "开始录像"
+            binding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_start)
+            binding.btnRecord.contentDescription = "开始录像"
         }
     }
 
@@ -178,11 +185,11 @@ class GpuImageCodecRecordActivity :
     }
 
     private fun showVideoPreview(videoFile: File) {
-        mBinding.layoutPreview.visibility = View.VISIBLE
+        binding.layoutPreview.visibility = View.VISIBLE
 
         currentVideoFile = videoFile
-        if (mBinding.previewTexture.isAvailable) {
-            mBinding.previewTexture.surfaceTexture?.let { st ->
+        if (binding.previewTexture.isAvailable) {
+            binding.previewTexture.surfaceTexture?.let { st ->
                 startTexturePlayer(Surface(st), videoFile)
             }
         }
@@ -212,9 +219,9 @@ class GpuImageCodecRecordActivity :
     }
 
     private fun adjustTextureTransform(videoFile: File) {
-        mBinding.previewTexture.post {
-            val viewWidth = mBinding.previewTexture.width
-            val viewHeight = mBinding.previewTexture.height
+        binding.previewTexture.post {
+            val viewWidth = binding.previewTexture.width
+            val viewHeight = binding.previewTexture.height
             if (viewWidth <= 0 || viewHeight <= 0) return@post
 
             var videoWidth = 0.0
@@ -265,7 +272,7 @@ class GpuImageCodecRecordActivity :
 
             val matrix = Matrix()
             matrix.setScale(scaleX, scaleY, viewWidth / 2f, viewHeight / 2f)
-            mBinding.previewTexture.setTransform(matrix)
+            binding.previewTexture.setTransform(matrix)
         }
     }
 
@@ -285,8 +292,8 @@ class GpuImageCodecRecordActivity :
     private fun closePreview() {
         stopTexturePlayer()
         currentVideoFile = null
-        mBinding.layoutPreview.visibility = View.GONE
-        mBinding.previewTexture.setTransform(Matrix())
+        binding.layoutPreview.visibility = View.GONE
+        binding.previewTexture.setTransform(Matrix())
     }
 
     override fun fitsSystemWindows(): Boolean = false

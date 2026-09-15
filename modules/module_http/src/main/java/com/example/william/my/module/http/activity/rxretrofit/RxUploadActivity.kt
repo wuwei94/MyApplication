@@ -16,7 +16,20 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import java.io.File
 
-/** Multipart 单文件与多文件上传示例。 */
+/**
+ * RxUpload — Retrofit + RxJava 文件上传封装
+ *
+ * RxUpload 基于 Retrofit Multipart 封装单文件与多文件上传，
+ * 提供进度回调、生命周期绑定与批量并发队列能力。
+ *
+ * 核心机制与避坑点：
+ * 1. Multipart 上传：支持单文件与多文件字段映射
+ * 2. 进度回调：RxUploadCallback.onProgress 原位回报上传进度
+ * 3. 生命周期绑定：setProvider(owner) 与 onFinally 统一收尾
+ * 4. 批量并发：多文件任务共享同一 Retrofit 实例并发上传
+ *
+ * https://square.github.io/retrofit
+ */
 @Route(path = RouterPath.Http.RxUpload)
 class RxUploadActivity : BasicResponseActivity() {
 

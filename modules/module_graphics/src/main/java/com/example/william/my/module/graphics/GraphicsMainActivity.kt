@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 图形渲染模块入口页
+ * 图形渲染模块入口 — 导航到 RenderEffect、RenderScript 等示例页面。
  *
  * 展示 Android 底层图形图像处理、着色器与渲染特效的示例列表，点击列表项跳转到对应的示例页。
  */

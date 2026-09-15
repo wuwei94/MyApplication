@@ -23,11 +23,14 @@ import kotlin.math.abs
 /**
  * MPAndroidChart — 柱状图 (BarChart)
  *
- * 核心特性：
- * 1. 季度目标 vs 实际销售额分组柱状图
- * 2. X 轴季度标签格式化与居中对齐
- * 3. 柱体触摸高亮与 MarkerView 提示
- * 4. 实时联动底部业绩达成率与差额分析
+ * BarChart 是 MPAndroidChart 的柱状图视图，支持单组/分组柱体、动画与触摸高亮。
+ * 本页演示季度目标 vs 实际销售额的分组柱状图，并联动底部业绩分析看板。
+ *
+ * 核心机制与避坑点：
+ * 1. 分组柱状图：groupBars() 将多组 BarDataSet 并排展示，groupSpace/barSpace 控制间距
+ * 2. X 轴格式化：IndexAxisValueFormatter 绑定季度标签，setCenterAxisLabels 居中对齐
+ * 3. 触摸高亮：OnChartValueSelectedListener 响应选中，自定义 MarkerView 悬浮提示
+ * 4. 数据联动：选中柱体后实时刷新底部达成率、差额与文字分析
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
@@ -48,7 +51,7 @@ class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {
     }
 
     private fun initBarChart() {
-        mBinding.barChart.apply {
+        binding.barChart.apply {
             description.isEnabled = false
             setTouchEnabled(true)
             isDragEnabled = false
@@ -126,16 +129,16 @@ class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {
         val diff = actual - target
         val rate = (actual / target) * 100
 
-        mBinding.tvMetricsTitle.text = "${quarters[index]} 业绩达成分析"
-        mBinding.tvBadgeStatus.text = if (rate >= 100) "超额完成" else "未达预期"
-        mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
+        binding.tvMetricsTitle.text = "${quarters[index]} 业绩达成分析"
+        binding.tvBadgeStatus.text = if (rate >= 100) "超额完成" else "未达预期"
+        binding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
             if (rate >= 100) Color.parseColor("#10B981") else Color.parseColor("#EF4444"),
         )
 
-        mBinding.tvTarget.text = "$target 万"
-        mBinding.tvActual.text = "$actual 万"
-        mBinding.tvDiff.text = "${if (diff > 0) "+" else ""}${String.format("%.1f", diff)} 万"
-        mBinding.tvRate.text = "${String.format("%.1f", rate)}%"
-        mBinding.tvRemark.text = "分析：Q${index + 1} 实际营收 ${if (diff >= 0) "超过" else "低于"} 目标 ${abs(diff)} 万元"
+        binding.tvTarget.text = "$target 万"
+        binding.tvActual.text = "$actual 万"
+        binding.tvDiff.text = "${if (diff > 0) "+" else ""}${String.format("%.1f", diff)} 万"
+        binding.tvRate.text = "${String.format("%.1f", rate)}%"
+        binding.tvRemark.text = "分析：Q${index + 1} 实际营收 ${if (diff >= 0) "超过" else "低于"} 目标 ${abs(diff)} 万元"
     }
 }

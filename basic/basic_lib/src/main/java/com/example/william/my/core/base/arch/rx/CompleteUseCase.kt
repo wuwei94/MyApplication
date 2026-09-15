@@ -17,24 +17,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 abstract class CompleteUseCase {
 
     private var disposable: Disposable? = null
-    private val mBackgroundExecutor: Scheduler
-    private val mScheduledExecutor: Scheduler
+    private val backgroundExecutor: Scheduler
+    private val scheduledExecutor: Scheduler
 
     constructor() {
-        mBackgroundExecutor = Schedulers.io()
-        mScheduledExecutor = AndroidSchedulers.mainThread()
+        backgroundExecutor = Schedulers.io()
+        scheduledExecutor = AndroidSchedulers.mainThread()
     }
 
     constructor(backgroundExecutor: Scheduler, scheduledExecutor: Scheduler) {
-        mBackgroundExecutor = backgroundExecutor
-        mScheduledExecutor = scheduledExecutor
+        this.backgroundExecutor = backgroundExecutor
+        this.scheduledExecutor = scheduledExecutor
     }
 
     protected abstract fun buildUseCaseObservable(): Completable
     fun execute(observer: DisposableCompletableObserver) {
         disposable = buildUseCaseObservable()
-            .subscribeOn(mBackgroundExecutor)
-            .observeOn(mScheduledExecutor)
+            .subscribeOn(backgroundExecutor)
+            .observeOn(scheduledExecutor)
             .subscribeWith(observer)
     }
 

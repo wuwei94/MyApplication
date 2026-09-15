@@ -30,7 +30,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Compose模块入口页
+ * Compose 模块入口 — 导航到基础组件、布局、手势、导航、Canvas 图表等示例页面。
  *
  * 展示 Jetpack Compose 基础组件、布局容器、手势交互、导航体系与 Canvas 数据可视化等示例列表。
  */
@@ -124,9 +124,9 @@ class ComposeMainActivity : ComponentActivity() {
         ) {
             items(itemsList) { item ->
                 LazyColumnItemExample(item) {
-                    if (!item.mRouterPath.isNullOrEmpty()) {
+                    if (!item.routerPath.isNullOrEmpty()) {
                         try {
-                            ARouter.getInstance().build(item.mRouterPath).navigation()
+                            ARouter.getInstance().build(item.routerPath).navigation()
                         } catch (e: HandlerException) {
                             e.printStackTrace()
                         }
@@ -138,8 +138,8 @@ class ComposeMainActivity : ComponentActivity() {
 
     @Composable
     fun LazyColumnItemExample(routerItem: RouterItem? = null, onClick: () -> Unit) {
-        val title = routerItem?.mRouterName.orEmpty()
-        val path = routerItem?.mRouterPath.orEmpty()
+        val title = routerItem?.routerName.orEmpty()
+        val path = routerItem?.routerPath.orEmpty()
 
         if (path.isEmpty()) {
             if (title.isNotEmpty()) {

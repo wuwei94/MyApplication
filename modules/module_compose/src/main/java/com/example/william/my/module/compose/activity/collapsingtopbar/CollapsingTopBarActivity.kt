@@ -39,7 +39,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * 在 Compose 中替代传统 View 体系的 CoordinatorLayout + AppBarLayout + CollapsingToolbarLayout。
  *
- * 核心机制：
+ * 核心机制与避坑点：
  * 1. 嵌套滚动连接：[Modifier.nestedScroll] 将列表的嵌套滑动事件分发给 [TopAppBarScrollBehavior]；
  * 2. 折叠吸顶行为：[TopAppBarDefaults.exitUntilCollapsedScrollBehavior]，向上滑动时标题视差折叠为标准高度并吸顶；
  * 3. 展开大标题：使用 [LargeTopAppBar]，折叠时平滑过渡为普通单行 TopAppBar 样式；
@@ -47,6 +47,8 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/components/app-bars
+ *
+ * https://developer.android.com/develop/ui/compose/components/app-bars
  */
 @Route(path = RouterPath.Compose.CollapsingTopBar)
 class CollapsingTopBarActivity : ComponentActivity() {

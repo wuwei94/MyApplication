@@ -10,7 +10,7 @@ import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
  *
  * Mavericks 是 Airbnb 开源的 MVI 框架，基于 Kotlin 和 ViewModel。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. MVI 架构：基于 Model-View-Intent 架构模式
  * 2. 不可变状态：使用不可变状态对象，保证数据一致性
  * 3. 简单易用：API 简单，学习成本低

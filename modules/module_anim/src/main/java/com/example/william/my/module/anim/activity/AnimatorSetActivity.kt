@@ -12,33 +12,24 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * AnimatorSet — 动画组合与编排
  *
- * 将多个 Animator（ObjectAnimator / ValueAnimator 等）组合在一起，
- * 精确控制它们的播放顺序和并发关系。支持顺序播放、同时播放和自定义编排三种模式。
+ * 将多个 Animator（ObjectAnimator / ValueAnimator 等）组合在一起，精确控制播放顺序与并发关系。
  *
- * 核心原理：
- * 1. **playSequentially(animator1, animator2, ...)** — 顺序播放
- *    - 按传入顺序依次执行，前一个结束后才开始下一个
- * 2. **playTogether(animator1, animator2, ...)** — 同时播放
- *    - 所有动画在同一时刻开始，同时执行
- * 3. **AnimatorSet.Builder** — 精细编排
- *    - play(a).with(b) — a 和 b 同时播放
- *    - play(a).before(b) — a 在 b 之前播放
- *    - play(a).after(b) — a 在 b 之后播放
- *    - 可链式组合，构建复杂的动画时序
+ * 核心机制与避坑点：
+ * 1. 顺序播放：`playSequentially(...)` 按传入顺序依次执行
+ * 2. 同时播放：`playTogether(...)` 同一时刻启动全部动画
+ * 3. Builder 编排：`play(a).with/before/after(b)` 表达复杂时序
+ * 4. 可链式组合：支撑入场/出场等多段联动效果
  *
- * 适用场景：
- * - 多个属性动画需要协同播放（如先缩放再旋转）
- * - 复杂的入场 / 出场动画编排
- * - 模拟 Material Design 的联动动画效果
+ * 单属性基础见 [ObjectAnimatorActivity]。
  *
- * @see ObjectAnimatorActivity 单个属性动画基础
+ * https://developer.android.google.cn/develop/ui/views/animations/prop-animation#choreography
  */
 @Route(path = RouterPath.Anim.AnimatorSet)
 class AnimatorSetActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mBinding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.shared_color_primary))
+        binding.basicsImage.setBackgroundColor(ContextCompat.getColor(this, R.color.shared_color_primary))
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
@@ -56,8 +47,9 @@ class AnimatorSetActivity : BasicImageActivity() {
     }
 
     /**
-     * playSequentially() — 顺序播放
-     * 动画按传入顺序依次执行，前一个结束后才开始下一个
+     * playSequentially() 顺序播放。
+     *
+     * 动画按传入顺序依次执行，前一个结束后才开始下一个。
      */
     private fun playSequentially() {
         val set = AnimatorSet()
@@ -66,8 +58,9 @@ class AnimatorSetActivity : BasicImageActivity() {
     }
 
     /**
-     * playTogether() — 同时播放
-     * 所有动画在同一时刻开始，同时执行
+     * playTogether() 同时播放。
+     *
+     * 所有动画在同一时刻开始，同时执行。
      */
     private fun playTogether() {
         val set = AnimatorSet()
@@ -76,12 +69,10 @@ class AnimatorSetActivity : BasicImageActivity() {
     }
 
     /**
-     * AnimatorSet.Builder — 精细编排
-     * play(a).with(b)    — a 和 b 同时播放
-     * play(a).before(b)  — a 在 b 之前播放
-     * play(a).after(b)   — a 在 b 之后播放
+     * AnimatorSet.Builder 精细编排。
      *
-     * 本例：alpha 和 rotation 同时播放，然后 scaleX 再播放
+     * play(a).with(b) 与 b 同时播放；play(a).before(b) / after(b) 控制先后。
+     * 本例：alpha 和 rotation 同时播放，然后 scaleX 再播放。
      */
     private fun playWithBuilder() {
         val alpha = createAlpha()
@@ -93,9 +84,9 @@ class AnimatorSetActivity : BasicImageActivity() {
         set.start()
     }
 
-    private fun createAlpha() = ObjectAnimator.ofFloat(mBinding.basicsImage, "alpha", 1f, 0f, 1f).setDuration(1000)
+    private fun createAlpha() = ObjectAnimator.ofFloat(binding.basicsImage, "alpha", 1f, 0f, 1f).setDuration(1000)
 
-    private fun createRotation() = ObjectAnimator.ofFloat(mBinding.basicsImage, "rotation", 0f, 360f).setDuration(1000)
+    private fun createRotation() = ObjectAnimator.ofFloat(binding.basicsImage, "rotation", 0f, 360f).setDuration(1000)
 
-    private fun createScaleX() = ObjectAnimator.ofFloat(mBinding.basicsImage, "scaleX", 1f, 0.5f, 1f).setDuration(1000)
+    private fun createScaleX() = ObjectAnimator.ofFloat(binding.basicsImage, "scaleX", 1f, 0.5f, 1f).setDuration(1000)
 }

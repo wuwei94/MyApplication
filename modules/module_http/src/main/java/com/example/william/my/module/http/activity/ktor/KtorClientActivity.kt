@@ -16,11 +16,13 @@ import kotlinx.coroutines.launch
  *
  * 演示固定使用 OkHttp Engine 的项目级 Ktor 客户端封装。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 统一封装：项目级统一的网络请求封装
  * 2. OkHttp Engine：使用 OkHttp 作为底层引擎
  * 3. 协程支持：原生支持 Kotlin 协程
  * 4. 配置灵活：支持 baseUrl、timeout 等配置
+ *
+ * https://ktor.io/
  */
 @Route(path = RouterPath.Http.KtorClient)
 class KtorClientActivity : BasicResponseActivity() {

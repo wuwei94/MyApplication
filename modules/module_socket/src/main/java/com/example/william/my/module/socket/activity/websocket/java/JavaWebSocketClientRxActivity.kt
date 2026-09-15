@@ -10,9 +10,18 @@ import com.example.william.my.core.javaws.client.JavaWebSocketRxObserver
 import org.java_websocket.client.WebSocketClient
 
 /**
- * Java-WebSocket RxJava 封装示例
+ * Java-WebSocket + RxJava — Observable 事件流消费
  *
- * 演示使用 JavaWebSocketClientRx + JavaWebSocketRxObserver 进行 WebSocket 通信
+ * 演示使用 JavaWebSocketClientRx + JavaWebSocketRxObserver 进行 WebSocket 通信，
+ * 将生命周期回调桥接为 RxJava 事件流，由 Observer 统一消费。
+ *
+ * 核心机制与避坑点：
+ * 1. Observable 桥接：createWebSocket 返回可订阅的事件源
+ * 2. 观察者封装：JavaWebSocketRxObserver 收敛 open/message/closed/error
+ * 3. 统一释放：页面销毁时 cancel(url) 断开连接
+ * 4. 轻量实现：不依赖 OkHttp 栈，库内自包含客户端能力
+ *
+ * https://github.com/TooTallNate/Java-WebSocket
  */
 @Route(path = RouterPath.Socket.JavaWebSocketClientRx)
 class JavaWebSocketClientRxActivity : BasicResponseActivity() {
@@ -62,7 +71,7 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
                 }
 
                 override fun onError(exception: Exception) {
-                    appendLogAccent("【错误】${exception.message}")
+                    appendLogAccent("✗ ${exception.message}")
                 }
             })
     }
@@ -73,7 +82,7 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

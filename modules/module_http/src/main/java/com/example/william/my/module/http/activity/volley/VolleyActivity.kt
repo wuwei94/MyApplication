@@ -17,33 +17,11 @@ import org.json.JSONObject
  *
  * Volley 是 Google 开发的网络请求框架，适合高并发、小数据量的网络请求。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 请求队列：自动管理请求队列，支持优先级排序
  * 2. 缓存机制：自动缓存请求结果，支持离线访问
  * 3. 线程管理：自动管理线程，回调在主线程执行
  * 4. 丰富的请求类型：支持 GET/POST/PUT/DELETE，支持 Form 和 JSON 请求体
- *
- * 基本用法：
- * ```kotlin
- * // 创建请求队列
- * val requestQueue = Volley.newRequestQueue(context)
- *
- * // 创建请求
- * val stringRequest = StringRequest(
- *     Request.Method.GET,
- *     "https://api.example.com/data",
- *     { response -> /* 处理响应 */ },
- *     { error -> /* 处理错误 */ }
- * )
- *
- * // 添加到队列
- * requestQueue.add(stringRequest)
- * ```
- *
- * 适用场景：
- * - 高并发、小数据量的网络请求
- * - API 请求、数据加载
- * - 需要缓存机制的场景
  *
  * https://github.com/google/volley
  */

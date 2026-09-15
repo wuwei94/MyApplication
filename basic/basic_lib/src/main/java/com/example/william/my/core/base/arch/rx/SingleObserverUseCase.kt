@@ -17,25 +17,25 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 abstract class SingleObserverUseCase<ReturnType : Any> {
 
     private var disposable: Disposable? = null
-    private val mBackgroundExecutor: Scheduler
-    private val mScheduledExecutor: Scheduler
+    private val backgroundExecutor: Scheduler
+    private val scheduledExecutor: Scheduler
 
     constructor() {
-        mBackgroundExecutor = Schedulers.io()
-        mScheduledExecutor = AndroidSchedulers.mainThread()
+        backgroundExecutor = Schedulers.io()
+        scheduledExecutor = AndroidSchedulers.mainThread()
     }
 
     constructor(backgroundExecutor: Scheduler, scheduledExecutor: Scheduler) {
-        mBackgroundExecutor = backgroundExecutor
-        mScheduledExecutor = scheduledExecutor
+        this.backgroundExecutor = backgroundExecutor
+        this.scheduledExecutor = scheduledExecutor
     }
 
     abstract fun buildUseCaseObservable(): Single<ReturnType>
 
     fun execute(observer: DisposableSingleObserver<ReturnType>) {
         disposable = buildUseCaseObservable()
-            .subscribeOn(mBackgroundExecutor)
-            .observeOn(mScheduledExecutor)
+            .subscribeOn(backgroundExecutor)
+            .observeOn(scheduledExecutor)
             .subscribeWith(observer)
     }
 

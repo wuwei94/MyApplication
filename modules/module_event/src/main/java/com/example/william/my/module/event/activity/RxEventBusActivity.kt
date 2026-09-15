@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
  *
  * 利用 RxJava 的 PublishSubject 实现的事件总线，支持响应式编程。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 响应式编程：基于 RxJava，支持丰富的操作符
  * 2. 线程调度：支持灵活的线程切换
  * 3. 粘性事件：支持粘性事件，使用 BehaviorSubject
@@ -23,21 +23,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
  * 特性对比：
  * 延迟发送: ❌ | 有序接收: ✅ | Sticky: ✅ | 生命周期感知: ❌ | 可跨进程: ❌ | 线程分发: ✅
  *
- * 基本用法：
- * ```kotlin
- * // 订阅事件
- * val disposable = RxEventBus.observeEvent(MessageEvent::class.java)
- *     .subscribe { event ->
- *         // 处理事件
- *     }
- *
- * // 发送事件
- * RxEventBus.postEvent(MessageEvent("Hello"))
- *
- * // 取消订阅
- * disposable.dispose()
- * ```
- *
  * 注意：RxEventBus 不具备生命周期感知能力，必须通过 CompositeDisposable 在 onDestroy 中解绑，防止内存泄漏。
  *
  * https://github.com/ReactiveX/RxJava
@@ -45,7 +30,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 @Route(path = RouterPath.Event.RxEventBus)
 class RxEventBusActivity : BasicResponseActivity() {
 
-    private val mDisposable = CompositeDisposable()
+    private val disposables = CompositeDisposable()
     private var isObserving = false
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -80,13 +65,13 @@ class RxEventBusActivity : BasicResponseActivity() {
 
     private fun toggleObserve() {
         if (!isObserving) {
-            mDisposable.clear()
-            mDisposable.add(
+            disposables.clear()
+            disposables.add(
                 RxEventBus.observeEvent(GlobalEvent::class.java).subscribe {
                     appendLog("收到普通事件：${it.message}")
                 },
             )
-            mDisposable.add(
+            disposables.add(
                 RxEventBus.observeEvent(StickyEvent::class.java).subscribe {
                     appendLog("收到粘性事件：${it.message}")
                 },
@@ -94,7 +79,7 @@ class RxEventBusActivity : BasicResponseActivity() {
             isObserving = true
             appendLog("已开启 RxEventBus 监听")
         } else {
-            mDisposable.clear()
+            disposables.clear()
             isObserving = false
             appendLog("已取消 RxEventBus 监听")
         }
@@ -102,6 +87,6 @@ class RxEventBusActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mDisposable.clear()
+        disposables.clear()
     }
 }

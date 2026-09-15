@@ -14,15 +14,15 @@ import javax.inject.Inject
  */
 class LoadSirInitImpl @Inject constructor() : IAppInit {
 
-    private lateinit var mApp: Application
+    private lateinit var app: Application
 
     override fun init(app: Application) {
-        this.mApp = app
+        this.app = app
 
         initLoadSir()
     }
 
-    override fun getApp(): Application = mApp
+    override fun getApp(): Application = app
 
     private fun initLoadSir() {
         LoadSir.beginBuilder()

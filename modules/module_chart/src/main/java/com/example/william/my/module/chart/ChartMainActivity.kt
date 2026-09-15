@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 数据可视化模块入口（MPAndroidChart）
+ * 数据可视化模块入口 — 导航到 MPAndroidChart 折线/柱状/饼图/雷达与联动看板等示例页面。
  *
  * GitHub: https://github.com/PhilJay/MPAndroidChart
  *

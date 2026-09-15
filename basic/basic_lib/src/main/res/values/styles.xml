@@ -1,21 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- 应用基础主题（M3 Light） -->
     <style name="base_AppTheme" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Primary brand color. -->
+        <!-- 品牌主色 -->
         <item name="colorPrimary">@color/base_purple_500</item>
         <item name="colorOnPrimary">@color/base_white</item>
         <item name="colorPrimaryContainer">@color/base_purple_200</item>
         <item name="colorOnPrimaryContainer">@color/base_black</item>
-        <!-- Secondary brand color. -->
+        <!-- 品牌辅色 -->
         <item name="colorSecondary">@color/base_teal_200</item>
         <item name="colorOnSecondary">@color/base_black</item>
         <item name="colorSecondaryContainer">@color/base_teal_200</item>
         <item name="colorOnSecondaryContainer">@color/base_black</item>
-        <!-- Status bar and navigation bar color. -->
+        <!-- 状态栏 / 导航栏透明（沉浸式表现，不等于启用 edge-to-edge） -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <!-- Customize your theme here. -->
-        <!-- 在 Android 15（API 35）中，系统默认启用了 edge-to-edge 无边框设计 -->
+        <!-- Android 15（API 35）默认强制 edge-to-edge；本主题显式 opt-out 以保持既有布局边衬 -->
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
     </style>
 

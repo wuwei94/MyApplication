@@ -13,19 +13,21 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.Locale
 
 /**
- * Jetpack JankStats + AndroidX Tracing —— 运行时卡顿监控闭环
+ * JankStats + AndroidX Tracing — 运行时卡顿监控闭环
  *
  * 与 [com.example.william.my.module.performance.activity.BaselineProfilesActivity] 的分工：
  * - Baseline Profiles + Macrobenchmark：解决**实验室阶段**的冷启动与掉帧，属于发布前的离线优化；
  * - JankStats + 自定义 Trace Section：解决**线上运行阶段**的真实设备卡顿归因，属于运行时的持续观测。
  *
- * 核心 API：
- * 1. [JankStats.createAndTrack]：注册逐帧回调，回调在后台线程触发，逐个上报 [androidx.metrics.performance.FrameData]
- *    （isJank 卡顿标记、frameDurationUiNanos 帧耗时、states 该帧所处的 UI 状态）；
- * 2. [PerformanceMetricsState.getHolderForHierarchy]：为视图树绑定状态容器，卡顿帧会自动携带业务状态，
- *    便于把卡顿归因到具体页面/操作而不是只得到一个百分比；
- * 3. [trace] / [Trace.beginAsyncSection]：写入自定义 trace section，让 System Trace / Perfetto 中
- *    除了系统帧数据外还能看到业务自身的耗时区间。
+ * 核心机制与避坑点：
+ * 1. JankStats.createAndTrack：注册逐帧回调，回调在后台线程触发，逐个上报 FrameData
+ *    （isJank 卡顿标记、frameDurationUiNanos 帧耗时、states 该帧所处的 UI 状态）
+ * 2. PerformanceMetricsState.getHolderForHierarchy：为视图树绑定状态容器，卡顿帧会自动携带业务状态，
+ *    便于把卡顿归因到具体页面/操作而不是只得到一个百分比
+ * 3. trace / Trace.beginAsyncSection：写入自定义 trace section，让 System Trace / Perfetto 中
+ *    除了系统帧数据外还能看到业务自身的耗时区间
+ *
+ * https://developer.android.com/jetpack/androidx/releases/metrics
  */
 @Route(path = RouterPath.Performance.JankStats)
 class JankStatsActivity : BasicResponseActivity() {

@@ -11,9 +11,9 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRespons
  * ViewPager2 基于 RecyclerView 实现，所以需要提供 RecyclerView.Adapter
  * 适合需要 RecyclerView 特性（如 ViewHolder 复用）的场景
  *
- * @param mData 页面数据列表
+ * @param data 页面数据列表
  */
-class ViewPagerAdapter2(private val mData: List<String> = emptyList()) : RecyclerView.Adapter<ViewPagerAdapter2.ViewHolder>() {
+class ViewPagerAdapter2(private val data: List<String> = emptyList()) : RecyclerView.Adapter<ViewPagerAdapter2.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = SharedLayoutResponseBinding.inflate(
@@ -25,10 +25,10 @@ class ViewPagerAdapter2(private val mData: List<String> = emptyList()) : Recycle
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.basicsResponse.text = mData.getOrNull(position) ?: ""
+        holder.binding.basicsResponse.text = data.getOrNull(position) ?: ""
     }
 
-    override fun getItemCount(): Int = mData.size
+    override fun getItemCount(): Int = data.size
 
     class ViewHolder(val binding: SharedLayoutResponseBinding) : RecyclerView.ViewHolder(binding.root)
 }

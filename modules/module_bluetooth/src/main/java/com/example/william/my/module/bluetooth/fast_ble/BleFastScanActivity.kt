@@ -11,26 +11,30 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.UUID
 
 /**
- * FastBle 扫描与规则过滤示例
+ * FastBle 扫描与规则过滤 — 链式 API
  *
- * 【FastBle —— 极简全能型（代步车）】
- * - 功能覆盖：全都有（扫描、连接、读写、Notify、MTU、基础重连）。
- * - 特点：API 最傻瓜、最直接。原生 Android 需要先找 Service 对象，再找 Characteristic 对象，写一堆回调；FastBle 直接传字符串就能读写：read(mac, serviceUUID, charUUID, callback)。
- * - 适合谁：新手入门、中小型项目、业务逻辑简单的蓝牙设备。
+ * FastBle 以字符串 UUID 与回调简化 BLE；本页演示扫描规则配置与三段回调。
  *
- * 演示特性：
- * 1. [BleScanRuleConfig] 链式构建扫描过滤规则（Service UUID、设备名称、MAC、超时时间等）
- * 2. [BleManager.getInstance().scan] 链式启动与监听
- * 3. 扫描回调：onScanStarted / onScanning / onScanFinished
+ * 库选型定位（四栈横评中的 FastBle）：
+ * - 功能覆盖：扫描、连接、读写、Notify、MTU、基础重连均有
+ * - API 成本：最低。原生需先拿 Service/Characteristic 再挂多层回调；FastBle 直接
+ *   `read(mac, serviceUUID, charUUID, callback)` 级别调用
+ * - 适合：新手入门、中小型项目、业务逻辑较简单的外设
+ *
+ * 核心机制与避坑点：
+ * 1. 规则链：`BleScanRuleConfig` 配置 UUID / 名称 / MAC / 超时
+ * 2. 一键扫描：`BleManager.getInstance().scan(...)`
+ * 3. 生命周期回调：onScanStarted / onScanning / onScanFinished
+ *
+ * https://github.com/Jasonchenlijian/FastBle
  */
 @Route(path = RouterPath.Bluetooth.FastScan)
 class BleFastScanActivity : BasicResponseActivity() {
 
-    private var mIsScanning = false
+    private var isScanning = false
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        // 初始化 FastBle 单例
         BleManager.getInstance().init(application)
         BleManager.getInstance()
             .enableLog(true)
@@ -80,7 +84,7 @@ class BleFastScanActivity : BasicResponseActivity() {
     }
 
     private fun startFastScan() {
-        if (mIsScanning) {
+        if (isScanning) {
             appendLog("⚠ 扫描正在进行中")
             return
         }
@@ -88,7 +92,7 @@ class BleFastScanActivity : BasicResponseActivity() {
         appendLog("🚀 启动 FastBle 扫描...")
         BleManager.getInstance().scan(object : BleScanCallback() {
             override fun onScanStarted(success: Boolean) {
-                mIsScanning = success
+                isScanning = success
                 if (success) {
                     appendLog("✓ FastBle 扫描已启动，监听中...")
                 } else {
@@ -109,7 +113,7 @@ class BleFastScanActivity : BasicResponseActivity() {
             }
 
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
-                mIsScanning = false
+                isScanning = false
                 val count = scanResultList?.size ?: 0
                 appendLog("🏁 FastBle 扫描结束，共发现 $count 个设备")
             }
@@ -117,12 +121,12 @@ class BleFastScanActivity : BasicResponseActivity() {
     }
 
     private fun stopFastScan() {
-        if (!mIsScanning) {
+        if (!isScanning) {
             appendLog("当前未在扫描")
             return
         }
         BleManager.getInstance().cancelScan()
-        mIsScanning = false
+        isScanning = false
         appendLog("✓ 已取消 FastBle 扫描")
     }
 
@@ -135,9 +139,9 @@ class BleFastScanActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mIsScanning) {
+        if (isScanning) {
             BleManager.getInstance().cancelScan()
-            mIsScanning = false
+            isScanning = false
         }
     }
 }

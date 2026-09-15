@@ -22,7 +22,17 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * ConstraintLayout
+ * ConstraintLayout — 声明式相对约束布局
+ *
+ * 演示 Compose 版 ConstraintLayout 的引用声明、约束DSL与解耦式 ConstraintSet。
+ *
+ * 核心机制与避坑点：
+ * 1. createRefs / constrainAs：为 Composable 声明引用并绑定约束，写法对齐 View 体系 ConstraintLayout；
+ * 2. Barrier 与 Guideline：createEndBarrier 跨组件栅栏、createGuidelineFromTop 百分比辅助线；
+ * 3. Chain 链式排列：createHorizontalChain 配合 ChainStyle.SpreadInside 控制多子项分布；
+ * 4. 解耦 ConstraintSet：将约束从布局树拆出，可在 BoxWithConstraints 中按横竖屏/屏宽切换约束集。
+ *
+ * https://developer.android.google.cn/develop/ui/compose/layouts/constraintlayout
  */
 @Route(path = RouterPath.Compose.ConstraintLayout)
 class ConstraintLayoutActivity : ComponentActivity() {

@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 网络模块入口页
+ * 网络模块入口 — 导航到 OkHttp、Retrofit、Ktor、Volley、Rx 上传下载等示例页面。
  *
  * 展示 OkHttp、Retrofit、Ktor、Volley、Rx 下载上传等网络方案的示例列表。
  */

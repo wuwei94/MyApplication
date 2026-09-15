@@ -35,7 +35,7 @@ import java.util.concurrent.Executors
 /**
  * 滤镜拍照专项辅助类
  *
- * 核心机制：
+ * 核心特性：
  * 1. 实时预览：CameraX [ImageAnalysis] 连续帧流 $\rightarrow$ [GPUImageRenderer] 实时着色上屏；
  * 2. 高清捕获：点击拍照时由 [ImageCapture] 捕获相机传感器全尺寸大图（千万级像素）；
  * 3. 离屏渲染：使用 [GPUImage] 离屏应用当前选中的同款 Shader 滤镜，保存高清 JPG 文件。

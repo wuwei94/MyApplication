@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
  *
  * RxJava 是一个基于观察者模式的异步编程库，提供丰富的操作符处理数据流。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 创建操作符：just / range 快速构建数据流
  * 2. 变换操作符：map 逐项映射、flatMap 扁平展开、buffer 背压缓冲
  * 3. 过滤操作符：filter 条件过滤、take 限量、distinct 去重

@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 特性模块入口页
+ * 特性模块入口 — 导航到麦克风动画、转盘、图片裁剪等示例页面。
  *
  * 展示麦克风动画、转盘、图片裁剪等特色功能的示例列表。
  */

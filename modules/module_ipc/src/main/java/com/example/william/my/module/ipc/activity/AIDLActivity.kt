@@ -16,7 +16,7 @@ import com.example.william.my.module.ipc.service.MyAIDLService
  *
  * AIDL（Android Interface Definition Language）是 Android 提供的跨进程通信方案。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 跨进程：不同进程间通过 Binder 调用远程方法；
  * 2. 并发处理：支持多线程并发调用（Binder 线程池）；
  * 3. 类型安全：通过 .aidl 接口定义，编译期生成 Stub/Proxy；
@@ -26,25 +26,13 @@ import com.example.william.my.module.ipc.service.MyAIDLService
  * - AIDL：支持并发调用，功能强大，适合复杂通信；
  * - Messenger：串行处理，简单易用，适合轻量级通信。
  *
- * 基本用法：
- * ```kotlin
- * // 绑定 AIDL Service
- * bindService(Intent(context, MyAIDLService::class.java), connection, BIND_AUTO_CREATE)
- *
- * // 获取接口实例
- * val service = IMyAidlInterface.Stub.asInterface(binder)
- * service.showToast("hello")
- * ```
- *
- * 适用场景：
- * - 多进程应用间的数据交互
- * - 需要并发调用的跨进程服务
+ * https://developer.android.com/guide/components/aidl
  */
 @Route(path = RouterPath.Ipc.AIDL)
 class AIDLActivity : BasicResponseActivity() {
 
-    private var mService: IMyAidlInterface? = null
-    private var mAIDLConnection: ServiceConnection? = null
+    private var aidlService: IMyAidlInterface? = null
+    private var aidlConnection: ServiceConnection? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -69,47 +57,47 @@ class AIDLActivity : BasicResponseActivity() {
     }
 
     private fun bindAIDLService() {
-        if (mAIDLConnection != null) {
+        if (aidlConnection != null) {
             appendLog("AIDL Service 已绑定")
             return
         }
 
-        mAIDLConnection = object : ServiceConnection {
+        aidlConnection = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-                mService = IMyAidlInterface.Stub.asInterface(binder)
-                appendLog("AIDL Service 绑定成功：${mService?.getMessage()}")
+                aidlService = IMyAidlInterface.Stub.asInterface(binder)
+                appendLog("AIDL Service 绑定成功：${aidlService?.getMessage()}")
             }
 
             override fun onServiceDisconnected(name: ComponentName) {
-                mService = null
+                aidlService = null
                 appendLog("AIDL Service 连接断开")
             }
         }
 
         val result = bindService(
             Intent(this, MyAIDLService::class.java),
-            mAIDLConnection!!,
+            aidlConnection!!,
             BIND_AUTO_CREATE,
         )
         appendLog("正在绑定 AIDL Service...（result=$result）")
     }
 
     private fun unbindAIDLService() {
-        mAIDLConnection?.let { conn ->
+        aidlConnection?.let { conn ->
             unbindService(conn)
-            mAIDLConnection = null
-            mService = null
+            aidlConnection = null
+            aidlService = null
             appendLog("AIDL Service 已解绑")
         } ?: appendLog("AIDL Service 未绑定")
     }
 
     private fun callGetMessage() {
-        mService?.let { appendLog("getMessage() 返回：${it.getMessage()}") }
+        aidlService?.let { appendLog("getMessage() 返回：${it.getMessage()}") }
             ?: appendLog("AIDL Service 未绑定，请先绑定")
     }
 
     private fun callShowToast() {
-        mService?.let {
+        aidlService?.let {
             it.showToast("来自客户端的 AIDL 调用")
             appendLog("已调用 showToast()")
         } ?: appendLog("AIDL Service 未绑定，请先绑定")

@@ -39,7 +39,7 @@ class RecyclerNestedAdapter(private var data: List<String>?) : RecyclerView.Adap
      *
      * 演示嵌套 RecyclerView 的适配器。
      */
-    class RecyclerAdapter(private val mData: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    class RecyclerAdapter(private val data: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val binding = UiItemRecyclerViewBinding.inflate(
@@ -52,10 +52,10 @@ class RecyclerNestedAdapter(private var data: List<String>?) : RecyclerView.Adap
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val binding = (holder as ViewHolder).binding
-            binding.itemTextView.text = mData?.getOrNull(position) ?: ""
+            binding.itemTextView.text = data?.getOrNull(position) ?: ""
         }
 
-        override fun getItemCount(): Int = mData?.size ?: 0
+        override fun getItemCount(): Int = data?.size ?: 0
 
         class ViewHolder(val binding: UiItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
     }

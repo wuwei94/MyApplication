@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 自定义控件模块入口页
+ * 自定义控件模块入口 — 导航到 Dialog、跑马灯、验证码等示例页面。
  *
  * 展示自定义 Dialog、PopWindow、跑马灯等控件的示例列表。
  */

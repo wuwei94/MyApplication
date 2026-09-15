@@ -24,7 +24,10 @@ import kotlinx.coroutines.launch
 /**
  * Ktor — Kotlin 官方现代跨平台网络框架
  *
- * 核心特性：
+ * Ktor Client 是 JetBrains 出品的 Kotlin 优先 HTTP 客户端，通过 Engine 抽象适配多平台，
+ * 本示例使用 OkHttp Engine 发起 Multipart 表单 POST。
+ *
+ * 核心机制与避坑点：
  * 1. Kotlin 优先：原生支持 Kotlin 协程，异步编程友好
  * 2. 多平台支持：支持 Android、iOS、Web、Desktop 等平台 (KMP)
  * 3. 插件系统：通过插件扩展功能（日志、认证、序列化等）

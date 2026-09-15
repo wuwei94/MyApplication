@@ -44,13 +44,13 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
     override fun onClick(adapter: BaseQuickAdapter<RouterItem, *>, view: View, position: Int) {
         super.onClick(adapter, view, position)
         val item = adapter.items[position]
-        val path = item.mRouterPath
+        val path = item.routerPath
         if (path.isNullOrEmpty()) {
             return
         }
         try {
             val postcard = ARouter.getInstance().build(path)
-            item.mParams.forEach { (key, value) ->
+            item.params.forEach { (key, value) ->
                 postcard.withString(key, value)
             }
             postcard.navigation()
@@ -62,7 +62,7 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
     class RouterRecyclerAdapter(data: ArrayList<RouterItem>) : BaseQuickAdapter<RouterItem, QuickViewHolder>(data) {
 
         override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: RouterItem?) {
-            holder.setText(R.id.item_textView, item?.mRouterName)
+            holder.setText(R.id.item_textView, item?.routerName)
         }
 
         override fun onCreateViewHolder(

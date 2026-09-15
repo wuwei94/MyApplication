@@ -35,6 +35,15 @@ import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
+ * GuaguaCard — 刮刮卡涂层擦除效果示例页
+ *
+ * 通过 [DrawModifier] + BlendMode.Clear 实现手指滑动擦除灰色涂层的刮刮卡效果。
+ *
+ * 核心机制与避坑点：
+ * 1. 手势路径采集：[awaitEachGesture] 在 Press/Move 阶段累计 Path 轨迹；
+ * 2. 图层擦除绘制：自定义 [ScrapeLayer] 在 ContentDrawScope 中 saveLayer 后以 Clear 混合模式擦除；
+ * 3. 笔触形态：Stroke 描边宽度、Round 端点与圆角连接控制擦除笔迹形状。
+ *
  * https://juejin.cn/post/7303075105390133259
  */
 @Route(path = RouterPath.Compose.GuaguaCard)

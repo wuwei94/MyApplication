@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * SSE 流式传输（DeepSeek AI 大模型对话）示例入口
+ * SSE 模块入口 — 导航到 OkHttp SSE、Ktor SSE 与 DeepSeek 流式对话等示例页面。
  *
  * 演示现代 AI 大模型标准的 POST + SSE 流式响应协议：
  * - OkHttp SSE（普通版本 / RxJava 封装 / Coroutines Flow 封装）

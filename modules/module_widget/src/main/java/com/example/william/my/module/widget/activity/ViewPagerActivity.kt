@@ -16,39 +16,27 @@ import com.example.william.my.module.widget.databinding.UiActivityViewPagerBindi
  *
  * ViewPager 是 Android 原生的页面滑动控件，支持左右滑动切换页面。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 页面滑动：支持左右滑动切换页面
  * 2. Fragment 支持：支持 Fragment 页面切换
  * 3. 适配器模式：使用 PagerAdapter 或 FragmentPagerAdapter
  * 4. 缓存机制：支持页面缓存，提升性能
  *
- * 基本用法：
- * ```kotlin
- * // 设置适配器
- * viewPager.adapter = ViewPagerAdapter(titles)
- *
- * // Fragment 适配器
- * viewPager.adapter = ViewPagerFragmentAdapter(supportFragmentManager, fragments)
- * ```
- *
- * 适用场景：
- * - 引导页、欢迎页
- * - Tab 切换
- * - 图片轮播
+ * https://developer.android.com/develop/ui/views/layout/swipe-viewpager
  */
 @Route(path = RouterPath.Widget.ViewPager)
 class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {
 
     override fun getViewBinding(): UiActivityViewPagerBinding = UiActivityViewPagerBinding.inflate(layoutInflater)
 
-    private val mTitles: ArrayList<String> = arrayListOf(
+    private val titles: ArrayList<String> = arrayListOf(
         "primary1",
         "primaryDark1",
         "primary2",
         "primaryDark2",
     )
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -62,11 +50,11 @@ class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {
     }
 
     private fun initViewPager() {
-        mBinding.viewpagerView.adapter = ViewPagerAdapter(mTitles)
+        binding.viewpagerView.adapter = ViewPagerAdapter(titles)
 
-        mBinding.viewpagerFragment.adapter = ViewPagerFragmentAdapter(
+        binding.viewpagerFragment.adapter = ViewPagerFragmentAdapter(
             supportFragmentManager,
-            mFragments,
+            fragments,
         )
     }
 }

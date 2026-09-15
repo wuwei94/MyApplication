@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 标签页模块入口页
+ * 标签页模块入口 — 导航到 TabHost、ViewPager、BottomNavigation 等示例页面。
  *
  * 展示 TabHost、ViewPager、BottomNavigation 等标签方案的示例列表。
  */

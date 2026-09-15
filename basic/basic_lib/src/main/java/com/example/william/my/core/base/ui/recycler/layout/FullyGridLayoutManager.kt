@@ -17,8 +17,7 @@ class FullyGridLayoutManager(
 
     private val TAG = this.javaClass.simpleName
 
-    private val mMeasuredDimension = IntArray(2)
-    private val mRecyclerViewState = RecyclerView.State()
+    private val measuredDimension = IntArray(2)
 
     override fun onMeasure(
         recycler: RecyclerView.Recycler,
@@ -39,21 +38,21 @@ class FullyGridLayoutManager(
                 position,
                 View.MeasureSpec.makeMeasureSpec(position, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(position, View.MeasureSpec.UNSPECIFIED),
-                mMeasuredDimension,
+                measuredDimension,
             )
             if (orientation == HORIZONTAL) {
                 if (position % span == 0) {
-                    width += mMeasuredDimension[0]
+                    width += measuredDimension[0]
                 }
                 if (position == 0) {
-                    height = mMeasuredDimension[1]
+                    height = measuredDimension[1]
                 }
             } else {
                 if (position % span == 0) {
-                    height += mMeasuredDimension[1]
+                    height += measuredDimension[1]
                 }
                 if (position == 0) {
-                    width = mMeasuredDimension[0]
+                    width = measuredDimension[0]
                 }
             }
         }

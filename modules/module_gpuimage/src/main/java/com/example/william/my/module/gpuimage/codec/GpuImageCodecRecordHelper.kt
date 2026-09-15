@@ -39,7 +39,7 @@ import java.util.concurrent.Executors
 /**
  * 经典 EGL 共享上下文 + MediaCodec 硬编录像辅助类
  *
- * 核心设计：
+ * 核心特性：
  * 1. 串联 CameraX 帧采集（ImageAnalysis + NV21 上传）与 GL 渲染线程；
  * 2. 在 GLSurfaceView 渲染管线中协调 [VideoEncoderCore]（H.264 视频硬编码）、
  *    [AudioEncoderCore]（AAC 音频硬编码）以及 [MediaMuxerWrapper]（MP4 混流封装）；

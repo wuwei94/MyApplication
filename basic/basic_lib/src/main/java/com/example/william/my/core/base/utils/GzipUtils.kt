@@ -61,9 +61,3 @@ object GzipUtils {
         return String(out.toByteArray(), StandardCharsets.UTF_8)
     }
 }
-
-/**
- * 兼容旧命名的类型别名
- */
-@Deprecated("请使用复数命名的 GzipUtils", ReplaceWith("GzipUtils"))
-typealias GzipUtil = GzipUtils

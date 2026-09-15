@@ -21,37 +21,18 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener
  *
  * PictureSelector 是一个功能强大的图片选择库，支持图片、视频、音频的选择和预览。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 多媒体选择：支持图片、视频、音频的选择
  * 2. 丰富的配置：支持裁剪、压缩、过滤等配置
  * 3. 预览功能：支持图片、视频的预览和删除
  * 4. 多种来源：支持相册、拍照、录像等多种来源
- *
- * 基本用法：
- * ```kotlin
- * // 打开相册选择图片
- * PictureSelector.create(this)
- *     .openGallery(SelectMimeType.ofImage())
- *     .setImageEngine(GlideEngine.createGlideEngine())
- *     .forResult(object : OnResultCallbackListener<LocalMedia?> {
- *         override fun onResult(result: ArrayList<LocalMedia?>) {
- *             // 处理选择结果
- *         }
- *         override fun onCancel() {}
- *     })
- * ```
- *
- * 适用场景：
- * - 用户头像、商品图片选择
- * - 图片上传、分享功能
- * - 多媒体内容管理
  *
  * https://github.com/LuckSiege/PictureSelector
  */
 @Route(path = RouterPath.WidgetThirdparty.PictureSelector)
 class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSelectorBinding>() {
 
-    private lateinit var mAdapter: PictureSelectorAdapter
+    private lateinit var adapter: PictureSelectorAdapter
 
     override fun getViewBinding(): WidgetThirdpartyActivityPictureSelectorBinding = WidgetThirdpartyActivityPictureSelectorBinding.inflate(layoutInflater)
 
@@ -59,29 +40,29 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
         super.initView(savedInstanceState)
 
         val manager = GridLayoutManager(this, 4)
-        mBinding.recyclerView.layoutManager = manager
+        binding.recyclerView.layoutManager = manager
 
-        mAdapter = PictureSelectorAdapter()
-        mBinding.recyclerView.adapter = mAdapter
+        adapter = PictureSelectorAdapter()
+        binding.recyclerView.adapter = adapter
 
-        mAdapter.setOnItemClickListener(object : PictureSelectorAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object : PictureSelectorAdapter.OnItemClickListener {
             override fun openPicture() {
                 PictureSelector.create(this@PictureSelectorActivity)
                     .openGallery(SelectMimeType.ofImage())
                     .setImageEngine(GlideEngine.createGlideEngine())
                     .forResult(object : OnResultCallbackListener<LocalMedia?> {
                         override fun onResult(result: ArrayList<LocalMedia?>) {
-                            val oldSize: Int = mAdapter.data.size
-                            val count = if (result.size == mAdapter.maxSelect) {
+                            val oldSize: Int = adapter.data.size
+                            val count = if (result.size == adapter.maxSelect) {
                                 oldSize + 1
                             } else {
                                 oldSize
                             }
-                            mAdapter.notifyItemRangeRemoved(0, count)
-                            mAdapter.data.clear()
+                            adapter.notifyItemRangeRemoved(0, count)
+                            adapter.data.clear()
 
-                            mAdapter.data.addAll(result)
-                            mAdapter.notifyItemRangeInserted(0, result.size)
+                            adapter.data.addAll(result)
+                            adapter.notifyItemRangeInserted(0, result.size)
                         }
 
                         override fun onCancel() {
@@ -95,8 +76,8 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
                     .setImageEngine(GlideEngine.createGlideEngine())
                     .setExternalPreviewEventListener(object : OnExternalPreviewEventListener {
                         override fun onPreviewDelete(position: Int) {
-                            mAdapter.remove(position)
-                            mAdapter.notifyItemRemoved(position)
+                            adapter.remove(position)
+                            adapter.notifyItemRemoved(position)
                         }
 
                         override fun onLongPressDownload(
@@ -104,7 +85,7 @@ class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSe
                             media: LocalMedia?,
                         ): Boolean = false
                     })
-                    .startActivityPreview(position, true, mAdapter.data)
+                    .startActivityPreview(position, true, adapter.data)
             }
         })
     }

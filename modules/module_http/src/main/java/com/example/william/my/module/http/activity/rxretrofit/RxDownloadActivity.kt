@@ -21,7 +21,20 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import java.io.File
 
-/** 单文件与批量并发下载示例。 */
+/**
+ * RxDownload — Retrofit + RxJava 文件下载封装
+ *
+ * RxDownload 基于 Retrofit 封装单文件下载与批量并发下载队列，
+ * 提供进度回调、目标文件指定与生命周期绑定能力。
+ *
+ * 核心机制与避坑点：
+ * 1. 单文件下载：destination 指定本地落盘路径
+ * 2. 批量队列：DownloadQueueTask 描述多任务并发下载
+ * 3. 进度回调：RxDownloadCallback / DownloadQueueProgress 原位回报进度
+ * 4. 生命周期绑定：setProvider(owner) 与 onFinally 统一收尾
+ *
+ * https://square.github.io/retrofit
+ */
 @Route(path = RouterPath.Http.RxDownload)
 class RxDownloadActivity : BasicResponseActivity() {
 

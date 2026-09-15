@@ -21,7 +21,7 @@ import java.util.Locale
  * 通信/调度类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：暗色终端控制台风格日志/响应展示区（[mBinding.basicsResponse] + [mBinding.basicsResponseScroll]）
+ * - 上方展示：暗色终端控制台风格日志/响应展示区（[binding.basicsResponse] + [binding.basicsResponseScroll]）
  * - 下方列表：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
@@ -33,20 +33,20 @@ import java.util.Locale
  */
 abstract class BasicResponseActivity : BasicControlActivity() {
 
-    protected lateinit var mBinding: SharedLayoutRecyclerResponseBinding
+    protected lateinit var binding: SharedLayoutRecyclerResponseBinding
 
-    private val mLog = SpannableStringBuilder()
-    private val mUpdatingLogs = linkedMapOf<String, String>()
+    private val log = SpannableStringBuilder()
+    private val updatingLogs = linkedMapOf<String, String>()
 
     override fun initViewBinding() {
-        mBinding = SharedLayoutRecyclerResponseBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
-        mRecycler = mBinding.basicsRecycler
+        binding = SharedLayoutRecyclerResponseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recycler = binding.basicsRecycler
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mBinding.basicsResponseClear.setOnClickListener {
+        binding.basicsResponseClear.setOnClickListener {
             clearLog()
         }
     }
@@ -59,14 +59,14 @@ abstract class BasicResponseActivity : BasicControlActivity() {
     protected fun showDescription(description: String) {
         runOnUiThread {
             // 说明为短文本：恢复父级宽度以保持水平居中（日志模式为不折行 wrap_content）
-            val params = mBinding.basicsResponse.layoutParams
+            val params = binding.basicsResponse.layoutParams
             if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT
-                mBinding.basicsResponse.layoutParams = params
+                binding.basicsResponse.layoutParams = params
             }
-            mBinding.basicsResponse.text = description
-            mBinding.basicsResponse.gravity = Gravity.CENTER
-            mBinding.basicsResponse.setTextColor(
+            binding.basicsResponse.text = description
+            binding.basicsResponse.gravity = Gravity.CENTER
+            binding.basicsResponse.setTextColor(
                 ContextCompat.getColor(this, R.color.shared_color_console_desc),
             )
         }
@@ -92,21 +92,21 @@ abstract class BasicResponseActivity : BasicControlActivity() {
     protected fun appendLog(message: String, color: Int) {
         runOnUiThread {
             val timePrefix = "[${formatTimestamp()}] "
-            val timeStart = mLog.length
-            mLog.append(timePrefix)
-            mLog.setSpan(
+            val timeStart = log.length
+            log.append(timePrefix)
+            log.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(this, R.color.shared_color_console_time)),
                 timeStart,
-                mLog.length,
+                log.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
 
-            val msgStart = mLog.length
-            mLog.appendLine(message)
-            mLog.setSpan(
+            val msgStart = log.length
+            log.appendLine(message)
+            log.setSpan(
                 ForegroundColorSpan(color),
                 msgStart,
-                mLog.length,
+                log.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             renderLogs()
@@ -118,7 +118,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      */
     protected fun updateLog(key: String, message: String) {
         runOnUiThread {
-            mUpdatingLogs[key] = "[${formatTimestamp()}] $message"
+            updatingLogs[key] = "[${formatTimestamp()}] $message"
             renderLogs()
         }
     }
@@ -128,7 +128,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      */
     protected fun removeUpdatingLog(key: String) {
         runOnUiThread {
-            mUpdatingLogs.remove(key)
+            updatingLogs.remove(key)
             renderLogs()
         }
     }
@@ -138,7 +138,7 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      */
     protected fun clearUpdatingLogs() {
         runOnUiThread {
-            mUpdatingLogs.clear()
+            updatingLogs.clear()
             renderLogs()
         }
     }
@@ -155,25 +155,25 @@ abstract class BasicResponseActivity : BasicControlActivity() {
      */
     protected fun clearLog() {
         runOnUiThread {
-            mLog.clear()
-            mUpdatingLogs.clear()
+            log.clear()
+            updatingLogs.clear()
             renderLogs()
         }
     }
 
     private fun renderLogs() {
         // 日志按行不折行展示：宽度改为 wrap_content，超长行由外层 HorizontalScrollView 横向滑动
-        val params = mBinding.basicsResponse.layoutParams
+        val params = binding.basicsResponse.layoutParams
         if (params.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
             params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-            mBinding.basicsResponse.layoutParams = params
+            binding.basicsResponse.layoutParams = params
         }
-        val content = SpannableStringBuilder(mLog)
-        mUpdatingLogs.values.forEach { message -> content.appendLine(message) }
-        mBinding.basicsResponse.text = content
-        mBinding.basicsResponse.gravity = Gravity.TOP
-        mBinding.basicsResponseScroll.post {
-            mBinding.basicsResponseScroll.fullScroll(View.FOCUS_DOWN)
+        val content = SpannableStringBuilder(log)
+        updatingLogs.values.forEach { message -> content.appendLine(message) }
+        binding.basicsResponse.text = content
+        binding.basicsResponse.gravity = Gravity.TOP
+        binding.basicsResponseScroll.post {
+            binding.basicsResponseScroll.fullScroll(View.FOCUS_DOWN)
         }
     }
 

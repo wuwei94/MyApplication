@@ -11,22 +11,22 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object RxEventBus {
 
-    val mStickyBus: MutableMap<Class<*>, Any> = ConcurrentHashMap()
-    val mRxEventBus: Subject<Any> = PublishSubject.create<Any>().toSerialized()
+    private val stickyBus: MutableMap<Class<*>, Any> = ConcurrentHashMap()
+    private val rxEventBus: Subject<Any> = PublishSubject.create<Any>().toSerialized()
 
     /**
      * 发送事件
      */
     fun postEvent(obj: Any) {
-        mRxEventBus.onNext(obj)
+        rxEventBus.onNext(obj)
     }
 
     /**
      * 发送Sticky事件
      */
     fun postStickyEvent(event: Any) {
-        synchronized(mStickyBus) {
-            mStickyBus.put(event.javaClass, event)
+        synchronized(stickyBus) {
+            stickyBus.put(event.javaClass, event)
         }
         postEvent(event)
     }
@@ -35,9 +35,9 @@ object RxEventBus {
      * 根据传递的 eventType 类型返回特定类型 eventType 的被观察者
      */
     inline fun <reified T : Any> observeEvent(eventType: Class<T>): Observable<T> {
-        synchronized(mStickyBus) {
-            val event = mStickyBus[eventType]
-            val observable = mRxEventBus.ofType(eventType)
+        synchronized(stickyBus) {
+            val event = stickyBus[eventType]
+            val observable = rxEventBus.ofType(eventType)
             return if (event != null) {
                 observable.mergeWith(
                     Observable.create { subscriber: ObservableEmitter<T> ->
@@ -54,8 +54,8 @@ object RxEventBus {
      * 移除指定eventType的Sticky事件
      */
     fun <T> removeStickyEvent(eventType: Class<T>) {
-        synchronized(mStickyBus) {
-            eventType.cast(mStickyBus.remove(eventType))
+        synchronized(stickyBus) {
+            eventType.cast(stickyBus.remove(eventType))
         }
     }
 
@@ -63,8 +63,8 @@ object RxEventBus {
      * 移除所有的Sticky事件
      */
     fun removeAllStickyEvents() {
-        synchronized(mStickyBus) {
-            mStickyBus.clear()
+        synchronized(stickyBus) {
+            stickyBus.clear()
         }
     }
 }

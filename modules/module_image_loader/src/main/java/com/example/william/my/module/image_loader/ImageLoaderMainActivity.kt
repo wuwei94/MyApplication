@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 图片加载演示入口
+ * 图片加载模块入口 — 导航到 Coil、Glide 与 lib_image_loader 统一封装等示例页面。
  *
  * 聚合主流图片加载方案（Coil、Glide）以及项目级 `lib_image_loader` 统一封装。
  */

@@ -11,15 +11,18 @@ import com.example.william.my.core.ninepatch.NinePatchHelper
 import com.example.william.my.module.widget_custom.R
 
 /**
- * 9-patch — 可拉伸图片
+ * Nine-patch — 可拉伸图片
  *
  * 9-patch 是 Android 特有的图片格式，支持局部拉伸与内容安全边距。
+ * 本页演示通过 NinePatchHelper 加载 Asset / Network .9 图作为气泡背景。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 局部拉伸：只拉伸指定区域，保持边角其他区域不变
  * 2. 内容区域：定义内容显示区域，自动适配不同尺寸
  * 3. 资源优化：减少图片资源数量，适配不同屏幕
- * 4. 性能优秀：系统原生支持
+ * 4. 系统原生支持：性能开销低，无需额外依赖
+ *
+ * https://developer.android.com/guide/topics/graphics/drawables#nine-patch
  */
 @Route(path = RouterPath.WidgetCustom.NinePatch)
 class NinePatchActivity : BasicLayoutActivity() {
@@ -34,7 +37,7 @@ class NinePatchActivity : BasicLayoutActivity() {
 
     private fun initPreviewCard() {
         val previewView = LayoutInflater.from(this)
-            .inflate(R.layout.widget_layout_ninepatch_preview, mContainer, false)
+            .inflate(R.layout.widget_layout_ninepatch_preview, container, false)
         tipView = previewView.findViewById(R.id.widget_ninepatch_tip)
         bubbleView = previewView.findViewById(R.id.widget_ninepatch_bubble)
 

@@ -15,15 +15,22 @@ import com.example.william.my.module.socket.utils.NetworkUtils
 import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
- * Netty RxJava 封装示例（TCP Socket）
+ * Netty TCP + RxJava — 传输层 TCP Observable 事件流消费
  *
- * 演示使用 NettyClientRx + NettyClientRxObserver 进行 TCP 通信
- * 使用 RxJava Observable 方式处理事件
- * 需要先启动本地服务端
+ * 演示使用 NettyClientRx + NettyClientRxObserver 进行 TCP 通信，
+ * 使用 RxJava Observable 方式处理事件。需要先启动本地服务端。
+ *
+ * 核心机制与避坑点：
+ * 1. Observable 桥接：createSocket 返回可订阅的 TCP 事件源
+ * 2. 观察者封装：NettyClientRxObserver 收敛 open/message/closed/error
+ * 3. 统一释放：页面销毁时 cancel 断开连接
+ * 4. 本地打靶：与进程内 Netty 服务端联调，无需公网服务器
  *
  * 服务端日志展示方式：与 NettyTcpSocketClientActivity 一致——
  * 页面 onStart/onStop 通过 NettyServer（进程级单例）订阅服务端事件，
  * 以【服务端】前缀 + 类型配色合并进主控制台。
+ *
+ * https://github.com/netty/netty
  */
 @Route(path = RouterPath.Socket.NettyTcpSocketClientRx)
 class NettyTcpSocketClientRxActivity : BasicResponseActivity() {
@@ -169,7 +176,7 @@ class NettyTcpSocketClientRxActivity : BasicResponseActivity() {
 
                 override fun onError(exception: Exception) {
                     runOnUiThread {
-                        appendLog("【错误】${exception.message}")
+                        appendLog("✗ ${exception.message}")
                     }
                 }
             })
@@ -187,7 +194,7 @@ class NettyTcpSocketClientRxActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

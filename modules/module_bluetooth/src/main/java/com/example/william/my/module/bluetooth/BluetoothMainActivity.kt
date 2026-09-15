@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 蓝牙示例入口（BLE 客户端为主）
+ * 蓝牙模块入口 — 导航到原生 BLE、FastBle、Nordic、RxAndroidBle 等示例页面。
  *
  * 演示 Android 低功耗蓝牙（Bluetooth Low Energy, BLE）开发中的核心技术链路：
  * 设备扫描与过滤、GATT 服务发现、特征值读写、Notify 订阅、MTU 协商与大包分包传输。

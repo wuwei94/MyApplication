@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * GPU 图像滤镜处理入口（GPUImage）
+ * GPU 图像模块入口 — 导航到 GPUImage 预览、滤镜组、相机帧滤镜、拍照录像等示例页面。
  *
  * GitHub: https://github.com/cats-oss/android-gpuimage
  *

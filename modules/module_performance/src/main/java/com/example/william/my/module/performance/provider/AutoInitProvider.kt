@@ -40,10 +40,13 @@ object AutoInitSdk {
 /**
  * AutoInitProvider — 演示使用 ContentProvider 实现「无侵入自动初始化」
  *
- * 核心原理：
- * 1. Android 进程拉起时，AMS 在 Application.onCreate() 执行之前，会串行拉起所有在 AndroidManifest 中声明的 ContentProvider 并回调其 onCreate()；
- * 2. 利用该时序，第三方 SDK（如早期 LeakCanary、Firebase）可在 ContentProvider.onCreate() 中通过 getContext() 自动完成初始化，免去在 Application.onCreate 中显式调用的侵入性；
- * 3. 弊端：每个 Provider 在系统层面均有反射拉起与 Binder 注册开销，多个 Provider 会显著拖慢冷启动。
+ * 利用系统拉起 ContentProvider 的时序，在 Application.onCreate 之前完成 SDK 初始化。
+ *
+ * 核心特性：
+ * 1. 无侵入初始化：ContentProvider.onCreate() 中通过 getContext() 完成 SDK 初始化，免去在 Application 显式调用；
+ * 2. 启动时序：Android 进程拉起时，AMS 在 Application.onCreate() 之前串行拉起 Manifest 中声明的 ContentProvider 并回调其 onCreate()（早期 LeakCanary、Firebase 即采用该模式）；
+ * 3. 数据共享：同时演示 ContentResolver 对 Provider 的 query/insert 访问；
+ * 4. 启动开销：每个 Provider 在系统层面均有反射拉起与 Binder 注册开销，多个 Provider 会显著拖慢冷启动（由此催生 App Startup 聚合初始化）。
  */
 class AutoInitProvider : ContentProvider() {
 

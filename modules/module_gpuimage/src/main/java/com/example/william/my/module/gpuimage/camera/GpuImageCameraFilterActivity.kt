@@ -15,27 +15,30 @@ import com.example.william.my.module.gpuimage.helper.GpuImageChipHelper
 import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
 
 /**
- * GPUImage 相机实时帧滤镜
+ * GPUImage — 相机实时帧滤镜
  *
- * 与滤镜预览页（静态图）的区别：这里的图像源是相机连续帧流，滤镜作用于每一帧，
- * 页面不产出文件（拍照 / 录像属 module_media 的 CameraX 采集示例）。
+ * 与滤镜预览页（静态图）的区别：这里的图像源是 CameraX ImageAnalysis 连续帧流，
+ * 滤镜作用于每一帧。GPUImageRenderer#onPreviewFrame 把 NV21 数据投递到 GL 线程，
+ * 由库完成 YUV→RGBA 转换与纹理上传后逐帧渲染。
  *
- * 核心 API：
- * - `ImageAnalysis`（CameraX）：以 YUV_420_888 输出连续帧，是本页唯一的取流用例
- * - `GPUImageRenderer#onPreviewFrame(byte[], int, int)`：把一帧 NV21 数据投递到 GL
- *   线程队列，由库完成 YUV→RGBA 转换与纹理上传
- * - `GPUImageRenderer#setFilter(GPUImageFilter)`：切换滤镜（内部线程安全）
- *
+ * 本页不产出文件；拍照 / 录像属 module_media 的 CameraX 采集示例。
  * 滤镜清单复用 [GpuImageFilterCatalog.FILTERS]，滤镜条交互复用 [GpuImageChipHelper]。
  * 渲染线程、帧格式转换与相机绑定细节见 [GpuImageCameraHelper]。
  *
+ * 核心机制与避坑点：
+ * 1. CameraX 取帧：ImageAnalysis 以 YUV_420_888 输出连续帧
+ * 2. 帧上传：GPUImageRenderer#onPreviewFrame 投递 NV21 到 GL 线程队列
+ * 3. 滤镜切换：setFilter(GPUImageFilter) 线程安全切换渲染滤镜
+ *
  * 局限：每帧的 YUV→RGBA 为 CPU 侧转换，分辨率上限控制在 720p；若需生产级实时滤镜
  * （1080p+ / 60fps），应改用相机 OES 纹理直通方案，而非该库的取帧回调路径。
+ *
+ * https://github.com/cats-oss/android-gpuimage
  */
 @Route(path = RouterPath.GpuImage.CameraFilter)
 class GpuImageCameraFilterActivity : BaseVBActivity<GpuimageActivityCameraFilterBinding>() {
 
-    private val cameraHelper by lazy { GpuImageCameraHelper(this, mBinding.glSurfaceView) }
+    private val cameraHelper by lazy { GpuImageCameraHelper(this, binding.glSurfaceView) }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -53,13 +56,13 @@ class GpuImageCameraFilterActivity : BaseVBActivity<GpuimageActivityCameraFilter
         super.initView(savedInstanceState)
 
         GpuImageChipHelper.populate(
-            container = mBinding.chipContainer,
+            container = binding.chipContainer,
             names = GpuImageFilterCatalog.FILTERS.map { it.name },
             initialIndex = 0,
         ) { index ->
             val spec = GpuImageFilterCatalog.FILTERS[index]
             cameraHelper.setFilter(spec.factory())
-            mBinding.tvCurrentFilter.text = spec.name
+            binding.tvCurrentFilter.text = spec.name
         }
 
         checkAndRequestPermission()

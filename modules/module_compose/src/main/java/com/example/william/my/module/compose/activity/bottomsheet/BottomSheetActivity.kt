@@ -53,10 +53,12 @@ import kotlinx.coroutines.launch
 /**
  * BottomSheet — Material 3 模态底栏交互示例页
  *
- * 聚合展示 Compose 中底部抽屉的标准实现：
- * 1. **ModalBottomSheet**：原生手势支持半屏吸附、全屏拖拽展开与向下甩动关闭；
- * 2. **SheetState 状态控制**：通过协程调度 `sheetState.show()` 与 `sheetState.hide()`；
- * 3. **典型工程场景**：快捷分享面板、商品规格选择器、底部操作菜单等。
+ * 聚合展示 Compose 中底部抽屉的标准实现。
+ *
+ * 核心机制与避坑点：
+ * 1. ModalBottomSheet：原生手势支持半屏吸附、全屏拖拽展开与向下甩动关闭；
+ * 2. SheetState 状态控制：通过协程调度 `sheetState.show()` 与 `sheetState.hide()`；
+ * 3. skipPartiallyExpanded：可跳过半展开锚点，直接全屏或仅全收起两种状态。
  *
  * https://developer.android.google.cn/develop/ui/compose/components/bottom-sheets
  */

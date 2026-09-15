@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 响应式编程专题：Kotlin Flow 与 RxJava 操作符对照演示。
+ * 响应式模块入口 — 导航到 Kotlin Flow 与 RxJava 操作符对照等示例页面。
  */
 @Route(path = RouterPath.Reactive.Main)
 class ReactiveMainActivity : RouterRecyclerActivity() {

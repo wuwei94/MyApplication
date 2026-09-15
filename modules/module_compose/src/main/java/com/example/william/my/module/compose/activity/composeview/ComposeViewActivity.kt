@@ -37,7 +37,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * 演示在传统 XML 布局（LinearLayout / TextView）中通过 [ComposeView] 嵌入现代 Compose 声明式 UI。
  *
- * 核心实践：
+ * 核心机制与避坑点：
  * 1. 组合生命周期管理策略：[ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed]，
  *    保证 Compose 组合随宿主 LifecycleOwner 销毁自动清理，避免内存泄漏；
  * 2. 传统 View 与 Compose 双向状态交互：Compose 内部状态变更可触发传统 View 文本刷新；
@@ -45,6 +45,8 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * 官方文档：
  * https://developer.android.google.cn/jetpack/compose/migrate/interoperability-apis/views-in-compose
+ *
+ * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
 @Route(path = RouterPath.Compose.ComposeViewActivity)
 class ComposeViewActivity : ComponentActivity() {

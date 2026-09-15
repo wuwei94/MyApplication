@@ -22,18 +22,17 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 1.重组和持久化:
- * remember：在Composable函数重组时记住状态，但不涉及持久化。
- * rememberSaveable：在Composable函数重组时记住状态，并将其保存到持久存储中。
- * 2.使用场景:
- * remember通常用于需要在Composable函数重组时保持不变的状态。
- * rememberSaveable通常用于需要在应用关闭和重新启动后保持不变的状态。
- * 3.依赖项:
- * remember的依赖项通常是Composable函数中的状态或参数。
- * rememberSaveable的依赖项通常是Composable函数中的状态或参数，以及一个用于保存和恢复状态的键（key）。
- * 4.性能:
- * remember不会影响性能，因为它只在Composable函数重组时运行。
- * rememberSaveable可能会影响性能，因为它涉及到与持久存储的交互。
+ * Remember — 重组记忆与状态持久化对比
+ *
+ * 对比演示 remember 与 rememberSaveable 在重组、进程重建与依赖项上的差异。
+ *
+ * 核心机制与避坑点：
+ * 1. remember：重组时记住状态，不涉及持久化；依赖项通常是 Composable 内的状态或参数；
+ * 2. rememberSaveable：重组时记住状态，并在进程重建/应用重启后恢复；可配合自定义 Saver；
+ * 3. 读写形态对比：`val` 读值、`by` 委托读写、解构 `(value, setValue)` 三种用法；
+ * 4. derivedStateOf：由高频状态派生低频状态，减少不必要重组。
+ *
+ * https://developer.android.google.cn/develop/ui/compose/state-saving
  */
 @Route(path = RouterPath.Compose.Remember)
 class RememberActivity : ComponentActivity() {

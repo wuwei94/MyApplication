@@ -15,7 +15,7 @@ import okhttp3.Response
  *
  * 由 Jim 修改：增加每行最多字符数(换行)定义：LINE_CHAR_COUNT，从 110 改为 180
  */
-class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
+class FormatPrinterImpl(private val filters: List<String>) : FormatPrinter {
 
     private val last: ThreadLocal<Int> = object : ThreadLocal<Int>() {
         override fun initialValue(): Int = 0
@@ -91,7 +91,7 @@ class FormatPrinterImpl(private val mFilters: List<String>) : FormatPrinter {
 
     internal fun shouldPrint(url: HttpUrl): Boolean {
         val urlWithoutQuery = url.toString().substringBefore('?')
-        for (filter in mFilters) {
+        for (filter in filters) {
             if (urlWithoutQuery.endsWith(filter)) {
                 return false
             }

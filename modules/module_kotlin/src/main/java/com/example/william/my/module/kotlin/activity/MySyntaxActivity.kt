@@ -7,14 +7,17 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.hypot
 
 /**
- * Kotlin 现代核心语法与类型安全 DSL
+ * Kotlin — 现代核心语法与类型安全 DSL
  *
- * 演示特性：
- * 1. 操作符重载（Operator Overloading）：+、*、[]、in、invoke 等预定义运算符重载
- * 2. 中缀表达式（Infix Functions）：省略点号和括号的自然语言风格方法调用
- * 3. 解构声明（Destructuring Declarations）：Data class 与自定义 componentN() 解构
- * 4. 密封接口与模式匹配（Sealed Interface）：类型安全层次与 when 表达式穷举
- * 5. 类型安全 DSL 构建器（Type-Safe Builders）：带接收者的 Lambda（T.() -> Unit）
+ * 演示 Kotlin 语言层面的高级语法特性：操作符重载、中缀函数、解构声明、
+ * 密封接口与类型安全 DSL 构建器，覆盖日常开发中提升表达力的关键能力。
+ *
+ * 核心机制与避坑点：
+ * 1. 操作符重载：+、*、[]、in、invoke 等预定义运算符通过 operator fun 自定义语义
+ * 2. 中缀表达式：infix fun 省略点号和括号，实现自然语言风格方法调用
+ * 3. 解构声明：Data class 自动 componentN，自定义类可手动实现 componentN
+ * 4. 密封接口：sealed interface 构建类型安全层次，when 表达式编译器穷举检查
+ * 5. 类型安全 DSL：带接收者的 Lambda（T.() -> Unit）+ @DslMarker 构建声明式 API
  *
  * https://kotlinlang.org/docs/operator-overloading.html
  * https://kotlinlang.org/docs/type-safe-builders.html

@@ -44,10 +44,14 @@ import kotlin.math.roundToInt
 /**
  * Progress — 现代进度指示器原语
  *
- * 全面演示 Material 3 基础加载与进度指示器组件：
+ * 全面演示 Material 3 基础加载与进度指示器组件。
+ *
+ * 核心机制与避坑点：
  * 1. [LinearProgressIndicator]：线性进度条，展示非确定性（无限加载）与确定性（0% ~ 100% 进度跟踪）；
  * 2. [CircularProgressIndicator]：圆形环形进度条，展示非确定性转圈与确定性环形闭合；
- * 3. 样式原语定制：轨道背景色（trackColor）、圆角端点（[StrokeCap.Round]）、线条粗细（strokeWidth）。
+ * 3. 样式原语定制：轨道背景色 trackColor、圆角端点 [StrokeCap.Round]、线条粗细 strokeWidth。
+ *
+ * https://developer.android.google.cn/develop/ui/compose/components/progress
  */
 @Route(path = RouterPath.Compose.Progress)
 class ProgressActivity : ComponentActivity() {

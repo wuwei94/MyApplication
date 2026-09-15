@@ -13,9 +13,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
- * Ktor SSE 客户端示例（Kotlin Coroutines Flow 封装版本 - DeepSeek 大模型流式对话）
+ * Ktor SSE — Coroutines Flow 封装版流式客户端
  *
- * 演示使用 Ktor Client 内置 SSE 插件发起 POST 请求直接连接 DeepSeek 官方流式接口。
+ * 使用 Ktor Client 内置 SSE 插件，将流式响应直接暴露为 Kotlin Flow，
+ * 在 lifecycleScope 中收集，对接 DeepSeek 官方 POST + SSE 流式对话接口。
+ * 与 OkHttp Flow 版相比，Ktor 原生集成 Flow，无需额外封装层。
+ *
+ * 核心机制与避坑点：
+ * 1. 原生 Flow：Ktor SSE 插件直接返回 Flow，collect 即可消费事件流
+ * 2. 密封类事件：KtorSseInfo（Open / Event / Closed / Error）类型安全分发
+ * 3. 协程生命周期：lifecycleScope.launch 收集，Job.cancel() 取消并断开连接
+ * 4. 逐 Token 解析：从 Event.data 提取 delta.content，[DONE] 触发自然完结
+ *
+ * https://ktor.io/docs/client-server-sent-events.html
  */
 @Route(path = RouterPath.SSE.KtorSseClientFlow)
 class KtorSseClientFlowActivity : BasicResponseActivity() {
@@ -78,7 +88,7 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
                             if (info.data?.trim() == "[DONE]") {
                                 removeUpdatingLog("deepseek_response")
                                 appendLogAccent("【AI 完整回答】\n$responseBuffer")
-                                appendLog("【完成】收到 [DONE] 标识，DeepSeek 流式响应生成完毕")
+                                appendLog("✓ 收到 [DONE] 标识，DeepSeek 流式响应生成完毕")
                                 streamJob?.cancel()
                                 return@collect
                             }
@@ -93,7 +103,7 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
                         }
                         is KtorSseInfo.Error -> {
                             removeUpdatingLog("deepseek_response")
-                            appendLog("【异常】${info.throwable.message}")
+                            appendLog("✗ ${info.throwable.message}")
                         }
                     }
                 }
@@ -104,6 +114,6 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
     private fun cancelStream() {
         streamJob?.cancel()
         removeUpdatingLog("deepseek_response")
-        appendLog("【中断】已 Cancel 协程 Job，断开 Ktor SSE 流")
+        appendLog("→ 已 Cancel 协程 Job，断开 Ktor SSE 流")
     }
 }

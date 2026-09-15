@@ -47,7 +47,7 @@ import java.util.Locale
 /**
  * CameraX 1.3+ CameraEffect 拍摄辅助类
  *
- * 核心设计：
+ * 核心特性：
  * 1. 利用 CameraX [CameraEffect] 在流媒体管道中同时为 Preview 与 VideoCapture 注入
  *    OpenGL 滤镜（[GpuImageSurfaceProcessor]），实现零拷贝的硬件级滤镜渲染。
  * 2. 视频录制直接交由 CameraX [VideoCapture] 与 [Recorder]，自动实现高质量音频采集、

@@ -16,34 +16,32 @@ import io.reactivex.rxjava3.disposables.Disposable
 import java.util.UUID
 
 /**
- * RxAndroidBle 响应式连接与流控示例
+ * RxAndroidBle 响应式连接与流控 — establishConnection
  *
- * 【RxAndroidBle —— 响应式全能型（高铁网络）】
- * - 功能覆盖：全都有。
- * - 特点：把所有蓝牙操作全变成了 RxJava 的 Observable 数据流。
- *   • 扫描、连接、读写、数据流推送全可以用 RxJava 操作符（filter 过滤微弱信号、throttle 节流、combineLatest 多设备合并）。
- *   • 取消订阅（dispose()）时，连接自动断开、通知自动注销，不容易内存泄漏。
- * - 适合谁：项目本身重度使用 RxJava 架构，或者需要对连续传感器数据做复杂流控的场景。
+ * 用 Rx 链式编排连接 → MTU → Notify → 写入；dispose 时自动断开并注销订阅。
  *
- * 演示特性：
- * 1. [RxBleDevice.establishConnection] 转换为 Observable<RxBleConnection>
- * 2. 链式 flatMap 编排：连接 ➔ 协商 MTU ➔ 订阅 Notification ➔ 写入特征
- * 3. 响应式优雅释放：调用 connection.dispose() 瞬间自动完成注销 Notify 与断开 GATT 连接
+ * 核心机制与避坑点：
+ * 1. 连接流：`establishConnection` → `Observable<RxBleConnection>`
+ * 2. 操作符编排：flatMap 串联协商与读写
+ * 3. 通知流：Notification 特征值作为 Observable
+ * 4. 资源释放：dispose 一次完成断开与清理
+ *
+ * https://github.com/dariuszseweryn/RxAndroidBle
  */
 @Route(path = RouterPath.Bluetooth.RxConnect)
 class BleRxConnectActivity : BasicResponseActivity() {
 
-    private lateinit var mRxBleClient: RxBleClient
-    private var mRxBleDevice: RxBleDevice? = null
-    private var mConnectionObservable: Observable<RxBleConnection>? = null
-    private val mDisposables = CompositeDisposable()
-    private var mConnectionDisposable: Disposable? = null
+    private lateinit var rxBleClient: RxBleClient
+    private var rxBleDevice: RxBleDevice? = null
+    private var connectionObservable: Observable<RxBleConnection>? = null
+    private val disposables = CompositeDisposable()
+    private var connectionDisposable: Disposable? = null
 
-    private var mTargetCharUuid: UUID? = null
+    private var targetCharUuid: UUID? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mRxBleClient = RxBleClient.create(applicationContext)
+        rxBleClient = RxBleClient.create(applicationContext)
 
         showDescription(
             "RxAndroidBle 响应式连接与流控示例\n\n" +
@@ -78,20 +76,20 @@ class BleRxConnectActivity : BasicResponseActivity() {
             .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
             .build()
 
-        val scanDisposable = mRxBleClient.scanBleDevices(scanSettings, ScanFilter.empty())
+        val scanDisposable = rxBleClient.scanBleDevices(scanSettings, ScanFilter.empty())
             .take(1)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { scanResult ->
                     val device = scanResult.bleDevice
-                    mRxBleDevice = device
+                    rxBleDevice = device
                     val name = device.name ?: "未知设备"
                     appendLog("找到设备: $name (${device.macAddress})，准备建立响应式连接...")
                     connect(device)
                 },
                 { e -> appendLog("✗ 扫描异常: ${e.message}") },
             )
-        mDisposables.add(scanDisposable)
+        disposables.add(scanDisposable)
     }
 
     private fun connect(device: RxBleDevice) {
@@ -102,9 +100,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
             .replay(1)
             .refCount()
 
-        mConnectionObservable = connectionObservable
+        this.connectionObservable = connectionObservable
 
-        mConnectionDisposable = connectionObservable
+        connectionDisposable = connectionObservable
             .observeOn(AndroidSchedulers.mainThread())
             .flatMapSingle { connection ->
                 appendLog("✓ 已建立 GATT 连接，正在发现服务...")
@@ -115,8 +113,8 @@ class BleRxConnectActivity : BasicResponseActivity() {
                     appendLog("✓ 成功发现 ${rxBleDeviceServices.bluetoothGattServices.size} 个服务")
                     rxBleDeviceServices.bluetoothGattServices.firstOrNull()?.let { s ->
                         s.characteristics.firstOrNull()?.let { c ->
-                            mTargetCharUuid = c.uuid
-                            appendLog("✓ 自动捕获目标特征值: $mTargetCharUuid")
+                            targetCharUuid = c.uuid
+                            appendLog("✓ 自动捕获目标特征值: $targetCharUuid")
                         }
                     }
                 },
@@ -127,7 +125,7 @@ class BleRxConnectActivity : BasicResponseActivity() {
     }
 
     private fun requestMtu() {
-        val connObs = mConnectionObservable
+        val connObs = connectionObservable
         if (connObs == null) {
             appendLog("✗ 当前未处于连接状态")
             return
@@ -142,12 +140,12 @@ class BleRxConnectActivity : BasicResponseActivity() {
                 { mtu -> appendLog("✓ [RxBle MTU] 协商成功，当前 MTU = $mtu 字节") },
                 { e -> appendLog("✗ [RxBle MTU] 协商失败: ${e.message}") },
             )
-        mDisposables.add(d)
+        disposables.add(d)
     }
 
     private fun readCharacteristic() {
-        val connObs = mConnectionObservable
-        val charUuid = mTargetCharUuid
+        val connObs = connectionObservable
+        val charUuid = targetCharUuid
         if (connObs == null || charUuid == null) {
             appendLog("✗ 设备未连接或无目标特征 UUID")
             return
@@ -166,12 +164,12 @@ class BleRxConnectActivity : BasicResponseActivity() {
                 },
                 { e -> appendLog("✗ [RxBle 读失败] ${e.message}") },
             )
-        mDisposables.add(d)
+        disposables.add(d)
     }
 
     private fun writeCharacteristic() {
-        val connObs = mConnectionObservable
-        val charUuid = mTargetCharUuid
+        val connObs = connectionObservable
+        val charUuid = targetCharUuid
         if (connObs == null || charUuid == null) {
             appendLog("✗ 设备未连接或无目标特征 UUID")
             return
@@ -189,12 +187,12 @@ class BleRxConnectActivity : BasicResponseActivity() {
                 },
                 { e -> appendLog("✗ [RxBle 写失败] ${e.message}") },
             )
-        mDisposables.add(d)
+        disposables.add(d)
     }
 
     private fun setupNotification() {
-        val connObs = mConnectionObservable
-        val charUuid = mTargetCharUuid
+        val connObs = connectionObservable
+        val charUuid = targetCharUuid
         if (connObs == null || charUuid == null) {
             appendLog("✗ 设备未连接或无目标特征 UUID")
             return
@@ -213,14 +211,14 @@ class BleRxConnectActivity : BasicResponseActivity() {
                 },
                 { e -> appendLog("✗ [RxBle Notify] 失败: ${e.message}") },
             )
-        mDisposables.add(d)
+        disposables.add(d)
     }
 
     private fun disconnect() {
-        mConnectionDisposable?.dispose()
-        mConnectionDisposable = null
-        mConnectionObservable = null
-        mDisposables.clear()
+        connectionDisposable?.dispose()
+        connectionDisposable = null
+        connectionObservable = null
+        disposables.clear()
         appendLog("✓ 已释放连接与所有 RxJava 订阅")
     }
 

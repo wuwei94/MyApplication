@@ -12,14 +12,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 /**
- * 原生 Retrofit + Call 回调方式
+ * Retrofit + Call — 原生回调式网络请求
  *
  * 使用 Retrofit.Builder 构建 API 接口实例，通过 Call.enqueue() 发起异步请求。
  *
- * 特点：
- * - 原生回调方式，无需额外依赖
- * - 支持同步（execute）和异步（enqueue）请求
- * - 需要手动处理线程切换
+ * 核心机制与避坑点：
+ * 1. 原生回调：Call.enqueue / execute，无需额外依赖
+ * 2. 同步异步：同时支持 execute 与 enqueue 两种调用形态
+ * 3. 线程自理：回调线程与主线程切换需调用方自行处理
  *
  * 注意：response.body()?.string() 只能调用一次，后续访问会返回 null。
  *

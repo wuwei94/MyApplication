@@ -12,7 +12,7 @@ import com.example.william.my.basic.basic_shared.utils.Utils
 /**
  * 硬件音频编码核心类（基于 AudioRecord + AAC MediaCodec）
  *
- * 核心机制：
+ * 核心特性：
  * 1. 启动 [AudioRecord] 线程实时采集麦克风 16-bit PCM 音频流；
  * 2. 投递到 AAC (audio/mp4a-latm) [MediaCodec] 编码器；
  * 3. 将编码后的 AAC 音频包写入 [MediaMuxerWrapper]，协同实现音视频同步录制。

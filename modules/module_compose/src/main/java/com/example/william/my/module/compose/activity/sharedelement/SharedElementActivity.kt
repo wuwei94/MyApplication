@@ -55,11 +55,13 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * SharedElement — 声明式共享元素转场动效示例页
  *
- * 聚合展示 Compose 1.7+ / Navigation 2.8+ 核心共享元素过渡技术：
- * 1. **SharedTransitionLayout**：开辟跨层级的共享过渡坐标空间；
- * 2. **Modifier.sharedElement**：图片等特定视觉元素在列表项与全屏大图间的连续无缝位移与缩放；
- * 3. **Modifier.sharedBounds**：卡片容器背景与文本标题在不同层级边界间的平滑形变扩展；
- * 4. **转场连续性**：消除了传统 Fragment/Activity 页面跳转时的割裂感，保证视觉焦点不中断。
+ * 聚合展示 Compose 1.7+ / Navigation 2.8+ 核心共享元素过渡技术。
+ *
+ * 核心机制与避坑点：
+ * 1. SharedTransitionLayout：开辟跨层级的共享过渡坐标空间；
+ * 2. Modifier.sharedElement：图片等特定视觉元素在列表项与全屏大图间的连续无缝位移与缩放；
+ * 3. Modifier.sharedBounds：卡片容器背景与文本标题在不同层级边界间的平滑形变扩展；
+ * 4. 转场连续性：消除传统 Fragment/Activity 页面跳转时的割裂感，保证视觉焦点不中断。
  *
  * https://developer.android.google.cn/develop/ui/compose/animation/shared-elements
  */

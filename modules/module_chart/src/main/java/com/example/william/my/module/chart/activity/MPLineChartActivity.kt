@@ -22,11 +22,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 /**
  * MPAndroidChart — 折线图 (LineChart)
  *
- * 核心特性：
- * 1. 双曲线收支对比、Cubic 贝塞尔平滑曲线
- * 2. 渐变面积填充与数据圆点高亮
- * 3. 自定义 MarkerView 悬浮气泡 Tooltip
- * 4. OnChartValueSelectedListener 联动底部指标看板
+ * LineChart 是 MPAndroidChart 的折线图视图，支持多曲线叠加、平滑插值与面积填充。
+ * 本页演示收入/支出双曲线对比，并通过 MarkerView 与选中监听联动底部指标看板。
+ *
+ * 核心机制与避坑点：
+ * 1. 双曲线对比：两个 LineDataSet 叠加展示收入与支出趋势
+ * 2. Cubic 平滑：Mode.CUBIC_BEZIER 贝塞尔曲线插值，视觉更流畅
+ * 3. 面积填充：setDrawFilled + fillAlpha 渐变填充曲线与坐标轴之间区域
+ * 4. 触摸联动：自定义 MarkerView 悬浮气泡 + OnChartValueSelectedListener 刷新底部指标
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
@@ -47,7 +50,7 @@ class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {
     }
 
     private fun initLineChart() {
-        mBinding.lineChart.apply {
+        binding.lineChart.apply {
             description.isEnabled = false
             setTouchEnabled(true)
             isDragEnabled = true
@@ -135,15 +138,15 @@ class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {
         val profit = inc - exp
         val margin = (profit / inc) * 100
 
-        mBinding.tvMetricsTitle.text = "选中月份数据联动 (${months[index]})"
-        mBinding.tvBadgeStatus.text = if (profit >= 0) "盈利良好" else "支出预警"
-        mBinding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
+        binding.tvMetricsTitle.text = "选中月份数据联动 (${months[index]})"
+        binding.tvBadgeStatus.text = if (profit >= 0) "盈利良好" else "支出预警"
+        binding.tvBadgeStatus.backgroundTintList = ColorStateList.valueOf(
             if (profit >= 0) Color.parseColor("#10B981") else Color.parseColor("#EF4444"),
         )
 
-        mBinding.tvIncome.text = "$inc 万"
-        mBinding.tvExpense.text = "$exp 万"
-        mBinding.tvProfit.text = "${if (profit > 0) "+" else ""}${String.format("%.1f", profit)} 万"
-        mBinding.tvMargin.text = "${String.format("%.1f", margin)}%"
+        binding.tvIncome.text = "$inc 万"
+        binding.tvExpense.text = "$exp 万"
+        binding.tvProfit.text = "${if (profit > 0) "+" else ""}${String.format("%.1f", profit)} 万"
+        binding.tvMargin.text = "${String.format("%.1f", margin)}%"
     }
 }

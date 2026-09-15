@@ -27,7 +27,7 @@ import org.koin.core.qualifier.named
 /**
  * Koin — Kotlin 专用的实用主义依赖注入框架
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 纯 Kotlin DSL：无注解处理器（无 KAPT / KSP 开销），极速编译
  * 2. 构造器 DSL（Constructor DSL）：通过 singleOf、factoryOf、viewModelOf 极简声明
  * 3. 灵活的作用域（Scope）与动态参数（parametersOf）：支持运行时按需传参
@@ -43,6 +43,8 @@ import org.koin.core.qualifier.named
  * - by inject()：属性懒加载注入
  * - get()：即时获取依赖对象
  * - parametersOf(...)：在解析时传递动态运行时参数
+ *
+ * https://insert-koin.io
  */
 @Route(path = RouterPath.Di.Koin)
 class KoinActivity : BasicResponseActivity() {

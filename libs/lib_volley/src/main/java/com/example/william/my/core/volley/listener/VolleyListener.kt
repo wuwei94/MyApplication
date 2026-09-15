@@ -8,7 +8,7 @@ abstract class VolleyListener<T> :
     /**
      * 创建请求的事件监听
      */
-    internal val mListener =
+    internal val listener =
         Response.Listener<T> { t ->
             onResponse(t)
         }
@@ -16,7 +16,7 @@ abstract class VolleyListener<T> :
     /**
      * 创建请求失败的事件监听
      */
-    internal val mErrorListener =
+    internal val errorListener =
         Response.ErrorListener { error ->
             onErrorResponse(error)
         }

@@ -30,14 +30,14 @@ import com.kingja.loadsir.core.LoadSir
  */
 class LoadSirFragment : Fragment() {
 
-    private lateinit var mBinding: SharedLayoutRecyclerLayoutBinding
+    private lateinit var binding: SharedLayoutRecyclerLayoutBinding
     private lateinit var loadService: LoadService<Any>
 
-    private val mAdapter: RecyclerAdapter by lazy {
+    private val recyclerAdapter: RecyclerAdapter by lazy {
         RecyclerAdapter()
     }
-    private val mAdapterHelper: QuickAdapterHelper by lazy {
-        QuickAdapterHelper.Builder(mAdapter).build()
+    private val adapterHelper: QuickAdapterHelper by lazy {
+        QuickAdapterHelper.Builder(recyclerAdapter).build()
     }
 
     override fun onCreateView(
@@ -45,8 +45,8 @@ class LoadSirFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        mBinding = SharedLayoutRecyclerLayoutBinding.inflate(inflater, container, false)
-        return mBinding.root
+        binding = SharedLayoutRecyclerLayoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +58,7 @@ class LoadSirFragment : Fragment() {
     private fun initTargetContent() {
         // 第一步：获取目标内容 View（复用成功内容布局）
         val targetContentView = layoutInflater
-            .inflate(R.layout.widget_thirdparty_layout_loadsir_target, mBinding.basicsResponseContainer, false)
+            .inflate(R.layout.widget_thirdparty_layout_loadsir_target, binding.basicsResponseContainer, false)
 
         // 第二步：注册 LoadSir，无侵入包裹目标 View
         loadService = LoadSir.getDefault().register(targetContentView) {
@@ -67,21 +67,21 @@ class LoadSirFragment : Fragment() {
         }
 
         // 第三步：将 LoadSir 包装后的 root 挂载至上方展示容器
-        mBinding.basicsResponseContainer.removeAllViews()
+        binding.basicsResponseContainer.removeAllViews()
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT,
         )
-        mBinding.basicsResponseContainer.addView(loadService.loadLayout, params)
+        binding.basicsResponseContainer.addView(loadService.loadLayout, params)
     }
 
     private fun initRecycler() {
-        mAdapter.submitList(buildList())
-        mAdapter.setOnItemClickListener { adapter, _, position ->
+        recyclerAdapter.submitList(buildList())
+        recyclerAdapter.setOnItemClickListener { adapter, _, position ->
             onRecyclerClick(position, adapter.items[position])
         }
-        mBinding.basicsRecycler.layoutManager = LinearLayoutManager(requireContext())
-        mBinding.basicsRecycler.adapter = mAdapterHelper.adapter
+        binding.basicsRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.basicsRecycler.adapter = adapterHelper.adapter
     }
 
     private fun buildList(): ArrayList<String> = arrayListOf(

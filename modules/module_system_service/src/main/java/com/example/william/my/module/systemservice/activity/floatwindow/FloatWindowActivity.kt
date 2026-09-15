@@ -17,18 +17,20 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.systemservice.R
 
 /**
- * 悬浮窗 — 系统级悬浮窗实现
+ * 悬浮窗 — 系统级 WindowManager 悬浮窗实现
  *
- * 通过 WindowManager 添加 TYPE_APPLICATION_OVERLAY 窗口实现系统级悬浮窗，支持拖拽和吸附效果。
- * 页面按调用顺序铺开窗口的完整生命周期：装配 LayoutParams → 权限判定与申请 → addView / removeView，
- * 便于对照系统 API 逐段阅读。
+ * 通过 WindowManager 添加 TYPE_APPLICATION_OVERLAY 窗口实现系统级悬浮窗，
+ * 支持拖拽与边缘自动吸附。页面按调用顺序铺开完整生命周期：
+ * 装配 LayoutParams → 权限判定与申请 → addView / removeView。
  *
- * 核心要点：
- * 1. 需申请 SYSTEM_ALERT_WINDOW 权限（android.permission.SYSTEM_ALERT_WINDOW）；
- * 2. 使用 TYPE_APPLICATION_OVERLAY（API 26+）或 TYPE_PHONE（旧版）；
- * 3. FLAG_NOT_FOCUSABLE 确保不拦截输入焦点；
- * 4. 通过 FloatTouchHelper 实现拖拽与边缘自动吸附；
- * 5. 叠加层是特殊权限，无 ActivityResult 契约可用：只能跳转系统授权页由用户手动开启，授权后再次点击本项即可展示。
+ * 核心机制与避坑点：
+ * 1. 系统级悬浮窗：WindowManager 添加 TYPE_APPLICATION_OVERLAY（API 26+）或 TYPE_PHONE（旧版）窗口，跨应用显示
+ * 2. 叠加层权限：需申请 SYSTEM_ALERT_WINDOW（android.permission.SYSTEM_ALERT_WINDOW）
+ * 3. 焦点隔离：FLAG_NOT_FOCUSABLE 确保不拦截输入焦点
+ * 4. 拖拽与吸附：通过 FloatTouchHelper 实现拖拽与边缘自动吸附
+ * 5. 授权流程：叠加层无 ActivityResult 契约可用，只能跳转系统授权页由用户手动开启，授权后再次点击本项即可展示
+ *
+ * https://developer.android.com/reference/android/view/WindowManager
  */
 @Route(path = RouterPath.SystemService.FloatWindow)
 class FloatWindowActivity : BasicResponseActivity() {

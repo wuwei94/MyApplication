@@ -17,20 +17,11 @@ import com.example.william.my.core.mqtt.hivemq.HiveMqClientManager
  *
  * 使用 EMQX 公共 Broker（无需账号），订阅与发布到同一 Topic 即可收到自己发出的消息。
  *
- * 基本用法：
- * ```kotlin
- * // 连接
- * HiveMqClientManager.connect(host = "broker.emqx.io", port = 1883, listener = ...)
- *
- * // 订阅
- * HiveMqClientManager.subscribe("mqtt/example", qos = 2)
- *
- * // 发布
- * HiveMqClientManager.publish("mqtt/example", "Hello HiveMQ!", qos = 1)
- *
- * // 断开
- * HiveMqClientManager.disconnect()
- * ```
+ * 核心机制与避坑点：
+ * 1. 异步 API：流式 Builder + CompletableFuture 回调，无阻塞
+ * 2. MQTT 5.0 支持：完整支持 MQTT 5.0 协议特性
+ * 3. Netty 驱动：高性能 Netty 网络层
+ * 4. QoS 0/1/2：支持三种服务质量等级
  *
  * https://github.com/hivemq/hivemq-mqtt-client
  */
@@ -91,7 +82,7 @@ class HiveMqClientActivity : BasicResponseActivity() {
                 }
 
                 override fun onError(message: String) {
-                    appendLogAccent("【错误】$message")
+                    appendLogAccent("✗ $message")
                 }
             },
         )
@@ -99,7 +90,7 @@ class HiveMqClientActivity : BasicResponseActivity() {
 
     private fun subscribe() {
         if (!HiveMqClientManager.isConnected()) {
-            appendLog("【错误】未连接，请先连接")
+            appendLog("✗ 未连接，请先连接")
             return
         }
         HiveMqClientManager.subscribe(topic, qos = 2)
@@ -108,7 +99,7 @@ class HiveMqClientActivity : BasicResponseActivity() {
 
     private fun publish(qos: Int) {
         if (!HiveMqClientManager.isConnected()) {
-            appendLog("【错误】未连接，请先连接")
+            appendLog("✗ 未连接，请先连接")
             return
         }
         val payload = "Hello HiveMQ! qos=$qos time=${System.currentTimeMillis()}"

@@ -12,10 +12,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
- * Java-WebSocket Coroutines Flow 封装示例
+ * Java-WebSocket + Flow — 协程流式事件消费
  *
- * 演示使用 JavaWebSocketClientFlow 进行 WebSocket 通信
- * 使用 Kotlin Coroutines Flow 收集 WebSocket 事件
+ * 演示使用 JavaWebSocketClientFlow 进行 WebSocket 通信，
+ * 将连接、消息、关闭、错误事件桥接为 Kotlin Flow，由 collect 逐条消费。
+ *
+ * 核心机制与避坑点：
+ * 1. 冷流桥接：createWebSocket 返回可 collect 的事件流
+ * 2. 事件密封：JavaWebSocketInfo 统一承载 Open/Message/Closed/Error
+ * 3. 结构化取消：collect 所在 Job 取消即停止消费
+ * 4. 轻量实现：不依赖 OkHttp 栈，库内自包含客户端能力
+ *
+ * https://github.com/TooTallNate/Java-WebSocket
  */
 @Route(path = RouterPath.Socket.JavaWebSocketClientFlow)
 class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
@@ -70,7 +78,7 @@ class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
                             appendLogAccent("【关闭】已关闭：code=${info.code} reason=${info.reason}")
                         }
                         is JavaWebSocketInfo.Error -> {
-                            appendLogAccent("【错误】${info.exception.message}")
+                            appendLogAccent("✗ ${info.exception.message}")
                         }
                     }
                 }
@@ -83,7 +91,7 @@ class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

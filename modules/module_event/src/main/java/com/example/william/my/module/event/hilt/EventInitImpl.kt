@@ -10,15 +10,15 @@ import javax.inject.Inject
  */
 class EventInitImpl @Inject constructor() : IAppInit {
 
-    private lateinit var mApp: Application
+    private lateinit var app: Application
 
     override fun init(app: Application) {
-        this.mApp = app
+        this.app = app
 
         initFlowEventBus(app)
     }
 
-    override fun getApp(): Application = mApp
+    override fun getApp(): Application = app
 
     private fun initFlowEventBus(app: Application) {
         FlowEventBus.init(app)

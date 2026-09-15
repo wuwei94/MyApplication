@@ -55,10 +55,12 @@ import kotlinx.coroutines.launch
 /**
  * StaggeredGrid — 交错瀑布流与网格列表示例页
  *
- * 聚合展示 Compose 中官方标准瀑布流容器的核心用法：
- * 1. **LazyVerticalStaggeredGrid**：针对高宽比各异的图文卡片进行智能紧凑流式排版；
- * 2. **列策略动态切换**：支持 2 列、3 列与自适应列宽 (StaggeredGridCells.Adaptive) 实时平滑切换；
- * 3. **状态感知与回到顶部**：利用 `rememberLazyStaggeredGridState()` 与 `derivedStateOf` 感知滚动偏移量，控制悬浮返回顶部按钮的显示与平滑滚动。
+ * 聚合展示 Compose 中官方标准瀑布流容器的核心用法。
+ *
+ * 核心机制与避坑点：
+ * 1. LazyVerticalStaggeredGrid：针对高宽比各异的图文卡片进行智能紧凑流式排版；
+ * 2. 列策略动态切换：支持 2 列、3 列与自适应列宽 (StaggeredGridCells.Adaptive) 实时平滑切换；
+ * 3. 状态感知与回到顶部：利用 `rememberLazyStaggeredGridState()` 与 `derivedStateOf` 感知滚动偏移量，控制悬浮返回顶部按钮的显示与平滑滚动。
  *
  * https://developer.android.google.cn/develop/ui/compose/lists#staggered-grid
  */

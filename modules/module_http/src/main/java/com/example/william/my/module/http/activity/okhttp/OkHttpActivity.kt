@@ -16,55 +16,21 @@ import okhttp3.Response
 import okio.IOException
 
 /**
- * OkHttp — HTTP 客户端库
+ * OkHttp — 基础 HTTP 请求与表单/多部分请求体演示
  *
- * OkHttp 是 Square 开源的 HTTP 客户端库，是 Android 最流行的网络请求库。
+ * 核心机制与避坑点：
+ * 1. 同步与异步调用：[OkHttpClient.newCall] 提供 [Call.execute]（阻塞主线程）与 [Call.enqueue]（后台回调）；
+ * 2. 响应流生命周期：[Response.body] 必须在 `use { ... }` 块内安全读取并释放，防止底层连接池泄漏；
+ * 3. 请求体形态：[FormBody] 适用于 key-value 表单，[MultipartBody] 适用于文件与多媒体混合表单。
  *
- * 核心特性：
- * 1. HTTP/2 支持：支持 HTTP/2 协议，多路复用
- * 2. 连接池：自动管理连接池，减少延迟
- * 3. 透明压缩：支持 gzip 压缩，减少传输数据量
- * 4. 请求重试：自动重试失败的请求
- *
- * 请求体类型：
- * 1. FormBody：表单请求体（application/x-www-form-urlencoded）
- * 2. MultipartBody：多部分请求体（multipart/form-data），支持文件上传
- * 3. RequestBody：自定义请求体，支持 JSON 等格式
- *
- * 基本用法：
- * ```kotlin
- * // 创建客户端
- * val client = OkHttpClient()
- *
- * // 构建请求
- * val request = Request.Builder()
- *     .url("https://api.example.com/data")
- *     .post(formBody)
- *     .build()
- *
- * // 发送异步请求
- * client.newCall(request).enqueue(object : Callback {
- *     override fun onFailure(call: Call, e: IOException) {
- *         // 请求失败
- *     }
- *     override fun onResponse(call: Call, response: Response) {
- *         // 请求成功
- *     }
- * })
- * ```
- *
- * 适用场景：
- * - HTTP 请求
- * - 文件上传下载
- * - 需要高性能网络请求的场景
- *
+ * 官方参考：
  * https://square.github.io/okhttp
  */
 @Route(path = RouterPath.Http.OkHttp)
 class OkHttpActivity : BasicResponseActivity() {
 
     /**
-     * 使用 DSL 创建 OkHttpClient（无额外配置，使用默认值）。
+     * 使用 DSL 创建 OkHttpClient 实例。
      */
     private val client: OkHttpClient = okHttpClient {}
 
@@ -74,8 +40,8 @@ class OkHttpActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "OkHttp Posting a FormBody",
-        "OkHttp Posting a MultipartBody",
+        "1. 发送表单请求 (FormBody)",
+        "2. 发送多部分表单请求 (MultipartBody)",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -105,16 +71,16 @@ class OkHttpActivity : BasicResponseActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                appendLog("【FormBody】失败：${e.message}")
+                appendLog("✗ [FormBody] 请求失败：${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        appendLog("【FormBody】失败：$response")
+                        appendLog("✗ [FormBody] 响应异常：$response")
                         return
                     }
-                    appendFormatLog("【FormBody】成功：", response.body.string())
+                    appendFormatLog("✓ [FormBody] 请求成功：", response.body.string())
                 }
             }
         })
@@ -140,16 +106,16 @@ class OkHttpActivity : BasicResponseActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                appendLog("【MultipartBody】失败：${e.message}")
+                appendLog("✗ [MultipartBody] 请求失败：${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
-                        appendLog("【MultipartBody】失败：$response")
+                        appendLog("✗ [MultipartBody] 响应异常：$response")
                         return
                     }
-                    appendFormatLog("【MultipartBody】成功：", response.body.string())
+                    appendFormatLog("✓ [MultipartBody] 请求成功：", response.body.string())
                 }
             }
         })

@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 组件模块入口页
+ * 组件模块入口 — 导航到 ActivityResult、广播、Service、返回键拦截等示例页面。
  *
  * 展示 ActivityResult、广播、Service 等 Android 组件的示例列表。
  */

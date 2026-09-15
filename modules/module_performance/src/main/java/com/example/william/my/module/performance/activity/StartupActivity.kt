@@ -15,10 +15,15 @@ import com.example.william.my.module.performance.startup.SecuritySdkInitializer
 /**
  * Jetpack App Startup — 应用初始化性能优化组件
  *
- * 核心设计与性能价值：
- * 1. 【减少 ContentProvider 数量】：避免每个第三方 SDK 各自声明 ContentProvider 导致冷启动耗时成倍增加；
- * 2. 【统一拓扑排序】：通过 Initializer.dependencies() 自动解析有向无环图（DAG），确保依赖组件严格按序初始化；
- * 3. 【按需延迟初始化】：支持通过 AppInitializer.getInstance(context).initializeComponent(...) 手动延迟触发，实现非核心组件懒加载。
+ * App Startup 用单个 InitializationProvider 聚合多个库的初始化逻辑，
+ * 通过 Initializer 依赖图统一调度，减少冷启动阶段的 ContentProvider 数量。
+ *
+ * 核心机制与避坑点：
+ * 1. 减少 ContentProvider 数量：避免每个第三方 SDK 各自声明 ContentProvider 导致冷启动耗时成倍增加
+ * 2. 统一拓扑排序：通过 Initializer.dependencies() 自动解析有向无环图（DAG），确保依赖组件严格按序初始化
+ * 3. 按需延迟初始化：支持通过 AppInitializer.getInstance(context).initializeComponent(...) 手动延迟触发，实现非核心组件懒加载
+ *
+ * https://developer.android.com/topic/libraries/app-startup
  */
 @Route(path = RouterPath.Performance.Startup)
 class StartupActivity : BasicResponseActivity() {

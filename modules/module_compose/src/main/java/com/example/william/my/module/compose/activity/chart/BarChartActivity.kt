@@ -45,11 +45,13 @@ import kotlin.math.abs
 /**
  * Jetpack Compose — 柱状图 (BarChart)
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 季度目标 vs 实际销售额分组柱状图
  * 2. `drawRoundRect` 顶部圆角柱体绘制
  * 3. 触摸柱体即时高亮响应
  * 4. 实时联动计算差额与达成率分析
+ *
+ * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 @Route(path = RouterPath.Compose.BarChart)
 class BarChartActivity : ComponentActivity() {

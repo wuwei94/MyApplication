@@ -40,10 +40,12 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Image — 图片显示与变换特性
  *
- * 演示 Compose 中 Image 组件的加载与多维视觉处理：
- * 1. **ContentScale 缩放策略**：Crop、Fit、FillBounds、Inside 对比；
- * 2. **形状裁剪与边框**：CircleShape 圆形头像、RoundedCornerShape 圆角与 Border 描边；
- * 3. **色彩滤镜与透明度**：ColorFilter.tint 矢量着色与 Alpha 透明度调节。
+ * 演示 Compose 中 Image 组件的加载与多维视觉处理。
+ *
+ * 核心机制与避坑点：
+ * 1. ContentScale 缩放策略：Crop、Fit、FillBounds、Inside 在固定容器尺寸下的对比；
+ * 2. 形状裁剪与边框：CircleShape 圆形头像、RoundedCornerShape 圆角与 Border 描边；
+ * 3. 色彩滤镜与透明度：ColorFilter.tint 矢量着色与 Alpha 透明度调节。
  *
  * https://developer.android.google.cn/jetpack/compose/graphics/images/loading
  */

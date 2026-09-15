@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
  *
  * Room 是 Android Jetpack 提供的数据库持久化框架，在 SQLite 之上提供类型安全与响应式抽象层。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 编译时验证：在编译时验证 SQL 语法与实体映射，减少运行时错误
  * 2. 注解驱动：使用注解定义数据库结构，简化代码
  * 3. 协程 & Flow 支持：DAO 挂起函数与 Flow 响应式查询数据驱动 UI
@@ -33,43 +33,12 @@ import kotlinx.coroutines.withContext
  * 2. @Dao：定义数据访问对象，包含增删改查方法
  * 3. @Database：定义数据库，包含版本号和实体列表
  *
- * 基本用法：
- * ```kotlin
- * // 定义实体
- * @Entity
- * data class User(
- *     @PrimaryKey val uid: Int,
- *     @ColumnInfo(name = "first_name") val firstName: String?
- * )
- *
- * // 定义 DAO
- * @Dao
- * interface UserDao {
- *     @Query("SELECT * FROM user")
- *     fun getAll(): List<User>
- *
- *     @Insert
- *     suspend fun insertAll(vararg users: User)
- * }
- *
- * // 定义数据库
- * @Database(entities = [User::class], version = 1)
- * abstract class AppDatabase : RoomDatabase() {
- *     abstract fun userDao(): UserDao
- * }
- * ```
- *
- * 适用场景：
- * - 本地数据持久化
- * - 离线数据缓存
- * - 复杂数据查询与响应式数据流
- *
  * https://developer.android.google.cn/jetpack/androidx/releases/room
  */
 @Route(path = RouterPath.Database.Room)
 class RoomActivity : BasicResponseActivity() {
 
-    private val mOAuthDao: OAuthDao by lazy {
+    private val oauthDao: OAuthDao by lazy {
         OAuthDataBase.getInstance(applicationContext).getOAuthDao()
     }
 
@@ -108,7 +77,7 @@ class RoomActivity : BasicResponseActivity() {
      */
     private fun observeOAuthFlow() {
         lifecycleScope.launch {
-            mOAuthDao.getAllOAuthFlow().collect { list: List<OAuth> ->
+            oauthDao.getAllOAuthFlow().collect { list: List<OAuth> ->
                 if (list.isEmpty()) {
                     appendLog("[Room Flow 监听] 当前数据库无数据")
                 } else {
@@ -130,7 +99,7 @@ class RoomActivity : BasicResponseActivity() {
     private fun addSingleOAuth() {
         lifecycleScope.launch(Dispatchers.IO) {
             val oAuth = OAuth(refreshToken = "Token_${System.currentTimeMillis() % 10000}", expires = 3600)
-            val newId = mOAuthDao.insertOAuth(oAuth)
+            val newId = oauthDao.insertOAuth(oAuth)
             lastInsertedId = newId
             withContext(Dispatchers.Main) {
                 appendLog("插入单条数据成功，生成的 ID: $newId")
@@ -146,7 +115,7 @@ class RoomActivity : BasicResponseActivity() {
             val list = Array(3) { index ->
                 OAuth(refreshToken = "Batch_Token_${index}_${System.currentTimeMillis() % 1000}", expires = 7200)
             }
-            mOAuthDao.insertAll(*list)
+            oauthDao.insertAll(*list)
             withContext(Dispatchers.Main) {
                 appendLog("批量插入 3 条数据完成")
             }
@@ -164,10 +133,10 @@ class RoomActivity : BasicResponseActivity() {
                 }
                 return@launch
             }
-            val current = mOAuthDao.getUserById(lastInsertedId)
+            val current = oauthDao.getUserById(lastInsertedId)
             if (current != null) {
                 val updated = current.copy(refreshToken = "Updated_${System.currentTimeMillis() % 10000}", expires = 9999)
-                mOAuthDao.updateOAuth(updated)
+                oauthDao.updateOAuth(updated)
                 withContext(Dispatchers.Main) {
                     appendLog("已更新 ID=$lastInsertedId 的数据为: ${updated.refreshToken}")
                 }
@@ -186,7 +155,7 @@ class RoomActivity : BasicResponseActivity() {
                 }
                 return@launch
             }
-            val result = mOAuthDao.getUserById(lastInsertedId)
+            val result = oauthDao.getUserById(lastInsertedId)
             withContext(Dispatchers.Main) {
                 appendLog("协程根据 ID=$lastInsertedId 查询结果: ${Gson().toJson(result)}")
             }
@@ -201,7 +170,7 @@ class RoomActivity : BasicResponseActivity() {
             appendLog("尚未记录有效 ID，请先插入数据")
             return
         }
-        val d = mOAuthDao.getUserSingle(lastInsertedId)
+        val d = oauthDao.getUserSingle(lastInsertedId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ oauth ->
@@ -217,7 +186,7 @@ class RoomActivity : BasicResponseActivity() {
      */
     private fun clearOAuth() {
         lifecycleScope.launch(Dispatchers.IO) {
-            mOAuthDao.deleteAllOAuth()
+            oauthDao.deleteAllOAuth()
             lastInsertedId = 0L
             withContext(Dispatchers.Main) {
                 appendLog("已清空 Room 数据表")

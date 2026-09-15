@@ -13,10 +13,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
- * OkHttp SSE 客户端示例（Kotlin Coroutines Flow 封装版本 - DeepSeek 大模型流式对话）
+ * OkHttp SSE — Coroutines Flow 封装版流式客户端
  *
- * 演示使用 OkHttpSseClientFlow 将 DeepSeek 大模型 POST 流式响应转换为 Coroutines Flow。
- * 在生命周期感知协程域中直接 collect 流式 Token，收到 [DONE] 时 Flow 自动结束。
+ * 将 OkHttp SSE 的事件流封装为 Kotlin Coroutines Flow，在 lifecycleScope 中收集，
+ * 对接 DeepSeek 官方 POST + SSE 流式对话接口。收到 [DONE] 时 Flow 自然结束。
+ *
+ * 核心机制与避坑点：
+ * 1. Flow 封装：OkHttpSseInfo 密封类映射 SSE 事件，collect 逐个消费
+ * 2. 协程生命周期：lifecycleScope.launch 启动收集，Job.cancel() 取消并断开底层连接
+ * 3. 逐 Token 解析：从 Event.data 提取 delta.content，累积为完整回答
+ * 4. 自然完结：收到 [DONE] 后取消协程，Flow 通道关闭
+ *
+ * https://square.github.io/okhttp/features/sse/
  */
 @Route(path = RouterPath.SSE.OkHttpSseClientFlow)
 class OkHttpSseClientFlowActivity : BasicResponseActivity() {
@@ -79,7 +87,7 @@ class OkHttpSseClientFlowActivity : BasicResponseActivity() {
                             if (info.data.trim() == "[DONE]") {
                                 removeUpdatingLog("deepseek_response")
                                 appendLogAccent("【AI 完整回答】\n$responseBuffer")
-                                appendLog("【完成】收到 [DONE] 标识，DeepSeek 流式响应自然完结")
+                                appendLog("✓ 收到 [DONE] 标识，DeepSeek 流式响应自然完结")
                                 streamJob?.cancel()
                                 return@collect
                             }
@@ -94,7 +102,7 @@ class OkHttpSseClientFlowActivity : BasicResponseActivity() {
                         }
                         is OkHttpSseInfo.Error -> {
                             removeUpdatingLog("deepseek_response")
-                            appendLog("【异常】${info.throwable.message}")
+                            appendLog("✗ ${info.throwable.message}")
                         }
                     }
                 }
@@ -105,6 +113,6 @@ class OkHttpSseClientFlowActivity : BasicResponseActivity() {
     private fun cancelStream() {
         streamJob?.cancel()
         removeUpdatingLog("deepseek_response")
-        appendLog("【中断】已 Cancel 协程 Job，自动断开底层 EventSource")
+        appendLog("→ 已 Cancel 协程 Job，自动断开底层 EventSource")
     }
 }

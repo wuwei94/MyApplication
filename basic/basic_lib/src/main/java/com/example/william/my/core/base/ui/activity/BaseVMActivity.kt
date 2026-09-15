@@ -16,7 +16,7 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseVMActivity<VB : ViewBinding?, VM : BaseViewModel> : BaseVBActivity<VB>() {
 
     private var _viewModel: VM? = null
-    protected val mViewModel get() = _viewModel!!
+    protected val viewModel get() = _viewModel!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ abstract class BaseVMActivity<VB : ViewBinding?, VM : BaseViewModel> : BaseVBAct
 
     override fun initViewModel() {
         _viewModel = viewModel()
-        lifecycle.addObserver(mViewModel)
+        lifecycle.addObserver(viewModel)
     }
 
     private fun viewModel(): VM? {

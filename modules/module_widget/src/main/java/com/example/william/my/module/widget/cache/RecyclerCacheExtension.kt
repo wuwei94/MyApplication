@@ -11,25 +11,25 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class RecyclerCacheExtension : RecyclerView.ViewCacheExtension() {
 
-    private val mViewCache: SparseArray<View> = SparseArray(4)
+    private val viewCache: SparseArray<View> = SparseArray(4)
 
     override fun getViewForPositionAndType(
         recycler: RecyclerView.Recycler,
         position: Int,
         type: Int,
-    ): View? = if (mViewCache.size() > position) {
-        mViewCache[position]
+    ): View? = if (viewCache.size() > position) {
+        viewCache[position]
     } else {
         null
     }
 
     fun addCache(position: Int, view: View) {
-        if (mViewCache[position] !== view) {
-            mViewCache.put(position, view)
+        if (viewCache[position] !== view) {
+            viewCache.put(position, view)
         }
     }
 
     fun clearCache() {
-        mViewCache.clear()
+        viewCache.clear()
     }
 }

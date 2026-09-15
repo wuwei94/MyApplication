@@ -23,13 +23,13 @@ import java.io.File
  *
  * 通过系统 Intent 实现图片裁剪功能，支持图库选择和拍照。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 图库选择：从相册选择图片并裁剪
  * 2. 拍照裁剪：支持缩略图和高清原图两种模式
  * 3. 系统裁剪：调用系统裁剪 Intent，兼容性好
  * 4. 权限处理：Android 7.0+ 使用 FileProvider 处理文件 URI
  *
- * 核心注意点：
+ * 局限：
  * 1. Android 7.0+ (API 24+) 禁止向第三方应用直接暴露 file:// URI，否则将抛出 FileUriExposedException
  *    必须使用 FileProvider.getUriForFile 生成 content:// URI 并附加读写权限标志
  * 2. com.android.camera.action.CROP 为 Android 非公开标准 Intent（部分厂商定制 ROM 可能未内置裁剪 App）
@@ -43,23 +43,7 @@ import java.io.File
  *    「targetSdk M+ 且声明了 CAMERA 却未授权时，调用该 action 会抛 SecurityException」，
  *    拍照路径必须先做运行时申请，否则异常会被 catch 吞成「启动相机失败」的静默失败
  *
- * 基本用法：
- * ```kotlin
- * // 启动裁剪
- * val intent = Intent("com.android.camera.action.CROP").apply {
- *     setDataAndType(sourceUri, "image/jpeg")
- *     putExtra("crop", "true")
- *     putExtra("aspectX", 1)
- *     putExtra("aspectY", 1)
- *     putExtra(MediaStore.EXTRA_OUTPUT, destinationUri)
- * }
- * cropLauncher.launch(intent)
- * ```
- *
- * 适用场景：
- * - 用户头像裁剪
- * - 图片编辑、分享
- * - 需要图片裁剪的场景
+ * https://developer.android.com/training/camera/photobasics
  */
 @Route(path = RouterPath.Feature.Crop)
 class CropActivity : BasicImageActivity() {
@@ -265,7 +249,7 @@ class CropActivity : BasicImageActivity() {
                 BitmapFactory.decodeStream(inputStream)
             }
             if (bitmap != null) {
-                mBinding.basicsImage.setImageBitmap(bitmap)
+                binding.basicsImage.setImageBitmap(bitmap)
                 Utils.toast("图片裁剪完成")
             } else {
                 Utils.toast("无法解码裁剪图片")

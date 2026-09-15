@@ -76,10 +76,10 @@ object HookManager {
      * 实现 InvocationHandler 的点击监听代理。
      */
     class OnClickListenerProxy(
-        private val mOriginalListener: View.OnClickListener?,
+        private val originalListener: View.OnClickListener?,
     ) : View.OnClickListener {
         override fun onClick(v: View) {
-            mOriginalListener?.onClick(v)
+            originalListener?.onClick(v)
             println("点击事件被hook到了!")
             println("hooked" + " : " + v.getTag(v.id).toString())
         }

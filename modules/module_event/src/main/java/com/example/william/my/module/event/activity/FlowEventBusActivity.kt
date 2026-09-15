@@ -14,7 +14,7 @@ import kotlinx.coroutines.Job
  *
  * 利用 Kotlin SharedFlow + repeatOnLifecycle 实现的协程事件总线。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 协程驱动：基于 Kotlin 协程，性能优秀
  * 2. 生命周期感知：利用 repeatOnLifecycle 自动管理订阅
  * 3. 粘性事件：支持粘性事件，使用 SharedFlow 的 replay 参数
@@ -23,32 +23,13 @@ import kotlinx.coroutines.Job
  * 特性对比：
  * 延迟发送: ✅ | 有序接收: ✅ | Sticky: ✅ | 生命周期感知: ✅ | 可跨进程: ❌ | 线程分发: ✅
  *
- * 基本用法：
- * ```kotlin
- * // 订阅事件
- * val job = FlowEventBus.observeEvent<MessageEvent>(this) { event ->
- *     // 处理事件
- * }
- *
- * // 发送事件
- * FlowEventBus.postEvent(this, MessageEvent("Hello"))
- *
- * // 取消订阅
- * job.cancel()
- * ```
- *
- * 适用场景：
- * - Kotlin 项目中的事件通信
- * - 需要协程支持的场景
- * - 现代化的 Android 架构
- *
  * https://github.com/Kotlin/kotlinx.coroutines
  */
 @Route(path = RouterPath.Event.FlowEventBus)
 class FlowEventBusActivity : BasicResponseActivity() {
 
-    private var mGlobalJob: Job? = null
-    private var mStickyJob: Job? = null
+    private var globalJob: Job? = null
+    private var stickyJob: Job? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -83,29 +64,29 @@ class FlowEventBusActivity : BasicResponseActivity() {
     }
 
     private fun toggleObserve() {
-        val isObserving = (mGlobalJob?.isActive == true) || (mStickyJob?.isActive == true)
+        val isObserving = (globalJob?.isActive == true) || (stickyJob?.isActive == true)
         if (!isObserving) {
-            mGlobalJob?.cancel()
-            mStickyJob?.cancel()
-            mGlobalJob = FlowEventBus.observeEvent<GlobalEvent>(this) {
+            globalJob?.cancel()
+            stickyJob?.cancel()
+            globalJob = FlowEventBus.observeEvent<GlobalEvent>(this) {
                 appendLog("收到普通事件：${it.message}")
             }
-            mStickyJob = FlowEventBus.observeEvent<StickyEvent>(this, isSticky = true) {
+            stickyJob = FlowEventBus.observeEvent<StickyEvent>(this, isSticky = true) {
                 appendLog("收到粘性事件：${it.message}")
             }
             appendLog("已开启 FlowEventBus 监听")
         } else {
-            mGlobalJob?.cancel()
-            mStickyJob?.cancel()
-            mGlobalJob = null
-            mStickyJob = null
+            globalJob?.cancel()
+            stickyJob?.cancel()
+            globalJob = null
+            stickyJob = null
             appendLog("已取消 FlowEventBus 监听")
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mGlobalJob?.cancel()
-        mStickyJob?.cancel()
+        globalJob?.cancel()
+        stickyJob?.cancel()
     }
 }

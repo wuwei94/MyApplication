@@ -17,17 +17,17 @@ import java.util.concurrent.TimeUnit
  */
 class InterceptorLogging(filters: List<String>) : Interceptor {
 
-    private val mPrinter = FormatPrinterImpl(filters)
+    private val printer = FormatPrinterImpl(filters)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        if (mPrinter.shouldPrint(request.url)) {
+        if (printer.shouldPrint(request.url)) {
             val requestBody = request.body
             if (isSafeToLog(requestBody)) {
-                mPrinter.printJsonRequest(request, FormatParser.parseRequest(request))
+                printer.printJsonRequest(request, FormatParser.parseRequest(request))
             } else {
-                mPrinter.printFileRequest(request)
+                printer.printFileRequest(request)
             }
         }
 
@@ -36,17 +36,17 @@ class InterceptorLogging(filters: List<String>) : Interceptor {
 
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
 
-        if (mPrinter.shouldPrint(response.request.url)) {
+        if (printer.shouldPrint(response.request.url)) {
             val responseContentType = response.body.contentType()
             if (responseContentType.isParseAble()) {
-                mPrinter.printJsonResponse(
+                printer.printJsonResponse(
                     tookMs,
                     response,
                     responseContentType,
                     FormatParser.parseResponse(response),
                 )
             } else {
-                mPrinter.printFileResponse(tookMs, response)
+                printer.printFileResponse(tookMs, response)
             }
         }
 

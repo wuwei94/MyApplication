@@ -22,12 +22,12 @@ import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.glide.GlideImagesPlugin
 
 /**
- * Markwon 基础与扩展 Markdown 渲染示例
+ * Markwon — Android 原生 Markdown 渲染引擎
  *
- * Markwon 是基于 commonmark-java 的 Android 原生 Markdown 渲染引擎，通过解析 Markdown AST
- * 生成 Android 原生 Spannable 富文本直接赋给 TextView，具备极高的渲染性能和可扩展性。
+ * 基于 commonmark-java，通过解析 Markdown AST 生成 Android 原生 Spannable 富文本
+ * 直接赋给 TextView，具备极高的渲染性能和可扩展性。
  *
- * 核心特性与扩展插件：
+ * 核心机制与避坑点：
  * 1. 基础语法：标题（H1~H6）、粗体、斜体、引用块（Blockquote）、无序/有序多级列表、水平分割线
  * 2. GFM 扩展表格 (TablePlugin)：标准 Markdown 表格渲染，支持多列与对齐方式
  * 3. 任务清单 (TaskListPlugin)：支持 GFM 规范的任务复选框列表（`- [x] Task`）
@@ -42,19 +42,19 @@ import io.noties.markwon.image.glide.GlideImagesPlugin
 @Route(path = RouterPath.Markdown.MarkwonBasic)
 class MarkwonBasicActivity : BasicLayoutActivity() {
 
-    private lateinit var mMarkdownBinding: MarkdownActivityBasicBinding
-    private lateinit var mTextView: TextView
+    private lateinit var markdownBinding: MarkdownActivityBasicBinding
+    private lateinit var textView: TextView
 
-    private lateinit var mDefaultMarkwon: Markwon
-    private lateinit var mCustomThemeMarkwon: Markwon
+    private lateinit var defaultMarkwon: Markwon
+    private lateinit var customThemeMarkwon: Markwon
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
         // 绑定上方视图容器
-        mMarkdownBinding = MarkdownActivityBasicBinding.inflate(LayoutInflater.from(this))
-        mTextView = mMarkdownBinding.markdownTextView
-        setView(mMarkdownBinding.root)
+        markdownBinding = MarkdownActivityBasicBinding.inflate(LayoutInflater.from(this))
+        textView = markdownBinding.markdownTextView
+        setView(markdownBinding.root)
 
         initMarkwon()
 
@@ -72,7 +72,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             .build()
 
         // 1. 标准全功能 Markwon（核心 + 表格 + 任务清单 + 删除线 + HTML + Glide 图片 + 链接拦截）
-        mDefaultMarkwon = Markwon.builder(this)
+        defaultMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
             .usePlugin(TablePlugin.create(tableTheme))
             .usePlugin(TaskListPlugin.create(this))
@@ -89,7 +89,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             .build()
 
         // 2. 自定义主题 Markwon（定制引用条颜色、代码块背景、列表样式）
-        mCustomThemeMarkwon = Markwon.builder(this)
+        customThemeMarkwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
             .usePlugin(TablePlugin.create(tableTheme))
             .usePlugin(TaskListPlugin.create(this))
@@ -167,7 +167,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             3. 第三步：实现打字机流控与代码高亮
         """.trimIndent()
 
-        mDefaultMarkwon.setMarkdown(mTextView, markdown)
+        defaultMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -196,7 +196,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             | 内联图片 | ✅ | 配合 Glide 异步加载插件 |
         """.trimIndent()
 
-        mDefaultMarkwon.setMarkdown(mTextView, markdown)
+        defaultMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -226,7 +226,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
               - [ ] 智能贴底平滑滚动与手势打断
         """.trimIndent()
 
-        mDefaultMarkwon.setMarkdown(mTextView, markdown)
+        defaultMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -250,7 +250,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             - 换行与分割：使用 `<br>` 进行行内换行<br>下一行文本内容
         """.trimIndent()
 
-        mDefaultMarkwon.setMarkdown(mTextView, markdown)
+        defaultMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -275,7 +275,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             > 图片加载由 Glide 引擎驱动，支持自动缓存与占位。
         """.trimIndent()
 
-        mDefaultMarkwon.setMarkdown(mTextView, markdown)
+        defaultMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -311,7 +311,7 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             ```
         """.trimIndent()
 
-        mCustomThemeMarkwon.setMarkdown(mTextView, markdown)
+        customThemeMarkwon.setMarkdown(textView, markdown)
     }
 
     /**
@@ -372,6 +372,6 @@ class MarkwonBasicActivity : BasicLayoutActivity() {
             点击链接探索更多：[深入学习 Markwon 官方文档](https://noties.io/Markwon/)
         """.trimIndent()
 
-        mDefaultMarkwon.setMarkdown(mTextView, markdown)
+        defaultMarkwon.setMarkdown(textView, markdown)
     }
 }

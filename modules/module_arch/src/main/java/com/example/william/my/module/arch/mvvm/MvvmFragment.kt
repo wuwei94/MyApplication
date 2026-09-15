@@ -15,14 +15,14 @@ import com.example.william.my.module.arch.mvvm.viewmodel.ArticleLiveDataViewMode
  */
 class MvvmFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
-    private val mViewModel: ArticleLiveDataViewModel by viewModels {
+    private val viewModel: ArticleLiveDataViewModel by viewModels {
         ArticleLiveDataViewModel.Factory
     }
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> = ArticleAdapter(arrayListOf())
 
     override fun observeViewModel() {
-        mViewModel.articleResponse.observe(viewLifecycleOwner) { response ->
+        viewModel.articleResponse.observe(viewLifecycleOwner) { response ->
             when {
                 response.code == RetrofitResponse.LOADING -> {
                     // 加载中状态
@@ -44,6 +44,6 @@ class MvvmFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
     override fun queryData() {
         super.queryData()
-        mViewModel.loadArticle(mPage)
+        viewModel.loadArticle(page)
     }
 }

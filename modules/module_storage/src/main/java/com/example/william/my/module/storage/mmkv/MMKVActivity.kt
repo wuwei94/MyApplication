@@ -11,29 +11,11 @@ import com.tencent.mmkv.MMKV
  *
  * MMKV 是腾讯开源的高性能键值存储库，基于 mmap 内存映射实现。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 高性能：基于 mmap 内存映射，读写性能远超 SharedPreferences
  * 2. 多进程支持：支持多进程并发访问与数据同步
  * 3. 跨平台：支持 Android、iOS、Windows、macOS 等平台
  * 4. 数据安全：支持数据加密，保障数据安全
- *
- * 基本用法：
- * ```kotlin
- * // 初始化
- * MMKV.initialize(context)
- *
- * // 写入数据
- * val kv = MMKV.defaultMMKV()
- * kv.encode("key", "value")
- *
- * // 读取数据
- * val value = kv.decodeString("key", "default")
- * ```
- *
- * 适用场景：
- * - 替代 SharedPreferences，提升性能
- * - 多进程数据共享
- * - 需要高性能键值存储的场景
  *
  * https://github.com/Tencent/MMKV
  */

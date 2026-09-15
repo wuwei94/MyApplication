@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Kotlin模块入口页
+ * Kotlin 模块入口 — 导航到协程、Flow、Channel、作用域函数、委托等示例页面。
  *
  * 展示协程、Flow、作用域函数、委托等 Kotlin 特性的示例列表。
  */

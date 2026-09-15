@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 示例模块入口页
+ * 示例模块入口 — 导航到 Hook、字体等示例页面。
  *
  * 展示 Hook、字体等示例。
  */

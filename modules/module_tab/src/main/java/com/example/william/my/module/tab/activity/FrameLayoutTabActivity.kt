@@ -21,34 +21,13 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  *
  * 使用 RadioGroup + RadioButton + FrameLayout 实现 Tab 切换，适合简单场景。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 简单实现：使用 RadioGroup 实现 Tab 切换
  * 2. Fragment 切换：支持 Fragment 切换
  * 3. 自定义样式：支持自定义 Tab 样式
  * 4. 选中状态：支持选中/未选中状态切换
  *
- * 基本用法：
- * ```kotlin
- * // XML 中使用
- * <RadioGroup
- *     android:id="@+id/navigate"
- *     android:layout_width="match_parent"
- *     android:layout_height="wrap_content"
- *     android:orientation="horizontal">
- *     <RadioButton ... />
- *     <RadioButton ... />
- * </RadioGroup>
- *
- * // 代码中设置监听
- * radioGroup.setOnCheckedChangeListener { group, checkedId ->
- *     // 切换 Fragment
- * }
- * ```
- *
- * 适用场景：
- * - 简单的 Tab 切换
- * - 底部导航栏
- * - 不需要复杂动画的场景
+ * https://developer.android.com/reference/android/widget/RadioGroup
  */
 @Route(path = RouterPath.Tab.FrameLayoutTab)
 class FrameLayoutTabActivity :
@@ -57,7 +36,7 @@ class FrameLayoutTabActivity :
 
     override fun getViewBinding(): TabActivityFrameLayoutTabBinding = TabActivityFrameLayoutTabBinding.inflate(layoutInflater)
 
-    private val mTitles: ArrayList<String> by lazy {
+    private val titles: ArrayList<String> by lazy {
         arrayListOf(
             getString(R.string.tab_title_home),
             getString(R.string.tab_title_discover),
@@ -66,16 +45,16 @@ class FrameLayoutTabActivity :
         )
     }
 
-    private val mIcons: ArrayList<Int> = arrayListOf(
+    private val icons: ArrayList<Int> = arrayListOf(
         R.drawable.tab_ic_tab1,
         R.drawable.tab_ic_tab2,
         R.drawable.tab_ic_tab4,
         R.drawable.tab_ic_tab3,
     )
 
-    private val mTabs: ArrayList<RadioButton> = arrayListOf()
+    private val tabs: ArrayList<RadioButton> = arrayListOf()
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -96,23 +75,23 @@ class FrameLayoutTabActivity :
             savedInstanceState,
             supportFragmentManager,
             R.id.frameLayout,
-            mFragments,
-            mTitles,
+            fragments,
+            titles,
         )
     }
 
     private fun initTab() {
-        mBinding.navigate.setOnCheckedChangeListener(this)
-        for (i in 0 until mBinding.navigate.childCount) {
-            val radioButton: RadioButton = mBinding.navigate.getChildAt(i) as RadioButton
-            radioButton.text = mTitles[i]
+        binding.navigate.setOnCheckedChangeListener(this)
+        for (i in 0 until binding.navigate.childCount) {
+            val radioButton: RadioButton = binding.navigate.getChildAt(i) as RadioButton
+            radioButton.text = titles[i]
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
                     R.color.tab_selector_check_primary_dark,
                 ),
             )
-            val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
+            val drawable = ContextCompat.getDrawable(this, icons[i])?.mutate()
             drawable?.let {
                 DrawableCompat.setTintList(
                     it,
@@ -120,13 +99,13 @@ class FrameLayoutTabActivity :
                 )
                 radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
             }
-            mTabs.add(radioButton)
+            tabs.add(radioButton)
         }
     }
 
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
-        for (i in 0 until mBinding.navigate.childCount) {
-            val child = mBinding.navigate.getChildAt(i) as? RadioButton
+        for (i in 0 until binding.navigate.childCount) {
+            val child = binding.navigate.getChildAt(i) as? RadioButton
             val isChecked = child?.id == checkedId
             child?.typeface = if (isChecked) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             if (isChecked) {
@@ -137,10 +116,10 @@ class FrameLayoutTabActivity :
     }
 
     private fun switchTab(position: Int) {
-        mBinding.navigate.check(mTabs[position].id)
+        binding.navigate.check(tabs[position].id)
     }
 
     private fun switchFragment(position: Int) {
-        FragmentUtils.switchFragment(supportFragmentManager, mFragments, position)
+        FragmentUtils.switchFragment(supportFragmentManager, fragments, position)
     }
 }

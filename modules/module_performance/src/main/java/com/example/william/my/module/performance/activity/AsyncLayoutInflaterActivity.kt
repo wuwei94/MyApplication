@@ -14,14 +14,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
- * AsyncLayoutInflater 异步布局加载与 ViewPreloadManager 预加载示例
+ * AsyncLayoutInflater — 异步布局解析与 ViewPreloadManager 预加载
  *
- * 本示例演示 AsyncLayoutInflater 的原生异步机制与 ViewPreloadManager 工程预加载架构：
- * 1. 核心机制：在后台工作线程异步解析 XML、反射实例化 View 对象，完成后在主线程回调中挂载至展示容器；
+ * 本示例演示 AsyncLayoutInflater 的原生异步机制与 ViewPreloadManager 工程预加载架构。
+ *
+ * 核心机制与避坑点：
+ * 1. 核心机制：在后台工作线程异步解析 XML、反射实例化 View 对象，完成后在主线程回调中挂载至展示容器
  * 2. ViewPreloadManager 预加载模式（Pre-Inflation）：
  *    - 在前置页面（如列表页）或系统空闲期，提前在后台批量异步解析详情页/弹窗/复杂卡片布局并缓存入池；
- *    - 进入详情页或点击弹窗时，直接调用 [ViewPreloadManager.getView] 瞬间取出挂载，实现 0ms 秒开；
- *    - 若池为空，自动降级（Fallback）走常规同步 inflate 加载，保证高可用。
+ *    - 进入详情页或点击弹窗时，直接调用 ViewPreloadManager.getView 瞬间取出挂载，实现 0ms 秒开；
+ *    - 若池为空，自动降级（Fallback）走常规同步 inflate 加载，保证高可用
+ *
+ * https://developer.android.com/reference/androidx/asynclayoutinflater/view/AsyncLayoutInflater
  */
 @Route(path = RouterPath.Performance.AsyncLayoutInflater)
 class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
@@ -66,7 +70,7 @@ class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
     private fun testAsyncInflateCard() {
         val startTime = System.currentTimeMillis()
 
-        asyncInflater.inflate(R.layout.performance_layout_async_card, mContainer) { view, _, _ ->
+        asyncInflater.inflate(R.layout.performance_layout_async_card, container) { view, _, _ ->
             val cost = System.currentTimeMillis() - startTime
             val titleView = view.findViewById<TextView>(R.id.performance_async_card_title)
             val descView = view.findViewById<TextView>(R.id.performance_async_card_desc)

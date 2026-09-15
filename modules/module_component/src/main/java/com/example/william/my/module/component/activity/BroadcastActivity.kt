@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference
  *
  * BroadcastReceiver 是 Android 四大组件之一，用于接收和处理广播消息。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 系统广播：接收系统事件（如电量变化、网络状态变化）
  * 2. 自定义广播：应用内或应用间发送自定义消息
  * 3. 动态注册：在代码中注册，生命周期跟随注册者
@@ -27,35 +27,17 @@ import java.lang.ref.WeakReference
  * 1. 动态注册：registerReceiver() / unregisterReceiver()
  * 2. 静态注册：在 AndroidManifest 中声明 receiver
  *
- * 基本用法：
- * ```kotlin
- * // 动态注册
- * val receiver = MyReceiver()
- * val filter = IntentFilter("com.example.MY_ACTION")
- * registerReceiver(receiver, filter)
- *
- * // 发送广播
- * val intent = Intent("com.example.MY_ACTION")
- * sendBroadcast(intent)
- *
- * // 注销
- * unregisterReceiver(receiver)
- * ```
- *
  * 注意事项：
  * - Android 13+ 需要指定 RECEIVER_NOT_EXPORTED 标志
  * - 使用 WeakReference 防止内存泄漏
  * - 避免在广播中执行耗时操作
  *
- * 适用场景：
- * - 系统事件监听
- * - 应用内消息传递
- * - 跨组件通信
+ * https://developer.android.com/guide/components/broadcasts
  */
 @Route(path = RouterPath.Component.Broadcast)
 class BroadcastActivity : BasicResponseActivity() {
 
-    private var mMessageReceiver: MessageReceiver? = null
+    private var messageReceiver: MessageReceiver? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -83,13 +65,13 @@ class BroadcastActivity : BasicResponseActivity() {
     }
 
     private fun registerReceiver() {
-        mMessageReceiver = MessageReceiver(this)
+        messageReceiver = MessageReceiver(this)
 
         val intentFilter = IntentFilter(MessageReceiver.ACTION_UPDATE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.registerReceiver(this, mMessageReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED)
+            ContextCompat.registerReceiver(this, messageReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED)
         } else {
-            ContextCompat.registerReceiver(this, mMessageReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
+            ContextCompat.registerReceiver(this, messageReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
         }
     }
 
@@ -99,7 +81,7 @@ class BroadcastActivity : BasicResponseActivity() {
     }
 
     private fun unregisterReceiver() {
-        mMessageReceiver?.let {
+        messageReceiver?.let {
             unregisterReceiver(it)
         }
     }

@@ -12,29 +12,33 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 
 /**
- * RxAndroidBle 响应式扫描与过滤示例
+ * RxAndroidBle 响应式扫描与过滤 — Observable 化 BLE
  *
- * 【RxAndroidBle —— 响应式全能型（高铁网络）】
- * - 功能覆盖：全都有。
- * - 特点：把所有蓝牙操作全变成了 RxJava 的 Observable 数据流。
- *   • 扫描、连接、读写、数据流推送全可以用 RxJava 操作符（filter 过滤微弱信号、throttle 节流、combineLatest 多设备合并）。
- *   • 取消订阅（dispose()）时，连接自动断开、通知自动注销，不容易内存泄漏。
- * - 适合谁：项目本身重度使用 RxJava 架构，或者需要对连续传感器数据做复杂流控的场景。
+ * RxAndroidBle 把扫描/连接/读写变成 RxJava 流，适合重度 Rx 架构；dispose 即释放。
  *
- * 演示特性：
- * 1. [RxBleClient.scanBleDevices] 转换为 Observable<ScanResult>
- * 2. 结合 RxJava 丰富操作符进行流式过滤 (filter)、去重 (distinct)、采样与节流 (sample / throttleFirst)
- * 3. 响应式生命周期控制：Disposable.dispose() 瞬间优雅取消扫描
+ * 库选型定位（四栈横评中的 RxAndroidBle）：
+ * - 编程模型：扫描、连接、读写、通知全部建模为 Observable，可用 filter / throttle /
+ *   combineLatest 等操作符做流控与多设备合并
+ * - 生命周期：dispose 时自动断开连接并注销通知，降低泄漏风险
+ * - 适合：项目本身重度使用 RxJava，或需要对连续传感器数据做复杂流控的场景
+ *
+ * 核心机制与避坑点：
+ * 1. 扫描流：`RxBleClient.scanBleDevices` → `Observable<ScanResult>`
+ * 2. 流式过滤：filter / distinct / sample / throttleFirst
+ * 3. 声明式取消：`Disposable.dispose()` 立刻停止扫描
+ * 4. 与连接示例同一客户端门面，便于横向对比
+ *
+ * https://github.com/dariuszseweryn/RxAndroidBle
  */
 @Route(path = RouterPath.Bluetooth.RxScan)
 class BleRxScanActivity : BasicResponseActivity() {
 
-    private lateinit var mRxBleClient: RxBleClient
-    private var mScanDisposable: Disposable? = null
+    private lateinit var rxBleClient: RxBleClient
+    private var scanDisposable: Disposable? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mRxBleClient = RxBleClient.create(applicationContext)
+        rxBleClient = RxBleClient.create(applicationContext)
 
         showDescription(
             "RxAndroidBle 响应式扫描与过滤示例\n\n" +
@@ -68,7 +72,7 @@ class BleRxScanActivity : BasicResponseActivity() {
 
         appendLog("🚀 启动 RxAndroidBle 响应式扫描 (minRssi=${minRssi ?: "不限"})...")
 
-        var observable = mRxBleClient.scanBleDevices(scanSettings, ScanFilter.empty())
+        var observable = rxBleClient.scanBleDevices(scanSettings, ScanFilter.empty())
             .observeOn(AndroidSchedulers.mainThread())
 
         // 利用 RxJava filter 操作符进行动态过滤
@@ -76,7 +80,7 @@ class BleRxScanActivity : BasicResponseActivity() {
             observable = observable.filter { result -> result.rssi >= minRssi }
         }
 
-        mScanDisposable = observable
+        scanDisposable = observable
             .subscribe(
                 { scanResult: ScanResult ->
                     val device = scanResult.bleDevice
@@ -97,13 +101,13 @@ class BleRxScanActivity : BasicResponseActivity() {
     }
 
     private fun stopRxScan() {
-        mScanDisposable?.let {
+        scanDisposable?.let {
             if (!it.isDisposed) {
                 it.dispose()
                 appendLog("✓ 已调用 Disposable.dispose() 停止扫描")
             }
         }
-        mScanDisposable = null
+        scanDisposable = null
     }
 
     private fun showRxBleAdvantages() {

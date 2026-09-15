@@ -9,13 +9,16 @@ import com.example.william.my.module.security.utils.SecureKeyDemoUtils
 /**
  * Android Keystore — 安全密钥管理
  *
- * Android Keystore 提供硬件级安全密钥管理，私钥始终保存在系统安全边界内。
+ * Android Keystore 提供硬件级安全密钥管理，私钥始终保存在系统安全边界内，
+ * 无法被应用或用户导出。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 硬件保护：私钥存储在 TEE 或 StrongBox 中，无法导出
  * 2. 设备绑定：密钥与设备绑定，无法迁移到其他设备
  * 3. 安全签名：支持 ECDSA、RSA 等签名算法
  * 4. 防重放：支持 challenge-response 机制，防止重放攻击
+ *
+ * https://developer.android.com/training/articles/keystore
  */
 @Route(path = RouterPath.Security.SecureKey)
 class SecureKeyActivity : BasicResponseActivity() {

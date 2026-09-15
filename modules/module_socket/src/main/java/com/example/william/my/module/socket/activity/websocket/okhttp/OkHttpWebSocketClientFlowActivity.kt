@@ -12,10 +12,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
- * OkHttp WebSocket Coroutines Flow 封装示例
+ * OkHttp WebSocket + Flow — 协程流式事件消费
  *
- * 演示使用 OkHttpWebSocketClientFlow 进行 WebSocket 通信
- * 使用 Kotlin Coroutines Flow 收集 WebSocket 事件
+ * 演示使用 OkHttpWebSocketClientFlow 进行 WebSocket 通信，
+ * 将连接、消息、关闭、错误事件桥接为 Kotlin Flow，由 collect 逐条消费。
+ *
+ * 核心机制与避坑点：
+ * 1. 冷流桥接：createWebSocket 返回可 collect 的事件流
+ * 2. 事件密封：OkHttpWebSocketInfo 统一承载 Open/Message/Closed/Error
+ * 3. 结构化取消：collect 所在 Job 取消即停止消费
+ * 4. 主动断开：cancel(url) 关闭底层 WebSocket
+ *
+ * https://square.github.io/okhttp/features/websockets
  */
 @Route(path = RouterPath.Socket.OkHttpWebSocketClientFlow)
 class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
@@ -70,7 +78,7 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
                             appendLogAccent("【关闭】已关闭：code=${info.code} reason=${info.reason}")
                         }
                         is OkHttpWebSocketInfo.Error -> {
-                            appendLogAccent("【错误】${info.exception.message}")
+                            appendLogAccent("✗ ${info.exception.message}")
                         }
                     }
                 }
@@ -83,7 +91,7 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

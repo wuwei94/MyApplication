@@ -19,51 +19,16 @@ import com.example.william.my.basic.basic_shared.R as SharedR
  *
  * Netty 是一个高性能的异步事件驱动的网络应用框架。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 高性能：基于 NIO，支持高并发
  * 2. 异步事件驱动：非阻塞 I/O，性能优秀
  * 3. 丰富的协议支持：支持 TCP、UDP、HTTP、WebSocket 等
  * 4. 易于使用：API 简单，易于扩展
  *
- * 基本用法：
- * ```kotlin
- * // 连接服务器
- * NettyClient.connect(
- *     host = "192.168.1.100",
- *     port = 8080,
- *     listener = object : NettyClientHandler.OnMessageListener {
- *         override fun onOpen(host: String, port: Int) {
- *             // 连接成功
- *         }
- *         override fun onMessage(message: String) {
- *             // 收到消息
- *         }
- *         override fun onClosed(reason: String) {
- *             // 连接关闭
- *         }
- *         override fun onError(exception: Exception) {
- *             // 发生错误
- *         }
- *     }
- * )
- *
- * // 发送消息
- * NettyClient.send("Hello")
- *
- * // 关闭连接
- * NettyClient.disconnect()
- * ```
- *
  * 服务端日志展示方式：
  * - 内置服务端运行在进程内 Service 中，主控制台按真实时间合并展示客户端与服务端两侧日志；
  * - 页面在 onStart/onStop 通过 [NettyServer]（进程级单例）订阅服务端事件，
  *   事件以「【服务端】前缀 + 强调色」追加进同一控制台，与服务端收发时序一一对应。
- *
- * 适用场景：
- * - 高并发网络应用
- * - 实时通信
- * - 游戏服务器
- * - 即时通讯
  *
  * https://github.com/netty/netty
  */
@@ -213,7 +178,7 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
 
                     override fun onError(throwable: Throwable) {
                         runOnUiThread {
-                            appendLog("【错误】${throwable.message}")
+                            appendLog("✗ ${throwable.message}")
                         }
                     }
                 },
@@ -232,7 +197,7 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

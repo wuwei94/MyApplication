@@ -19,7 +19,7 @@ import com.example.william.my.core.base.ui.activity.BaseActivity
  * 布局结构：
  * - 列表展示：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
- * 约定与规范：
+ * 规范约定：
  * 1. 继承类实现 [buildList] 构建列表数据源。
  * 2. 继承类实现 [onRecyclerClick] 响应列表项点击事件。
  */
@@ -27,34 +27,33 @@ abstract class BasicControlActivity :
     BaseActivity(),
     BaseQuickAdapter.OnItemClickListener<String> {
 
-    private val mAdapter: RecyclerAdapter by lazy {
+    private val recyclerAdapter: RecyclerAdapter by lazy {
         RecyclerAdapter()
     }
-    private val mAdapterHelper: QuickAdapterHelper by lazy {
-        QuickAdapterHelper.Builder(mAdapter).build()
+    private val adapterHelper: QuickAdapterHelper by lazy {
+        QuickAdapterHelper.Builder(recyclerAdapter).build()
     }
 
-    protected lateinit var binding: SharedLayoutRecyclerBinding
-    protected lateinit var mRecycler: RecyclerView
+    private lateinit var controlBinding: SharedLayoutRecyclerBinding
+    protected lateinit var recycler: RecyclerView
 
     override fun initViewBinding() {
         super.initViewBinding()
-        binding = SharedLayoutRecyclerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        mRecycler = binding.basicsRecycler
+        controlBinding = SharedLayoutRecyclerBinding.inflate(layoutInflater)
+        setContentView(controlBinding.root)
+        recycler = controlBinding.basicsRecycler
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
         initRecycler()
     }
 
     private fun initRecycler() {
-        mAdapter.submitList(buildRecyclerList())
-        mAdapter.setOnItemClickListener(this)
-        mRecycler.layoutManager = LinearLayoutManager(this)
-        mRecycler.adapter = mAdapterHelper.adapter
+        recyclerAdapter.submitList(buildRecyclerList())
+        recyclerAdapter.setOnItemClickListener(this)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapterHelper.adapter
     }
 
     protected open fun buildRecyclerList(): ArrayList<String> = buildList()

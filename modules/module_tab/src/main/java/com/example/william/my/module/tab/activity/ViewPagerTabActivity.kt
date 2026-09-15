@@ -21,28 +21,13 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPagerTabBind
  *
  * 使用 ViewPager + RadioGroup 实现 Tab 切换，支持 Fragment 页面切换。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. ViewPager 联动：Tab 和 ViewPager 联动切换
  * 2. Fragment 支持：支持 Fragment 页面切换
  * 3. 自定义样式：支持自定义 Tab 样式
  * 4. 图标支持：支持图标和文字组合
  *
- * 基本用法：
- * ```kotlin
- * // 设置 ViewPager 适配器
- * viewPager.adapter = ViewPagerFragmentAdapter(supportFragmentManager, fragments)
- *
- * // 设置 RadioGroup 监听
- * radioGroup.setOnCheckedChangeListener { group, checkedId ->
- *     // 切换 ViewPager
- *     viewPager.currentItem = position
- * }
- * ```
- *
- * 适用场景：
- * - Tab 切换
- * - 底部导航栏
- * - 多 Tab 页面切换
+ * https://developer.android.com/reference/androidx/viewpager/widget/ViewPager
  */
 @Route(path = RouterPath.Tab.ViewPagerTab)
 class ViewPagerTabActivity :
@@ -51,7 +36,7 @@ class ViewPagerTabActivity :
 
     override fun getViewBinding(): TabActivityViewPagerTabBinding = TabActivityViewPagerTabBinding.inflate(layoutInflater)
 
-    private val mTitles: ArrayList<String> by lazy {
+    private val titles: ArrayList<String> by lazy {
         arrayListOf(
             getString(R.string.tab_title_home),
             getString(R.string.tab_title_discover),
@@ -60,16 +45,16 @@ class ViewPagerTabActivity :
         )
     }
 
-    private val mIcons: ArrayList<Int> = arrayListOf(
+    private val icons: ArrayList<Int> = arrayListOf(
         R.drawable.tab_ic_tab1,
         R.drawable.tab_ic_tab2,
         R.drawable.tab_ic_tab4,
         R.drawable.tab_ic_tab3,
     )
 
-    private val mTabs: ArrayList<RadioButton> = arrayListOf()
+    private val tabs: ArrayList<RadioButton> = arrayListOf()
 
-    private val mFragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
         PrimaryDarkFragment(),
         PrimaryFragment(),
@@ -85,23 +70,23 @@ class ViewPagerTabActivity :
     }
 
     private fun initFragment() {
-        mBinding.viewPager.offscreenPageLimit = 4
-        mBinding.viewPager.adapter =
-            ViewPagerFragmentAdapter(supportFragmentManager, mFragments)
+        binding.viewPager.offscreenPageLimit = 4
+        binding.viewPager.adapter =
+            ViewPagerFragmentAdapter(supportFragmentManager, fragments)
     }
 
     private fun initTab() {
-        mBinding.navigate.setOnCheckedChangeListener(this)
-        for (i in 0 until mBinding.navigate.childCount) {
-            val radioButton: RadioButton = mBinding.navigate.getChildAt(i) as RadioButton
-            radioButton.text = mTitles[i]
+        binding.navigate.setOnCheckedChangeListener(this)
+        for (i in 0 until binding.navigate.childCount) {
+            val radioButton: RadioButton = binding.navigate.getChildAt(i) as RadioButton
+            radioButton.text = titles[i]
             radioButton.setTextColor(
                 ContextCompat.getColorStateList(
                     this,
                     R.color.tab_selector_check_primary_dark,
                 ),
             )
-            val drawable = ContextCompat.getDrawable(this, mIcons[i])?.mutate()
+            val drawable = ContextCompat.getDrawable(this, icons[i])?.mutate()
             drawable?.let {
                 DrawableCompat.setTintList(
                     it,
@@ -109,13 +94,13 @@ class ViewPagerTabActivity :
                 )
                 radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(null, it, null, null)
             }
-            mTabs.add(radioButton)
+            tabs.add(radioButton)
         }
     }
 
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
-        for (i in 0 until mBinding.navigate.childCount) {
-            val child = mBinding.navigate.getChildAt(i) as? RadioButton
+        for (i in 0 until binding.navigate.childCount) {
+            val child = binding.navigate.getChildAt(i) as? RadioButton
             val isChecked = child?.id == checkedId
             child?.typeface = if (isChecked) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             if (isChecked) {
@@ -126,10 +111,10 @@ class ViewPagerTabActivity :
     }
 
     private fun switchTab(position: Int) {
-        mBinding.navigate.check(mTabs[position].id)
+        binding.navigate.check(tabs[position].id)
     }
 
     private fun switchFragment(position: Int) {
-        mBinding.viewPager.currentItem = position
+        binding.viewPager.currentItem = position
     }
 }

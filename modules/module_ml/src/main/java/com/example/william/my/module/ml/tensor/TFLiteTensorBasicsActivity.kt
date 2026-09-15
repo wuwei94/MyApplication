@@ -12,16 +12,19 @@ import kotlinx.coroutines.withContext
 import org.tensorflow.lite.Interpreter
 
 /**
- * TFLite 张量底层操作与内存生命周期规范
+ * TensorFlow Lite — 张量底层操作与内存生命周期
  *
- * 官方文档: https://www.tensorflow.org/lite/guide
+ * 演示端侧模型推理的底层核心机制：FlatBuffers 零拷贝加载、Direct Memory 排布、
+ * 动态张量调整与 Native 资源安全释放规范。
  *
- * 演示端侧模型推理的底层核心机制：
+ * 核心机制与避坑点：
  * 1. FlatBuffers 零拷贝（Zero-copy mmap）加载与张量元数据（Tensor Metadata / Shapes / DataType）实时反射
  * 2. JVM Direct Memory vs 堆内存对比与原生字节序（ByteOrder.nativeOrder()）
  * 3. 动态张量尺寸调整 (Dynamic Shape Resizing)
  * 4. 多输入多输出 (Multi-Input Multi-Output, MIMO) 复杂张量推理调度
  * 5. Native C++ 资源安全释放与防内存泄漏规范
+ *
+ * https://www.tensorflow.org/lite/guide
  */
 @Route(path = RouterPath.Ml.TensorBasics)
 class TFLiteTensorBasicsActivity : BasicResponseActivity() {

@@ -49,13 +49,14 @@ import kotlin.math.roundToInt
 /**
  * TransformGestures — 多指复合手势实战
  *
- * 演示 Compose 官方底层手势监测 API [detectTransformGestures] 的全功能集成：
+ * 演示 Compose 官方底层手势监测 API [detectTransformGestures] 的全功能集成。
+ *
+ * 核心机制与避坑点：
  * 1. 复合手势捕获：在单次触控监听中同步处理双指缩放（Pinch-to-zoom）、双指旋转（Rotate）与多指平移（Pan）；
  * 2. 硬件加速变换：使用 [Modifier.graphicsLayer] 独立渲染图层，避免引起频繁的全组件重组；
  * 3. 约束限制与归一化：为缩放系数（0.5f ~ 5.0f）施加安全边界约束；
  * 4. 实时参数仪表盘：显示缩放比率、旋转弧度与二维平移坐标；支持一键复位。
  *
- * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/touch-input/pointer-input/understand-gestures#multitouch-gestures
  */
 @Route(path = RouterPath.Compose.TransformGestures)

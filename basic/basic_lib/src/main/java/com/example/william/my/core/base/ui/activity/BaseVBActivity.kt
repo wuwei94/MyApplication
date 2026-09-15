@@ -6,12 +6,12 @@ import androidx.viewbinding.ViewBinding
 /**
  * ViewBinding Activity 基类
  *
- * 通过 [getViewBinding] 绑定视图，并在销毁时自动释放 mBinding 引用。
+ * 通过 [getViewBinding] 绑定视图，并在销毁时自动释放 binding 引用。
  */
 abstract class BaseVBActivity<VB : ViewBinding?> : BaseActivity() {
 
     private var _binding: VB? = null
-    protected val mBinding get() = _binding!!
+    protected val binding get() = _binding!!
 
     protected abstract fun getViewBinding(): VB
 
@@ -22,7 +22,7 @@ abstract class BaseVBActivity<VB : ViewBinding?> : BaseActivity() {
     override fun initViewBinding() {
         super.initViewBinding()
         _binding = getViewBinding()
-        setContentView(mBinding.root)
+        setContentView(binding.root)
     }
 
     override fun onDestroy() {

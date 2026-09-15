@@ -42,10 +42,12 @@ import kotlinx.coroutines.launch
 /**
  * ScrollableTabRow 与 HorizontalPager 双向联动示例页
  *
- * 聚合展示 Compose 中可滚动标签栏与水平分页容器的深度协同：
- * 1. **双向联动**：手势滑动分页（HorizontalPager）驱动 Tab 选中项跟随，点击 Tab 平滑滚动至目标页面；
- * 2. **程序化跳页**：通过 `PagerState.animateScrollToPage()` 支持上一页、下一页及快速定点跳转；
- * 3. **分页指示器**：自定义圆点指示器动态响应当前页码与总页数。
+ * 聚合展示 Compose 中可滚动标签栏与水平分页容器的深度协同。
+ *
+ * 核心机制与避坑点：
+ * 1. 双向联动：手势滑动分页（HorizontalPager）驱动 Tab 选中项跟随，点击 Tab 平滑滚动至目标页面；
+ * 2. 程序化跳页：通过 `PagerState.animateScrollToPage()` 支持上一页、下一页及快速定点跳转；
+ * 3. 分页指示器：自定义圆点指示器动态响应当前页码与总页数。
  *
  * https://developer.android.google.cn/develop/ui/compose/components/tab-row
  * https://developer.android.google.cn/jetpack/compose/layouts/pager

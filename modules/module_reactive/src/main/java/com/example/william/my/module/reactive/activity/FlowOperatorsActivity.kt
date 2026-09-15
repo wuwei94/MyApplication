@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.onEach
  *
  * Flow 是 Kotlin 协程的响应式数据流，与 RxJava 操作符一一对应。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 创建操作符：flowOf / asFlow 快速构建冷数据流
  * 2. 变换操作符：map 逐项映射、flatMapConcat 扁平展开、buffer 背压缓冲
  * 3. 过滤操作符：filter 条件过滤、take 限量、distinct 去重

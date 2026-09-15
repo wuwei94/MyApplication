@@ -61,14 +61,15 @@ import kotlinx.coroutines.launch
 /**
  * Button — 现代化 Material 3 按钮家族实战
  *
- * 全景展示 Compose Material 3 规范中的按钮体系、状态响应与交互设计：
+ * 全景展示 Compose Material 3 规范中的按钮体系、状态响应与交互设计。
+ *
+ * 核心机制与避坑点：
  * 1. M3 五大核心按钮类型：Filled (Button)、Filled Tonal、Elevated、Outlined 与 TextButton；
  * 2. 图标按钮家族：IconButton、FilledIconButton、FilledTonalIconButton 与 OutlinedIconButton；
- * 3. 浮动操作按钮 (FAB)：标准 FloatingActionButton 与带文本的 ExtendedFloatingActionButton；
+ * 3. 浮动操作按钮 FAB：标准 FloatingActionButton 与带文本的 ExtendedFloatingActionButton；
  * 4. 状态与加载反馈：禁用态（enabled = false）与异步加载态（CircularProgressIndicator 联动）；
  * 5. 形状与定制：胶囊形 (CircleShape)、方圆角等自定义 Shape。
  *
- * 官方文档：
  * https://developer.android.google.cn/develop/ui/compose/components/button
  */
 @Route(path = RouterPath.Compose.Button)

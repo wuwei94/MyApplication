@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * MQTT 示例入口
+ * MQTT 模块入口 — 导航到 HiveMQ、Paho Android Service 等示例页面。
  *
  * 演示 MQTT（Message Queuing Telemetry Transport）发布/订阅消息队列协议的核心能力：
  * 连接（Connect）、订阅（Subscribe）、发布（Publish）、QoS 与断开（Disconnect）。

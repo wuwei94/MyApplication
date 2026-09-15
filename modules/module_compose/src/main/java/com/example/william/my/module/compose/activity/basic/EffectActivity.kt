@@ -41,18 +41,17 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.delay
 
 /**
- * LaunchedEffect
- * 用于在Composable的生命周期内运行挂起代码块，通常用于处理副作用，如网络请求、数据库操作等。当LaunchedEffect的关键参数发生变化时，它会取消之前的任务并重新启动一个新的任务。
+ * Effect — Compose 副作用体系实战
  *
- * SideEffect
- * 用于在重组时运行代码，但不依赖于任何状态或效应参数。它通常用于执行一些与Composable状态无关的副作用，如更新系统设置、记录日志等。
+ * 聚合演示 Compose 四类标准副作用 API 的生命周期边界与适用语义。
  *
- * DisposableEffect
- * 用于需要清理资源的副作用场景（如注册广播接收器、添加传感器监听、管理外部连接）。在组件离开组合或 key 参数发生变化时，
- * 触发 [DisposableEffectScope.onDispose] 块进行生命周期资源释放。
+ * 核心机制与避坑点：
+ * 1. LaunchedEffect：在 Composable 生命周期内运行挂起代码块（网络请求、计时器等）；key 变化时取消旧协程并重启新任务；
+ * 2. SideEffect：重组成功后同步到非 Compose 外部状态，不依赖 key，适合日志、系统设置等无清理副作用；
+ * 3. DisposableEffect：注册广播/传感器/连接等需清理资源，离开组合或 key 变化时触发 [DisposableEffectScope.onDispose] 释放；
+ * 4. rememberUpdatedState：长生命周期副作用中引用最新 State/Lambda，避免闭包捕获导致 Stale State Capture。
  *
- * rememberUpdatedState
- * 用于在长生命周期副作用（如异步挂起或回调）中引用频繁变动的状态或 Lambda，防止因闭包捕获而读取到陈旧的状态值（Stale State Capture）。
+ * https://developer.android.google.cn/develop/ui/compose/side-effects
  */
 @Route(path = RouterPath.Compose.Effect)
 class EffectActivity : ComponentActivity() {

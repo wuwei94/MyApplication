@@ -20,48 +20,20 @@ import java.util.Calendar
  *
  * 演示 Android 中各种对话框的使用方式。
  *
+ * 核心机制与避坑点：
+ * 1. 多形态对话框：普通、列表、单选、日期、时间、自定义视图等类型
+ * 2. 标准 AlertDialog：支持标题、图标、内容与确定/取消按钮
+ * 3. 日期时间选择：DatePickerDialog / TimePickerDialog 系统选择器
+ * 4. 自定义内容：setView 或 setContentView 注入自定义视图
+ * 5. DialogFragment：重写 onCreateDialog 或 onCreateView，支持生命周期管理
+ *
  * 核心组件：
  * 1. AlertDialog：普通对话框，支持标题、内容、按钮
  * 2. DatePickerDialog：日期选择对话框
  * 3. TimePickerDialog：时间选择对话框
  * 4. DialogFragment：对话框 Fragment，支持生命周期管理
  *
- * 对话框类型：
- * 1. 普通对话框：标题 + 内容 + 确定/取消按钮
- * 2. 列表对话框：点击列表项
- * 3. 单选对话框：单选列表
- * 4. 日期对话框：选择日期
- * 5. 时间对话框：选择时间
- * 6. 自定义对话框：setView 或 setContentView
- * 7. AlertDialogDialogFragment：重写 onCreateDialog
- * 8. CustomViewDialogFragment：重写 onCreateView
- *
- * 基本用法：
- * ```kotlin
- * // 普通对话框
- * AlertDialog.Builder(context)
- *     .setTitle("标题")
- *     .setMessage("内容")
- *     .setPositiveButton("确定") { _, _ -> /* 处理点击 */ }
- *     .setNegativeButton("取消") { _, _ -> /* 处理点击 */ }
- *     .show()
- *
- * // 日期对话框
- * DatePickerDialog(context, { _, year, month, dayOfMonth ->
- *     // 处理日期选择
- * }, year, month, dayOfMonth).show()
- *
- * // 自定义对话框
- * val dialog = AlertDialog.Builder(context)
- *     .setView(customView)
- *     .create()
- * dialog.show()
- * ```
- *
- * 适用场景：
- * - 确认对话框、提示对话框
- * - 日期、时间选择
- * - 自定义对话框
+ * https://developer.android.com/develop/ui/views/components/dialogs
  */
 @Route(path = RouterPath.Widget.Dialog)
 class DialogActivity : BasicResponseActivity() {

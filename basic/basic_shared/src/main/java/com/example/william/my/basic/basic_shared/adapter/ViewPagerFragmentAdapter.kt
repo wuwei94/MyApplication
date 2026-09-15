@@ -12,19 +12,19 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  * 使用 BEHAVIOR_SET_USER_VISIBLE_HINT：通过 setUserVisibleHint() 控制懒加载
  *
  * @param fm FragmentManager
- * @param mFragments Fragment 列表
- * @param mTitles 可选的标题列表，用于 TabLayout 显示
+ * @param fragments Fragment 列表
+ * @param titles 可选的标题列表，用于 TabLayout 显示
  */
 @Suppress("deprecation")
 class ViewPagerFragmentAdapter(
     fm: FragmentManager,
-    private val mFragments: List<Fragment> = emptyList(),
-    private val mTitles: List<String>? = null,
+    private val fragments: List<Fragment> = emptyList(),
+    private val titles: List<String>? = null,
 ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    override fun getCount(): Int = mFragments.size
+    override fun getCount(): Int = fragments.size
 
-    override fun getItem(position: Int): Fragment = mFragments[position]
+    override fun getItem(position: Int): Fragment = fragments[position]
 
-    override fun getPageTitle(position: Int): CharSequence = mTitles?.getOrNull(position) ?: ""
+    override fun getPageTitle(position: Int): CharSequence = titles?.getOrNull(position) ?: ""
 }

@@ -96,13 +96,13 @@ abstract class BaseApp : Application() {
 
     companion object {
 
-        private var mBaseApp: Application? = null
+        private var baseApp: Application? = null
 
         val app: Application
-            get() = mBaseApp ?: throw IllegalArgumentException("Application 不能为空")
+            get() = baseApp ?: throw IllegalArgumentException("Application 不能为空")
 
         fun setApp(app: Application) {
-            mBaseApp = app
+            baseApp = app
         }
     }
 }

@@ -17,7 +17,17 @@ import com.example.william.my.module.media.databinding.MediaActivityPhotoBinding
 import com.example.william.my.module.media.utils.ImageCaptureHelper
 
 /**
- * 拍照示例 — 基于 CameraX 的 ImageCapture 用例，演示预览取景与单张照片捕获。
+ * CameraX — ImageCapture 拍照用例
+ *
+ * 基于 CameraX 的 ImageCapture 用例，演示预览取景与单张照片捕获的完整流程。
+ *
+ * 核心机制与避坑点：
+ * 1. 预览取景：PreviewView 实时预览相机画面
+ * 2. 单张捕获：ImageCapture 拍照并输出 JPEG 文件
+ * 3. 照片预览：拍照后展示预览，支持关闭返回
+ * 4. 权限处理：运行时申请 CAMERA 权限
+ *
+ * https://developer.android.com/media/camera/camerax/get-started
  */
 @Route(path = RouterPath.Media.Photo)
 class MediaPhotoActivity :
@@ -25,7 +35,7 @@ class MediaPhotoActivity :
     View.OnClickListener {
 
     private val imageCaptureHelper by lazy {
-        ImageCaptureHelper(this, mBinding.previewView)
+        ImageCaptureHelper(this, binding.previewView)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -45,14 +55,14 @@ class MediaPhotoActivity :
 
         checkAndRequestPermission()
 
-        mBinding.btnCapture.setOnClickListener(this)
-        mBinding.btnClosePreview.setOnClickListener(this)
+        binding.btnCapture.setOnClickListener(this)
+        binding.btnClosePreview.setOnClickListener(this)
 
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (mBinding.layoutPreview.isVisible) {
+                    if (binding.layoutPreview.isVisible) {
                         closePreview()
                     } else {
                         isEnabled = false
@@ -65,13 +75,13 @@ class MediaPhotoActivity :
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnCapture -> {
+            binding.btnCapture -> {
                 imageCaptureHelper.captureImage { bitmap ->
                     showImagePreview(bitmap)
                 }
             }
 
-            mBinding.btnClosePreview -> {
+            binding.btnClosePreview -> {
                 closePreview()
             }
         }
@@ -91,13 +101,13 @@ class MediaPhotoActivity :
     }
 
     private fun showImagePreview(bitmap: Bitmap) {
-        mBinding.previewImage.setImageBitmap(bitmap)
-        mBinding.layoutPreview.visibility = View.VISIBLE
+        binding.previewImage.setImageBitmap(bitmap)
+        binding.layoutPreview.visibility = View.VISIBLE
     }
 
     private fun closePreview() {
-        mBinding.layoutPreview.visibility = View.GONE
-        mBinding.previewImage.setImageBitmap(null)
+        binding.layoutPreview.visibility = View.GONE
+        binding.previewImage.setImageBitmap(null)
     }
 
     override fun fitsSystemWindows(): Boolean = false

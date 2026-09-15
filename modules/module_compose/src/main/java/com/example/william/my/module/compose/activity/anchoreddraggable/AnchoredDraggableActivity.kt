@@ -52,6 +52,8 @@ import kotlin.math.roundToInt
 
 /**
  * 侧滑操作项状态锚点定义
+ *
+ * https://developer.android.com/develop/ui/compose/touch-input/pointer-input/drag-swipe-fling
  */
 private enum class DragValue {
     Settled, // 正常未侧滑状态
@@ -63,7 +65,7 @@ private enum class DragValue {
  *
  * 演示 Compose 官方现代手势组件 [Modifier.anchoredDraggable] 实现列表项侧滑露出操作项（Swipe-to-Reveal）。
  *
- * 核心机制：
+ * 核心机制与避坑点：
  * 1. 锚点定位：通过 [DraggableAnchors] 为不同状态设定像素位移锚点；
  * 2. 状态驱动：[AnchoredDraggableState] 控制当前展开/折叠状态；
  * 3. 阈值与动画：结合 [spring] 弹性动画与 [positionalThreshold] 判定松手吸附逻辑；

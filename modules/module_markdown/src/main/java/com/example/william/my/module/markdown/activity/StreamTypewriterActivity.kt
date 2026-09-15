@@ -31,36 +31,41 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * 流式 Markdown 打字机与未闭合语法容错示例
+ * 流式 Markdown 打字机 — 未闭合语法容错与动态流控引擎
  *
- * 核心技术组合：
- * 1. TypewriterEngine：动态自适应出字速率控制（积压加速 + 标点呼吸停顿 + 暂停/跳过）；
- * 2. MarkdownStreamFixer：实时检测未闭合的 ``` 代码块与行内富文本标签，虚拟闭合防止界面跳动闪烁；
- * 3. Prism4j + Markwon：代码块语法着色与原生 Spannable 高性能渲染；
- * 4. Channel.CONFLATED 顺序流控：保证单调递增渲染与丝滑吸底。
+ * 模拟 LLM 流式推流场景，演示打字机出字速率自适应、未闭合 Markdown 语法实时修复，
+ * 以及 Channel.CONFLATED 顺序流控保证单调递增渲染的完整方案。
+ *
+ * 核心机制与避坑点：
+ * 1. TypewriterEngine：动态自适应出字速率控制（积压加速 + 标点呼吸停顿 + 暂停/跳过）
+ * 2. MarkdownStreamFixer：实时检测未闭合的 ``` 代码块与行内富文本标签，虚拟闭合防止界面跳动闪烁
+ * 3. Prism4j + Markwon：代码块语法着色与原生 Spannable 高性能渲染
+ * 4. Channel.CONFLATED 顺序流控：保证单调递增渲染与丝滑吸底
+ *
+ * https://github.com/noties/Markwon
  */
 @Route(path = RouterPath.Markdown.StreamTypewriter)
 class StreamTypewriterActivity : BasicLayoutActivity() {
 
-    private lateinit var mTypewriterBinding: MarkdownActivityTypewriterBinding
-    private lateinit var mTextView: TextView
-    private lateinit var mScrollView: NestedScrollView
+    private lateinit var typewriterBinding: MarkdownActivityTypewriterBinding
+    private lateinit var textView: TextView
+    private lateinit var scrollView: NestedScrollView
 
-    private lateinit var mMarkwon: Markwon
-    private val mEngine = TypewriterEngine()
-    private var mMockNetworkJob: Job? = null
+    private lateinit var markwon: Markwon
+    private val engine = TypewriterEngine()
+    private var mockNetworkJob: Job? = null
 
     // 顺序流控通道：汇聚高频推流，保证单调递增渲染与零竞态闪烁
-    private val mRenderChannel = Channel<Pair<String, Boolean>>(Channel.CONFLATED)
-    private var mRenderJob: Job? = null
+    private val renderChannel = Channel<Pair<String, Boolean>>(Channel.CONFLATED)
+    private var renderJob: Job? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        mTypewriterBinding = MarkdownActivityTypewriterBinding.inflate(LayoutInflater.from(this))
-        mTextView = mTypewriterBinding.markdownTypewriterTextView
-        mScrollView = mTypewriterBinding.nestedScrollView
-        setView(mTypewriterBinding.root)
+        typewriterBinding = MarkdownActivityTypewriterBinding.inflate(LayoutInflater.from(this))
+        textView = typewriterBinding.markdownTypewriterTextView
+        scrollView = typewriterBinding.nestedScrollView
+        setView(typewriterBinding.root)
 
         initMarkwon()
         initRenderPipeline()
@@ -83,14 +88,14 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             .build()
 
         val tableWidthProvider: () -> Int = {
-            if (mTextView.width > 0) {
-                mTextView.width - mTextView.paddingLeft - mTextView.paddingRight
+            if (textView.width > 0) {
+                textView.width - textView.paddingLeft - textView.paddingRight
             } else {
                 resources.displayMetrics.widthPixels - dpToPx(32)
             }
         }
 
-        mMarkwon = Markwon.builder(this)
+        markwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
             .usePlugin(com.example.william.my.module.markdown.plugin.GfmTablePlugin.create(tableTheme, tableWidthProvider))
             .usePlugin(TaskListPlugin.create(this))
@@ -110,19 +115,19 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
     private fun dpToPx(dp: Int): Int = (dp * resources.displayMetrics.density + 0.5f).toInt()
 
     private fun initRenderPipeline() {
-        mRenderJob?.cancel()
-        mRenderJob = lifecycleScope.launch(Dispatchers.Default) {
-            for ((rawText, isFinished) in mRenderChannel) {
+        renderJob?.cancel()
+        renderJob = lifecycleScope.launch(Dispatchers.Default) {
+            for ((rawText, isFinished) in renderChannel) {
                 // 1. 进行流式未闭合语法修复与呼吸光标追加
                 val fixedMarkdown = MarkdownStreamFixer.fix(rawText, appendCursor = !isFinished)
 
                 // 2. 解析 AST 并生成 Spannable
-                val node = mMarkwon.parse(fixedMarkdown)
-                val spanned = mMarkwon.render(node)
+                val node = markwon.parse(fixedMarkdown)
+                val spanned = markwon.render(node)
 
                 // 3. 提交主线程渲染
                 withContext(Dispatchers.Main) {
-                    mTextView.text = spanned
+                    textView.text = spanned
                     // 4. 吸底滚动（直接计算位移，避免 fullScroll 动画打断引起震颤）
                     scrollToBottom()
                 }
@@ -131,32 +136,32 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
     }
 
     private fun renderMarkdownSequentially(rawText: String, isFinished: Boolean) {
-        mRenderChannel.trySend(rawText to isFinished)
+        renderChannel.trySend(rawText to isFinished)
     }
 
     private fun scrollToBottom() {
-        mScrollView.post {
-            val child = mScrollView.getChildAt(0) ?: return@post
-            val scrollRange = child.bottom - mScrollView.height + mScrollView.paddingBottom
+        scrollView.post {
+            val child = scrollView.getChildAt(0) ?: return@post
+            val scrollRange = child.bottom - scrollView.height + scrollView.paddingBottom
             if (scrollRange > 0) {
-                mScrollView.scrollTo(0, scrollRange)
+                scrollView.scrollTo(0, scrollRange)
             }
         }
     }
 
     private fun initEngine() {
-        mEngine.setOnTextUpdateListener { rawText, isFinished ->
+        engine.setOnTextUpdateListener { rawText, isFinished ->
             renderMarkdownSequentially(rawText, isFinished)
         }
 
-        mEngine.setOnMetricsListener { backlog, speedMs, state ->
+        engine.setOnMetricsListener { backlog, speedMs, state ->
             lifecycleScope.launch(Dispatchers.Main) {
-                mTypewriterBinding.tvEngineStatus.text = state.name
-                mTypewriterBinding.tvBufferBacklog.text = "$backlog 字"
-                mTypewriterBinding.tvCurrentSpeed.text = "$speedMs ms/字"
+                typewriterBinding.tvEngineStatus.text = state.name
+                typewriterBinding.tvBufferBacklog.text = "$backlog 字"
+                typewriterBinding.tvCurrentSpeed.text = "$speedMs ms/字"
 
                 // 状态色彩更新
-                mTypewriterBinding.tvEngineStatus.setTextColor(
+                typewriterBinding.tvEngineStatus.setTextColor(
                     when (state) {
                         TypewriterEngine.State.TYPING -> 0xFF4CAF50.toInt()
                         TypewriterEngine.State.PAUSED -> 0xFFFF9800.toInt()
@@ -187,7 +192,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             2 -> startCodeFixerDemo()
             3 -> startPunctuationRhythmDemo()
             4 -> togglePauseResume()
-            5 -> mEngine.skipToFinish()
+            5 -> engine.skipToFinish()
             6 -> resetAll()
         }
     }
@@ -197,7 +202,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
      */
     private fun startBurstStreamDemo() {
         resetAll()
-        mEngine.start(lifecycleScope)
+        engine.start(lifecycleScope)
 
         val chunks = listOf(
             "# 现代 AI 流式交互核心原理\n\n",
@@ -221,12 +226,12 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             "整个流式过程自然丝滑，毫无界面闪烁！",
         )
 
-        mMockNetworkJob = lifecycleScope.launch {
+        mockNetworkJob = lifecycleScope.launch {
             for (chunk in chunks) {
-                mEngine.feed(chunk)
+                engine.feed(chunk)
                 delay(120) // 模拟网络突发间隔
             }
-            mEngine.complete()
+            engine.complete()
         }
     }
 
@@ -235,16 +240,16 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
      */
     private fun startSmoothStreamDemo() {
         resetAll()
-        mEngine.start(lifecycleScope)
+        engine.start(lifecycleScope)
 
         val text = "这是一个平缓细腻的打字机演示。网络推流以均匀的小节奏推送到客户端，打字机保持在 35ms 左右的稳定出字速度，光标在末尾优雅地闪烁。"
 
-        mMockNetworkJob = lifecycleScope.launch {
+        mockNetworkJob = lifecycleScope.launch {
             for (c in text) {
-                mEngine.feed(c.toString())
+                engine.feed(c.toString())
                 delay(30)
             }
-            mEngine.complete()
+            engine.complete()
         }
     }
 
@@ -253,7 +258,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
      */
     private fun startCodeFixerDemo() {
         resetAll()
-        mEngine.start(lifecycleScope)
+        engine.start(lifecycleScope)
 
         val codeChunks = listOf(
             "### 流式语法自动补全与容错测试\n\n",
@@ -271,15 +276,15 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             "> MarkdownStreamFixer 单遍状态机保证了在闭合标签到达前，AST 语法树始终完整无闪烁！",
         )
 
-        mMockNetworkJob = lifecycleScope.launch {
+        mockNetworkJob = lifecycleScope.launch {
             for (chunk in codeChunks) {
                 for (c in chunk) {
-                    mEngine.feed(c.toString())
+                    engine.feed(c.toString())
                     delay(22)
                 }
                 delay(80)
             }
-            mEngine.complete()
+            engine.complete()
         }
     }
 
@@ -288,7 +293,7 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
      */
     private fun startPunctuationRhythmDemo() {
         resetAll()
-        mEngine.start(lifecycleScope)
+        engine.start(lifecycleScope)
 
         val rhythmSentences = listOf(
             "### 标点呼吸停顿与节奏演示\n\n",
@@ -299,43 +304,43 @@ class StreamTypewriterActivity : BasicLayoutActivity() {
             "这种富有层次的呼吸节奏，让 AI 显得更加生动，就像是在实时思考一样！",
         )
 
-        mMockNetworkJob = lifecycleScope.launch {
+        mockNetworkJob = lifecycleScope.launch {
             for (sentence in rhythmSentences) {
                 for (char in sentence) {
-                    mEngine.feed(char.toString())
+                    engine.feed(char.toString())
                     delay(25)
                 }
             }
-            mEngine.complete()
+            engine.complete()
         }
     }
 
-    private var mIsPaused = false
+    private var isPaused = false
 
     private fun togglePauseResume() {
-        mIsPaused = !mIsPaused
-        if (mIsPaused) {
-            mEngine.pause()
+        isPaused = !isPaused
+        if (isPaused) {
+            engine.pause()
             Toast.makeText(this, "打字机已暂停", Toast.LENGTH_SHORT).show()
         } else {
-            mEngine.resume()
+            engine.resume()
             Toast.makeText(this, "打字机已继续", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun resetAll() {
-        mMockNetworkJob?.cancel()
-        mMockNetworkJob = null
-        mEngine.reset()
-        mTextView.text = ""
-        mScrollView.scrollTo(0, 0)
-        mIsPaused = false
+        mockNetworkJob?.cancel()
+        mockNetworkJob = null
+        engine.reset()
+        textView.text = ""
+        scrollView.scrollTo(0, 0)
+        isPaused = false
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mMockNetworkJob?.cancel()
-        mRenderJob?.cancel()
-        mEngine.reset()
+        mockNetworkJob?.cancel()
+        renderJob?.cancel()
+        engine.reset()
     }
 }

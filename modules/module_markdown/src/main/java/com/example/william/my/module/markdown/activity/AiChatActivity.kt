@@ -34,27 +34,32 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 /**
- * AI 流式对话完整实战界面 (AiChatActivity)
+ * AI 流式对话 — RecyclerView 增量刷新 + 打字机流控的完整实战界面
  *
- * 核心技术组合：
+ * 基于 Markwon + Prism4j + 自研 TypewriterEngine，模拟大模型 SSE 流式输出场景，
+ * 演示从推流、渲染、滚动到交互的全链路 Android 原生实现。
+ *
+ * 核心机制与避坑点：
  * 1. RecyclerView Payload 局部增量刷新：流式出字仅更新当前 AI 气泡的 TextView，完全避免 ViewHolder 重新绘制与闪烁；
  * 2. 智能吸底平滑滚动：用户手势上滑查看历史时自动暂停吸底，并展示“回到最新内容”悬浮按钮；
  * 3. 打字机动态流控 (TypewriterEngine) + 未闭合语法容错 (MarkdownStreamFixer)；
  * 4. Prism4j 多语言代码语法着色 + Markdown 富文本排版；
- * 5. 全生命周期管理：支持「发送」与「停止生成」即时切换、消息一键全文复制。
+ * 5. 全生命周期管理：支持「发送」与「停止生成」即时切换、消息一键全文复制
+ *
+ * https://github.com/noties/Markwon
  */
 @Route(path = RouterPath.Markdown.AiChat)
 class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
 
-    private lateinit var mMarkwon: Markwon
-    private lateinit var mAdapter: ChatAdapter
-    private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var markwon: Markwon
+    private lateinit var adapter: ChatAdapter
+    private lateinit var layoutManager: LinearLayoutManager
 
-    private val mEngine = TypewriterEngine()
-    private var mMockStreamJob: Job? = null
-    private var mCurrentAiMessageIndex = -1
-    private var mIsGenerating = false
-    private var mAutoScrollEnabled = true
+    private val engine = TypewriterEngine()
+    private var mockStreamJob: Job? = null
+    private var currentAiMessageIndex = -1
+    private var isGenerating = false
+    private var autoScrollEnabled = true
 
     override fun getViewBinding(): MarkdownActivityChatBinding = MarkdownActivityChatBinding.inflate(layoutInflater)
 
@@ -71,11 +76,11 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
     }
 
     private fun initHeader() {
-        mBinding.btnClearChat.setOnClickListener {
-            if (mIsGenerating) {
+        binding.btnClearChat.setOnClickListener {
+            if (isGenerating) {
                 stopGeneration()
             }
-            mAdapter.setMessages(emptyList())
+            adapter.setMessages(emptyList())
             showWelcomeMessage()
             Toast.makeText(this, "对话已清空", Toast.LENGTH_SHORT).show()
         }
@@ -94,14 +99,14 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
             .build()
 
         val tableWidthProvider: () -> Int = {
-            val rv = mBinding.recyclerViewChat
+            val rv = binding.recyclerViewChat
             val baseWidth = if (rv.width > 0) rv.width else resources.displayMetrics.widthPixels
             // 严格对齐 markdown_item_chat_assistant.xml：外层边距(24dp) + 头像区域(40dp) + 气泡边距(18dp) + 内边距(28dp) = 110dp
             val bubbleHorizontalMargins = dpToPx(110)
             (baseWidth - bubbleHorizontalMargins).coerceAtLeast(100)
         }
 
-        mMarkwon = Markwon.builder(this)
+        markwon = Markwon.builder(this)
             .usePlugin(CorePlugin.create())
             .usePlugin(com.example.william.my.module.markdown.plugin.GfmTablePlugin.create(tableTheme, tableWidthProvider))
             .usePlugin(TaskListPlugin.create(this))
@@ -121,22 +126,22 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
     private fun dpToPx(dp: Int): Int = (dp * resources.displayMetrics.density).toInt()
 
     private fun initRecyclerView() {
-        mAdapter = ChatAdapter(mMarkwon) { content ->
+        adapter = ChatAdapter(markwon) { content ->
             copyToClipboard(content)
         }
 
-        mLayoutManager = LinearLayoutManager(this).apply {
+        layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = false
         }
 
-        mBinding.recyclerViewChat.apply {
-            layoutManager = mLayoutManager
-            adapter = mAdapter
+        binding.recyclerViewChat.apply {
+            layoutManager = this@AiChatActivity.layoutManager
+            adapter = this@AiChatActivity.adapter
             itemAnimator = null // 关闭全局动画，完全由 Payload 驱动细粒度增量刷新
 
             // 软键盘弹起导致 RecyclerView 布局高度变化时，如果用户处于吸底状态则自动滚动显示最新内容
             addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
-                if (bottom < oldBottom && mAutoScrollEnabled) {
+                if (bottom < oldBottom && autoScrollEnabled) {
                     scrollBottomDelta(smooth = false)
                 }
             }
@@ -148,9 +153,9 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                         // 仅在用户手指主动触摸拖拽时检测是否向上翻看历史，绝不被惯性/程序滚动误触
                         val canScrollDown = recyclerView.canScrollVertically(1)
                         if (canScrollDown) {
-                            mAutoScrollEnabled = false
-                            if (mIsGenerating) {
-                                mBinding.cardScrollBottom.visibility = View.VISIBLE
+                            autoScrollEnabled = false
+                            if (isGenerating) {
+                                binding.cardScrollBottom.visibility = View.VISIBLE
                             }
                         }
                     }
@@ -161,13 +166,13 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                     val canScrollDown = recyclerView.canScrollVertically(1)
                     if (canScrollDown) {
                         // 视口不在最底部时：若处于生成中且吸底已暂停，显示悬浮按钮
-                        if (mIsGenerating && !mAutoScrollEnabled) {
-                            mBinding.cardScrollBottom.visibility = View.VISIBLE
+                        if (isGenerating && !autoScrollEnabled) {
+                            binding.cardScrollBottom.visibility = View.VISIBLE
                         }
                     } else {
                         // 滑动回最底部时：恢复自动吸底并隐藏悬浮按钮
-                        mAutoScrollEnabled = true
-                        mBinding.cardScrollBottom.visibility = View.GONE
+                        autoScrollEnabled = true
+                        binding.cardScrollBottom.visibility = View.GONE
                     }
                 }
             })
@@ -176,67 +181,67 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
 
     private fun initListeners() {
         // 发送或停止按钮
-        mBinding.btnSendOrStop.setOnClickListener {
-            if (mIsGenerating) {
+        binding.btnSendOrStop.setOnClickListener {
+            if (isGenerating) {
                 stopGeneration()
             } else {
-                val input = mBinding.etChatInput.text.toString().trim()
+                val input = binding.etChatInput.text.toString().trim()
                 if (input.isNotEmpty()) {
                     sendMessage(input)
-                    mBinding.etChatInput.setText("")
+                    binding.etChatInput.setText("")
                 }
             }
         }
 
         // 悬浮回到底部按钮
-        mBinding.cardScrollBottom.setOnClickListener {
-            mAutoScrollEnabled = true
-            mBinding.cardScrollBottom.visibility = View.GONE
-            val targetPos = mAdapter.itemCount - 1
+        binding.cardScrollBottom.setOnClickListener {
+            autoScrollEnabled = true
+            binding.cardScrollBottom.visibility = View.GONE
+            val targetPos = adapter.itemCount - 1
             if (targetPos >= 0) {
-                mBinding.recyclerViewChat.scrollToPosition(targetPos)
-                mBinding.recyclerViewChat.post {
+                binding.recyclerViewChat.scrollToPosition(targetPos)
+                binding.recyclerViewChat.post {
                     scrollBottomDelta(smooth = true)
                 }
             }
         }
 
         // 预设快捷提示词点击
-        mBinding.chipPrompt1.setOnClickListener { sendMessage("🚀 请用 Kotlin 写一段基于 SSE 的流式推流解析器") }
-        mBinding.chipPrompt2.setOnClickListener { sendMessage("⚡ 如何在 Android 客户端实现 120fps 流式 Markdown 丝滑渲染？") }
-        mBinding.chipPrompt3.setOnClickListener { sendMessage("📊 请给出一个 SQL 复杂多表统计与索引调优案例") }
-        mBinding.chipPrompt4.setOnClickListener { sendMessage("🏛️ 详细对比 Android 依赖注入 Hilt 与 Koin 的异同与选型建议") }
+        binding.chipPrompt1.setOnClickListener { sendMessage("🚀 请用 Kotlin 写一段基于 SSE 的流式推流解析器") }
+        binding.chipPrompt2.setOnClickListener { sendMessage("⚡ 如何在 Android 客户端实现 120fps 流式 Markdown 丝滑渲染？") }
+        binding.chipPrompt3.setOnClickListener { sendMessage("📊 请给出一个 SQL 复杂多表统计与索引调优案例") }
+        binding.chipPrompt4.setOnClickListener { sendMessage("🏛️ 详细对比 Android 依赖注入 Hilt 与 Koin 的异同与选型建议") }
     }
 
     private fun initEngine() {
-        mEngine.setOnTextUpdateListener { text, isFinished ->
+        engine.setOnTextUpdateListener { text, isFinished ->
             lifecycleScope.launch(Dispatchers.Main) {
-                if (mCurrentAiMessageIndex >= 0) {
-                    val message = mAdapter.getMessage(mCurrentAiMessageIndex)
+                if (currentAiMessageIndex >= 0) {
+                    val message = adapter.getMessage(currentAiMessageIndex)
                     if (message != null) {
                         message.content = text
                         message.status = if (isFinished) ChatMessage.Status.COMPLETED else ChatMessage.Status.STREAMING
 
                         // 核心架构设计：流式出字期间直接驱动活跃 ViewHolder 更新，杜绝 RecyclerView 高频 notifyItemChanged 引起的布局全量重测与视窗抖动
-                        val holder = mBinding.recyclerViewChat.findViewHolderForAdapterPosition(mCurrentAiMessageIndex) as? ChatAdapter.AssistantViewHolder
+                        val holder = binding.recyclerViewChat.findViewHolderForAdapterPosition(currentAiMessageIndex) as? ChatAdapter.AssistantViewHolder
                         if (holder != null) {
-                            holder.updateStreamContent(mMarkwon, message)
+                            holder.updateStreamContent(markwon, message)
                             if (isFinished) {
                                 holder.updateStatus(message) { copyToClipboard(message.content) }
                             }
                         } else {
-                            mAdapter.updateMessage(mCurrentAiMessageIndex, message, ChatMessage.PAYLOAD_STREAM_CONTENT)
+                            adapter.updateMessage(currentAiMessageIndex, message, ChatMessage.PAYLOAD_STREAM_CONTENT)
                         }
 
                         if (isFinished) {
                             onGenerationFinished()
-                            if (mAutoScrollEnabled) {
-                                mBinding.recyclerViewChat.post {
+                            if (autoScrollEnabled) {
+                                binding.recyclerViewChat.post {
                                     scrollBottomDelta(smooth = true)
                                 }
                             }
                         } else {
-                            if (mAutoScrollEnabled) {
+                            if (autoScrollEnabled) {
                                 scrollBottomDelta(smooth = false)
                             }
                         }
@@ -263,11 +268,11 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
             """.trimIndent(),
             status = ChatMessage.Status.COMPLETED,
         )
-        mAdapter.addMessage(welcome)
+        adapter.addMessage(welcome)
     }
 
     private fun sendMessage(prompt: String) {
-        if (mIsGenerating) return
+        if (isGenerating) return
 
         // 1. 创建用户消息与 AI 占位消息
         val userMsg = ChatMessage(
@@ -284,26 +289,26 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
         )
 
         // 2. 原子性批量插入两条消息（避免分批插入导致列表高度两次跳跃与闪烁）
-        mAdapter.addMessages(userMsg, aiMsg)
-        mCurrentAiMessageIndex = mAdapter.itemCount - 1
+        adapter.addMessages(userMsg, aiMsg)
+        currentAiMessageIndex = adapter.itemCount - 1
 
         // 3. 切换状态与输入控制
-        mIsGenerating = true
-        mAutoScrollEnabled = true
-        mBinding.cardScrollBottom.visibility = View.GONE
-        mBinding.btnSendOrStop.text = "停止生成"
-        mBinding.btnSendOrStop.setBackgroundColor(0xFFE53935.toInt()) // 红色警示
-        mBinding.recyclerViewChat.scrollToPosition(mCurrentAiMessageIndex)
+        isGenerating = true
+        autoScrollEnabled = true
+        binding.cardScrollBottom.visibility = View.GONE
+        binding.btnSendOrStop.text = "停止生成"
+        binding.btnSendOrStop.setBackgroundColor(0xFFE53935.toInt()) // 红色警示
+        binding.recyclerViewChat.scrollToPosition(currentAiMessageIndex)
 
         // 4. 启动打字机并模拟推流
-        mEngine.start(lifecycleScope)
+        engine.start(lifecycleScope)
         startMockAiStream(prompt)
     }
 
     private fun startMockAiStream(prompt: String) {
         val responseChunks = generateResponseChunks(prompt)
 
-        mMockStreamJob = lifecycleScope.launch(Dispatchers.Default) {
+        mockStreamJob = lifecycleScope.launch(Dispatchers.Default) {
             delay(260) // 模拟大模型首字 TTFT 思考耗时
             for (chunk in responseChunks) {
                 // 每次推 2 个字符，间隔 40ms（约 50 字符/秒），轻快敏捷流畅
@@ -311,25 +316,25 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 while (i < chunk.length) {
                     val tokenSize = minOf(2, chunk.length - i)
                     val token = chunk.substring(i, i + tokenSize)
-                    mEngine.feed(token)
+                    engine.feed(token)
                     i += tokenSize
                     delay(40) // 模拟大模型 Token 推流网络间隔
                 }
             }
-            mEngine.complete()
+            engine.complete()
         }
     }
 
     private fun stopGeneration() {
-        mMockStreamJob?.cancel()
-        mMockStreamJob = null
-        mEngine.skipToFinish()
+        mockStreamJob?.cancel()
+        mockStreamJob = null
+        engine.skipToFinish()
 
-        if (mCurrentAiMessageIndex >= 0) {
-            val message = mAdapter.getMessage(mCurrentAiMessageIndex)
+        if (currentAiMessageIndex >= 0) {
+            val message = adapter.getMessage(currentAiMessageIndex)
             if (message != null) {
                 message.status = ChatMessage.Status.FAILED
-                mAdapter.updateMessage(mCurrentAiMessageIndex, message, ChatMessage.PAYLOAD_STATUS)
+                adapter.updateMessage(currentAiMessageIndex, message, ChatMessage.PAYLOAD_STATUS)
             }
         }
         onGenerationFinished()
@@ -337,10 +342,10 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
     }
 
     private fun onGenerationFinished() {
-        mIsGenerating = false
-        mBinding.btnSendOrStop.text = "发送"
-        mBinding.btnSendOrStop.setBackgroundColor(0xFF2196F3.toInt()) // 恢复主色
-        mBinding.cardScrollBottom.visibility = View.GONE
+        isGenerating = false
+        binding.btnSendOrStop.text = "发送"
+        binding.btnSendOrStop.setBackgroundColor(0xFF2196F3.toInt()) // 恢复主色
+        binding.cardScrollBottom.visibility = View.GONE
     }
 
     /**
@@ -349,21 +354,21 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
      * 绝不调用 smoothScrollToPosition(targetPos)，杜绝 Android 默认 SNAP_TO_START 导致长消息回弹到卡片顶部表格的 bug。
      */
     private fun scrollBottomDelta(smooth: Boolean = false) {
-        val targetPos = mAdapter.itemCount - 1
+        val targetPos = adapter.itemCount - 1
         if (targetPos < 0) return
 
-        val lastChild = mLayoutManager.findViewByPosition(targetPos)
+        val lastChild = layoutManager.findViewByPosition(targetPos)
         if (lastChild != null) {
-            val bottomDiff = lastChild.bottom + mBinding.recyclerViewChat.paddingBottom - mBinding.recyclerViewChat.height
+            val bottomDiff = lastChild.bottom + binding.recyclerViewChat.paddingBottom - binding.recyclerViewChat.height
             if (bottomDiff > 0) {
                 if (smooth) {
-                    mBinding.recyclerViewChat.smoothScrollBy(0, bottomDiff)
+                    binding.recyclerViewChat.smoothScrollBy(0, bottomDiff)
                 } else {
-                    mBinding.recyclerViewChat.scrollBy(0, bottomDiff)
+                    binding.recyclerViewChat.scrollBy(0, bottomDiff)
                 }
             }
         } else {
-            mBinding.recyclerViewChat.scrollToPosition(targetPos)
+            binding.recyclerViewChat.scrollToPosition(targetPos)
         }
     }
 
@@ -447,7 +452,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
                 "// 在 Adapter 中拦截 Payload 刷新，耗时 < 1ms：\n",
                 "override fun onBindViewHolder(holder: ViewHolder, pos: Int, payloads: List<Any>) {\n",
                 "    if (payloads.contains(PAYLOAD_STREAM_CONTENT)) {\n",
-                "        holder.updateTextOnly(mMarkwon, item)\n",
+                "        holder.updateTextOnly(markwon, item)\n",
                 "    } else {\n",
                 "        holder.bindFull(item)\n",
                 "    }\n",
@@ -530,7 +535,7 @@ class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mMockStreamJob?.cancel()
-        mEngine.reset()
+        mockStreamJob?.cancel()
+        engine.reset()
     }
 }

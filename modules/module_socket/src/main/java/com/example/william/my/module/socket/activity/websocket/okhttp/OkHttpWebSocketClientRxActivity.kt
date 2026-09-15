@@ -10,10 +10,18 @@ import com.example.william.my.core.okhttpws.client.OkHttpWebSocketObserver
 import okhttp3.WebSocket
 
 /**
- * OkHttp WebSocket RxJava 封装示例
+ * OkHttp WebSocket + RxJava — Observable 事件流消费
  *
- * 演示使用 OkHttpWebSocketClientRx + OkHttpWebSocketObserver 进行 WebSocket 通信
- * 连接到 echo.websocket.org 服务器
+ * 演示使用 OkHttpWebSocketClientRx + OkHttpWebSocketObserver 进行 WebSocket 通信，
+ * 将生命周期回调桥接为 RxJava 事件流，由 Observer 统一消费。
+ *
+ * 核心机制与避坑点：
+ * 1. Observable 桥接：createWebSocket 返回可订阅的事件源
+ * 2. 观察者封装：OkHttpWebSocketObserver 收敛 open/message/closed/error
+ * 3. 统一释放：页面销毁时 cancel(url) 断开连接
+ * 4. 与回调版对齐：事件语义与普通监听器版本一致
+ *
+ * https://square.github.io/okhttp/features/websockets
  */
 @Route(path = RouterPath.Socket.OkHttpWebSocketClientRx)
 class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
@@ -63,7 +71,7 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
                 }
 
                 override fun onError(exception: Exception) {
-                    appendLogAccent("【错误】${exception.message}")
+                    appendLogAccent("✗ ${exception.message}")
                 }
             })
     }
@@ -74,7 +82,7 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
         if (success) {
             appendLog("【发送】$message")
         } else {
-            appendLog("【错误】发送失败")
+            appendLog("✗ 发送失败")
         }
     }
 

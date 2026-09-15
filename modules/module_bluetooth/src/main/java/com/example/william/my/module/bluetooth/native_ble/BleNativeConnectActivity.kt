@@ -21,16 +21,31 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.UUID
 
 /**
- * 原生 BLE 连接与 GATT 交互示例
+ * 原生 BLE 连接与 GATT 交互 — BluetoothGatt
  *
- * 演示 Android 原生 BluetoothGatt 的全生命周期与数据读写机制：
- * 1. 设备连接 (connectGatt / autoConnect / 状态机监听)
- * 2. 服务发现 (discoverServices / GATT 树结构解析)
- * 3. MTU 协商 (requestMtu / 突破 23 字节上限)
- * 4. 特征值读取 (readCharacteristic)
- * 5. 特征值写入 (writeCharacteristic / WRITE_TYPE_DEFAULT vs NO_RESPONSE)
- * 6. Notify/Indicate 订阅 (setCharacteristicNotification + CCCD Descriptor 写入)
- * 7. 资源释放与断开连接
+ * 演示 Android 原生 BluetoothGatt 全生命周期与特征值读写。
+ *
+ * 核心特性：
+ * 1. 连接：connectGatt / autoConnect 与连接状态机
+ * 2. 服务发现：discoverServices 与 GATT 树解析
+ * 3. MTU 协商：requestMtu，突破默认 23 字节负载
+ * 4. 特征读写：readCharacteristic / writeCharacteristic（DEFAULT vs NO_RESPONSE）
+ * 5. 订阅：setCharacteristicNotification + CCCD Descriptor 写入
+ * 6. 释放：断开与 close，避免句柄泄漏
+ *
+ * 基本用法：
+ * ```kotlin
+ * device.connectGatt(context, false, gattCallback, TRANSPORT_LE)
+ * // onConnectionStateChange → discoverServices → read/write/notify
+ * gatt.disconnect(); gatt.close()
+ * ```
+ *
+ * 适用场景：
+ * - 自研 GATT 客户端协议调试
+ * - 与扫描/队列示例对照理解原生回调模型
+ * - 不想引入 Nordic / FastBle 等封装库
+ *
+ * https://developer.android.google.cn/guide/topics/connectivity/bluetooth/ble
  */
 @SuppressLint("MissingPermission")
 @Route(path = RouterPath.Bluetooth.NativeConnect)
@@ -41,66 +56,66 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         private val CCCD_UUID: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
     }
 
-    private var mBluetoothAdapter: BluetoothAdapter? = null
-    private var mBluetoothGatt: BluetoothGatt? = null
-    private var mTargetDevice: BluetoothDevice? = null
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private var bluetoothGatt: BluetoothGatt? = null
+    private var targetDevice: BluetoothDevice? = null
 
-    private var mReadableChar: BluetoothGattCharacteristic? = null
-    private var mWritableChar: BluetoothGattCharacteristic? = null
-    private var mNotifiableChar: BluetoothGattCharacteristic? = null
+    private var readableChar: BluetoothGattCharacteristic? = null
+    private var writableChar: BluetoothGattCharacteristic? = null
+    private var notifiableChar: BluetoothGattCharacteristic? = null
 
-    private val mGattCallback = object : BluetoothGattCallback() {
+    private val gattCallback = object : BluetoothGattCallback() {
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             super.onConnectionStateChange(gatt, status, newState)
             val deviceAddress = gatt?.device?.address ?: "Unknown"
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 when (newState) {
                     BluetoothProfile.STATE_CONNECTED -> {
-                        appendLog("✓ 已连接到设备: ，准备发现服务...")
+                        appendLog("✓ 已连接到设备: $deviceAddress，准备发现服务...")
                         // 连接成功后，官方推荐调用 discoverServices()
                         gatt?.discoverServices()
                     }
                     BluetoothProfile.STATE_DISCONNECTED -> {
-                        appendLog("✓ 设备已断开连接: ")
-                        mReadableChar = null
-                        mWritableChar = null
-                        mNotifiableChar = null
+                        appendLog("✓ 设备已断开连接: $deviceAddress")
+                        readableChar = null
+                        writableChar = null
+                        notifiableChar = null
                     }
                 }
             } else {
-                appendLog("✗ 连接状态异常 (status=, newState=)")
+                appendLog("✗ 连接状态异常 (status=$status, newState=$newState)")
             }
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
             super.onServicesDiscovered(gatt, status)
             if (status == BluetoothGatt.GATT_SUCCESS && gatt != null) {
-                appendLog("✓ 成功发现 GATT 服务列表 ( 个服务):")
+                appendLog("✓ 成功发现 GATT 服务列表 (${gatt.services.size} 个服务):")
                 for (service in gatt.services) {
                     val sUuid = service.uuid.toString()
                     val sType = if (service.type == BluetoothGattService.SERVICE_TYPE_PRIMARY) "Primary" else "Secondary"
-                    appendLog("  ├─ Service:  ()")
+                    appendLog("  ├─ Service: $sUuid ($sType)")
 
                     for (char in service.characteristics) {
                         val cUuid = char.uuid.toString()
                         val props = parseProperties(char.properties)
-                        appendLog("  │   ├─ Char:  | 属性: []")
+                        appendLog("  │   ├─ Char: $cUuid | 属性: [$props]")
 
                         // 自动记录首个可读/可写/可Notify的特征，方便快速演示
-                        if (mReadableChar == null && (char.properties and BluetoothGattCharacteristic.PROPERTY_READ) != 0) {
-                            mReadableChar = char
+                        if (readableChar == null && (char.properties and BluetoothGattCharacteristic.PROPERTY_READ) != 0) {
+                            readableChar = char
                         }
-                        if (mWritableChar == null && (char.properties and (BluetoothGattCharacteristic.PROPERTY_WRITE or BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)) != 0) {
-                            mWritableChar = char
+                        if (writableChar == null && (char.properties and (BluetoothGattCharacteristic.PROPERTY_WRITE or BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)) != 0) {
+                            writableChar = char
                         }
-                        if (mNotifiableChar == null && (char.properties and (BluetoothGattCharacteristic.PROPERTY_NOTIFY or BluetoothGattCharacteristic.PROPERTY_INDICATE)) != 0) {
-                            mNotifiableChar = char
+                        if (notifiableChar == null && (char.properties and (BluetoothGattCharacteristic.PROPERTY_NOTIFY or BluetoothGattCharacteristic.PROPERTY_INDICATE)) != 0) {
+                            notifiableChar = char
                         }
                     }
                 }
                 appendLog("✓ 已自动捕获可交互的特征值引用")
             } else {
-                appendLog("✗ 发现服务失败 (status=)")
+                appendLog("✗ 发现服务失败 (status=$status)")
             }
         }
 
@@ -174,7 +189,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-        mBluetoothAdapter = bluetoothManager?.adapter
+        bluetoothAdapter = bluetoothManager?.adapter
 
         showDescription(
             "Android 原生 BLE 连接与 GATT 交互示例\n\n" +
@@ -206,7 +221,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     }
 
     private fun scanAndConnectFirstDevice() {
-        val scanner = mBluetoothAdapter?.bluetoothLeScanner
+        val scanner = bluetoothAdapter?.bluetoothLeScanner
         if (scanner == null) {
             appendLog("✗ 无法获取 BLE 扫描器，请确认蓝牙已开启")
             return
@@ -219,9 +234,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
                     try {
                         scanner.stopScan(this)
                     } catch (_: Exception) {}
-                    mTargetDevice = device
+                    targetDevice = device
                     val name = device.name ?: "未知设备"
-                    appendLog("找到设备:  ()，发起连接...")
+                    appendLog("找到设备: $name，发起连接...")
                     connectDevice(device)
                 }
             }
@@ -236,15 +251,15 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     private fun connectDevice(device: BluetoothDevice) {
         disconnectAndClose()
         appendLog("正在建立 GATT 连接 (autoConnect = false)...")
-        mBluetoothGatt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            device.connectGatt(this, false, mGattCallback, BluetoothDevice.TRANSPORT_LE)
+        bluetoothGatt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            device.connectGatt(this, false, gattCallback, BluetoothDevice.TRANSPORT_LE)
         } else {
-            device.connectGatt(this, false, mGattCallback)
+            device.connectGatt(this, false, gattCallback)
         }
     }
 
     private fun discoverServices() {
-        val gatt = mBluetoothGatt
+        val gatt = bluetoothGatt
         if (gatt == null) {
             appendLog("✗ GATT 尚未连接")
             return
@@ -254,7 +269,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     }
 
     private fun requestMtu() {
-        val gatt = mBluetoothGatt
+        val gatt = bluetoothGatt
         if (gatt == null) {
             appendLog("✗ GATT 尚未连接")
             return
@@ -265,8 +280,8 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     }
 
     private fun readCharacteristic() {
-        val gatt = mBluetoothGatt
-        val char = mReadableChar
+        val gatt = bluetoothGatt
+        val char = readableChar
         if (gatt == null || char == null) {
             appendLog("✗ 无可用的可读特征值或未连接")
             return
@@ -276,8 +291,8 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     }
 
     private fun writeCharacteristic() {
-        val gatt = mBluetoothGatt
-        val char = mWritableChar
+        val gatt = bluetoothGatt
+        val char = writableChar
         if (gatt == null || char == null) {
             appendLog("✗ 无可用的可写特征值或未连接")
             return
@@ -291,8 +306,8 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     }
 
     private fun enableNotification() {
-        val gatt = mBluetoothGatt
-        val char = mNotifiableChar
+        val gatt = bluetoothGatt
+        val char = notifiableChar
         if (gatt == null || char == null) {
             appendLog("✗ 无可用的 Notify 特征值或未连接")
             return
@@ -320,17 +335,17 @@ class BleNativeConnectActivity : BasicResponseActivity() {
     }
 
     private fun disconnectAndClose() {
-        mBluetoothGatt?.let { gatt ->
+        bluetoothGatt?.let { gatt ->
             try {
                 gatt.disconnect()
                 gatt.close()
             } catch (_: Exception) {}
             appendLog("✓ 已断开并释放 BluetoothGatt 资源")
         }
-        mBluetoothGatt = null
-        mReadableChar = null
-        mWritableChar = null
-        mNotifiableChar = null
+        bluetoothGatt = null
+        readableChar = null
+        writableChar = null
+        notifiableChar = null
     }
 
     private fun parseProperties(props: Int): String {

@@ -18,20 +18,11 @@ import com.example.william.my.core.mqtt.paho.PahoServiceClientManager
  *
  * 使用 EMQX 公共 Broker（无需账号），订阅与发布到同一 Topic 即可收到自己发出的消息。
  *
- * 基本用法：
- * ```kotlin
- * // 连接
- * PahoServiceClientManager.connect(context, broker = "tcp://broker.emqx.io:1883", listener = ...)
- *
- * // 订阅
- * PahoServiceClientManager.subscribe("mqtt/example", qos = 2)
- *
- * // 发布
- * PahoServiceClientManager.publish("mqtt/example", "Hello Paho!", qos = 1)
- *
- * // 断开
- * PahoServiceClientManager.disconnect()
- * ```
+ * 核心机制与避坑点：
+ * 1. Service 绑定：通过 MqttService 在 Android 平台运行，支持后台保活
+ * 2. 经典 API：基于 MqttAndroidClient 的同步/异步混合 API
+ * 3. QoS 0/1/2：支持三种服务质量等级
+ * 4. 断线重连：内置自动重连机制
  *
  * https://github.com/hannesa2/paho.mqtt.android
  */
@@ -91,7 +82,7 @@ class PahoServiceClientActivity : BasicResponseActivity() {
                 }
 
                 override fun onError(message: String) {
-                    appendLogAccent("【错误】$message")
+                    appendLogAccent("✗ $message")
                 }
             },
         )
@@ -99,7 +90,7 @@ class PahoServiceClientActivity : BasicResponseActivity() {
 
     private fun subscribe() {
         if (!PahoServiceClientManager.isConnected()) {
-            appendLog("【错误】未连接，请先连接")
+            appendLog("✗ 未连接，请先连接")
             return
         }
         PahoServiceClientManager.subscribe(topic, qos = 2)
@@ -108,7 +99,7 @@ class PahoServiceClientActivity : BasicResponseActivity() {
 
     private fun publish(qos: Int) {
         if (!PahoServiceClientManager.isConnected()) {
-            appendLog("【错误】未连接，请先连接")
+            appendLog("✗ 未连接，请先连接")
             return
         }
         val payload = "Hello Paho Service! qos=$qos time=${System.currentTimeMillis()}"

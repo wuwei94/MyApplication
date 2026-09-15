@@ -11,9 +11,18 @@ import com.example.william.my.module.sse.utils.LlmStreamParser
 import io.reactivex.rxjava3.disposables.Disposable
 
 /**
- * OkHttp SSE 客户端示例（RxJava 封装版本 - DeepSeek 大模型流式对话）
+ * OkHttp SSE — RxJava Observable 封装版流式客户端
  *
- * 演示使用 OkHttpSseClientRx 将 DeepSeek 大模型流式响应转为 Observable 响应式数据流。
+ * 将 OkHttp SSE 的事件流封装为 RxJava3 Observable，通过 subscribe 订阅响应式数据，
+ * 对接 DeepSeek 官方 POST + SSE 流式对话接口。与原生回调版相比，获得操作符组合能力。
+ *
+ * 核心机制与避坑点：
+ * 1. Observable 封装：OkHttpSseInfo 密封类（Open / Event / Closed / Error）映射 SSE 事件
+ * 2. 响应式订阅：subscribe 三参形式处理 onNext / onError / onComplete
+ * 3. 生命周期管理：Disposable 控制订阅，页面销毁时自动 dispose 防泄漏
+ * 4. 逐 Token 解析：从 Event.data 提取 delta.content，[DONE] 触发 dispose 终止
+ *
+ * https://square.github.io/okhttp/features/sse/
  */
 @Route(path = RouterPath.SSE.OkHttpSseClientRx)
 class OkHttpSseClientRxActivity : BasicResponseActivity() {
@@ -76,7 +85,7 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
                             if (info.data.trim() == "[DONE]") {
                                 removeUpdatingLog("deepseek_response")
                                 appendLogAccent("【AI 完整回答】\n$responseBuffer")
-                                appendLog("【完成】收到 [DONE]，DeepSeek 生成完毕，Rx 流正常完结")
+                                appendLog("✓ 收到 [DONE]，DeepSeek 生成完毕，Rx 流正常完结")
                                 streamDisposable?.dispose()
                                 return@subscribe
                             }
@@ -91,7 +100,7 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
                         }
                         is OkHttpSseInfo.Error -> {
                             removeUpdatingLog("deepseek_response")
-                            appendLog("【异常】${info.throwable.message}")
+                            appendLog("✗ ${info.throwable.message}")
                         }
                     }
                 },
@@ -108,6 +117,6 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
     private fun cancelStream() {
         streamDisposable?.dispose()
         removeUpdatingLog("deepseek_response")
-        appendLog("【中断】已 Dispose 取消当前 Rx 数据流")
+        appendLog("→ 已 Dispose 取消当前 Rx 数据流")
     }
 }

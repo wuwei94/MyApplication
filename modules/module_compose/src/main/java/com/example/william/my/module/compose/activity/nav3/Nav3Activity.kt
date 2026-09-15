@@ -91,6 +91,10 @@ sealed interface DemoNavKey {
      * @param topicId 话题 ID
      * @param topicTitle 话题名称
      * @param topicDesc 话题说明
+
+     *
+     * https://developer.android.com/guide/navigation/design/navigation-compose
+     *
      */
     data class TopicDetail(
         val topicId: String,
@@ -129,7 +133,7 @@ sealed interface DemoNavKey {
 /**
  * Navigation 3 声明式导航状态托管容器
  *
- * 核心设计哲学：
+ * 核心机制与避坑点：
  * 1. **State Hoisting（状态提升）**：返回栈（BackStack）不再是 NavController 内部黑盒，
  *    而是提升为纯 Compose 响应式状态列表；
  * 2. **可预测性与时间旅行**：返回栈的推入、弹出、重置即是对标准 List 的修改，

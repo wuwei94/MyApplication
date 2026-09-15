@@ -38,12 +38,12 @@ class PictureSelectorAdapter(
                 com.example.william.my.basic.basic_shared.R.drawable.shared_ic_launcher,
             )
             binding.itemIvPic.setOnClickListener {
-                mItemClickListener?.openPicture()
+                itemClickListener?.openPicture()
             }
         } else {
-            if (mItemClickListener != null) {
+            if (itemClickListener != null) {
                 binding.root.setOnClickListener { v: View ->
-                    mItemClickListener?.onItemClick(v, holder.absoluteAdapterPosition)
+                    itemClickListener?.onItemClick(v, holder.absoluteAdapterPosition)
                 }
             }
 
@@ -107,10 +107,10 @@ class PictureSelectorAdapter(
         }
     }
 
-    private var mItemClickListener: OnItemClickListener? = null
+    private var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener?) {
-        mItemClickListener = listener
+        itemClickListener = listener
     }
 
     /**

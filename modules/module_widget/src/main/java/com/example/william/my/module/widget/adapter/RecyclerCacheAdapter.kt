@@ -13,7 +13,7 @@ import com.example.william.my.module.widget.databinding.UiItemRecyclerViewBindin
  */
 class RecyclerCacheAdapter(private val data: List<String>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val mCaches: RecyclerCacheExtension = RecyclerCacheExtension()
+    private val caches: RecyclerCacheExtension = RecyclerCacheExtension()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = UiItemRecyclerViewBinding.inflate(
@@ -25,7 +25,7 @@ class RecyclerCacheAdapter(private val data: List<String>?) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        mCaches.addCache(position, holder.itemView)
+        caches.addCache(position, holder.itemView)
 
         val binding = (holder as ViewHolder).binding
         binding.itemTextView.text = data?.getOrNull(position) ?: ""

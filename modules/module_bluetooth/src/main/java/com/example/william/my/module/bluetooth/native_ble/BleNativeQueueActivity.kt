@@ -15,15 +15,17 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.min
 
 /**
- * 原生 BLE 协程队列与分包传输示例
+ * 原生 BLE 协程队列与分包传输 — GATT 串行化
  *
- * 直击 Android 原生 BLE 最核心的技术痛点：
- * 1. 痛点：Android 系统的 BluetoothGatt 实例在底层仅支持单任务串行执行，
- *    并发发起多个 read/write 操作会导致底层返回 false 或直接丢弃。
- * 2. 解决方案：使用 Kotlin 协程 Channel 构建无阻塞的 FIFO GATT 任务执行队列，
- *    确保每个指令在收到底层 onCharacteristicWrite / onCharacteristicRead 回调后，才派发下一个指令。
- * 3. 大包分包机制 (Chunking)：当传输数据大于当前 MTU 负载（如 20 或 244 字节）时，
- *    自动按 MTU 切片拆包，逐包入队排队发送，接收端拼接还原完整包。
+ * BluetoothGatt 底层单任务：并发 read/write 会失败或被丢弃。本页用协程 Channel 做 FIFO 队列，并演示 MTU 分包。
+ *
+ * 核心机制与避坑点：
+ * 1. 串行队列：Channel 缓冲 GATT 指令，回调完成后再派发下一条
+ * 2. 协程等待：CompletableDeferred 挂起至 onCharacteristicRead/Write
+ * 3. 自动分包：按当前 MTU 负载切片入队，接收侧拼接
+ * 4. 可取消：生命周期内取消 Job 即停止派发
+ *
+ * https://developer.android.google.cn/guide/topics/connectivity/bluetooth/ble
  */
 @Route(path = RouterPath.Bluetooth.NativeQueue)
 class BleNativeQueueActivity : BasicResponseActivity() {
@@ -42,9 +44,9 @@ class BleNativeQueueActivity : BasicResponseActivity() {
     )
 
     // GATT 指令串行队列通道
-    private val mOperationChannel = Channel<BleOperation>(capacity = Channel.UNLIMITED)
-    private val mTaskIdCounter = AtomicInteger(1)
-    private var mMtuPayloadSize = 20 // 默认 MTU (23) - ATT Header (3) = 20 字节
+    private val operationChannel = Channel<BleOperation>(capacity = Channel.UNLIMITED)
+    private val taskIdCounter = AtomicInteger(1)
+    private var mtuPayloadSize = 20 // 默认 MTU (23) - ATT Header (3) = 20 字节
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -62,16 +64,16 @@ class BleNativeQueueActivity : BasicResponseActivity() {
      */
     private fun startQueueDispatcher() {
         lifecycleScope.launch(Dispatchers.IO) {
-            for (op in mOperationChannel) {
+            for (op in operationChannel) {
                 withContext(Dispatchers.Main) {
-                    appendLog("▶ [队列调度器] 开始执行任务 # (, 大小:  字节)...")
+                    appendLog("▶ [队列调度器] 开始执行任务 #${op.id} (${op.type}, 大小: ${op.payload.size} 字节)...")
                 }
 
                 // 模拟底层真实 GATT 异步操作耗时（如等待 onCharacteristicWrite 回调）
                 delay(120)
 
                 withContext(Dispatchers.Main) {
-                    appendLog("✓ [队列调度器] 任务 # 底层已响应 (ACK)，释放队列锁")
+                    appendLog("✓ [队列调度器] 任务 #${op.id} 底层已响应 (ACK)，释放队列锁")
                 }
                 op.completion.complete(true)
             }
@@ -90,11 +92,11 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         when (position) {
             0 -> testConcurrentOperations()
             1 -> {
-                mMtuPayloadSize = 244
+                mtuPayloadSize = 244
                 appendLog("✓ 已将模拟 MTU 设置为 247 字节，单包有效载荷上限调整为: 244 字节")
             }
             2 -> {
-                mMtuPayloadSize = 20
+                mtuPayloadSize = 20
                 appendLog("✓ 已将模拟 MTU 重置为 23 字节，单包有效载荷上限调整为: 20 字节")
             }
             3 -> testChunkingSend()
@@ -108,7 +110,7 @@ class BleNativeQueueActivity : BasicResponseActivity() {
     private fun testConcurrentOperations() {
         appendLog("🚀 瞬间并发提交 5 个 GATT 操作到协程队列...")
         for (i in 1..5) {
-            val taskId = mTaskIdCounter.getAndIncrement()
+            val taskId = taskIdCounter.getAndIncrement()
             val type = if (i % 2 == 0) "WRITE" else "READ"
             val dummyData = byteArrayOf(0x01, 0x02, i.toByte())
             enqueueOperation(taskId, type, dummyData)
@@ -119,10 +121,10 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         lifecycleScope.launch {
             val deferred = CompletableDeferred<Boolean>()
             val op = BleOperation(id, type, payload, deferred)
-            appendLog("📥 [任务投递] 任务 # () 入队等待排队...")
-            mOperationChannel.send(op)
+            appendLog("📥 [任务投递] 任务 #$id ($type) 入队等待排队...")
+            operationChannel.send(op)
             val result = deferred.await()
-            appendLog("🏁 [任务完成] 任务 # 返回结果: ")
+            appendLog("🏁 [任务完成] 任务 #$id 返回结果: $result")
         }
     }
 
@@ -131,18 +133,18 @@ class BleNativeQueueActivity : BasicResponseActivity() {
      */
     private fun testChunkingSend() {
         val totalBytes = ByteArray(128) { (it % 256).toByte() }
-        appendLog("📦 准备发送 128 字节数据，当前分包大小上限:  字节/包")
+        appendLog("📦 准备发送 128 字节数据，当前分包大小上限: $mtuPayloadSize 字节/包")
 
         var offset = 0
         var packageIndex = 1
-        val totalPackages = (totalBytes.size + mMtuPayloadSize - 1) / mMtuPayloadSize
+        val totalPackages = (totalBytes.size + mtuPayloadSize - 1) / mtuPayloadSize
 
         while (offset < totalBytes.size) {
-            val length = min(mMtuPayloadSize, totalBytes.size - offset)
+            val length = min(mtuPayloadSize, totalBytes.size - offset)
             val chunk = totalBytes.copyOfRange(offset, offset + length)
-            val taskId = mTaskIdCounter.getAndIncrement()
+            val taskId = taskIdCounter.getAndIncrement()
 
-            appendLog("  ├─ 切片分包 [/] ( 字节) 正在提交入队...")
+            appendLog("  ├─ 切片分包 [$packageIndex/$totalPackages] (${chunk.size} 字节) 正在提交入队...")
             enqueueOperation(taskId, "WRITE_CHUNK", chunk)
 
             offset += length
@@ -159,17 +161,17 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         val chunk2 = "Reactive BLE Queue ".toByteArray()
         val chunk3 = "Chunking Success!".toByteArray()
 
-        appendLog("  ├─ 收到分包 1 ( 字节): ''")
-        appendLog("  ├─ 收到分包 2 ( 字节): ''")
-        appendLog("  ├─ 收到分包 3 ( 字节): ''")
+        appendLog("  ├─ 收到分包 1 (${chunk1.size} 字节): '${String(chunk1)}'")
+        appendLog("  ├─ 收到分包 2 (${chunk2.size} 字节): '${String(chunk2)}'")
+        appendLog("  ├─ 收到分包 3 (${chunk3.size} 字节): '${String(chunk3)}'")
 
         val fullData = chunk1 + chunk2 + chunk3
         val resultText = String(fullData)
-        appendLog("✓ 组包完成！完整数据长度:  字节, 还原文本: \"\"")
+        appendLog("✓ 组包完成！完整数据长度: ${fullData.size} 字节, 还原文本: \"$resultText\"")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mOperationChannel.close()
+        operationChannel.close()
     }
 }

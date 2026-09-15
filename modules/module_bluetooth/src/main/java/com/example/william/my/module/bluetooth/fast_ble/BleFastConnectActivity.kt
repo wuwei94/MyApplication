@@ -16,25 +16,30 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * FastBle 连接与读写回调示例
+ * FastBle 连接与读写回调 — 字符串 UUID 直调
  *
- * 【FastBle —— 极简全能型（代步车）】
- * - 功能覆盖：全都有（扫描、连接、读写、Notify、MTU、基础重连）。
- * - 特点：API 最傻瓜、最直接。原生 Android 需要先找 Service 对象，再找 Characteristic 对象，写一堆回调；FastBle 直接传字符串就能读写：read(mac, serviceUUID, charUUID, callback)。
- * - 适合谁：新手入门、中小型项目、业务逻辑简单的蓝牙设备。
+ * 连接、MTU、read/write/notify 均以 UUID 字符串直接调用，省去手动查找 Characteristic。
  *
- * 演示特性：
- * 1. [BleManager.getInstance().connect] 连接与状态监听
- * 2. [BleManager.getInstance().setMtu] MTU 设置
- * 3. [BleManager.getInstance().read] / [write] 简化读写（无需手动寻找 Characteristic 实例，直接传 UUID 字符串）
- * 4. [BleManager.getInstance().notify] 开启通知
+ * 库选型定位（四栈横评中的 FastBle）：
+ * - 功能覆盖：扫描、连接、读写、Notify、MTU、基础重连均有
+ * - API 成本：最低。原生需先拿 Service/Characteristic 再挂多层回调；FastBle 直接
+ *   `read(mac, serviceUUID, charUUID, callback)` 级别调用
+ * - 适合：新手入门、中小型项目、业务逻辑较简单的外设
+ *
+ * 核心机制与避坑点：
+ * 1. 连接：`BleManager.connect` + 状态回调
+ * 2. MTU：`setMtu`
+ * 3. 读写：`read` / `write`（serviceUUID + charUUID 字符串）
+ * 4. 通知：`notify` 订阅特征值
+ *
+ * https://github.com/Jasonchenlijian/FastBle
  */
 @Route(path = RouterPath.Bluetooth.FastConnect)
 class BleFastConnectActivity : BasicResponseActivity() {
 
-    private var mConnectedDevice: BleDevice? = null
-    private var mTargetServiceUuid: String? = null
-    private var mTargetCharUuid: String? = null
+    private var connectedDevice: BleDevice? = null
+    private var targetServiceUuid: String? = null
+    private var targetCharUuid: String? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -80,7 +85,7 @@ class BleFastConnectActivity : BasicResponseActivity() {
             }
 
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
-                if (mConnectedDevice == null) {
+                if (connectedDevice == null) {
                     appendLog("未扫描到可用设备")
                 }
             }
@@ -100,21 +105,21 @@ class BleFastConnectActivity : BasicResponseActivity() {
                 }
 
                 override fun onConnectSuccess(bleDevice: BleDevice?, gatt: BluetoothGatt?, status: Int) {
-                    mConnectedDevice = bleDevice
+                    connectedDevice = bleDevice
                     appendLog("✓ FastBle 连接成功: ${bleDevice?.mac}")
 
                     // 自动提取首个可用服务与特征 UUID
                     gatt?.services?.firstOrNull()?.let { s ->
-                        mTargetServiceUuid = s.uuid.toString()
+                        targetServiceUuid = s.uuid.toString()
                         s.characteristics.firstOrNull()?.let { c ->
-                            mTargetCharUuid = c.uuid.toString()
+                            targetCharUuid = c.uuid.toString()
                         }
                     }
-                    appendLog("✓ 自动捕获目标 Service: $mTargetServiceUuid, Char: $mTargetCharUuid")
+                    appendLog("✓ 自动捕获目标 Service: $targetServiceUuid, Char: $targetCharUuid")
                 }
 
                 override fun onDisConnected(isActiveDisConnected: Boolean, device: BleDevice?, gatt: BluetoothGatt?, status: Int) {
-                    mConnectedDevice = null
+                    connectedDevice = null
                     appendLog("✓ FastBle 设备已断开 (主动断开=$isActiveDisConnected)")
                 }
             },
@@ -122,7 +127,7 @@ class BleFastConnectActivity : BasicResponseActivity() {
     }
 
     private fun setFastBleMtu() {
-        val dev = mConnectedDevice
+        val dev = connectedDevice
         if (dev == null) {
             appendLog("✗ 设备尚未连接")
             return
@@ -144,9 +149,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
     }
 
     private fun readCharacteristic() {
-        val dev = mConnectedDevice
-        val sUuid = mTargetServiceUuid
-        val cUuid = mTargetCharUuid
+        val dev = connectedDevice
+        val sUuid = targetServiceUuid
+        val cUuid = targetCharUuid
         if (dev == null || sUuid == null || cUuid == null) {
             appendLog("✗ 设备未连接或无可用特征 UUID")
             return
@@ -172,9 +177,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
     }
 
     private fun writeCharacteristic() {
-        val dev = mConnectedDevice
-        val sUuid = mTargetServiceUuid
-        val cUuid = mTargetCharUuid
+        val dev = connectedDevice
+        val sUuid = targetServiceUuid
+        val cUuid = targetCharUuid
         if (dev == null || sUuid == null || cUuid == null) {
             appendLog("✗ 设备未连接或无可用特征 UUID")
             return
@@ -200,9 +205,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
     }
 
     private fun enableNotification() {
-        val dev = mConnectedDevice
-        val sUuid = mTargetServiceUuid
-        val cUuid = mTargetCharUuid
+        val dev = connectedDevice
+        val sUuid = targetServiceUuid
+        val cUuid = targetCharUuid
         if (dev == null || sUuid == null || cUuid == null) {
             appendLog("✗ 设备未连接或无可用特征 UUID")
             return
@@ -231,7 +236,7 @@ class BleFastConnectActivity : BasicResponseActivity() {
     }
 
     private fun disconnect() {
-        mConnectedDevice?.let { dev ->
+        connectedDevice?.let { dev ->
             BleManager.getInstance().disconnect(dev)
             appendLog("✓ 已发送断开连接指令")
         } ?: run {
@@ -241,6 +246,6 @@ class BleFastConnectActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mConnectedDevice?.let { BleManager.getInstance().disconnect(it) }
+        connectedDevice?.let { BleManager.getInstance().disconnect(it) }
     }
 }

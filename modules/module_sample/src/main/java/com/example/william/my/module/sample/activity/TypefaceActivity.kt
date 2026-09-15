@@ -13,6 +13,15 @@ import com.example.william.my.module.sample.R
  * Typeface — 字体加载与切换
  *
  * Typeface 是 Android 的字体管理类，用于加载和切换字体样式。
+ * 本页演示系统内置字体与 Asset 自定义字体的加载与应用。
+ *
+ * 核心机制与避坑点：
+ * 1. 系统字体：DEFAULT / DEFAULT_BOLD / MONOSPACE / SERIF / SANS_SERIF
+ * 2. Asset 字体：createFromAsset() 加载自定义 TTF 字体文件
+ * 3. 样式组合：支持 Bold / Italic / BoldItalic 样式叠加
+ * 4. 全局字体：支持通过 fontFamily 全局替换应用字体
+ *
+ * https://developer.android.com/develop/ui/views/text-and-emoji/fonts-in-xml
  */
 @Route(path = RouterPath.Sample.Typeface)
 class TypefaceActivity : BasicLayoutActivity() {
@@ -29,7 +38,7 @@ class TypefaceActivity : BasicLayoutActivity() {
 
     private fun initPreviewCard() {
         val previewView = LayoutInflater.from(this)
-            .inflate(R.layout.sample_layout_typeface_preview, mContainer, false)
+            .inflate(R.layout.sample_layout_typeface_preview, container, false)
         nameView = previewView.findViewById(R.id.sample_typeface_name)
         enView = previewView.findViewById(R.id.sample_typeface_en)
         zhView = previewView.findViewById(R.id.sample_typeface_zh)

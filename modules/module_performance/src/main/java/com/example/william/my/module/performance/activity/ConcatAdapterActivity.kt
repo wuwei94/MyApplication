@@ -12,13 +12,17 @@ import com.example.william.my.module.performance.adapter.ConcatFooterAdapter
 import com.example.william.my.module.performance.adapter.ConcatHeaderAdapter
 
 /**
- * ConcatAdapter 模块化列表组合与视图类型隔离示例
+ * ConcatAdapter — 模块化列表组合与视图类型隔离
  *
- * 本示例演示 ConcatAdapter 在多模块复合列表中的标准用法与最佳实践：
- * 1. 模块化解耦：替代单个包含数十种 ViewType 的庞大 Adapter，将 Header、Banner、Feed、Footer 拆分为单一职责的子 Adapter。
- * 2. 视图类型隔离（isolateViewTypes = true）：各子 Adapter 可自由定义独立的 ViewType（如均为 0、1），由 ConcatAdapter 内部自动进行 ID 映射隔离，杜绝类型冲突。
- * 3. 独立增量刷新：子 Adapter 调用自身的 notifyItemChanged / notifyItemInserted 时，只在其所属的区间内精准局部刷新。
- * 4. 动态插拔模块：支持在运行时使用 `addAdapter(index, adapter)` / `removeAdapter(adapter)` 动态上线或下架特定业务模块。
+ * 本示例演示 ConcatAdapter 在多模块复合列表中的标准用法与最佳实践。
+ *
+ * 核心机制与避坑点：
+ * 1. 模块化解耦：替代单个包含数十种 ViewType 的庞大 Adapter，将 Header、Banner、Feed、Footer 拆分为单一职责的子 Adapter
+ * 2. 视图类型隔离（isolateViewTypes = true）：各子 Adapter 可自由定义独立的 ViewType（如均为 0、1），由 ConcatAdapter 内部自动进行 ID 映射隔离，杜绝类型冲突
+ * 3. 独立增量刷新：子 Adapter 调用自身的 notifyItemChanged / notifyItemInserted 时，只在其所属的区间内精准局部刷新
+ * 4. 动态插拔模块：支持在运行时使用 addAdapter(index, adapter) / removeAdapter(adapter) 动态上线或下架特定业务模块
+ *
+ * https://developer.android.com/reference/androidx/recyclerview/widget/ConcatAdapter
  */
 @Route(path = RouterPath.Performance.ConcatAdapter)
 class ConcatAdapterActivity : BasicRecyclerActivity() {
@@ -42,30 +46,24 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        initSubAdapters()
         initConcatAdapter()
     }
 
-    private fun initSubAdapters() {
-        headerAdapter = ConcatHeaderAdapter()
-        bannerAdapter = ConcatBannerAdapter()
-
-        val feedList = mutableListOf(
-            "推荐商品 1" to "热销爆款，限时五折优惠中",
-            "推荐商品 2" to "新品首发，好评如潮，立即抢购",
-            "推荐商品 3" to "爆款数码科技，会员专属特惠价",
-        )
-        feedAdapter = ConcatFeedAdapter(feedList)
-        feedItemIndex = feedList.size + 1
-
-        footerAdapter = ConcatFooterAdapter()
-    }
-
     private fun initConcatAdapter() {
-        // 配置 ConcatAdapter：开启 ViewType 隔离（核心保护）
         val config = ConcatAdapter.Config.Builder()
             .setIsolateViewTypes(true)
             .build()
+
+        headerAdapter = ConcatHeaderAdapter("顶栏：今日焦点动态 (Header)")
+        bannerAdapter = ConcatBannerAdapter(arrayListOf("🔥 热点 1: 性能优化指南", "🚀 热点 2: 现代 Kotlin 架构"))
+        feedAdapter = ConcatFeedAdapter(
+            arrayListOf(
+                "信息流条目 1: 理解 View 渲染流水线",
+                "信息流条目 2: 深入协程挂起本质",
+                "信息流条目 3: Compose 智能重组机制",
+            ),
+        )
+        footerAdapter = ConcatFooterAdapter("底栏：到底啦 ~ (Footer)")
 
         concatAdapter = ConcatAdapter(
             config,
@@ -75,7 +73,7 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
             footerAdapter,
         )
 
-        mDataRecycler.apply {
+        dataRecycler.apply {
             layoutManager = LinearLayoutManager(this@ConcatAdapterActivity)
             adapter = concatAdapter
         }
@@ -85,7 +83,7 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> {
-                // 1. 动态插拔 Banner 模块
+                // 1. 动态挂载/卸载 Banner
                 if (isBannerVisible) {
                     concatAdapter.removeAdapter(bannerAdapter)
                     isBannerVisible = false
@@ -96,30 +94,28 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
             }
 
             1 -> {
-                // 2. 向 Feed 列表新增项（触发 Feed 局部增量刷新）
-                val newTitle = "新增商品 $feedItemIndex"
-                val newDesc = "动态插入推荐，触发 FeedAdapter 局部 notifyItemInserted"
-                feedItemIndex++
-                feedAdapter.items.add(newTitle to newDesc)
-                feedAdapter.notifyItemInserted(feedAdapter.items.size - 1)
+                // 2. 向 Feed 局部插入
+                val newItem = "动态新增流项目 #${feedItemIndex++}"
+                val currentSize = feedAdapter.items.size
+                feedAdapter.items.add(newItem)
+                feedAdapter.notifyItemInserted(currentSize)
             }
 
             2 -> {
-                // 3. 仅更新 Feed 首条（验证局部精准刷新）
+                // 3. 局部定向刷新首条
                 if (feedAdapter.items.isNotEmpty()) {
-                    val old = feedAdapter.items[0]
-                    feedAdapter.items[0] = old.first to "已局部精准刷新：${System.currentTimeMillis() % 1000}"
+                    feedAdapter.items[0] = "已定向更新首条 @ ${System.currentTimeMillis() % 10000}"
                     feedAdapter.notifyItemChanged(0)
                 }
             }
 
             3 -> {
-                // 4. 动态插拔 Footer 模块
+                // 4. 动态挂载/卸载 Footer
                 if (isFooterVisible) {
                     concatAdapter.removeAdapter(footerAdapter)
                     isFooterVisible = false
                 } else {
-                    concatAdapter.addAdapter(concatAdapter.adapters.size, footerAdapter)
+                    concatAdapter.addAdapter(footerAdapter)
                     isFooterVisible = true
                 }
             }

@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 依赖注入 (DI) 演示入口
+ * 依赖注入模块入口 — 导航到 Hilt、Koin 等示例页面。
  *
  * 集中展示 Android 主流依赖注入方案（Hilt 与 Koin）的核心特性与最佳实践。
  */

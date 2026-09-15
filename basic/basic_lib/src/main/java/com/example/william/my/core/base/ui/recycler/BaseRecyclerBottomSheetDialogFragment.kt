@@ -37,7 +37,7 @@ abstract class BaseRecyclerBottomSheetDialogFragment<T : Any> :
 
     // ===== RecyclerViewHost接口实现 =====
 
-    override fun getHostBinding(): BaseFragmentRecyclerViewBinding = mBinding
+    override fun getHostBinding(): BaseFragmentRecyclerViewBinding = binding
 
     override fun getHostContext(): Context = requireContext()
 
@@ -85,30 +85,30 @@ abstract class BaseRecyclerBottomSheetDialogFragment<T : Any> :
     /**
      * 获取当前页码
      */
-    val mPage: Int get() = recyclerHandler.mPage
+    val page: Int get() = recyclerHandler.page
 
     /**
      * 获取页面大小
      */
-    val mPageSize: Int get() = recyclerHandler.mPageSize
+    val pageSize: Int get() = recyclerHandler.pageSize
 
     /**
      * 获取LayoutManager
      */
-    val mLayoutManager: RecyclerView.LayoutManager? get() = recyclerHandler.mLayoutManager
+    val layoutManager: RecyclerView.LayoutManager? get() = recyclerHandler.layoutManager
 
     /**
      * 获取Adapter
      */
-    val mAdapter: BaseQuickAdapter<T, QuickViewHolder>? get() = recyclerHandler.mAdapter
+    val adapter: BaseQuickAdapter<T, QuickViewHolder>? get() = recyclerHandler.adapter
 
     /**
      * 获取多类型Adapter
      */
-    val mMultiItemAdapter: BaseMultiItemAdapter<T>? get() = recyclerHandler.mMultiItemAdapter
+    val multiItemAdapter: BaseMultiItemAdapter<T>? get() = recyclerHandler.multiItemAdapter
 
     /**
      * 获取QuickAdapterHelper
      */
-    val mAdapterHelper: QuickAdapterHelper? get() = recyclerHandler.mAdapterHelper
+    val adapterHelper: QuickAdapterHelper? get() = recyclerHandler.adapterHelper
 }

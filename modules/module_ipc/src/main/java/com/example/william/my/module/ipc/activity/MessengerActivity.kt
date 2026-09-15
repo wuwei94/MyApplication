@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference
  *
  * Messenger 是 Android 提供的轻量级 IPC 方案，基于 Handler 实现。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 简单易用：基于 Handler，学习成本低
  * 2. 串行处理：消息排队处理，避免并发问题
  * 3. 双向通信：通过 Message.replyTo 实现双向通信
@@ -30,41 +30,14 @@ import java.lang.ref.WeakReference
  * - Messenger：串行处理，简单易用，适合轻量级通信
  * - AIDL：并行处理，功能强大，适合复杂通信
  *
- * 基本用法：
- * ```kotlin
- * // 服务端
- * class MyService : Service() {
- *     private val messenger = Messenger(IncomingHandler())
- *
- *     override fun onBind(intent: Intent): IBinder {
- *         return messenger.binder
- *     }
- * }
- *
- * // 客户端
- * val connection = object : ServiceConnection {
- *     override fun onServiceConnected(name: ComponentName, service: IBinder) {
- *         val messenger = Messenger(service)
- *         val msg = Message.obtain().apply {
- *             what = MSG_CODE
- *             replyTo = clientMessenger  // 设置回复 Messenger
- *         }
- *         messenger.send(msg)
- *     }
- * }
- * ```
- *
- * 适用场景：
- * - 跨进程通信
- * - Activity 与 Service 通信
- * - 轻量级 IPC 需求
+ * https://developer.android.com/guide/components/bound-services
  */
 @Route(path = RouterPath.Ipc.Messenger)
 class MessengerActivity : BasicResponseActivity() {
 
-    private var mServiceMessenger: Messenger? = null
-    private var mClientMessenger: Messenger? = null
-    private var mServiceConnection: ServiceConnection? = null
+    private var serviceMessenger: Messenger? = null
+    private var clientMessenger: Messenger? = null
+    private var serviceConnection: ServiceConnection? = null
 
     private class ClientHandler(activity: MessengerActivity) : Handler(Looper.getMainLooper()) {
 
@@ -72,10 +45,10 @@ class MessengerActivity : BasicResponseActivity() {
 
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            val mActivity = weakReference.get() ?: return
+            val activity = weakReference.get() ?: return
             if (msg.what == MSG_CODE_SEND_TO_ACTIVITY) {
                 val value = msg.data.getString(MSG_SEND_KEY)
-                mActivity.appendLog("收到回复：$value")
+                activity.appendLog("收到回复：$value")
             }
         }
     }
@@ -94,17 +67,17 @@ class MessengerActivity : BasicResponseActivity() {
 
     private fun initMessenger() {
         val clientHandler = ClientHandler(this)
-        mClientMessenger = Messenger(clientHandler)
+        clientMessenger = Messenger(clientHandler)
     }
 
     private fun sendMessage() {
-        mServiceMessenger?.let { service ->
+        serviceMessenger?.let { service ->
             val message = Message.obtain().apply {
                 what = MSG_CODE_SEND_TO_SERVICE
                 data = Bundle().apply {
                     putString(MSG_SEND_KEY, MSG_SEND_MESSAGE)
                 }
-                replyTo = mClientMessenger
+                replyTo = clientMessenger
             }
             service.send(message)
             appendLog("发送消息给 Service")
@@ -117,20 +90,20 @@ class MessengerActivity : BasicResponseActivity() {
     }
 
     private fun bindService() {
-        mServiceConnection = object : ServiceConnection {
+        serviceConnection = object : ServiceConnection {
             override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
-                mServiceMessenger = Messenger(iBinder)
+                serviceMessenger = Messenger(iBinder)
                 appendLog("Service 已连接")
                 sendMessage()
             }
 
             override fun onServiceDisconnected(componentName: ComponentName) {
-                mServiceMessenger = null
+                serviceMessenger = null
                 appendLog("Service 连接断开")
             }
         }
 
-        mServiceConnection?.let { conn ->
+        serviceConnection?.let { conn ->
             bindService(
                 Intent(this@MessengerActivity, MyMessageService::class.java),
                 conn,
@@ -145,7 +118,7 @@ class MessengerActivity : BasicResponseActivity() {
     }
 
     private fun unbindService() {
-        mServiceConnection?.let { conn ->
+        serviceConnection?.let { conn ->
             unbindService(conn)
         }
     }

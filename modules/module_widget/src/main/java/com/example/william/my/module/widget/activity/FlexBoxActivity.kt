@@ -15,13 +15,13 @@ import com.google.android.flexbox.FlexboxLayoutManager
  *
  * FlexboxLayoutManager 是 Google 出品的弹性布局管理器，用于 RecyclerView。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 弹性布局：支持类似 CSS Flexbox 的弹性布局
  * 2. 自动换行：支持自动换行，适合标签、流式布局
  * 3. 灵活对齐：支持多种对齐方式
  * 4. 响应式：支持不同屏幕尺寸的自适应布局
  *
- * 核心属性：
+ * 核心组件：
  * 1. FlexDirection：主轴方向
  *    - ROW：水平方向
  *    - COLUMN：垂直方向
@@ -45,19 +45,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
  *    - FLEX_END：结束对齐
  *    - STRETCH：拉伸对齐
  *
- * 基本用法：
- * ```kotlin
- * val manager = FlexboxLayoutManager(context)
- * manager.flexDirection = FlexDirection.ROW
- * manager.flexWrap = FlexWrap.WRAP
- * recyclerView.layoutManager = manager
- * ```
- *
- * 适用场景：
- * - 标签云、流式布局
- * - 自适应布局
- * - 响应式设计
- *
  * https://github.com/google/flexbox-layout
  */
 @Route(path = RouterPath.Widget.FlexBox)
@@ -65,7 +52,7 @@ class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
 
     override fun getViewBinding(): UiActivityFlexBoxBinding = UiActivityFlexBoxBinding.inflate(layoutInflater)
 
-    private val mData = arrayListOf(
+    private val data = arrayListOf(
         "FlexBox_1234",
         "FlexBox_5678",
         "FlexBox_90",
@@ -88,7 +75,7 @@ class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
         manager.flexDirection = FlexDirection.ROW // 主轴方向
         manager.flexWrap = FlexWrap.WRAP // 是否换行
 
-        mBinding.flexboxRecycleView.layoutManager = manager
-        mBinding.flexboxRecycleView.adapter = RecyclerAdapter(mData)
+        binding.flexboxRecycleView.layoutManager = manager
+        binding.flexboxRecycleView.adapter = RecyclerAdapter(data)
     }
 }

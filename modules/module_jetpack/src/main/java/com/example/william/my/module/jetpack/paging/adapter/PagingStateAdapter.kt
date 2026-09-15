@@ -16,15 +16,15 @@ import com.example.william.my.module.jetpack.databinding.JetpackItemRecyclerBind
 class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<PagingStateAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
-        holder.mBinding.itemTextView.setOnClickListener {
+        holder.binding.itemTextView.setOnClickListener {
             if (loadState is LoadState.Error) {
                 retry()
             }
         }
         when (loadState) {
             is LoadState.Loading -> {
-                holder.mBinding.itemTextView.text = "正在加载更多数据..."
-                holder.mBinding.itemTextView.setBackgroundColor(
+                holder.binding.itemTextView.text = "正在加载更多数据..."
+                holder.binding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
                         com.example.william.my.basic.basic_shared.R.color.shared_color_primary,
@@ -33,8 +33,8 @@ class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Pagin
             }
 
             is LoadState.NotLoading -> {
-                holder.mBinding.itemTextView.text = ""
-                holder.mBinding.itemTextView.setBackgroundColor(
+                holder.binding.itemTextView.text = ""
+                holder.binding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
                         android.R.color.transparent,
@@ -43,8 +43,8 @@ class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Pagin
             }
 
             is LoadState.Error -> {
-                holder.mBinding.itemTextView.text = "加载失败，点击重试 (${loadState.error.localizedMessage ?: "网络异常"})"
-                holder.mBinding.itemTextView.setBackgroundColor(
+                holder.binding.itemTextView.text = "加载失败，点击重试 (${loadState.error.localizedMessage ?: "网络异常"})"
+                holder.binding.itemTextView.setBackgroundColor(
                     ContextCompat.getColor(
                         holder.itemView.context,
                         com.example.william.my.basic.basic_shared.R.color.shared_color_primary_dark,
@@ -64,6 +64,6 @@ class PagingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Pagin
      * 加载状态 ViewHolder
      */
     class ViewHolder(bind: JetpackItemRecyclerBinding) : RecyclerView.ViewHolder(bind.root) {
-        var mBinding: JetpackItemRecyclerBinding = bind
+        val binding: JetpackItemRecyclerBinding = bind
     }
 }

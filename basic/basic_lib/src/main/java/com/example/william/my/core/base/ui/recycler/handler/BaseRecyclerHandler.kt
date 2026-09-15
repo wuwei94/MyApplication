@@ -26,14 +26,14 @@ class BaseRecyclerHandler<T : Any>(
     OnRefreshLoadMoreListener {
 
     // ===== 分页相关 =====
-    var mPage: Int = host.getStartPage()
-    var mPageSize: Int = 20
+    var page: Int = host.getStartPage()
+    var pageSize: Int = 20
 
     // ===== RecyclerView相关组件 =====
-    var mLayoutManager: RecyclerView.LayoutManager? = null
-    var mAdapter: BaseQuickAdapter<T, QuickViewHolder>? = null
-    var mMultiItemAdapter: BaseMultiItemAdapter<T>? = null
-    lateinit var mAdapterHelper: QuickAdapterHelper
+    var layoutManager: RecyclerView.LayoutManager? = null
+    var adapter: BaseQuickAdapter<T, QuickViewHolder>? = null
+    var multiItemAdapter: BaseMultiItemAdapter<T>? = null
+    lateinit var adapterHelper: QuickAdapterHelper
 
     /**
      * 初始化RecyclerView
@@ -49,25 +49,25 @@ class BaseRecyclerHandler<T : Any>(
         binding.smartRefresh.setOnRefreshLoadMoreListener(this)
 
         // 设置LayoutManager
-        mLayoutManager = host.initRecyclerManager()
-        mLayoutManager?.let {
+        layoutManager = host.initRecyclerManager()
+        layoutManager?.let {
             binding.recyclerView.layoutManager = it
         }
 
         // 设置Adapter
-        mAdapter = host.initRecyclerAdapter()
-        mMultiItemAdapter = host.initRecyclerMultiAdapter()
+        adapter = host.initRecyclerAdapter()
+        multiItemAdapter = host.initRecyclerMultiAdapter()
 
-        mAdapter?.let {
+        adapter?.let {
             it.setOnItemClickListener(this)
-            mAdapterHelper = QuickAdapterHelper.Builder(it).build()
-            binding.recyclerView.adapter = mAdapterHelper.adapter
+            adapterHelper = QuickAdapterHelper.Builder(it).build()
+            binding.recyclerView.adapter = adapterHelper.adapter
         }
 
-        mMultiItemAdapter?.let {
+        multiItemAdapter?.let {
             it.setOnItemClickListener(this)
-            mAdapterHelper = QuickAdapterHelper.Builder(it).build()
-            binding.recyclerView.adapter = mAdapterHelper.adapter
+            adapterHelper = QuickAdapterHelper.Builder(it).build()
+            binding.recyclerView.adapter = adapterHelper.adapter
         }
 
         // 添加装饰器
@@ -86,18 +86,18 @@ class BaseRecyclerHandler<T : Any>(
      */
     fun initRecyclerViewStateView() {
         if (host.emptyView() != null) {
-            mAdapter?.isStateViewEnable = true
-            mMultiItemAdapter?.isStateViewEnable = true
-            mAdapter?.stateView = host.emptyView()
-            mMultiItemAdapter?.stateView = host.emptyView()
+            adapter?.isStateViewEnable = true
+            multiItemAdapter?.isStateViewEnable = true
+            adapter?.stateView = host.emptyView()
+            multiItemAdapter?.stateView = host.emptyView()
         }
 
         if (host.emptyResId() != 0) {
             val context = host.getHostContext()
-            mAdapter?.isStateViewEnable = true
-            mMultiItemAdapter?.isStateViewEnable = true
-            mAdapter?.setStateViewLayout(context, host.emptyResId())
-            mMultiItemAdapter?.setStateViewLayout(context, host.emptyResId())
+            adapter?.isStateViewEnable = true
+            multiItemAdapter?.isStateViewEnable = true
+            adapter?.setStateViewLayout(context, host.emptyResId())
+            multiItemAdapter?.setStateViewLayout(context, host.emptyResId())
         }
     }
 
@@ -108,17 +108,17 @@ class BaseRecyclerHandler<T : Any>(
         val newList = list ?: emptyList()
         val binding = host.getHostBinding()
 
-        if (mPage == host.getStartPage()) {
-            mAdapter?.submitList(newList)
-            mMultiItemAdapter?.submitList(newList)
+        if (page == host.getStartPage()) {
+            adapter?.submitList(newList)
+            multiItemAdapter?.submitList(newList)
         } else {
-            mAdapter?.addAll(newList)
-            mMultiItemAdapter?.addAll(newList)
+            adapter?.addAll(newList)
+            multiItemAdapter?.addAll(newList)
         }
 
         initRecyclerViewStateView()
 
-        if (newList.size < mPageSize) {
+        if (newList.size < pageSize) {
             binding.smartRefresh.finishLoadMoreWithNoMoreData()
         } else {
             binding.smartRefresh.setEnableLoadMore(host.canLoadMore())
@@ -135,8 +135,8 @@ class BaseRecyclerHandler<T : Any>(
         binding.smartRefresh.finishRefresh(false)
         binding.smartRefresh.finishLoadMore(false)
         // 加载更多失败时回退页码，避免重试时跳过当前失败页
-        if (mPage > host.getStartPage()) {
-            mPage--
+        if (page > host.getStartPage()) {
+            page--
         }
     }
 
@@ -158,12 +158,12 @@ class BaseRecyclerHandler<T : Any>(
     // ===== OnRefreshLoadMoreListener实现 =====
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mPage = host.getStartPage()
+        page = host.getStartPage()
         host.queryData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mPage++
+        page++
         host.queryData()
     }
 

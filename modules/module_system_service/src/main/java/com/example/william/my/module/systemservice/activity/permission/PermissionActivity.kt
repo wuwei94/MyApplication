@@ -11,11 +11,19 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 运行时权限（Jetpack 原生契约方案）
+ * 运行时权限 — Jetpack ActivityResultContracts 原生契约方案
  *
- * 使用 Jetpack ActivityResultContracts.RequestMultiplePermissions 申请 App 基础运行时权限：
- * - 通知权限 (POST_NOTIFICATIONS，Android 13+)
- * - 多媒体存储权限 (READ_MEDIA_IMAGES / READ_MEDIA_VIDEO / READ_MEDIA_AUDIO，Android 13+；Android 12 及以下为 READ/WRITE_EXTERNAL_STORAGE)
+ * 使用 Jetpack ActivityResultContracts.RequestMultiplePermissions 申请运行时权限，
+ * 替代已废弃的 onRequestPermissionsResult 回调。覆盖通知权限（Android 13+）与
+ * 多媒体存储权限（Android 13+ 为 READ_MEDIA_*，低版本为 READ/WRITE_EXTERNAL_STORAGE）。
+ *
+ * 核心机制与避坑点：
+ * 1. 契约注册：registerForActivityResult + RequestMultiplePermissions 声明式注册
+ * 2. 结果回调：grantedPermissions Map 区分已授权与被拒绝权限
+ * 3. 永久拒绝检测：shouldShowRequestPermissionRationale 判断用户是否勾选「不再提示」
+ * 4. 版本适配：按 Build.VERSION 动态选择 READ_MEDIA_* 或 READ_EXTERNAL_STORAGE
+ *
+ * https://developer.android.com/training/permissions/requesting
  */
 @Route(path = RouterPath.SystemService.Permission)
 class PermissionActivity : BasicResponseActivity() {

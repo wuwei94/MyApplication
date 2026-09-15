@@ -24,7 +24,7 @@ import kotlin.math.min
  *
  * ScriptIntrinsicBlur 是 Android 原生的高斯模糊实现，API 31 后被 RenderEffect 取代。
  *
- * 核心步骤：
+ * 核心机制与避坑点：
  * 1. RenderScript.create() — 创建上下文
  * 2. ScriptIntrinsicBlur.create() — 创建模糊脚本
  * 3. Allocation.createFromBitmap() — 创建输入/输出缓冲区
@@ -36,6 +36,7 @@ import kotlin.math.min
  * - 需要 Bitmap 输出：使用 HardwareRenderer 离屏渲染
  *
  * @see RenderEffectActivity RenderEffect 替代方案
+ * https://developer.android.com/guide/topics/renderscript/migrate
  */
 @Route(path = RouterPath.Graphics.RenderScript)
 class RenderScriptActivity : BasicImageActivity() {

@@ -19,11 +19,16 @@ import kotlinx.coroutines.launch
 /**
  * Jetpack Lifecycle — 生命周期感知型组件
  *
- * 演示 Android Jetpack 核心生命周期机制：
- * 1. [DefaultLifecycleObserver]：业务组件/Presenter 解耦监听 Activity/Fragment 生命周期事件；
- * 2. [ProcessLifecycleOwner]：全局 Application 级别的前后台切换感知（无需手动统计 Activity 计数）；
- * 3. [repeatOnLifecycle]：协程安全数据流收集，当页面处于非活跃状态（如后台 STOPPED）时自动取消收集并挂起协程，进入活跃状态时自动重启；
- * 4. [flowWithLifecycle]：Flow 级别的单流生命周期过滤操作符。
+ * 演示 Android Jetpack 核心生命周期机制，涵盖组件解耦监听、应用级前后台感知
+ * 与协程安全数据流收集。
+ *
+ * 核心机制与避坑点：
+ * 1. [DefaultLifecycleObserver]：业务组件/Presenter 解耦监听 Activity/Fragment 生命周期事件
+ * 2. [ProcessLifecycleOwner]：全局 Application 级别的前后台切换感知（无需手动统计 Activity 计数）
+ * 3. [repeatOnLifecycle]：协程安全数据流收集，当页面处于非活跃状态（如后台 STOPPED）时自动取消收集并挂起协程，进入活跃状态时自动重启
+ * 4. [flowWithLifecycle]：Flow 级别的单流生命周期过滤操作符
+ *
+ * https://developer.android.google.cn/topic/libraries/architecture/lifecycle
  */
 @Route(path = RouterPath.Jetpack.Lifecycle)
 class LifecycleActivity : BasicResponseActivity() {

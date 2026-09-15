@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Markdown 富文本渲染与 AI 流式交互模块入口
+ * Markdown 模块入口 — 导航到 Markwon、代码高亮、流式打字机、AI 聊天等示例页面。
  *
  * 演进体系：
  * 1. Markwon 基础与扩展语法渲染（标题 / 引用 / 表格 / 任务清单 / HTML / 图片 / 主题）

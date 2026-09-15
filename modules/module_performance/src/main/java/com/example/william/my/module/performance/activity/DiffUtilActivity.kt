@@ -11,13 +11,17 @@ import com.example.william.my.module.performance.adapter.ArticleAdapter
 import com.example.william.my.module.performance.bean.ArticleItem
 
 /**
- * DiffUtil 列表差量计算与局部更新示例
+ * DiffUtil — 列表差量计算与局部更新
  *
- * 本示例演示 DiffUtil 在列表更新中的标准写法与真实渲染效果：
- * 1. areItemsTheSame(oldPos, newPos)：判断是否为同一个条目（通常比较唯一主键 ID）。
- * 2. areContentsTheSame(oldPos, newPos)：判断条目内容是否完全一致（内容未变则跳过刷新）。
- * 3. getChangePayload(oldPos, newPos)：提取变化字段的 Payload，用于极细粒度局部刷新，避免整个 ViewHolder 重新绑定。
- * 4. dispatchUpdatesTo(adapter)：将增、删、改、移精准定向分发给 Adapter，触发平滑的 ItemAnimator 动画。
+ * 本示例演示 DiffUtil 在列表更新中的标准写法与真实渲染效果。
+ *
+ * 核心机制与避坑点：
+ * 1. areItemsTheSame(oldPos, newPos)：判断是否为同一个条目（通常比较唯一主键 ID）
+ * 2. areContentsTheSame(oldPos, newPos)：判断条目内容是否完全一致（内容未变则跳过刷新）
+ * 3. getChangePayload(oldPos, newPos)：提取变化字段的 Payload，用于极细粒度局部刷新，避免整个 ViewHolder 重新绑定
+ * 4. dispatchUpdatesTo(adapter)：将增、删、改、移精准定向分发给 Adapter，触发平滑的 ItemAnimator 动画
+ *
+ * https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil
  */
 @Route(path = RouterPath.Performance.DiffUtil)
 class DiffUtilActivity : BasicRecyclerActivity() {
@@ -57,7 +61,7 @@ class DiffUtilActivity : BasicRecyclerActivity() {
             applyDiffResult(newList)
         }
 
-        mDataRecycler.apply {
+        dataRecycler.apply {
             layoutManager = LinearLayoutManager(this@DiffUtilActivity)
             itemAnimator = DefaultItemAnimator()
             adapter = articleAdapter

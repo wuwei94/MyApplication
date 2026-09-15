@@ -22,30 +22,17 @@ import com.example.william.my.module.component.service.MyForegroundService
  * 2. Bound Service：通过 bindService 绑定，可直接调用 Service 方法
  * 3. Foreground Service：通过 startForegroundService 启动，有通知栏常驻
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 后台运行：在后台执行长时间操作，不阻塞 UI
  * 2. 生命周期管理：系统自动管理，但需注意资源释放
  * 3. 前台服务：Android 8.0+ 需要使用前台服务
  *
- * 基本用法：
- * ```kotlin
- * // Started Service
- * startService(Intent(context, MyService::class.java))
- * stopService(Intent(context, MyService::class.java))
- *
- * // Bound Service
- * bindService(intent, connection, Context.BIND_AUTO_CREATE)
- * unbindService(connection)
- * ```
- *
- * 适用场景：
- * - 音乐播放、文件下载等后台操作
- * - 需要长期运行的任务
+ * https://developer.android.com/guide/components/services
  */
 @Route(path = RouterPath.Component.Service)
 class ServiceActivity : BasicResponseActivity() {
 
-    private var mBoundConnection: ServiceConnection? = null
+    private var boundConnection: ServiceConnection? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -86,12 +73,12 @@ class ServiceActivity : BasicResponseActivity() {
     }
 
     private fun bindBoundService() {
-        if (mBoundConnection != null) {
+        if (boundConnection != null) {
             appendLog("Bound Service 已绑定")
             return
         }
 
-        mBoundConnection = object : ServiceConnection {
+        boundConnection = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, binder: IBinder) {
                 val service = (binder as MyBoundService.LocalBinder).getService()
                 appendLog("Bound Service 绑定成功：${service.getMessage()}")
@@ -104,16 +91,16 @@ class ServiceActivity : BasicResponseActivity() {
 
         val result = bindService(
             Intent(this, MyBoundService::class.java),
-            mBoundConnection!!,
+            boundConnection!!,
             BIND_AUTO_CREATE,
         )
         appendLog("正在绑定 Bound Service...（result=$result）")
     }
 
     private fun unbindBoundService() {
-        mBoundConnection?.let { conn ->
+        boundConnection?.let { conn ->
             unbindService(conn)
-            mBoundConnection = null
+            boundConnection = null
             appendLog("Bound Service 已解绑")
         } ?: appendLog("Bound Service 未绑定")
     }

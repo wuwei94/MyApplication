@@ -53,10 +53,12 @@ import kotlinx.coroutines.launch
 /**
  * Dialog — 对话框与 Snackbar 提示条示例页
  *
- * 聚合展示 Compose 中前台反馈体系的标准实现：
- * 1. **AlertDialog**：Material 3 标准警告确认对话框（图标、标题、文本与双动作按钮）；
- * 2. **自定义 Dialog**：基于 `Dialog` 容器与 `DialogProperties` 自定义复杂卡片交互；
- * 3. **Snackbar 浮动提示**：集成 `SnackbarHost` 与协程生命周期，支持带操作行动点（Action）的自动消隐提示。
+ * 聚合展示 Compose 中前台反馈体系的标准实现。
+ *
+ * 核心机制与避坑点：
+ * 1. AlertDialog：Material 3 标准警告确认对话框（图标、标题、文本与双动作按钮）；
+ * 2. 自定义 Dialog：基于 `Dialog` 容器与 `DialogProperties` 自定义复杂卡片交互；
+ * 3. Snackbar 浮动提示：集成 `SnackbarHost` 与协程生命周期，支持带操作行动点（Action）的自动消隐提示。
  *
  * https://developer.android.google.cn/develop/ui/compose/components/dialog
  * https://developer.android.google.cn/develop/ui/compose/components/snackbar

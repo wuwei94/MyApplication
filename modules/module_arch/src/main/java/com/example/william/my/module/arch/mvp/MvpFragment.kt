@@ -18,15 +18,15 @@ class MvpFragment :
     BaseRecyclerFragment<ArticleDetailData>(),
     ArticleContract.View {
 
-    private var mPresenter: ArticlePresenter? = null
+    private var presenter: ArticlePresenter? = null
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<ArticleDetailData, QuickViewHolder> = ArticleAdapter(arrayListOf())
 
     override fun observeViewModel() {
         super.observeViewModel()
 
-        if (mPresenter == null) {
-            mPresenter = ArticlePresenter(
+        if (presenter == null) {
+            presenter = ArticlePresenter(
                 ServiceLocator.provideArticleRepository(requireActivity().applicationContext),
                 this,
             )
@@ -37,7 +37,7 @@ class MvpFragment :
 
     override fun queryData() {
         super.queryData()
-        mPresenter?.loadArticle(mPage)
+        presenter?.loadArticle(page)
     }
 
     override fun showArticle(articles: List<ArticleDetailData>) {
@@ -49,8 +49,8 @@ class MvpFragment :
     }
 
     override fun onDestroyView() {
-        mPresenter?.clear()
-        mPresenter = null
+        presenter?.clear()
+        presenter = null
         super.onDestroyView()
     }
 }

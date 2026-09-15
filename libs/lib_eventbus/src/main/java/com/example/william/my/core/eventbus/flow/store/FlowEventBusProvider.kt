@@ -16,12 +16,12 @@ object FlowEventBusProvider : ViewModelStoreOwner {
     override val viewModelStore: ViewModelStore
         get() = store
 
-    private val mFlowEventBusProvider: ViewModelProvider by lazy {
+    private val viewModelProvider: ViewModelProvider by lazy {
         ViewModelProvider(
             FlowEventBusProvider,
             ViewModelProvider.AndroidViewModelFactory.getInstance(FlowEventBus.getApp()),
         )
     }
 
-    operator fun <T : ViewModel> get(modelClass: Class<T>): T = mFlowEventBusProvider[modelClass]
+    operator fun <T : ViewModel> get(modelClass: Class<T>): T = viewModelProvider[modelClass]
 }

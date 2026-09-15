@@ -17,14 +17,15 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 /**
- * Kotlin Channel 与回调桥接 Flow
+ * Kotlin Channel — 协程间热通信管道与回调桥接
  *
  * Channel 是协程之间的热通信管道（Hot Stream），支持多个协程安全地传递数据流。
+ * 本页演示缓冲策略、生产消费模型、callbackFlow 回调桥接与 channelFlow 并发发射。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 缓冲模式：RENDEZVOUS（无缓冲握手）、BUFFERED（固定缓冲）、CONFLATED（保留最新值）、UNLIMITED（无界缓冲）
- * 2. 生产消费：produce 协程构建器与多消费者竞争消费
- * 3. callbackFlow：传统回调监听器（Listener）转 Flow 的标准桥梁，配合 awaitClose 安全释放资源
+ * 2. 生产消费：produce 协程构建器与多消费者竞争消费模型
+ * 3. callbackFlow：传统回调监听器转 Flow 的标准桥梁，配合 awaitClose 安全释放资源
  * 4. channelFlow：支持在流构建器内部并发启动多个子协程进行 send 发射
  *
  * https://kotlinlang.org/docs/channels.html

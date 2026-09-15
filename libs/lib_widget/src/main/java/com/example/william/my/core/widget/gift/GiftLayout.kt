@@ -25,45 +25,45 @@ class GiftLayout @JvmOverloads constructor(
 
     private var isPlaying = false
 
-    private val mPagView: PAGView
-    private val mSmallAnimView: SmallAnimView
+    private val pagView: PAGView
+    private val smallAnimView: SmallAnimView
 
-    private val mGiftMsgBodyQueue = LinkedBlockingQueue<String>()
+    private val giftMsgBodyQueue = LinkedBlockingQueue<String>()
 
     init {
-        this.mPagView = PAGView(context, attrs, defStyleAttr)
-        mPagView.visibility = GONE
-        mPagView.setRepeatCount(1)
-        mPagView.setScaleMode(PAGScaleMode.Zoom)
-        mPagView.addListener(this)
-        val mPagViewParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        addView(mPagView, mPagViewParams)
+        this.pagView = PAGView(context, attrs, defStyleAttr)
+        pagView.visibility = GONE
+        pagView.setRepeatCount(1)
+        pagView.setScaleMode(PAGScaleMode.Zoom)
+        pagView.addListener(this)
+        val pagViewParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        addView(pagView, pagViewParams)
 
-        this.mSmallAnimView = SmallAnimView(context, attrs, defStyleAttr)
-        mSmallAnimView.visibility = GONE
-        mSmallAnimView.addListener(this)
+        this.smallAnimView = SmallAnimView(context, attrs, defStyleAttr)
+        smallAnimView.visibility = GONE
+        smallAnimView.addListener(this)
         val mallAnimViewParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         mallAnimViewParams.topMargin = AdaptScreenUtils.pt2Px(60f)
-        addView(mSmallAnimView, mallAnimViewParams)
+        addView(smallAnimView, mallAnimViewParams)
     }
 
     private fun notifyGiftMsg() {
         println("notifyGiftMsg 通知播放动画")
 
-        if (!isPlaying && !mGiftMsgBodyQueue.isEmpty()) {
-            val nextMessage = mGiftMsgBodyQueue.poll()
+        if (!isPlaying && !giftMsgBodyQueue.isEmpty()) {
+            val nextMessage = giftMsgBodyQueue.poll()
         }
     }
 
     override fun onAnimationStart(pagView: PAGView) {
         println("onAnimationStart")
-        mPagView.visibility = VISIBLE
+        this.pagView.visibility = VISIBLE
         isPlaying = true
     }
 
     override fun onAnimationEnd(pagView: PAGView) {
         println("onAnimationEnd")
-        mPagView.visibility = GONE
+        this.pagView.visibility = GONE
         isPlaying = false
         notifyGiftMsg()
     }
@@ -79,13 +79,13 @@ class GiftLayout @JvmOverloads constructor(
 
     override fun onAnimationStart(animation: Animator) {
         println("onAnimationStart")
-        mSmallAnimView.visibility = VISIBLE
+        smallAnimView.visibility = VISIBLE
         isPlaying = true
     }
 
     override fun onAnimationEnd(animation: Animator) {
         println("onAnimationEnd")
-        mSmallAnimView.visibility = GONE
+        smallAnimView.visibility = GONE
         isPlaying = false
         notifyGiftMsg()
     }

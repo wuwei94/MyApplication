@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Flutter 入口页（无 Flutter 变体）
+ * Flutter 模块入口 — 未启用 Flutter 时的占位页，提示先执行 flutter pub get。
  *
  * 未启用 Flutter 时展示占位提示。
  */

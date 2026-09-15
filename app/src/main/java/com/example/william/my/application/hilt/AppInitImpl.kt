@@ -16,17 +16,17 @@ import javax.inject.Inject
  */
 class AppInitImpl @Inject constructor() : IAppInit {
 
-    private lateinit var mApp: Application
+    private lateinit var app: Application
 
     override fun init(app: Application) {
-        this.mApp = app
+        this.app = app
 
         initCrash(app)
 
         initEventBus()
     }
 
-    override fun getApp(): Application = mApp
+    override fun getApp(): Application = app
 
     private fun initCrash(app: Application) {
         CrashUtils.init { crashInfo ->

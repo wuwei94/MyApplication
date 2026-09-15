@@ -49,15 +49,12 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * Adaptive — 响应式多端自适应布局示例页
  *
- * 聚合展示 Compose 官方规范的自适应大屏与折叠屏适配架构：
- * 1. **WindowSizeClass 规范断点**：
- *    - **Compact (< 600dp)**：常见直板手机，采用单栏流式布局；
- *    - **Medium (600dp..840dp)**：折叠屏内屏/小平板，采用紧凑双栏；
- *    - **Expanded (> 840dp)**：大平板与横屏，展开完整的 List-Detail（列表-详情）双窗格规范；
- * 2. **List-Detail 模式落地**：
- *    - 手机端：点击条目覆盖进入详情，支持物理返回键返回；
- *    - 平板/折叠屏端：左右分栏同屏响应，左侧列表常驻，右侧毫秒级切换详情看板；
- * 3. **内置模拟切换**：无需实体平板或旋转屏幕，支持在页面内手动模拟 Compact、Medium 与 Expanded 视口。
+ * 聚合展示 Compose 官方规范的自适应大屏与折叠屏适配架构。
+ *
+ * 核心机制与避坑点：
+ * 1. WindowSizeClass 规范断点：Compact (< 600dp) 单栏流式、Medium (600dp..840dp) 紧凑双栏、Expanded (> 840dp) 完整 List-Detail 双窗格；
+ * 2. List-Detail 模式落地：手机端点击条目覆盖进入详情并支持物理返回键；平板/折叠屏端左右分栏同屏响应，左侧列表常驻、右侧毫秒级切换详情；
+ * 3. 内置模拟切换：无需实体平板或旋转屏幕，页面内可手动模拟 Compact、Medium 与 Expanded 视口。
  *
  * https://developer.android.google.cn/develop/ui/compose/layouts/adaptive
  */

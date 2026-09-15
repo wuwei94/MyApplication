@@ -24,31 +24,16 @@ import com.example.william.my.module.widget_custom.R
  * 不要误传 applicationContext / baseContext 等 Context，否则类型不匹配会出错。
  * 原因：PopupWindow 的展示依赖 Activity 的窗口（如背景变暗需要 Activity.getWindow()）。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. Builder 链式调用：像 AlertDialog 一样链式配置 PopupWindow
  * 2. 常用属性封装：焦点、外部触摸、动画、输入法模式、触摸拦截等
  * 3. 背景变暗：弹出时背景自动变暗，dismiss 时自动还原
  * 4. 兼容处理：兼容 Android 6.0+ 点击外部区域关闭
- *
- * 基本用法：
- * ```kotlin
- * val popWindow = CustomPopWindow.PopupWindowBuilder(this)
- *     .setView(R.layout.pop_layout)
- *     .enableBackgroundDark(true)   // 弹出时背景是否变暗
- *     .setBgDarkAlpha(0.7f)         // 变暗透明度（0-1）
- *     .create()
- *     .showAsDropDown(anchorView, 0, 0)
- * ```
- *
- * 适用场景：
- * - 顶部/底部菜单弹窗
- * - 筛选、下拉选项
- * - 自定义气泡、引导提示
  */
 @Route(path = RouterPath.WidgetCustom.CustomPopWindow)
 class CustomPopWindowActivity : BasicResponseActivity() {
 
-    private var mCustomPopWindow: CustomPopWindow? = null
+    private var customPopWindow: CustomPopWindow? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -75,11 +60,11 @@ class CustomPopWindowActivity : BasicResponseActivity() {
         )
 
         contentView.findViewById<TextView>(R.id.widget_item_one).setOnClickListener {
-            mCustomPopWindow?.dismiss()
+            customPopWindow?.dismiss()
             appendLog("点击了菜单项 1")
         }
         contentView.findViewById<TextView>(R.id.widget_item_two).setOnClickListener {
-            mCustomPopWindow?.dismiss()
+            customPopWindow?.dismiss()
             appendLog("点击了菜单项 2")
         }
 
@@ -92,8 +77,8 @@ class CustomPopWindowActivity : BasicResponseActivity() {
             builder.enableBackgroundDark(true).setBgDarkAlpha(0.7f)
         }
 
-        mCustomPopWindow = builder.create()
-            .showAsDropDown(mBinding.basicsResponse, 0, 0)
+        customPopWindow = builder.create()
+            .showAsDropDown(binding.basicsResponse, 0, 0)
 
         appendLog(if (backgroundDark) "展示 CustomPopWindow（背景变暗）" else "展示 CustomPopWindow")
     }

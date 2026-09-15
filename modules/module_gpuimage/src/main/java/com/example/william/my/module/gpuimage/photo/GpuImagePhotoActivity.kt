@@ -18,13 +18,18 @@ import com.example.william.my.module.gpuimage.helper.GpuImageChipHelper
 import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
 
 /**
- * 滤镜拍照示例（专项页面）
+ * GPUImage — 滤镜拍照（全分辨率离屏渲染）
  *
- * 核心设计：
- * 1. 取景：CameraX ImageAnalysis 取流，经 GPUImage 实时渲染滤镜到 GLSurfaceView；
- * 2. 拍摄：ImageCapture 捕获全尺寸超高清原图（而非低画质屏幕取帧截图）；
- * 3. 滤镜处理：GPUImage 离屏渲染当前选中的滤镜，生成全分辨率滤镜照片并存盘；
- * 4. 预览：支持即时大图全屏浮层卡片查看与返回键拦截。
+ * 演示 CameraX 采集 + GPUImage 离屏渲染的滤镜拍照链路：取景用实时预览，
+ * 拍摄时捕获全尺寸超高清原图，经 GPUImage 离屏渲染应用当前滤镜后无损保存。
+ *
+ * 核心机制与避坑点：
+ * 1. 实时取景：CameraX ImageAnalysis 取流，GPUImage 实时渲染滤镜到 GLSurfaceView
+ * 2. 全分辨率拍摄：ImageCapture 捕获全尺寸原图，而非低画质屏幕取帧截图
+ * 3. 离屏滤镜：GPUImage 离屏渲染管道对原图应用当前选中滤镜，生成全分辨率照片
+ * 4. 即时预览：拍摄完成后大图全屏浮层卡片查看，支持返回键拦截关闭
+ *
+ * https://github.com/cats-oss/android-gpuimage
  */
 @Route(path = RouterPath.GpuImage.Photo)
 class GpuImagePhotoActivity :
@@ -32,7 +37,7 @@ class GpuImagePhotoActivity :
     View.OnClickListener {
 
     private val photoHelper by lazy {
-        GpuImagePhotoHelper(this, mBinding.glSurfaceView)
+        GpuImagePhotoHelper(this, binding.glSurfaceView)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -51,23 +56,23 @@ class GpuImagePhotoActivity :
         super.initView(savedInstanceState)
 
         GpuImageChipHelper.populate(
-            container = mBinding.chipContainer,
+            container = binding.chipContainer,
             names = GpuImageFilterCatalog.FILTERS.map { it.name },
             initialIndex = 0,
         ) { index ->
             val spec = GpuImageFilterCatalog.FILTERS[index]
             photoHelper.setFilter(spec.factory)
-            mBinding.tvCurrentFilter.text = spec.name
+            binding.tvCurrentFilter.text = spec.name
         }
 
-        mBinding.btnCapture.setOnClickListener(this)
-        mBinding.btnClosePreview.setOnClickListener(this)
+        binding.btnCapture.setOnClickListener(this)
+        binding.btnClosePreview.setOnClickListener(this)
 
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (mBinding.layoutPreview.isVisible) {
+                    if (binding.layoutPreview.isVisible) {
                         closePreview()
                     } else {
                         isEnabled = false
@@ -82,7 +87,7 @@ class GpuImagePhotoActivity :
 
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.btnCapture -> {
+            binding.btnCapture -> {
                 Utils.toast("正在拍摄高清滤镜照片...")
                 photoHelper.capturePhoto { bitmap, file ->
                     showPhotoPreview(bitmap)
@@ -90,7 +95,7 @@ class GpuImagePhotoActivity :
                 }
             }
 
-            mBinding.btnClosePreview -> {
+            binding.btnClosePreview -> {
                 closePreview()
             }
         }
@@ -131,13 +136,13 @@ class GpuImagePhotoActivity :
     }
 
     private fun showPhotoPreview(bitmap: Bitmap) {
-        mBinding.previewImage.setImageBitmap(bitmap)
-        mBinding.layoutPreview.visibility = View.VISIBLE
+        binding.previewImage.setImageBitmap(bitmap)
+        binding.layoutPreview.visibility = View.VISIBLE
     }
 
     private fun closePreview() {
-        mBinding.layoutPreview.visibility = View.GONE
-        mBinding.previewImage.setImageBitmap(null)
+        binding.layoutPreview.visibility = View.GONE
+        binding.previewImage.setImageBitmap(null)
     }
 
     override fun fitsSystemWindows(): Boolean = false

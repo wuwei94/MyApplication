@@ -14,37 +14,13 @@ import org.json.JSONObject
  *
  * HttpURLConnection 是 Android 原生的网络请求类，无需额外依赖。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 原生支持：Android SDK 内置，无需额外依赖
  * 2. 轻量级：代码量少，适合简单请求
  * 3. 可定制：支持自定义请求头、超时设置等
  * 4. 线程管理：需要手动管理线程，回调在子线程
  *
- * 基本用法：
- * ```kotlin
- * // 创建连接
- * val url = URL("https://api.example.com/data")
- * val connection = url.openConnection() as HttpURLConnection
- *
- * // 设置请求方法
- * connection.requestMethod = "GET"
- *
- * // 设置超时
- * connection.connectTimeout = 5000
- * connection.readTimeout = 5000
- *
- * // 读取响应
- * val inputStream = connection.inputStream
- * val response = inputStream.bufferedReader().readText()
- *
- * // 关闭连接
- * connection.disconnect()
- * ```
- *
- * 适用场景：
- * - 简单的网络请求
- * - 不想引入第三方库
- * - 学习网络请求原理
+ * https://developer.android.com/reference/java/net/HttpURLConnection
  */
 @Route(path = RouterPath.Http.HttpURL)
 class HttpURLActivity : BasicResponseActivity() {

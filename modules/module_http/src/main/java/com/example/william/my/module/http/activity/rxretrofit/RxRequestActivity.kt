@@ -12,6 +12,17 @@ import com.google.gson.JsonElement
 import org.json.JSONObject
 
 /**
+ * RxRequest — 基于 Retrofit + RxJava 的动态请求封装
+ *
+ * RxRequest 在 Retrofit + RxJava 之上提供 Builder 风格的动态请求能力，
+ * 无需为每个接口预先声明方法即可发起表单、JSON 与 Multipart 请求。
+ *
+ * 核心机制与避坑点：
+ * 1. 动态请求：通过 api(url) 运行时指定地址，不依赖预声明的 API 接口
+ * 2. 多种请求体：支持表单参数、JSONObject 与 Multipart 字段
+ * 3. 生命周期绑定：setProvider(owner) 绑定宿主，销毁后自动释放
+ * 4. 统一回调：ResponseCallback 封装成功/失败分支与异常归一
+ *
  * https://square.github.io/retrofit
  * https://github.com/square/retrofit
  */
