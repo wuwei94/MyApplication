@@ -75,7 +75,7 @@
 1. **废除匈牙利命名法（禁止 `m` 前缀）**：
    - 彻底告别 Java 时代的 `mBinding`、`mLog` 等前缀；
    - 属性与变量统一使用清晰自解释的小驼峰命名（如 `binding`、`log`、`isScanning`）。
-2. **状态可见性与不可变性**：
+2. **状态可见性与不可变性（架构演进型页面与 ViewModel 规范）**：
    - 内部可变状态必须严格私有收敛（如 `private val _uiState = MutableStateFlow(...)`）；
    - 对外仅暴露只读的契约流（如 `val uiState: StateFlow<...> = _uiState.asStateFlow()`）。
 3. **消除魔法数与全局松散常量**：
@@ -92,20 +92,21 @@
 3. **UI 层安全收集 Flow**：
    - 在 Activity / Fragment 观察 Flow 时，必须使用 `basic_lib` 提供的 `collectWithLifecycle` 或 `launchAndRepeatWithLifecycle(Lifecycle.State.STARTED)`，避免应用切到后台时继续收集造成 UI 异常与资源浪费。
 
-## 示例页面
+## 示例页面架构形态
 
-示例页面的首要目标是让读者快速看清库的入口、参数、返回值和回调，而不是展示一套页面级任务编排器。
+全工程示例页面按功能定位划分为三大正向架构形态，各司其职：
 
-- 一个操作列表项通过 `buildList()` 声明，直接对应一个命名明确的示例方法，在 `onRecyclerClick(position, string)` 中根据 `when(position)` 分发调用，可参考 `OkHttpActivity`。
-- 页面只保留演示所需的最小状态。取消和生命周期管理优先使用库返回的 `Disposable`、`CompositeDisposable` 或平台标准能力。
-- 不要为了串行切换操作在页面引入 `pending action`、operation ID、active 标记、重复的 `runAfter...` / `begin...` 包装层，除非该页面的示例目标就是任务编排。
-- 物理 I/O 终止、资源租约、并发限制和取消一致性属于库的职责。多个示例页重复实现同类编排时，应先改进库 API，再简化页面调用。
-- 单任务与批量任务可以使用不同的数据模型，但公开调用结构和回调命名应尽量一致；不能为了表面一致隐藏必要的业务差异。
-- 离散的开始、成功、失败和取消事件使用 `appendLog()`；高频进度使用 `updateLog(key, message)`，不得持续追加 RecyclerView 条目或历史日志。
+### 1. API 演示型页面（Showcase Activity · 全工程通用默认）
 
-### Compose 声明式示例准则
+全工程绝大多数模块的默认形态。首要目标是让读者快速看清库的入口、参数、返回值和回调。
 
-对于 Compose 示例模块（如 `module_compose`），其核心定位为 **Compose 官方 UI 与交互原语的“代码活字典”**，必须严格遵循以下准则（模板见 [templates.md](templates.md)）：
+- 依托 `BasicResponseActivity` / `BasicControlActivity`，通过 `buildList()` 声明操作列表项，直接对应命名明确的示例方法，在 `onRecyclerClick(position, string)` 中根据 `when(position)` 分发调用，可参考 `OkHttpActivity`。
+- 页面直接调用底层库 API，保持无持久状态直调；物理 I/O 终止、资源租约、并发限制和取消一致性属于库的职责。
+- 离散事件使用 `appendLog()`；高频进度使用 `updateLog(key, message)`，不得持续追加列表条目。
+
+### 2. UI 原语型页面（Compose Primitives · 专属于 `module_compose`）
+
+`module_compose` 的核心定位为 **Compose 官方 UI 与交互原语的“代码活字典”**，严格遵循以下准则（模板见 [templates.md](templates.md)）：
 
 1. **Stateful 容器与 Stateless 展示层分离**：
    - 容器层负责处理 ViewModel 接入、副作用（Toast/Navigation）监听；
@@ -113,12 +114,23 @@
 2. **单页精炼自包含（代码控制在 300 行左右）**：
    - 一个 Activity 仅聚焦讲透单个核心 Composable 或机制原语；
    - 代码开箱即用，拒绝跨页面共享复杂的控制层或通用脚手架。
-3. **状态调节仅限 UI 参数（严禁引入复杂业务逻辑）**：
-   - 页面内的交互控件（如 Slider、Switch、Button）仅纯粹用于驱动 Composable 参数的即时动态变更（如进度数值、对齐方式、端点形状）；
-   - 严禁为了丰富页面而引入假业务流程（如搜索历史、模拟购物车、分页缓存、假登录等）。
-4. **坚持“原语为主、实战为辅”的梯次格局（绝不以实战淘汰基础）**：
-   - 基础原语页面（如最基础的 `CanvasActivity` 线/圆/弧绘制、`TextActivity` 基础排版）是学习查阅的基石，必须永久保留；
-   - 进阶复合页面（如 Canvas 多图表联动看板、全套 Theme 调色板）充当能力上限展示，二者形成清晰梯次，绝不能因存在复合实战而合并或移除基础原语。
+3. **状态调节仅限 UI 参数**：
+   - 页面内的交互控件（如 Slider、Switch、Button）纯粹用于驱动 Composable 参数的即时动态变更（如进度数值、对齐方式、端点形状），直观演示组件表现。
+4. **坚持“原语为主、实战为辅”的梯次格局**：
+   - 基础原语页面是学习查阅的基石，永久保留；
+   - 进阶复合页面（如 Canvas 多图表联动看板、全套 Theme 调色板、Nav3 / Adaptive 导航容器）充当能力上限展示，形成清晰梯次。
+
+### 3. 架构演进型页面（Architecture Pattern · 专属于 `module_arch`）
+
+`module_arch` 专门用于集中承载与对比端到端现代应用架构范式（MVP / MVVM / MVI / Mavericks / SSOT 离线优先）：
+
+1. **单一真实来源（SSOT）与响应式流**：
+   - 离线优先架构中，UI 所观察的数据完全由 Room 本地数据库 Flow 驱动，数据持久化作为唯一事实源；
+   - 数据流通过 `combine` / `map` 响应式派生为单一不可变 `UiState`，通过 `.stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000), initialValue = ...)` 对外暴露。
+2. **集中式状态驱动**：
+   - Activity / Fragment 仅作为渲染器，通过 `collectWithLifecycle` 集中监听 `uiState` 渲染 ViewBinding 或 Composable，界面无零散控制变量。
+3. **内存级 Fake 优先测试**：
+   - 架构页面配套手写 Fake 数据源与 Turbine 测试，验证数据流在装载、网络同步、异常与数据变动下的响应序列。
 
 ## 改动范围
 

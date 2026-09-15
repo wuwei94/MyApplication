@@ -22,4 +22,7 @@ dependencies {
 
     implementation(libs.mavericks)
     implementation(libs.smartrefresh.compose)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

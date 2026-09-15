@@ -276,37 +276,25 @@ package com.example.william.my.module.arch.viewmodel
 import app.cash.turbine.test
 import com.example.william.my.module.arch.fake.FakeArticleRepository
 import com.example.william.my.module.arch.mvi.data.ArticleUiIntent
-import kotlinx.coroutines.Dispatchers
+import com.example.william.my.module.arch.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleViewModelTest {
 
-    private val testDispatcher = StandardTestDispatcher()
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     private val fakeRepository = FakeArticleRepository()
 
-    @Before
-    fun setUp() {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
     @Test
-    fun loadArticles_success_emitsLoadingThenSuccessState() = runTest(testDispatcher) {
+    fun loadArticles_success_emitsLoadingThenSuccessState() = runTest {
         val viewModel = ArticleMviViewModel(fakeRepository)
 
         viewModel.uiState.test {
