@@ -1,4 +1,4 @@
-# lib_bluetooth
+﻿# lib_bluetooth
 
 MyApplication 的 Flutter 蓝牙通信封装库，基于 `flutter_blue_plus` 进行面向对象抽象与统一设计。
 

@@ -1,4 +1,4 @@
-library;
+﻿library;
 
 export 'src/ble_client.dart';
 export 'src/ble_models.dart';

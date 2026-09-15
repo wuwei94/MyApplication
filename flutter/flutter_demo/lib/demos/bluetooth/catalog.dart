@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+﻿import 'package:flutter/widgets.dart';
 import 'package:flutter_demo/catalog/models/catalog_entry.dart';
 import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/bluetooth/ble_device_demo.dart';

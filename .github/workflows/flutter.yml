@@ -1,5 +1,15 @@
 name: Flutter CI
 
+# Flutter 侧独立 CI 流水线：代码分析、单元测试与 Android AAR 构建打包。
+#
+# 设计要点：
+#   1. 独立流水线隔离：Flutter 构建依赖 Flutter SDK 与特定 Dart 工具链，
+#      与 Android 主流水线（build.yml）解耦，避免纯 Android 改动被 Flutter 构建拖慢。
+#   2. 缓存优化：使用 subosito/flutter-action 开启 cache 复用 Flutter SDK 与 pub 依赖缓存。
+#   3. 产物交付：通过静态分析与单元测试后，构建 Flutter Android AAR 并上传 Artifact。
+#
+# 未纳入本矩阵（演进规划）：Flutter 端到端驱动测试（UI 自动化打靶由本地负责）。
+
 on:
   push:
     branches: [ main ]

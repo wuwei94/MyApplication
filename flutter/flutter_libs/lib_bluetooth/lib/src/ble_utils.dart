@@ -1,4 +1,4 @@
-import 'dart:math';
+﻿import 'dart:math';
 import 'dart:typed_data';
 
 /// BLE 数据处理与协议编解码工具
