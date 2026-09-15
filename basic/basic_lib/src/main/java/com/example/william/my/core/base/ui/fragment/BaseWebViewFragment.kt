@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.fragment
+package com.example.william.my.core.base.ui.fragment
 
 import com.example.william.my.core.base.R
 import com.example.william.my.core.base.databinding.BaseFragmentWebViewBinding

@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mavericks
+package com.example.william.my.module.arch.mavericks
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route

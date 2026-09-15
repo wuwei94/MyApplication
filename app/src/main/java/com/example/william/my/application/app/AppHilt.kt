@@ -1,4 +1,4 @@
-﻿package com.example.william.my.application.app
+package com.example.william.my.application.app
 
 import android.app.Application
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit

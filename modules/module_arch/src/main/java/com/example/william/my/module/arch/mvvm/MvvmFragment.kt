@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mvvm
+package com.example.william.my.module.arch.mvvm
 
 import androidx.fragment.app.viewModels
 import com.chad.library.adapter4.BaseQuickAdapter

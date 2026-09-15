@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.sse.activity.okhttp
+package com.example.william.my.module.sse.activity.okhttp
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope

@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.chart.activity
+package com.example.william.my.module.chart.activity
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList

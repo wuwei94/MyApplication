@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.activity
+package com.example.william.my.core.base.ui.activity
 
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding

@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.recycler.decoration
+package com.example.william.my.core.base.ui.recycler.decoration
 
 import android.graphics.Canvas
 import android.graphics.Rect

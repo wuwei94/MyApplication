@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.feature.activity
+package com.example.william.my.module.feature.activity
 
 import android.graphics.Color
 import android.os.Bundle

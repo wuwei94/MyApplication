@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.arch.mvp
+package com.example.william.my.core.base.arch.mvp
 
 /**
  * MVP 架构 View 基础接口

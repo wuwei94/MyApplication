@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget.dialog
+package com.example.william.my.module.widget.dialog
 
 import android.os.Bundle
 import android.view.View

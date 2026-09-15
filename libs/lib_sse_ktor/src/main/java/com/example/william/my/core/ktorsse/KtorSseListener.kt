@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.ktorsse
+package com.example.william.my.core.ktorsse
 
 /**
  * Ktor SSE 回调监听器

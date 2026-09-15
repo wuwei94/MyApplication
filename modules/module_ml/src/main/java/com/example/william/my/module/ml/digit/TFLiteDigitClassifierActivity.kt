@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.ml.digit
+package com.example.william.my.module.ml.digit
 
 import android.os.Bundle
 import android.view.View

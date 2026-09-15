@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.recycler
+package com.example.william.my.core.base.ui.recycler
 
 import android.content.Context
 import android.os.Bundle

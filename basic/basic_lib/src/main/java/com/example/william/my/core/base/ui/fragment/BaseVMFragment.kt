@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.fragment
+package com.example.william.my.core.base.ui.fragment
 
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider

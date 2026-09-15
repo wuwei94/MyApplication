@@ -1,4 +1,4 @@
-﻿@file:JvmName("RecyclerTabLayoutUtils")
+@file:JvmName("RecyclerTabLayoutUtils")
 
 package com.example.william.my.core.base.ui.recycler.tab
 

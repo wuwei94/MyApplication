@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.arch.mvvm
+package com.example.william.my.core.base.arch.mvvm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

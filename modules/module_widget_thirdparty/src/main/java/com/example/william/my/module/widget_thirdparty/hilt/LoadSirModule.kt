@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.widget_thirdparty.hilt
+package com.example.william.my.module.widget_thirdparty.hilt
 
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.app.hilt.qualifier.LoadSirInit

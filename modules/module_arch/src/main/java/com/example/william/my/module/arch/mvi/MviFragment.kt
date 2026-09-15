@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mvi
+package com.example.william.my.module.arch.mvi
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle

@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.app.provider
+package com.example.william.my.core.base.app.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues

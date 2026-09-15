@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.recycler.tab
+package com.example.william.my.core.base.ui.recycler.tab
 
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder

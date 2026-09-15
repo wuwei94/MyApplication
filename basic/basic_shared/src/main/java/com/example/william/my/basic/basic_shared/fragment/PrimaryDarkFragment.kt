@@ -1,4 +1,4 @@
-﻿package com.example.william.my.basic.basic_shared.fragment
+package com.example.william.my.basic.basic_shared.fragment
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R

@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.event.hilt
+package com.example.william.my.module.event.hilt
 
 import android.app.Application
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit

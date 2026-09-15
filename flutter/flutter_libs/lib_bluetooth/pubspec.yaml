@@ -1,4 +1,4 @@
-﻿name: lib_bluetooth
+name: lib_bluetooth
 description: Flutter Bluetooth Low Energy (BLE) client package with chunking, queueing, and stream management.
 version: 0.1.0
 publish_to: none

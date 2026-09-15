@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.markdown.plugin
+package com.example.william.my.module.markdown.plugin
 
 import android.text.Layout
 import io.noties.markwon.AbstractMarkwonPlugin

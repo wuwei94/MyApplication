@@ -1,4 +1,4 @@
-﻿# 低功耗蓝牙（BLE 客户端）开发指南
+# 低功耗蓝牙（BLE 客户端）开发指南
 
 > 本文档系统梳理低功耗蓝牙（Bluetooth Low Energy, BLE）客户端的核心功能体系、GATT 通信机制以及各主流第三方库（Nordic BLE / FastBle / RxAndroidBle / Flutter）的功能覆盖与选型对比。
 

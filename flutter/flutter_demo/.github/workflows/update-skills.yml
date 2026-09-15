@@ -1,4 +1,4 @@
-﻿name: Auto Update Agent Skills
+name: Auto Update Agent Skills
 
 on:
   schedule:

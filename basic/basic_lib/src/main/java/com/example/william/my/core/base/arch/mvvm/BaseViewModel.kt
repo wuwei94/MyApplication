@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.arch.mvvm
+package com.example.william.my.core.base.arch.mvvm
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.MutableLiveData

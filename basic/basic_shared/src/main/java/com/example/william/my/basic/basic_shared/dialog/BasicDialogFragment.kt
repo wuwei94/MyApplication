@@ -1,4 +1,4 @@
-﻿package com.example.william.my.basic.basic_shared.dialog
+package com.example.william.my.basic.basic_shared.dialog
 
 import android.os.Bundle
 import android.view.View

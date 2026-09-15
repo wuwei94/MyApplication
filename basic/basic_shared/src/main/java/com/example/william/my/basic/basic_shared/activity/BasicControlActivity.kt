@@ -1,4 +1,4 @@
-﻿package com.example.william.my.basic.basic_shared.activity
+package com.example.william.my.basic.basic_shared.activity
 
 import android.content.Context
 import android.os.Bundle

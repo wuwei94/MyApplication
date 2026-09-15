@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.dialog
+package com.example.william.my.core.base.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

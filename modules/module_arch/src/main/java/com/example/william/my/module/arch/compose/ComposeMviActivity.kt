@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.compose
+package com.example.william.my.module.arch.compose
 
 import android.os.Bundle
 import android.widget.Toast

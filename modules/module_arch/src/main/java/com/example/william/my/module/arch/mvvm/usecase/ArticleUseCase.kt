@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mvvm.usecase
+package com.example.william.my.module.arch.mvvm.usecase
 
 import com.example.william.my.basic.basic_repo.bean.ArticleData
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository

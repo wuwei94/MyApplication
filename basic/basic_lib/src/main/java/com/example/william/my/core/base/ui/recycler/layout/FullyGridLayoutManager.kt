@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.recycler.layout
+package com.example.william.my.core.base.ui.recycler.layout
 
 import android.content.Context
 import android.util.Log

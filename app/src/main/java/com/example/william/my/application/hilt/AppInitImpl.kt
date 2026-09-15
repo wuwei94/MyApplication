@@ -1,4 +1,4 @@
-﻿package com.example.william.my.application.hilt
+package com.example.william.my.application.hilt
 
 import android.app.Application
 import com.blankj.utilcode.util.CrashUtils

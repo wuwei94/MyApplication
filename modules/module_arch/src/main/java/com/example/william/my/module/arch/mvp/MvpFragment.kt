@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mvp
+package com.example.william.my.module.arch.mvp
 
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder

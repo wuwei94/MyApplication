@@ -1,4 +1,4 @@
-﻿package com.example.william.my.application.hilt
+package com.example.william.my.application.hilt
 
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.app.hilt.qualifier.AppInit

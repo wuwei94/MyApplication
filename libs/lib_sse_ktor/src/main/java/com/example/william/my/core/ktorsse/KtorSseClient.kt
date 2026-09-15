@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.ktorsse
+package com.example.william.my.core.ktorsse
 
 import android.os.Handler
 import android.os.Looper

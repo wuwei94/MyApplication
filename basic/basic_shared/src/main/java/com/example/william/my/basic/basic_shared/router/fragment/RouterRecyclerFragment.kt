@@ -1,4 +1,4 @@
-﻿package com.example.william.my.basic.basic_shared.router.fragment
+package com.example.william.my.basic.basic_shared.router.fragment
 
 import android.content.Context
 import android.os.Build

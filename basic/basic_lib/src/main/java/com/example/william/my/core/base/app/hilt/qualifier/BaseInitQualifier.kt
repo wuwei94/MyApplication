@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.app.hilt.qualifier
+package com.example.william.my.core.base.app.hilt.qualifier
 
 import javax.inject.Qualifier
 

@@ -1,4 +1,4 @@
-﻿import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 /// 蓝牙适配器状态
 enum BleAdapterState {

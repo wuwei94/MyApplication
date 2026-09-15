@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.media.activity
+package com.example.william.my.module.media.activity
 
 import android.Manifest
 import android.content.pm.PackageManager

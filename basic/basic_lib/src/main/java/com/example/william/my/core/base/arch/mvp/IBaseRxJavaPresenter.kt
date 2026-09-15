@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.arch.mvp
+package com.example.william.my.core.base.arch.mvp
 
 /**
  * 基于 RxJava 的 MVP Presenter 基础接口（管理订阅生命周期）

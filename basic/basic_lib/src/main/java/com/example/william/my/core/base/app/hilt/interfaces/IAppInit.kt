@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.app.hilt.interfaces
+package com.example.william.my.core.base.app.hilt.interfaces
 
 import android.app.Application
 import android.content.res.Configuration

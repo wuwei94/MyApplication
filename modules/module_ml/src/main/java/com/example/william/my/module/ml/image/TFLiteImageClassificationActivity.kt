@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.ml.image
+package com.example.william.my.module.ml.image
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

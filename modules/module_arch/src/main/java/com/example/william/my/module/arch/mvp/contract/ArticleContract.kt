@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mvp.contract
+package com.example.william.my.module.arch.mvp.contract
 
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.core.base.arch.mvp.IBasePresenter

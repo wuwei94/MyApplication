@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.tab.activity
+package com.example.william.my.module.tab.activity
 
 import android.graphics.Typeface
 import android.os.Bundle

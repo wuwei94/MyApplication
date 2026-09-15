@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.arch.rx
+package com.example.william.my.core.base.arch.rx
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable

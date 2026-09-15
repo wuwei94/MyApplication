@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.jetpack.activity
+package com.example.william.my.module.jetpack.activity
 
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels

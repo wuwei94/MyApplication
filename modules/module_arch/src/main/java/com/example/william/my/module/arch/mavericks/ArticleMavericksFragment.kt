@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.arch.mavericks
+package com.example.william.my.module.arch.mavericks
 
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel

@@ -1,4 +1,4 @@
-﻿package com.example.william.my.module.markdown.activity
+package com.example.william.my.module.markdown.activity
 
 import android.content.ClipData
 import android.content.ClipboardManager

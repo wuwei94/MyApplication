@@ -1,4 +1,4 @@
-﻿package com.example.william.my.core.base.ui.dialog.bottomsheet
+package com.example.william.my.core.base.ui.dialog.bottomsheet
 
 import android.os.Bundle
 import android.view.Gravity
