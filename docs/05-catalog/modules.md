@@ -48,7 +48,7 @@
 
 ## 模块总览
 
-> 下表按 [DirectoryActivity](file:///E:/StudioProjects/MyApplication/basic/basic_shared/src/main/java/com/example/william/my/basic/basic_shared/category/DirectoryActivity.kt) 的一级分类顺序排列，与 `Category.kt` 中的分类定义保持一致。
+> 下表按 [DirectoryActivity](../../basic/basic_shared/src/main/java/com/example/william/my/basic/basic_shared/category/DirectoryActivity.kt) 的一级分类顺序排列，与 `Category.kt` 中的分类定义保持一致。
 
 | 分类 | 模块 | 职责 | 入口 Activity | 路由前缀 |
 |------|------|------|--------------|---------|
@@ -475,7 +475,7 @@
 
 ### module_ml（机器学习 / AI）
 
-演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、真实模型推理、硬件加速与落地实践。详细技术指南参见 [ml.md](file:///E:/StudioProjects/MyApplication/docs/04-domains/ml.md)。
+演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、真实模型推理、硬件加速与落地实践。详细技术指南参见 [ml.md](../04-domains/ml.md)。
 
 | Activity | 功能 |
 |----------|------|

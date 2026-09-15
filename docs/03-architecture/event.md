@@ -185,5 +185,5 @@ modules/module_event/                   # 业务演示模块
     └── FlowEventBusActivity.kt         # FlowEventBus 实战页面
 ```
 
-- **模块入口**：[`EventMainActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_event/src/main/java/com/example/william/my/module/event/EventMainActivity.kt)
-- **Flow 演示**：[`FlowEventBusActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_event/src/main/java/com/example/william/my/module/event/activity/FlowEventBusActivity.kt)
+- **模块入口**：[`EventMainActivity.kt`](../../modules/module_event/src/main/java/com/example/william/my/module/event/EventMainActivity.kt)
+- **Flow 演示**：[`FlowEventBusActivity.kt`](../../modules/module_event/src/main/java/com/example/william/my/module/event/activity/FlowEventBusActivity.kt)

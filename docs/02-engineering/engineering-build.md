@@ -210,12 +210,12 @@ android.enableAppCompileTimeRClass=true
 # 各模块的 R 类仅包含自身声明的资源，跨模块与依赖库的资源须显式限定其 R 类
 android.nonTransitiveRClass=true
 ```
-* **与 NiA 一致**：AGP 8.0 起 `true` 即为默认值，NiA 同样取 `true`。本仓此前因历史代码直接引用传递 R 符号而显式取 `false`，现已完成迁移并回归默认。
-* **引用规则（迁移后必须遵守）**：开启后 `R.xxx` 只解析本模块声明的资源，凡引用其他模块或依赖库的资源，都必须把该资源所属的 R 类写全：
+* **与 NiA 一致**：AGP 8.0 起 `true` 即为默认值，NiA 同样取 `true`。
+* **引用规则**：开启后 `R.xxx` 只解析本模块声明的资源，凡引用其他模块或依赖库的资源，都必须把该资源所属的 R 类写全：
   * 本工程模块：`com.example.william.my.basic.basic_shared.R.color.shared_color_primary`；
   * 依赖库：`com.google.android.material.R.attr.bottomSheetStyle`、`com.luck.picture.lib.R.drawable.ps_image_placeholder`。
   依赖库自身的 R 类仍在编译类路径上，可被消费者直接引用（已实测 `:libs:lib_widget:compileDemoDebugJavaWithJavac` 通过）。
-* **迁移范围**：共 34 处。其中 `lib_widget` 的 22 处为 bottom sheet 组件自 Material 移植时留下的传递符号（`Widget_Design_BottomSheet_Modal`、`mtrl_min_touch_target_size`、`design_bottom_sheet_peek_height_min`、`bottomSheetStyle`、`bottomSheetDialogTheme`、`Theme_Material3_Light_BottomSheetDialog` 与 `BottomSheetBehavior_Layout` 系列 styleable），统一限定为 `com.google.android.material.R`；其余 12 处为 `module_compose` 的 `ImageActivity`、`module_jetpack` 的 `PagingStateAdapter`、`module_widget_thirdparty` 的 `PictureSelectorAdapter` 引用 `basic_shared` 的 `shared_*` 资源，以及 `GlideEngine` 引用 PictureSelector 的占位图。
+* **显式限定分布**：共 34 处。其中 `lib_widget` 的 22 处为 bottom sheet 组件自 Material 移植时使用的传递符号（`Widget_Design_BottomSheet_Modal`、`mtrl_min_touch_target_size`、`design_bottom_sheet_peek_height_min`、`bottomSheetStyle`、`bottomSheetDialogTheme`、`Theme_Material3_Light_BottomSheetDialog` 与 `BottomSheetBehavior_Layout` 系列 styleable），统一限定为 `com.google.android.material.R`；其余 12 处为 `module_compose` 的 `ImageActivity`、`module_jetpack` 的 `PagingStateAdapter`、`module_widget_thirdparty` 的 `PictureSelectorAdapter` 引用 `basic_shared` 的 `shared_*` 资源，以及 `GlideEngine` 引用 PictureSelector 的占位图。
 * **排查手段**：这类违规在编译器报错前即可静态发现——逐文件判定其 `R` 实际指向哪个 R 类（显式 `import *.R` 优先，否则为本模块自身），再核对引用名是否在该 R 类所属模块的 `res` 中声明；未声明者即为传递引用。
 * **收益**：每个模块的 R 类仅含自身声明的符号，避免上游模块的资源 ID 级联穿透，显著缩短多模块增量编译耗时，并让「资源归属」在代码里显式可见。
 
@@ -250,7 +250,7 @@ android.nonFinalResIds=true
 
 #### 演化驱动与定位
 Google 官方 NiA 正在持续将其纯领域模型（`:core:model`）与算法工具平滑向 Kotlin Multiplatform (KMP) 演进。
-当前项目中，[`basic/basic_model`](file:///e:/StudioProjects/MyApplication/basic/basic_model) 已经是**零 Android 依赖的纯 Kotlin/JVM 库**（由 `JvmLibraryConventionPlugin.kt` 配置），具备无缝向 KMP 演化的天然优势。
+当前项目中，[`basic/basic_model`](../../basic/basic_model) 已经是**零 Android 依赖的纯 Kotlin/JVM 库**（由 `JvmLibraryConventionPlugin.kt` 配置），具备无缝向 KMP 演化的天然优势。
 
 #### 迁移落地路径
 将 `basic_model` 从纯 JVM 插件升级为 KMP 插件，使其不仅能在 Android 端运行，还能编译为 Desktop (JVM) 与 iOS (Native) 目标架构：

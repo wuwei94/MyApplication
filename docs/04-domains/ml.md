@@ -47,7 +47,7 @@
 
 ### 1. Center-Crop 中心等比正方形裁剪
 * **问题背景**：MobileNet 模型输入要求固定为 `224 × 224` 正方形。如果手机长方形照片（如 4:3 或 16:9）直接强行缩放，会导致物体严重压扁变形，模型准确率骤降。
-* **解决方案**：在 [`TFLiteModelHelper.kt`](file:///E:/StudioProjects/MyApplication/modules/module_ml/src/main/java/com/example/william/my/module/ml/helper/TFLiteModelHelper.kt) 中先按短边居中裁出 1:1 最大正方形，再平滑缩放到 224×224：
+* **解决方案**：在 [`TFLiteModelHelper.kt`](../../modules/module_ml/src/main/java/com/example/william/my/module/ml/helper/TFLiteModelHelper.kt) 中先按短边居中裁出 1:1 最大正方形，再平滑缩放到 224×224：
   ```kotlin
   val minDim = minOf(bitmap.width, bitmap.height)
   val xOffset = (bitmap.width - minDim) / 2

@@ -70,7 +70,7 @@ val disposable = RxDownload.builder()
 - `setProvider(owner)` 会在页面生命周期结束时自动取消下载。
 - `onFinally {}` 在底层网络调用、响应体和文件流真正退出后触发；需要清理目标目录或串行启动下一任务时，应以该信号作为屏障。
 - 批量队列从目标路径与并发许可的预处理阶段开始计入终止屏障；取消后，目标路径租约和并发许可会保持到对应预处理或物理下载真正退出，避免新队列与旧任务同时写入。
-- `lib_rx_download` 不再保留旧 `DownloadTask` 状态机和 `start/stop/remove` 入口；单任务通过返回的 `Disposable` 取消，批量任务通过队列的 `Disposable` 整体取消。
+- 单任务通过返回的 `Disposable` 取消，批量任务通过队列的 `Disposable` 整体取消。
 
 ## 批量下载与并发
 

@@ -39,7 +39,7 @@
 - 下载落盘与断点续传归 `lib_rx_download`，Multipart 文件上传归 `lib_rx_upload`；通用网络库只保留协议层传输能力。
 - Retrofit 注解接口的 Rx 基础能力归 `lib_retrofit_rx`；只有运行时动态 URL、方法或请求体 Builder 归 `lib_rx_request`。
 - 这些库仅由当前仓库消费，公开 API 调整采用一次性 breaking change：同步修改全部调用方和文档，不保留旧类型或 `@Deprecated` 过渡入口。
-- Android 网络数据模型按实际组件传参需求直接实现 `Parcelable`。`lib_okhttp.base.BaseBean` 仅用于兼容旧 `Serializable` 模型。
+- Android 网络数据模型按实际组件传参需求直接实现 `Parcelable`；`lib_okhttp.base.BaseBean` 为标记 `@Deprecated` 的 Serializable 模型示例。
 - `lib_retrofit` 的 `ApiException.message` 始终提供非空展示文本；原始异常消息为空时使用统一的 `DEFAULT_MESSAGE`，示例页无需自行增加“未知错误”兜底方法。
 
 ## Flutter 与 Retrofit 普通请求契约
@@ -84,7 +84,7 @@ com.example.william.my.core.rx.request/
 
 ### lib_rx_download
 
-通过根包中的 `RxDownload.builder()` 创建不可变单次下载请求；`RxDownloadManager.builder()` 创建可复用的业务级下载管理器。单任务代码与 `lib_rx_upload` 按 `builder/callback/config/exception/model/request` 对称分层。`RxDownloadCallback<P, R>` 同时服务单任务和下载队列，两种场景都通过请求对象的 `build().subscribeWith(callback)` 使用；原始 `Single`、`Flowable` 和队列任务事件作为高级入口保留。下载由 Retrofit `@Streaming GET` 执行，使用临时文件和 `If-Range` 校验资源身份；非 2xx 响应会在 `DownloadHttpException` 中保留服务端错误体。`RxDownloadManager` 为不同业务配置共享 `Retrofit` 与跨队列总并发数，默认并发 3。下载特有的批量执行能力集中在 `queue` 目录，旧 `DownloadTask` 状态机和兼容入口已移除。
+通过根包中的 `RxDownload.builder()` 创建不可变单次下载请求；`RxDownloadManager.builder()` 创建可复用的业务级下载管理器。单任务代码与 `lib_rx_upload` 按 `builder/callback/config/exception/model/request` 对称分层。`RxDownloadCallback<P, R>` 同时服务单任务和下载队列，两种场景都通过请求对象的 `build().subscribeWith(callback)` 使用；原始 `Single`、`Flowable` 和队列任务事件作为高级入口保留。下载由 Retrofit `@Streaming GET` 执行，使用临时文件和 `If-Range` 校验资源身份；非 2xx 响应会在 `DownloadHttpException` 中保留服务端错误体。`RxDownloadManager` 为不同业务配置共享 `Retrofit` 与跨队列总并发数，默认并发 3。下载特有的批量执行能力集中在 `queue` 目录。
 
 ### lib_rx_upload
 

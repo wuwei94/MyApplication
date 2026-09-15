@@ -57,7 +57,7 @@ val cached = cachedClient("api") {
 
 | 目录 | 职责 |
 |------|------|
-| `builder` | `OkHttpClientBuilder` 和旧请求体 Builder |
+| `builder` | `OkHttpClientBuilder` 与请求体构建示例 |
 | `compat` | 把 DSL 配置适配到 `OkHttpClient.Builder` |
 | `interceptor` | 日志、缓存、Cookie、BaseUrl 和进度 Interceptor |
 | `body` | 上传和下载进度 Body |
@@ -76,7 +76,7 @@ val cached = cachedClient("api") {
 
 这些 Header 只在客户端内部使用，发往服务器前由对应 Interceptor 删除。
 
-上传/下载进度的新类型为 `UploadProgressRequestBody`、`DownloadProgressResponseBody`、`InterceptorUploadProgress` 和 `InterceptorDownloadProgress`。旧 `RequestBodyProgress`、`ResponseBodyProgress` 与 `InterceptorProgress` 仅作为废弃兼容入口保留。
+上传/下载进度使用 `UploadProgressRequestBody`、`DownloadProgressResponseBody`、`InterceptorUploadProgress` 和 `InterceptorDownloadProgress`。`RequestBodyProgress`、`ResponseBodyProgress` 与 `InterceptorProgress` 为标记 `@Deprecated` 的示例类型，供对照历史封装写法，不作为业务接入入口。
 
 `ignoreSSL()` 只允许 Debug 构建。格式化日志跳过 one-shot/duplex、未知长度和超过 1 MiB 的请求体，响应预览上限为 1 MiB。
 

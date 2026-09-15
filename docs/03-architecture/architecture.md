@@ -52,7 +52,7 @@ flowchart LR
 
 ### 2.1 MVP（Model-View-Presenter 契约架构）
 
-- **模块源码位置**：[`com.example.william.my.module.arch.mvp`](file:///e:/StudioProjects/MyApplication/modules/module_arch/src/main/java/com/example/william/my/module/arch/mvp)
+- **模块源码位置**：[`com.example.william.my.module.arch.mvp`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/mvp)
 - **核心组件**：
   - `ArticleContract`：统一契约接口，内聚定义 `View` 与 `Presenter` 职责；
   - `ArticlePresenter`：业务调度核心，持有 View 弱引用并协调 Model；
@@ -83,7 +83,7 @@ interface ArticleContract {
 
 ### 2.2 MVVM（Model-View-ViewModel 数据驱动架构）
 
-- **模块源码位置**：[`com.example.william.my.module.arch.mvvm`](file:///e:/StudioProjects/MyApplication/modules/module_arch/src/main/java/com/example/william/my/module/arch/mvvm)
+- **模块源码位置**：[`com.example.william.my.module.arch.mvvm`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/mvvm)
 - **核心组件**：
   - `ArticleUseCase`：领域层（Domain Layer）业务用例，复用业务规则；
   - `ArticleLiveDataViewModel`：状态持有者，暴露不可变 `LiveData`；
@@ -121,7 +121,7 @@ class ArticleLiveDataViewModel : BaseViewModel() {
 
 ### 2.3 MVI（Model-View-Intent 单向数据流架构）
 
-- **模块源码位置**：[`com.example.william.my.module.arch.mvi`](file:///e:/StudioProjects/MyApplication/modules/module_arch/src/main/java/com/example/william/my/module/arch/mvi)
+- **模块源码位置**：[`com.example.william.my.module.arch.mvi`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/mvi)
 - **核心组件**：
   - `ArticleIntent`：密封接口，显式代表用户的每一次操作或系统事件；
   - `ArticleViewState`：单一不可变状态数据类，页面的唯一真实数据源；
@@ -173,7 +173,7 @@ class ArticleStateFlowViewModel : BaseViewModel() {
 
 ### 2.4 Compose MVI（声明式 UI 与 MVI 结合）
 
-- **模块源码位置**：[`com.example.william.my.module.arch.compose`](file:///e:/StudioProjects/MyApplication/modules/module_arch/src/main/java/com/example/william/my/module/arch/compose)
+- **模块源码位置**：[`com.example.william.my.module.arch.compose`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/compose)
 - **核心组件**：
   - `ArticleComposeState` / `ArticleComposeIntent` / `ArticleComposeUiEffect`；
   - `ComposeMviActivity`：使用 Jetpack Compose 构建纯声明式视图，集成 SmartSwipeRefresh 下拉刷新组件。
@@ -210,7 +210,7 @@ fun ArticleScreen(
 
 ### 2.5 Airbnb Mavericks（现代化轻量级 MVI）
 
-- **模块源码位置**：[`com.example.william.my.module.arch.mavericks`](file:///e:/StudioProjects/MyApplication/modules/module_arch/src/main/java/com/example/william/my/module/arch/mavericks)
+- **模块源码位置**：[`com.example.william.my.module.arch.mavericks`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/mavericks)
 - **核心组件**：
   - `ArticleMavericksState`：实现 `MavericksState`；
   - `ArticleMavericksViewModel`：继承 `MavericksViewModel`；
@@ -257,7 +257,7 @@ override fun invalidate() = withState(viewModel) { state ->
 
 ### 2.6 Offline-First & SSOT（离线优先与单一真实数据源架构）
 
-- **模块源码位置**：[`com.example.william.my.module.arch.ssot`](file:///e:/StudioProjects/MyApplication/modules/module_arch/src/main/java/com/example/william/my/module/arch/ssot)
+- **模块源码位置**：[`com.example.william.my.module.arch.ssot`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/ssot)
 - **基础支撑层（完全对齐 Google Now in Android 标准数据层解耦）**：
   - `basic/basic_lib`: `NetworkMonitor`（响应式网络感知）
   - `basic/basic_model`: 纯领域模型层（`ArticleDetailData` 领域实体、`ChangeListVersions` 增量游标模型，零 Android 依赖）

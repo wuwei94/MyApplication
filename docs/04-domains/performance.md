@@ -1,6 +1,6 @@
 # Android 性能优化指南与实战手册
 
-> 本文档系统性梳理 Android 移动端性能优化的核心维度、底层原理、治理手段与工具链，并与工程中的交互式性能演示示例（`modules/module_sample/performance`）相互映射。
+> 本文档系统性梳理 Android 移动端性能优化的核心维度、底层原理、治理手段与工具链，并与工程中的交互式性能演示示例（`modules/module_performance`）相互映射。
 
 ---
 
@@ -51,7 +51,7 @@
 ### 4. 内存多级缓存（LRU & TTL 策略）
 - **核心机制**：利用 `LruCache` 基于 `LinkedHashMap(accessOrder = true)` 的双向链表机制，维护最近最少使用顺序，当内存超过 `maxSize` 时自动触发 `trimToSize` 淘汰旧节点。
 - **最佳实践**：封装携带时间戳的 `CacheEntry` 支持 TTL（Time-To-Live）时效控制，在获取时主动判定是否过期并触发异步回源更新。
-- **示例源码**：[`LruCacheActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/LruCacheActivity.kt)（路由：`/Sample/LruCache`）
+- **示例源码**：[`LruCacheActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/LruCacheActivity.kt)（路由：`/Performance/LruCache`）
 
 ---
 
@@ -64,13 +64,13 @@
   - `notifyDataSetChanged()`：全量失效，强制全部可见 Item 重新绑定 ViewHolder，无法触发局部更新动画，开销随数据量线性增长；
   - `DiffUtil`：基于 Myers 差分算法计算新旧数据集的最小差异集（$O(N + D^2)$），定向派发 `notifyItemRangeInserted` / `notifyItemRangeRemoved` / `notifyItemRangeChanged`；
   - 推荐结合 `ListAdapter` / `AsyncListDiffer` 将耗时的差量计算调度至后台子线程执行。
-- **示例源码**：[`DiffUtilActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/DiffUtilActivity.kt)（路由：`/Sample/DiffUtil`）
+- **示例源码**：[`DiffUtilActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/DiffUtilActivity.kt)（路由：`/Performance/DiffUtil`）
 
 ### 2. 列表视图复用与模块化拆分（RecycledViewPool & ConcatAdapter）
 - **跨列表共享视图池（RecycledViewPool）**：在 ViewPager2 多 Tab 或垂直列表嵌套横向列表时，多个 RecyclerView 共用同一个 `RecycledViewPool`，减少重复创建 ViewHolder 的性能与内存开销；
-  - **示例源码**：[`RecycledViewPoolActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/RecycledViewPoolActivity.kt)（路由：`/Sample/RecycledViewPool`）
+  - **示例源码**：[`RecycledViewPoolActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/RecycledViewPoolActivity.kt)（路由：`/Performance/RecycledViewPool`）
 - **模块化列表组合（ConcatAdapter）**：替代单个包含数十种 ViewType 的臃肿 Adapter，将 Header、Banner、Feed 拆分为独立子 Adapter，开启 `setIsolateViewTypes(true)` 隔离类型并实现单模块独立增量局部刷新；
-  - **示例源码**：[`ConcatAdapterActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/ConcatAdapterActivity.kt)（路由：`/Sample/ConcatAdapter`）
+  - **示例源码**：[`ConcatAdapterActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/ConcatAdapterActivity.kt)（路由：`/Performance/ConcatAdapter`）
 
 ### 3. 布局层级与过度绘制（Overdraw）治理
 - **扁平化层级**：优先使用 `ConstraintLayout` 替代多层嵌套的 `LinearLayout` / `RelativeLayout`，降低 Measure/Layout 的递归时间复杂度；
@@ -78,7 +78,7 @@
 - **组件复用与精简**：使用 `<include>` 复用组件，搭配 `<merge>` 标签消除多余根节点；
 - **懒加载机制**：使用 `ViewStub` 承载低频/按需展示的视图（如网络错误重试页、空状态占位），避免冷启动与首次渲染时的无效解析；
 - **过度绘制检查**：开启开发者选项中的“调试 GPU 过度绘制（Show GPU Overdraw）”，移除无意义的 `android:background`。
-- **示例源码**：[`AsyncLayoutInflaterActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/AsyncLayoutInflaterActivity.kt)（路由：`/Sample/AsyncLayoutInflater`）
+- **示例源码**：[`AsyncLayoutInflaterActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AsyncLayoutInflaterActivity.kt)（路由：`/Performance/AsyncLayoutInflater`）
 
 ---
 
@@ -108,7 +108,7 @@
    - 必须在主线程同步完成的 SDK 放在主线程首批执行；
    - 可以异步并发的 SDK 放入后台线程池初始化；
    - 依赖主界面的次要 SDK 放入 `IdleHandler.queueIdle()` 在主线程空闲时延迟执行。
-   - **示例源码**：[`IdleHandlerActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/IdleHandlerActivity.kt)（路由：`/Sample/IdleHandler`）
+   - **示例源码**：[`IdleHandlerActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/IdleHandlerActivity.kt)（路由：`/Performance/IdleHandler`）
 3. **视觉障眼法**：配置 WindowBackground 占位主题（Splash Theme），消除启动白屏/黑屏等待感。
 
 ---
@@ -142,16 +142,16 @@
 
 ## 七、工程内交互式性能演示速查表
 
-在项目中可通过 `SampleMainActivity`（路由 `/Sample/Main`）直达以下性能实战演示：
+在项目中可通过 `PerformanceMainActivity`（路由 `/Performance/Main`）直达以下性能实战演示：
 
 | 演示功能 | 对应 Activity | 路由路径 | 核心演示与写法内容 |
 |---------|--------------|---------|-------------------|
-| **列表局部差量刷新** | [`DiffUtilActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/DiffUtilActivity.kt) | `/Sample/DiffUtil` | `DiffUtil.Callback` 差量计算、定向更新与 Payload 细粒度局部刷新写法 |
-| **多级内存缓存设计** | [`LruCacheActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/LruCacheActivity.kt) | `/Sample/LruCache` | Cache-Aside 回源读取模式、容量超出自动淘汰与 `entryRemoved` 监听 |
-| **主线程空闲调度** | [`IdleHandlerActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/IdleHandlerActivity.kt) | `/Sample/IdleHandler` | `IdleHandler` 单次/持续空闲监听、生命周期注销与次要任务延迟初始化 |
-| **异步布局解析预加载** | [`AsyncLayoutInflaterActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/AsyncLayoutInflaterActivity.kt) | `/Sample/AsyncLayoutInflater` | `AsyncLayoutInflater` 后台异步解析 XML、主线程回调挂载与视图预加载池模式 |
-| **跨列表共享视图池** | [`RecycledViewPoolActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/RecycledViewPoolActivity.kt) | `/Sample/RecycledViewPool` | `RecycledViewPool` 跨 Tab/嵌套列表共用 ViewHolder 缓存池与容量扩容 |
-| **多模块列表拼装与隔离** | [`ConcatAdapterActivity`](file:///E:/StudioProjects/MyApplication/modules/module_sample/src/main/java/com/example/william/my/module/sample/performance/ConcatAdapterActivity.kt) | `/Sample/ConcatAdapter` | `ConcatAdapter` 多 Adapter 拼装、`isolateViewTypes` 类型隔离与单模块独立局部刷新 |
+| **列表局部差量刷新** | [`DiffUtilActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/DiffUtilActivity.kt) | `/Performance/DiffUtil` | `DiffUtil.Callback` 差量计算、定向更新与 Payload 细粒度局部刷新写法 |
+| **多级内存缓存设计** | [`LruCacheActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/LruCacheActivity.kt) | `/Performance/LruCache` | Cache-Aside 回源读取模式、容量超出自动淘汰与 `entryRemoved` 监听 |
+| **主线程空闲调度** | [`IdleHandlerActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/IdleHandlerActivity.kt) | `/Performance/IdleHandler` | `IdleHandler` 单次/持续空闲监听、生命周期注销与次要任务延迟初始化 |
+| **异步布局解析预加载** | [`AsyncLayoutInflaterActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AsyncLayoutInflaterActivity.kt) | `/Performance/AsyncLayoutInflater` | `AsyncLayoutInflater` 后台异步解析 XML、主线程回调挂载与视图预加载池模式 |
+| **跨列表共享视图池** | [`RecycledViewPoolActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/RecycledViewPoolActivity.kt) | `/Performance/RecycledViewPool` | `RecycledViewPool` 跨 Tab/嵌套列表共用 ViewHolder 缓存池与容量扩容 |
+| **多模块列表拼装与隔离** | [`ConcatAdapterActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/ConcatAdapterActivity.kt) | `/Performance/ConcatAdapter` | `ConcatAdapter` 多 Adapter 拼装、`isolateViewTypes` 类型隔离与单模块独立局部刷新 |
 
 ---
 

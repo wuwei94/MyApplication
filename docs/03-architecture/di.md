@@ -209,5 +209,5 @@ modules/module_di/
     └── KoinActivity.kt          # 演示 singleOf / factoryOf / bind / named / parametersOf / viewModelOf / 自定义 Scope
 ```
 
-- **Hilt 实战代码**：查阅 [`HiltActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_di/src/main/java/com/example/william/my/module/di/activity/HiltActivity.kt)
-- **Koin 实战代码**：查阅 [`KoinActivity.kt`](file:///E:/StudioProjects/MyApplication/modules/module_di/src/main/java/com/example/william/my/module/di/activity/KoinActivity.kt)
+- **Hilt 实战代码**：查阅 [`HiltActivity.kt`](../../modules/module_di/src/main/java/com/example/william/my/module/di/activity/HiltActivity.kt)
+- **Koin 实战代码**：查阅 [`KoinActivity.kt`](../../modules/module_di/src/main/java/com/example/william/my/module/di/activity/KoinActivity.kt)

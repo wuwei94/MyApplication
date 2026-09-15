@@ -19,7 +19,7 @@ flowchart LR
     B -.->|后台异步同步写| A
 ```
 * **核心原则**：UI 永远只观察 Room 数据库吐出的冷流（Flow），网络请求成功后仅写入数据库，由数据库的变动天然触发 UI 响应；
-* **离线可用**：即使断网，App 依然立即可用并展现最新的持久化数据，零加载白屏。在 [`basic/basic_repo`](file:///e:/StudioProjects/MyApplication/basic/basic_repo) 与 [`modules/module_arch:ssot`](file:///e:/StudioProjects/MyApplication/modules/module_arch) 已完整落地。
+* **离线可用**：即使断网，App 依然立即可用并展现最新的持久化数据，零加载白屏。在 [`basic/basic_repo`](../../basic/basic_repo) 与 [`modules/module_arch:ssot`](../../modules/module_arch) 已完整落地。
 
 ---
 
@@ -28,7 +28,7 @@ flowchart LR
 现代应用 UI 不仅需要感知业务数据，还需要对操作系统外部环境（网络连接、系统时区、电量状态）保持实时敏锐的响应式观察。
 
 #### 网络状态监视器（`NetworkMonitor`）`【已落地】`
-在 [`basic/basic_lib`](file:///e:/StudioProjects/MyApplication/basic/basic_lib) 提供统一的网络感知接口：
+在 [`basic/basic_lib`](../../basic/basic_lib) 提供统一的网络感知接口：
 ```kotlin
 interface NetworkMonitor {
     val isOnline: Flow<Boolean>
@@ -53,7 +53,7 @@ interface NetworkMonitor {
 
 ## 3. 声明式后台增量数据同步（`Synchronizer` + `SyncWorker`） 【已落地】
 
-针对后台数据同步，抽取高阶同步契约（在 [`basic/basic_sync`](file:///e:/StudioProjects/MyApplication/basic/basic_sync) 落地）：
+针对后台数据同步，抽取高阶同步契约（在 [`basic/basic_sync`](../../basic/basic_sync) 落地）：
 ```kotlin
 interface Synchronizer {
     suspend fun getChangeListVersions(): ChangeListVersions
@@ -87,7 +87,7 @@ modules/
 
 ## 5. Jetpack Navigation 3 声明式导航体系 【部分落地】
 
-现代 Android 官方导航已经从基于 URL 字符串跳转全面演进至 **Navigation 3**（`androidx.navigation3`）。已在 [`modules/module_compose`](file:///e:/StudioProjects/MyApplication/modules/module_compose) 落地 `Nav3Activity` 基础样板。
+现代 Android 官方导航已经从基于 URL 字符串跳转全面演进至 **Navigation 3**（`androidx.navigation3`）。已在 [`modules/module_compose`](../../modules/module_compose) 落地 `Nav3Activity` 基础样板。
 
 #### 核心机制
 * **类型安全路由模型 (`NavKey`)**：放弃拼接 URL，导航键（NavKey）由强类型 `data class` / `@Serializable` 承载：
