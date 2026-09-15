@@ -224,6 +224,7 @@ include(":benchmarks")
 // 自定义 Lint 规则模块（测试命名规范等），通过 build-logic 的 lintChecks 注入各 Android 模块
 include(":lint")
 
+// enableFlutter=false 时跳过 Flutter 工程接入，便于纯 Android 本地门禁与 CI 流水线加速
 val enableFlutter = providers.gradleProperty("enableFlutter")
     .orElse("true")
     .get()

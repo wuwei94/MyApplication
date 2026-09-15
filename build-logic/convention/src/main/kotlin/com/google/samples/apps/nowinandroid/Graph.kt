@@ -131,6 +131,9 @@ internal enum class PluginType(val id: String, val ref: String, val style: Strin
     ),
 }
 
+/**
+ * 为子工程注册依赖图提取（graphDump）与 README Mermaid 图表更新（graphUpdate）任务
+ */
 internal fun Project.configureGraphTasks() {
     if (!buildFile.exists()) return // 忽略没有 build 文件的根模块
     val dumpTask = tasks.register<GraphDumpTask>("graphDump") {

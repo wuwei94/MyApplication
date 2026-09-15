@@ -22,6 +22,9 @@ enum class NiaFlavor(val dimension: FlavorDimension, val applicationIdSuffix: St
     prod(FlavorDimension.contentType),
 }
 
+/**
+ * 为 Android 模块统一注册并配置产品风味维度与 Flavor（demo / prod）
+ */
 fun configureFlavors(
     commonExtension: CommonExtension,
     flavorConfigurationBlock: ProductFlavor.(flavor: NiaFlavor) -> Unit = {},

@@ -36,6 +36,9 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.work.DisableCachingByDefault
 import java.io.File
 
+/**
+ * 为各变体注册打印测试 APK 路径的任务，供自动化测试运行器获取产物路径
+ */
 internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtension<*, *, *>) {
     extension.onVariants { variant ->
         if (variant is HasAndroidTest) {
@@ -67,6 +70,9 @@ internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtensio
     }
 }
 
+/**
+ * 打印测试 APK 与测试源码目录位置的 Gradle 任务
+ */
 @DisableCachingByDefault(because = "Prints output to console")
 internal abstract class PrintApkLocationTask : DefaultTask() {
     @get:PathSensitive(PathSensitivity.RELATIVE)

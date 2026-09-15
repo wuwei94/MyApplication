@@ -22,14 +22,23 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
+/**
+ * 为 Android Library 与 Application 模块配置 Spotless 代码风格检查
+ */
 internal fun Project.configureSpotlessForAndroid() {
     configureSpotlessCommon()
 }
 
+/**
+ * 为纯 JVM 模块（如 basic_model）配置 Spotless 代码风格检查
+ */
 internal fun Project.configureSpotlessForJvm() {
     configureSpotlessCommon()
 }
 
+/**
+ * 为根工程配置 Spotless 检查，纳管 build-logic convention 源码与根目录 KTS 脚本
+ */
 internal fun Project.configureSpotlessForRootProject() {
     apply(plugin = "com.diffplug.spotless")
     extensions.configure<SpotlessExtension> {
@@ -57,6 +66,9 @@ internal fun Project.configureSpotlessForRootProject() {
     }
 }
 
+/**
+ * 通用 Spotless 规则配置：统一换行符为 LF、配置 ktlint 规则并抑制包名下划线校验
+ */
 private fun Project.configureSpotlessCommon() {
     apply(plugin = "com.diffplug.spotless")
     extensions.configure<SpotlessExtension> {
