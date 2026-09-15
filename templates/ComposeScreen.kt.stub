@@ -1,0 +1,94 @@
+package com.example.william.my.module.compose.sample
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+
+/**
+ * 容器层 Composable (Stateful)
+ *
+ * 职责：连接架构层（ViewModel）、安全收集 Flow 状态、分发副作用与生命周期事件。
+ * 纯逻辑与生命周期编排，不包含复杂 UI 布局。
+ */
+@Composable
+fun <Feature>Route(
+    viewModel: <Feature>ViewModel,
+    onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.uiEffect) {
+        viewModel.uiEffect.collect { effect ->
+            // 处理单次副作用
+        }
+    }
+
+    <Feature>Screen(
+        uiState = uiState,
+        onAction = { intent -> viewModel.sendIntent(intent) },
+        modifier = modifier,
+    )
+}
+
+/**
+ * 展示层 Composable (Stateless)
+ *
+ * 职责：纯粹的 UI 布局与绘制，所有数据由入参传入，所有交互通过 lambda 向外冒泡。
+ * 必须支持独立 @Preview，严禁引入虚假业务逻辑。
+ */
+@Composable
+fun <Feature>Screen(
+    uiState: <Feature>UiState,
+    onAction: (<Feature>UiIntent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Scaffold(modifier = modifier) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center,
+        ) {
+            when {
+                uiState.isLoading -> CircularProgressIndicator()
+                uiState.errorMessage != null -> Text(text = "异常: ${uiState.errorMessage}")
+                else -> Text(text = "展示内容: ${uiState.data}")
+            }
+        }
+    }
+}
+
+/**
+ * Preview 假数据提供器
+ */
+class <Feature>UiStatePreviewProvider : PreviewParameterProvider<<Feature>UiState> {
+    override val values: Sequence<<Feature>UiState> = sequenceOf(
+        <Feature>UiState(isLoading = true),
+        <Feature>UiState(errorMessage = "网络连接超时"),
+        <Feature>UiState(data = "预览示例数据"),
+    )
+}
+
+@Preview(showBackground = true, name = "多状态预览")
+@Composable
+private fun <Feature>ScreenPreview(
+    @PreviewParameter(<Feature>UiStatePreviewProvider::class) state: <Feature>UiState,
+) {
+    <Feature>Screen(
+        uiState = state,
+        onAction = {},
+    )
+}

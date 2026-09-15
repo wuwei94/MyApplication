@@ -1,6 +1,7 @@
 # 关键约定
 
-> 所有模块和 Activity 必须遵守的规则。
+> 所有模块和 Activity 必须遵守的领域与架构规则。
+> Agent 运行时强制契约与代码/注释风格清单详见 [AGENTS.md](../../AGENTS.md) (L0) 与 [STYLE.md](STYLE.md) (L1)；模板骨架优先采用 [templates/](../../templates/) (L2)。
 
 ## 路由
 
@@ -60,14 +61,25 @@
 
 ## Activity 基类
 
-- `BasicControlActivity` — 纯操作/控制列表类示例 Activity 基类
+- `BasicControlActivity` — 纯操作/控制列表类示例 Activity 基类（通过 `buildList` 构建操作列表，`onRecyclerClick` 响应点击）
 - `BasicResponseActivity` — 上方内联日志区与下方操作控制列表；页面初始说明使用 `showDescription` 居中展示，离散事件使用 `appendLog`，高频状态使用 `updateLog(key, message)` 原位更新；统一由下方 `buildList` + `onRecyclerClick` 触发操作
 - `BasicImageActivity` — 上方图片展示区与下方操作控制列表；支持 `showImage` 主线程更新展示
-- `BasicLayoutActivity` — 上方空白动态 View 容器（`mContainer` / `ConstraintLayout`）与下方操作控制列表；支持 `setView` / `addView` 动态挂载、替换与展示自定义 View 或异步渲染结果
-- `BasicRecyclerActivity` — 上方数据展示列表（`mContainer` / `basics_response_container` 内含 `mDataRecycler`，高度 0dp 自适应撑满）与下方操作控制列表（固定高度 300dp）
+- `BasicLayoutActivity` — 上方空白动态 View 容器（`container` / `ConstraintLayout`）与下方操作控制列表；支持 `setView` / `addView` 动态挂载、替换与展示自定义 View 或异步渲染结果
+- `BasicRecyclerActivity` — 上方数据展示列表（`container` / `basics_response_container` 内含 `dataRecycler`，高度 0dp 自适应撑满）与下方操作控制列表（固定高度 300dp）
 - `BaseVBActivity<VB>` — ViewBinding 基类
 - `BaseFragmentActivity` — Fragment 宿主
 - `RouterRecyclerActivity` — RecyclerView 列表（带路由项）
+
+## 现代 Kotlin 与命名约束（对齐 Google 官方规范）
+
+1. **废除匈牙利命名法（禁止 `m` 前缀）**：
+   - 彻底告别 Java 时代的 `mBinding`、`mLog` 等前缀；
+   - 属性与变量统一使用清晰自解释的小驼峰命名（如 `binding`、`log`、`isScanning`）。
+2. **状态可见性与不可变性**：
+   - 内部可变状态必须严格私有收敛（如 `private val _uiState = MutableStateFlow(...)`）；
+   - 对外仅暴露只读的契约流（如 `val uiState: StateFlow<...> = _uiState.asStateFlow()`）。
+3. **消除魔法数与全局松散常量**：
+   - 废除随处散落的全局字符串字典，就近在业务/示例类内部使用 `companion object`、`enum` 或 `sealed interface` 保证类型安全。
 
 ## 协程调度器与作用域约定（对齐 NiA）
 
@@ -80,12 +92,11 @@
 3. **UI 层安全收集 Flow**：
    - 在 Activity / Fragment 观察 Flow 时，必须使用 `basic_lib` 提供的 `collectWithLifecycle` 或 `launchAndRepeatWithLifecycle(Lifecycle.State.STARTED)`，避免应用切到后台时继续收集造成 UI 异常与资源浪费。
 
-
 ## 示例页面
 
 示例页面的首要目标是让读者快速看清库的入口、参数、返回值和回调，而不是展示一套页面级任务编排器。
 
-- 一个操作列表项应直接对应一个命名明确的示例方法，库调用和回调尽量放在该方法附近，可参考 `RxRequestActivity`。
+- 一个操作列表项通过 `buildList()` 声明，直接对应一个命名明确的示例方法，在 `onRecyclerClick(position, string)` 中根据 `when(position)` 分发调用，可参考 `OkHttpActivity`。
 - 页面只保留演示所需的最小状态。取消和生命周期管理优先使用库返回的 `Disposable`、`CompositeDisposable` 或平台标准能力。
 - 不要为了串行切换操作在页面引入 `pending action`、operation ID、active 标记、重复的 `runAfter...` / `begin...` 包装层，除非该页面的示例目标就是任务编排。
 - 物理 I/O 终止、资源租约、并发限制和取消一致性属于库的职责。多个示例页重复实现同类编排时，应先改进库 API，再简化页面调用。
@@ -94,24 +105,40 @@
 
 ### Compose 声明式示例准则
 
-对于 Compose 示例模块（如 `module_compose`），其核心定位为 **Compose 官方 UI 与交互原语的“代码活字典”**，必须严格遵循以下三条准则：
+对于 Compose 示例模块（如 `module_compose`），其核心定位为 **Compose 官方 UI 与交互原语的“代码活字典”**，必须严格遵循以下准则（模板见 [templates.md](templates.md)）：
 
-1. **单页精炼自包含（代码控制在 300 行左右）**：
+1. **Stateful 容器与 Stateless 展示层分离**：
+   - 容器层负责处理 ViewModel 接入、副作用（Toast/Navigation）监听；
+   - 展示层为纯 Composable，所有数据由参数传入，事件通过 lambda 冒泡，必须支持独立 `@Preview` 预览。
+2. **单页精炼自包含（代码控制在 300 行左右）**：
    - 一个 Activity 仅聚焦讲透单个核心 Composable 或机制原语；
    - 代码开箱即用，拒绝跨页面共享复杂的控制层或通用脚手架。
-2. **状态调节仅限 UI 参数（严禁引入复杂业务逻辑）**：
+3. **状态调节仅限 UI 参数（严禁引入复杂业务逻辑）**：
    - 页面内的交互控件（如 Slider、Switch、Button）仅纯粹用于驱动 Composable 参数的即时动态变更（如进度数值、对齐方式、端点形状）；
    - 严禁为了丰富页面而引入假业务流程（如搜索历史、模拟购物车、分页缓存、假登录等）。
-3. **坚持“原语为主、实战为辅”的梯次格局（绝不以实战淘汰基础）**：
+4. **坚持“原语为主、实战为辅”的梯次格局（绝不以实战淘汰基础）**：
    - 基础原语页面（如最基础的 `CanvasActivity` 线/圆/弧绘制、`TextActivity` 基础排版）是学习查阅的基石，必须永久保留；
    - 进阶复合页面（如 Canvas 多图表联动看板、全套 Theme 调色板）充当能力上限展示，二者形成清晰梯次，绝不能因存在复合实战而合并或移除基础原语。
 
 ## 改动范围
 
 - 默认实现正常业务路径和常见失败路径，不为极少数、违反既有协议或纯理论输入增加额外校验、分支、异常类型、兼容层或公共 API。
+- 交付物整体形态（禁止附赠、禁止复盘式标题/注释、范围自检）见 [scope.md](scope.md)。
 - 跨平台或跨库对齐以普通使用契约为准，不追求对畸形响应、越界数据和底层实现细节逐项完全一致。
 - 只有用户明确要求、官方契约明确保证，或项目中已有真实使用依据时，才扩展少见场景。
 - 安全问题、数据损坏、资源泄漏和会影响常规功能正确性的情况不受上述限制。
+- 本仓为技术栈沉淀示例工程：在任务边界内不要害怕大范围改动。按合理优先级收敛（先契约/锚点与硬约束，再按模块铺开）。[comments.md](comments.md) 的「最小切片」约束的是无关附赠与未变更注释块，不禁止任务内的规模化对齐或根因重构。
+
+## 历史/废弃示例内容
+
+本仓是技术栈沉淀示例项目。以「已废弃 API / 历史实现 / 技术演进对比」为**被演示主题**的页面或类，保留废弃能力并标注状态属于示例内容本身，不按附赠或残留清理。
+
+同时满足才成立：
+
+1. 废弃能力是演示对象（如 AsyncTask、RenderScript、HttpURLConnection 历史实现），不是顺手挂上的兼容壳；
+2. KDoc 写清当前定位与现代替代方案（见 [comments.md](comments.md)）。
+
+不在此列：本仓自有库未清理的兼容入口、移植残留死代码、文档中「旧 X 已移除」式复盘。
 
 ## 问题排查与架构治理（根因治理，严禁打补丁）
 

@@ -1,0 +1,68 @@
+package com.example.william.my.module.arch.sample
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+// 1. UiState: 单一可信源数据快照（不可变）
+data class <Feature>UiState(
+    val isLoading: Boolean = false,
+    val data: List<String> = emptyList(),
+    val errorMessage: String? = null,
+)
+
+// 2. UiIntent: 用户驱动的离散动作意图
+sealed interface <Feature>UiIntent {
+    data object Refresh : <Feature>UiIntent
+    data class SubmitAction(val id: Long) : <Feature>UiIntent
+}
+
+// 3. UiEffect: 一次性消费副作用事件（Toast、路由跳转等）
+sealed interface <Feature>UiEffect {
+    data class ShowToast(val message: String) : <Feature>UiEffect
+    data class NavigateToDetail(val id: Long) : <Feature>UiEffect
+}
+
+// 4. ViewModel: 状态驱动器
+class <Feature>ViewModel : ViewModel() {
+
+    private val _uiState = MutableStateFlow(<Feature>UiState())
+    val uiState: StateFlow<<Feature>UiState> = _uiState.asStateFlow()
+
+    private val _uiEffect = Channel<<Feature>UiEffect>(Channel.BUFFERED)
+    val uiEffect = _uiEffect.receiveAsFlow()
+
+    fun sendIntent(intent: <Feature>UiIntent) {
+        when (intent) {
+            is <Feature>UiIntent.Refresh -> loadData()
+            is <Feature>UiIntent.SubmitAction -> submit(intent.id)
+        }
+    }
+
+    private fun loadData() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            runCatching {
+                // 执行异步加载...
+                emptyList<String>()
+            }.onSuccess { list ->
+                _uiState.update { it.copy(isLoading = false, data = list) }
+            }.onFailure { throwable ->
+                _uiState.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+                _uiEffect.send(<Feature>UiEffect.ShowToast("加载失败: ${throwable.message}"))
+            }
+        }
+    }
+
+    private fun submit(id: Long) {
+        viewModelScope.launch {
+            _uiEffect.send(<Feature>UiEffect.NavigateToDetail(id))
+        }
+    }
+}

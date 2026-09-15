@@ -1,0 +1,60 @@
+package com.example.william.my.module.<模块名>.activity
+
+import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+
+/**
+ * <组件名> — <一句话核心职责定位>
+ *
+ * 核心机制与避坑点：
+ * 1. <机制要点 1>：<关键说明，聚焦非显而易见的时序/线程/参数约束>
+ * 2. <避坑要点 2>：<生命周期/资源释放/内存防范等注意事项>
+ *
+ * 官方参考：
+ * <官方权威裸 URL 或仓库相对路径>
+ */
+@Route(path = RouterPath.<模块名>.<页面名>)
+class SampleActivity : BasicResponseActivity() {
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("演示 <功能名> 的核心 API 调用与状态联动")
+    }
+
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 触发基础操作",
+        "2. 触发异步流程",
+        "3. 重置 / 清理资源",
+    )
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> executeBasicCall()
+            1 -> executeAsyncCall()
+            2 -> clearResources()
+        }
+    }
+
+    private fun executeBasicCall() {
+        appendLog("→ 开始执行基础调用...")
+        runCatching {
+            // 直接调用库 API，严禁页面级包装调度器
+        }.onSuccess {
+            appendLog("✓ 调用成功")
+        }.onFailure { error ->
+            appendLog("✗ 调用失败: ${error.message}")
+        }
+    }
+
+    private fun executeAsyncCall() {
+        appendLog("→ 启动异步监听...")
+        // 离散事件用 appendLog，高频变动使用 updateLog("stream_key", "...")
+    }
+
+    private fun clearResources() {
+        appendLog("✓ 资源已清理")
+    }
+}

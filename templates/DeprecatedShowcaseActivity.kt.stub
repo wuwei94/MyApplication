@@ -1,0 +1,51 @@
+package com.example.william.my.module.<模块名>.activity
+
+import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.basic.basic_shared.router.path.RouterPath
+
+/**
+ * <组件名> — <一句话核心职责定位>（已废弃）
+ * ⚠️ 历史参考：<废弃原因，如系统 API 废弃或底层机制缺陷>，生产代码应使用 <现代替代方案>。
+ *
+ * 核心机制与避坑点：
+ * 1. 废弃背景：<说明为何该方案被弃用或存在哪些隐患>
+ * 2. 现代迁移策略：<简述迁移到现代 API 的核心改动点>
+ *
+ * 官方参考：
+ * <官方权威裸 URL 或现代替代方案说明文档>
+ */
+@Route(path = RouterPath.<模块名>.<页面名>)
+class DeprecatedSampleActivity : BasicResponseActivity() {
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("演示已废弃的 <技术名> API 及其与现代方案的对比")
+    }
+
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 触发历史实现操作",
+        "2. 触发对照/现代替代实现",
+    )
+
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
+        when (position) {
+            0 -> executeLegacyCall()
+            1 -> executeModernAlternative()
+        }
+    }
+
+    private fun executeLegacyCall() {
+        appendLog("→ [历史实现] 开始执行调用...")
+        // 演示历史废弃 API 的运行逻辑
+        appendLog("✓ [历史实现] 执行完毕")
+    }
+
+    private fun executeModernAlternative() {
+        appendLog("→ [现代方案] 开始执行调用...")
+        // 演示现代替代方案的运行逻辑
+        appendLog("✓ [现代方案] 执行完毕")
+    }
+}
