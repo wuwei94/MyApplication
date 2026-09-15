@@ -29,5 +29,6 @@ class TestNamingIssueRegistry : IssueRegistry() {
     override val issues: List<Issue> = listOf(
         TestNamingDetector.ISSUE_TEST_CLASS_NAME,
         TestNamingDetector.ISSUE_TEST_METHOD_NAME,
+        HungarianNotationDetector.ISSUE_HUNGARIAN_NOTATION,
     )
 }
