@@ -246,7 +246,9 @@ class BleNativeScanActivity : BasicResponseActivity() {
         if (isScanning) {
             try {
                 bleScanner?.stopScan(scanCallback)
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+                // 页面销毁兜底：忽略蓝牙已关闭或未在扫描态时的底层异常
+            }
             isScanning = false
         }
     }

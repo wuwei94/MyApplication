@@ -18,7 +18,7 @@ import com.example.william.my.core.retrofit.R;
  */
 public class LoadingTipView extends LinearLayout implements View.OnClickListener {
 
-    private TextView mTextView;
+    private TextView textView;
 
     public LoadingTipView(Context context) {
         super(context);
@@ -40,8 +40,8 @@ public class LoadingTipView extends LinearLayout implements View.OnClickListener
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setBackgroundColor(Color.WHITE);
 
-        mTextView = findViewById(R.id.loading_textView);
-        mTextView.setOnClickListener(this);
+        textView = findViewById(R.id.loading_textView);
+        textView.setOnClickListener(this);
         setLoadingTip(Status.loading);
     }
 
@@ -57,7 +57,7 @@ public class LoadingTipView extends LinearLayout implements View.OnClickListener
     }
 
     public void setMessage(String message) {
-        mTextView.setText(message);
+        textView.setText(message);
     }
 
     public void setLoadingTip(Status status) {
@@ -69,15 +69,15 @@ public class LoadingTipView extends LinearLayout implements View.OnClickListener
             case loading:
                 setVisibility(View.VISIBLE);
                 setEnabled(false);
-                mTextView.setText("加载中……");
+                textView.setText("加载中……");
                 break;
             case empty:
                 setVisibility(View.VISIBLE);
                 setEnabled(false);
                 if (message == null) {
-                    mTextView.setText("暂无数据");
+                    textView.setText("暂无数据");
                 } else {
-                    mTextView.setText(message);
+                    textView.setText(message);
                 }
                 break;
             case finish:
@@ -87,9 +87,9 @@ public class LoadingTipView extends LinearLayout implements View.OnClickListener
                 setVisibility(View.VISIBLE);
                 setEnabled(true);
                 if (message == null) {
-                    mTextView.setText("网络异常，请刷新页面");
+                    textView.setText("网络异常，请刷新页面");
                 } else {
-                    mTextView.setText(message);
+                    textView.setText(message);
                 }
                 break;
             default:

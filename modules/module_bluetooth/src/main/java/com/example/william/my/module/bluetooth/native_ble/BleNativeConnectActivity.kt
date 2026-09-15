@@ -233,7 +233,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
                 result?.device?.let { device ->
                     try {
                         scanner.stopScan(this)
-                    } catch (_: Exception) {}
+                    } catch (_: Exception) {
+                        // 保护性调用：忽略停止已结束扫描时的底层平台异常
+                    }
                     targetDevice = device
                     val name = device.name ?: "未知设备"
                     appendLog("找到设备: $name，发起连接...")
@@ -339,7 +341,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
             try {
                 gatt.disconnect()
                 gatt.close()
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+                // 资源释放兜底：忽略底层蓝牙服务已关闭时的断开异常
+            }
             appendLog("✓ 已断开并释放 BluetoothGatt 资源")
         }
         bluetoothGatt = null

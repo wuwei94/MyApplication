@@ -55,12 +55,12 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
             .build()
 
         headerAdapter = ConcatHeaderAdapter("顶栏：今日焦点动态 (Header)")
-        bannerAdapter = ConcatBannerAdapter(arrayListOf("🔥 热点 1: 性能优化指南", "🚀 热点 2: 现代 Kotlin 架构"))
+        bannerAdapter = ConcatBannerAdapter("🔥 热点 1: 性能优化指南", "🚀 热点 2: 现代 Kotlin 架构")
         feedAdapter = ConcatFeedAdapter(
-            arrayListOf(
-                "信息流条目 1: 理解 View 渲染流水线",
-                "信息流条目 2: 深入协程挂起本质",
-                "信息流条目 3: Compose 智能重组机制",
+            mutableListOf(
+                "信息流条目 1" to "理解 View 渲染流水线",
+                "信息流条目 2" to "深入协程挂起本质",
+                "信息流条目 3" to "Compose 智能重组机制",
             ),
         )
         footerAdapter = ConcatFooterAdapter("底栏：到底啦 ~ (Footer)")
@@ -95,7 +95,7 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
 
             1 -> {
                 // 2. 向 Feed 局部插入
-                val newItem = "动态新增流项目 #${feedItemIndex++}"
+                val newItem = "动态新增流项目 #${feedItemIndex++}" to "动态局部刷新"
                 val currentSize = feedAdapter.items.size
                 feedAdapter.items.add(newItem)
                 feedAdapter.notifyItemInserted(currentSize)
@@ -104,7 +104,8 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
             2 -> {
                 // 3. 局部定向刷新首条
                 if (feedAdapter.items.isNotEmpty()) {
-                    feedAdapter.items[0] = "已定向更新首条 @ ${System.currentTimeMillis() % 10000}"
+                    val old = feedAdapter.items[0]
+                    feedAdapter.items[0] = old.first to "已定向更新首条 @ ${System.currentTimeMillis() % 10000}"
                     feedAdapter.notifyItemChanged(0)
                 }
             }

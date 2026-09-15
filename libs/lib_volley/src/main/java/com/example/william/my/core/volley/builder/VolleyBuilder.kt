@@ -24,8 +24,8 @@ import org.json.JSONObject
  */
 class VolleyBuilder<T> {
 
-    private lateinit var url: String
-    private lateinit var clazz: Class<T>
+    private lateinit var requestUrl: String
+    private lateinit var responseClass: Class<T>
     private var method: Int = Method.GET
     private val header: MutableMap<String, String> = mutableMapOf()
     private val parameter: MutableMap<String, String> = mutableMapOf()
@@ -33,12 +33,12 @@ class VolleyBuilder<T> {
     private var tag: String = TAG_GENERATOR.getAndIncrement().toString()
 
     fun url(api: String): VolleyBuilder<T> {
-        url = api
+        requestUrl = api
         return this
     }
 
     fun clazz(clazz: Class<T>): VolleyBuilder<T> {
-        this.clazz = clazz
+        responseClass = clazz
         return this
     }
 
@@ -99,15 +99,15 @@ class VolleyBuilder<T> {
      * @param listener 响应回调
      */
     fun build(context: Context, listener: VolleyListener<T>) {
-        check(::url.isInitialized) { "url 未设置，请调用 .url()" }
-        check(::clazz.isInitialized) { "clazz 未设置，请调用 .clazz()" }
+        check(::requestUrl.isInitialized) { "url 未设置，请调用 .url()" }
+        check(::responseClass.isInitialized) { "clazz 未设置，请调用 .clazz()" }
 
         val finalUrl = buildUrl()
         val request = if (jsonObject != null) {
             JsonRequest(
                 method,
                 finalUrl,
-                clazz,
+                responseClass,
                 header,
                 jsonObject,
                 listener.listener,
@@ -117,7 +117,7 @@ class VolleyBuilder<T> {
             FromRequest(
                 method,
                 finalUrl,
-                clazz,
+                responseClass,
                 header,
                 parameter,
                 listener.listener,
@@ -132,11 +132,11 @@ class VolleyBuilder<T> {
      * GET/DELETE 将 params 拼到 URL 上，POST/PUT 直接返回原 URL。
      */
     private fun buildUrl(): String {
-        if (parameter.isEmpty()) return url
-        if (method != Method.GET && method != Method.DELETE) return url
-        val separator = if (url.contains("?")) "&" else "?"
+        if (parameter.isEmpty()) return requestUrl
+        if (method != Method.GET && method != Method.DELETE) return requestUrl
+        val separator = if (requestUrl.contains("?")) "&" else "?"
         val query = parameter.entries.joinToString("&") { "${it.key}=${it.value}" }
-        return "$url$separator$query"
+        return "$requestUrl$separator$query"
     }
 
     companion object {

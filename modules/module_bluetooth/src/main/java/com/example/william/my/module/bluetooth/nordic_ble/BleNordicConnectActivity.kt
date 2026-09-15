@@ -124,7 +124,9 @@ class BleNordicConnectActivity : BasicResponseActivity() {
                 result?.device?.let { device ->
                     try {
                         scanner.stopScan(this)
-                    } catch (_: Exception) {}
+                    } catch (_: Exception) {
+                        // 保护性调用：忽略停止已结束扫描时的底层平台异常
+                    }
                     targetDevice = device
                     val name = device.name ?: "未知设备"
                     appendLog("找到设备: $name (${device.address})，使用 Nordic BleManager 发起连接...")

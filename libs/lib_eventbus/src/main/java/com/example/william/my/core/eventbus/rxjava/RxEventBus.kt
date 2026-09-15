@@ -11,8 +11,11 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object RxEventBus {
 
-    private val stickyBus: MutableMap<Class<*>, Any> = ConcurrentHashMap()
-    private val rxEventBus: Subject<Any> = PublishSubject.create<Any>().toSerialized()
+    @PublishedApi
+    internal val stickyBus: MutableMap<Class<*>, Any> = ConcurrentHashMap()
+
+    @PublishedApi
+    internal val rxEventBus: Subject<Any> = PublishSubject.create<Any>().toSerialized()
 
     /**
      * 发送事件

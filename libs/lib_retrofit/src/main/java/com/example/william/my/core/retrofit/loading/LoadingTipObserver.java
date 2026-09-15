@@ -11,16 +11,16 @@ import java.util.Collection;
  */
 public abstract class LoadingTipObserver<T> implements Observer<RetrofitResponse<T>> {
 
-    private final LoadingTipView mLoadingTipView;
+    private final LoadingTipView loadingTipView;
 
     public LoadingTipObserver(LoadingTipView loadingTipView) {
-        this.mLoadingTipView = loadingTipView;
+        this.loadingTipView = loadingTipView;
     }
 
     public LoadingTipObserver(LoadingTipView loadingTipView, String message) {
-        this.mLoadingTipView = loadingTipView;
-        if (this.mLoadingTipView != null) {
-            this.mLoadingTipView.setMessage(message);
+        this.loadingTipView = loadingTipView;
+        if (this.loadingTipView != null) {
+            this.loadingTipView.setMessage(message);
         }
     }
 
@@ -31,21 +31,21 @@ public abstract class LoadingTipObserver<T> implements Observer<RetrofitResponse
         }
         switch (retrofitResponse.getCode()) {
             case RetrofitResponse.LOADING:
-                if (mLoadingTipView != null) {
-                    mLoadingTipView.setLoadingTip(LoadingTipView.Status.loading);
+                if (loadingTipView != null) {
+                    loadingTipView.setLoadingTip(LoadingTipView.Status.loading);
                 }
                 break;
             case RetrofitResponse.SUCCESS:
-                if (mLoadingTipView != null) {
-                    mLoadingTipView.setLoadingTip(isEmpty(retrofitResponse.getData())
+                if (loadingTipView != null) {
+                    loadingTipView.setLoadingTip(isEmpty(retrofitResponse.getData())
                             ? LoadingTipView.Status.empty
                             : LoadingTipView.Status.finish);
                 }
                 onResponse(retrofitResponse.getData());
                 break;
             default:
-                if (!onFailure(retrofitResponse.getMessage()) && mLoadingTipView != null) {
-                    mLoadingTipView.setLoadingTip(LoadingTipView.Status.error, retrofitResponse.getMessage());
+                if (!onFailure(retrofitResponse.getMessage()) && loadingTipView != null) {
+                    loadingTipView.setLoadingTip(LoadingTipView.Status.error, retrofitResponse.getMessage());
                 }
                 break;
         }

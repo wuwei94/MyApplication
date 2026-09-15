@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @Test
-    fun useAppContext() {
+    fun appContext_packageName_matchesApplicationId() {
         // 被测应用的 Context。
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.william.my.application", appContext.packageName)
