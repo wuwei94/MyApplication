@@ -272,6 +272,7 @@ object RouterPath {
         // 启动与初始化优化
         const val ContentProvider = "$PATH/ContentProvider"
         const val Startup = "$PATH/Startup"
+        const val AnchorTask = "$PATH/AnchorTask"
         const val BaselineProfiles = "$PATH/BaselineProfiles"
         const val IdleHandler = "$PATH/IdleHandler"
 

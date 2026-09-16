@@ -45,6 +45,7 @@ mindmap
       engineering-patterns.md["现代架构范式（NiA 落地）"]
       di.md["依赖注入（Hilt vs Koin）"]
       event.md["事件总线对比与选型"]
+      startup.md["启动初始化（App Startup vs AnchorTask）"]
     04-domains
       network.md["网络通信约定（Retrofit / Ktor）"]
       transfer.md["文件传输与断点续传队列"]
@@ -103,6 +104,7 @@ mindmap
 | [engineering-patterns.md](03-architecture/engineering-patterns.md) | **现代架构范式（NiA 落地）** | Offline-First、Environment Monitors、Synchronizer、Navigation 3、M3 Adaptive 与可插拔接口 |
 | [di.md](03-architecture/di.md) | **依赖注入对比** | Hilt（编译期注入）vs Koin（运行时注入）对比矩阵与实战 |
 | [event.md](03-architecture/event.md) | **事件总线选型** | EventBus、RxEventBus、LiveEventBus 与 FlowEventBus 选型矩阵 |
+| [startup.md](03-architecture/startup.md) | **启动初始化对比** | ContentProvider、App Startup 与 AnchorTask 多线程 DAG 锚点编排对比 |
 
 ---
 
@@ -146,6 +148,7 @@ mindmap
 | **现代架构范式** | Offline-First / SyncWorker / Nav3 / Adaptive / API-Impl / 可插拔接口 | NiA 工程落地范式集合，各能力落地状态见成熟度矩阵 | [engineering-patterns.md](03-architecture/engineering-patterns.md) |
 | **依赖注入** | Hilt vs Koin | Hilt 编译期注入更稳（团队/大型工程）；Koin 轻量起步快 | [di.md](03-architecture/di.md) |
 | **事件总线** | EventBus / RxEventBus / LiveEventBus / FlowEventBus | FlowEventBus 响应式现代首选；老代码看迁移矩阵 | [event.md](03-architecture/event.md) |
+| **启动初始化** | ContentProvider / App Startup / AnchorTask | Provider 阶段收敛 + Application 阶段并发 DAG + 锚点卡点 + IdleHandler 延迟加载 | [startup.md](03-architecture/startup.md) |
 | **网络请求封装** | OkHttp / Retrofit / Retrofit-Rx / Ktor | 按调用形态分工，不可强行对齐的能力见「功能对比」节 | [network.md](04-domains/network.md) |
 | **文件传输** | 单任务 vs 并发队列 Builder | 统一 Builder 风格，大文件并发走 Manager | [transfer.md](04-domains/transfer.md) |
 | **长连接传输层** | OkHttp WS / Java-WebSocket / Netty TCP | 应用层 WS 优先 OkHttp 线；自建服务端选 Java-WS；私有协议高并发上 Netty | [socket.md](04-domains/socket.md)（第四章） |

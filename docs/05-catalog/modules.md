@@ -550,6 +550,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | PerformanceMainActivity | 模块入口，导航到启动优化、布局解析与列表复用等性能优化页面 |
 | ContentProviderActivity | ContentProvider 自动初始化机制（利用 onCreate 优先时序自动捕获 Context、跨组件数据共享与多 Provider 冷启动弊端分析） |
 | StartupActivity | Jetpack App Startup 初始化组件（单个 InitializationProvider 聚合托管、DAG 依赖拓扑排序、手动按需延迟加载与多 Provider 耗时分析） |
+| AnchorTaskActivity | AnchorTask 启动任务编排调度（多线程并发 DAG 依赖流转、主/子线程池分派与 CountDownLatch 锚点阻塞卡点机制） |
 | BaselineProfilesActivity | Jetpack Baseline Profiles 基线配置文件（ART 运行时 AOT 预编译提速、ProfileInstaller 本地诊断写入、CUJ 关键路径规则与 ADB 测试指令） |
 | IdleHandlerActivity | IdleHandler 主线程空闲调度（单次/持续监听与延迟初始化） |
 | AsyncLayoutInflaterActivity | AsyncLayoutInflater 异步布局解析与视图预加载池 |

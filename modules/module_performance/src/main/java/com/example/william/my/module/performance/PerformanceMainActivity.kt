@@ -20,6 +20,7 @@ class PerformanceMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("── 启动与初始化优化 ──", ""))
         routerItems.add(RouterItem("ContentProvider 自动初始化（时序机制与多 Provider 耗时分析）", RouterPath.Performance.ContentProvider))
         routerItems.add(RouterItem("App Startup（InitializationProvider 聚合与 DAG 拓扑排序）", RouterPath.Performance.Startup))
+        routerItems.add(RouterItem("AnchorTask（多线程并发 DAG 编排与主线程锚点等待）", RouterPath.Performance.AnchorTask))
         routerItems.add(RouterItem("Baseline Profiles（ART 预编译 AOT 加速与 ProfileInstaller）", RouterPath.Performance.BaselineProfiles))
         routerItems.add(RouterItem("IdleHandler 空闲调度（主线程延迟初始化）", RouterPath.Performance.IdleHandler))
 
