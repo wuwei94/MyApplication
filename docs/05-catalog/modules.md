@@ -496,8 +496,8 @@
 | ArchMainActivity | 模块入口，导航到 MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First 架构模式示例 |
 | MvpActivity | MVP 架构模式（ArticleContract + ArticlePresenter） |
 | MvvmActivity | MVVM 架构模式（ArticleLiveDataViewModel + UseCase） |
-| MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect） |
-| ComposeMviActivity | Compose MVI 架构模式（Jetpack Compose + StateFlow + SmartRefresh Compose） |
+| MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect + ArticleFlowUseCase） |
+| ComposeMviActivity | Compose MVI 架构模式（Jetpack Compose + StateFlow + SmartRefresh Compose + ArticleFlowUseCase） |
 | MavericksActivity | Mavericks 架构模式（Airbnb MVI，MavericksState + MavericksViewModel + MavericksRepository） |
 | OfflineFirstActivity | Offline-First 离线优先与 SSOT 单一数据源架构模式（Room Flow + NetworkMonitor 响应式网络监听/离线横幅/在线自愈 + Synchronizer / SyncWorker 增量游标幂等拉取） |
 

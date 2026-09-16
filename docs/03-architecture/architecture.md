@@ -126,6 +126,7 @@ class ArticleLiveDataViewModel : BaseViewModel() {
   - `ArticleIntent`：密封接口，显式代表用户的每一次操作或系统事件；
   - `ArticleViewState`：单一不可变状态数据类，页面的唯一真实数据源；
   - `ArticleUiEffect`：一次性副作用（如弹 Toast、路由跳转、弹窗提示）；
+  - `ArticleFlowUseCase`：领域层（Domain Layer）业务用例（Flow 版），封装文章列表请求，ViewModel 经其获取冷流而不直接依赖 Repository；
   - `ArticleStateFlowViewModel`：Intent 处理器与状态生产机；
   - `MviFragment` / `MviActivity`：UI 发送 Intent，并收集 State 与 Effect。
 
@@ -176,6 +177,7 @@ class ArticleStateFlowViewModel : BaseViewModel() {
 - **模块源码位置**：[`com.example.william.my.module.arch.compose`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/compose)
 - **核心组件**：
   - `ArticleComposeState` / `ArticleComposeIntent` / `ArticleComposeUiEffect`；
+  - `ArticleFlowUseCase`：与经典 MVI 共用的领域层业务用例（Flow 版），Compose ViewModel 经其获取冷流而不直接依赖 Repository；
   - `ComposeMviActivity`：使用 Jetpack Compose 构建纯声明式视图，集成 SmartSwipeRefresh 下拉刷新组件。
 
 #### 核心代码切片：状态提升与声明式局部重组

@@ -11,6 +11,7 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect
 import com.example.william.my.module.arch.mvi.data.ArticleViewState
+import com.example.william.my.module.arch.mvi.usecase.ArticleFlowUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +25,8 @@ import kotlinx.coroutines.launch
 /**
  * 文章列表 StateFlow ViewModel
  *
- * 演示 MVI 模式中通过 Channel 接收 Intent、StateFlow 暴露 UIState，以及 Channel 分发 Effect 副作用。
+ * 演示 MVI 模式中通过 Channel 接收 Intent、StateFlow 暴露 UIState，以及 Channel 分发 Effect 副作用；
+ * 数据经 [ArticleFlowUseCase] 领域用例获取。
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticleStateFlowViewModel(private val repository: ArticleRepository) : ViewModel() {
@@ -39,12 +41,14 @@ class ArticleStateFlowViewModel(private val repository: ArticleRepository) : Vie
     val effect: Flow<ArticleUiEffect>
         get() = _effect.receiveAsFlow()
 
+    private val articleFlowUseCase: ArticleFlowUseCase = ArticleFlowUseCase(repository)
+
     init {
         viewModelScope.launch {
             intent.consumeAsFlow()
                 .flatMapLatest { intent ->
                     when (intent) {
-                        is ArticleIntent.LoadArticleIntent -> repository.getArticleFlow(intent.page)
+                        is ArticleIntent.LoadArticleIntent -> articleFlowUseCase(intent.page)
                     }
                 }
                 .collect { response ->

@@ -11,6 +11,7 @@ import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.compose.data.ArticleComposeIntent
 import com.example.william.my.module.arch.compose.data.ArticleComposeState
 import com.example.william.my.module.arch.compose.data.ArticleComposeUiEffect
+import com.example.william.my.module.arch.mvi.usecase.ArticleFlowUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +30,8 @@ import kotlinx.coroutines.launch
  * 1. Intent：通过 Channel 接收用户意图（下拉刷新 / 上拉加载更多）
  * 2. State：通过 StateFlow 暴露不可变的单向 UI 状态（列表数据、分页索引及加载中状态）
  * 3. Effect：通过 Channel 分发单次副作用事件（下拉刷新/加载更多完成通知、网络异常 Toast）
+ *
+ * 数据经 [ArticleFlowUseCase] 领域用例获取，与经典 MVI 共用同一用例，体现领域层与 UI 实现解耦。
  */
 class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewModel() {
 
@@ -41,6 +44,8 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
     val effect: Flow<ArticleComposeUiEffect> = _effect.receiveAsFlow()
 
     private var loadJob: Job? = null
+
+    private val articleFlowUseCase: ArticleFlowUseCase = ArticleFlowUseCase(repository)
 
     init {
         viewModelScope.launch {
@@ -63,7 +68,7 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
 
         val targetPage = if (isRefresh) 0 else _state.value.page + 1
         loadJob = viewModelScope.launch {
-            repository.getArticleFlow(targetPage).collect { response ->
+            articleFlowUseCase(targetPage).collect { response ->
                 when {
                     response.code == RetrofitResponse.LOADING -> {
                         _state.update { current ->
@@ -117,6 +122,9 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
     }
 
     companion object {
+        /**
+         * 工厂：通过 [viewModelFactory] DSL 从 [CreationExtras] 获取 Application 并注入仓库
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = checkNotNull(
