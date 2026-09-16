@@ -18,30 +18,30 @@ class NanoServerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        try {
-            nanoServer = NanoServer(application)
-            nanoServer?.start(3000)
-            println("Start HttpService Success...")
-        } catch (e: IOException) {
-            println("Start HttpService Failed...")
-            e.printStackTrace()
-        }
+        nanoServer = NanoServer(application)
+        Thread {
+            try {
+                nanoServer?.start(3000)
+                logcat("Start NanoServerService Success...")
+            } catch (e: IOException) {
+                logcat("Start NanoServerService Failed: ${e.message}")
+            }
+        }.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         try {
             nanoServer?.stop()
-            println("Stop HttpService Success...")
+            logcat("Stop NanoServerService Success...")
         } catch (e: Exception) {
-            println("Stop HttpService Failed...")
-            e.printStackTrace()
+            logcat("Stop NanoServerService Failed: ${e.message}")
         }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int = START_STICKY
 
-    private fun println(msg: String) {
+    private fun logcat(msg: String) {
         Utils.logcat(TAG, msg)
     }
 
@@ -49,11 +49,13 @@ class NanoServerService : Service() {
 
         private val TAG = NanoServerService::class.java.simpleName
 
+        @JvmStatic
         fun startService(context: Context) {
             val intent = Intent(context, NanoServerService::class.java)
             context.startService(intent)
         }
 
+        @JvmStatic
         fun stopService(context: Context) {
             val intent = Intent(context, NanoServerService::class.java)
             context.stopService(intent)

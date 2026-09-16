@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.retrofit
 
+import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
@@ -29,8 +30,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Route(path = RouterPath.Http.RetrofitCoroutine)
 class RetrofitCoroutineActivity : BasicResponseActivity() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Retrofit 协程示例：suspend + lifecycleScope 发起登录请求")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Retrofit loginSuspend",
+        "1. Retrofit 协程登录请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -54,15 +60,15 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
             try {
                 val response: RetrofitResponse<LoginData> = api.loginSuspend(username, password)
                 if (response.isSuccess) {
-                    appendFormatLog("Retrofit Coroutine 响应：", JsonUtils.toJson(response))
+                    appendFormatLog("✓ Retrofit Coroutine 响应：", JsonUtils.toJson(response))
                 } else {
                     appendLog(
-                        "Retrofit Coroutine 业务失败（${response.code}）：" +
+                        "✗ Retrofit Coroutine 业务失败（${response.code}）：" +
                             response.message.ifBlank { "未知错误" },
                     )
                 }
             } catch (e: Exception) {
-                appendLog("Retrofit Coroutine 失败：${e.message ?: "未知错误"}")
+                appendLog("✗ Retrofit Coroutine 失败：${e.message ?: "未知错误"}")
             }
         }
     }

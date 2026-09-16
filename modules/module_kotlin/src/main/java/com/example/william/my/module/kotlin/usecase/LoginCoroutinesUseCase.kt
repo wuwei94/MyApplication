@@ -10,12 +10,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 /**
- * Android 上的 Kotlin 协程用例
+ * Android 上的 Kotlin 协程用例（登录）
  * https://developer.android.google.cn/kotlin/coroutines
  * <p>
- * suspend -> Result
+ * suspend -> Result；演示模块直连 [NetworkApi]，不经过 Repository。
  */
-class CoroutinesUseCase(private val defaultDispatcher: CoroutineDispatcher) {
+class LoginCoroutinesUseCase(private val defaultDispatcher: CoroutineDispatcher) {
 
     private val api = createApi(NetworkApi::class.java)
 
@@ -24,13 +24,9 @@ class CoroutinesUseCase(private val defaultDispatcher: CoroutineDispatcher) {
         password: String,
     ): NetworkResult<RetrofitResponse<LoginData>> = withContext(defaultDispatcher) {
         // 打印线程
-        ThreadUtils.isMainThread("CoroutinesUseCase login")
+        ThreadUtils.isMainThread("LoginCoroutinesUseCase login")
 
         // 阻塞网络请求
         NetworkResult.Success(api.loginSuspend(username, password))
-    }
-
-    companion object {
-        private val TAG = CoroutinesUseCase::class.java.simpleName
     }
 }

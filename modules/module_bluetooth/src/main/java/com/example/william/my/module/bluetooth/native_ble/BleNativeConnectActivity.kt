@@ -25,6 +25,11 @@ import java.util.UUID
  *
  * 演示 Android 原生 BluetoothGatt 全生命周期与特征值读写。
  *
+ * 库选型定位（四栈横评中的原生）：
+ * - 维护方：Android 系统 SDK，零第三方依赖
+ * - 能力要点：GATT 回调与服务树完全暴露，无队列保护需自行串行化
+ * - 适合：自研 GATT 协议调试、不想引入 Nordic / FastBle 等封装库的项目
+ *
  * 核心特性：
  * 1. 连接：connectGatt / autoConnect 与连接状态机
  * 2. 服务发现：discoverServices 与 GATT 树解析
@@ -208,7 +213,8 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         "7. 断开并释放 GATT 连接 (disconnect & close)",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> scanAndConnectFirstDevice()
             1 -> discoverServices()

@@ -9,11 +9,11 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  * 布局/视图容器类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：ConstraintLayout 动态视图展示容器（[mContainer] / [binding.basicsResponseContainer]）
+ * - 上方展示：ConstraintLayout 动态视图展示容器（[container] / [binding.basicsResponseContainer]）
  * - 下方列表：RecyclerView 操作列表（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
- * 1. 继承类通过 [mContainer]、[setView] 或 [addView] 动态挂载、替换或更新上方区域的 View。
+ * 1. 继承类通过 [container]、[setView] 或 [addView] 动态挂载、替换或更新上方区域的 View。
  * 2. 下方统一由 [buildList] + [onRecyclerClick] 触发操作。
  * 3. 适用场景：自定义 View 效果演示、动态布局加载（如 AsyncLayoutInflater）、视图预加载展示等。
  */

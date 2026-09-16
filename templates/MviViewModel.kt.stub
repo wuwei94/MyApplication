@@ -6,6 +6,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -32,16 +33,22 @@ sealed interface <Feature>UiEffect {
 // 4. ViewModel: 状态驱动器
 class <Feature>ViewModel : ViewModel() {
 
+    val intent = Channel<<Feature>UiIntent>(Channel.UNLIMITED)
+
     private val _uiState = MutableStateFlow(<Feature>UiState())
     val uiState: StateFlow<<Feature>UiState> = _uiState.asStateFlow()
 
     private val _uiEffect = Channel<<Feature>UiEffect>(Channel.BUFFERED)
     val uiEffect = _uiEffect.receiveAsFlow()
 
-    fun sendIntent(intent: <Feature>UiIntent) {
-        when (intent) {
-            is <Feature>UiIntent.Refresh -> loadData()
-            is <Feature>UiIntent.SubmitAction -> submit(intent.id)
+    init {
+        viewModelScope.launch {
+            intent.consumeAsFlow().collect { action ->
+                when (action) {
+                    is <Feature>UiIntent.Refresh -> loadData()
+                    is <Feature>UiIntent.SubmitAction -> submit(action.id)
+                }
+            }
         }
     }
 
@@ -55,7 +62,7 @@ class <Feature>ViewModel : ViewModel() {
                 _uiState.update { it.copy(isLoading = false, data = list) }
             }.onFailure { throwable ->
                 _uiState.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-                _uiEffect.send(<Feature>UiEffect.ShowToast("加载失败: ${throwable.message}"))
+                _uiEffect.send(<Feature>UiEffect.ShowToast("网络请求失败: ${throwable.message}"))
             }
         }
     }

@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_custom.R
-import com.example.william.my.module.widget_custom.databinding.DemoActivityMarqueeViewBinding
+import com.example.william.my.module.widget_custom.databinding.WidgetActivityMarqueeViewBinding
 
 /**
  * MarqueeView — 跑马灯控件
@@ -24,9 +24,9 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityMarqu
  * 4. 点击事件：支持每项的点击事件
  */
 @Route(path = RouterPath.WidgetCustom.MarqueeView)
-class MarqueeViewActivity : BaseVBActivity<DemoActivityMarqueeViewBinding>() {
+class MarqueeViewActivity : BaseVBActivity<WidgetActivityMarqueeViewBinding>() {
 
-    override fun getViewBinding(): DemoActivityMarqueeViewBinding = DemoActivityMarqueeViewBinding.inflate(layoutInflater)
+    override fun getViewBinding(): WidgetActivityMarqueeViewBinding = WidgetActivityMarqueeViewBinding.inflate(layoutInflater)
 
     private val data = arrayListOf("第一条数据", "第二条数据", "第三条数据", "第四条数据")
     private val marqueeViews = mutableListOf<View>()
@@ -41,12 +41,12 @@ class MarqueeViewActivity : BaseVBActivity<DemoActivityMarqueeViewBinding>() {
         var i = 0
         while (i < data.size) {
             val viewGroup = layoutInflater.inflate(
-                R.layout.demo_item_marquee_view,
+                R.layout.widget_item_marquee_view,
                 window.decorView as ViewGroup,
                 false,
             ) as LinearLayout
-            val textView1 = viewGroup.findViewById<TextView>(R.id.item_marquee_primary)
-            val textView2 = viewGroup.findViewById<TextView>(R.id.item_marquee_accent)
+            val textView1 = viewGroup.findViewById<TextView>(R.id.widget_item_marquee_primary)
+            val textView2 = viewGroup.findViewById<TextView>(R.id.widget_item_marquee_accent)
             // 进行对控件赋值
             textView1.text = data[i]
             if (data.size > i + 1) {
@@ -60,6 +60,6 @@ class MarqueeViewActivity : BaseVBActivity<DemoActivityMarqueeViewBinding>() {
             marqueeViews.add(viewGroup)
             i += 2
         }
-        binding.marqueeView.setViews(marqueeViews)
+        binding.widgetMarqueeView.setViews(marqueeViews)
     }
 }

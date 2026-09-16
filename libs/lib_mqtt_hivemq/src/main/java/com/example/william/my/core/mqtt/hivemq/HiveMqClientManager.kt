@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.william.my.core.mqtt.MqttClientListener
 import com.hivemq.client.mqtt.MqttClient
+import com.hivemq.client.mqtt.MqttClientState
 import com.hivemq.client.mqtt.datatypes.MqttQos
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient
 
@@ -27,9 +28,6 @@ object HiveMqClientManager {
     @Volatile
     private var listener: MqttClientListener? = null
 
-    @Volatile
-    private var connected: Boolean = false
-
     /**
      * 建立 MQTT 3.1.1 连接。
      *
@@ -49,7 +47,6 @@ object HiveMqClientManager {
         listener: MqttClientListener? = null,
     ) {
         this.listener = listener
-        connected = false
         val newClient: Mqtt3AsyncClient = MqttClient.builder()
             .useMqttVersion3()
             .serverHost(host)
@@ -63,7 +60,6 @@ object HiveMqClientManager {
             .send()
             .whenComplete { _, throwable ->
                 if (throwable == null) {
-                    connected = true
                     mainHandler.post {
                         this@HiveMqClientManager.listener?.onConnectSuccess(false)
                     }
@@ -102,12 +98,13 @@ object HiveMqClientManager {
     /**
      * 发布消息。
      */
-    fun publish(topic: String, payload: String, qos: Int = 1) {
+    fun publish(topic: String, payload: String, qos: Int = 1, retained: Boolean = false) {
         val current = client ?: return
         current.publishWith()
             .topic(topic)
             .payload(payload.toByteArray(Charsets.UTF_8))
             .qos(toQos(qos))
+            .retain(retained)
             .send()
             .whenComplete { _, throwable ->
                 if (throwable != null) {
@@ -123,7 +120,6 @@ object HiveMqClientManager {
      */
     fun disconnect() {
         val current = client ?: return
-        connected = false
         try {
             current.disconnect()
         } catch (_: Exception) {
@@ -137,7 +133,7 @@ object HiveMqClientManager {
     /**
      * 当前是否已连接。
      */
-    fun isConnected(): Boolean = connected
+    fun isConnected(): Boolean = client?.state == MqttClientState.CONNECTED
 
     private fun toQos(qos: Int): MqttQos = when (qos) {
         0 -> MqttQos.AT_MOST_ONCE

@@ -4,23 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.BlurViewActivity">
+    tools:context=".activity.VerifyCodeActivity">
 
-    <com.example.william.my.core.widget.blur.BlurView
-        android:id="@+id/blur_blurView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <SeekBar
-        android:id="@+id/blur_seekBar"
+    <com.example.william.my.core.widget.verifycode.VerifyCodeView
+        android:id="@+id/widget_verify_code_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/shared_dp_48"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

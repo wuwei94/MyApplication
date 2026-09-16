@@ -3,10 +3,12 @@ package com.example.william.my.module.kotlin.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.data.NetworkResult
-import com.example.william.my.module.kotlin.usecase.FlowUseCase
+import com.example.william.my.module.kotlin.usecase.LoginFlowUseCase
 import com.example.william.my.module.kotlin.utils.ThreadUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,7 +45,7 @@ import java.io.IOException
  * https://developer.android.google.cn/kotlin/flow
  */
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
+class FlowViewModel(private val useCase: LoginFlowUseCase) : ViewModel() {
 
     // 1. 登录 UI 状态流 (StateFlow)
     private val _uiState: MutableStateFlow<NetworkResult<RetrofitResponse<LoginData>>> =
@@ -61,7 +63,7 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
     fun login(username: String, password: String) {
         viewModelScope.launch {
             ThreadUtils.isMainThread("FlowViewModel login")
-            _flowLog.emit("【1. 基础冷流】发起 Flow 登录请求...")
+            _flowLog.emit("→ [1. 基础冷流] 发起 Flow 登录请求...")
 
             val flow: Flow<RetrofitResponse<LoginData>> =
                 useCase.login(username, password)
@@ -72,10 +74,10 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
                 }
                 .catch { exception ->
                     _uiState.value = NetworkResult.Error(Exception(exception))
-                    _flowLog.emit("【1. 基础冷流】登录异常: ${exception.message}")
+                    _flowLog.emit("✗ [1. 基础冷流] 登录异常: ${exception.message}")
                 }
                 .onCompletion {
-                    _flowLog.emit("【1. 基础冷流】请求链路完成 (onCompletion)")
+                    _flowLog.emit("✓ [1. 基础冷流] 请求链路完成 (onCompletion)")
                 }
                 .collect { response ->
                     _uiState.value = NetworkResult.Success(response)
@@ -88,13 +90,13 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
      */
     fun testFlowTransform() {
         viewModelScope.launch {
-            _flowLog.emit("【2. 变换操作符】源数据: 1..6，经过 filter(偶数) -> map(计算平方) -> take(2)...")
+            _flowLog.emit("→ [2. 变换操作符] 源数据: 1..6，经过 filter(偶数) -> map(计算平方) -> take(2)...")
             flowOf(1, 2, 3, 4, 5, 6)
                 .filter { it % 2 == 0 }
                 .map { "偶数项: $it -> 平方: ${it * it}" }
                 .take(2)
                 .collect {
-                    _flowLog.emit("【2. 变换操作符】接收: $it")
+                    _flowLog.emit("✓ [2. 变换操作符] 接收: $it")
                 }
         }
     }
@@ -119,15 +121,15 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
                 emit(3)
             }
 
-            _flowLog.emit("【3. zip 操作符】1 对 1 严格按序号配对:")
+            _flowLog.emit("→ [3. zip 操作符] 1 对 1 严格按序号配对:")
             flowLetters.zip(flowNumbers) { letter, number ->
                 "[$letter : $number]"
             }.collect {
-                _flowLog.emit("【3. zip 结果】$it")
+                _flowLog.emit("✓ [3. zip 结果] $it")
             }
 
             delay(100)
-            _flowLog.emit("【3. combine 操作符】任意一方有新值时与另一方最新值组合:")
+            _flowLog.emit("→ [3. combine 操作符] 任意一方有新值时与另一方最新值组合:")
             val flowLetters2 = flow {
                 emit("X")
                 delay(200)
@@ -143,7 +145,7 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
             flowLetters2.combine(flowNumbers2) { letter, number ->
                 "($letter + $number)"
             }.collect {
-                _flowLog.emit("【3. combine 结果】$it")
+                _flowLog.emit("✓ [3. combine 结果] $it")
             }
         }
     }
@@ -153,7 +155,7 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
      */
     fun testDebounceAndFlatMapLatest() {
         viewModelScope.launch {
-            _flowLog.emit("【4. 防抖搜索】模拟输入流: 'k' -> 'ko' -> 'kot' -> 'kot' -> 'kotlin'...")
+            _flowLog.emit("→ [4. 防抖搜索] 模拟输入流: 'k' -> 'ko' -> 'kot' -> 'kot' -> 'kotlin'...")
 
             val searchInputFlow = flow {
                 emit("k")
@@ -173,13 +175,13 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
                 .flatMapLatest { query ->
                     // 模拟网络搜索流，收到新 query 时自动取消旧搜索流
                     flow {
-                        _flowLog.emit("【4. 防抖搜索】触发检索关键词: [$query]")
+                        _flowLog.emit("→ [4. 防抖搜索] 触发检索关键词: [$query]")
                         delay(150)
                         emit("检索结果: 关于 '$query' 的 10 条匹配项")
                     }
                 }
                 .collect { result ->
-                    _flowLog.emit("【4. 防抖搜索】展示: $result")
+                    _flowLog.emit("✓ [4. 防抖搜索] 展示: $result")
                 }
         }
     }
@@ -189,18 +191,18 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
      */
     fun testHotFlows() {
         viewModelScope.launch {
-            _flowLog.emit("【5. 热流对比】StateFlow 具备初始值并保留最新状态；SharedFlow 适合广播一次性事件。")
+            _flowLog.emit("→ [5. 热流对比] StateFlow 具备初始值并保留最新状态；SharedFlow 适合广播一次性事件。")
 
             val oneOffEventFlow = MutableSharedFlow<String>(replay = 0, extraBufferCapacity = 1)
 
             val collectorJob = launch {
                 oneOffEventFlow.collect { event ->
-                    _flowLog.emit("【5. SharedFlow 订阅者收到事件】$event")
+                    _flowLog.emit("✓ [5. SharedFlow 订阅者收到事件] $event")
                 }
             }
 
             delay(50)
-            _flowLog.emit("【5. SharedFlow 发送事件】发送 Toast 通知事件...")
+            _flowLog.emit("→ [5. SharedFlow 发送事件] 发送 Toast 通知事件...")
             oneOffEventFlow.emit("ShowToast: '操作已成功完成！'")
             delay(100)
             collectorJob.cancel()
@@ -212,12 +214,12 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
      */
     fun testRetryAndCatch() {
         viewModelScope.launch {
-            _flowLog.emit("【6. 异常重试】模拟不稳定网络流 (前 2 次抛异常，第 3 次成功)...")
+            _flowLog.emit("→ [6. 异常重试] 模拟不稳定网络流 (前 2 次抛异常，第 3 次成功)...")
             var attemptCount = 0
 
             val unstableFlow = flow {
                 attemptCount++
-                _flowLog.emit("【6. 异常重试】第 $attemptCount 次尝试请求数据...")
+                _flowLog.emit("→ [6. 异常重试] 第 $attemptCount 次尝试请求数据...")
                 if (attemptCount < 3) {
                     throw IOException("网络超时异常 (attempt=$attemptCount)")
                 }
@@ -227,29 +229,27 @@ class FlowViewModel(private val useCase: FlowUseCase) : ViewModel() {
             unstableFlow
                 .retry(retries = 2) { cause ->
                     val shouldRetry = cause is IOException
-                    _flowLog.emit("【6. 异常重试】捕获 [${cause.message}], 是否重试: $shouldRetry")
+                    _flowLog.emit("✗ [6. 异常重试] 捕获 [${cause.message}], 是否重试: $shouldRetry")
                     shouldRetry
                 }
                 .catch { exception ->
-                    _flowLog.emit("【6. 异常重试】重试耗尽，降级处理: ${exception.message}")
+                    _flowLog.emit("✗ [6. 异常重试] 重试耗尽，降级处理: ${exception.message}")
                     emit("兜底本地缓存数据")
                 }
                 .collect { data ->
-                    _flowLog.emit("【6. 异常重试】最终收集结果: $data")
+                    _flowLog.emit("✓ [6. 异常重试] 最终收集结果: $data")
                 }
         }
     }
-}
 
-/**
- * Flow ViewModel 工厂
- */
-object FlowVMFactory : ViewModelProvider.Factory {
-
-    private val useCase = FlowUseCase(Dispatchers.IO)
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        @Suppress("UNCHECKED_CAST")
-        return FlowViewModel(useCase) as T
+    companion object {
+        /**
+         * 工厂：通过 [viewModelFactory] DSL 构建并注入 [LoginFlowUseCase]
+         */
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                FlowViewModel(LoginFlowUseCase(Dispatchers.IO))
+            }
+        }
     }
 }

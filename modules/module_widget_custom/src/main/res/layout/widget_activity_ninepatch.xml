@@ -7,18 +7,18 @@
     tools:context=".activity.NinePatchActivity">
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/widget_text_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="啊啊啊啊啊啊啊啊啊啊啊啊"
-        app:layout_constraintBottom_toTopOf="@id/text2"
+        app:layout_constraintBottom_toTopOf="@id/widget_text_secondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text2"
+        android:id="@+id/widget_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/shared_dp_8"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text1" />
+        app:layout_constraintTop_toBottomOf="@id/widget_text_primary" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

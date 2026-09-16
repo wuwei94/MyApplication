@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.retrofit
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.LoginData
@@ -18,7 +19,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * Retrofit + RxJava — 原生回调式网络请求
+ * Retrofit + RxJava — Rx 订阅式网络请求
  *
  * 使用 Retrofit.Builder 手动装配 Gson 转换器与 RxJava3 CallAdapter，
  * 将接口方法返回值桥接为 Single，由页面自行管理线程与订阅释放。
@@ -37,8 +38,13 @@ class RetrofitRxActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Retrofit Rx 示例：RxJava3 Single 订阅式登录请求")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "RetrofitRx login",
+        "1. Retrofit Rx 登录请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -66,11 +72,11 @@ class RetrofitRxActivity : BasicResponseActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<RetrofitResponse<LoginData>>() {
                     override fun onSuccess(response: RetrofitResponse<LoginData>) {
-                        appendFormatLog("Retrofit Rx 响应：", JsonUtils.toJson(response))
+                        appendFormatLog("✓ Retrofit Rx 响应：", JsonUtils.toJson(response))
                     }
 
                     override fun onError(e: Throwable) {
-                        appendLog("Retrofit Rx 失败：${e.message ?: "未知错误"}")
+                        appendLog("✗ Retrofit Rx 失败：${e.message ?: "未知错误"}")
                     }
                 }),
         )

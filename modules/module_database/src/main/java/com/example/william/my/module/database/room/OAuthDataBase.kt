@@ -19,6 +19,7 @@ abstract class OAuthDataBase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "personal-db"
 
+        @Volatile
         private var instance: OAuthDataBase? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this) {

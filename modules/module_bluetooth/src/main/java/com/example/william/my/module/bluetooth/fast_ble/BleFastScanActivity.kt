@@ -26,6 +26,21 @@ import java.util.UUID
  * 2. 一键扫描：`BleManager.getInstance().scan(...)`
  * 3. 生命周期回调：onScanStarted / onScanning / onScanFinished
  *
+ * 基本用法：
+ * ```kotlin
+ * BleManager.getInstance().initScanRule(
+ *     BleScanRuleConfig.Builder().setScanTimeOut(10000).setServiceUuids(uuids).build()
+ * )
+ * BleManager.getInstance().scan(object : BleScanCallback() {
+ *     override fun onScanning(bleDevice: BleDevice?) { /* updateLog */ }
+ * })
+ * ```
+ *
+ * 适用场景：
+ * - 新手入门或中小型项目快速接入 BLE
+ * - 业务逻辑较简单、以 UUID 字符串驱动的外设
+ * - 与原生 / Nordic / RxAndroidBle 扫描模型横向对比
+ *
  * https://github.com/Jasonchenlijian/FastBle
  */
 @Route(path = RouterPath.Bluetooth.FastScan)
@@ -56,7 +71,8 @@ class BleFastScanActivity : BasicResponseActivity() {
         "5. 查看 FastBle 设计特点说明",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> configScanRule(isFilter = false)
             1 -> configScanRule(isFilter = true)

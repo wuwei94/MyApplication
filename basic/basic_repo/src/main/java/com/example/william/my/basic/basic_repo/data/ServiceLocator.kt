@@ -170,10 +170,7 @@ object ServiceLocator {
         return ArticleLocalDataSourceImpl(database.articleDao())
     }
 
-    private fun createArticleRepository(context: Context): ArticleRepository {
-        val newRepo =
-            DefaultArticleRepository(createArticleRemoteDataSource(), createArticleLocalDataSource(context))
-        articleRepository = newRepo
-        return newRepo
+    private fun createArticleRepository(context: Context): ArticleRepository = DefaultArticleRepository(createArticleRemoteDataSource(), createArticleLocalDataSource(context)).also {
+        articleRepository = it
     }
 }

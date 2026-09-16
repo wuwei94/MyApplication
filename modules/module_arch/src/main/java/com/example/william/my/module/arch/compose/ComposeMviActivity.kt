@@ -88,7 +88,7 @@ class ComposeMviActivity : BaseActivity() {
                 this.needFirstRefresh = true
             }
             val scrollState = rememberLazyListState()
-            val uiState by viewModel.state.collectAsState()
+            val uiState by viewModel.uiState.collectAsState()
 
             var displayRefreshFlag by remember { mutableStateOf<SmartSwipeStateFlag?>(null) }
             var displayLoadMoreFlag by remember { mutableStateOf<SmartSwipeStateFlag?>(null) }
@@ -105,7 +105,7 @@ class ComposeMviActivity : BaseActivity() {
 
             // 监听单次副作用事件（如刷新完成、加载更多完成、Toast 提示）
             LaunchedEffect(Unit) {
-                viewModel.effect.collect { effect ->
+                viewModel.uiEffect.collect { effect ->
                     when (effect) {
                         is ArticleComposeUiEffect.RefreshComplete -> {
                             val flag = if (effect.isSuccess) {
@@ -283,7 +283,7 @@ class ComposeMviActivity : BaseActivity() {
             SmartSwipeStateFlag.TIPS_RELEASE -> "释放立即加载" to false
             SmartSwipeStateFlag.REFRESHING -> "正在加载..." to true
             SmartSwipeStateFlag.SUCCESS -> "加载完成" to false
-            SmartSwipeStateFlag.ERROR -> "加载失败" to false
+            SmartSwipeStateFlag.ERROR -> "网络请求失败" to false
         }
 
         Box(

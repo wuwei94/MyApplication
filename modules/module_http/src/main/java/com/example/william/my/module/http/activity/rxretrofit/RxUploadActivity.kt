@@ -82,10 +82,10 @@ class RxUploadActivity : BasicResponseActivity() {
                 target.writeText(content)
             }
         } catch (error: Exception) {
-            appendLog("上传文件创建失败：${error.message ?: ApiException.DEFAULT_MESSAGE}")
+            appendLog("✗ [单文件上传] 文件创建失败：${error.message ?: ApiException.DEFAULT_MESSAGE}")
             return
         }
-        appendLog("单文件上传已开始")
+        appendLog("→ [单文件上传] 已开始")
         uploadInProgress = true
         operations.add(
             RxUpload.builder()
@@ -112,13 +112,13 @@ class RxUploadActivity : BasicResponseActivity() {
 
                     override fun onResponse(response: UploadResult) {
                         removeUpdatingLog(UPLOAD_PROGRESS_KEY)
-                        appendLog("上传完成，HTTP ${response.statusCode}")
-                        appendFormatLog("上传响应：", response.body)
+                        appendLog("✓ [单文件上传] 完成，HTTP ${response.statusCode}")
+                        appendFormatLog("✓ [单文件上传] 响应：", response.body)
                     }
 
                     override fun onFailure(error: ApiException) {
                         removeUpdatingLog(UPLOAD_PROGRESS_KEY)
-                        appendLog("上传失败：${error.message}")
+                        appendLog("✗ [单文件上传] 失败：${error.message}")
                     }
                 }),
         )
@@ -142,10 +142,10 @@ class RxUploadActivity : BasicResponseActivity() {
                 target.writeText(content)
             }
         } catch (error: Exception) {
-            appendLog("上传文件创建失败：${error.message ?: ApiException.DEFAULT_MESSAGE}")
+            appendLog("✗ [多文件上传] 文件创建失败：${error.message ?: ApiException.DEFAULT_MESSAGE}")
             return
         }
-        appendLog("多文件上传已开始，共 ${files.size} 个文件")
+        appendLog("→ [多文件上传] 已开始，共 ${files.size} 个文件")
         uploadInProgress = true
         operations.add(
             RxUpload.builder()
@@ -172,13 +172,13 @@ class RxUploadActivity : BasicResponseActivity() {
 
                     override fun onResponse(response: UploadResult) {
                         removeUpdatingLog(UPLOAD_PROGRESS_KEY)
-                        appendLog("上传完成，HTTP ${response.statusCode}")
-                        appendFormatLog("上传响应：", response.body)
+                        appendLog("✓ [多文件上传] 完成，HTTP ${response.statusCode}")
+                        appendFormatLog("✓ [多文件上传] 响应：", response.body)
                     }
 
                     override fun onFailure(error: ApiException) {
                         removeUpdatingLog(UPLOAD_PROGRESS_KEY)
-                        appendLog("上传失败：${error.message}")
+                        appendLog("✗ [多文件上传] 失败：${error.message}")
                     }
                 }),
         )
@@ -187,7 +187,7 @@ class RxUploadActivity : BasicResponseActivity() {
     private fun cancelUpload() {
         operations.clear()
         clearUpdatingLogs()
-        appendLog("当前上传操作已取消")
+        appendLog("→ [上传] 当前操作已取消")
     }
 
     private fun clearUploads() {
@@ -195,7 +195,7 @@ class RxUploadActivity : BasicResponseActivity() {
         if (uploadInProgress) {
             uploadCleanupRequested = true
             operations.clear()
-            appendLog("当前上传已取消，等待任务结束后清理文件")
+            appendLog("→ [上传] 当前任务已取消，等待结束后清理文件")
             return
         }
         clearUploadFiles()
@@ -204,24 +204,24 @@ class RxUploadActivity : BasicResponseActivity() {
     /** 删除上传示例目录中的直接子项。 */
     private fun clearUploadFiles() {
         if (uploadDirectory.exists() && !uploadDirectory.isDirectory) {
-            appendLog("上传临时文件清理失败：目标路径不是目录")
+            appendLog("✗ [清理上传文件] 目标路径不是目录")
             return
         }
         if (!uploadDirectory.exists()) {
-            appendLog("上传临时文件清理完成：已删除 0/0")
+            appendLog("✓ [清理上传文件] 已删除 0/0")
             return
         }
         val files = uploadDirectory.listFiles() ?: run {
-            appendLog("上传临时文件清理失败：无法读取目录")
+            appendLog("✗ [清理上传文件] 无法读取目录")
             return
         }
         val failedFiles = files.filter { !it.delete() }
         appendLog(
-            "上传临时文件清理完成：已删除 " +
+            "✓ [清理上传文件] 已删除 " +
                 "${files.size - failedFiles.size}/${files.size}",
         )
         if (failedFiles.isNotEmpty()) {
-            appendLog("未能删除：${failedFiles.joinToString { it.name }}")
+            appendLog("✗ [清理上传文件] 未能删除：${failedFiles.joinToString { it.name }}")
         }
     }
 

@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_custom.databinding.DemoActivityBlurViewBinding
+import com.example.william.my.module.widget_custom.databinding.WidgetActivityBlurViewBinding
 
 /**
  * BlurView — 局部背景高斯模糊控件
@@ -25,9 +25,9 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityBlurV
  * https://developer.android.com/media/platform/rendereffect
  */
 @Route(path = RouterPath.WidgetCustom.BlurView)
-class BlurViewActivity : BaseVBActivity<DemoActivityBlurViewBinding>() {
+class BlurViewActivity : BaseVBActivity<WidgetActivityBlurViewBinding>() {
 
-    override fun getViewBinding(): DemoActivityBlurViewBinding = DemoActivityBlurViewBinding.inflate(layoutInflater)
+    override fun getViewBinding(): WidgetActivityBlurViewBinding = WidgetActivityBlurViewBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -36,11 +36,11 @@ class BlurViewActivity : BaseVBActivity<DemoActivityBlurViewBinding>() {
     }
 
     private fun initBlurView() {
-        binding.blurSeekBar.max = 100
-        binding.blurBlurView.setImageView(R.drawable.shared_ic_launcher)
-        binding.blurSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.widgetBlurSeekBar.max = 100
+        binding.widgetBlurView.setImageView(R.drawable.shared_ic_launcher)
+        binding.widgetBlurSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                binding.blurBlurView.setImageBlur(progress)
+                binding.widgetBlurView.setImageBlur(progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}

@@ -34,8 +34,8 @@ class VolleyActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Volley postForm（表单提交）",
-        "Volley postJson（JSON 提交）",
+        "1. Volley postForm（表单提交）",
+        "2. Volley postJson（JSON 提交）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -66,11 +66,11 @@ class VolleyActivity : BasicResponseActivity() {
                 this,
                 object : VolleyListener<LoginData>() {
                     override fun onResponse(response: LoginData?) {
-                        appendLog("【postForm】成功：${response?.let(JsonUtils::toJson)}")
+                        appendLog("✓ [postForm] ${response?.let(JsonUtils::toJson)}")
                     }
 
                     override fun onErrorResponse(error: VolleyError?) {
-                        appendLog("【postForm】失败：${error?.message}")
+                        appendLog("✗ [postForm] ${error?.message}")
                     }
                 },
             )
@@ -90,11 +90,11 @@ class VolleyActivity : BasicResponseActivity() {
                 this,
                 object : VolleyListener<LoginData>() {
                     override fun onResponse(response: LoginData?) {
-                        appendLog("【postJson】成功：${response?.let(JsonUtils::toJson)}")
+                        appendLog("✓ [postJson] ${response?.let(JsonUtils::toJson)}")
                     }
 
                     override fun onErrorResponse(error: VolleyError?) {
-                        appendLog("【postJson】失败：${error?.message}")
+                        appendLog("✗ [postJson] ${error?.message}")
                     }
                 },
             )

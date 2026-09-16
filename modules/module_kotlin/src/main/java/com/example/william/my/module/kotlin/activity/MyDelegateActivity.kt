@@ -31,13 +31,13 @@ class MyDelegateActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "类委托（Class Delegation: by base）",
-        "自定义属性委托（ReadWriteProperty）",
-        "延迟属性委托（by lazy）",
-        "可观察属性（Delegates.observable）",
-        "可否决属性（Delegates.vetoable）",
-        "Map 映射属性委托（by map）",
-        "属性重定向委托（::otherProp）与 notNull",
+        "1. 类委托（Class Delegation: by base）",
+        "2. 自定义属性委托（ReadWriteProperty）",
+        "3. 延迟属性委托（by lazy）",
+        "4. 可观察属性（Delegates.observable）",
+        "5. 可否决属性（Delegates.vetoable）",
+        "6. Map 映射属性委托（by map）",
+        "7. 属性重定向委托（::otherProp）与 notNull",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -81,7 +81,7 @@ class MyDelegateActivity : BasicResponseActivity() {
 
     private fun testClassDelegate() {
         val printer = DelegatedPrinter(RealPrinter())
-        appendLog("【类委托】调用结果: ${printer.printMessage()}")
+        appendLog("✓ [类委托] 调用结果: ${printer.printMessage()}")
     }
 
     // ─────────────────────────────────────────────
@@ -111,9 +111,9 @@ class MyDelegateActivity : BasicResponseActivity() {
 
     private fun testAttrDelegate() {
         val holder = CustomDelegateHolder()
-        appendLog("【属性委托】读取初始值: ${holder.text}")
+        appendLog("→ [属性委托] 读取初始值: ${holder.text}")
         holder.text = "NewDelegateValue"
-        appendLog("【属性委托】赋值后读取: ${holder.text}")
+        appendLog("✓ [属性委托] 赋值后读取: ${holder.text}")
     }
 
     // ─────────────────────────────────────────────
@@ -126,8 +126,8 @@ class MyDelegateActivity : BasicResponseActivity() {
     }
 
     private fun testLazyDelegate() {
-        appendLog("【Lazy委托】第 1 次访问: $lazyValue")
-        appendLog("【Lazy委托】第 2 次访问: $lazyValue（未重复初始化，计算次数: $lazyInitCount）")
+        appendLog("→ [Lazy委托] 第 1 次访问: $lazyValue")
+        appendLog("✓ [Lazy委托] 第 2 次访问: $lazyValue（未重复初始化，计算次数: $lazyInitCount）")
     }
 
     // ─────────────────────────────────────────────
@@ -140,7 +140,7 @@ class MyDelegateActivity : BasicResponseActivity() {
      */
     class ObservableUser(private val logCallback: (String) -> Unit) {
         var name: String by Delegates.observable("InitName") { prop, old, new ->
-            logCallback("【Observable】属性 ${prop.name} 变更: $old -> $new")
+            logCallback("→ [Observable] 属性 ${prop.name} 变更: $old -> $new")
         }
     }
 
@@ -161,7 +161,7 @@ class MyDelegateActivity : BasicResponseActivity() {
     class VetoableUser(private val logCallback: (String) -> Unit) {
         var age: Int by Delegates.vetoable(18) { prop, old, new ->
             val allow = new in 0..150
-            logCallback("【Vetoable】尝试将 ${prop.name} 从 $old 修改为 $new: ${if (allow) "允许" else "否决"}")
+            logCallback("→ [Vetoable] 尝试将 ${prop.name} 从 $old 修改为 $new: ${if (allow) "允许" else "否决"}")
             allow
         }
     }
@@ -169,9 +169,9 @@ class MyDelegateActivity : BasicResponseActivity() {
     private fun testVetoableDelegate() {
         val user = VetoableUser { appendLog(it) }
         user.age = 25
-        appendLog("【Vetoable】当前 age: ${user.age}")
+        appendLog("✓ [Vetoable] 当前 age: ${user.age}")
         user.age = -5
-        appendLog("【Vetoable】当前 age: ${user.age}（非法值未生效）")
+        appendLog("✓ [Vetoable] 当前 age: ${user.age}（非法值未生效）")
     }
 
     // ─────────────────────────────────────────────
@@ -190,7 +190,7 @@ class MyDelegateActivity : BasicResponseActivity() {
     private fun testMapDelegate() {
         val map = mapOf("title" to "Antigravity App", "version" to 2)
         val config = MapConfig(map)
-        appendLog("【Map委托】title: ${config.title}, version: ${config.version}")
+        appendLog("✓ [Map委托] title: ${config.title}, version: ${config.version}")
     }
 
     // ─────────────────────────────────────────────
@@ -213,12 +213,12 @@ class MyDelegateActivity : BasicResponseActivity() {
 
     private fun testPropertyRedirectAndNotNull() {
         val bean = MyMigrationBean()
-        appendLog("【属性重定向】读取 oldFeatureName: ${bean.oldFeatureName}")
+        appendLog("→ [属性重定向] 读取 oldFeatureName: ${bean.oldFeatureName}")
         bean.oldFeatureName = "Kotlin-2.0-Evolution"
-        appendLog("【属性重定向】修改 oldFeatureName 后 newFeatureName 同步变更为: ${bean.newFeatureName}")
+        appendLog("✓ [属性重定向] 修改 oldFeatureName 后 newFeatureName 同步变更为: ${bean.newFeatureName}")
 
         // notNull 赋值测试
         bean.initializedToken = "Auth-Token-987654"
-        appendLog("【Delegates.notNull】读取非空属性: ${bean.initializedToken}")
+        appendLog("✓ [Delegates.notNull] 读取非空属性: ${bean.initializedToken}")
     }
 }

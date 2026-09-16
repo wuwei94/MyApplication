@@ -9,8 +9,8 @@ import com.example.william.my.basic.basic_repo.data.ServiceLocator
 import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.compose.data.ArticleComposeIntent
-import com.example.william.my.module.arch.compose.data.ArticleComposeState
 import com.example.william.my.module.arch.compose.data.ArticleComposeUiEffect
+import com.example.william.my.module.arch.compose.data.ArticleComposeUiState
 import com.example.william.my.module.arch.mvi.usecase.ArticleFlowUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -37,11 +37,11 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
 
     val intent = Channel<ArticleComposeIntent>(Channel.UNLIMITED)
 
-    private val _state = MutableStateFlow(ArticleComposeState())
-    val state: StateFlow<ArticleComposeState> = _state.asStateFlow()
+    private val _uiState = MutableStateFlow(ArticleComposeUiState())
+    val uiState: StateFlow<ArticleComposeUiState> = _uiState.asStateFlow()
 
-    private val _effect = Channel<ArticleComposeUiEffect>(Channel.BUFFERED)
-    val effect: Flow<ArticleComposeUiEffect> = _effect.receiveAsFlow()
+    private val _uiEffect = Channel<ArticleComposeUiEffect>(Channel.BUFFERED)
+    val uiEffect: Flow<ArticleComposeUiEffect> = _uiEffect.receiveAsFlow()
 
     private var loadJob: Job? = null
 
@@ -66,12 +66,12 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
             return
         }
 
-        val targetPage = if (isRefresh) 0 else _state.value.page + 1
+        val targetPage = if (isRefresh) 0 else _uiState.value.page + 1
         loadJob = viewModelScope.launch {
             articleFlowUseCase(targetPage).collect { response ->
                 when {
                     response.code == RetrofitResponse.LOADING -> {
-                        _state.update { current ->
+                        _uiState.update { current ->
                             current.copy(
                                 isRefreshing = isRefresh,
                                 isLoadingMore = !isRefresh,
@@ -81,7 +81,7 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
 
                     response.isSuccess -> {
                         val newArticles = response.data?.datas ?: emptyList()
-                        _state.update { current ->
+                        _uiState.update { current ->
                             val updatedList = if (isRefresh) {
                                 newArticles
                             } else {
@@ -95,26 +95,26 @@ class ArticleComposeViewModel(private val repository: ArticleRepository) : ViewM
                             )
                         }
                         if (isRefresh) {
-                            _effect.send(ArticleComposeUiEffect.RefreshComplete(isSuccess = true))
+                            _uiEffect.send(ArticleComposeUiEffect.RefreshComplete(isSuccess = true))
                         } else {
-                            _effect.send(ArticleComposeUiEffect.LoadMoreComplete(isSuccess = true))
+                            _uiEffect.send(ArticleComposeUiEffect.LoadMoreComplete(isSuccess = true))
                         }
                     }
 
                     else -> {
                         val message = response.message.ifEmpty { "网络请求失败" }
-                        _state.update { current ->
+                        _uiState.update { current ->
                             current.copy(
                                 isRefreshing = false,
                                 isLoadingMore = false,
                             )
                         }
                         if (isRefresh) {
-                            _effect.send(ArticleComposeUiEffect.RefreshComplete(isSuccess = false))
+                            _uiEffect.send(ArticleComposeUiEffect.RefreshComplete(isSuccess = false))
                         } else {
-                            _effect.send(ArticleComposeUiEffect.LoadMoreComplete(isSuccess = false))
+                            _uiEffect.send(ArticleComposeUiEffect.LoadMoreComplete(isSuccess = false))
                         }
-                        _effect.send(ArticleComposeUiEffect.ShowToast(message))
+                        _uiEffect.send(ArticleComposeUiEffect.ShowToast(message))
                     }
                 }
             }

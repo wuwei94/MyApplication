@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.retrofit
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -29,8 +30,13 @@ import retrofit2.Retrofit
 @Route(path = RouterPath.Http.RetrofitCall)
 class RetrofitCallActivity : BasicResponseActivity() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Retrofit Call 示例：原生 enqueue 回调发起登录请求")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Retrofit loginCall",
+        "1. Retrofit Call 登录请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -54,17 +60,17 @@ class RetrofitCallActivity : BasicResponseActivity() {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    appendFormatLog("Retrofit Call 响应：", response.body()?.string().orEmpty())
+                    appendFormatLog("✓ Retrofit Call 响应：", response.body()?.string().orEmpty())
                 } else {
                     appendFormatLog(
-                        "Retrofit Call 失败（HTTP ${response.code()}）：",
+                        "✗ Retrofit Call 失败（HTTP ${response.code()}）：",
                         response.errorBody()?.string().orEmpty(),
                     )
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                appendLog("Retrofit Call 失败：${t.message ?: "未知错误"}")
+                appendLog("✗ Retrofit Call 失败：${t.message ?: "未知错误"}")
             }
         })
     }

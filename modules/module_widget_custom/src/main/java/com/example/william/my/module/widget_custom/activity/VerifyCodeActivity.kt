@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_custom.databinding.DemoActivityVerifyCodeBinding
+import com.example.william.my.module.widget_custom.databinding.WidgetActivityVerifyCodeBinding
 
 /**
  * VerifyCode — 验证码输入控件
@@ -18,9 +18,9 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityVerif
  * 4. 自动聚焦：自动聚焦到第一个输入框
  */
 @Route(path = RouterPath.WidgetCustom.VerifyCode)
-class VerifyCodeActivity : BaseVBActivity<DemoActivityVerifyCodeBinding>() {
+class VerifyCodeActivity : BaseVBActivity<WidgetActivityVerifyCodeBinding>() {
 
-    override fun getViewBinding(): DemoActivityVerifyCodeBinding = DemoActivityVerifyCodeBinding.inflate(layoutInflater)
+    override fun getViewBinding(): WidgetActivityVerifyCodeBinding = WidgetActivityVerifyCodeBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -29,6 +29,6 @@ class VerifyCodeActivity : BaseVBActivity<DemoActivityVerifyCodeBinding>() {
     }
 
     private fun initVerifyCode() {
-        binding.verifyCodeView.editContent = "0731"
+        binding.widgetVerifyCodeView.editContent = "0731"
     }
 }

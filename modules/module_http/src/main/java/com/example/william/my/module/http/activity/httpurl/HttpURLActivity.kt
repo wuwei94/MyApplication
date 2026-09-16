@@ -31,8 +31,8 @@ class HttpURLActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "HttpURL postForm（表单提交）",
-        "HttpURL postJson（JSON 提交）",
+        "1. HttpURL postForm（表单提交）",
+        "2. HttpURL postJson（JSON 提交）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -62,10 +62,10 @@ class HttpURLActivity : BasicResponseActivity() {
             Constants.Url_Login,
             params,
             listener = {
-                appendLog("【postForm】成功：$it")
+                appendLog("✓ [postForm] $it")
             },
             errorListener = {
-                appendLog("【postForm】失败：${it?.message}")
+                appendLog("✗ [postForm] ${it?.message}")
             },
         )
     }
@@ -79,10 +79,10 @@ class HttpURLActivity : BasicResponseActivity() {
             Constants.Url_Login,
             jsonObject,
             listener = {
-                appendLog("【postJson】成功：$it")
+                appendLog("✓ [postJson] $it")
             },
             errorListener = {
-                appendLog("【postJson】失败：${it?.message}")
+                appendLog("✗ [postJson] ${it?.message}")
             },
         )
     }

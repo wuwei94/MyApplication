@@ -11,7 +11,7 @@ import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.core.widget.bottomsheet.ViewPagerBottomSheetDialogFragment
 import com.example.william.my.module.widget_custom.R
-import com.example.william.my.module.widget_custom.databinding.DemoDialogBottomSheetBinding
+import com.example.william.my.module.widget_custom.databinding.WidgetDialogBottomSheetBinding
 
 /**
  * 底部弹窗
@@ -20,7 +20,7 @@ import com.example.william.my.module.widget_custom.databinding.DemoDialogBottomS
  */
 class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
 
-    private lateinit var binding: DemoDialogBottomSheetBinding
+    private lateinit var binding: WidgetDialogBottomSheetBinding
 
     private val fragments: ArrayList<Fragment> = arrayListOf(
         PrimaryFragment(),
@@ -29,14 +29,14 @@ class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
         PrimaryDarkFragment(),
     )
 
-    override fun getLayout(): Int = R.layout.demo_dialog_bottom_sheet
+    override fun getLayout(): Int = R.layout.widget_dialog_bottom_sheet
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DemoDialogBottomSheetBinding.inflate(layoutInflater)
+        binding = WidgetDialogBottomSheetBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -47,13 +47,13 @@ class MyBottomSheetDialog : ViewPagerBottomSheetDialogFragment() {
     }
 
     private fun initViewPager() {
-        binding.viewPager.offscreenPageLimit = fragments.size
-        binding.viewPager.adapter =
+        binding.widgetViewPager.offscreenPageLimit = fragments.size
+        binding.widgetViewPager.adapter =
             ViewPagerFragmentAdapter(childFragmentManager, fragments)
-        binding.viewPager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
+        binding.widgetViewPager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                onPageChange(binding.viewPager)
+                onPageChange(binding.widgetViewPager)
             }
         })
     }

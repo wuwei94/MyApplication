@@ -37,10 +37,10 @@ class MyInlineActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "作用域函数对比（with / let / run / also / apply）",
-        "泛型实化类型获取（inline + reified）",
-        "自定义内联扩展函数（mAlso / mApply / mRun）",
-        "内联修饰符（noinline 与 crossinline）",
+        "1. 作用域函数对比（with / let / run / also / apply）",
+        "2. 泛型实化类型获取（inline + reified）",
+        "3. 自定义内联扩展函数（mAlso / mApply / mRun）",
+        "4. 内联修饰符（noinline 与 crossinline）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -64,34 +64,34 @@ class MyInlineActivity : BasicResponseActivity() {
             name = "WithUser"
             "with 返回: name=$name"
         }
-        appendLog("【with】$withResult")
+        appendLog("✓ [with] $withResult")
 
         // let
         val letResult = user.let {
             it.score = 70
             "let 返回: score=${it.score}"
         }
-        appendLog("【let】$letResult")
+        appendLog("✓ [let] $letResult")
 
         // run
         val runResult = user.run {
             score = 80
             "run 返回: ${toJson()}"
         }
-        appendLog("【run】$runResult")
+        appendLog("✓ [run] $runResult")
 
         // also
         val alsoResult = user.also {
             it.name = "AlsoUser"
         }
-        appendLog("【also】返回对象本身: ${alsoResult.toJson()}")
+        appendLog("✓ [also] 返回对象本身: ${alsoResult.toJson()}")
 
         // apply
         val applyResult = user.apply {
             name = "ApplyUser"
             score = 100
         }
-        appendLog("【apply】返回对象本身: ${applyResult.toJson()}")
+        appendLog("✓ [apply] 返回对象本身: ${applyResult.toJson()}")
     }
 
     // ─────────────────────────────────────────────
@@ -102,12 +102,12 @@ class MyInlineActivity : BasicResponseActivity() {
     private inline fun <reified T> parseJson(json: String): T = Gson().fromJson(json, T::class.java)
 
     private fun testReifiedGenerics() {
-        appendLog("【reified】${getTypeName<UserData>()}")
-        appendLog("【reified】${getTypeName<String>()}")
+        appendLog("✓ [reified] ${getTypeName<UserData>()}")
+        appendLog("✓ [reified] ${getTypeName<String>()}")
 
         val json = """{"name":"ReifiedUser","score":95}"""
         val parsedUser: UserData = parseJson(json)
-        appendLog("【reified 解析】name=${parsedUser.name}, score=${parsedUser.score}")
+        appendLog("✓ [reified 解析] name=${parsedUser.name}, score=${parsedUser.score}")
     }
 
     // ─────────────────────────────────────────────
@@ -134,7 +134,7 @@ class MyInlineActivity : BasicResponseActivity() {
             }
 
         val summary = user.mRun {
-            "【自定义内联】结果: ${toJson()}"
+            "✓ [自定义内联] 结果: ${toJson()}"
         }
         appendLog(summary)
     }
@@ -167,11 +167,11 @@ class MyInlineActivity : BasicResponseActivity() {
             inlinedBlock = { "Inlined-Content" },
             storedBlock = { "Stored-Non-Inlined-Content" },
         )
-        appendLog("【noinline】成功将未内联 Lambda 传递并延迟调用: ${savedLambda()}")
+        appendLog("✓ [noinline] 成功将未内联 Lambda 传递并延迟调用: ${savedLambda()}")
 
         // crossinline 演示
         executeWithCrossinline {
-            appendLog("【crossinline】在内部 Runnable 上下文中安全执行，禁止破坏栈帧的非局部 return")
+            appendLog("✓ [crossinline] 在内部 Runnable 上下文中安全执行，禁止破坏栈帧的非局部 return")
         }
     }
 }

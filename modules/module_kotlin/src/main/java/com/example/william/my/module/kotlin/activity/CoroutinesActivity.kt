@@ -6,7 +6,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.kotlin.viewmodel.CoroutinesVMFactory
 import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
 
 /**
@@ -29,7 +28,7 @@ import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
 class CoroutinesActivity : BasicResponseActivity() {
 
     private val viewModel: CoroutinesViewModel by viewModels {
-        CoroutinesVMFactory
+        CoroutinesViewModel.Factory
     }
 
     override fun initView(savedInstanceState: Bundle?) {

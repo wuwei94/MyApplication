@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -41,11 +42,13 @@ class OfflineFirstViewModel(
     private val syncPreferences: SyncPreferencesDataSource,
 ) : ViewModel() {
 
+    val intent = Channel<OfflineFirstIntent>(Channel.UNLIMITED)
+
     private val isSyncingFlow = MutableStateFlow(false)
     private val lastSyncTimeFlow = MutableStateFlow<Long?>(null)
 
-    private val _effect = Channel<OfflineFirstUiEffect>(Channel.BUFFERED)
-    val effect: Flow<OfflineFirstUiEffect> = _effect.receiveAsFlow()
+    private val _uiEffect = Channel<OfflineFirstUiEffect>(Channel.BUFFERED)
+    val uiEffect: Flow<OfflineFirstUiEffect> = _uiEffect.receiveAsFlow()
 
     private data class SyncStatusSnapshot(
         val isSyncing: Boolean,
@@ -100,28 +103,28 @@ class OfflineFirstViewModel(
             var wasConnected: Boolean? = null
             networkMonitor.isOnline.collect { isConnected ->
                 if (wasConnected == false && isConnected) {
-                    _effect.send(OfflineFirstUiEffect.ShowToast("检测到网络已恢复，正在自动执行在线自愈增量同步..."))
+                    _uiEffect.send(OfflineFirstUiEffect.ShowToast("检测到网络已恢复，正在自动执行在线自愈增量同步..."))
                     syncManager.requestSync()
                 }
                 wasConnected = isConnected
             }
         }
-    }
 
-    fun sendIntent(intent: OfflineFirstIntent) {
         viewModelScope.launch {
-            when (intent) {
-                is OfflineFirstIntent.Sync -> syncArticles(intent.page)
-                is OfflineFirstIntent.TriggerWorkManagerSync -> {
-                    syncManager.requestSync()
-                    _effect.send(OfflineFirstUiEffect.ShowToast("已提交 WorkManager 后台增量同步任务（带连网约束）"))
+            intent.consumeAsFlow().collect { action ->
+                when (action) {
+                    is OfflineFirstIntent.Sync -> syncArticles(action.page)
+                    is OfflineFirstIntent.TriggerWorkManagerSync -> {
+                        syncManager.requestSync()
+                        _uiEffect.send(OfflineFirstUiEffect.ShowToast("已提交 WorkManager 后台增量同步任务（带连网约束）"))
+                    }
+                    is OfflineFirstIntent.SimulateRemoteNewVersion -> {
+                        repository.simulateRemoteNewVersion(action.title)
+                        _uiEffect.send(OfflineFirstUiEffect.ShowToast("远端已产生新版本变更，可点击同步验证增量拉取"))
+                    }
+                    is OfflineFirstIntent.AddLocalArticle -> addLocalArticle(action.title)
+                    is OfflineFirstIntent.ClearLocalCache -> clearLocalCache()
                 }
-                is OfflineFirstIntent.SimulateRemoteNewVersion -> {
-                    repository.simulateRemoteNewVersion(intent.title)
-                    _effect.send(OfflineFirstUiEffect.ShowToast("远端已产生新版本变更，可点击同步验证增量拉取"))
-                }
-                is OfflineFirstIntent.AddLocalArticle -> addLocalArticle(intent.title)
-                is OfflineFirstIntent.ClearLocalCache -> clearLocalCache()
             }
         }
     }
@@ -133,26 +136,29 @@ class OfflineFirstViewModel(
         isSyncingFlow.value = false
         if (result.isSuccess) {
             lastSyncTimeFlow.value = System.currentTimeMillis()
-            _effect.send(OfflineFirstUiEffect.SyncComplete(isSuccess = true))
-            _effect.send(OfflineFirstUiEffect.ShowToast("网络同步成功，已写入 Room 数据库并自动推流"))
+            _uiEffect.send(OfflineFirstUiEffect.SyncComplete(isSuccess = true))
+            _uiEffect.send(OfflineFirstUiEffect.ShowToast("网络同步成功，已写入 Room 数据库并自动推流"))
         } else {
-            _effect.send(OfflineFirstUiEffect.SyncComplete(isSuccess = false))
-            val errorMsg = result.exceptionOrNull()?.message ?: "网络请求异常"
-            _effect.send(OfflineFirstUiEffect.ShowToast("网络同步失败: $errorMsg（界面仍稳定展示 Room 离线缓存）"))
+            _uiEffect.send(OfflineFirstUiEffect.SyncComplete(isSuccess = false))
+            val errorMsg = result.exceptionOrNull()?.message ?: "网络请求失败"
+            _uiEffect.send(OfflineFirstUiEffect.ShowToast("网络同步失败: $errorMsg（界面仍稳定展示 Room 离线缓存）"))
         }
     }
 
     private suspend fun addLocalArticle(title: String) {
         repository.insertLocalArticle(title)
-        _effect.send(OfflineFirstUiEffect.ShowToast("已直接向 Room 插入一条记录，UI 自动感知更新"))
+        _uiEffect.send(OfflineFirstUiEffect.ShowToast("已直接向 Room 插入一条记录，UI 自动感知更新"))
     }
 
     private suspend fun clearLocalCache() {
         repository.clearLocalArticles()
-        _effect.send(OfflineFirstUiEffect.ShowToast("已清空 Room 数据库，UI 自动清空"))
+        _uiEffect.send(OfflineFirstUiEffect.ShowToast("已清空 Room 数据库，UI 自动清空"))
     }
 
     companion object {
+        /**
+         * 工厂：通过 [viewModelFactory] DSL 从 [CreationExtras] 获取 Application 并注入仓库
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = checkNotNull(

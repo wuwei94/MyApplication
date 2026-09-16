@@ -11,9 +11,11 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 演示 Android 低功耗蓝牙（Bluetooth Low Energy, BLE）开发中的核心技术链路：
  * 设备扫描与过滤、GATT 服务发现、特征值读写、Notify 订阅、MTU 协商与大包分包传输。
  *
- * 提供两种方案对比：
+ * 提供四栈横评对比：
  * - Android 原生 SDK 方案（BluetoothLeScanner + BluetoothGatt + 协程队列）
  * - Nordic Android-BLE-Library 方案（BleManager 工业级架构 + suspend 挂起操作）
+ * - FastBle 链式封装方案（字符串 UUID + 回调，入门成本最低）
+ * - RxAndroidBle 响应式流方案（Observable 化扫描/连接，适合重度 Rx 架构）
  */
 @Route(path = RouterPath.Bluetooth.Main)
 class BluetoothMainActivity : RouterRecyclerActivity() {

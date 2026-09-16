@@ -23,6 +23,12 @@ import no.nordicsemi.android.ble.observer.ConnectionObserver
  *
  * 基于 NordicBleManager 演示连接生命周期、重试重连与协程挂起 API。
  *
+ * 库选型定位（四栈横评中的 Nordic）：
+ * - 维护方：蓝牙芯片原厂 Nordic 官方维护，稳定性与边缘异常处理最强
+ * - 能力要点：请求队列解决多任务并发冲突；内置 MTU 自动切包（split）/ 拼包（merge），
+ *   无需自行计算 offset；支持 Kotlin 协程 suspend 挂起调用
+ * - 适合：智能硬件大厂、医疗设备、车载、OTA 固件升级、对稳定性要求极高的项目
+ *
  * 核心特性：
  * 1. Manager 生命周期：[NordicBleManager] 统一 GATT 管道
  * 2. 链式策略：timeout / retry / autoConnect
@@ -102,7 +108,8 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         "4. 断开连接并清理资源",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> scanAndConnectNordic()
             1 -> readCharacteristicSuspend()

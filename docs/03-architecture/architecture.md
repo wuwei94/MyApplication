@@ -124,7 +124,7 @@ class ArticleLiveDataViewModel : BaseViewModel() {
 - **模块源码位置**：[`com.example.william.my.module.arch.mvi`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/mvi)
 - **核心组件**：
   - `ArticleIntent`：密封接口，显式代表用户的每一次操作或系统事件；
-  - `ArticleViewState`：单一不可变状态数据类，页面的唯一真实数据源；
+  - `ArticleUiState`：单一不可变状态数据类，页面的唯一真实数据源；
   - `ArticleUiEffect`：一次性副作用（如弹 Toast、路由跳转、弹窗提示）；
   - `ArticleFlowUseCase`：领域层（Domain Layer）业务用例（Flow 版），封装文章列表请求，ViewModel 经其获取冷流而不直接依赖 Repository；
   - `ArticleStateFlowViewModel`：Intent 处理器与状态生产机；
@@ -133,7 +133,7 @@ class ArticleLiveDataViewModel : BaseViewModel() {
 #### 核心代码切片：单向循环流与副作用隔离
 ```mermaid
 flowchart LR
-    UI["View (Fragment)"] -->|"1. sendIntent(Intent)"| VM["ViewModel"]
+    UI["View (Fragment)"] -->|"1. intent.send(Intent)"| VM["ViewModel"]
     VM -->|"2. reduce() 更新"| State["_viewState (StateFlow)"]
     VM -->|"3. 一次性事件"| Effect["_uiEffect (Channel)"]
     State -->|"4. collect 渲染"| UI
@@ -142,7 +142,7 @@ flowchart LR
 
 ```kotlin
 // 单一聚合状态：杜绝状态矛盾
-data class ArticleViewState(
+data class ArticleUiState(
     val isLoading: Boolean = false,
     val data: List<ArticleDetailData>? = null,
     val error: String? = null
@@ -150,15 +150,21 @@ data class ArticleViewState(
 
 // 响应式 UDF 驱动
 class ArticleStateFlowViewModel : BaseViewModel() {
-    private val _viewState = MutableStateFlow(ArticleViewState())
-    val viewState: StateFlow<ArticleViewState> = _viewState.asStateFlow()
+    val intent = Channel<ArticleIntent>(Channel.UNLIMITED)
+
+    private val _uiState = MutableStateFlow(ArticleUiState())
+    val uiState: StateFlow<ArticleUiState> = _uiState.asStateFlow()
 
     private val _uiEffect = Channel<ArticleUiEffect>(Channel.BUFFERED)
     val uiEffect: Flow<ArticleUiEffect> = _uiEffect.receiveAsFlow()
 
-    fun sendIntent(intent: ArticleIntent) {
-        when (intent) {
-            is ArticleIntent.GetArticle -> loadArticles(intent.page)
+    init {
+        viewModelScope.launch {
+            intent.consumeAsFlow().collect { action ->
+                when (action) {
+                    is ArticleIntent.GetArticle -> loadArticles(action.page)
+                }
+            }
         }
     }
 }
@@ -176,7 +182,7 @@ class ArticleStateFlowViewModel : BaseViewModel() {
 
 - **模块源码位置**：[`com.example.william.my.module.arch.compose`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/compose)
 - **核心组件**：
-  - `ArticleComposeState` / `ArticleComposeIntent` / `ArticleComposeUiEffect`；
+  - `ArticleComposeUiState` / `ArticleComposeIntent` / `ArticleComposeUiEffect`；
   - `ArticleFlowUseCase`：与经典 MVI 共用的领域层业务用例（Flow 版），Compose ViewModel 经其获取冷流而不直接依赖 Repository；
   - `ComposeMviActivity`：使用 Jetpack Compose 构建纯声明式视图，集成 SmartSwipeRefresh 下拉刷新组件。
 
@@ -184,7 +190,7 @@ class ArticleStateFlowViewModel : BaseViewModel() {
 ```kotlin
 @Composable
 fun ArticleScreen(
-    state: ArticleComposeState,
+    state: ArticleComposeUiState,
     onIntent: (ArticleComposeIntent) -> Unit
 ) {
     Scaffold(...) { innerPadding ->
@@ -223,18 +229,18 @@ Mavericks 将网络或异步操作的标准四态封装为第一公民类型 `As
 
 ```kotlin
 data class ArticleMavericksState(
-    val articleList: Async<MutableList<ArticleDetailData>> = Uninitialized
+    val articleResponse: Async<RetrofitResponse<ArticleData>> = Uninitialized
 ) : MavericksState
 
 class ArticleMavericksViewModel(
     initialState: ArticleMavericksState,
-    private val repository: ArticleMavericksRepository
+    private val repository: ArticleRepository
 ) : MavericksViewModel<ArticleMavericksState>(initialState) {
 
-    fun getArticle(page: Int) {
+    fun loadArticle(page: Int) {
         // suspend 代码直接 execute，自动经历 Loading -> Success/Fail 转换！
-        suspend { repository.getArticle(page) }
-            .execute { copy(articleList = it) }
+        suspend { repository.getArticleSuspend(page) }
+            .execute { copy(articleResponse = it) }
     }
 }
 ```
@@ -242,11 +248,11 @@ class ArticleMavericksViewModel(
 #### View 层响应：`withState` 安全读取
 ```kotlin
 override fun invalidate() = withState(viewModel) { state ->
-    when (state.articleList) {
+    when (val response = state.articleResponse) {
         is Uninitialized -> { /* 初始状态 */ }
         is Loading -> showLoading()
-        is Success -> showData(state.articleList())
-        is Fail -> showError(state.articleList.error.message)
+        is Success -> showData(response().data?.datas)
+        is Fail -> showError(response.error.message)
     }
 }
 ```

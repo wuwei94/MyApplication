@@ -101,7 +101,8 @@ class BleNordicScanActivity : BasicResponseActivity() {
         "4. 查看 Nordic 广播包最佳实践说明",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> startScan(isFilter = false)
             1 -> startScan(isFilter = true)

@@ -11,7 +11,7 @@ import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 import com.example.william.my.module.arch.adapter.ArticleAdapter
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect
-import com.example.william.my.module.arch.mvi.data.ArticleViewState
+import com.example.william.my.module.arch.mvi.data.ArticleUiState
 import com.example.william.my.module.arch.mvi.viewmodel.ArticleStateFlowViewModel
 import kotlinx.coroutines.launch
 
@@ -34,17 +34,17 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // 监听 UI 状态
                 launch {
-                    viewModel.state.collect { state ->
+                    viewModel.uiState.collect { state ->
                         when (state) {
-                            is ArticleViewState.Loading -> {
+                            is ArticleUiState.Loading -> {
                                 // 加载中状态
                             }
 
-                            is ArticleViewState.Success -> {
+                            is ArticleUiState.Success -> {
                                 onDataSuccess(state.articles)
                             }
 
-                            is ArticleViewState.Error -> {
+                            is ArticleUiState.Error -> {
                                 onDataFail()
                             }
                         }
@@ -53,7 +53,7 @@ class MviFragment : BaseRecyclerFragment<ArticleDetailData>() {
 
                 // 监听单次副作用事件（如 Toast）
                 launch {
-                    viewModel.effect.collect { effect ->
+                    viewModel.uiEffect.collect { effect ->
                         when (effect) {
                             is ArticleUiEffect.ShowToast -> {
                                 showToast(effect.message)

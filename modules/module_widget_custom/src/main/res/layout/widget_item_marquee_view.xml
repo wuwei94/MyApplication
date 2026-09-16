@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/item_marquee_primary"
+        android:id="@+id/widget_item_marquee_primary"
         android:layout_width="match_parent"
         android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_primary"
@@ -14,7 +14,7 @@
         android:paddingStart="@dimen/shared_dp_16" />
 
     <TextView
-        android:id="@+id/item_marquee_accent"
+        android:id="@+id/widget_item_marquee_accent"
         android:layout_width="match_parent"
         android:layout_height="@dimen/shared_dp_48"
         android:background="@color/shared_color_primary_dark"

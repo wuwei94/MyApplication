@@ -26,20 +26,20 @@ import java.io.File
 )
 class RequestBodyBuilder {
 
-    private var mProgressListener: RequestProgressListener? = null
+    private var progressListener: RequestProgressListener? = null
 
     @Deprecated(
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
         replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
     fun addListener(listener: RequestProgressListener) {
-        mProgressListener = listener
+        progressListener = listener
     }
 
-    private val mFormBuilder = FormBody.Builder()
+    private val formBuilder = FormBody.Builder()
 
     fun addForm(key: String, value: String): RequestBodyBuilder {
-        mFormBuilder.add(key, value)
+        formBuilder.add(key, value)
         return this
     }
 
@@ -47,17 +47,17 @@ class RequestBodyBuilder {
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
         replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
-    fun buildForm(): RequestBody = wrapWithProgress(mFormBuilder.build())
+    fun buildForm(): RequestBody = wrapWithProgress(formBuilder.build())
 
-    private val mMultipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+    private val multipartBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
     fun addMultipart(key: String, value: String): RequestBodyBuilder {
-        mMultipartBuilder.addFormDataPart(key, value)
+        multipartBuilder.addFormDataPart(key, value)
         return this
     }
 
     fun addFile(name: String, file: File, fileName: String = file.name): RequestBodyBuilder {
-        mMultipartBuilder.addFormDataPart(
+        multipartBuilder.addFormDataPart(
             name,
             fileName,
             file.asRequestBody(MediaTypes.MEDIA_TYPE_MULTIPART),
@@ -69,12 +69,12 @@ class RequestBodyBuilder {
         message = "请使用 InterceptorUploadProgress 配合 lambda 替代",
         replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
-    fun buildMultipart(): RequestBody = wrapWithProgress(mMultipartBuilder.build())
+    fun buildMultipart(): RequestBody = wrapWithProgress(multipartBuilder.build())
 
-    private val mJsonBuilder = JSONObject()
+    private val jsonBuilder = JSONObject()
 
     fun addJson(key: String, value: String): RequestBodyBuilder {
-        mJsonBuilder.put(key, value)
+        jsonBuilder.put(key, value)
         return this
     }
 
@@ -83,12 +83,12 @@ class RequestBodyBuilder {
         replaceWith = ReplaceWith("InterceptorUploadProgress"),
     )
     fun buildJson(): RequestBody {
-        val body = mJsonBuilder.toString().toRequestBody(MediaTypes.MEDIA_TYPE_JSON)
+        val body = jsonBuilder.toString().toRequestBody(MediaTypes.MEDIA_TYPE_JSON)
         return wrapWithProgress(body)
     }
 
     private fun wrapWithProgress(body: RequestBody): RequestBody {
-        val listener = mProgressListener ?: return body
+        val listener = progressListener ?: return body
         return UploadProgressRequestBody(body, listener::onProgress)
     }
 }

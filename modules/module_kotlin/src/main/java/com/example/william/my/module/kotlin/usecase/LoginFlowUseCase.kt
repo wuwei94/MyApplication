@@ -2,25 +2,23 @@ package com.example.william.my.module.kotlin.usecase
 
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.LoginData
-import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.retrofit.createApi
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.kotlin.utils.ThreadUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 /**
- * Android 上的 Kotlin 数据流用例
+ * Android 上的 Kotlin 数据流用例（登录）
  * https://developer.android.google.cn/kotlin/flow
  * <p>
- * suspend -> Flow
+ * suspend -> Flow；演示模块直连 [NetworkApi]，不经过 Repository，异常由收集方处理。
  */
-class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
+class LoginFlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
 
     private val api = createApi(NetworkApi::class.java)
 
@@ -29,7 +27,7 @@ class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
      */
     private fun createFlow(username: String, password: String): Flow<RetrofitResponse<LoginData>> = flow {
         // 打印线程
-        ThreadUtils.isMainThread("FlowUseCase login")
+        ThreadUtils.isMainThread("LoginFlowUseCase login")
 
         // 将请求结果发送到流
         emit(api.loginSuspend(username, password))
@@ -51,13 +49,4 @@ class FlowUseCase(private val defaultDispatcher: CoroutineDispatcher) {
         }
         // flowOn 影响上游的 flow
         .flowOn(defaultDispatcher)
-        // 下游的 flow 不受影响
-        .catch { exception ->
-            // 在消费者的上下文中执行
-            Utils.logcat(TAG, "exception : " + exception.message.toString())
-        }
-
-    companion object {
-        private val TAG = FlowUseCase::class.java.simpleName
-    }
 }

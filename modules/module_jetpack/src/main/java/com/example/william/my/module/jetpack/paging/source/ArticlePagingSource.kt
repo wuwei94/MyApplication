@@ -22,12 +22,16 @@ class ArticlePagingSource(
         val nextPageNumber = params.key ?: 0
 
         val response = networkApi.getArticleSuspend(nextPageNumber)
-
-        LoadResult.Page(
-            data = response.data!!.datas,
-            prevKey = null, // 仅向前分页。
-            nextKey = response.data!!.curPage,
-        )
+        val data = response.data
+        if (data != null) {
+            LoadResult.Page(
+                data = data.datas,
+                prevKey = null, // 仅向前分页。
+                nextKey = data.curPage,
+            )
+        } else {
+            LoadResult.Error(NullPointerException("Response data is null"))
+        }
     } catch (e: Exception) {
         // 处理错误，返回 LoadResult.Error()
         LoadResult.Error(e)

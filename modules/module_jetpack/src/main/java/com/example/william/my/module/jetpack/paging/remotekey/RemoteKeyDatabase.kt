@@ -38,6 +38,7 @@ abstract class RemoteKeyDatabase : RoomDatabase() {
 
         private const val DB_NAME = "RemoteKey.db"
 
+        @Volatile
         private var instance: RemoteKeyDatabase? = null
         fun getInstance(context: Context) = instance ?: synchronized(this) {
             instance ?: createDataBase(context).also {

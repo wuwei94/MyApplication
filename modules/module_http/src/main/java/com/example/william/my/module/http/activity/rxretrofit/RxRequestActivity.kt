@@ -72,12 +72,12 @@ class RxRequestActivity : BasicResponseActivity() {
             .subscribe(object : ResponseCallback<JsonElement>() {
                 override fun onResponse(response: JsonElement?) {
                     super.onResponse(response)
-                    appendFormatLog("Post Form 响应：", response?.toString().orEmpty())
+                    appendFormatLog("✓ [Post Form] ", response?.toString().orEmpty())
                 }
 
                 override fun onFailure(e: ApiException) {
                     super.onFailure(e)
-                    appendLog("Post Form 失败：${e.message}")
+                    appendLog("✗ [Post Form] ${e.message}")
                 }
             })
     }
@@ -96,12 +96,12 @@ class RxRequestActivity : BasicResponseActivity() {
             .subscribe(object : ResponseCallback<JsonElement>() {
                 override fun onResponse(response: JsonElement?) {
                     super.onResponse(response)
-                    appendFormatLog("Post JSON 响应：", response?.toString().orEmpty())
+                    appendFormatLog("✓ [Post JSON] ", response?.toString().orEmpty())
                 }
 
                 override fun onFailure(e: ApiException) {
                     super.onFailure(e)
-                    appendLog("Post JSON 失败：${e.message}")
+                    appendLog("✗ [Post JSON] ${e.message}")
                 }
             })
     }
@@ -121,12 +121,12 @@ class RxRequestActivity : BasicResponseActivity() {
             .subscribe(object : ResponseCallback<JsonElement>() {
                 override fun onResponse(response: JsonElement?) {
                     super.onResponse(response)
-                    appendFormatLog("Multipart 响应：", response?.toString().orEmpty())
+                    appendFormatLog("✓ [Multipart] ", response?.toString().orEmpty())
                 }
 
                 override fun onFailure(e: ApiException) {
                     super.onFailure(e)
-                    appendLog("Multipart 失败：${e.message}")
+                    appendLog("✗ [Multipart] ${e.message}")
                 }
             })
     }

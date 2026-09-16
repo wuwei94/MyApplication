@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.retrofit
 
+import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
@@ -31,8 +32,13 @@ import kotlinx.coroutines.launch
 @Route(path = RouterPath.Http.RetrofitCoroutineDsl)
 class RetrofitCoroutineDslActivity : BasicResponseActivity() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Retrofit 协程 DSL 示例：DSL 封装后挂起式登录请求")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Retrofit DSL loginSuspend",
+        "1. Retrofit DSL 协程登录请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -52,15 +58,15 @@ class RetrofitCoroutineDslActivity : BasicResponseActivity() {
             try {
                 val response: RetrofitResponse<LoginData> = api.loginSuspend(username, password)
                 if (response.isSuccess) {
-                    appendFormatLog("Retrofit Coroutine DSL 响应：", JsonUtils.toJson(response))
+                    appendFormatLog("✓ Retrofit Coroutine DSL 响应：", JsonUtils.toJson(response))
                 } else {
                     appendLog(
-                        "Retrofit Coroutine DSL 业务失败（${response.code}）：" +
+                        "✗ Retrofit Coroutine DSL 业务失败（${response.code}）：" +
                             response.message.ifBlank { "未知错误" },
                     )
                 }
             } catch (e: Exception) {
-                appendLog("Retrofit Coroutine DSL 失败：${e.message ?: "未知错误"}")
+                appendLog("✗ Retrofit Coroutine DSL 失败：${e.message ?: "未知错误"}")
             }
         }
     }

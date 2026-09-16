@@ -9,12 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 
 /**
  * 容器层 Composable (Stateful)
@@ -29,6 +31,7 @@ fun <Feature>Route(
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(viewModel.uiEffect) {
         viewModel.uiEffect.collect { effect ->
@@ -38,7 +41,11 @@ fun <Feature>Route(
 
     <Feature>Screen(
         uiState = uiState,
-        onAction = { intent -> viewModel.sendIntent(intent) },
+        onAction = { intent ->
+            scope.launch {
+                viewModel.intent.send(intent)
+            }
+        },
         modifier = modifier,
     )
 }

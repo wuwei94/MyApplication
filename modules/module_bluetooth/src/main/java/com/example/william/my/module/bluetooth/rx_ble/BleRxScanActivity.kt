@@ -28,6 +28,19 @@ import io.reactivex.rxjava3.disposables.Disposable
  * 3. 声明式取消：`Disposable.dispose()` 立刻停止扫描
  * 4. 与连接示例同一客户端门面，便于横向对比
  *
+ * 基本用法：
+ * ```kotlin
+ * rxBleClient.scanBleDevices(scanSettings, ScanFilter.empty())
+ *     .filter { it.rssi >= minRssi }
+ *     .subscribe({ updateLog(it.bleDevice.macAddress, "...") }, { appendLog(it.message) })
+ * // 取消：scanDisposable.dispose()
+ * ```
+ *
+ * 适用场景：
+ * - 项目已重度使用 RxJava 的响应式架构
+ * - 需要对连续传感器扫描流做 filter / throttle / combine 等流控
+ * - 与原生 / Nordic / FastBle 扫描模型横向对比
+ *
  * https://github.com/dariuszseweryn/RxAndroidBle
  */
 @Route(path = RouterPath.Bluetooth.RxScan)
@@ -54,7 +67,8 @@ class BleRxScanActivity : BasicResponseActivity() {
         "4. 查看 RxAndroidBle 响应式设计优势",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> startRxScan(minRssi = null)
             1 -> startRxScan(minRssi = -75)

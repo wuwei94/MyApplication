@@ -83,14 +83,14 @@ class MySyntaxActivity : BasicResponseActivity() {
         val p2 = Point(5, 6)
 
         val plusResult = p1 + p2
-        appendLog("【操作符 +】Point(3,4) + Point(5,6) = $plusResult")
+        appendLog("✓ [操作符 +] Point(3,4) + Point(5,6) = $plusResult")
 
         val timesResult = p1 * 3
-        appendLog("【操作符 *】Point(3,4) * 3 = $timesResult")
+        appendLog("✓ [操作符 *] Point(3,4) * 3 = $timesResult")
 
-        appendLog("【操作符 []】p1[0]=${p1[0]}, p1[1]=${p1[1]}")
-        appendLog("【操作符 in】3 in p1: ${3 in p1}, 99 in p1: ${99 in p1}")
-        appendLog("【操作符 ()】调用: ${p1("当前坐标")}")
+        appendLog("✓ [操作符 []] p1[0]=${p1[0]}, p1[1]=${p1[1]}")
+        appendLog("✓ [操作符 in] 3 in p1: ${3 in p1}, 99 in p1: ${99 in p1}")
+        appendLog("✓ [操作符 ()] 调用: ${p1("当前坐标")}")
     }
 
     // ─────────────────────────────────────────────
@@ -106,10 +106,10 @@ class MySyntaxActivity : BasicResponseActivity() {
 
         // 中缀调用：省略点号和圆括号
         val distance = p1 distanceTo p2
-        appendLog("【中缀函数】p1 distanceTo p2 = $distance")
+        appendLog("✓ [中缀函数] p1 distanceTo p2 = $distance")
 
         val message = "Kotlin" combineWith "Android Architecture"
-        appendLog("【中缀函数】'Kotlin' combineWith 'Android Architecture' = $message")
+        appendLog("✓ [中缀函数] 'Kotlin' combineWith 'Android Architecture' = $message")
     }
 
     // ─────────────────────────────────────────────
@@ -137,17 +137,17 @@ class MySyntaxActivity : BasicResponseActivity() {
         // Data Class 解构
         val dev = Developer("Alice", 28, "Android Architect")
         val (name, age, role) = dev
-        appendLog("【DataClass 解构】name=$name, age=$age, role=$role")
+        appendLog("✓ [DataClass 解构] name=$name, age=$age, role=$role")
 
         // 自定义 componentN 解构
         val coord = Coordinates(39.9042, 116.4074)
         val (lat, lng) = coord
-        appendLog("【自定义类解构】纬度=$lat, 经度=$lng")
+        appendLog("✓ [自定义类解构] 纬度=$lat, 经度=$lng")
 
         // Map 遍历解构
         val map = mapOf("Kotlin" to 2.0, "Coroutines" to 1.8)
         for ((lang, ver) in map) {
-            appendLog("【Map 遍历解构】$lang -> v$ver")
+            appendLog("✓ [Map 遍历解构] $lang -> v$ver")
         }
     }
 
@@ -184,7 +184,7 @@ class MySyntaxActivity : BasicResponseActivity() {
             UiResult.Error("HTTP 500 服务器错误"),
         )
         states.forEach { state ->
-            appendLog("【Sealed Interface】${renderResult(state)}")
+            appendLog("✓ [Sealed Interface] ${renderResult(state)}")
         }
     }
 
@@ -226,7 +226,7 @@ class MySyntaxActivity : BasicResponseActivity() {
         }
 
         fun build(): String = buildString {
-            appendLine("【DSL 菜单】$title")
+            appendLine("→ [DSL 菜单] $title")
             items.forEach { appendLine(it) }
         }.trimEnd()
     }

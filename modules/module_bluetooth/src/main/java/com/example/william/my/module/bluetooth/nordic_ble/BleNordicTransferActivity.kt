@@ -39,7 +39,8 @@ class BleNordicTransferActivity : BasicResponseActivity() {
         "4. 查看 Nordic 工业级架构优势总结",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> demoSplitPrinciple()
             1 -> demoMergePrinciple()

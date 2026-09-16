@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.ktor
 
+import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -38,8 +39,13 @@ import kotlinx.coroutines.launch
 @Route(path = RouterPath.Http.Ktor)
 class KtorActivity : BasicResponseActivity() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Ktor 示例：OkHttp Engine 发起 Multipart 表单 POST")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "ktor post",
+        "1. Ktor 发起 POST 请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -78,14 +84,14 @@ class KtorActivity : BasicResponseActivity() {
                 }
                 val body = response.bodyAsText()
                 if (response.status.isSuccess()) {
-                    appendFormatLog("Ktor 响应：", body)
+                    appendFormatLog("✓ Ktor 响应：", body)
                 } else {
-                    appendFormatLog("Ktor 失败（HTTP ${response.status.value}）：", body)
+                    appendFormatLog("✗ Ktor 失败（HTTP ${response.status.value}）：", body)
                 }
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                appendLog("Ktor 失败：${error.message ?: "未知错误"}")
+                appendLog("✗ Ktor 失败：${error.message ?: "未知错误"}")
             }
         }
     }

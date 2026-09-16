@@ -88,7 +88,8 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         "5. 模拟接收端接收 3 个分包并组包校验完整性",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> testConcurrentOperations()
             1 -> {

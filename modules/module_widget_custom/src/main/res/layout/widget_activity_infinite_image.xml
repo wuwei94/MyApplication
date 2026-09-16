@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.VerifyCodeActivity">
+    tools:context=".activity.InfiniteImageActivity">
 
-    <com.example.william.my.core.widget.verifycode.VerifyCodeView
-        android:id="@+id/verifyCodeView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dp_48"
+    <com.example.william.my.core.widget.infiniteimage.InfiniteImageView
+        android:id="@+id/widget_infinite_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:src="@drawable/demo_infinite_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

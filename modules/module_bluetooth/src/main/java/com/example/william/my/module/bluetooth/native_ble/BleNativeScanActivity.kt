@@ -26,6 +26,11 @@ import java.util.UUID
  *
  * 演示 Android 原生 BLE 扫描生命周期与广播数据解析，不依赖第三方蓝牙库。
  *
+ * 库选型定位（四栈横评中的原生）：
+ * - 维护方：Android 系统 SDK，零第三方依赖
+ * - 能力要点：ScanFilter / ScanSettings / 广播包结构完全暴露，可控性最强但模板代码最多
+ * - 适合：不想引入三方库、需要精确控制扫描参数或学习底层机制的项目
+ *
  * 核心特性：
  * 1. 运行时权限：兼容 Android 12+ BLUETOOTH_SCAN 与 Android 11- ACCESS_FINE_LOCATION
  * 2. 适配器状态：BluetoothAdapter 可用性感知
@@ -124,7 +129,8 @@ class BleNativeScanActivity : BasicResponseActivity() {
         "6. 模拟解析 BLE 广播包结构",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> checkAndRequestPermissions()
             1 -> checkBluetoothAdapterState()

@@ -20,11 +20,31 @@ import java.util.UUID
  *
  * 用 Rx 链式编排连接 → MTU → Notify → 写入；dispose 时自动断开并注销订阅。
  *
+ * 库选型定位（四栈横评中的 RxAndroidBle）：
+ * - 编程模型：连接、读写、通知全部建模为 Observable，可用 flatMap / switchMap 等操作符编排
+ * - 生命周期：dispose 时自动断开连接并注销通知，降低泄漏风险
+ * - 适合：项目本身重度使用 RxJava，或需要对连续传感器数据做复杂流控的场景
+ *
  * 核心机制与避坑点：
  * 1. 连接流：`establishConnection` → `Observable<RxBleConnection>`
  * 2. 操作符编排：flatMap 串联协商与读写
  * 3. 通知流：Notification 特征值作为 Observable
  * 4. 资源释放：dispose 一次完成断开与清理
+ *
+ * 基本用法：
+ * ```kotlin
+ * device.establishConnection(false)
+ *     .flatMapSingle { it.discoverServices() }
+ *     .flatMap { conn -> conn.setupNotification(charUuid) }
+ *     .flatMap { it }
+ *     .subscribe({ appendLog("Notify: ...") }, { appendLog(it.message) })
+ * // 断开：disposable.dispose()
+ * ```
+ *
+ * 适用场景：
+ * - 响应式 BLE 业务层，连接与读写需与其它 Rx 流组合
+ * - 多设备并发或需要 dispose 即释放的生命周期模型
+ * - 与原生 / Nordic / FastBle 连接模型横向对比
  *
  * https://github.com/dariuszseweryn/RxAndroidBle
  */
@@ -59,7 +79,8 @@ class BleRxConnectActivity : BasicResponseActivity() {
         "6. 断开连接并释放所有流 (dispose)",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> scanAndEstablishConnection()
             1 -> requestMtu()

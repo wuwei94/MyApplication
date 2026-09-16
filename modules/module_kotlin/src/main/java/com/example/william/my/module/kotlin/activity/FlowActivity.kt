@@ -10,7 +10,6 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.kotlin.data.NetworkResult
-import com.example.william.my.module.kotlin.viewmodel.FlowVMFactory
 import com.example.william.my.module.kotlin.viewmodel.FlowViewModel
 import kotlinx.coroutines.launch
 
@@ -33,7 +32,7 @@ import kotlinx.coroutines.launch
 class FlowActivity : BasicResponseActivity() {
 
     private val viewModel: FlowViewModel by viewModels {
-        FlowVMFactory
+        FlowViewModel.Factory
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -72,15 +71,15 @@ class FlowActivity : BasicResponseActivity() {
                     viewModel.uiState.collect { uiState ->
                         when (uiState) {
                             is NetworkResult.Loading -> {
-                                appendLog("【Flow UIState】Loading...")
+                                appendLog("→ [Flow UIState] Loading...")
                             }
 
                             is NetworkResult.Success -> {
-                                appendLog("【Flow UIState】Success: ${uiState.string()}")
+                                appendLog("✓ [Flow UIState] ${uiState.string()}")
                             }
 
                             is NetworkResult.Error -> {
-                                appendLog("【Flow UIState】Error: ${uiState.string()}")
+                                appendLog("✗ [Flow UIState] ${uiState.string()}")
                             }
                         }
                     }

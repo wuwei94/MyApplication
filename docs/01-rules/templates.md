@@ -110,6 +110,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -118,19 +119,23 @@ class ArticleMviViewModel(
     private val repository: ArticleRepository,
 ) : ViewModel() {
 
+    val intent = Channel<ArticleUiIntent>(Channel.UNLIMITED)
+
     private val _uiState = MutableStateFlow(ArticleUiState())
     val uiState: StateFlow<ArticleUiState> = _uiState.asStateFlow()
 
     private val _uiEffect = Channel<ArticleUiEffect>(Channel.BUFFERED)
     val uiEffect = _uiEffect.receiveAsFlow()
 
-    fun sendIntent(intent: ArticleUiIntent) {
-        when (intent) {
-            is ArticleUiIntent.Refresh -> loadArticles()
-            is ArticleUiIntent.ToggleFavorite -> toggleFavorite(intent.articleId)
-            is ArticleUiIntent.LoadDetail -> {
-                viewModelScope.launch {
-                    _uiEffect.send(ArticleUiEffect.NavigateToDetail(intent.articleId))
+    init {
+        viewModelScope.launch {
+            intent.consumeAsFlow().collect { action ->
+                when (action) {
+                    is ArticleUiIntent.Refresh -> loadArticles()
+                    is ArticleUiIntent.ToggleFavorite -> toggleFavorite(action.articleId)
+                    is ArticleUiIntent.LoadDetail -> {
+                        _uiEffect.send(ArticleUiEffect.NavigateToDetail(action.articleId))
+                    }
                 }
             }
         }
@@ -145,7 +150,7 @@ class ArticleMviViewModel(
                 _uiState.update { it.copy(isLoading = false, articles = list) }
             }.onFailure { throwable ->
                 _uiState.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-                _uiEffect.send(ArticleUiEffect.ShowToast("加载失败: ${throwable.message}"))
+                _uiEffect.send(ArticleUiEffect.ShowToast("网络请求失败: ${throwable.message}"))
             }
         }
     }
@@ -174,12 +179,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 
 /**
  * 容器层 Composable (Stateful)
@@ -194,6 +201,7 @@ fun ArticleRoute(
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(viewModel.uiEffect) {
         viewModel.uiEffect.collect { effect ->
@@ -206,8 +214,16 @@ fun ArticleRoute(
 
     ArticleScreen(
         uiState = uiState,
-        onRefresh = { viewModel.sendIntent(ArticleUiIntent.Refresh) },
-        onArticleClick = { id -> viewModel.sendIntent(ArticleUiIntent.LoadDetail(id)) },
+        onRefresh = {
+            scope.launch {
+                viewModel.intent.send(ArticleUiIntent.Refresh)
+            }
+        },
+        onArticleClick = { id ->
+            scope.launch {
+                viewModel.intent.send(ArticleUiIntent.LoadDetail(id))
+            }
+        },
         modifier = modifier,
     )
 }
@@ -304,7 +320,7 @@ class ArticleViewModelTest {
             assertTrue(initial.articles.isEmpty())
 
             // 触发刷新意图
-            viewModel.sendIntent(ArticleUiIntent.Refresh)
+            viewModel.intent.send(ArticleUiIntent.Refresh)
 
             // 预期状态 1：加载中
             val loadingState = awaitItem()

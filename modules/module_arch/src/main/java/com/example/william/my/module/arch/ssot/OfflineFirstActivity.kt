@@ -54,6 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -67,6 +68,7 @@ import com.loren.component.view.composesmartrefresh.SmartSwipeStateFlag
 import com.loren.component.view.composesmartrefresh.ThresholdScrollStrategy
 import com.loren.component.view.composesmartrefresh.rememberSmartSwipeRefreshState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -110,7 +112,7 @@ class OfflineFirstActivity : BaseActivity() {
 
             // 监听单次副作用事件（Toast / 同步状态）
             LaunchedEffect(Unit) {
-                viewModel.effect.collect { effect ->
+                viewModel.uiEffect.collect { effect ->
                     when (effect) {
                         is OfflineFirstUiEffect.ShowToast -> {
                             Toast.makeText(this@OfflineFirstActivity, effect.message, Toast.LENGTH_SHORT).show()
@@ -146,17 +148,33 @@ class OfflineFirstActivity : BaseActivity() {
                     // 3. SSOT 教学互动控制板（状态指标与验证按钮）
                     SsotControlDashboard(
                         uiState = uiState,
-                        onSyncClick = { viewModel.sendIntent(OfflineFirstIntent.Sync(0)) },
-                        onWorkManagerSyncClick = { viewModel.sendIntent(OfflineFirstIntent.TriggerWorkManagerSync) },
+                        onSyncClick = {
+                            lifecycleScope.launch {
+                                viewModel.intent.send(OfflineFirstIntent.Sync(0))
+                            }
+                        },
+                        onWorkManagerSyncClick = {
+                            lifecycleScope.launch {
+                                viewModel.intent.send(OfflineFirstIntent.TriggerWorkManagerSync)
+                            }
+                        },
                         onSimulateRemoteNewVersionClick = {
                             val mockTitle = "官方更新 #${System.currentTimeMillis() % 1000}"
-                            viewModel.sendIntent(OfflineFirstIntent.SimulateRemoteNewVersion(mockTitle))
+                            lifecycleScope.launch {
+                                viewModel.intent.send(OfflineFirstIntent.SimulateRemoteNewVersion(mockTitle))
+                            }
                         },
                         onInsertClick = {
                             val mockTitle = "本地离线笔记 #${System.currentTimeMillis() % 1000}"
-                            viewModel.sendIntent(OfflineFirstIntent.AddLocalArticle(mockTitle))
+                            lifecycleScope.launch {
+                                viewModel.intent.send(OfflineFirstIntent.AddLocalArticle(mockTitle))
+                            }
                         },
-                        onClearClick = { viewModel.sendIntent(OfflineFirstIntent.ClearLocalCache) },
+                        onClearClick = {
+                            lifecycleScope.launch {
+                                viewModel.intent.send(OfflineFirstIntent.ClearLocalCache)
+                            }
+                        },
                     )
 
                     HorizontalDivider(thickness = 0.5.dp, color = Color(0xFFE0E0E0))
@@ -165,7 +183,9 @@ class OfflineFirstActivity : BaseActivity() {
                     SmartSwipeRefresh(
                         modifier = Modifier.fillMaxSize(),
                         onRefresh = {
-                            viewModel.sendIntent(OfflineFirstIntent.Sync(0))
+                            lifecycleScope.launch {
+                                viewModel.intent.send(OfflineFirstIntent.Sync(0))
+                            }
                         },
                         state = refreshState,
                         headerIndicator = {

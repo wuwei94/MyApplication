@@ -33,7 +33,7 @@ class MvvmFragment : BaseRecyclerFragment<ArticleDetailData>() {
                 }
 
                 else -> {
-                    showToast(response.message.ifEmpty { "加载失败" })
+                    showToast(response.message.ifEmpty { "网络请求失败" })
                     onDataFail()
                 }
             }

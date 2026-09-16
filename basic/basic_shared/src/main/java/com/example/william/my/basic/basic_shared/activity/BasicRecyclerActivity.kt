@@ -9,11 +9,11 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRecycle
  * 列表/数据展示类示例 Activity 基类。
  *
  * 布局结构：
- * - 上方展示：ConstraintLayout 容器（[mContainer] / [binding.basicsResponseContainer]），高度为 0dp 自适应撑满，内部包含数据展示列表（[mDataRecycler] / [binding.basicsDataRecycler]）
- * - 下方列表：RecyclerView 操作列表（[mRecycler] / [binding.basicsRecycler]），固定高度为 300dp（通过 [buildList] 与 [onRecyclerClick] 触发操作）
+ * - 上方展示：ConstraintLayout 容器（[container] / [binding.basicsResponseContainer]），高度为 0dp 自适应撑满，内部包含数据展示列表（[dataRecycler] / [binding.basicsDataRecycler]）
+ * - 下方列表：RecyclerView 操作列表（[recycler] / [binding.basicsRecycler]），固定高度为 300dp（通过 [buildList] 与 [onRecyclerClick] 触发操作）
  *
  * 约定与规范：
- * 1. 继承类通过 [mDataRecycler] 或 [setAdapter] 配置上方区域的数据展示列表。
+ * 1. 继承类通过 [dataRecycler] 或 [setAdapter] 配置上方区域的数据展示列表。
  * 2. 下方统一由 [buildList] + [onRecyclerClick] 触发操作。
  * 3. 适用场景：RecyclerView 各种 LayoutManager 演示、DiffUtil 局部刷新、ConcatAdapter 组合等。
  */

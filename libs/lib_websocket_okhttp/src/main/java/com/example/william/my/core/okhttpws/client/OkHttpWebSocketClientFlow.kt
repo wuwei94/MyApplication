@@ -116,6 +116,8 @@ object OkHttpWebSocketClientFlow {
 
     fun send(request: Request, message: String): Boolean = send(request.url.toString(), message)
 
+    fun send(request: Request, bytes: ByteString): Boolean = send(request.url.toString(), bytes)
+
     fun close(url: String, code: Int = 1000, reason: String = "") {
         getWebSocket(url)?.let { webSocket ->
             try {

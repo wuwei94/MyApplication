@@ -10,7 +10,7 @@ import com.example.william.my.basic.basic_repo.data.repository.ArticleRepository
 import com.example.william.my.core.retrofit.response.RetrofitResponse
 import com.example.william.my.module.arch.mvi.data.ArticleIntent
 import com.example.william.my.module.arch.mvi.data.ArticleUiEffect
-import com.example.william.my.module.arch.mvi.data.ArticleViewState
+import com.example.william.my.module.arch.mvi.data.ArticleUiState
 import com.example.william.my.module.arch.mvi.usecase.ArticleFlowUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -33,13 +33,13 @@ class ArticleStateFlowViewModel(private val repository: ArticleRepository) : Vie
 
     val intent = Channel<ArticleIntent>(Channel.UNLIMITED)
 
-    private val _state = MutableStateFlow<ArticleViewState>(ArticleViewState.Loading)
-    val state: StateFlow<ArticleViewState>
-        get() = _state
+    private val _uiState = MutableStateFlow<ArticleUiState>(ArticleUiState.Loading)
+    val uiState: StateFlow<ArticleUiState>
+        get() = _uiState
 
-    private val _effect = Channel<ArticleUiEffect>(Channel.BUFFERED)
-    val effect: Flow<ArticleUiEffect>
-        get() = _effect.receiveAsFlow()
+    private val _uiEffect = Channel<ArticleUiEffect>(Channel.BUFFERED)
+    val uiEffect: Flow<ArticleUiEffect>
+        get() = _uiEffect.receiveAsFlow()
 
     private val articleFlowUseCase: ArticleFlowUseCase = ArticleFlowUseCase(repository)
 
@@ -54,18 +54,18 @@ class ArticleStateFlowViewModel(private val repository: ArticleRepository) : Vie
                 .collect { response ->
                     when {
                         response.code == RetrofitResponse.LOADING -> {
-                            _state.value = ArticleViewState.Loading
+                            _uiState.value = ArticleUiState.Loading
                         }
 
                         response.isSuccess -> {
                             val datas = response.data?.datas ?: emptyList()
-                            _state.value = ArticleViewState.Success(datas)
+                            _uiState.value = ArticleUiState.Success(datas)
                         }
 
                         else -> {
                             val message = response.message.ifEmpty { "网络请求失败" }
-                            _effect.send(ArticleUiEffect.ShowToast(message))
-                            _state.value = ArticleViewState.Error(message)
+                            _uiEffect.send(ArticleUiEffect.ShowToast(message))
+                            _uiState.value = ArticleUiState.Error(message)
                         }
                     }
                 }

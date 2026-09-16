@@ -71,13 +71,13 @@ class FakeArticleRepository : ArticleRepository {
     override suspend fun syncWith(synchronizer: Synchronizer): Boolean = true
 
     override fun getArticleCallback(page: Int, callback: ArticleRepository.LoadArticleCallback) {}
-    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> = throw NotImplementedError()
-    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override fun getArticleLiveDataByRx(page: Int): LiveData<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override fun getArticleLiveDataByFlow(page: Int): LiveData<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override fun getArticleFlow(page: Int): Flow<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override fun getArticleFlowByRx(page: Int): Flow<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override fun getArticleFlowByLiveData(page: Int): Flow<RetrofitResponse<ArticleData>> = throw NotImplementedError()
-    override suspend fun getArticleResult(page: Int, forceUpdate: Boolean): NetworkResult<List<ArticleDetailData>> = throw NotImplementedError()
+    override fun getArticleSingle(page: Int): Single<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override suspend fun getArticleSuspend(page: Int): RetrofitResponse<ArticleData> = throw UnsupportedOperationException()
+    override fun getArticleLiveData(page: Int): LiveData<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override fun getArticleLiveDataByRx(page: Int): LiveData<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override fun getArticleLiveDataByFlow(page: Int): LiveData<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override fun getArticleFlow(page: Int): Flow<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override fun getArticleFlowByRx(page: Int): Flow<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override fun getArticleFlowByLiveData(page: Int): Flow<RetrofitResponse<ArticleData>> = throw UnsupportedOperationException()
+    override suspend fun getArticleResult(page: Int, forceUpdate: Boolean): NetworkResult<List<ArticleDetailData>> = throw UnsupportedOperationException()
 }

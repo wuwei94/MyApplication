@@ -16,14 +16,14 @@ import kotlinx.coroutines.Dispatchers
  */
 class ArticleMavericksViewModel(
     initialState: ArticleMavericksState,
-    private val articleRepository: ArticleRepository,
+    private val repository: ArticleRepository,
 ) : MavericksViewModel<ArticleMavericksState>(initialState) {
 
     fun loadArticle(page: Int) {
         withState { state ->
             if (state.articleResponse is Loading) return@withState
             suspend {
-                articleRepository.getArticleSuspend(page)
+                repository.getArticleSuspend(page)
             }.execute(Dispatchers.IO) {
                 copy(articleResponse = it)
             }

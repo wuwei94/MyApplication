@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.retrofit
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_repo.bean.LoginData
@@ -31,8 +32,13 @@ import com.example.william.my.core.retrofit.rx.callback.ResponseCallback
 @Route(path = RouterPath.Http.RetrofitRxDsl)
 class RetrofitRxDslActivity : BasicResponseActivity() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Retrofit Rx DSL 示例：DSL 封装后订阅式登录请求")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Retrofit Rx DSL login",
+        "1. Retrofit Rx DSL 登录请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -55,14 +61,14 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
                 override fun onResponse(response: LoginData?) {
                     super.onResponse(response)
                     appendFormatLog(
-                        "Retrofit Rx DSL 响应：",
+                        "✓ Retrofit Rx DSL 响应：",
                         response?.let(JsonUtils::toJson).orEmpty(),
                     )
                 }
 
                 override fun onFailure(e: ApiException) {
                     super.onFailure(e)
-                    appendLog("Retrofit Rx DSL 失败：${e.message}")
+                    appendLog("✗ Retrofit Rx DSL 失败：${e.message}")
                 }
             })
     }

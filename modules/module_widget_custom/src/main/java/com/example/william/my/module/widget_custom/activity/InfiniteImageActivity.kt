@@ -3,7 +3,7 @@ package com.example.william.my.module.widget_custom.activity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.widget_custom.databinding.DemoActivityInfiniteImageBinding
+import com.example.william.my.module.widget_custom.databinding.WidgetActivityInfiniteImageBinding
 
 /**
  * InfiniteImage — 无限轮播图片控件
@@ -17,7 +17,7 @@ import com.example.william.my.module.widget_custom.databinding.DemoActivityInfin
  * 4. 指示器：支持自定义指示器样式
  */
 @Route(path = RouterPath.WidgetCustom.InfiniteImage)
-class InfiniteImageActivity : BaseVBActivity<DemoActivityInfiniteImageBinding>() {
+class InfiniteImageActivity : BaseVBActivity<WidgetActivityInfiniteImageBinding>() {
 
-    override fun getViewBinding(): DemoActivityInfiniteImageBinding = DemoActivityInfiniteImageBinding.inflate(layoutInflater)
+    override fun getViewBinding(): WidgetActivityInfiniteImageBinding = WidgetActivityInfiniteImageBinding.inflate(layoutInflater)
 }

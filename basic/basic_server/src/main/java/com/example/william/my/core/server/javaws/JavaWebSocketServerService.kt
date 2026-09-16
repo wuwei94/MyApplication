@@ -39,12 +39,14 @@ class JavaWebSocketServerService : Service() {
                 logcat("onError: ${throwable.message}")
             }
         })
-        try {
-            server?.start()
-            logcat("Start JavaWebSocketServerService Success...")
-        } catch (e: Exception) {
-            logcat("Start JavaWebSocketServerService Failed: ${e.message}")
-        }
+        Thread {
+            try {
+                server?.start()
+                logcat("Start JavaWebSocketServerService Success...")
+            } catch (e: Exception) {
+                logcat("Start JavaWebSocketServerService Failed: ${e.message}")
+            }
+        }.start()
     }
 
     override fun onDestroy() {

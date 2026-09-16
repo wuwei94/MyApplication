@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.retrofit
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.api.NetworkApi
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
@@ -28,8 +29,13 @@ import retrofit2.Response
 @Route(path = RouterPath.Http.RetrofitCallDsl)
 class RetrofitCallDslActivity : BasicResponseActivity() {
 
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Retrofit Call DSL 示例：DSL 封装后回调发起登录请求")
+    }
+
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Retrofit DSL loginCall",
+        "1. Retrofit DSL Call 登录请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -49,17 +55,17 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    appendFormatLog("Retrofit DSL 响应：", response.body()?.string().orEmpty())
+                    appendFormatLog("✓ Retrofit DSL 响应：", response.body()?.string().orEmpty())
                 } else {
                     appendFormatLog(
-                        "Retrofit DSL 失败（HTTP ${response.code()}）：",
+                        "✗ Retrofit DSL 失败（HTTP ${response.code()}）：",
                         response.errorBody()?.string().orEmpty(),
                     )
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                appendLog("Retrofit DSL 失败：${t.message ?: "未知错误"}")
+                appendLog("✗ Retrofit DSL 失败：${t.message ?: "未知错误"}")
             }
         })
     }

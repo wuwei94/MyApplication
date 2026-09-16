@@ -141,6 +141,9 @@ class PagingViewModel(
     }.flowable.cachedIn(viewModelScope)
 
     companion object {
+        /**
+         * 工厂：通过 [viewModelFactory] DSL 从 [CreationExtras] 获取 Application 并注入仓库
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application =

@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
+import okio.ByteString
 import java.io.EOFException
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeoutException
@@ -86,7 +87,19 @@ object OkHttpWebSocketClientRx {
         }
     }
 
+    fun send(url: String, bytes: ByteString): Boolean {
+        val webSocket = getWebSocket(url) ?: return false
+        return try {
+            webSocket.send(bytes)
+        } catch (e: Exception) {
+            OkHttpWebSocketLogger.error("send bytes failed: $url", e)
+            false
+        }
+    }
+
     fun send(request: Request, message: String): Boolean = send(request.url.toString(), message)
+
+    fun send(request: Request, bytes: ByteString): Boolean = send(request.url.toString(), bytes)
 
     fun cancel(url: String) {
         getWebSocket(url)?.let { webSocket ->

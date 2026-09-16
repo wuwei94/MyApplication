@@ -87,7 +87,7 @@ class OfflineFirstViewModelTest {
             assertEquals(0, awaitItem().articles.size)
 
             // 发送本地插入意图
-            viewModel.sendIntent(OfflineFirstIntent.AddLocalArticle("本地即时新增文章"))
+            viewModel.intent.send(OfflineFirstIntent.AddLocalArticle("本地即时新增文章"))
 
             // 验证响应式数据流自动推流更新
             val updated = awaitItem()
@@ -107,7 +107,7 @@ class OfflineFirstViewModelTest {
             assertEquals(1, awaitItem().articles.size)
 
             // 发送清空本地缓存意图
-            viewModel.sendIntent(OfflineFirstIntent.ClearLocalCache)
+            viewModel.intent.send(OfflineFirstIntent.ClearLocalCache)
 
             // 验证数据表清空后流式反应
             val cleared = awaitItem()

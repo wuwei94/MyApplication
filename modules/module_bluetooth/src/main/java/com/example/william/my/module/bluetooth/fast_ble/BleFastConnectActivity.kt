@@ -32,6 +32,21 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 3. 读写：`read` / `write`（serviceUUID + charUUID 字符串）
  * 4. 通知：`notify` 订阅特征值
  *
+ * 基本用法：
+ * ```kotlin
+ * BleManager.getInstance().connect(device, object : BleGattCallback() {
+ *     override fun onConnectSuccess(device: BleDevice?, gatt: BluetoothGatt?, status: Int) { }
+ * })
+ * BleManager.getInstance().read(device, serviceUUID, charUUID, object : BleReadCallback() {
+ *     override fun onReadSuccess(data: ByteArray?) { }
+ * })
+ * ```
+ *
+ * 适用场景：
+ * - 不想手动查找 Characteristic、希望 UUID 字符串直调
+ * - 新手入门、中小型项目、业务逻辑较简单的外设
+ * - 与原生 / Nordic / RxAndroidBle 连接模型横向对比
+ *
  * https://github.com/Jasonchenlijian/FastBle
  */
 @Route(path = RouterPath.Bluetooth.FastConnect)
@@ -61,7 +76,8 @@ class BleFastConnectActivity : BasicResponseActivity() {
         "6. 断开连接 (disconnect)",
     )
 
-    override fun onRecyclerClick(position: Int, text: String) {
+    override fun onRecyclerClick(position: Int, string: String) {
+        super.onRecyclerClick(position, string)
         when (position) {
             0 -> scanAndConnect()
             1 -> setFastBleMtu()

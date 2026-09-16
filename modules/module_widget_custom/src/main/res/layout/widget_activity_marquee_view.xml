@@ -4,21 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Sensor3DActivity">
+    tools:context=".activity.MarqueeViewActivity">
 
-    <com.example.william.my.core.widget.sensor3d.Sensor3DView
-        android:id="@+id/sensor3D"
+    <com.example.william.my.core.widget.marqueeview.MarqueeView
+        android:id="@+id/widget_marquee_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dp_image_size"
-        app:backgroundAccelerateRatio="-2.0"
-        app:backgrounddrawable="@drawable/demo_sensor_background"
-        app:foregroundAccelerateRatio="4.0"
-        app:foregrounddrawable="@drawable/demo_sensor_foreground"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:midAccelerateRatio="1.0"
-        app:middrawable="@drawable/demo_sensor_mid" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

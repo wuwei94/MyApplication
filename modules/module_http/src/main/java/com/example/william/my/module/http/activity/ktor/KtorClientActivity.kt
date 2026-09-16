@@ -1,5 +1,6 @@
 package com.example.william.my.module.http.activity.ktor
 
+import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.LoginData
@@ -35,7 +36,14 @@ class KtorClientActivity : BasicResponseActivity() {
     }
     private val client by clientDelegate
 
-    override fun buildList(): ArrayList<String> = arrayListOf("Ktor Client POST")
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        showDescription("Ktor Client 示例：项目级封装发起表单登录")
+    }
+
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. Ktor Client 发起 POST 请求",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
@@ -54,16 +62,16 @@ class KtorClientActivity : BasicResponseActivity() {
             val result = client.postFormResponse<LoginData>("user/login", params)
             result.onSuccess { response ->
                 if (response.isSuccess) {
-                    appendFormatLog("Ktor Client 响应：", JsonUtils.toJson(response))
+                    appendFormatLog("✓ Ktor Client 响应：", JsonUtils.toJson(response))
                 } else {
                     appendLog(
-                        "Ktor Client 业务失败（${response.code}）：" +
+                        "✗ Ktor Client 业务失败（${response.code}）：" +
                             response.message.ifBlank { "未知错误" },
                     )
                 }
             }
             result.onFailure { error ->
-                appendLog("Ktor Client 失败：${error.message ?: "未知错误"}")
+                appendLog("✗ Ktor Client 失败：${error.message ?: "未知错误"}")
             }
         }
     }

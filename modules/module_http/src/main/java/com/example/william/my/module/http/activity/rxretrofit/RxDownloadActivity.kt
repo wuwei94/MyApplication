@@ -77,7 +77,7 @@ class RxDownloadActivity : BasicResponseActivity() {
         clearUpdatingLogs()
         downloadInProgress = true
         downloadCleanupRequested = false
-        appendLog("单文件下载已开始")
+        appendLog("→ [单文件下载] 已开始")
 
         val destination = File(downloadDirectory, "single-${Constants.Url_Download.fileName()}")
         operations.add(
@@ -105,12 +105,12 @@ class RxDownloadActivity : BasicResponseActivity() {
 
                         override fun onResponse(response: DownloadResult) {
                             removeUpdatingLog(DOWNLOAD_PROGRESS_KEY)
-                            appendLog("文件已保存到：${response.file.absolutePath}")
+                            appendLog("✓ [单文件下载] 已保存到：${response.file.absolutePath}")
                         }
 
                         override fun onFailure(error: ApiException) {
                             removeUpdatingLog(DOWNLOAD_PROGRESS_KEY)
-                            appendLog("下载失败：${error.message}")
+                            appendLog("✗ [单文件下载] 失败：${error.message}")
                         }
                     },
                 ),
@@ -127,7 +127,7 @@ class RxDownloadActivity : BasicResponseActivity() {
             val destination = File(downloadDirectory, "${index + 1}-${url.fileName()}")
             DownloadQueueTask(url = url, destination = destination, id = destination.name)
         }
-        appendLog("多文件下载已开始，共 ${tasks.size} 个文件")
+        appendLog("→ [多文件下载] 已开始，共 ${tasks.size} 个文件")
 
         operations.add(
             RxDownloadManager.builder()
@@ -158,25 +158,25 @@ class RxDownloadActivity : BasicResponseActivity() {
                             removeUpdatingLog(DOWNLOAD_PROGRESS_KEY)
                             response.successes.forEach { success ->
                                 appendLog(
-                                    "${success.task.id} 已保存到：" +
+                                    "✓ [多文件下载] ${success.task.id} 已保存到：" +
                                         success.result.file.absolutePath,
                                 )
                             }
                             response.failures.forEach { failure ->
                                 appendLog(
-                                    "${failure.task.id} 下载失败：" +
+                                    "✗ [多文件下载] ${failure.task.id} 下载失败：" +
                                         failure.error.message,
                                 )
                             }
                             appendLog(
-                                "下载完成：成功 ${response.successes.size}，" +
+                                "✓ [多文件下载] 完成：成功 ${response.successes.size}，" +
                                     "失败 ${response.failures.size}",
                             )
                         }
 
                         override fun onFailure(error: ApiException) {
                             removeUpdatingLog(DOWNLOAD_PROGRESS_KEY)
-                            appendLog("下载队列失败：${error.message}")
+                            appendLog("✗ [多文件下载] 队列失败：${error.message}")
                         }
                     },
                 ),
@@ -186,7 +186,7 @@ class RxDownloadActivity : BasicResponseActivity() {
     private fun cancelDownload() {
         operations.clear()
         clearUpdatingLogs()
-        appendLog("当前下载操作已取消")
+        appendLog("→ [下载] 当前操作已取消")
     }
 
     private fun clearDownloads() {
@@ -194,7 +194,7 @@ class RxDownloadActivity : BasicResponseActivity() {
         if (downloadInProgress) {
             downloadCleanupRequested = true
             operations.clear()
-            appendLog("当前下载已取消，等待任务结束后清理文件")
+            appendLog("→ [下载] 当前任务已取消，等待结束后清理文件")
             return
         }
         clearDownloadFiles()
@@ -203,24 +203,24 @@ class RxDownloadActivity : BasicResponseActivity() {
     /** 删除下载示例目录中的直接子项。 */
     private fun clearDownloadFiles() {
         if (downloadDirectory.exists() && !downloadDirectory.isDirectory) {
-            appendLog("下载文件清理失败：目标路径不是目录")
+            appendLog("✗ [清理下载文件] 目标路径不是目录")
             return
         }
         if (!downloadDirectory.exists()) {
-            appendLog("下载文件清理完成：已删除 0/0")
+            appendLog("✓ [清理下载文件] 已删除 0/0")
             return
         }
         val files = downloadDirectory.listFiles() ?: run {
-            appendLog("下载文件清理失败：无法读取目录")
+            appendLog("✗ [清理下载文件] 无法读取目录")
             return
         }
         val failedFiles = files.filter { !it.delete() }
         appendLog(
-            "下载文件清理完成：已删除 " +
+            "✓ [清理下载文件] 已删除 " +
                 "${files.size - failedFiles.size}/${files.size}",
         )
         if (failedFiles.isNotEmpty()) {
-            appendLog("未能删除：${failedFiles.joinToString { it.name }}")
+            appendLog("✗ [清理下载文件] 未能删除：${failedFiles.joinToString { it.name }}")
         }
     }
 

@@ -18,7 +18,7 @@ import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
  * 核心机制与避坑点：
  * 1. 单向数据流：数据从 Model → View → Intent 单向流动
  * 2. 不可变状态：状态不可变，每次更新都创建新状态
- * 3. 响应式编程：基于 RxJava 或 Kotlin Flow
+ * 3. 响应式编程：基于 Kotlin StateFlow 与 Channel
  * 4. 易于调试：状态变化可追踪，便于调试
  *
  * https://developer.android.com/topic/architecture
