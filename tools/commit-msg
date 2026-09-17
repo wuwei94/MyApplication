@@ -7,7 +7,7 @@
 #   2. 格式必须是 <type>(<scope>): <subject>
 #   3. 标题长度 ≤72 静默通过 / 73~100 仅提示 / >100 拒绝（中文按 1 个字符计）
 #   4. 标题结尾不加句号
-#   5. 标题建议用中文书写（仅提示，不阻断）
+#   5. 标题必须包含至少一个汉字（中文门禁，不通过则拒绝）
 #
 # 安装：./tools/install-git-hooks.sh
 # 临时跳过：git commit --no-verify     或     COMMIT_MSG_DISABLE=1 git commit
