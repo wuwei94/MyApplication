@@ -14,7 +14,7 @@
 | 改 Gradle/CI/钩子/混淆/Flutter/XML 注释 | [engineering.md](engineering.md) | 工程化落点注释与文件头 |
 | 抄现成模板（UDF/Compose/测试/Fake） | [templates.md](templates.md) | 代码模板库 |
 | 查 UI 尺寸、字体、图标规范 | [design.md](design.md) | 4dp 网格与设计体系 |
-| 写 Commit / 装钩子 | [git.md](git.md) | Conventional Commits 与门禁 |
+| 写 Commit / 装钩子 | [git.md](git.md) | Conventional Commits、提交粒度与门禁 |
 
 ## 分层
 

@@ -52,6 +52,42 @@ scope 可省略（`docs: ...` 这类全仓范围的改动）。
 
 机械校验（`tools/commit-msg`，不通过则拒绝提交）：标题非空、Conventional Commits 格式、长度 >100、结尾句号、标题至少含一个汉字。第 3、4 条靠交付自检与 Review。
 
+## 提交粒度（多 Agent 统一约束）
+
+> 目标：不同 Agent / 不同会话落历史时，切片观一致——既禁止巨石提交，也禁止无意义碎切。
+> 信息格式与禁止负向叙事见上文与 [delivery.md](delivery.md)；本文只约束「拆到哪一层」。
+
+### 必须拆开
+
+1. **禁止跨 type 混提**：一次提交只允许一种 type。`feat` / `fix` / `refactor` / `style` / `docs` / `test` / `build` / `ci` 不得写进同一提交。
+2. **禁止跨主模块混提**：一次提交的业务代码只允许落在一个主模块路径（`modules/module_*`、`libs/lib_*`、`basic_*`、`app` 等）。同一模块的文档同步更新可并入该提交。
+3. **规约升级与代码落地物理切开**：升级 `AGENTS.md` / `docs/01-rules/*` 的提交，不得与跨模块代码重构混提（见 [delivery.md](delivery.md) §1.3）。
+4. **批量格式化独立成提**：`style(spotless): ...` 单独提交，hash 追加到 `.git-blame-ignore-revs`。
+
+### 禁止再拆
+
+1. **同模块 + 同 type + 同关注点 = 一个提交**。同一示例页的路由四件套（`@Route` + Manifest + `RouterPath` + 入口 `buildRouter()`）属于同一关注点，不得拆成多个 commit。
+2. **每个提交必须可独立检出**：禁止提交中间不可用状态；单提交 checkout 后至少不引入新的 `spotlessCheck` 失败。
+3. **禁止拆散唯一依赖对**：仅有的调用方与其 API 变更属于同一提交。
+4. **单任务默认 1～3 个提交**：超过 3 个时，任务单必须逐条写明提交计划，Agent 不得自行增减切片。
+
+### 任务单中的提交计划
+
+派活时写死切片；执行方既不得把多条合并成一条，也不得在计划外再拆：
+
+```text
+提交计划（禁止合并，也禁止再拆）：
+1. feat(module_x): 新增 Y 能力
+2. docs(module_x): 同步文档同步表
+禁止：type 混提、跨主模块改动、未经要求的 style/refactor 附赠
+```
+
+### 执行边界
+
+- 粒度违规由交付自检与 Review 拦截；当前 `commit-msg` 不做机械粒度判定。
+- 未获明确授权仍不得 `git commit` / `git push`（见 [delivery.md](delivery.md)）。
+- 任务单已写提交计划时，以任务单为准；未写时按本文默认切片。
+
 ## 快速开始
 
 ```bash

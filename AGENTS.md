@@ -34,6 +34,7 @@
 ## 4. 完成定义（交付前自检清单）
 - [ ] `git status` + `git diff --stat`：触碰文件完全在任务白名单内
 - [ ] `git diff`：无非预期的注释减号行，无负向复盘词汇
+- [ ] 提交粒度（若已获授权落历史）：按 [docs/01-rules/git.md](docs/01-rules/git.md)「提交粒度」切片——不跨 type / 主模块混提，同关注点不碎切；任务单写有提交计划时严格照做
 - [ ] 触碰 Kotlin/Java/Gradle 源码：`./gradlew :<模块路径>:spotlessApply` 且 `spotlessCheck` 通过；纯文档/规约任务不强制跑 Gradle spotless
 - [ ] 涉及 Activity 新增：`@Route` + Manifest 注册 + `RouterPath` + 入口 `buildRouter()` 四件套齐全，并按 [structure.md](docs/01-rules/structure.md)「文档同步」更新
 - [ ] 涉及模块增删：已按 [structure.md](docs/01-rules/structure.md)「文档同步」更新，且未引入跨层依赖
