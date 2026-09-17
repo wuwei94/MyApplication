@@ -13,27 +13,21 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * Room — 数据库持久化框架
- *
- * Room 是 Android Jetpack 提供的数据库持久化框架，在 SQLite 之上提供类型安全与响应式抽象层。
+ * Room — Jetpack 在 SQLite 之上的类型安全持久化框架
  *
  * 核心机制与避坑点：
- * 1. 编译时验证：在编译时验证 SQL 语法与实体映射，减少运行时错误
- * 2. 注解驱动：使用注解定义数据库结构，简化代码
- * 3. 协程 & Flow 支持：DAO 挂起函数与 Flow 响应式查询数据驱动 UI
- * 4. RxJava 支持：原生支持 Single、Maybe、Flowable 响应式流
- * 5. 事务支持：RoomDatabase.withTransaction 支持多表原子事务
+ * 1. 编译期校验：@Entity / @Dao / @Database 在编译时校验 SQL 与实体映射；schema 变更必须递增 version 并提供 Migration
+ * 2. 主线程限制：默认禁止主线程查询，需在 Dispatchers.IO / Rx Schedulers.io 上执行；allowMainThreadQueries 仅用于调试
+ * 3. 响应式查询：DAO 返回 Flow 时表变更自动重发；RxJava 返回类型（Single/Maybe/Flowable）需自行管理 Disposable
+ * 4. 事务：insertAll 等批量写入在 DAO 事务内完成，失败时整体回滚
  *
- * 核心组件：
- * 1. @Entity：定义数据库表结构
- * 2. @Dao：定义数据访问对象，包含增删改查方法
- * 3. @Database：定义数据库，包含版本号和实体列表
- *
- * https://developer.android.google.cn/jetpack/androidx/releases/room
+ * 官方参考：
+ * https://developer.android.com/training/data-storage/room
  */
 @Route(path = RouterPath.Database.Room)
 class RoomActivity : BasicResponseActivity() {
@@ -47,17 +41,20 @@ class RoomActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("点击下方列表项演示 Room 数据库 CRUD 与 Flow/RxJava 响应式查询")
+        showDescription(
+            "Room 示例：写入 / 批量事务 / 更新查询 / Flow 观察 / Rx 查询 / 清理重置",
+        )
         observeOAuthFlow()
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "插入单条数据 (Insert Single)",
-        "批量插入数据 (Insert Batch)",
-        "更新最近一条数据 (Update)",
-        "根据 ID 查询数据 (Query by ID)",
-        "RxJava Single 异步查询 (Rx Query)",
-        "清空数据库 (Delete All)",
+        "1. 插入单条数据 (Insert Single)",
+        "2. 批量插入数据 (Insert Batch)",
+        "3. 更新最近一条数据 (Update)",
+        "4. 根据 ID 查询数据 (Query by ID)",
+        "5. Flow 响应式观察 (表变更自动上屏)",
+        "6. RxJava Single 异步查询 (Rx Query)",
+        "7. 清空数据库 (Delete All)",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -67,13 +64,14 @@ class RoomActivity : BasicResponseActivity() {
             1 -> addBatchOAuth()
             2 -> updateLatestOAuth()
             3 -> queryOAuthById()
-            4 -> queryOAuthByRxSingle()
-            5 -> clearOAuth()
+            4 -> readFlowOnce()
+            5 -> queryOAuthByRxSingle()
+            6 -> clearOAuth()
         }
     }
 
     /**
-     * 1. 响应式 Flow 查询：监听数据表全量变化并实时输出
+     * 响应式 Flow 查询：表变更自动重发并上屏
      */
     private fun observeOAuthFlow() {
         lifecycleScope.launch {
@@ -93,103 +91,113 @@ class RoomActivity : BasicResponseActivity() {
         }
     }
 
-    /**
-     * 2. 插入单条记录
-     */
-    private fun addSingleOAuth() {
+    private fun readFlowOnce() {
+        appendLog("→ 读取 Room Flow 当前快照...")
         lifecycleScope.launch(Dispatchers.IO) {
-            val oAuth = OAuth(refreshToken = "Token_${System.currentTimeMillis() % 10000}", expires = 3600)
+            val list = oauthDao.getAllOAuthFlow().first()
+            withContext(Dispatchers.Main) {
+                appendLog("✓ [Flow first] 当前共 ${list.size} 条记录")
+            }
+        }
+    }
+
+    private fun addSingleOAuth() {
+        appendLog("→ 插入单条 OAuth...")
+        lifecycleScope.launch(Dispatchers.IO) {
+            val oAuth = OAuth(
+                refreshToken = "Token_${System.currentTimeMillis() % 10000}",
+                expires = 3600,
+            )
             val newId = oauthDao.insertOAuth(oAuth)
             lastInsertedId = newId
             withContext(Dispatchers.Main) {
-                appendLog("插入单条数据成功，生成的 ID: $newId")
+                appendLog("✓ 插入单条数据成功，生成的 ID: $newId")
             }
         }
     }
 
-    /**
-     * 3. 批量插入多条记录
-     */
     private fun addBatchOAuth() {
+        appendLog("→ 批量插入 3 条 OAuth...")
         lifecycleScope.launch(Dispatchers.IO) {
             val list = Array(3) { index ->
-                OAuth(refreshToken = "Batch_Token_${index}_${System.currentTimeMillis() % 1000}", expires = 7200)
+                OAuth(
+                    refreshToken = "Batch_Token_${index}_${System.currentTimeMillis() % 1000}",
+                    expires = 7200,
+                )
             }
             oauthDao.insertAll(*list)
             withContext(Dispatchers.Main) {
-                appendLog("批量插入 3 条数据完成")
+                appendLog("✓ 批量插入 3 条数据完成")
             }
         }
     }
 
-    /**
-     * 4. 更新最新一条数据
-     */
     private fun updateLatestOAuth() {
+        appendLog("→ 更新最近一条 OAuth...")
         lifecycleScope.launch(Dispatchers.IO) {
             if (lastInsertedId == 0L) {
                 withContext(Dispatchers.Main) {
-                    appendLog("尚未插入数据，请先插入一条数据")
+                    appendLog("✗ 尚未插入数据，请先插入一条数据")
                 }
                 return@launch
             }
             val current = oauthDao.getUserById(lastInsertedId)
             if (current != null) {
-                val updated = current.copy(refreshToken = "Updated_${System.currentTimeMillis() % 10000}", expires = 9999)
+                val updated = current.copy(
+                    refreshToken = "Updated_${System.currentTimeMillis() % 10000}",
+                    expires = 9999,
+                )
                 oauthDao.updateOAuth(updated)
                 withContext(Dispatchers.Main) {
-                    appendLog("已更新 ID=$lastInsertedId 的数据为: ${updated.refreshToken}")
+                    appendLog("✓ 已更新 ID=$lastInsertedId 的数据为: ${updated.refreshToken}")
                 }
             }
         }
     }
 
-    /**
-     * 5. 协程查询单条数据
-     */
     private fun queryOAuthById() {
+        appendLog("→ 根据 ID 查询 OAuth...")
         lifecycleScope.launch(Dispatchers.IO) {
             if (lastInsertedId == 0L) {
                 withContext(Dispatchers.Main) {
-                    appendLog("尚未记录有效 ID，请先插入数据")
+                    appendLog("✗ 尚未记录有效 ID，请先插入数据")
                 }
                 return@launch
             }
             val result = oauthDao.getUserById(lastInsertedId)
             withContext(Dispatchers.Main) {
-                appendLog("协程根据 ID=$lastInsertedId 查询结果: ${Gson().toJson(result)}")
+                appendLog("✓ 协程根据 ID=$lastInsertedId 查询结果: ${Gson().toJson(result)}")
             }
         }
     }
 
-    /**
-     * 6. RxJava Single 响应式查询
-     */
     private fun queryOAuthByRxSingle() {
         if (lastInsertedId == 0L) {
-            appendLog("尚未记录有效 ID，请先插入数据")
+            appendLog("✗ 尚未记录有效 ID，请先插入数据")
             return
         }
+        appendLog("→ RxJava Single 查询 OAuth...")
         val d = oauthDao.getUserSingle(lastInsertedId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ oauth ->
-                appendLog("RxJava Single 查询成功: ID=${oauth.id}, Token=${oauth.refreshToken}")
-            }, { error ->
-                appendLog("RxJava Single 查询失败: ${error.localizedMessage}")
-            })
+            .subscribe(
+                { oauth ->
+                    appendLog("✓ RxJava Single 查询成功: ID=${oauth.id}, Token=${oauth.refreshToken}")
+                },
+                { error ->
+                    appendLog("✗ RxJava Single 查询失败: ${error.localizedMessage}")
+                },
+            )
         disposables.add(d)
     }
 
-    /**
-     * 7. 清空全部数据
-     */
     private fun clearOAuth() {
+        appendLog("→ 清空 Room 数据表...")
         lifecycleScope.launch(Dispatchers.IO) {
             oauthDao.deleteAllOAuth()
             lastInsertedId = 0L
             withContext(Dispatchers.Main) {
-                appendLog("已清空 Room 数据表")
+                appendLog("✓ 已清空 Room 数据表")
             }
         }
     }
