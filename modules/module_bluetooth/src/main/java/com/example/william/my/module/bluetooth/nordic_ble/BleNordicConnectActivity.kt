@@ -21,34 +21,16 @@ import no.nordicsemi.android.ble.observer.ConnectionObserver
 /**
  * Nordic BLE 连接与挂起调用 — BleManager + suspend
  *
- * 基于 NordicBleManager 演示连接生命周期、重试重连与协程挂起 API。
+ * 基于 NordicBleManager 演示连接生命周期、链式重试与协程 suspend API，与原生 / FastBle / Rx 连接栈平行对照。
  *
- * 库选型定位（四栈横评中的 Nordic）：
- * - 维护方：蓝牙芯片原厂 Nordic 官方维护，稳定性与边缘异常处理最强
- * - 能力要点：请求队列解决多任务并发冲突；内置 MTU 自动切包（split）/ 拼包（merge），
- *   无需自行计算 offset；支持 Kotlin 协程 suspend 挂起调用
- * - 适合：智能硬件大厂、医疗设备、车载、OTA 固件升级、对稳定性要求极高的项目
+ * 核心机制与避坑点：
+ * 1. Manager 管道：[NordicBleManager] 统一 GATT 请求队列，多任务并发由库内串行化
+ * 2. 链式策略：connect(...).timeout(...).retry(...).enqueue() 可配置超时与重连次数
+ * 3. 断开原因：[ConnectionObserver] 区分主动断开、连接超时、链路丢失等状态，便于重连决策
+ * 4. 挂起扩展：`suspend` 将 enqueue 回调转为同步风格，需在 Dispatchers.IO 上调用避免阻塞主线程
+ * 5. 资源释放：连接建立与断开均走 Manager 生命周期，页面销毁前应完成 disconnect
  *
- * 核心特性：
- * 1. Manager 生命周期：[NordicBleManager] 统一 GATT 管道
- * 2. 链式策略：timeout / retry / autoConnect
- * 3. 状态细听：[ConnectionObserver] 区分断开原因
- * 4. 挂起扩展：`suspend` 将回调转为同步风格协程调用
- *
- * 基本用法：
- * ```kotlin
- * manager.connect(device)
- *     .timeout(10_000)
- *     .retry(3, 100)
- *     .enqueue()
- * // 或：withContext(IO) { manager.connect(device).suspend() }
- * ```
- *
- * 适用场景：
- * - 高可靠连接与自动重连
- * - 协程优先的 BLE 业务层
- * - 与原生/Rx/FastBle 连接模型对比
- *
+ * 官方参考：
  * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
 @SuppressLint("MissingPermission")
@@ -96,7 +78,8 @@ class BleNordicConnectActivity : BasicResponseActivity() {
 
         showDescription(
             "Nordic BLE 工业级连接与挂起调用示例\n\n" +
-                "演示 BleManager 状态机、自动重试连接、管道化初始化与 Kotlin suspend 读写\n" +
+                "覆盖连接状态、suspend 读写、Notify 订阅与资源释放\n" +
+                "initialize 管道在连接就绪时自动协商 MTU 并使能 Notification\n" +
                 "请按顺序点击下方操作项",
         )
     }
@@ -105,7 +88,8 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         "1. 扫描并使用 Nordic BleManager 连接首个设备 (带3次重试)",
         "2. 挂起读取特征值 (suspend 协程调用)",
         "3. 挂起写入数据 (suspend 协程调用)",
-        "4. 断开连接并清理资源",
+        "4. 使能 Notify 通知订阅 (enableNotifications)",
+        "5. 断开连接并清理资源",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -114,7 +98,8 @@ class BleNordicConnectActivity : BasicResponseActivity() {
             0 -> scanAndConnectNordic()
             1 -> readCharacteristicSuspend()
             2 -> writeCharacteristicSuspend()
-            3 -> disconnectNordic()
+            3 -> enableNotificationSuspend()
+            4 -> disconnectNordic()
         }
     }
 
@@ -197,6 +182,22 @@ class BleNordicConnectActivity : BasicResponseActivity() {
                 appendLog("✗ [suspend 写入失败] 异常: ${e.message}")
             }
         }
+    }
+
+    /**
+     * 对照 initialize 管道中的自动 Notify，手动再走一遍 enableNotifications 请求。
+     */
+    private fun enableNotificationSuspend() {
+        val char = bleManager.targetCharacteristic
+        if (char == null || !bleManager.isConnected) {
+            appendLog("✗ 设备未连接或无可用特征值")
+            return
+        }
+        appendLog("→ [Notify] 请求使能特征值通知订阅...")
+        bleManager.enableNotify(char)
+            .done { appendLog("✓ [Notify] 通知订阅已使能，下行数据经 Notification 回调") }
+            .fail { _, status -> appendLog("✗ [Notify] 使能失败 status=$status") }
+            .enqueue()
     }
 
     private fun disconnectNordic() {

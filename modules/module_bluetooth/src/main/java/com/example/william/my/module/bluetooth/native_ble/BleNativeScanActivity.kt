@@ -24,33 +24,17 @@ import java.util.UUID
 /**
  * 原生 BLE 扫描与过滤 — BluetoothLeScanner
  *
- * 演示 Android 原生 BLE 扫描生命周期与广播数据解析，不依赖第三方蓝牙库。
+ * 不依赖第三方库，演示系统 BLE 扫描生命周期与广播数据解析，与 Nordic / FastBle / Rx 扫描栈平行对照。
  *
- * 库选型定位（四栈横评中的原生）：
- * - 维护方：Android 系统 SDK，零第三方依赖
- * - 能力要点：ScanFilter / ScanSettings / 广播包结构完全暴露，可控性最强但模板代码最多
- * - 适合：不想引入三方库、需要精确控制扫描参数或学习底层机制的项目
+ * 核心机制与避坑点：
+ * 1. 运行时权限：Android 12+ 需 BLUETOOTH_SCAN / BLUETOOTH_CONNECT，Android 11- 需 ACCESS_FINE_LOCATION
+ * 2. 适配器状态：BluetoothAdapter 可能为 null 或未开启，扫描前需做可用性检查
+ * 3. 扫描参数：ScanSettings 控制 SCAN_MODE_LOW_LATENCY / LOW_POWER，ScanFilter 按 Service UUID / 设备名过滤
+ * 4. 广播解析：onScanResult 中从 scanRecord 提取 RSSI、Service UUIDs、Manufacturer Data
+ * 5. 生命周期：startScan / stopScan 必须成对调用，避免扫描器句柄泄漏与耗电
  *
- * 核心特性：
- * 1. 运行时权限：兼容 Android 12+ BLUETOOTH_SCAN 与 Android 11- ACCESS_FINE_LOCATION
- * 2. 适配器状态：BluetoothAdapter 可用性感知
- * 3. 扫描模式：SCAN_MODE_LOW_LATENCY / LOW_POWER 等
- * 4. 规则过滤：ScanFilter（Service UUID、设备名）
- * 5. 广播解析：RSSI、Service UUIDs、Manufacturer Data
- *
- * 基本用法：
- * ```kotlin
- * scanner.startScan(filters, settings, scanCallback)
- * // onScanResult 中解析 result.scanRecord 后 updateLog(key, ...)
- * scanner.stopScan(scanCallback)
- * ```
- *
- * 适用场景：
- * - 发现周边 BLE 设备并解析广播
- * - 需要系统原生 API、不引入三方库的项目
- * - 与连接/队列示例串联的扫描入口
- *
- * https://developer.android.google.cn/guide/topics/connectivity/bluetooth/ble
+ * 官方参考：
+ * https://developer.android.com/guide/topics/connectivity/bluetooth-le
  */
 @SuppressLint("MissingPermission")
 @Route(path = RouterPath.Bluetooth.NativeScan)

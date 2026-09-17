@@ -18,35 +18,16 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * FastBle 连接与读写回调 — 字符串 UUID 直调
  *
- * 连接、MTU、read/write/notify 均以 UUID 字符串直接调用，省去手动查找 Characteristic。
- *
- * 库选型定位（四栈横评中的 FastBle）：
- * - 功能覆盖：扫描、连接、读写、Notify、MTU、基础重连均有
- * - API 成本：最低。原生需先拿 Service/Characteristic 再挂多层回调；FastBle 直接
- *   `read(mac, serviceUUID, charUUID, callback)` 级别调用
- * - 适合：新手入门、中小型项目、业务逻辑较简单的外设
+ * 连接、MTU、read/write/notify 均以 serviceUUID + charUUID 字符串直调，省去手动查找 Characteristic，与原生 / Nordic / Rx 连接栈平行对照。
  *
  * 核心机制与避坑点：
- * 1. 连接：`BleManager.connect` + 状态回调
- * 2. MTU：`setMtu`
- * 3. 读写：`read` / `write`（serviceUUID + charUUID 字符串）
- * 4. 通知：`notify` 订阅特征值
+ * 1. 连接：`BleManager.connect` + BleGattCallback 状态回调，连接成功后才可读写
+ * 2. MTU：`setMtu` 需在大包传输前协商，默认 23 字节有效载荷仅 20 字节
+ * 3. 读写：`read` / `write` 以字符串 UUID 定位特征值，写失败依赖 onWriteFailure 回调感知
+ * 4. 通知：`notify` 订阅特征值后在 BleNotifyCallback 收流，断开连接时应停止订阅
+ * 5. 全局初始化：`BleManager.getInstance().init(application)` 与 reConnectCount / operateTimeout 可在页面入口统一配置
  *
- * 基本用法：
- * ```kotlin
- * BleManager.getInstance().connect(device, object : BleGattCallback() {
- *     override fun onConnectSuccess(device: BleDevice?, gatt: BluetoothGatt?, status: Int) { }
- * })
- * BleManager.getInstance().read(device, serviceUUID, charUUID, object : BleReadCallback() {
- *     override fun onReadSuccess(data: ByteArray?) { }
- * })
- * ```
- *
- * 适用场景：
- * - 不想手动查找 Characteristic、希望 UUID 字符串直调
- * - 新手入门、中小型项目、业务逻辑较简单的外设
- * - 与原生 / Nordic / RxAndroidBle 连接模型横向对比
- *
+ * 官方参考：
  * https://github.com/Jasonchenlijian/FastBle
  */
 @Route(path = RouterPath.Bluetooth.FastConnect)
@@ -62,7 +43,7 @@ class BleFastConnectActivity : BasicResponseActivity() {
 
         showDescription(
             "FastBle 连接与读写回调示例\n\n" +
-                "演示 FastBle 极简的 UUID 驱动读写与 BleGattCallback / BleNotifyCallback\n" +
+                "覆盖扫描连接、MTU、读写 Notify、大包写入与断开释放\n" +
                 "请按顺序点击下方操作项",
         )
     }
@@ -73,7 +54,8 @@ class BleFastConnectActivity : BasicResponseActivity() {
         "3. 读取特征值 (BleReadCallback)",
         "4. 写入测试数据 (BleWriteCallback)",
         "5. 开启 Notify 通知监听 (BleNotifyCallback)",
-        "6. 断开连接 (disconnect)",
+        "6. 发送大包数据 (write 分包 current/total)",
+        "7. 断开连接 (disconnect)",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -84,7 +66,8 @@ class BleFastConnectActivity : BasicResponseActivity() {
             2 -> readCharacteristic()
             3 -> writeCharacteristic()
             4 -> enableNotification()
-            5 -> disconnect()
+            5 -> writeLargePayload()
+            6 -> disconnect()
         }
     }
 
@@ -246,6 +229,37 @@ class BleFastConnectActivity : BasicResponseActivity() {
                 override fun onCharacteristicChanged(data: ByteArray?) {
                     val hex = data?.joinToString(" ") { String.format("%02X", it) } ?: ""
                     appendLog("🔔 [FastBle 收到 Notify] Hex=[$hex]")
+                }
+            },
+        )
+    }
+
+    /**
+     * 写入超过单包有效载荷的数据，观察 FastBle 回调中的分包进度。
+     */
+    private fun writeLargePayload() {
+        val dev = connectedDevice
+        val sUuid = targetServiceUuid
+        val cUuid = targetCharUuid
+        if (dev == null || sUuid == null || cUuid == null) {
+            appendLog("✗ 设备未连接或无可用特征 UUID")
+            return
+        }
+
+        val sendBytes = ByteArray(128) { index -> ('A' + (index % 26)).code.toByte() }
+        appendLog("→ [大包写入] 发送 ${sendBytes.size} 字节，观察 current/total 分包进度...")
+        BleManager.getInstance().write(
+            dev,
+            sUuid,
+            cUuid,
+            sendBytes,
+            object : BleWriteCallback() {
+                override fun onWriteSuccess(current: Int, total: Int, justWrite: ByteArray?) {
+                    appendLog("✓ [大包写入] 进度: [$current/$total]")
+                }
+
+                override fun onWriteFailure(exception: BleException?) {
+                    appendLog("✗ [大包写入] ${exception?.description}")
                 }
             },
         )

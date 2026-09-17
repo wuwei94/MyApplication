@@ -23,34 +23,17 @@ import java.util.UUID
 /**
  * 原生 BLE 连接与 GATT 交互 — BluetoothGatt
  *
- * 演示 Android 原生 BluetoothGatt 全生命周期与特征值读写。
+ * 系统 BluetoothGatt 全生命周期与特征值读写；无队列保护，需自行串行化，与 Nordic / FastBle / Rx 连接栈平行对照。
  *
- * 库选型定位（四栈横评中的原生）：
- * - 维护方：Android 系统 SDK，零第三方依赖
- * - 能力要点：GATT 回调与服务树完全暴露，无队列保护需自行串行化
- * - 适合：自研 GATT 协议调试、不想引入 Nordic / FastBle 等封装库的项目
+ * 核心机制与避坑点：
+ * 1. 连接状态机：connectGatt / autoConnect，连接成功后必须 discoverServices 才能拿到服务树
+ * 2. MTU 协商：requestMtu 突破默认 23 字节负载（有效 20 字节），需在读写大包前完成
+ * 3. 特征读写：readCharacteristic / writeCharacteristic 走回调，写类型区分 DEFAULT 与 NO_RESPONSE
+ * 4. 订阅：setCharacteristicNotification 后仍须写入 CCCD Descriptor（00002902）才真正生效
+ * 5. 资源释放：结束时 disconnect + close 成对调用，避免 GATT 句柄泄漏导致后续连接失败
  *
- * 核心特性：
- * 1. 连接：connectGatt / autoConnect 与连接状态机
- * 2. 服务发现：discoverServices 与 GATT 树解析
- * 3. MTU 协商：requestMtu，突破默认 23 字节负载
- * 4. 特征读写：readCharacteristic / writeCharacteristic（DEFAULT vs NO_RESPONSE）
- * 5. 订阅：setCharacteristicNotification + CCCD Descriptor 写入
- * 6. 释放：断开与 close，避免句柄泄漏
- *
- * 基本用法：
- * ```kotlin
- * device.connectGatt(context, false, gattCallback, TRANSPORT_LE)
- * // onConnectionStateChange → discoverServices → read/write/notify
- * gatt.disconnect(); gatt.close()
- * ```
- *
- * 适用场景：
- * - 自研 GATT 客户端协议调试
- * - 与扫描/队列示例对照理解原生回调模型
- * - 不想引入 Nordic / FastBle 等封装库
- *
- * https://developer.android.google.cn/guide/topics/connectivity/bluetooth/ble
+ * 官方参考：
+ * https://developer.android.com/guide/topics/connectivity/bluetooth-le
  */
 @SuppressLint("MissingPermission")
 @Route(path = RouterPath.Bluetooth.NativeConnect)

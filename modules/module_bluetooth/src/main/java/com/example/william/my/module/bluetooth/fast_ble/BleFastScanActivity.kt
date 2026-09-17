@@ -13,34 +13,15 @@ import java.util.UUID
 /**
  * FastBle 扫描与规则过滤 — 链式 API
  *
- * FastBle 以字符串 UUID 与回调简化 BLE；本页演示扫描规则配置与三段回调。
- *
- * 库选型定位（四栈横评中的 FastBle）：
- * - 功能覆盖：扫描、连接、读写、Notify、MTU、基础重连均有
- * - API 成本：最低。原生需先拿 Service/Characteristic 再挂多层回调；FastBle 直接
- *   `read(mac, serviceUUID, charUUID, callback)` 级别调用
- * - 适合：新手入门、中小型项目、业务逻辑较简单的外设
+ * FastBle 以字符串 UUID 与三段回调简化 BLE 扫描，与原生 / Nordic / Rx 扫描栈平行对照。
  *
  * 核心机制与避坑点：
- * 1. 规则链：`BleScanRuleConfig` 配置 UUID / 名称 / MAC / 超时
- * 2. 一键扫描：`BleManager.getInstance().scan(...)`
- * 3. 生命周期回调：onScanStarted / onScanning / onScanFinished
+ * 1. 规则链：`BleScanRuleConfig` 统一配置 Service UUID / 设备名 / MAC / 超时，扫描前需先 initScanRule
+ * 2. 一键扫描：`BleManager.getInstance().scan(...)` 内部处理适配器与权限前置检查
+ * 3. 生命周期回调：onScanStarted / onScanning / onScanFinished 三段，onScanning 内适合 updateLog
+ * 4. 全局初始化：`BleManager.getInstance().init(application)` 必须在扫描前调用，否则空指针
  *
- * 基本用法：
- * ```kotlin
- * BleManager.getInstance().initScanRule(
- *     BleScanRuleConfig.Builder().setScanTimeOut(10000).setServiceUuids(uuids).build()
- * )
- * BleManager.getInstance().scan(object : BleScanCallback() {
- *     override fun onScanning(bleDevice: BleDevice?) { /* updateLog */ }
- * })
- * ```
- *
- * 适用场景：
- * - 新手入门或中小型项目快速接入 BLE
- * - 业务逻辑较简单、以 UUID 字符串驱动的外设
- * - 与原生 / Nordic / RxAndroidBle 扫描模型横向对比
- *
+ * 官方参考：
  * https://github.com/Jasonchenlijian/FastBle
  */
 @Route(path = RouterPath.Bluetooth.FastScan)

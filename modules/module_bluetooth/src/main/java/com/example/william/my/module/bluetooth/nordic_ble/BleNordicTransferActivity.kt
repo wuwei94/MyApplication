@@ -7,16 +7,18 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.Locale
 
 /**
- * Nordic BLE 大数据流式传输 — split / merge
+ * Nordic BLE 大数据流式传输原理 — split / merge
  *
- * 演示 Nordic 自动按 MTU 切包发送与多包拼接接收，无需手写 offset 分包循环。
+ * 本页以本地日志与吞吐演算说明 Nordic `.split()` / `.merge()` 的分包与拼包模型，
+ * 不发起真实 GATT 写读；真实连接与 MTU 协商见 Nordic 连接页。
  *
  * 核心机制与避坑点：
- * 1. 自动切包：`.split()` 按当前 MTU 负载拆分 1KB+ 载荷并排队发送
- * 2. 自动拼包：`.merge()` 将多次 Notification 拼成完整帧
- * 3. 流控：Write Response / No Response 速率由库内处理
- * 4. 与扫描/连接页同一 BleManager 管道
+ * 1. 自动切包：`.split()` 按协商 MTU 负载拆分 1KB+ 载荷，逐片入队并等待底层 ACK
+ * 2. 自动拼包：`.merge()` 依据自定义帧头/长度将多次 Notification 合并为完整业务帧后回调
+ * 3. 流控：Write Default / No Response 的发送速率与重传由库内请求队列处理
+ * 4. 示意边界：本页为原理演示，不替代真机传输联调
  *
+ * 官方参考：
  * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
 @Route(path = RouterPath.Bluetooth.NordicTransfer)
@@ -26,8 +28,8 @@ class BleNordicTransferActivity : BasicResponseActivity() {
         super.initView(savedInstanceState)
 
         showDescription(
-            "Nordic BLE 大数据流式传输示例\n\n" +
-                "演示 Nordic 内置的自动分包切割 (.split())、流式拼包合并 (.merge()) 与可靠传输\n" +
+            "Nordic BLE 大数据流式传输原理示意\n\n" +
+                "本地演算 `.split()` / `.merge()` 分包拼包模型与吞吐，不发起真实 GATT 传输\n" +
                 "请点击下方操作项",
         )
     }

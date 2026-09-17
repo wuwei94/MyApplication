@@ -14,34 +14,16 @@ import io.reactivex.rxjava3.disposables.Disposable
 /**
  * RxAndroidBle 响应式扫描与过滤 — Observable 化 BLE
  *
- * RxAndroidBle 把扫描/连接/读写变成 RxJava 流，适合重度 Rx 架构；dispose 即释放。
- *
- * 库选型定位（四栈横评中的 RxAndroidBle）：
- * - 编程模型：扫描、连接、读写、通知全部建模为 Observable，可用 filter / throttle /
- *   combineLatest 等操作符做流控与多设备合并
- * - 生命周期：dispose 时自动断开连接并注销通知，降低泄漏风险
- * - 适合：项目本身重度使用 RxJava，或需要对连续传感器数据做复杂流控的场景
+ * 将 BLE 扫描建模为 RxJava Observable，可用操作符做流控；dispose 即停止扫描，与原生 / Nordic / FastBle 扫描栈平行对照。
  *
  * 核心机制与避坑点：
- * 1. 扫描流：`RxBleClient.scanBleDevices` → `Observable<ScanResult>`
- * 2. 流式过滤：filter / distinct / sample / throttleFirst
- * 3. 声明式取消：`Disposable.dispose()` 立刻停止扫描
- * 4. 与连接示例同一客户端门面，便于横向对比
+ * 1. 扫描流：`RxBleClient.scanBleDevices` 产出 `Observable<ScanResult>`，需保持客户端单例
+ * 2. 流式过滤：filter / distinct / sample / throttleFirst 组合做 RSSI 门槛与高频节流
+ * 3. 声明式取消：`Disposable.dispose()` 立刻停止扫描，页面销毁前必须执行
+ * 4. 线程模型：subscribe 时切到 AndroidSchedulers.mainThread 更新 UI，扫描源默认在后台线程
  *
- * 基本用法：
- * ```kotlin
- * rxBleClient.scanBleDevices(scanSettings, ScanFilter.empty())
- *     .filter { it.rssi >= minRssi }
- *     .subscribe({ updateLog(it.bleDevice.macAddress, "...") }, { appendLog(it.message) })
- * // 取消：scanDisposable.dispose()
- * ```
- *
- * 适用场景：
- * - 项目已重度使用 RxJava 的响应式架构
- * - 需要对连续传感器扫描流做 filter / throttle / combine 等流控
- * - 与原生 / Nordic / FastBle 扫描模型横向对比
- *
- * https://github.com/dariuszseweryn/RxAndroidBle
+ * 官方参考：
+ * https://github.com/Polidea/RxAndroidBle
  */
 @Route(path = RouterPath.Bluetooth.RxScan)
 class BleRxScanActivity : BasicResponseActivity() {

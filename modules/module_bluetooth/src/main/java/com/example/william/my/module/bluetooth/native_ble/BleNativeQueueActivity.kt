@@ -17,15 +17,16 @@ import kotlin.math.min
 /**
  * 原生 BLE 协程队列与分包传输 — GATT 串行化
  *
- * BluetoothGatt 底层单任务：并发 read/write 会失败或被丢弃。本页用协程 Channel 做 FIFO 队列，并演示 MTU 分包。
+ * BluetoothGatt 底层单任务：并发 read/write 会失败或被丢弃；本页用协程 Channel 做 FIFO 队列，并按 MTU 分包。
  *
  * 核心机制与避坑点：
- * 1. 串行队列：Channel 缓冲 GATT 指令，回调完成后再派发下一条
- * 2. 协程等待：CompletableDeferred 挂起至 onCharacteristicRead/Write
- * 3. 自动分包：按当前 MTU 负载切片入队，接收侧拼接
- * 4. 可取消：生命周期内取消 Job 即停止派发
+ * 1. 串行队列：Channel 缓冲 GATT 指令，上一条回调完成后再派发下一条，避免底层并发冲突
+ * 2. 协程等待：CompletableDeferred 挂起至 onCharacteristicRead/Write，回调完成才释放队列锁
+ * 3. MTU 分包：按当前 MTU 负载（默认 MTU 23 − ATT Header 3 = 20 字节）切片入队，接收侧拼接
+ * 4. 可取消：lifecycleScope 内取消 Job 即停止派发，随 Activity 生命周期自动回收
  *
- * https://developer.android.google.cn/guide/topics/connectivity/bluetooth/ble
+ * 官方参考：
+ * https://developer.android.com/guide/topics/connectivity/bluetooth-le
  */
 @Route(path = RouterPath.Bluetooth.NativeQueue)
 class BleNativeQueueActivity : BasicResponseActivity() {

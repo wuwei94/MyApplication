@@ -36,6 +36,9 @@ class NordicBleManager(context: Context) : BleManager(context) {
         writeType: Int = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT,
     ) = writeCharacteristic(characteristic, data, writeType)
 
+    /** BleManager.enableNotifications 为 protected，示例页经此入口发起使能请求。 */
+    fun enableNotify(characteristic: BluetoothGattCharacteristic) = enableNotifications(characteristic)
+
     private fun log(message: String) {
         onLogListener?.invoke("[Nordic Log] $message")
     }

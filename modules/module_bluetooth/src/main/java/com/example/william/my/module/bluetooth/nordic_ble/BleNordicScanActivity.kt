@@ -16,34 +16,18 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Nordic BLE 扫描与过滤 — Android-BLE-Library
+ * Nordic 扫描过滤对照 — 系统 BluetoothLeScanner + Nordic 规范 UUID
  *
- * Nordic 官方库，队列与分包工业级可靠；本页聚焦扫描过滤与广播类型区分。
+ * 本页用系统 BluetoothLeScanner 演示 Nordic 规范的服务过滤与 Connectable 区分；
+ * Nordic 请求队列与 MTU 分包能力在连接 / 传输页由 BleManager 承担。
  *
- * 库选型定位（四栈横评中的 Nordic）：
- * - 维护方：蓝牙芯片原厂 Nordic 官方维护，稳定性与边缘异常处理最强
- * - 能力要点：请求队列解决多任务并发冲突；内置 MTU 自动切包（split）/ 拼包（merge），
- *   无需自行计算 offset；支持 Kotlin 协程 suspend 挂起调用
- * - 适合：智能硬件大厂、医疗设备、车载、OTA 固件升级、对稳定性要求极高的项目
+ * 核心机制与避坑点：
+ * 1. 服务过滤：按 Nordic UART / 标准 GATT Service UUID 配置 ScanFilter，减少无效广播噪音
+ * 2. 广播类型：Android O+ 可从 ScanResult.isConnectable 区分可连接设备与 Beacon
+ * 3. 高频结果：扫描回调内用 updateLog 按 MAC 原位刷新 RSSI，避免日志爆炸
+ * 4. 库栈分工：扫描走系统 API，连接 / 传输走 Nordic BleManager，与原生 / FastBle / Rx 平行对照
  *
- * 核心特性：
- * 1. 服务过滤：Nordic UART / 标准 GATT Service UUID
- * 2. 广播类型：Connectable 与 Non-connectable Beacon
- * 3. RSSI 平滑：高频扫描结果原位 updateLog
- * 4. 与连接/传输页共用同一库栈，便于串联
- *
- * 基本用法：
- * ```kotlin
- * scanner = Scanner(context, scanCallback, scanSettings)
- * scanner.setScanFilters(filters)
- * scanner.startScanning()
- * ```
- *
- * 适用场景：
- * - 医疗 / 车载 / OTA 等高稳定要求
- * - 需要官方维护的 BLE 栈
- * - 与原生 / Rx / FastBle 扫描对比
- *
+ * 官方参考：
  * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
 @SuppressLint("MissingPermission")
