@@ -22,9 +22,9 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Transition（转场过渡动画）", RouterPath.Anim.Transition))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 第三方动画库 ──", ""))
-        routerItems.add(RouterItem("PAG（Tencent 动效文件渲染）", RouterPath.Anim.Pag))
-        routerItems.add(RouterItem("Lottie（Airbnb 矢量 JSON 动画）", RouterPath.Anim.Lottie))
-        routerItems.add(RouterItem("SVGAPlayer（SVGA 高性能动画）", RouterPath.Anim.SvgaPlayer))
+        routerItems.add(RouterItem("PAG（布局预览）", RouterPath.Anim.Pag))
+        routerItems.add(RouterItem("Lottie（布局预览）", RouterPath.Anim.Lottie))
+        routerItems.add(RouterItem("SVGAPlayer（布局预览）", RouterPath.Anim.SvgaPlayer))
         return routerItems
     }
 }

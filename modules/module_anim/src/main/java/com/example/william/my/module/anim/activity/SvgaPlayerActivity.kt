@@ -13,16 +13,14 @@ import com.opensource.svgaplayer.SVGAVideoEntity
 import java.io.File
 
 /**
- * SVGA — 轻量级动画格式
- *
- * SVGA 是一种跨平台的动画格式，由 YY 团队开发，广泛应用于直播礼物、表情等场景。
+ * SVGA — 跨平台动效布局预览
  *
  * 核心机制与避坑点：
- * 1. 跨平台：支持 Android、iOS、Web 等多平台
- * 2. 文件体积小：比 GIF 小，比 Lottie 更轻量
- * 3. 高性能：优化的渲染引擎，适合大量动画同时播放
- * 4. 易于集成：设计工具导出即可使用
+ * 1. 解析播放：SVGAParser 解析 .svga 后交给 SVGAImageView 渲染
+ * 2. 缓存：可配合 HttpResponseCache 缓存远端资源
+ * 3. 布局预览：本页解析本地/远端资源并播放，无交互操作项
  *
+ * 官方参考：
  * https://github.com/svga/SVGAPlayer-Android
  */
 @Route(path = RouterPath.Anim.SvgaPlayer)

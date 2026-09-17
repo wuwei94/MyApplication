@@ -7,16 +7,14 @@ import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.anim.databinding.AnimActivityLottieBinding
 
 /**
- * Lottie — 高性能动画渲染框架
- *
- * Lottie 是 Airbnb 开源的动画库，可直接渲染 Adobe After Effects 导出的动画。
+ * Lottie — JSON 矢量动画布局预览
  *
  * 核心机制与避坑点：
- * 1. 矢量动画：支持矢量图形，无失真缩放
- * 2. 文件体积小：JSON 格式，比 GIF 小 10 倍以上
- * 3. 高性能：硬件加速渲染，流畅运行复杂动画
- * 4. 动态控制：支持播放、暂停、进度控制、速度调整
+ * 1. JSON 动画：渲染 After Effects 导出的 Lottie JSON，支持缩放无失真
+ * 2. 自动播放：布局配置 lottie_autoPlay；暂停/进度控制需在代码中接 LottieAnimationView API
+ * 3. 布局预览：本页无交互操作项，复杂控制见官方文档
  *
+ * 官方参考：
  * https://github.com/airbnb/lottie-android
  */
 @Route(path = RouterPath.Anim.Lottie)
