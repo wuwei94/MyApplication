@@ -20,9 +20,11 @@ import kotlinx.coroutines.launch
  * 核心机制与避坑点：
  * 1. 冷流桥接：createWebSocket 返回可 collect 的事件流
  * 2. 事件密封：OkHttpWebSocketInfo 统一承载 Open/Message/Closed/Error
- * 3. 结构化取消：collect 所在 Job 取消即停止消费
- * 4. 主动断开：cancel(url) 关闭底层 WebSocket
+ * 3. 下行监听：TextMessage/BytesMessage 随 collect 消费
+ * 4. 结构化取消：collect 所在 Job 取消即停止消费
+ * 5. 主动断开：cancel(url) 关闭底层 WebSocket
  *
+ * 官方参考：
  * https://square.github.io/okhttp/features/websockets
  */
 @Route(path = RouterPath.Socket.OkHttpWebSocketClientFlow)
@@ -33,13 +35,17 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【OkHttp WebSocket】Coroutines Flow 封装\n地址：$serverUrl")
+        showDescription(
+            "[OkHttp WebSocket]Coroutines Flow 封装\n地址：$serverUrl\n" +
+                "覆盖建立连接 / 上行发送 / 应用层心跳 / 下行监听 / 关闭注销",
+        )
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "连接服务器（Connect）",
-        "发送消息（Send Message）",
-        "断开连接（Disconnect）",
+        "1. 连接服务器（Connect + 下行监听）",
+        "2. 发送消息（Send Message）",
+        "3. 发送应用层心跳（Heartbeat）",
+        "4. 断开连接（Disconnect）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -47,7 +53,8 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
         when (position) {
             0 -> connect()
             1 -> sendMessage()
-            2 -> disconnect()
+            2 -> sendHeartbeat()
+            3 -> disconnect()
         }
     }
 
@@ -59,26 +66,26 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
 
     private fun connect() {
         connectJob?.cancel()
-        appendLog("【连接】正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         connectJob = lifecycleScope.launch {
             OkHttpWebSocketClientFlow
                 .createWebSocket(serverUrl)
                 .collect { info ->
                     when (info) {
                         is OkHttpWebSocketInfo.Open -> {
-                            appendLogAccent("【连接】已连接")
+                            appendLog("✓ [连接] 已连接，下行监听随 collect 挂接")
                         }
                         is OkHttpWebSocketInfo.TextMessage -> {
-                            appendLogAccent("【消息】收到：${info.text}")
+                            appendLog("✓ [下行] 收到：${info.text}")
                         }
                         is OkHttpWebSocketInfo.BytesMessage -> {
-                            appendLogAccent("【消息】收到字节数据：${info.bytes.size} bytes")
+                            appendLog("✓ [下行] 收到字节数据：${info.bytes.size} bytes")
                         }
                         is OkHttpWebSocketInfo.Closed -> {
-                            appendLogAccent("【关闭】已关闭：code=${info.code} reason=${info.reason}")
+                            appendLog("✓ [关闭] 已关闭：code=${info.code} reason=${info.reason}")
                         }
                         is OkHttpWebSocketInfo.Error -> {
-                            appendLogAccent("✗ ${info.exception.message}")
+                            appendLog("✗ ${info.exception.message}")
                         }
                     }
                 }
@@ -87,17 +94,29 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
 
     private fun sendMessage() {
         val message = "Hello from Client (Flow)!"
+        appendLog("→ [上行] 发送消息...")
         val success = OkHttpWebSocketClientFlow.send(serverUrl, message)
         if (success) {
-            appendLog("【发送】$message")
+            appendLog("✓ [上行] $message")
         } else {
             appendLog("✗ 发送失败")
+        }
+    }
+
+    private fun sendHeartbeat() {
+        val heartbeat = "ping ${System.currentTimeMillis()}"
+        appendLog("→ [心跳] 发送应用层探测帧...")
+        val success = OkHttpWebSocketClientFlow.send(serverUrl, heartbeat)
+        if (success) {
+            appendLog("✓ [心跳] $heartbeat")
+        } else {
+            appendLog("✗ 心跳发送失败，请先连接")
         }
     }
 
     private fun disconnect() {
         connectJob?.cancel()
         OkHttpWebSocketClientFlow.close(serverUrl)
-        appendLog("【断开】已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }

@@ -13,20 +13,14 @@ import okhttp3.WebSocket
 /**
  * OkHttp WebSocket — 基于 OkHttp 的全双工实时通信客户端
  *
- * WebSocket 是一种在单个 TCP 连接上进行全双工通信的协议，适合实时应用场景。
- * 本示例使用 OkHttpWebSocketClient 封装进行 WebSocket 通信，
- * 演示连接、发送消息、断开连接的基本操作。
- *
  * 核心机制与避坑点：
- * 1. HTTP Upgrade：一次握手后升级为全双工帧通信
- * 2. 服务端推送：连接建立后服务器可主动下发消息
- * 3. 封装客户端：OkHttpWebSocketClient 统一 connect/send/cancel
- * 4. 监听回调：OkHttpWebSocketClientListener 回报打开/消息/关闭/失败
+ * 1. HTTP Upgrade：一次握手后升级为全双工帧通信，服务器可主动推送
+ * 2. 封装客户端：OkHttpWebSocketClient 统一 connect/send/cancel，复用 OkHttp 连接池
+ * 3. 监听回调：OkHttpWebSocketClientListener 在 OkHttp 线程回报，UI 更新须切主线程
+ * 4. 下行监听：onMessage 随 connect 挂接，无需单独注册
+ * 5. 会话释放：页面销毁前 cancel(url)，避免长连接与线程驻留
  *
- * 与 HTTP 的区别：
- * - HTTP：请求-响应模式，单向通信
- * - WebSocket：全双向通信，服务器可主动推送
- *
+ * 官方参考：
  * https://square.github.io/okhttp/features/websockets
  */
 @Route(path = RouterPath.Socket.OkHttpWebSocketClient)
@@ -36,13 +30,17 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【OkHttp WebSocket】普通版本\n地址：$serverUrl")
+        showDescription(
+            "[OkHttp WebSocket]Listener 版\n地址：$serverUrl\n" +
+                "覆盖建立连接 / 上行发送 / 应用层心跳 / 下行监听 / 关闭注销",
+        )
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "连接服务器（Connect）",
-        "发送消息（Send Message）",
-        "断开连接（Disconnect）",
+        "1. 连接服务器（Connect + 下行监听）",
+        "2. 发送消息（Send Message）",
+        "3. 发送应用层心跳（Heartbeat）",
+        "4. 断开连接（Disconnect）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -50,7 +48,8 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
         when (position) {
             0 -> connect()
             1 -> sendMessage()
-            2 -> disconnect()
+            2 -> sendHeartbeat()
+            3 -> disconnect()
         }
     }
 
@@ -60,31 +59,31 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
     }
 
     private fun connect() {
-        appendLog("【连接】正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         OkHttpWebSocketClient.connect(
             url = serverUrl,
             listener = object : OkHttpWebSocketClientListener() {
                 override fun onOpen(webSocket: WebSocket, response: Response) {
                     runOnUiThread {
-                        appendLogAccent("【连接】已连接")
+                        appendLog("✓ [连接] 已连接，下行监听 onMessage 已挂接")
                     }
                 }
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
                     runOnUiThread {
-                        appendLogAccent("【消息】收到：$text")
+                        appendLog("✓ [下行] 收到：$text")
                     }
                 }
 
                 override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                     runOnUiThread {
-                        appendLogAccent("【关闭】已关闭：code=$code reason=$reason")
+                        appendLog("✓ [关闭] 已关闭：code=$code reason=$reason")
                     }
                 }
 
                 override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                     runOnUiThread {
-                        appendLogAccent("✗ ${t.message}")
+                        appendLog("✗ ${t.message}")
                     }
                 }
             },
@@ -93,16 +92,31 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
 
     private fun sendMessage() {
         val message = "Hello from Client!"
+        appendLog("→ [上行] 发送消息...")
         val success = OkHttpWebSocketClient.send(serverUrl, message)
         if (success) {
-            appendLog("【发送】$message")
+            appendLog("✓ [上行] $message")
         } else {
             appendLog("✗ 发送失败")
         }
     }
 
+    /**
+     * 应用层心跳：复用 send 通道发送探测帧，对照协议层 ping 由 OkHttp 连接池维护。
+     */
+    private fun sendHeartbeat() {
+        val heartbeat = "ping ${System.currentTimeMillis()}"
+        appendLog("→ [心跳] 发送应用层探测帧...")
+        val success = OkHttpWebSocketClient.send(serverUrl, heartbeat)
+        if (success) {
+            appendLog("✓ [心跳] $heartbeat")
+        } else {
+            appendLog("✗ 心跳发送失败，请先连接")
+        }
+    }
+
     private fun disconnect() {
         OkHttpWebSocketClient.close(serverUrl)
-        appendLog("【断开】已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }

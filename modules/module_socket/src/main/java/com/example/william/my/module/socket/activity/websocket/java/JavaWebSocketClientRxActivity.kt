@@ -21,6 +21,7 @@ import org.java_websocket.client.WebSocketClient
  * 3. 统一释放：页面销毁时 cancel(url) 断开连接
  * 4. 轻量实现：不依赖 OkHttp 栈，库内自包含客户端能力
  *
+ * 官方参考：
  * https://github.com/TooTallNate/Java-WebSocket
  */
 @Route(path = RouterPath.Socket.JavaWebSocketClientRx)
@@ -30,13 +31,17 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Java-WebSocket】RxJava 封装\n地址：$serverUrl")
+        showDescription(
+            "[Java-WebSocket]RxJava 封装\n地址：$serverUrl\n" +
+                "覆盖建立连接 / 上行发送 / 下行监听 / 断线自动重连 / 关闭注销",
+        )
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "连接服务器（Connect）",
-        "发送消息（Send Message）",
-        "断开连接（Disconnect）",
+        "1. 连接服务器（Connect + 下行监听）",
+        "2. 发送消息（Send Message）",
+        "3. 断线自动重连策略说明（Reconnect）",
+        "4. 断开连接（Disconnect）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -44,8 +49,17 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
         when (position) {
             0 -> connect()
             1 -> sendMessage()
-            2 -> disconnect()
+            2 -> showReconnectPolicy()
+            3 -> disconnect()
         }
+    }
+
+    /**
+     * 输出当前库内自动重连参数与下行监听挂接方式。
+     */
+    private fun showReconnectPolicy() {
+        appendLog("✓ [重连] autoReconnect=true，reconnectInterval=3000ms")
+        appendLog("✓ [下行] onMessage 随连接建立挂接，无需单独注册")
     }
 
     override fun onDestroy() {
@@ -54,20 +68,20 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
     }
 
     private fun connect() {
-        appendLog("【连接】正在连接 $serverUrl ...")
+        appendLog("[连接]正在连接 $serverUrl ...")
         JavaWebSocketClientRx
             .createWebSocket(serverUrl)
             .subscribe(object : JavaWebSocketRxObserver() {
                 override fun onOpen(webSocket: WebSocketClient) {
-                    appendLogAccent("【连接】已连接")
+                    appendLogAccent("[连接]已连接")
                 }
 
                 override fun onMessage(webSocket: WebSocketClient, text: String) {
-                    appendLogAccent("【消息】收到：$text")
+                    appendLogAccent("[消息]收到：$text")
                 }
 
                 override fun onClosed(code: Int, reason: String, remote: Boolean) {
-                    appendLogAccent("【关闭】已关闭：code=$code reason=$reason")
+                    appendLogAccent("[关闭]已关闭：code=$code reason=$reason")
                 }
 
                 override fun onError(exception: Exception) {
@@ -80,7 +94,7 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
         val message = "Hello from Client!"
         val success = JavaWebSocketClientRx.send(serverUrl, message)
         if (success) {
-            appendLog("【发送】$message")
+            appendLog("[发送]$message")
         } else {
             appendLog("✗ 发送失败")
         }
@@ -88,6 +102,6 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
 
     private fun disconnect() {
         JavaWebSocketClientRx.close(serverUrl)
-        appendLog("【断开】已断开连接")
+        appendLog("[断开]已断开连接")
     }
 }

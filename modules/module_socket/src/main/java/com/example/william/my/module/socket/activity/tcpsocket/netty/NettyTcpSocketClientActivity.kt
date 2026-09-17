@@ -17,19 +17,18 @@ import com.example.william.my.basic.basic_shared.R as SharedR
 /**
  * Netty — 高性能网络框架（TCP Socket 客户端）
  *
- * Netty 是一个高性能的异步事件驱动的网络应用框架。
- *
  * 核心机制与避坑点：
- * 1. 高性能：基于 NIO，支持高并发
- * 2. 异步事件驱动：非阻塞 I/O，性能优秀
- * 3. 丰富的协议支持：支持 TCP、UDP、HTTP、WebSocket 等
- * 4. 易于使用：API 简单，易于扩展
+ * 1. 事件驱动：ChannelHandler 串接入站/出站事件，勿在 Handler 内做阻塞 I/O
+ * 2. 线程模型：EventLoopGroup 独立于主线程，UI 更新须切回主线程
+ * 3. 资源释放：Channel / EventLoopGroup 在页面销毁时 shutdown，防止线程泄漏
+ * 4. 本地打靶：与进程内 Netty 服务端联调，无需公网服务器
  *
  * 服务端日志展示方式：
  * - 内置服务端运行在进程内 Service 中，主控制台按真实时间合并展示客户端与服务端两侧日志；
  * - 页面在 onStart/onStop 通过 [NettyServer]（进程级单例）订阅服务端事件，
  *   事件以「【服务端】前缀 + 强调色」追加进同一控制台，与服务端收发时序一一对应。
  *
+ * 官方参考：
  * https://github.com/netty/netty
  */
 @Route(path = RouterPath.Socket.NettyTcpSocketClient)
@@ -90,20 +89,21 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
      * 以指定类型颜色追加一行服务端日志（自动带【服务端】前缀与时间戳）。
      */
     private fun appendServerLog(message: String, color: Int) {
-        appendLog("【服务端】$message", color)
+        appendLog("[服务端]$message", color)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Netty TCP】客户端示例\n地址：$serverUrl\n需要先启动本地服务端")
+        showDescription("[Netty TCP]客户端示例\n地址：$serverUrl\n需要先启动本地服务端\n覆盖连接 / 上行发送 / 下行监听 / 状态说明 / 关闭注销")
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "启动服务端（Start Server）",
-        "停止服务端（Stop Server）",
-        "连接服务器（Connect）",
-        "发送消息（Send Message）",
-        "断开连接（Disconnect）",
+        "1. 启动服务端（Start Server）",
+        "2. 停止服务端（Stop Server）",
+        "3. 连接服务器（Connect + 下行监听）",
+        "4. 发送消息（Send Message）",
+        "5. 连接状态与重连说明（Connection Status）",
+        "6. 断开连接（Disconnect）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -113,8 +113,18 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
             1 -> stopServer()
             2 -> connect()
             3 -> sendMessage()
-            4 -> disconnect()
+            4 -> showConnectionStatus()
+            5 -> disconnect()
         }
+    }
+
+    /**
+     * 输出本地服务端打靶与客户端下行监听的挂接方式。
+     */
+    private fun showConnectionStatus() {
+        appendLog("✓ [状态] 目标 $serverUrl，需先启动本地服务端")
+        appendLog("✓ [下行] 客户端 Handler / 服务端 Listener 随连接与 onStart 订阅挂接")
+        appendLog("✓ [重连] 本页为本地打靶示例，生产重连需在业务层策略化")
     }
 
     override fun onStart() {
@@ -136,22 +146,22 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
     private fun startServer() {
         nettyServerService?.startServer(this)
         // 启动为异步操作，真实结果由服务端事件（【服务端】已启动）写入控制台
-        appendLog("【操作】已发起启动服务端，等待就绪...")
+        appendLog("[操作]已发起启动服务端，等待就绪...")
     }
 
     private fun stopServer() {
         nettyServerService?.stopServer(this)
         // 停止结果由服务端事件（【服务端】已停止）写入控制台
-        appendLog("【操作】已发起停止服务端...")
+        appendLog("[操作]已发起停止服务端...")
     }
 
     private fun connect() {
         if (!NettyServer.isRunning()) {
-            appendLog("【状态】服务端未启动，请先启动服务端")
+            appendLog("[状态]服务端未启动，请先启动服务端")
             return
         }
 
-        appendLog("【连接】正在连接 $serverUrl ...")
+        appendLog("[连接]正在连接 $serverUrl ...")
         Thread {
             NettyClient.connect(
                 host = host,
@@ -159,20 +169,20 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
                 listener = object : NettyClientHandler.OnMessageListener {
                     override fun onConnected(remoteAddress: String) {
                         runOnUiThread {
-                            appendLog("【连接】已连接到 $remoteAddress")
+                            appendLog("[连接]已连接到 $remoteAddress")
                             NettyClient.sendMessage("heart")
                         }
                     }
 
                     override fun onMessage(message: String) {
                         runOnUiThread {
-                            appendLog("【消息】收到：$message")
+                            appendLog("[消息]收到：$message")
                         }
                     }
 
                     override fun onDisconnected() {
                         runOnUiThread {
-                            appendLog("【关闭】已断开连接")
+                            appendLog("[关闭]已断开连接")
                         }
                     }
 
@@ -188,14 +198,14 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
 
     private fun sendMessage() {
         if (!NettyClient.isConnected()) {
-            appendLog("【状态】未连接，无法发送消息")
+            appendLog("[状态]未连接，无法发送消息")
             return
         }
 
         val message = "Hello from Client!"
         val success = NettyClient.sendMessage(message)
         if (success) {
-            appendLog("【发送】$message")
+            appendLog("[发送]$message")
         } else {
             appendLog("✗ 发送失败")
         }
@@ -203,11 +213,11 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
 
     private fun disconnect() {
         if (!NettyClient.isConnected()) {
-            appendLog("【状态】未连接")
+            appendLog("[状态]未连接")
             return
         }
 
         NettyClient.disconnect()
-        appendLog("【断开】已断开连接")
+        appendLog("[断开]已断开连接")
     }
 }

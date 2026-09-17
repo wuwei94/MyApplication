@@ -33,6 +33,7 @@ import com.example.william.my.basic.basic_shared.R as SharedR
  * 页面 onStart/onStop 通过 NettyServer（进程级单例）订阅服务端事件，
  * 以【服务端】前缀 + 类型配色合并进主控制台。
  *
+ * 官方参考：
  * https://github.com/netty/netty
  */
 @Route(path = RouterPath.Socket.NettyTcpSocketClientFlow)
@@ -94,20 +95,21 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
      * 以指定类型颜色追加一行服务端日志（自动带【服务端】前缀与时间戳）。
      */
     private fun appendServerLog(message: String, color: Int) {
-        appendLog("【服务端】$message", color)
+        appendLog("[服务端]$message", color)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Netty TCP】Coroutines Flow 封装\n地址：$serverUrl\n需要先启动本地服务端")
+        showDescription("[Netty TCP]Coroutines Flow 封装\n地址：$serverUrl\n需要先启动本地服务端\n覆盖连接 / 上行发送 / 下行监听 / 状态说明 / 关闭注销")
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "启动服务端（Start Server）",
-        "停止服务端（Stop Server）",
-        "连接服务器（Connect）",
-        "发送消息（Send Message）",
-        "断开连接（Disconnect）",
+        "1. 启动服务端（Start Server）",
+        "2. 停止服务端（Stop Server）",
+        "3. 连接服务器（Connect + 下行监听）",
+        "4. 发送消息（Send Message）",
+        "5. 连接状态与重连说明（Connection Status）",
+        "6. 断开连接（Disconnect）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -117,8 +119,18 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
             1 -> stopServer()
             2 -> connect()
             3 -> sendMessage()
-            4 -> disconnect()
+            4 -> showConnectionStatus()
+            5 -> disconnect()
         }
+    }
+
+    /**
+     * 输出本地服务端打靶与客户端下行监听的挂接方式。
+     */
+    private fun showConnectionStatus() {
+        appendLog("✓ [状态] 目标 $serverUrl，需先启动本地服务端")
+        appendLog("✓ [下行] 客户端 Handler / 服务端 Listener 随连接与 onStart 订阅挂接")
+        appendLog("✓ [重连] 本页为本地打靶示例，生产重连需在业务层策略化")
     }
 
     override fun onStart() {
@@ -141,37 +153,37 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
     private fun startServer() {
         nettyServerService?.startServer(this)
         // 启动为异步操作，真实结果由服务端事件（【服务端】已启动）写入控制台
-        appendLog("【操作】已发起启动服务端，等待就绪...")
+        appendLog("[操作]已发起启动服务端，等待就绪...")
     }
 
     private fun stopServer() {
         nettyServerService?.stopServer(this)
         // 停止结果由服务端事件（【服务端】已停止）写入控制台
-        appendLog("【操作】已发起停止服务端...")
+        appendLog("[操作]已发起停止服务端...")
     }
 
     private fun connect() {
         if (!NettyServer.isRunning()) {
-            appendLog("【状态】服务端未启动，请先启动服务端")
+            appendLog("[状态]服务端未启动，请先启动服务端")
             return
         }
 
         connectJob?.cancel()
-        appendLog("【连接】正在连接 $serverUrl ...")
+        appendLog("[连接]正在连接 $serverUrl ...")
         connectJob = lifecycleScope.launch {
             NettyClientFlow
                 .createConnection(host, port)
                 .collect { info ->
                     when (info) {
                         is NettyClientInfo.Open -> {
-                            appendLog("【连接】已连接到 ${info.host}:${info.port}")
+                            appendLog("[连接]已连接到 ${info.host}:${info.port}")
                             NettyClientFlow.send(host, port, "heart")
                         }
                         is NettyClientInfo.TextMessage -> {
-                            appendLog("【消息】收到：${info.message}")
+                            appendLog("[消息]收到：${info.message}")
                         }
                         is NettyClientInfo.Closed -> {
-                            appendLog("【关闭】已关闭：${info.reason}")
+                            appendLog("[关闭]已关闭：${info.reason}")
                         }
                         is NettyClientInfo.Error -> {
                             appendLog("✗ ${info.exception.message}")
@@ -184,14 +196,14 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
     private fun sendMessage() {
         val channel = NettyClientFlow.getChannel(host, port)
         if (channel == null || !channel.isActive) {
-            appendLog("【状态】未连接，无法发送消息")
+            appendLog("[状态]未连接，无法发送消息")
             return
         }
 
         val message = "Hello from Client (Flow)!"
         val success = NettyClientFlow.send(host, port, message)
         if (success) {
-            appendLog("【发送】$message")
+            appendLog("[发送]$message")
         } else {
             appendLog("✗ 发送失败")
         }
@@ -200,6 +212,6 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
     private fun disconnect() {
         connectJob?.cancel()
         NettyClientFlow.close(host, port)
-        appendLog("【断开】已断开连接")
+        appendLog("[断开]已断开连接")
     }
 }
