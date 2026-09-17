@@ -2,6 +2,7 @@
 
 > 基于 Material Design 规范，定义项目统一的尺寸、间距和文字大小。
 > 所有尺寸定义在 `basic_shared/src/main/res/values/dimens.xml`。
+> 规范导航见 [README.md](README.md)。
 
 ## 尺寸体系
 

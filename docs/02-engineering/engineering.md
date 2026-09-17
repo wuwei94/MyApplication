@@ -9,7 +9,7 @@
 | 维度 | 核心能力 | 详细文档 |
 | :--- | :--- | :--- |
 | **1. 构建系统与依赖治理** | Version Catalog / Convention Plugins / 极速构建 / 依赖守卫 / KMP 演进 | [工程化分册 · 构建系统与代码质量治理](engineering-build.md)、[build-logic.md](build-logic.md) |
-| **2. 代码规范与静态治理** | Spotless / 自定义 Lint / Lint 基线 / Compose 稳定性 | [工程化分册 · 构建系统与代码质量治理](engineering-build.md)；项目规范见 [../01-rules/conventions.md](../01-rules/conventions.md)、[comments.md](../01-rules/comments.md)、[design.md](../01-rules/design.md) |
+| **2. 代码规范与静态治理** | Spotless / 自定义 Lint / Lint 基线 / Compose 稳定性 | [工程化分册 · 构建系统与代码质量治理](engineering-build.md)；项目规范见 [../01-rules/README.md](../01-rules/README.md)、[style.md](../01-rules/style.md)、[design.md](../01-rules/design.md) |
 | **3. 现代测试体系** | Turbine + Fake / 测试命名 Lint / Roborazzi / GMD / JaCoCo | [testing.md](testing.md) |
 | **4. 现代架构解耦与通信范式** | Offline-First / API-Impl / Navigation 3 / M3 Adaptive | [../03-architecture/engineering-patterns.md](../03-architecture/engineering-patterns.md)；模式选型见 [architecture.md](../03-architecture/architecture.md)、[modularization.md](../03-architecture/modularization.md) |
 | **5. 性能度量与运行时监控** | Macrobenchmark / Baseline Profile / JankStats / Tracing | [../04-domains/performance.md](../04-domains/performance.md) |

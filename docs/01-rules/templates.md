@@ -1,7 +1,9 @@
 # 现代 Android 标准代码模板库
 
-> 本文档汇集 MyApplication 工程中经实践验证的现代标准代码模板。
-> 新建页面、重构架构、编写单元测试或扩展新模块时，应优先采用本模板库中的规范结构。
+> 本文档汇集经实践验证的代码模板骨架。
+> 新建页面、重构架构、编写单元测试或扩展新模块时优先采用本库结构。
+> 规则真相源：示例页与平行实现见 [showcase.md](showcase.md)；通用风格见 [style.md](style.md)。模板与规则冲突时以规则文件为准。
+> 包路径示意：示例页常见于 `module_<域>/.../activity/...`；模块入口 Activity 多在模块包根（如 `BluetoothMainActivity`）。新建页面以兄弟页既有分包为准，不强行套模板路径。
 
 ---
 
@@ -25,7 +27,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 2. <避坑要点 2>：<生命周期/资源释放/线程切换等非显而易见的注意事项>
  *
  * 官方参考：
- * <官方权威文档 URL>
+ * <官方权威文档 URL；UI/动画演示页可省，见 showcase.md §2.2>
  */
 @Route(path = RouterPath.<模块名>.<页面名>)
 class SampleActivity : BasicResponseActivity() {
@@ -438,9 +440,10 @@ class ArticleScreenScreenshotTest {
        alias(libs.plugins.my.android.feature)
    }
    android {
-       namespace = "com.example.william.my.module.<模块名>"
-       resourcePrefix = "<模块名>_"
+       namespace = "com.example.william.my.module.<域名>"
+       // 前缀见 structure.md「modules 资源前缀」：新建默认域名_，勿模仿 ui_/demo_ 例外
+       resourcePrefix("<域名>_")
    }
    ```
-3. **`RouterPath.kt`**：在对应技术分类的对象内注册常量：`const val <页面名> = "/<模块名>/<页面名>"`；
+3. **`RouterPath.kt`**：在对应技术分类的对象内注册常量：`const val <页面名> = "/<模块名>/<页面名>"`（模块名与页面名均 PascalCase，见 [structure.md](structure.md)「路由」）；
 4. **`Category.kt` / `CategoryActivity.kt`**：将主入口挂载到 10 大技术领域对应分组。

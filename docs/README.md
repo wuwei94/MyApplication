@@ -9,8 +9,8 @@
 
 | 我想…… | 先去读 | 说明 |
 | :--- | :--- | :--- |
-| 给项目提交代码 / 新写模块 | [01-rules/conventions.md](01-rules/conventions.md) → [git.md](01-rules/git.md) | 硬性约定：路由、模块结构、提交格式与门禁 |
-| 多 Agent 写代码 / 运行时契约与风格 | [AGENTS.md](../AGENTS.md) → [01-rules/STYLE.md](01-rules/STYLE.md) | 运行时最高硬契约 (L0) 与代码/注释风格速查清单 (L1) |
+| 给项目提交代码 / 新写模块 | [01-rules/README.md](01-rules/README.md) → structure / git | 按任务导航；路由、模块结构、提交门禁 |
+| 多 Agent 写代码 / 运行时契约与风格 | [AGENTS.md](../AGENTS.md) → [01-rules/README.md](01-rules/README.md) | L0 硬契约 + L1 分任务规范 |
 | 摸清工程化全貌与各能力落地状态 | [02-engineering/engineering.md](02-engineering/engineering.md) | 全景图 + 成熟度矩阵 + 各维度入口 |
 | 做技术选型 / 想对比方案 | 跳到「选型对比速查」表 | 全仓对比类文档一张表聚合 |
 | 查某个模块有哪些页面 | [05-catalog/modules.md](05-catalog/modules.md) | 各功能模块 × Activity 清单，Ctrl+F 直达 |
@@ -26,12 +26,13 @@
 mindmap
   root((docs<br/>文档体系))
     01-rules
-      STYLE.md["统一代码与注释风格契约"]
-      conventions.md["关键约定与开发原则"]
-      scope.md["交付范围与改动纪律"]
-      comments.md["代码注释规范"]
+      README.md["规范导航（按任务查文档）"]
+      delivery.md["交付纪律"]
+      structure.md["工程结构与模块边界"]
+      showcase.md["示例页与平行实现"]
+      style.md["代码风格与注释"]
+      engineering.md["工程化注释与落点"]
       templates.md["现代标准代码模板库"]
-      agent-style-prompt.md["Agent 统一风格提示词"]
       design.md["UI 设计与尺寸体系"]
       git.md["Git 规范与门禁钩子"]
     02-engineering
@@ -69,14 +70,15 @@ mindmap
 
 | 文档 | 说明 | 核心关注点 |
 | :--- | :--- | :--- |
-| [STYLE.md](01-rules/STYLE.md) | **统一代码风格清单** | 类头三段式 KDoc、命名消灭 m 前缀、Showcase 结构、日志符号速查 |
-| [conventions.md](01-rules/conventions.md) | **关键约定** | 路由命名、模块标准结构、示例页面编写准则、Activity 继承树与十大约定 |
-| [scope.md](01-rules/scope.md) | **交付范围与改动纪律** | 禁止附赠、禁止复盘式交付（负向标题/「为何不加」注释）、diff 范围自检与纠错交付形态 |
-| [comments.md](01-rules/comments.md) | **代码注释规范** | 中文优先、KDoc 结构分层、选型与约束注释保护、最小修改切片 |
-| [templates.md](01-rules/templates.md) | **现代代码模板库** | 声明式 Action 示例页、UDF/MVI、Compose、Flow 状态测试、Fake 替身、Roborazzi 等标准模板 |
-| [agent-style-prompt.md](01-rules/agent-style-prompt.md) | **Agent 统一风格提示词** | 示例页/工程化/Flutter/XML/TOML/ProGuard/CI 全落点注释契约、检查清单与风格收敛流程 |
-| [design.md](01-rules/design.md) | **设计规范** | 4dp 网格间距、字体阶梯、圆角规范、统一图标尺寸系统 |
-| [git.md](01-rules/git.md) | **Git 提交规范** | Conventional Commits 格式、中文门禁、钩子安装、历史遗留与 pre-push 门禁 |
+| [README.md](01-rules/README.md) | **规范导航** | 按读者任务索引全部 L1 文档 |
+| [delivery.md](01-rules/delivery.md) | **交付纪律** | 禁止附赠、禁止复盘式交付、范围自检 |
+| [structure.md](01-rules/structure.md) | **工程结构** | 路由、模块、分类判据、基类、协程、文档同步 |
+| [showcase.md](01-rules/showcase.md) | **示例页与平行实现** | 页型、类头、官方参考边界、平行注释、日志契约 |
+| [style.md](01-rules/style.md) | **代码风格与注释** | 命名、库类/成员 KDoc、Why>What |
+| [engineering.md](01-rules/engineering.md) | **工程化注释落点** | Convention/CI/钩子/混淆/Flutter/XML |
+| [templates.md](01-rules/templates.md) | **现代代码模板库** | Showcase、UDF/MVI、Compose、测试模板 |
+| [design.md](01-rules/design.md) | **设计规范** | 4dp 网格、字体、圆角、图标尺寸 |
+| [git.md](01-rules/git.md) | **Git 提交规范** | Conventional Commits、门禁钩子 |
 
 ---
 
@@ -132,7 +134,7 @@ mindmap
 
 | 文档 | 说明 | 核心关注点 |
 | :--- | :--- | :--- |
-| [modules.md](05-catalog/modules.md) | **功能模块详情** | 30 个功能业务模块的定位、依赖拓扑与各 Activity 页面清单 |
+| [modules.md](05-catalog/modules.md) | **功能模块详情** | 36 个功能业务模块的定位、依赖拓扑与各 Activity 页面清单 |
 | [libs.md](05-catalog/libs.md) | **库封装层索引** | `libs/` 目录下各无 UI 基础库的对外 API 与职责边界说明 |
 
 ---

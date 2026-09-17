@@ -552,7 +552,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/02-engineering/testing.md`
 - **工程化实践**：基于 Now in Android 的构建与版本治理、测试三支柱、性能基准（Macrobenchmark + Baseline Profile）与门禁防御，详见 `docs/02-engineering/engineering.md`（总览）与 `docs/02-engineering/engineering-build.md`（分册）
 - **注释语言**：代码注释与文档默认使用中文
-- 完整技术文档导航详见 [docs/README.md](docs/README.md)，专项规范参见 `docs/01-rules/git.md`、`docs/01-rules/conventions.md`、`docs/03-architecture/architecture.md`、`docs/02-engineering/testing.md` 与 `docs/02-engineering/engineering.md`
+- 完整技术文档导航详见 [docs/README.md](docs/README.md)，专项规范见 [docs/01-rules/README.md](docs/01-rules/README.md)（delivery / structure / showcase / style / engineering / templates / design / git）与 `docs/02-engineering/engineering.md`、`docs/03-architecture/architecture.md`
 
 ---
 
