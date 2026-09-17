@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
  * 3. 协程生命周期：lifecycleScope.launch 收集，Job.cancel() 取消并断开连接
  * 4. 逐 Token 解析：从 Event.data 提取 delta.content，[DONE] 触发自然完结
  *
+ * 官方参考：
  * https://ktor.io/docs/client-server-sent-events.html
  */
 @Route(path = RouterPath.SSE.KtorSseClientFlow)
@@ -36,12 +37,12 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Ktor SSE】DeepSeek AI 流式对话 (Ktor Client + Flow 封装)\n地址：$serverUrl\n模型：deepseek-chat\n特性：Ktor 原生 Flow 收集 -> POST JSON Payload -> [DONE] 完成")
+        showDescription("[Ktor SSE]DeepSeek AI 流式对话 (Ktor Client + Flow 封装)\n地址：$serverUrl\n模型：deepseek-chat\n特性：Ktor 原生 Flow 收集 -> POST JSON Payload -> [DONE] 完成\n覆盖上行 Prompt / 下行 Token 流监听 / Job 取消注销")
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "发起 DeepSeek 对话（Ktor POST Flow）",
-        "中断当前生成（Cancel Job）",
+        "1. 发起 DeepSeek 对话（Ktor POST Flow + 下行监听）",
+        "2. 中断当前生成（Cancel Job + 注销下行）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -60,7 +61,7 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
     private fun sendDeepSeekPrompt(prompt: String) {
         if (Constants.DeepSeek_ApiKey.isBlank()) {
             appendLog("----------------------------------------")
-            appendLog("【提示】未配置 DeepSeek API Key！")
+            appendLog("[提示]未配置 DeepSeek API Key！")
             appendLog("👉 请在工程根目录 local.properties 中配置：deepseek.api.key=sk-xxxx 后重新编译。")
             return
         }
@@ -68,10 +69,10 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
         streamJob?.cancel()
         responseBuffer.clear()
         appendLog("----------------------------------------")
-        appendLog("【DeepSeek 目标】$serverUrl")
-        appendLog("【用户提问】$prompt")
-        appendLog("【AI 思考中... 正在使用 Ktor 发起流式 POST 请求】")
-        updateLog("deepseek_response", "【AI 思考中...】")
+        appendLog("[DeepSeek 目标]$serverUrl")
+        appendLog("[用户提问]$prompt")
+        appendLog("[AI 思考中... 正在使用 Ktor 发起流式 POST 请求]")
+        updateLog("deepseek_response", "[AI 思考中...]")
 
         val jsonBody = LlmStreamParser.buildChatRequestBody(prompt, "deepseek-chat")
         val headers = mapOf("Authorization" to "Bearer ${Constants.DeepSeek_ApiKey}")
@@ -82,12 +83,12 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
                 .collect { info ->
                     when (info) {
                         is KtorSseInfo.Open -> {
-                            appendLogAccent("【连接】Ktor SSE 流连接成功，开始接收 DeepSeek 响应...")
+                            appendLogAccent("[连接]Ktor SSE 流连接成功，开始接收 DeepSeek 响应...")
                         }
                         is KtorSseInfo.Event -> {
                             if (info.data?.trim() == "[DONE]") {
                                 removeUpdatingLog("deepseek_response")
-                                appendLogAccent("【AI 完整回答】\n$responseBuffer")
+                                appendLogAccent("[AI 完整回答]\n$responseBuffer")
                                 appendLog("✓ 收到 [DONE] 标识，DeepSeek 流式响应生成完毕")
                                 streamJob?.cancel()
                                 return@collect
@@ -95,11 +96,11 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
                             val delta = LlmStreamParser.parseDeltaContent(info.data ?: "")
                             if (delta.isNotEmpty()) {
                                 responseBuffer.append(delta)
-                                updateLog("deepseek_response", "【AI 正在打字...】\n$responseBuffer")
+                                updateLog("deepseek_response", "[AI 正在打字...]\n$responseBuffer")
                             }
                         }
                         is KtorSseInfo.Closed -> {
-                            appendLog("【关闭】Ktor SSE 连接已断开")
+                            appendLog("[关闭]Ktor SSE 连接已断开")
                         }
                         is KtorSseInfo.Error -> {
                             removeUpdatingLog("deepseek_response")
@@ -107,7 +108,7 @@ class KtorSseClientFlowActivity : BasicResponseActivity() {
                         }
                     }
                 }
-            appendLog("【Flow 结束】本次 DeepSeek 流式对话收集完毕")
+            appendLog("[Flow 结束]本次 DeepSeek 流式对话收集完毕")
         }
     }
 

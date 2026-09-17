@@ -22,6 +22,7 @@ import com.example.william.my.module.sse.utils.LlmStreamParser
  * 3. 逐 Token 解析：从 data 帧提取 delta.content，累积为完整回答
  * 4. 会话终止：收到 [DONE] 后主动 cancel，或页面销毁时自动断开
  *
+ * 官方参考：
  * https://ktor.io/docs/client-server-sent-events.html
  */
 @Route(path = RouterPath.SSE.KtorSseClient)
@@ -32,12 +33,12 @@ class KtorSseClientActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Ktor SSE】DeepSeek AI 流式对话 (Listener 回调)\n地址：$serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成")
+        showDescription("[Ktor SSE]DeepSeek AI 流式对话 (Listener 回调)\n地址：$serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成\n覆盖上行 Prompt / 下行 Token 流监听 / 关闭注销")
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "发起 DeepSeek 对话（Ktor POST Stream）",
-        "中断当前生成（Cancel Stream）",
+        "1. 发起 DeepSeek 对话（Ktor POST Stream + 下行监听）",
+        "2. 中断当前生成（Cancel Stream + 注销下行）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -56,17 +57,17 @@ class KtorSseClientActivity : BasicResponseActivity() {
     private fun sendDeepSeekPrompt(prompt: String) {
         if (Constants.DeepSeek_ApiKey.isBlank()) {
             appendLog("----------------------------------------")
-            appendLog("【提示】未配置 DeepSeek API Key！")
+            appendLog("[提示]未配置 DeepSeek API Key！")
             appendLog("👉 请在工程根目录 local.properties 中配置：deepseek.api.key=sk-xxxx 后重新编译。")
             return
         }
 
         responseBuffer.clear()
         appendLog("----------------------------------------")
-        appendLog("【DeepSeek 目标】$serverUrl")
-        appendLog("【用户提问】$prompt")
-        appendLog("【AI 思考中... 正在建立 Ktor SSE 连接】")
-        updateLog("deepseek_response", "【AI 思考中...】")
+        appendLog("[DeepSeek 目标]$serverUrl")
+        appendLog("[用户提问]$prompt")
+        appendLog("[AI 思考中... 正在建立 Ktor SSE 连接]")
+        updateLog("deepseek_response", "[AI 思考中...]")
 
         val jsonBody = LlmStreamParser.buildChatRequestBody(prompt, "deepseek-chat")
         val headers = mapOf("Authorization" to "Bearer ${Constants.DeepSeek_ApiKey}")
@@ -77,13 +78,13 @@ class KtorSseClientActivity : BasicResponseActivity() {
             headers = headers,
             listener = object : KtorSseListener {
                 override fun onOpen() {
-                    appendLogAccent("【连接】Ktor SSE 连接已建立，开始流式接收 Token...")
+                    appendLogAccent("[连接]Ktor SSE 连接已建立，开始流式接收 Token...")
                 }
 
                 override fun onEvent(id: String?, event: String?, data: String?) {
                     if (data?.trim() == "[DONE]") {
                         removeUpdatingLog("deepseek_response")
-                        appendLogAccent("【AI 完整回答】\n$responseBuffer")
+                        appendLogAccent("[AI 完整回答]\n$responseBuffer")
                         appendLog("✓ 收到 [DONE] 标志，DeepSeek 模型生成完毕！")
                         KtorSseClient.cancel(serverUrl)
                         return
@@ -92,12 +93,12 @@ class KtorSseClientActivity : BasicResponseActivity() {
                     val delta = LlmStreamParser.parseDeltaContent(data ?: "")
                     if (delta.isNotEmpty()) {
                         responseBuffer.append(delta)
-                        updateLog("deepseek_response", "【AI 正在打字...】\n$responseBuffer")
+                        updateLog("deepseek_response", "[AI 正在打字...]\n$responseBuffer")
                     }
                 }
 
                 override fun onClosed(reason: String) {
-                    appendLog("【关闭】Ktor SSE 会话结束，本次对话交互完毕")
+                    appendLog("[关闭]Ktor SSE 会话结束，本次对话交互完毕")
                 }
 
                 override fun onFailure(t: Throwable) {
