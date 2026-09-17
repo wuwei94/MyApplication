@@ -9,22 +9,16 @@ import com.example.william.my.core.mqtt.MqttClientListener
 import com.example.william.my.core.mqtt.paho.PahoServiceClientManager
 
 /**
- * Eclipse Paho Android Service — 客户端
- *
- * 基于 MqttAndroidClient，通过绑定 `MqttService` 在 Android 平台运行。
- * 使用 hannesa2 维护 fork（官方 1.1.1 已停更，在 targetSdk 34+ 上注册
- * Receiver 缺少导出标志会导致 SecurityException 崩溃），
- * fork 的 AAR 已自带 Service 声明，无需在 AndroidManifest 手动注册。
- *
- * 使用 EMQX 公共 Broker（无需账号），订阅与发布到同一 Topic 即可收到自己发出的消息。
+ * Eclipse Paho Android Service — 绑定 MqttService 的 MQTT 客户端
  *
  * 核心机制与避坑点：
- * 1. Service 绑定：通过 MqttService 在 Android 平台运行，支持后台保活
- * 2. 经典 API：基于 MqttAndroidClient 的同步/异步混合 API
- * 3. QoS 0/1/2：支持三种服务质量等级
- * 4. 断线重连：内置自动重连机制
+ * 1. Service 绑定：MqttAndroidClient 通过绑定 MqttService 维持后台连接，页面销毁时必须 disconnect 释放 Service
+ * 2. 协议版本：MqttAndroidClient 默认 MQTT 3.1.1，不支持 MQTT 5.0 特性
+ * 3. Fork 依赖：官方 1.1.1 在 targetSdk 34+ 注册 Receiver 缺少导出标志会 SecurityException，本页使用 hannesa2 维护 fork（AAR 自带 Service 声明）
+ * 4. 断线重连：MqttService 内置自动重连，onConnectionLost 后等待恢复；QoS 0/1/2 语义按 MQTT 3.1.1 规范
  *
- * https://github.com/hannesa2/paho.mqtt.android
+ * 官方参考：
+ * https://github.com/eclipse-paho/paho.mqtt.android
  */
 @Route(path = RouterPath.Mqtt.PahoServiceClient)
 class PahoServiceClientActivity : BasicResponseActivity() {
@@ -34,16 +28,20 @@ class PahoServiceClientActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("【Paho Android Service】MqttAndroidClient\nBroker：$broker\nTopic：$topic\n\n先连接，再订阅，最后发布。")
+        showDescription(
+            "[Paho Android Service] MqttAndroidClient（MQTT 3.1.1）\nBroker：$broker\nTopic：$topic\n" +
+                "覆盖连接 / 订阅下行 / 发布上行 / 服务内置自动重连 / 关闭注销",
+        )
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "连接 Broker（Connect）",
-        "订阅主题（Subscribe QoS 2）",
-        "发布消息（Publish QoS 0）",
-        "发布消息（Publish QoS 1）",
-        "发布消息（Publish QoS 2）",
-        "断开连接（Disconnect）",
+        "1. 连接 Broker（Connect）",
+        "2. 订阅主题（Subscribe QoS 2 + 下行监听）",
+        "3. 发布消息（Publish QoS 0）",
+        "4. 发布消息（Publish QoS 1）",
+        "5. 发布消息（Publish QoS 2）",
+        "6. 查询连接与重连状态（Connection Status）",
+        "7. 断开连接（Disconnect）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -54,8 +52,18 @@ class PahoServiceClientActivity : BasicResponseActivity() {
             2 -> publish(0)
             3 -> publish(1)
             4 -> publish(2)
-            5 -> disconnect()
+            5 -> showConnectionStatus()
+            6 -> disconnect()
         }
+    }
+
+    /**
+     * MqttService 内置自动重连；本项输出连接态与重连语义。
+     */
+    private fun showConnectionStatus() {
+        val connected = PahoServiceClientManager.isConnected()
+        appendLog("✓ [状态] isConnected=$connected")
+        appendLog("✓ [重连] MqttService 内置自动重连，onConnectionLost 后等待恢复")
     }
 
     override fun onDestroy() {
@@ -64,21 +72,21 @@ class PahoServiceClientActivity : BasicResponseActivity() {
     }
 
     private fun connect() {
-        appendLog("【连接】正在连接 $broker ...")
+        appendLog("[连接] 正在连接 $broker ...")
         PahoServiceClientManager.connect(
             context = this,
             broker = broker,
             listener = object : MqttClientListener() {
                 override fun onConnectSuccess(reconnect: Boolean) {
-                    appendLogAccent(if (reconnect) "【连接】已重连成功" else "【连接】已连接")
+                    appendLogAccent(if (reconnect) "[连接] 已重连成功" else "[连接] 已连接")
                 }
 
                 override fun onConnectionLost() {
-                    appendLogAccent("【连接】连接丢失，等待自动重连...")
+                    appendLogAccent("[连接] 连接丢失，等待自动重连...")
                 }
 
                 override fun onMessageArrived(topic: String, payload: String) {
-                    appendLogAccent("【消息】topic=$topic\npayload=$payload")
+                    appendLogAccent("[消息] topic=$topic\npayload=$payload")
                 }
 
                 override fun onError(message: String) {
@@ -94,7 +102,7 @@ class PahoServiceClientActivity : BasicResponseActivity() {
             return
         }
         PahoServiceClientManager.subscribe(topic, qos = 2)
-        appendLog("【订阅】已订阅 $topic（QoS 2）")
+        appendLog("[订阅] 已订阅 $topic（QoS 2）")
     }
 
     private fun publish(qos: Int) {
@@ -104,11 +112,11 @@ class PahoServiceClientActivity : BasicResponseActivity() {
         }
         val payload = "Hello Paho Service! qos=$qos time=${System.currentTimeMillis()}"
         PahoServiceClientManager.publish(topic, payload, qos = qos)
-        appendLog("【发布】$topic（QoS $qos）\n$payload")
+        appendLog("[发布] $topic（QoS $qos）\n$payload")
     }
 
     private fun disconnect() {
         PahoServiceClientManager.disconnect()
-        appendLog("【断开】已断开连接")
+        appendLog("[断开] 已断开连接")
     }
 }
