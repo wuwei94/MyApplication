@@ -1,6 +1,8 @@
 # 库封装层
 
-`libs/` 只提供可复用能力，不包含 Activity。使用方式、行为约束和选型建议应记录在对应专题文档中，避免在本文件维护重复的 API 手册。
+`libs/`（Android）只提供可复用能力，不包含 Activity。使用方式、行为约束和选型建议应记录在对应专题文档中，避免在本文件维护重复的 API 手册。
+
+> 本表为检索索引：Android 库目录为 `libs/lib_*`；Flutter 库目录为 `flutter/flutter_libs/*`，依赖方式见各 package README，不走 Android `projects.libs.*` 访问器（包名地图见 [structure.md](../01-rules/structure.md)）。
 
 ## 库总览
 

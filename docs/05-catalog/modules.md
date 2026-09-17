@@ -277,25 +277,25 @@
 
 ### module_http（HTTP 网络请求）
 
-集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call/协程/RxJava）以及 Rx 动态请求与文件传输。实际请求页统一基于 `BasicResponseActivity` 内联展示响应、日志与原位更新进度。
+集中演示基础 HTTP 客户端（HttpURLConnection、Volley）、OkHttp、Retrofit（Call/协程/RxJava）以及 Rx 动态请求与文件传输。方法族页统一覆盖 GET / POST Form / POST JSON / POST Raw / POST Multipart 与客户端配置轴；实际请求页统一基于 `BasicResponseActivity` 内联展示响应、日志与原位更新进度。
 
 | Activity | 功能 |
 |----------|------|
 | HttpMainActivity | 模块入口，导航到各个 HTTP 请求示例页面 |
-| HttpURLActivity | HttpURLConnection 原生网络请求 |
-| VolleyActivity | Volley HTTP 请求 |
-| OkHttpActivity | `lib_okhttp` DSL 与 OkHttp 原生请求示例 |
-| RetrofitCallActivity | Retrofit 原生 `Call` 请求示例 |
-| RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi` 示例 |
-| RetrofitCoroutineActivity | Retrofit 协程挂起函数原生调用示例 |
-| RetrofitCoroutineDslActivity | `lib_retrofit` DSL 与协程挂起函数示例 |
-| RetrofitRxActivity | Retrofit RxJava 原生订阅与页面销毁释放示例 |
-| RetrofitRxDslActivity | `lib_retrofit_rx` 标准接口与默认策略示例 |
-| RxRequestActivity | 基于 `BasicResponseActivity` 展示 `lib_rx_request` Form、JSON 与 Multipart 动态请求 |
+| HttpURLActivity | HttpURLConnection 原生网络请求（GET / Form / JSON / Raw / Multipart 与连接超时配置） |
+| VolleyActivity | Volley HTTP 请求（GET / Form / JSON / Raw / Multipart 与 Header/Tag 配置） |
+| OkHttpActivity | `lib_okhttp` 与 OkHttp 原生请求（GET / FormBody / JSON / Raw / MultipartBody 与 DSL Client 配置） |
+| RetrofitCallActivity | Retrofit 原生 `Call` 请求（GET / Form / JSON / Raw / Multipart 与 Client 配置） |
+| RetrofitCallDslActivity | `lib_retrofit` DSL 与 `createApi`（GET / Form / JSON / Raw / Multipart 与 DSL Client 配置） |
+| RetrofitCoroutineActivity | Retrofit 协程挂起函数原生调用（GET / Form / JSON / Raw / Multipart 与 Client 配置） |
+| RetrofitCoroutineDslActivity | `lib_retrofit` DSL 与协程挂起函数（GET / Form / JSON / Raw / Multipart 与 DSL Client 配置） |
+| RetrofitRxActivity | Retrofit RxJava 原生订阅与页面销毁释放示例（GET / Form / JSON / Raw / Multipart 与 Client 配置） |
+| RetrofitRxDslActivity | `lib_retrofit_rx` `rxRetrofit` + `createRxApi`（GET / Form / JSON / Raw / Multipart 与 DSL Client 配置） |
+| RxRequestActivity | `lib_rx_request` 动态请求（GET / Form / JSON / Raw / Multipart / PUT 与 Client 配置） |
 | RxDownloadActivity | 基于 `BasicResponseActivity` 直接展示单任务 Builder、并发队列 Builder、统一 `RxDownloadCallback`、原位更新进度和 `File` 目录清理 |
 | RxUploadActivity | 基于 `BasicResponseActivity` 直接展示 `addFile` / `addFiles` 单多文件 Multipart 上传、`RxUploadCallback`、同步创建少量示例文件和 `File` 目录清理 |
-| KtorActivity | Ktor 原生请求（POST 多部分表单与挂起函数） |
-| KtorClientActivity | 基于 `lib_ktor` 的项目级 Ktor 客户端封装（`postFormResponse`） |
+| KtorActivity | Ktor 原生 HttpClient（OkHttp Engine：GET / Form / JSON / Raw / Multipart 与 Client 插件配置） |
+| KtorClientActivity | `lib_ktor` 项目级 Ktor 客户端（GET / Form / JSON / Raw / Multipart / PUT Form 与 DSL 配置） |
 
 ---
 
@@ -306,11 +306,11 @@
 | Activity | 功能 |
 |----------|------|
 | SseMainActivity | 模块入口，导航到 OkHttp / Ktor SSE 流式示例页面 |
-| OkHttpSseClientActivity | OkHttp SSE 原始回调版本（DeepSeek POST Prompt $\rightarrow$ 逐 Token 流式输出 $\rightarrow$ 收到 `[DONE]` 结束） |
-| OkHttpSseClientRxActivity | OkHttp SSE RxJava 封装版本（DeepSeek POST Observable 流 $\rightarrow$ 收到 `[DONE]` 触发 `onComplete()`） |
-| OkHttpSseClientFlowActivity | OkHttp SSE Coroutines Flow 封装版本（DeepSeek POST Flow $\rightarrow$ 协程生命周期感知与逐字打字机效果） |
-| KtorSseClientActivity | Ktor SSE 原始回调版本（DeepSeek POST Prompt $\rightarrow$ KtorSseListener 主线程回调） |
-| KtorSseClientFlowActivity | Ktor SSE Coroutines Flow 封装版本（Ktor Client + SSE Plugin 发起 DeepSeek POST 大模型流式请求） |
+| OkHttpSseClientActivity | OkHttp SSE Listener 回调（POST Prompt + 下行 Token 流监听 / Cancel 注销） |
+| OkHttpSseClientRxActivity | OkHttp SSE RxJava（POST Observable + 下行监听 / Dispose 注销） |
+| OkHttpSseClientFlowActivity | OkHttp SSE Coroutines Flow（POST Flow + 下行监听 / Job 取消注销） |
+| KtorSseClientActivity | Ktor SSE Listener 回调（POST Prompt + 下行 Token 流监听 / Cancel 注销） |
+| KtorSseClientFlowActivity | Ktor SSE Coroutines Flow（POST Flow + 下行监听 / Job 取消注销） |
 
 ---
 
@@ -321,15 +321,15 @@
 | Activity | 功能 |
 |----------|------|
 | SocketMainActivity | 模块入口，导航到 WebSocket / TCP Socket 各方案示例页面 |
-| OkHttpWebSocketClientActivity | OkHttp WebSocket 普通版本（连接外部服务器） |
-| OkHttpWebSocketClientRxActivity | OkHttp WebSocket RxJava 封装版本 |
-| OkHttpWebSocketClientFlowActivity | OkHttp WebSocket Coroutines Flow 封装版本 |
-| JavaWebSocketClientActivity | Java-WebSocket 普通版本（连接外部服务器） |
-| JavaWebSocketClientRxActivity | Java-WebSocket RxJava 封装版本 |
-| JavaWebSocketClientFlowActivity | Java-WebSocket Coroutines Flow 封装版本 |
-| NettyTcpSocketClientActivity | Netty TCP 普通版本（ARouter ServerService 启动本地服务端 + 连接） |
-| NettyTcpSocketClientRxActivity | Netty TCP RxJava 封装版本（ARouter ServerService 启动本地服务端 + 连接） |
-| NettyTcpSocketClientFlowActivity | Netty TCP Coroutines Flow 封装版本（ARouter ServerService 启动本地服务端 + 连接） |
+| OkHttpWebSocketClientActivity | OkHttp WebSocket Listener（Connect / Send / 应用层心跳 / Disconnect） |
+| OkHttpWebSocketClientRxActivity | OkHttp WebSocket RxJava（Connect / Send / 应用层心跳 / Disconnect） |
+| OkHttpWebSocketClientFlowActivity | OkHttp WebSocket Flow（Connect / Send / 应用层心跳 / Disconnect） |
+| JavaWebSocketClientActivity | Java-WebSocket Listener（Connect / Send / 自动重连策略 / Disconnect） |
+| JavaWebSocketClientRxActivity | Java-WebSocket RxJava（Connect / Send / 自动重连策略 / Disconnect） |
+| JavaWebSocketClientFlowActivity | Java-WebSocket Flow（Connect / Send / 自动重连策略 / Disconnect） |
+| NettyTcpSocketClientActivity | Netty TCP Listener（本地服务端启停 + Connect / Send / 状态 / Disconnect） |
+| NettyTcpSocketClientRxActivity | Netty TCP RxJava（本地服务端启停 + Connect / Send / 状态 / Disconnect） |
+| NettyTcpSocketClientFlowActivity | Netty TCP Flow（本地服务端启停 + Connect / Send / 状态 / Disconnect） |
 
 服务端 Service：
 
@@ -347,8 +347,8 @@
 | Activity | 功能 |
 |----------|------|
 | MqttMainActivity | 模块入口，导航到两个 MQTT 客户端示例页面 |
-| HiveMqClientActivity | HiveMQ MQTT Client 异步 API：连接、订阅、发布（QoS 0/1/2）与断开连接 |
-| PahoServiceClientActivity | Eclipse Paho Android Service（MqttAndroidClient，绑定 MqttService）：连接、订阅、发布（QoS 0/1/2）与断开连接 |
+| HiveMqClientActivity | HiveMQ MQTT Client（Connect / Subscribe 下行 / Publish QoS 0-2 / 连接状态 / Disconnect） |
+| PahoServiceClientActivity | Paho Android Service（Connect / Subscribe 下行 / Publish QoS 0-2 / 服务内置重连状态 / Disconnect） |
 
 ---
 
@@ -362,13 +362,13 @@
 | BleNativeScanActivity | 原生 BLE 扫描（动态权限、扫描模式、RSSI 实时更新与广播数据解析） |
 | BleNativeConnectActivity | 原生 BLE 连接与 GATT 交互（服务发现、MTU 协商、读写特征与 Notify 订阅） |
 | BleNativeQueueActivity | 原生 BLE 协程队列与分包传输（解决并发冲突、Channel 串行排队与大包 Chunking） |
-| BleNordicScanActivity | Nordic BLE 扫描与设备发现（UART 服务过滤与扫描最佳实践） |
-| BleNordicConnectActivity | Nordic BLE 连接与挂起调用（BleManager 工业级架构、自动重试与 suspend 读写） |
-| BleNordicTransferActivity | Nordic BLE 大数据流式传输（.split() 自动分包切割与 .merge() 流式拼包） |
+| BleNordicScanActivity | Nordic 扫描过滤对照（系统 BluetoothLeScanner + Nordic 规范 UUID） |
+| BleNordicConnectActivity | Nordic BLE 连接与挂起调用（BleManager 状态机、suspend 读写、Notify 订阅与断开释放） |
+| BleNordicTransferActivity | Nordic BLE 传输原理示意（.split() 分包与 .merge() 拼包本地演算） |
 | BleFastScanActivity | FastBle 链式扫描与规则过滤（BleScanRuleConfig 配置与单例扫描） |
-| BleFastConnectActivity | FastBle 链式连接与读写回调（BleGattCallback、UUID 驱动读写与 Notify） |
+| BleFastConnectActivity | FastBle 连接与读写（MTU / Read / Write / Notify / 大包分包进度 / 断开） |
 | BleRxScanActivity | RxAndroidBle 响应式扫描与过滤（Observable 数据流、RxJava 操作符流控） |
-| BleRxConnectActivity | RxAndroidBle 响应式连接与流控（establishConnection 管道、flatMap 串联与自动释放） |
+| BleRxConnectActivity | RxAndroidBle 响应式连接（establishConnection / MTU / 读写 Notify / 大包写入 / dispose） |
 
 ---
 
@@ -379,8 +379,8 @@
 | Activity | 功能 |
 |----------|------|
 | DatabaseMainActivity | 模块入口，导航到 Room、ObjectBox 示例 |
-| RoomActivity | Room 数据库 CRUD、协程 Flow 响应式查询与 RxJava 响应式流 |
-| ObjectBoxActivity | ObjectBox 高性能对象数据库增删查改 |
+| RoomActivity | Room（Insert / Batch / Update / Query / Flow 观察 / Rx 查询 / Delete All） |
+| ObjectBoxActivity | ObjectBox（put / 批量 put / 查询 / ObjectBoxLiveData 观察 / removeAll） |
 
 ---
 
@@ -391,8 +391,8 @@
 | Activity | 功能 |
 |----------|------|
 | StorageMainActivity | 模块入口，导航到 DataStore、MMKV 示例 |
-| DataStoreActivity | DataStore（Preferences + Proto）数据存储 |
-| MMKVActivity | MMKV 高性能键值存储（写入 / 读取 / 删除 / 清空） |
+| DataStoreActivity | DataStore（写入 / updateData 事务 / Flow 读取观察 / 清空） |
+| MMKVActivity | MMKV（写入 / 读取 / 批量写入 / ByteArray / 删除 / clearAll；同步 decode） |
 
 ---
 
@@ -522,10 +522,10 @@
 | Activity | 功能 |
 |----------|------|
 | EventMainActivity | 模块入口，导航到各事件总线实现示例页面 |
-| EventBusActivity | EventBus（GreenRobot） |
-| RxEventBusActivity | RxEventBus（基于 RxJava） |
-| LiveEventBusActivity | LiveEventBus（基于 LiveData） |
-| FlowEventBusActivity | FlowEventBus（基于 Kotlin Flow） |
+| EventBusActivity | EventBus（Register / Unregister / 普通事件 / Sticky / 生命周期约束） |
+| RxEventBusActivity | RxEventBus（Observe / Dispose / 普通事件 / Sticky / 生命周期约束） |
+| LiveEventBusActivity | LiveEventBus（Observe / Cancel Job / 普通事件 / Sticky / 生命周期感知） |
+| FlowEventBusActivity | FlowEventBus（Observe / Cancel Job / 普通事件 / Sticky / 生命周期感知） |
 
 ---
 
