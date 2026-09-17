@@ -25,26 +25,16 @@ import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
 /**
- * Koin — Kotlin 专用的实用主义依赖注入框架
+ * Koin — Kotlin 优先的运行时依赖注入框架
  *
  * 核心机制与避坑点：
- * 1. 纯 Kotlin DSL：无注解处理器（无 KAPT / KSP 开销），极速编译
- * 2. 构造器 DSL（Constructor DSL）：通过 singleOf、factoryOf、viewModelOf 极简声明
- * 3. 灵活的作用域（Scope）与动态参数（parametersOf）：支持运行时按需传参
- * 4. 跨平台（KMP）：原生支持 Android、iOS、Desktop、Web 与 Ktor 服务端
+ * 1. 纯 Kotlin DSL：无注解处理器，依赖在运行时按图解析，缺少编译期缺失依赖检查，需靠启动自检兜底
+ * 2. 容器启动：Application 层 startKoin { androidContext(...) } 一次；页面/测试场景用 loadKoinModules 热加载示例模块，避免重复 startKoin
+ * 3. 实例模型：singleOf 全局复用同一实例，factoryOf 每次 get() 新建；viewModelOf 绑定 ViewModelStore 生命周期
+ * 4. 限定与作用域：named(...) 区分同接口多实现；parametersOf 在 get() 时传入运行时参数；自定义 Scope 需手动 close() 释放所持实例
  *
- * 常用 DSL：
- * - startKoin { ... }：启动 Koin 容器并配置 Context 与 Modules
- * - single / singleOf：声明单例（Singleton）实例
- * - factory / factoryOf：声明工厂（Factory）实例，每次请求生成新对象
- * - viewModel / viewModelOf：声明与 Android Lifecycle / ViewModelStore 绑定的 ViewModel
- * - bind：将实现类绑定到特定接口
- * - named(...) / qualifier：具名限定符，区分同一接口的多实现
- * - by inject()：属性懒加载注入
- * - get()：即时获取依赖对象
- * - parametersOf(...)：在解析时传递动态运行时参数
- *
- * https://insert-koin.io
+ * 官方参考：
+ * https://insert-koin.io/
  */
 @Route(path = RouterPath.Di.Koin)
 class KoinActivity : BasicResponseActivity() {
@@ -87,39 +77,39 @@ class KoinActivity : BasicResponseActivity() {
                 // 验证单例 vs 工厂
                 val tracker2: KoinAnalyticsTracker = get()
                 val orderProcessor2: KoinOrderProcessor = get()
-                appendLog("【1. 单例 singleOf】")
+                appendLog("[1. 单例 singleOf]")
                 appendLog("   • 实例 1 hash=${analyticsTracker.hashCode()}, info=${analyticsTracker.logEvent("click_btn")}")
                 appendLog("   • 实例 2 hash=${tracker2.hashCode()} (相同实例 = ${analyticsTracker === tracker2})")
-                appendLog("【1. 工厂 factoryOf】")
+                appendLog("[1. 工厂 factoryOf]")
                 appendLog("   • 实例 1 hash=${orderProcessor.hashCode()}, info=${orderProcessor.processOrder(101)}")
                 appendLog("   • 实例 2 hash=${orderProcessor2.hashCode()} (不同实例 = ${orderProcessor !== orderProcessor2})")
             }
             1 -> {
-                appendLog("【2. 具名限定符注入】")
+                appendLog("[2. 具名限定符注入]")
                 appendLog("   • AliPay:   ${aliPayService.pay(88.0)}")
                 appendLog("   • WeChatPay:${weChatPayService.pay(66.0)}")
             }
             2 -> {
                 // 运行时传入动态参数
                 val userSession: KoinUserProfileSession = get { parametersOf("VIP_User_9527") }
-                appendLog("【3. 动态传参注入】${userSession.getSessionDetails()}")
+                appendLog("[3. 动态传参注入] ${userSession.getSessionDetails()}")
             }
             3 -> {
                 val count = koinSampleViewModel.incrementAndGet()
-                appendLog("【4. Koin ViewModel】当前计数 = $count (${koinSampleViewModel.getViewModelInfo()})")
+                appendLog("[4. Koin ViewModel] 当前计数 = $count (${koinSampleViewModel.getViewModelInfo()})")
             }
             4 -> {
                 // 创建自定义 Scope
                 val scopeId = "custom_scope_${System.currentTimeMillis()}"
                 val customScope = getKoin().createScope(scopeId, named("CustomSessionScope"))
                 val scopedSession: KoinScopedSession = customScope.get()
-                appendLog("【5. Scope 作用域】创建 Scope [id=$scopeId]")
+                appendLog("[5. Scope 作用域] 创建 Scope [id=$scopeId]")
                 appendLog("   • 获取 Scoped 实例: hash=${scopedSession.hashCode()}, msg=${scopedSession.info}")
                 customScope.close()
                 appendLog("   • Scope 已关闭并销毁所持实例")
             }
             5 -> {
-                appendLog("【6. Koin 容器状态】")
+                appendLog("[6. Koin 容器状态]")
                 appendLog("   • Koin 实例: ${getKoin()}")
                 appendLog("   • Tracker: ${analyticsTracker.logEvent("verify_all")}")
                 appendLog("   • ViewModel: ${koinSampleViewModel.getViewModelInfo()}")
