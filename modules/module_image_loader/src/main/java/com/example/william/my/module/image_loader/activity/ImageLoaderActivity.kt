@@ -10,21 +10,12 @@ import com.example.william.my.core.imageloader.coil.ImageLoader as CoilImageLoad
 import com.example.william.my.core.imageloader.glide.ImageLoader as GlideImageLoader
 
 /**
- * lib_image_loader — 统一图片加载封装
- *
- * `lib_image_loader` 通过 [IImageLoader] 抽象出统一的图片加载 API，
- * 并分别基于 Coil 与 Glide 提供两套实现（实现类名均为 `ImageLoader`）。
- *
- * 本页演示同一套 `IImageLoader` 接口在不同底层实现之间的无感切换，
- * 调用方无需关心底层是 Coil 还是 Glide。
+ * lib_image_loader — 统一图片加载抽象层
  *
  * 核心机制与避坑点：
- * - loadImage：普通加载
- * - loadImageRound：圆形加载
- * - loadImageRadius：圆角加载
- * - clear：清除图片
- *
- * https://github.com/bumptech/glide
+ * 1. 接口抽象：IImageLoader 定义 loadImage / loadImageRound / loadImageRadius / clear，调用方不感知底层实现
+ * 2. 双实现切换：coil 与 glide 两套 ImageLoader 可在运行时替换，同一 View 调用路径保持一致
+ * 3. 实现约束：各实现内部需自行处理生命周期取消与主线程回调，封装层不做二次调度
  */
 @Route(path = RouterPath.ImageLoader.ImageLoader)
 class ImageLoaderActivity : BasicImageActivity() {
@@ -38,12 +29,12 @@ class ImageLoaderActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "切换实现（Glide ⇄ Coil）",
-        "基础加载 loadImage",
-        "圆形加载 loadImageRound",
-        "圆角加载 loadImageRadius",
-        "清除图片 clear",
-        "异常链接（触发 error）",
+        "1. 切换底层实现 (Glide ⇄ Coil)",
+        "2. 加载基础图片 (loadImage)",
+        "3. 加载圆形图片 (loadImageRound)",
+        "4. 加载圆角图片 (loadImageRadius)",
+        "5. 清除当前图片 (clear)",
+        "6. 加载异常链接触发错误回退",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

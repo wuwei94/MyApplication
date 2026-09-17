@@ -11,17 +11,16 @@ import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Glide 4 — 高性能图片加载框架
- *
- * Glide 是 Android 最流行的图片加载框架，由 Google 推荐使用。
+ * Glide — 生命周期感知的 Android 图片加载框架
  *
  * 核心机制与避坑点：
- * 1. 多级缓存：内存缓存 + 磁盘缓存，自动管理缓存生命周期
- * 2. 丰富的变换：circleCrop（圆形裁剪）、RoundedCorners（圆角）、centerCrop（居中裁剪）等
- * 3. 生命周期感知：自动绑定 Activity/Fragment 生命周期，避免内存泄漏
- * 4. 渐变动画：支持 crossFade 等过渡动画，提升用户体验
+ * 1. 生命周期绑定：Glide.with(activity/fragment) 将请求挂到 Lifecycle，页面销毁自动 pause/cancel，避免泄漏
+ * 2. 多级缓存：内存 + 磁盘缓存按变换后的尺寸与签名区分，同一 URL 不同 transform 分别缓存
+ * 3. 变换链：circleCrop / RoundedCorners / centerCrop 等 BitmapTransformation 顺序生效，可组合
+ * 4. 加载失败：placeholder 在加载中展示，error 在失败时回退；主线程发起，结果回调回主线程
  *
- * https://github.com/bumptech/glide
+ * 官方参考：
+ * https://bumptech.github.io/glide/
  */
 @Route(path = RouterPath.ImageLoader.Glide)
 class GlideActivity : BasicImageActivity() {
@@ -32,12 +31,12 @@ class GlideActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "基础图片加载（Url_Image1）",
-        "圆形裁剪（circleCrop）",
-        "圆角变换（RoundedCorners: 48px）",
-        "居中裁剪（centerCrop）",
-        "占位图与渐变动画（crossFade）",
-        "加载异常链接（触发 error 占位图）",
+        "1. 加载基础图片 (Url_Image1)",
+        "2. 圆形裁剪 (circleCrop)",
+        "3. 圆角变换 (RoundedCorners: 48px)",
+        "4. 居中裁剪 (centerCrop)",
+        "5. 占位图与渐变动画 (crossFade)",
+        "6. 加载异常链接触发 error 占位图",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

@@ -12,17 +12,16 @@ import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * Coil 3 — 现代 Kotlin 图片加载库
- *
- * Coil 是一个基于 Kotlin 协程的现代图片加载库，由 Google 推荐使用。
+ * Coil 3 — 基于 Kotlin 协程的图片加载库
  *
  * 核心机制与避坑点：
- * 1. 轻量快速：基于 Kotlin 协程，性能优秀
- * 2. 协程驱动：原生支持 Kotlin 协程与 Flow
- * 3. 自动缓存：内存与磁盘缓存自动管理
- * 4. 简单易用：一行代码加载图片
+ * 1. 协程驱动：ImageView.load 扩展在 View 上发起异步请求，请求与 View 生命周期自动关联取消；默认复用全局 ImageLoader 单例
+ * 2. 缓存策略：内存 + 磁盘缓存自动管理，同一 URL 重复 load 命中缓存直接展示
+ * 3. 请求配置：ImageRequest.Builder 内配置 crossfade / placeholder / error，失败时展示 error 资源
+ * 4. 版本约束：coil3 包名与 coil2 不兼容，依赖与 API 需按大版本对齐
  *
- * https://github.com/coil-kt/coil
+ * 官方参考：
+ * https://coil-kt.github.io/coil/
  */
 @Route(path = RouterPath.ImageLoader.Coil)
 class CoilActivity : BasicImageActivity() {
@@ -33,11 +32,11 @@ class CoilActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "基础图片加载（Url_Image1）",
-        "切换第二张图片（Url_Image2）",
-        "淡入过渡动画（crossfade）",
-        "占位图与错误图（placeholder / error）",
-        "异常链接加载测试（触发 error）",
+        "1. 加载基础图片 (Url_Image1)",
+        "2. 切换第二张图片 (Url_Image2)",
+        "3. 启用淡入过渡动画 (crossfade)",
+        "4. 配置占位图与错误图 (placeholder / error)",
+        "5. 加载异常链接触发 error 回退",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
