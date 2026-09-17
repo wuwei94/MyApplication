@@ -8,25 +8,21 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.storage.datastore.ExamplePreferenceDataStore
 import com.example.william.my.module.storage.datastore.ExampleProtoDataStore
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
- * DataStore — 数据存储框架
- *
- * DataStore 是 Android Jetpack 提供的数据存储框架，用于替代 SharedPreferences。
- *
- * 两种类型：
- * 1. Preferences DataStore：键值对存储，无需预先定义 schema
- * 2. Proto DataStore：类型安全存储，需要预先定义 Protocol Buffers schema
+ * DataStore — Jetpack 异步键值 / Proto 持久化方案
  *
  * 核心机制与避坑点：
- * 1. 异步 API：基于 Kotlin 协程与 Flow，完全避免阻塞主线程
- * 2. 类型安全：Proto DataStore 提供编译时类型检查
- * 3. 事务支持：支持数据事务与原子读写，保证数据一致性
- * 4. 自动迁移：支持从 SharedPreferences 自动迁移
- * 5. 异常处理：支持 Flow catch 捕获 I/O 异常与默认值降级
+ * 1. 两种形态：Preferences DataStore 无 schema 键值对；Proto DataStore 基于 Protobuf schema 提供编译期类型检查
+ * 2. 异步读写：API 全面基于协程与 Flow，updateData / data 均为挂起，禁止在主线程同步读取
+ * 3. 一致性：updateData 在事务内完成读改写，失败自动回抛 IOException，适合计数器等原子场景
+ * 4. 流式监听：data 返回的 Flow 在每次写入后重发最新值；collect 需在生命周期作用域内，页面销毁自动取消
  *
- * https://developer.android.google.cn/topic/libraries/architecture/datastore
+ * 官方参考：
+ * https://developer.android.com/topic/libraries/architecture/datastore
  */
 @Route(path = RouterPath.Storage.DataStore)
 class DataStoreActivity : BasicResponseActivity() {
@@ -36,29 +32,33 @@ class DataStoreActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("点击下方列表项读写与监听 Preferences 和 Proto DataStore")
+        showDescription(
+            "DataStore 示例：写入 / updateData 事务 / Flow 读取观察 / 清理重置",
+        )
         observeDataStore()
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Preferences: 自增计数器",
-        "Preferences: 写入用户名",
-        "Proto: 自增计数器 (类型安全)",
-        "清空所有 DataStore 数据",
+        "1. 写入 Preferences 用户名",
+        "2. Preferences 计数器自增 (updateData 事务)",
+        "3. Proto 计数器自增 (类型安全)",
+        "4. 读取当前 Flow 观察值",
+        "5. 清空所有 DataStore 数据",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
-            0 -> incrementPrefCounter()
-            1 -> setPrefUserName()
+            0 -> setPrefUserName()
+            1 -> incrementPrefCounter()
             2 -> incrementProtoCounter()
-            3 -> clearAllDataStore()
+            3 -> readCurrentFlowValues()
+            4 -> clearAllDataStore()
         }
     }
 
     /**
-     * 响应式监听 DataStore 数据流变化
+     * 响应式监听：写入后 Flow 自动重发最新值
      */
     private fun observeDataStore() {
         lifecycleScope.launch(Dispatchers.Main) {
@@ -78,30 +78,59 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
-    private fun incrementPrefCounter() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            preDataStore.incrementCounter()
-        }
-    }
-
     private fun setPrefUserName() {
+        appendLog("→ 写入 Preferences 用户名...")
         lifecycleScope.launch(Dispatchers.IO) {
             val randomName = "User_${System.currentTimeMillis() % 1000}"
             preDataStore.setUserName(randomName)
+            withContext(Dispatchers.Main) {
+                appendLog("✓ 已写入 UserName=$randomName")
+            }
+        }
+    }
+
+    private fun incrementPrefCounter() {
+        appendLog("→ Preferences Counter updateData 自增...")
+        lifecycleScope.launch(Dispatchers.IO) {
+            preDataStore.incrementCounter()
+            withContext(Dispatchers.Main) {
+                appendLog("✓ Preferences Counter 自增请求已提交")
+            }
         }
     }
 
     private fun incrementProtoCounter() {
+        appendLog("→ Proto Counter updateData 自增...")
         lifecycleScope.launch(Dispatchers.IO) {
             protoDataStore.incrementCounter()
+            withContext(Dispatchers.Main) {
+                appendLog("✓ Proto Counter 自增请求已提交")
+            }
+        }
+    }
+
+    private fun readCurrentFlowValues() {
+        appendLog("→ 读取 Flow 当前值...")
+        lifecycleScope.launch(Dispatchers.IO) {
+            val prefCounter = preDataStore.getCounter().first()
+            val userName = preDataStore.getUserName().first()
+            val protoCounter = protoDataStore.getCounter().first()
+            withContext(Dispatchers.Main) {
+                appendLog(
+                    "✓ [Flow first] PrefCounter=$prefCounter, UserName=$userName, ProtoCounter=$protoCounter",
+                )
+            }
         }
     }
 
     private fun clearAllDataStore() {
+        appendLog("→ 清空 Preferences 与 Proto DataStore...")
         lifecycleScope.launch(Dispatchers.IO) {
             preDataStore.clear()
             protoDataStore.clear()
-            appendLog("已清空 Preferences 与 Proto DataStore 数据")
+            withContext(Dispatchers.Main) {
+                appendLog("✓ 已清空 Preferences 与 Proto DataStore 数据")
+            }
         }
     }
 }
