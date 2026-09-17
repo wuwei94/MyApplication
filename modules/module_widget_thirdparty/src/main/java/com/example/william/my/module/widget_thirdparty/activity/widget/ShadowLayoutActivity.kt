@@ -6,16 +6,13 @@ import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityShadowLayoutBinding
 
 /**
- * ShadowLayout — 阴影布局控件
- *
- * ShadowLayout 是一个轻量级的阴影布局库，支持自定义阴影效果。
+ * ShadowLayout — 阴影与圆角布局预览
  *
  * 核心机制与避坑点：
- * 1. 简单易用：一行代码添加阴影效果
- * 2. 丰富的自定义：支持自定义阴影颜色、半径、偏移量
- * 3. 性能优秀：使用 Canvas 绘制，性能优于 CardView
- * 4. 兼容性好：支持 Android 4.0+
+ * 1. 阴影绘制：由库在 Canvas 上绘制阴影，可配置颜色 / 半径 / 偏移
+ * 2. 布局预览：本页为静态 XML 展示，无交互操作项
  *
+ * 官方参考：
  * https://github.com/lihangleo2/ShadowLayout
  */
 @Route(path = RouterPath.WidgetThirdparty.ShadowLayout)

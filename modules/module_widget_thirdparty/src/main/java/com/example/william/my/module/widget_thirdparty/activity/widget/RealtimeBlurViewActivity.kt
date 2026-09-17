@@ -8,16 +8,14 @@ import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityBlurViewBinding
 
 /**
- * RealtimeBlurView — 实时高斯模糊控件
- *
- * RealtimeBlurView 是一个轻量级的高斯模糊库，类似 iOS 的 UIVisualEffectView。
+ * RealtimeBlurView — 实时高斯模糊布局预览
  *
  * 核心机制与避坑点：
- * 1. 实时模糊：动态模糊背景内容，支持实时更新
- * 2. 高性能：使用 RenderScript 加速，性能优秀
- * 3. 简单易用：一行代码实现毛玻璃效果
- * 4. 兼容性好：支持 Android 4.0+
+ * 1. 实时模糊：对下层内容做动态高斯模糊，适合毛玻璃浮层
+ * 2. 模糊半径：setBlurRadius 以像素为单位，DPI 换算后设置
+ * 3. 布局预览：本页仅配置半径并静态展示，无交互操作项
  *
+ * 官方参考：
  * https://github.com/mmin18/RealtimeBlurView
  */
 @Route(path = RouterPath.WidgetThirdparty.RealtimeBlurView)
