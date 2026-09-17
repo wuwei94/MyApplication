@@ -33,6 +33,7 @@ import java.io.File
  * 3. 进度回调：RxDownloadCallback / DownloadQueueProgress 原位回报进度
  * 4. 生命周期绑定：setProvider(owner) 与 onFinally 统一收尾
  *
+ * 官方参考：
  * https://square.github.io/retrofit
  */
 @Route(path = RouterPath.Http.RxDownload)
@@ -55,10 +56,10 @@ class RxDownloadActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "单文件下载",
-        "多文件下载",
-        "取消当前下载",
-        "清理下载文件",
+        "1. 单文件下载",
+        "2. 多文件下载",
+        "3. 取消当前下载",
+        "4. 清理下载文件",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

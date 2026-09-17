@@ -28,6 +28,7 @@ import java.io.File
  * 3. 生命周期绑定：setProvider(owner) 与 onFinally 统一收尾
  * 4. 批量并发：多文件任务共享同一 Retrofit 实例并发上传
  *
+ * 官方参考：
  * https://square.github.io/retrofit
  */
 @Route(path = RouterPath.Http.RxUpload)
@@ -50,9 +51,9 @@ class RxUploadActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "单文件上传",
-        "多文件上传",
-        "取消当前上传",
+        "1. 单文件上传",
+        "2. 多文件上传",
+        "3. 取消当前上传",
         "清理上传临时文件",
     )
 
