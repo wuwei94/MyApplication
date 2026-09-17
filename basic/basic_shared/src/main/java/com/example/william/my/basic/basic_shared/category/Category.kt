@@ -9,7 +9,7 @@ package com.example.william.my.basic.basic_shared.category
  * [id] 同时是 ARouter 跳转参数值，变更会导致按旧 id 传参的入口失效，故保持稳定；
  * 调整展示文案只改 [title]。
  *
- * 一级分类的划分与模块归属判据见 `docs/01-rules/conventions.md#分类判据与模块边界`。
+ * 一级分类的划分与模块归属判据见 `docs/01-rules/structure.md#分类判据与模块边界`。
  */
 enum class Category(val id: String, val title: String) {
     UI("ui", "UI 交互"),

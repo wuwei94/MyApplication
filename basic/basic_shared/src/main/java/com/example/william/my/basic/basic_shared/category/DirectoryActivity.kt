@@ -13,7 +13,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * - 二级：技术来源或主题（同一能力的不同实现按来源分组，不同技术点按主题分组）
  *
  * 归类规则：Jetpack 组件有明确主题时归入对应主题模块，无主题架构组件才进 module_jetpack，
- * 详见 docs/conventions.md#分类判据。
+ * 详见 docs/01-rules/structure.md#分类判据与模块边界。
  */
 @Route(path = RouterPath.Directory_Main)
 class DirectoryActivity : RouterRecyclerActivity() {
