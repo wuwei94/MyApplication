@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.activity.loadsir
+package com.example.william.my.module.widget_thirdparty.loadsir.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater

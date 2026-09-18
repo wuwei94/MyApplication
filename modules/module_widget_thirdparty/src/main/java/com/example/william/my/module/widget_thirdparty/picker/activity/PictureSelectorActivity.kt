@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.activity.picker
+package com.example.william.my.module.widget_thirdparty.picker.activity
 
 import android.content.Context
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.activity.loadsir
+package com.example.william.my.module.widget_thirdparty.loadsir.activity
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
