@@ -163,6 +163,8 @@ module_<域>/
 | 手动 | `app.App` | 提供 `XxxApp : BaseAppInit`，并在 `App.initApp()` 中 `registerAppInit(...)` |
 | Hilt | `app.AppHilt` | 提供 `XxxInitImpl : IAppInit` + `@XxxInit` 限定符 + `XxxModule`，并纳入 `AppHilt.onCreate()` 调用顺序 |
 
+**命名约定**：`Xxx` 取**模块短名**（`module_arch` → `Arch`，`module_widget_thirdparty` → `WidgetThirdparty`），手动轨与 Hilt 轨共用同一前缀；禁止 Hilt 轨改用初始化目标库名（如 Mavericks、LoadSir）另起一套。
+
 只接一条链路会导致另一方案下模块初始化静默失效。已接入模块见根 `README.md`。
 
 ## Activity 基类
@@ -237,7 +239,7 @@ Showcase 控制台族基类在 `basic_shared`；架构基类（`BaseActivity` / 
 
 - **新增 Activity**：复制已有 Activity → 更新 `@Route` → Manifest 注册 → `RouterPath` 加常量 → 入口 `buildRouter()` 加项 → 按「文档同步」更新 catalog
 - **新增模块**：复制模块 → `settings.gradle.kts` → `RouterPath.kt` → `CategoryActivity` / `Category.kt` → 核对分层依赖方向与包名地图
-- **提供 AppInit**：手动 `XxxApp` + `registerAppInit` 与 Hilt `XxxInitImpl` + Module 双轨齐全
+- **提供 AppInit**：手动 `XxxApp` + `registerAppInit` 与 Hilt `XxxInitImpl` + `@XxxInit` + `XxxModule` 双轨齐全；`Xxx` 为模块短名，双轨同一前缀
 - 路由：`basic/basic_shared/.../RouterPath.kt`
 - 目录/分类：`DirectoryActivity.kt` / `CategoryActivity.kt`
 - Showcase 基类：`basic/basic_shared/.../activity/`
