@@ -233,8 +233,8 @@ android.nonFinalResIds=true
 
 ### 5. 依赖守卫、拓扑可视化与空测试优化 【部分已落地】
 
-* **Dependency Guard（依赖漂移防护）`【部分已落地】`**：
-  接入 `com.dropbox.dependency-guard` 插件。目前壳工程已生成运行时依赖基线快照（`app/dependencies/prodDebugRuntimeClasspath.txt`）。依赖树发生非预期变更（如三方库隐式引入冲突版本或风险许可证库）时，构建直接中断并给出 diff。下一步规划在 CI 门禁中全面铺开至全部 Library 模块。
+* **Dependency Guard（依赖漂移防护）`【已落地】`**：
+  接入 `com.dropbox.dependency-guard` 插件。壳工程锁定 `prodDebug` / `prodRelease` 运行时类路径（`app/dependencies/*.txt`）；Android Library / Feature 模块经 `AndroidLibraryConventionPlugin` 统一锁定同类路径，纯 JVM 模块经 `JvmLibraryConventionPlugin` 锁定 `runtimeClasspath`。基线位于各模块 `dependencies/` 目录，`dependencyGuard` 任务比对，`dependencyGuardBaseline` 任务刷新。
 * **依赖拓扑图自动生成 `【已落地】`**：
   在根工程运行：
   ```bash
@@ -407,21 +407,21 @@ kotlinx.datetime.Instant
 
 ---
 
-### 5. NiA 进阶 Lint 规则规划与拦截准则 【演进规划 - 待落地】
+### 5. NiA 进阶 Lint 规则 【已落地】
 
-参考 Google 官方 NiA 最佳实践，规划在 `:lint` 模块后续拓展以下 3 项刚性静态拦截规则：
+在 `:lint` 模块落地以下 3 项静态拦截规则（与既有 TestNaming / HungarianNotation 同注册表、同 SPI 加载）：
 
 #### 1. 生命周期安全流收集检查（`CollectAsStateWithLifecycleDetector`）
-* **违规场景**：在 Compose UI 树中直接调用 `Flow.collectAsState()`；
-* **危害**：当 Activity/Fragment 切入后台（STOPPED 状态）时，`collectAsState()` 依然持续监听上游冷流发射，无法释放计算资源甚至导致内存泄漏与后台异常；
-* **拦截与修复建议**：拦截 `collectAsState()`，强制要求使用 `androidx.lifecycle.compose` 提供的 `collectAsStateWithLifecycle()`，确保当页面生命周期低于 `Lifecycle.State.STARTED` 时自动取消协程收集。
+* **违规场景**：在 Compose UI 中直接调用 `Flow.collectAsState()`；
+* **危害**：页面切入后台（STOPPED）后仍持续收集上游冷流，浪费计算资源并可能触发后台重组；
+* **拦截与修复建议**：改用 `androidx.lifecycle.compose.collectAsStateWithLifecycle()`，使收集范围对齐 `Lifecycle.State.STARTED`；教学对照可用 `@Suppress("CollectAsStateWithLifecycle")`。
 
 #### 2. 现代时间 API 强制检查（`DateTimeApiDetector`）
-* **违规场景**：在数据实体模型与网络层直接使用老旧易错的 `java.util.Date`、`java.util.Calendar` 或 `SimpleDateFormat`；
-* **危害**：非线程安全、不支持时区不可变性、且无法支持 Kotlin Multiplatform 跨平台序列化；
-* **拦截与修复建议**：强制迁移至 Java 8+ `java.time.Instant` / `LocalDateTime` 或全平台通用的 `kotlinx.datetime.Instant`。
+* **违规场景**：数据实体字段或调用点使用 `java.util.Date`、`java.util.Calendar`、`java.text.SimpleDateFormat`；
+* **危害**：非线程安全、时区处理易错，不利于 KMP 与类型化序列化；
+* **拦截与修复建议**：迁移至 `java.time.*` 或 `kotlinx.datetime.*`；废弃 API 教学页可对类标注 `@Deprecated` 放行。
 
 #### 3. ViewModel 作用域声明检查（`ViewModelScopeDetector`）
-* **违规场景**：在可复用的小粒度子 Composable 内部，无条件调用 `viewModel()` 默认工厂获取全局 ViewModel；
-* **危害**：破坏组件的可复用性与可测试性，使子组件无法独立 Preview，且在复杂回退栈或 LazyColumn 中极易引发状态错乱与实例泄漏；
-* **拦截与修复建议**：强制要求 ViewModel 仅在顶层 Screen/Route Composable 中获取，子组件只接收不可变 `UiState` 数据类与 Lambdas 回调事件（状态提升 State Hoisting）。
+* **违规场景**：在叶子子 Composable（非 `*Screen` / `*Route` / `*Page` / `*Destination`）内调用 `viewModel()` / `hiltViewModel()`；
+* **危害**：破坏 State Hoisting 与组件可测性，在列表复用与多返回栈下易绑定错误作用域；
+* **拦截与修复建议**：顶层 Screen/Route 获取 ViewModel，子组件只接收 `UiState` 与事件 Lambda。
