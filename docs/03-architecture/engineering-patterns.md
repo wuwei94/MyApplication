@@ -62,6 +62,7 @@ interface Synchronizer {
 }
 ```
 * **WorkManager 定时调度**：通过 `ServiceLocatorSyncWorker` / `HiltSyncWorker` 声明约束（仅在有网络、充电或空闲时运行）；
+* **应用启动排队**：`module_arch` 的 AppInit 双轨（`ArchApp` / `ArchInitImpl`）在启动时调用 `Sync.initialize`，入队一次静默增量同步（`ExistingWorkPolicy.KEEP`，避免重复排队）；
 * **增量变更同步（ChangeList）**：每次只拉取版本号高于本地游标的增量数据，极大节省流量与设备电量。
 
 ---

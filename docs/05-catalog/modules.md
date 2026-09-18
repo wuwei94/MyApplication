@@ -501,7 +501,7 @@
 | MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect + ArticleFlowUseCase） |
 | ComposeMviActivity | Compose MVI 架构模式（Jetpack Compose + StateFlow + SmartRefresh Compose + ArticleFlowUseCase） |
 | MavericksActivity | Mavericks 架构模式（Airbnb MVI，MavericksState + MavericksViewModel + MavericksRepository） |
-| OfflineFirstActivity | Offline-First 离线优先与 SSOT 单一数据源架构模式（Room Flow + NetworkMonitor 响应式网络监听/离线横幅/在线自愈 + Synchronizer / ServiceLocatorSyncWorker 增量游标幂等拉取） |
+| OfflineFirstActivity | Offline-First 离线优先与 SSOT 单一数据源架构模式（Room Flow + NetworkMonitor + ServiceLocatorSyncWorker；AppInit 启动时 Sync.initialize 排队） |
 
 ---
 
