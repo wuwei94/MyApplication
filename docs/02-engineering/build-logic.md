@@ -15,6 +15,7 @@ build-logic/convention/src/main/kotlin/
 │   ├── ProjectExtensions.kt            # Project 扩展属性
 │   ├── PrintTestApks.kt                # 打印测试 APK 路径
 │   ├── AndroidInstrumentedTests.kt     # 禁用空测试模块
+│   ├── Badging.kt                      # APK Badging 基线卫士 + GMD 托管设备
 │   ├── DependencyGuard.kt              # Dependency Guard 接入（Android/JVM）
 │   ├── Graph.kt                        # 依赖拓扑图生成逻辑
 │   └── Spotless.kt                     # Spotless + ktlint 代码格式化配置

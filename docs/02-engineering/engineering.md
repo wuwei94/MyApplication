@@ -102,9 +102,9 @@ flowchart TD
 | **3. 现代测试体系** | Turbine 响应式数据流单测 | Turbine + 手写 Fake 内存替身 | `【已落地】` | `modules/module_reactive`（样板） |
 | | 测试命名 Lint 机器校验 | 编译期命名 AST 机械校验 | `【已落地】` | `lint` 模块（注入全局 Android 模块） |
 | | Roborazzi 像素级截图测试 | JVM Robolectric 原生图形无头渲染 | `【已落地】` | `modules/module_compose`（样板） |
-| | ATF 自动化无障碍合规检查 | Accessibility Testing Framework 联动 | `【演进规划 - 待落地】` | 规范已确立，全工程截图用例全量集成推进中 |
-| | 共享测试替身基础设施 | basic:basic_testing（Fake / Dispatchers） | `【演进规划 - 待落地】` | 现有替身分散于各模块，规划建立全局测试基建模块 |
-| | Gradle 托管设备 (GMD) | pixel6api31aosp 纯净自动化插桩 | `【演进规划 - 待落地】` | 配置已声明，CI 自动化镜像流水线推进中 |
+| | ATF 自动化无障碍合规检查 | Accessibility Testing Framework 联动 | `【已落地】` | `module_compose` 截图测试接入 `checkRoboAccessibility` |
+| | 共享测试替身基础设施 | basic:basic_testing（Fake / Dispatchers） | `【已落地】` | `basic/basic_testing`：MainDispatcherRule / TestNetworkMonitor / TestDispatchersModule；AndroidDeps 自动注入 |
+| | Gradle 托管设备 (GMD) | pixel6api31aosp 纯净自动化插桩 | `【已落地】` | Convention 统一声明 `managedDevices.localDevices`；CI 矩阵含 GMD Job |
 | | JaCoCo 代码覆盖率统一配置 | Convention 插件排除生成类与 BuildConfig | `【已落地】` | `build-logic` 覆盖率插件 |
 | **4. 架构解耦与通信范式** | 离线优先与 SSOT 单一数据源 | Room 响应式流驱动 UI + 乐观更新 | `【已落地】` | `basic/basic_repo` + `modules/module_arch:ssot` |
 | | 后台增量数据同步机制 | Synchronizer 契约 + SyncWorker 调度 | `【已落地】` | `basic/basic_sync`（WorkManager） |
@@ -121,7 +121,7 @@ flowchart TD
 | | AndroidX Tracing 深度追踪 | trace section 联动 Perfetto 业务泳道 | `【已落地】` | `modules/module_performance` |
 | **6. 交付安全与门禁防御** | Git commit-msg 校验 | Conventional Commits + 中文强制拦截 | `【已落地】` | `tools/commit-msg` + 安装脚本 |
 | | Git pre-push 增量门禁 | 增量 Lint + 全量 Spotless 极速拦截 | `【已落地】` | `tools/pre-push` |
-| | Badging 权限与组件基线卫士 | AAPT2 dump 元数据 diff 比对 | `【演进规划 - 待落地】` | 规范已设计，全自动化构建任务与基线推进中 |
+| | Badging 权限与组件基线卫士 | AAPT2 dump 元数据 diff 比对 | `【已落地】` | `checkBadging` / `updateBadgingBaseline`；基线 `app/badging/prodRelease.txt` |
 | | CI 自动化矩阵 | GitHub Actions 自动化并发校验 | `【已落地】` | `.github/workflows/` |
 
 ---
@@ -158,8 +158,8 @@ sequenceDiagram
 
 * **commit-msg / pre-push 钩子**：格式规则、安装方式与跳过通道（`--no-verify` / `COMMIT_MSG_DISABLE=1` / `PRE_PUSH_DISABLE=1`）详见 [git.md](../01-rules/git.md)。
 * **pre-push 增量算法**：全量 `spotlessCheck` → `git diff` 计算受影响模块 → 精准执行 `:<module>:lintProdDebug`（纯 JVM 模块执行 `:<module>:lint`，自定义规则模块 `:lint` 自身豁免），并统一传 `-PenableFlutter=false` 关闭 Flutter 集成（`enableFlutter` 默认 `true`，开启时 `:app` 的 Lint 会连带分析 Flutter 产物，单次门禁耗时由分钟级升至十几分钟）。
-* **APK 产物基线与权限卫士（Badging）`【演进规划 - 待落地】`**：规划注册 `checkBadging` 任务，通过 AAPT2 dump APK 的 `badging`（`permissions`、`features`、`exported` 组件等）与入库基线（如 `app/badging/release.txt`）比对，依赖一旦隐式引入危险权限（如 `READ_EXTERNAL_STORAGE`、`ACCESS_FINE_LOCATION`）即拦截并输出 diff。
-* **CI 并行矩阵 `【已落地】`**：`.github/workflows/build.yml` 拆为五条并行 Job —— `spotlessCheck`、`lintProdDebug`、`testProdDebugUnitTest`、`dependencyGuard`、`assembleProdDebug + assembleProdRelease`（APK 产物归档）；统一经 `gradle/actions/setup-gradle` 复用 Gradle User Home 缓存，并配置 `concurrency` 取消同分支的过期运行。**拆 Job 的收益以缓存为前提**——缺少缓存时各 Job 冷启动会拉长总时长。`verifyRoborazziProdDebug` 与 `checkBadging` 仍属演进规划：前者需先在 CI 环境重新生成截图基准（基准图与运行环境的字体、渲染相关），后者需先引入 badging 插件。
+* **APK 产物基线与权限卫士（Badging）`【已落地】`**：`checkBadging` 通过 AAPT2 dump APK 的 `badging`（`package` / `uses-permission` / `uses-feature` 等）与入库基线 `app/badging/prodRelease.txt` 比对，依赖隐式引入危险权限或元数据漂移时构建失败并输出 diff。刷新基线：`./gradlew updateBadgingBaseline -PenableFlutter=false`。
+* **CI 并行矩阵 `【已落地】`**：`.github/workflows/build.yml` 并行 Job —— `spotlessCheck`、`lintProdDebug`、`testProdDebugUnitTest`、`dependencyGuard`、`assembleProdDebug + assembleProdRelease`、`checkBadging`、GMD 插桩（`pixel6api31aospDemoDebugAndroidTest`）；统一经 `gradle/actions/setup-gradle` 复用 Gradle User Home 缓存，并配置 `concurrency` 取消同分支的过期运行。**拆 Job 的收益以缓存为前提**——缺少缓存时各 Job 冷启动会拉长总时长。`verifyRoborazziProdDebug` 仍属演进规划：需先在 CI 环境重新生成截图基准（基准图与运行环境的字体、渲染相关）。
 
 ---
 
@@ -213,7 +213,7 @@ sequenceDiagram
 ./gradlew :benchmarks:connectedCheck
 
 # 通过 Gradle 托管设备自动跑插桩测试（无需手工启动模拟器）
-./gradlew pixel6api31aospDebugAndroidTest
+./gradlew pixel6api31aospDemoDebugAndroidTest -PenableFlutter=false
 
 # 校验 APK 权限与产物 Badging 基线
 ./gradlew checkBadging

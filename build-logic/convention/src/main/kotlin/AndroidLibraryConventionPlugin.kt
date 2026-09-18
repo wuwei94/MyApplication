@@ -20,6 +20,7 @@ import com.google.samples.apps.nowinandroid.configureAndroidDependencyGuard
 import com.google.samples.apps.nowinandroid.configureDepsAndroid
 import com.google.samples.apps.nowinandroid.configureFlavors
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
+import com.google.samples.apps.nowinandroid.configureManagedDevices
 import com.google.samples.apps.nowinandroid.configurePrintApksTask
 import com.google.samples.apps.nowinandroid.configureSpotlessForAndroid
 import com.google.samples.apps.nowinandroid.disableUnnecessaryAndroidTests
@@ -52,6 +53,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 configureFlavors(this)
                 configureDepsAndroid(this)
+                configureManagedDevices(testOptions)
                 // 资源前缀由模块名派生，
                 // 因此 ":core:module1" 内的资源必须以 "core_module1_" 为前缀
                 // resourcePrefix =

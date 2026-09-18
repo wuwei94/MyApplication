@@ -16,10 +16,12 @@
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.google.samples.apps.nowinandroid.configureBadging
 import com.google.samples.apps.nowinandroid.configureDepsAndroid
 import com.google.samples.apps.nowinandroid.configureFeatureAndroid
 import com.google.samples.apps.nowinandroid.configureFlavors
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
+import com.google.samples.apps.nowinandroid.configureManagedDevices
 import com.google.samples.apps.nowinandroid.configurePrintApksTask
 import com.google.samples.apps.nowinandroid.configureSpotlessForAndroid
 import org.gradle.api.Plugin
@@ -49,7 +51,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureFlavors(this)
                 configureDepsAndroid(this)
                 configureFeatureAndroid(this)
+                configureManagedDevices(testOptions)
             }
+            configureBadging()
             extensions.configure<ApplicationAndroidComponentsExtension> {
                 configurePrintApksTask(this)
             }

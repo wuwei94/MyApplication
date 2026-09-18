@@ -90,14 +90,13 @@ src/test/
    - sdk 固定（34），避免多 SDK 下字体度量差异。
 3. **按需引入**：`testing-screenshot` bundle 只在截图测试模块声明（`testImplementation(platform(compose-bom))` + bundle），不进全局公共依赖，避免拖慢其它模块编译。
 4. **覆盖矩阵**：每个组件至少亮 / 暗主题两张（`MyApplicationTheme(darkTheme = ...)`）。
-5. **同步无障碍检查（RoboAccessibility + ATF）`【演进规划 - 待落地】`**：
-   在 UI 截图的同时，挂载 Accessibility Testing Framework 进行静态无障碍断言：
+5. **同步无障碍检查（RoboAccessibility + ATF）`【已落地】`**：
+   在 UI 截图的同时调用 Roborazzi Accessibility Check 进行静态无障碍断言：
    ```kotlin
-   captureRoboImage(filePath) {
-       checkRoboAccessibility(AccessibilityCheckPreset.LATEST)
-   }
+   composeRule.onRoot().captureRoboImage()
+   composeRule.onRoot().checkRoboAccessibility()
    ```
-   自动拦截触控区域小于 48dp、文本与背景对比度不达标（< 4.5:1）、缺少 `contentDescription` 等无障碍合规缺陷。
+   拦截触控区域过小、文本与背景对比度不达标、缺少 `contentDescription` 等无障碍合规缺陷。
 6. **多设备规格覆盖（`captureMultiDevice`）`【已落地】`**：一份 UI 组件测试同时生成三档物理设备形态的渲染快照：
    ```kotlin
    enum class DefaultTestDevices(val description: String, val spec: String) {
@@ -108,11 +107,15 @@ src/test/
    ```
 7. **自动化联动开关 `【已落地】`**：在 `gradle.properties` 配置 `roborazzi.test.verify=true`，使得常规 `./gradlew test` 会自动联动触发截图比对，杜绝"代码改了却忘记跑视觉回归"的隐患。
 
-### 共享测试替身演进（`basic:basic_testing`）`【演进规划 - 待落地】`
+### 共享测试替身（`basic:basic_testing`）`【已落地】`
 
-当前测试替身（如 `FakeNumberSource`）散落在业务模块单测目录下。后续规划参考 Google NiA 的 `:core:testing`，建立全局独立的纯测试共享库 `:basic:basic_testing`：
-* 集中提供全局 `MainDispatcherRule` 与 `TestDispatchersModule`（通过 `@TestInstallIn` 自动替换 Hilt 生产调度器）；
-* 统一下沉跨模块通用的 Fake Repository、Fake 监视器（`FakeNetworkMonitor` / `FakeTimeZoneMonitor`）及测试数据集工厂。
+全局纯测试共享库 `:basic:basic_testing` 对齐 Google NiA 的 `:core:testing`：
+
+* `MainDispatcherRule`：协程单测主调度器重定向（`Dispatchers.Main` → `TestDispatcher`）；
+* `TestDispatchersModule`：`@TestInstallIn` 在 Hilt 测试中自动替换生产 `DispatchersModule`；
+* `TestNetworkMonitor`：可脚本化离线/在线的网络监视器替身。
+
+`AndroidDeps.kt` 为除 `:basic:basic_lib` / `:basic:basic_testing` 外的 Android 模块自动注入 `testImplementation(project(":basic:basic_testing"))`，业务模块不再各写一份调度器规则。
 
 ### 已知边界
 
@@ -121,14 +124,13 @@ src/test/
 
 ## 四、自动化设备与覆盖率基建
 
-### Gradle 托管设备（GMD）`【演进规划 - 待落地】`
+### Gradle 托管设备（GMD）`【已落地】`
 
-插桩测试如果依赖开发者手动启动本地模拟器，容易因模拟器状态污染、系统版本差异导致测试偶发失败。在构建插件中引入 GMD 声明：
+插桩测试依赖开发者手动启动本地模拟器时，易因模拟器状态污染与系统版本差异导致偶发失败。Convention 插件为 Application / Library 模块统一声明 GMD：
 
 ```kotlin
-// build-logic 中的托管设备配置
-android.testOptions.managedDevices.devices {
-    create<ManagedVirtualDevice>("pixel6api31aosp") {
+android.testOptions.managedDevices.localDevices {
+    create("pixel6api31aosp") {
         device = "Pixel 6"
         apiLevel = 31
         systemImageSource = "aosp"
@@ -136,8 +138,8 @@ android.testOptions.managedDevices.devices {
 }
 ```
 
-* **命令**：`./gradlew pixel6api31aospDebugAndroidTest`
-* **优势**：Gradle 自动从官方源拉取纯净镜像、无头启动、执行测试用例、拉取报告并自动销毁容器，保障插桩测试结果 100% 可复现。
+* **命令**：`./gradlew pixel6api31aospDemoDebugAndroidTest`（带 demo/prod 风味前缀）
+* **优势**：Gradle 自动拉取纯净镜像、无头启动、执行用例、拉取报告并销毁容器，保障插桩结果可复现。
 
 ### 禁用测试动画 `【已落地】`
 
@@ -169,8 +171,14 @@ android.testOptions.animationsDisabled = true
 ./gradlew :modules:module_compose:recordRoborazziDemoDebug   # 录制
 ./gradlew :modules:module_compose:verifyRoborazziDemoDebug   # 校验
 
+# 共享测试基建单测
+./gradlew :basic:basic_testing:testDemoDebugUnitTest
+
 # Lint 规则自身的单测
 ./gradlew :lint:test
+
+# Gradle 托管设备插桩（demo 风味）
+./gradlew pixel6api31aospDemoDebugAndroidTest -PenableFlutter=false
 ```
 
 > 注意：工程带 demo/prod 风味，测试任务名需带风味前缀（`testDemoDebugUnitTest` / `lintDemoDebug`）。
