@@ -33,16 +33,16 @@ class DataStoreActivity : BasicResponseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         showDescription(
-            "DataStore 示例：写入 / updateData 事务 / Flow 读取观察 / 清理重置",
+            "DataStore 示例（与 MMKV 平行轴：写入 / 读取观察 / 事务 / 清理）",
         )
         observeDataStore()
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
         "1. 写入 Preferences 用户名",
-        "2. Preferences 计数器自增 (updateData 事务)",
-        "3. Proto 计数器自增 (类型安全)",
-        "4. 读取当前 Flow 观察值",
+        "2. 读取当前 Flow 观察值",
+        "3. Preferences 计数器自增 (updateData 事务)",
+        "4. Proto 计数器自增 (类型安全，库特有)",
         "5. 清空所有 DataStore 数据",
     )
 
@@ -50,9 +50,9 @@ class DataStoreActivity : BasicResponseActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> setPrefUserName()
-            1 -> incrementPrefCounter()
-            2 -> incrementProtoCounter()
-            3 -> readCurrentFlowValues()
+            1 -> readCurrentFlowValues()
+            2 -> incrementPrefCounter()
+            3 -> incrementProtoCounter()
             4 -> clearAllDataStore()
         }
     }

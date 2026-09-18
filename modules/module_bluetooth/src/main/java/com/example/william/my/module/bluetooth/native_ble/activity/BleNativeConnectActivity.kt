@@ -188,7 +188,7 @@ class BleNativeConnectActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> = arrayListOf(
         "1. 扫描并自动连接发现的第一个 BLE 设备",
-        "2. 手动发现 GATT 服务树 (discoverServices)",
+        "2. 发现 GATT 服务树 (discoverServices，协议前置)",
         "3. 请求扩展 MTU 至 512 字节 (requestMtu)",
         "4. 读取首个可读特征值 (readCharacteristic)",
         "5. 写入测试文本到首个可写特征值 (writeCharacteristic)",

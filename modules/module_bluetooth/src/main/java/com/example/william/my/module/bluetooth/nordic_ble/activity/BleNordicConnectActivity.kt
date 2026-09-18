@@ -91,6 +91,7 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         "3. 挂起写入数据 (suspend 协程调用)",
         "4. 使能 Notify 通知订阅 (enableNotifications)",
         "5. 断开连接并清理资源",
+        // 与 Native/Fast/Rx 平行轴对照：本页连接流程内完成服务发现，未单独暴露 MTU / 大包分包列表位
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

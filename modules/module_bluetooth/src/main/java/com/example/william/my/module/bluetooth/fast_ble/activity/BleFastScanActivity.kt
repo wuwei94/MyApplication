@@ -45,11 +45,11 @@ class BleFastScanActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "1. 配置全局扫描规则 (超时 10 秒 / 无过滤)",
-        "2. 配置带 Service UUID 过滤的规则 (0xFFE0)",
+        "1. 配置全量扫描规则 (超时 10 秒 / 无过滤)",
+        "2. 配置过滤扫描规则 (Service UUID 0xFFE0)",
         "3. 开启 FastBle 扫描",
-        "4. 取消/停止扫描",
-        "5. 查看 FastBle 设计特点说明",
+        "4. 停止扫描 (cancelScan)",
+        "5. 查看 FastBle 设计特点说明（库特有）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

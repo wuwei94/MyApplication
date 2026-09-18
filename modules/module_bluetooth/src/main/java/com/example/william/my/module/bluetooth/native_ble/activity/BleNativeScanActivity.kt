@@ -105,12 +105,12 @@ class BleNativeScanActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "1. 检查并申请蓝牙/位置权限",
-        "2. 检查蓝牙适配器开关状态",
-        "3. 开启 BLE 连续扫描 (低延迟模式)",
+        "1. 检查并申请蓝牙/位置权限（原生前置）",
+        "2. 检查蓝牙适配器开关状态（原生前置）",
+        "3. 开启 BLE 全量连续扫描 (低延迟模式)",
         "4. 开启 BLE 过滤扫描 (带 UUID 过滤)",
         "5. 停止 BLE 扫描",
-        "6. 模拟解析 BLE 广播包结构",
+        "6. 查看 BLE 广播包结构说明（原生特有）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

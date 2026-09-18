@@ -379,8 +379,8 @@
 | Activity | 功能 |
 |----------|------|
 | DatabaseMainActivity | 模块入口，导航到 Room、ObjectBox 示例 |
-| RoomActivity | Room（Insert / Batch / Update / Query / Flow 观察 / Rx 查询 / Delete All） |
-| ObjectBoxActivity | ObjectBox（put / 批量 put / 查询 / ObjectBoxLiveData 观察 / removeAll） |
+| RoomActivity | Room（Insert / Batch / Update / Query / Flow 观察 / Rx 查询 / Delete All；与 ObjectBox 平行轴） |
+| ObjectBoxActivity | ObjectBox（put / 批量 put / 覆盖更新 put upsert / 查询 / LiveData 观察 / removeAll；与 Room 平行轴） |
 
 ---
 
@@ -391,8 +391,8 @@
 | Activity | 功能 |
 |----------|------|
 | StorageMainActivity | 模块入口，导航到 DataStore、MMKV 示例 |
-| DataStoreActivity | DataStore（写入 / updateData 事务 / Flow 读取观察 / 清空） |
-| MMKVActivity | MMKV（写入 / 读取 / 批量写入 / ByteArray / 删除 / clearAll；同步 decode） |
+| DataStoreActivity | DataStore（写入 / Flow 读取观察 / updateData 事务 / Proto / 清空；与 MMKV 平行轴） |
+| MMKVActivity | MMKV（写入 / 读取 / 批量 / 删除 / clearAll / ByteArray 特有；与 DataStore 平行轴） |
 
 ---
 

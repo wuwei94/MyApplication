@@ -33,17 +33,18 @@ class ObjectBoxActivity : BasicResponseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         showDescription(
-            "ObjectBox 示例：写入 / 批量 put / 查询 / LiveData 观察 / 清理重置",
+            "ObjectBox 示例（与 Room 平行轴：插入 / 批量 / 更新 / 查询 / 观察 / 清理）",
         )
         initBox()
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "1. 插入 Note 数据",
+        "1. 插入 Note 数据 (put)",
         "2. 批量插入 Note 数据 (Box.put List)",
-        "3. 查询所有 Note",
-        "4. 订阅数据变更 (ObjectBoxLiveData)",
-        "5. 清空 Note 数据",
+        "3. 覆盖更新 Note (put 同 id，等价 upsert)",
+        "4. 查询所有 Note",
+        "5. 订阅数据变更 (ObjectBoxLiveData)",
+        "6. 清空 Note 数据",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -51,9 +52,10 @@ class ObjectBoxActivity : BasicResponseActivity() {
         when (position) {
             0 -> addNote()
             1 -> addBatchNotes()
-            2 -> showNote()
-            3 -> observeNotes()
-            4 -> clearNotes()
+            2 -> updateLatestNote()
+            3 -> showNote()
+            4 -> observeNotes()
+            5 -> clearNotes()
         }
     }
 
@@ -80,6 +82,22 @@ class ObjectBoxActivity : BasicResponseActivity() {
         )
         notesBox.put(notes)
         appendLog("✓ 批量插入完成，id 列表=${notes.map { it.id }}")
+    }
+
+    /**
+     * 覆盖更新：ObjectBox 无独立 UPDATE SQL，put 相同 id 即 upsert。
+     */
+    private fun updateLatestNote() {
+        appendLog("→ 覆盖更新最近一条 Note (put upsert)...")
+        val latest = notesBox.all.lastOrNull()
+        if (latest == null) {
+            appendLog("✗ 当前无数据，请先插入")
+            return
+        }
+        val oldText = latest.text
+        latest.text = "Updated ${System.currentTimeMillis()}"
+        notesBox.put(latest)
+        appendLog("✓ 已更新 id=${latest.id}: \"$oldText\" → \"${latest.text}\"")
     }
 
     private fun showNote() {

@@ -43,10 +43,10 @@ class BleRxScanActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "1. 开启 RxJava 响应式全量扫描 (带 100ms 节流)",
-        "2. 开启 RxJava 信号强度过滤扫描 (仅显示 RSSI > -75dBm)",
-        "3. 取消扫描 (通过 Disposable.dispose())",
-        "4. 查看 RxAndroidBle 响应式设计优势",
+        "1. 开启全量扫描 (RxJava 响应式，100ms 节流)",
+        "2. 开启过滤扫描 (RSSI > -75dBm)",
+        "3. 停止扫描 (Disposable.dispose)",
+        "4. 查看 RxAndroidBle 响应式设计说明（库特有）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

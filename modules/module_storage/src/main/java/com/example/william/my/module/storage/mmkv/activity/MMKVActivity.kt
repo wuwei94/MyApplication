@@ -38,10 +38,10 @@ class MMKVActivity : BasicResponseActivity() {
         "1. 写入基础类型数据（String / Int / Boolean / Float）",
         "2. 读取基础类型数据",
         "3. 批量写入多键数据",
-        "4. 写入二进制数据（ByteArray）",
-        "5. 读取二进制数据",
-        "6. 删除指定键（user_name）",
-        "7. 清空全部存储（clearAll）",
+        "4. 删除指定键（user_name）",
+        "5. 清空全部存储（clearAll）",
+        "6. 写入二进制数据（ByteArray，库特有）",
+        "7. 读取二进制数据（库特有）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -51,10 +51,10 @@ class MMKVActivity : BasicResponseActivity() {
             0 -> writeBasicTypes(kv)
             1 -> readBasicTypes(kv)
             2 -> writeBatchKeys(kv)
-            3 -> writeBinary(kv)
-            4 -> readBinary(kv)
-            5 -> removeUserName(kv)
-            6 -> clearAll(kv)
+            3 -> removeUserName(kv)
+            4 -> clearAll(kv)
+            5 -> writeBinary(kv)
+            6 -> readBinary(kv)
         }
     }
 

@@ -81,9 +81,9 @@ class BleNordicScanActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> = arrayListOf(
         "1. 开启全量 BLE 设备扫描 (低延迟模式)",
-        "2. 开启 Nordic UART 服务过滤扫描 (0xFFE0 / 0x6E40)",
+        "2. 开启过滤扫描 (Nordic UART 0xFFE0 / 0x6E40)",
         "3. 停止扫描",
-        "4. 查看 Nordic 广播包最佳实践说明",
+        "4. 查看 Nordic 广播包最佳实践说明（库特有）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

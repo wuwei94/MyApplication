@@ -42,7 +42,7 @@ class RoomActivity : BasicResponseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         showDescription(
-            "Room 示例：写入 / 批量事务 / 更新查询 / Flow 观察 / Rx 查询 / 清理重置",
+            "Room 示例（与 ObjectBox 平行轴：插入 / 批量 / 更新 / 查询 / 观察 / 清理）",
         )
         observeOAuthFlow()
     }
@@ -51,9 +51,9 @@ class RoomActivity : BasicResponseActivity() {
         "1. 插入单条数据 (Insert Single)",
         "2. 批量插入数据 (Insert Batch)",
         "3. 更新最近一条数据 (Update)",
-        "4. 根据 ID 查询数据 (Query by ID)",
+        "4. 查询数据 (Query by ID / 全表)",
         "5. Flow 响应式观察 (表变更自动上屏)",
-        "6. RxJava Single 异步查询 (Rx Query)",
+        "6. RxJava Single 异步查询 (Rx Query，库特有)",
         "7. 清空数据库 (Delete All)",
     )
 
