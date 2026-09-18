@@ -88,7 +88,7 @@ class AdaptiveActivity : ComponentActivity() {
         ArticleItem(2, "Navigation 3 声明式解耦架构演进", "导航规范", "NavKey 强类型路由与纯状态提升返回栈的全面实践。"),
         ArticleItem(3, "Material 3 响应式设计指南", "UI 规范", "从直板手机、折叠屏到平板电脑的 List-Detail 经典断点。"),
         ArticleItem(4, "Kotlin 2.0 K2 编译器原理", "语言特性", "全新的前端编译器架构，大幅提高大型多模块工程编译效率。"),
-        ArticleItem(5, "Offline-First 离线优先架构实战", "工程基建", "Room + MMKV 游标同步与 SSOT 单一数据源的稳定落地。"),
+        ArticleItem(5, "Offline-First 离线优先架构实战", "工程基建", "Room + Proto DataStore 游标同步与 SSOT 单一数据源的稳定落地。"),
     )
 
     @Composable

@@ -269,7 +269,7 @@ override fun invalidate() = withState(viewModel) { state ->
 - **基础支撑层（完全对齐 Google Now in Android 标准数据层解耦）**：
   - `basic/basic_lib`: `NetworkMonitor`（响应式网络感知）
   - `basic/basic_model`: 纯领域模型层（`ArticleDetailData` 领域实体、`ChangeListVersions` 增量游标模型，零 Android 依赖）
-  - `basic/basic_datastore`: 键值与偏好存储（`SyncPreferencesDataSource` 基于 Tencent MMKV 高性能 mmap 持久化游标，并通过 `StateFlow` 暴露响应式流）
+  - `basic/basic_datastore`: 键值与偏好存储（`SyncPreferencesDataSource` 基于 Proto DataStore 持久化版本游标，并通过 `Flow` 暴露响应式流）
   - `basic/basic_database`: 本地持久化数据库（`ArticleEntity` Room 实体、`ArticleDao`、`ArticleDatabase`、`ArticleLocalDataSource`）
   - `basic/basic_network`: 远程网络数据通信（`ArticleApi` / `ArticleRxApi`、`NetworkChangeList`、`ArticleRemoteDataSource`）
   - `basic/basic_repo`: 纯数据仓库（`ArticleRepository` 聚合门面、`Synchronizer` / `Syncable` 契约、`ServiceLocator` 装配中心）
@@ -277,7 +277,7 @@ override fun invalidate() = withState(viewModel) { state ->
 - **核心架构理念**：
   1. **SSOT（唯一真理在本地）**：UI 永远只读 Room 数据库推出来的 `Flow<List<Article>>`，绝不直接碰网络接口返回的原始 DTO；
   2. **Write-Only Sync（网络写同步）**：网络拉取的数据只做一件事——写入 Room 数据库，由 Room 的 `InvalidationTracker` 自动触发 UI 更新；
-  3. **增量游标（ChangeList）**：基于 MMKV 保存版本号（如 `v1`、`v2`），每次向服务端请求增量数据，实现后台幂等同步；
+  3. **增量游标（ChangeList）**：基于 Proto DataStore 保存版本号（如 `v1`、`v2`），每次向服务端请求增量数据，实现后台幂等同步；
   4. **在线自愈（Auto-Recovery）**：感知到断网重连后，无需用户下拉刷新，系统自动在后台调度增量同步。
 
 #### 核心数据流动图解

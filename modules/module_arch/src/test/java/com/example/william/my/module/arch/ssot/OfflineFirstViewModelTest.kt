@@ -44,7 +44,7 @@ class OfflineFirstViewModelTest {
         repository = FakeArticleRepository()
         networkMonitor = TestNetworkMonitor()
         syncManager = TestSyncManager()
-        syncPreferences = createTestSyncPreferences()
+        syncPreferences = SyncPreferencesDataSource.createInMemoryForTest()
 
         viewModel = OfflineFirstViewModel(
             repository = repository,
@@ -52,14 +52,6 @@ class OfflineFirstViewModelTest {
             syncManager = syncManager,
             syncPreferences = syncPreferences,
         )
-    }
-
-    private fun createTestSyncPreferences(): SyncPreferencesDataSource {
-        val constructor = SyncPreferencesDataSource::class.java.getDeclaredConstructor(
-            Class.forName("com.tencent.mmkv.MMKV"),
-        )
-        constructor.isAccessible = true
-        return constructor.newInstance(null) as SyncPreferencesDataSource
     }
 
     @Test

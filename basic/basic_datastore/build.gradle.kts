@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
+    alias(libs.plugins.nowinandroid.android.protobuf)
 }
 
 android {
@@ -12,7 +13,7 @@ dependencies {
     implementation(projects.basic.basicShared)
     api(projects.basic.basicModel)
 
-    api(libs.mmkv)
+    implementation(libs.androidx.datastore.runtime)
 
     testImplementation(libs.kotlinx.coroutines.test)
 }

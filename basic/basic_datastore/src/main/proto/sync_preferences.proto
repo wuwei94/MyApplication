@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.example.william.my.basic.basic_datastore.proto";
+option java_multiple_files = true;
+
+// 增量同步版本游标本地持久化模型（对齐 NiA NiaPreferences 中的 change list versions）
+message SyncPreferences {
+  int32 article_version = 1;
+}
