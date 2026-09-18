@@ -1,7 +1,7 @@
 
 @file:Suppress("ktlint:standard:value-parameter-comment")
 
-package com.example.william.my.module.database.objectbox
+package com.example.william.my.module.database.objectbox.data
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

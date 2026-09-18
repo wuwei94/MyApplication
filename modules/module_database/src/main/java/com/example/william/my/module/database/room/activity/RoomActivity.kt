@@ -1,13 +1,13 @@
-package com.example.william.my.module.database.activity
+package com.example.william.my.module.database.room.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.database.room.OAuth
-import com.example.william.my.module.database.room.OAuthDao
-import com.example.william.my.module.database.room.OAuthDataBase
+import com.example.william.my.module.database.room.data.OAuth
+import com.example.william.my.module.database.room.data.OAuthDao
+import com.example.william.my.module.database.room.data.OAuthDataBase
 import com.google.gson.Gson
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
