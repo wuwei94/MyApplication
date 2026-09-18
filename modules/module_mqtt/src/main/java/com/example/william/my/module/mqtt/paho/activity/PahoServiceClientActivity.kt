@@ -1,4 +1,4 @@
-package com.example.william.my.module.mqtt.activity
+package com.example.william.my.module.mqtt.paho.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

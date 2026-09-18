@@ -3,8 +3,8 @@
 
     <application>
         <activity android:name=".MqttMainActivity" />
-        <activity android:name=".activity.HiveMqClientActivity" />
-        <activity android:name=".activity.PahoServiceClientActivity" />
+        <activity android:name=".hivemq.activity.HiveMqClientActivity" />
+        <activity android:name=".paho.activity.PahoServiceClientActivity" />
     </application>
 
 </manifest>

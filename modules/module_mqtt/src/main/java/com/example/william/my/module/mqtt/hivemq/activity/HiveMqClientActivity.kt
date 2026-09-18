@@ -1,4 +1,4 @@
-package com.example.william.my.module.mqtt.activity
+package com.example.william.my.module.mqtt.hivemq.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
