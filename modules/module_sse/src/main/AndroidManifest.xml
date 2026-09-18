@@ -3,11 +3,11 @@
 
     <application>
         <activity android:name=".SseMainActivity" />
-        <activity android:name=".activity.okhttp.OkHttpSseClientActivity" />
-        <activity android:name=".activity.okhttp.OkHttpSseClientRxActivity" />
-        <activity android:name=".activity.okhttp.OkHttpSseClientFlowActivity" />
-        <activity android:name=".activity.ktor.KtorSseClientActivity" />
-        <activity android:name=".activity.ktor.KtorSseClientFlowActivity" />
+        <activity android:name=".okhttp.activity.OkHttpSseClientActivity" />
+        <activity android:name=".okhttp.activity.OkHttpSseClientRxActivity" />
+        <activity android:name=".okhttp.activity.OkHttpSseClientFlowActivity" />
+        <activity android:name=".ktor.activity.KtorSseClientActivity" />
+        <activity android:name=".ktor.activity.KtorSseClientFlowActivity" />
     </application>
 
 </manifest>
