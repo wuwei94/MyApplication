@@ -1,4 +1,4 @@
-package com.example.william.my.module.ml.tensor
+package com.example.william.my.module.ml.tensor.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
