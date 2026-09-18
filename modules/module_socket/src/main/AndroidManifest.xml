@@ -3,15 +3,15 @@
 
     <application>
         <activity android:name=".SocketMainActivity" />
-        <activity android:name=".activity.websocket.okhttp.OkHttpWebSocketClientActivity" />
-        <activity android:name=".activity.websocket.okhttp.OkHttpWebSocketClientRxActivity" />
-        <activity android:name=".activity.websocket.okhttp.OkHttpWebSocketClientFlowActivity" />
-        <activity android:name=".activity.websocket.java.JavaWebSocketClientActivity" />
-        <activity android:name=".activity.websocket.java.JavaWebSocketClientRxActivity" />
-        <activity android:name=".activity.websocket.java.JavaWebSocketClientFlowActivity" />
-        <activity android:name=".activity.tcpsocket.netty.NettyTcpSocketClientActivity" />
-        <activity android:name=".activity.tcpsocket.netty.NettyTcpSocketClientRxActivity" />
-        <activity android:name=".activity.tcpsocket.netty.NettyTcpSocketClientFlowActivity" />
+        <activity android:name=".websocket.okhttp.activity.OkHttpWebSocketClientActivity" />
+        <activity android:name=".websocket.okhttp.activity.OkHttpWebSocketClientRxActivity" />
+        <activity android:name=".websocket.okhttp.activity.OkHttpWebSocketClientFlowActivity" />
+        <activity android:name=".websocket.java.activity.JavaWebSocketClientActivity" />
+        <activity android:name=".websocket.java.activity.JavaWebSocketClientRxActivity" />
+        <activity android:name=".websocket.java.activity.JavaWebSocketClientFlowActivity" />
+        <activity android:name=".tcpsocket.netty.activity.NettyTcpSocketClientActivity" />
+        <activity android:name=".tcpsocket.netty.activity.NettyTcpSocketClientRxActivity" />
+        <activity android:name=".tcpsocket.netty.activity.NettyTcpSocketClientFlowActivity" />
     </application>
 
 </manifest>

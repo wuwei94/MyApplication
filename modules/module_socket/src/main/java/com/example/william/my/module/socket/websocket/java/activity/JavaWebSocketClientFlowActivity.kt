@@ -1,4 +1,4 @@
-package com.example.william.my.module.socket.activity.websocket.java
+package com.example.william.my.module.socket.websocket.java.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope

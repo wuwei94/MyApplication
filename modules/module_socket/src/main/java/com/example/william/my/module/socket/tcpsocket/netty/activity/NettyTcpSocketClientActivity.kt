@@ -1,4 +1,4 @@
-package com.example.william.my.module.socket.activity.tcpsocket.netty
+package com.example.william.my.module.socket.tcpsocket.netty.activity
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
