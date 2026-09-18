@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.rxretrofit.activity
+package com.example.william.my.module.http.rx_request.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

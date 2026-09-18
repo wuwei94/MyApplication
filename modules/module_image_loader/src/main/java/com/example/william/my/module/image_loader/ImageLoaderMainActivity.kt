@@ -16,7 +16,7 @@ class ImageLoaderMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems = ArrayList<RouterItem>()
         routerItems.add(RouterItem("Coil（Kotlin 协程图片库）", RouterPath.ImageLoader.Coil))
-        routerItems.add(RouterItem("Glide（成熟稳定 Google 推荐）", RouterPath.ImageLoader.Glide))
+        routerItems.add(RouterItem("Glide（生命周期绑定与变换链）", RouterPath.ImageLoader.Glide))
         routerItems.add(RouterItem("LibImageLoader（项目级统一封装 lib_image_loader）", RouterPath.ImageLoader.LibImageLoader))
         return routerItems
     }

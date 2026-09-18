@@ -25,13 +25,13 @@ class ChartMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems = arrayListOf<RouterItem>()
         routerItems.add(RouterItem("── 基础图表 ──", ""))
-        routerItems.add(RouterItem("LineChart（折线图 & 触摸 Tooltip）", RouterPath.Chart.MPLineChart))
-        routerItems.add(RouterItem("BarChart（柱状图 & 目标达成对比）", RouterPath.Chart.MPBarChart))
-        routerItems.add(RouterItem("PieChart（饼图/环形图 & 触控外扩）", RouterPath.Chart.MPPieChart))
-        routerItems.add(RouterItem("RadarChart（雷达图 & 能力评估模型）", RouterPath.Chart.MPRadarChart))
+        routerItems.add(RouterItem("MP LineChart（折线图 & 触摸 Tooltip）", RouterPath.Chart.MPLineChart))
+        routerItems.add(RouterItem("MP BarChart（柱状图 & 目标达成对比）", RouterPath.Chart.MPBarChart))
+        routerItems.add(RouterItem("MP PieChart（饼图/环形图 & 触控外扩）", RouterPath.Chart.MPPieChart))
+        routerItems.add(RouterItem("MP RadarChart（雷达图 & 能力评估模型）", RouterPath.Chart.MPRadarChart))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── 综合看板 ──", ""))
-        routerItems.add(RouterItem("ChartLinkage（多图表全景联动看板）", RouterPath.Chart.MPChartLinkage))
+        routerItems.add(RouterItem("MP ChartLinkage（多图表全景联动看板）", RouterPath.Chart.MPChartLinkage))
         return routerItems
     }
 }

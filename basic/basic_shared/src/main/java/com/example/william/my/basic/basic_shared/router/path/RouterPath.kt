@@ -89,7 +89,7 @@ object RouterPath {
         // 第三方动画库
         const val Pag = "$PATH/Pag"
         const val Lottie = "$PATH/Lottie"
-        const val SvgaPlayer = "$PATH/SvgaPlayer"
+        const val Svga = "$PATH/Svga"
     }
 
     // 图形与渲染特效（RenderEffect / RenderScript / 图像与图形着色计算）
@@ -533,7 +533,7 @@ object RouterPath {
         const val Main = "$PATH/Main"
 
         // ── 基础组件与混排 ──
-        const val ComposeViewActivity = "$PATH/ComposeViewActivity"
+        const val ComposeView = "$PATH/ComposeView"
         const val AndroidView = "$PATH/AndroidView"
         const val Text = "$PATH/Text"
         const val Button = "$PATH/Button"

@@ -23,8 +23,8 @@ import java.io.File
  * 官方参考：
  * https://github.com/svga/SVGAPlayer-Android
  */
-@Route(path = RouterPath.Anim.SvgaPlayer)
-class SvgaPlayerActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
+@Route(path = RouterPath.Anim.Svga)
+class SvgaActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
 
     override fun getViewBinding(): AnimActivitySvgaBinding = AnimActivitySvgaBinding.inflate(layoutInflater)
 

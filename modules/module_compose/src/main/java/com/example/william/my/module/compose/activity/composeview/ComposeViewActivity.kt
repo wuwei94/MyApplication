@@ -48,7 +48,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
-@Route(path = RouterPath.Compose.ComposeViewActivity)
+@Route(path = RouterPath.Compose.ComposeView)
 class ComposeViewActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

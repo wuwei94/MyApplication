@@ -203,7 +203,7 @@
 | TransitionSecondActivity | 视图过渡动画目标页 |
 | PagActivity | PAG 动画播放器 |
 | LottieActivity | Lottie 动画播放器 |
-| SvgaPlayerActivity | SVGA 动画播放器 |
+| SvgaActivity | SVGA 动画播放器（与 Pag / Lottie 平行） |
 
 ---
 

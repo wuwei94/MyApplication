@@ -57,7 +57,7 @@ class ComposeMainActivity : ComponentActivity() {
 
     private fun buildRouterItems() {
         routerItems.add(RouterItem("── 基础 UI 组件与互操作 ──", ""))
-        routerItems.add(RouterItem("ComposeView（View 宿主中嵌入 Compose：老工程/XML 渐进式接入）", RouterPath.Compose.ComposeViewActivity))
+        routerItems.add(RouterItem("ComposeView（View 宿主中嵌入 Compose：老工程/XML 渐进式接入）", RouterPath.Compose.ComposeView))
         routerItems.add(RouterItem("AndroidView（Compose 树中嵌入原生 View：老控件/地图/视频等互操作）", RouterPath.Compose.AndroidView))
         routerItems.add(RouterItem("Text（文本样式、段落排版与点击事件）", RouterPath.Compose.Text))
         routerItems.add(RouterItem("Button（交互按钮形态与点击防重）", RouterPath.Compose.Button))

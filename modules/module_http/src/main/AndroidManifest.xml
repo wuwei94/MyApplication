@@ -12,9 +12,9 @@
         <activity android:name=".retrofit.activity.RetrofitCoroutineDslActivity" />
         <activity android:name=".retrofit.activity.RetrofitRxActivity" />
         <activity android:name=".retrofit.activity.RetrofitRxDslActivity" />
-        <activity android:name=".rxretrofit.activity.RxRequestActivity" />
-        <activity android:name=".rxretrofit.activity.RxDownloadActivity" />
-        <activity android:name=".rxretrofit.activity.RxUploadActivity" />
+        <activity android:name=".rx_request.activity.RxRequestActivity" />
+        <activity android:name=".rx_request.activity.RxDownloadActivity" />
+        <activity android:name=".rx_request.activity.RxUploadActivity" />
         <activity android:name=".ktor.activity.KtorActivity" />
         <activity android:name=".ktor.activity.KtorClientActivity" />
     </application>

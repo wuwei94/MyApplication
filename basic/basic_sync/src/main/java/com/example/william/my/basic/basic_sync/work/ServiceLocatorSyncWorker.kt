@@ -27,6 +27,9 @@ import java.util.concurrent.TimeUnit
  * 2. 【高阶同步契约】：自身实现 [Synchronizer]，代理游标读取与原子更新；
  * 3. 【确定性调度】：WorkManager 编排，有网约束，失败 [Result.retry] 指数退避；
  * 4. 【业务同构】：`doWork` 与 Hilt 路径相同，差异仅在依赖获取方式。
+ *
+ * 官方参考：
+ * https://developer.android.google.cn/topic/libraries/architecture/workmanager
  */
 class ServiceLocatorSyncWorker(
     appContext: Context,

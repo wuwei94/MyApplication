@@ -10,7 +10,7 @@
         <activity android:name=".activity.TransitionSecondActivity" />
         <activity android:name=".activity.PagActivity" />
         <activity android:name=".activity.LottieActivity" />
-        <activity android:name=".activity.SvgaPlayerActivity" />
+        <activity android:name=".activity.SvgaActivity" />
     </application>
 
 </manifest>
