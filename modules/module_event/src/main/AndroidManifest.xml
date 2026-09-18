@@ -3,10 +3,10 @@
 
     <application>
         <activity android:name=".EventMainActivity" />
-        <activity android:name=".activity.EventBusActivity" />
-        <activity android:name=".activity.RxEventBusActivity" />
-        <activity android:name=".activity.LiveEventBusActivity" />
-        <activity android:name=".activity.FlowEventBusActivity" />
+        <activity android:name=".eventbus.activity.EventBusActivity" />
+        <activity android:name=".rxeventbus.activity.RxEventBusActivity" />
+        <activity android:name=".liveeventbus.activity.LiveEventBusActivity" />
+        <activity android:name=".floweventbus.activity.FlowEventBusActivity" />
     </application>
 
 </manifest>

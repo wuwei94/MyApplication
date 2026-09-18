@@ -1,4 +1,4 @@
-package com.example.william.my.module.event.activity
+package com.example.william.my.module.event.floweventbus.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
