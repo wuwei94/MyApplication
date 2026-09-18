@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.codec.encoder
+package com.example.william.my.module.gpuimage.codec.data.encoder
 
 import android.media.MediaCodec
 import android.media.MediaCodecInfo

@@ -10,13 +10,13 @@
 
     <application>
         <activity android:name=".GpuImageMainActivity" />
-        <activity android:name=".filter.GpuImageFilterActivity" />
-        <activity android:name=".adjust.GpuImageAdjustActivity" />
-        <activity android:name=".group.GpuImageGroupActivity" />
-        <activity android:name=".camera.GpuImageCameraFilterActivity" />
-        <activity android:name=".photo.GpuImagePhotoActivity" />
-        <activity android:name=".effect.GpuImageCameraEffectActivity" />
-        <activity android:name=".codec.GpuImageCodecRecordActivity" />
+        <activity android:name=".filter.activity.GpuImageFilterActivity" />
+        <activity android:name=".adjust.activity.GpuImageAdjustActivity" />
+        <activity android:name=".group.activity.GpuImageGroupActivity" />
+        <activity android:name=".camera.activity.GpuImageCameraFilterActivity" />
+        <activity android:name=".photo.activity.GpuImagePhotoActivity" />
+        <activity android:name=".effect.activity.GpuImageCameraEffectActivity" />
+        <activity android:name=".codec.activity.GpuImageCodecRecordActivity" />
     </application>
 
 </manifest>

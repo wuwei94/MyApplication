@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.filter
+package com.example.william.my.module.gpuimage.filter.activity
 
 import android.graphics.Bitmap
 import android.net.Uri

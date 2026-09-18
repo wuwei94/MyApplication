@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.photo
+package com.example.william.my.module.gpuimage.photo.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -16,6 +16,7 @@ import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.gpuimage.databinding.GpuimageActivityPhotoBinding
 import com.example.william.my.module.gpuimage.helper.GpuImageChipHelper
 import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
+import com.example.william.my.module.gpuimage.photo.data.GpuImagePhotoHelper
 
 /**
  * GPUImage — 滤镜拍照（全分辨率离屏渲染）

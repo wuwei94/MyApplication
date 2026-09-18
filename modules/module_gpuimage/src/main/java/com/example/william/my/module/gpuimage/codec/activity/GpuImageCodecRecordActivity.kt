@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.effect
+package com.example.william.my.module.gpuimage.codec.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -19,46 +19,39 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.gpuimage.R
-import com.example.william.my.module.gpuimage.databinding.GpuimageActivityCameraEffectBinding
+import com.example.william.my.module.gpuimage.codec.data.GpuImageCodecRecordHelper
+import com.example.william.my.module.gpuimage.databinding.GpuimageActivityCodecRecordBinding
 import com.example.william.my.module.gpuimage.helper.GpuImageChipHelper
+import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
 import java.io.File
 
 /**
- * GPUImage — CameraX CameraEffect 特效滤镜录像
+ * GPUImage — EGL 共享上下文 + MediaCodec 硬编滤镜录像
  *
- * 使用 CameraX 1.3+ 官方 CameraEffect API，将 OpenGL 滤镜挂载在相机硬件输出流
- * 与 PreviewView / VideoCapture 之间，实现 GPU 纹理级零拷贝实时着色与录像。
+ * 经典 OpenGL 滤镜录像方案：GL 线程捕获当前 EGLContext，创建指向 MediaCodec
+ * InputSurface 的 EGLWindowSurface，在绘制屏幕帧的同时重放绘制到编码器，
+ * 配合 AudioRecord 采样与 MediaMuxer 混流封装为 MP4。与 CameraEffect 方案
+ * 相比，本方案完全掌控 EGL 上下文与编码管线。
  *
  * 核心机制与避坑点：
- * 1. CameraEffect 挂载：SurfaceProcessor 拦截相机输出纹理，GPUImage 逐帧着色
- * 2. 零拷贝渲染：滤镜直接作用于 OES 纹理，无 CPU 侧像素拷贝
- * 3. 高质量录像：CameraX VideoCapture + Recorder 自动采集音频、H.264 硬编码与混流
+ * 1. EGL 共享上下文：从 GLSurfaceView 的 EGLContext 派生编码器 Surface 的上下文
+ * 2. 双路渲染：同一帧先绘制到屏幕 GLSurfaceView，再重放到 MediaCodec InputSurface
+ * 3. 硬编码混流：MediaCodec H.264 硬编 + AudioRecord 采样 + MediaMuxer 封装 MP4
  * 4. 录像回放：内嵌卡片式浮层，MediaPlayer + TextureView 无缝重放 MP4
  *
- * https://developer.android.com/media/camera/camerax
  * https://github.com/cats-oss/android-gpuimage
  */
-@Route(path = RouterPath.GpuImage.CameraEffect)
-class GpuImageCameraEffectActivity :
-    BaseVBActivity<GpuimageActivityCameraEffectBinding>(),
+@Route(path = RouterPath.GpuImage.CodecRecord)
+class GpuImageCodecRecordActivity :
+    BaseVBActivity<GpuimageActivityCodecRecordBinding>(),
     View.OnClickListener {
 
-    private val cameraEffectHelper by lazy {
-        GpuImageCameraEffectHelper(this, binding.previewView)
+    private val codecRecordHelper by lazy {
+        GpuImageCodecRecordHelper(this, binding.glSurfaceView)
     }
 
     private var mediaPlayer: MediaPlayer? = null
     private var currentVideoFile: File? = null
-
-    private val filterSpecs = listOf(
-        "原图" to GpuImageSurfaceProcessor.FILTER_NONE,
-        "黑白" to GpuImageSurfaceProcessor.FILTER_GRAYSCALE,
-        "复古" to GpuImageSurfaceProcessor.FILTER_SEPIA,
-        "反色" to GpuImageSurfaceProcessor.FILTER_INVERT,
-        "暖色" to GpuImageSurfaceProcessor.FILTER_WARM,
-        "冷色" to GpuImageSurfaceProcessor.FILTER_COOL,
-        "高对比" to GpuImageSurfaceProcessor.FILTER_CONTRAST,
-    )
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions(),
@@ -66,7 +59,7 @@ class GpuImageCameraEffectActivity :
         val cameraGranted = permissions[Manifest.permission.CAMERA] ?: false
         val audioGranted = permissions[Manifest.permission.RECORD_AUDIO] ?: false
         if (cameraGranted) {
-            cameraEffectHelper.setupCamera()
+            startCamera()
         } else {
             Utils.toast("未授予相机权限，无法使用滤镜录像")
         }
@@ -75,19 +68,19 @@ class GpuImageCameraEffectActivity :
         }
     }
 
-    override fun getViewBinding(): GpuimageActivityCameraEffectBinding = GpuimageActivityCameraEffectBinding.inflate(layoutInflater)
+    override fun getViewBinding(): GpuimageActivityCodecRecordBinding = GpuimageActivityCodecRecordBinding.inflate(layoutInflater)
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
         GpuImageChipHelper.populate(
             container = binding.chipContainer,
-            names = filterSpecs.map { it.first },
+            names = GpuImageFilterCatalog.FILTERS.map { it.name },
             initialIndex = 0,
         ) { index ->
-            val spec = filterSpecs[index]
-            cameraEffectHelper.setFilterType(spec.second)
-            binding.tvCurrentFilter.text = spec.first
+            val spec = GpuImageFilterCatalog.FILTERS[index]
+            codecRecordHelper.setFilter(spec.factory)
+            binding.tvCurrentFilter.text = spec.name
         }
 
         binding.btnRecord.setOnClickListener(this)
@@ -133,14 +126,14 @@ class GpuImageCameraEffectActivity :
     override fun onClick(v: View?) {
         when (v) {
             binding.btnRecord -> {
-                if (cameraEffectHelper.isRecording()) {
+                if (codecRecordHelper.isRecording()) {
                     updateRecordButton(false)
-                    Utils.toast("正在停止录像并处理视频...")
-                    cameraEffectHelper.stopRecording()
+                    Utils.toast("正在停止录像并处理 MP4...")
+                    codecRecordHelper.stopRecording()
                 } else {
                     updateRecordButton(true)
-                    Utils.toast("开始录制带滤镜视频...")
-                    cameraEffectHelper.startRecording { videoFile ->
+                    Utils.toast("启动 EGL + MediaCodec 硬编录制...")
+                    codecRecordHelper.startRecording { videoFile ->
                         updateRecordButton(false)
                         showVideoPreview(videoFile)
                     }
@@ -168,13 +161,28 @@ class GpuImageCameraEffectActivity :
         val hasAudio = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
 
         if (hasCamera) {
-            cameraEffectHelper.setupCamera()
+            startCamera()
         }
         if (!hasCamera || !hasAudio) {
             permissionLauncher.launch(
                 arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO),
             )
         }
+    }
+
+    private fun startCamera() {
+        codecRecordHelper.setup()
+        codecRecordHelper.start()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        codecRecordHelper.onResume()
+    }
+
+    override fun onPause() {
+        codecRecordHelper.onPause()
+        super.onPause()
     }
 
     private fun showVideoPreview(videoFile: File) {
@@ -200,14 +208,14 @@ class GpuImageCameraEffectActivity :
                     mp.start()
                 }
                 setOnErrorListener { _, what, extra ->
-                    Utils.logcat("CameraEffectActivity", "MediaPlayer error: what=$what extra=$extra")
+                    Utils.logcat("CodecRecordActivity", "MediaPlayer error: what=$what extra=$extra")
                     Utils.toast("视频回放失败")
                     true
                 }
                 prepareAsync()
             }
         } catch (e: Exception) {
-            Utils.logcat("CameraEffectActivity", "startTexturePlayer error: ${e.message}")
+            Utils.logcat("CodecRecordActivity", "startTexturePlayer error: ${e.message}")
         }
     }
 
@@ -239,7 +247,7 @@ class GpuImageCameraEffectActivity :
                     retriever.release()
                 }
             } catch (e: Exception) {
-                Utils.logcat("CameraEffectActivity", "metadata error: ${e.message}")
+                Utils.logcat("CodecRecordActivity", "metadata error: ${e.message}")
             }
 
             if (videoWidth <= 0 || videoHeight <= 0) {
@@ -276,7 +284,7 @@ class GpuImageCameraEffectActivity :
                 it.release()
             }
         } catch (e: Exception) {
-            Utils.logcat("CameraEffectActivity", "stopTexturePlayer error: ${e.message}")
+            Utils.logcat("CodecRecordActivity", "stopTexturePlayer error: ${e.message}")
         } finally {
             mediaPlayer = null
         }
@@ -293,7 +301,7 @@ class GpuImageCameraEffectActivity :
 
     override fun onDestroy() {
         closePreview()
-        cameraEffectHelper.release()
+        codecRecordHelper.release()
         super.onDestroy()
     }
 }
