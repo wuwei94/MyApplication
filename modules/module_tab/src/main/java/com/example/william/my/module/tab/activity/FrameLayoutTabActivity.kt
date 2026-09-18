@@ -1,4 +1,4 @@
-package com.example.william.my.module.tab.viewpagertab.activity
+package com.example.william.my.module.tab.activity
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,33 +8,33 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
-import com.example.william.my.module.tab.databinding.TabActivityViewPagerTabBinding
+import com.example.william.my.module.tab.databinding.TabActivityFrameLayoutTabBinding
+import com.example.william.my.module.tab.utils.FragmentUtils
 
 /**
- * ViewPager + Tab — ViewPager 实现 Tab 切换
+ * FrameLayoutTab — RadioGroup + FrameLayout 实现 Tab 切换
  *
- * 使用 ViewPager + RadioGroup 实现 Tab 切换，支持 Fragment 页面切换。
+ * 使用 RadioGroup + RadioButton + FrameLayout 实现 Tab 切换，适合简单场景。
  *
  * 核心机制与避坑点：
- * 1. ViewPager 联动：Tab 和 ViewPager 联动切换
- * 2. Fragment 支持：支持 Fragment 切换
+ * 1. 简单实现：使用 RadioGroup 实现 Tab 切换
+ * 2. Fragment 切换：支持 Fragment 切换
  * 3. 自定义样式：支持自定义 Tab 样式
- * 4. 图标支持：支持图标和文字组合
+ * 4. 选中状态：支持选中/未选中状态切换
  *
- * https://developer.android.com/reference/androidx/viewpager/widget/ViewPager
+ * https://developer.android.com/reference/android/widget/RadioGroup
  */
-@Route(path = RouterPath.Tab.ViewPagerTab)
-class ViewPagerTabActivity :
-    BaseVBActivity<TabActivityViewPagerTabBinding>(),
+@Route(path = RouterPath.Tab.FrameLayoutTab)
+class FrameLayoutTabActivity :
+    BaseVBActivity<TabActivityFrameLayoutTabBinding>(),
     RadioGroup.OnCheckedChangeListener {
 
-    override fun getViewBinding(): TabActivityViewPagerTabBinding = TabActivityViewPagerTabBinding.inflate(layoutInflater)
+    override fun getViewBinding(): TabActivityFrameLayoutTabBinding = TabActivityFrameLayoutTabBinding.inflate(layoutInflater)
 
     private val titles: ArrayList<String> by lazy {
         arrayListOf(
@@ -64,15 +64,20 @@ class ViewPagerTabActivity :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        initFragment()
+        initFragment(savedInstanceState)
         initTab()
         switchTab(0)
+        switchFragment(0)
     }
 
-    private fun initFragment() {
-        binding.viewPager.offscreenPageLimit = 4
-        binding.viewPager.adapter =
-            ViewPagerFragmentAdapter(supportFragmentManager, fragments)
+    private fun initFragment(savedInstanceState: Bundle?) {
+        FragmentUtils.initFragment(
+            savedInstanceState,
+            supportFragmentManager,
+            R.id.frameLayout,
+            fragments,
+            titles,
+        )
     }
 
     private fun initTab() {
@@ -115,6 +120,6 @@ class ViewPagerTabActivity :
     }
 
     private fun switchFragment(position: Int) {
-        binding.viewPager.currentItem = position
+        FragmentUtils.switchFragment(supportFragmentManager, fragments, position)
     }
 }

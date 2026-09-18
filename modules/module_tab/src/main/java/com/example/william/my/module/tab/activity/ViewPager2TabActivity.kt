@@ -1,4 +1,4 @@
-package com.example.william.my.module.tab.viewpager2tab.activity
+package com.example.william.my.module.tab.activity
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -24,7 +24,7 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBin
  *
  * 核心机制与避坑点：
  * 1. ViewPager2 联动：Tab 和 ViewPager2 联动切换
- * 2. Fragment 支持：支持 Fragment 切换
+ * 2. Fragment 支持：支持 Fragment 页面切换
  * 3. 禁用滑动：支持禁用用户手动滑动
  * 4. 页面同步：支持页面变化同步到 Tab
  *
