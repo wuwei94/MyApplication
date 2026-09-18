@@ -23,7 +23,7 @@ import kotlin.math.hypot
  * https://kotlinlang.org/docs/type-safe-builders.html
  */
 @Route(path = RouterPath.Kotlin.Syntax)
-class MySyntaxActivity : BasicResponseActivity() {
+class SyntaxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

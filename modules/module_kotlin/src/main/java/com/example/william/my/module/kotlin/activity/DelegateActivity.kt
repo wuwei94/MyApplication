@@ -23,7 +23,7 @@ import kotlin.reflect.KProperty
  * https://kotlinlang.org/docs/delegation.html
  */
 @Route(path = RouterPath.Kotlin.Delegate)
-class MyDelegateActivity : BasicResponseActivity() {
+class DelegateActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

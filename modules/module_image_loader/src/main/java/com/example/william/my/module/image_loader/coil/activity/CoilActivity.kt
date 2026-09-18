@@ -33,10 +33,11 @@ class CoilActivity : BasicImageActivity() {
 
     override fun buildList(): ArrayList<String> = arrayListOf(
         "1. 加载基础图片 (Url_Image1)",
-        "2. 切换第二张图片 (Url_Image2)",
+        "2. 加载第二张图片 (Url_Image2)",
         "3. 启用淡入过渡动画 (crossfade)",
         "4. 配置占位图与错误图 (placeholder / error)",
         "5. 加载异常链接触发 error 回退",
+        "6. 清除当前图片 (load null)",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -47,6 +48,7 @@ class CoilActivity : BasicImageActivity() {
             2 -> loadWithCrossfade()
             3 -> loadWithPlaceholder()
             4 -> loadError()
+            5 -> clearImage()
         }
     }
 
@@ -77,5 +79,9 @@ class CoilActivity : BasicImageActivity() {
             placeholder(R.drawable.shared_ic_launcher)
             error(R.drawable.shared_ic_launcher)
         }
+    }
+
+    private fun clearImage() {
+        binding.basicsImage.setImageDrawable(null)
     }
 }

@@ -84,6 +84,8 @@ androidx.fragment:fragment:1.8.9
 androidx.graphics:graphics-path:1.0.1
 androidx.graphics:graphics-shapes-android:1.0.1
 androidx.graphics:graphics-shapes:1.0.1
+androidx.hilt:hilt-common:1.2.0
+androidx.hilt:hilt-work:1.2.0
 androidx.interpolator:interpolator:1.0.0
 androidx.legacy:legacy-support-core-ui:1.0.0
 androidx.legacy:legacy-support-core-utils:1.0.0

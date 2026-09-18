@@ -22,12 +22,12 @@ class SystemServiceMainActivity : RouterRecyclerActivity() {
 
         // 权限
         routerItems.add(RouterItem("── 权限 ──", ""))
-        routerItems.add(RouterItem("Permission（运行时权限 Jetpack 契约）", RouterPath.SystemService.Permission))
+        routerItems.add(RouterItem("JetpackPermission（运行时权限 Jetpack 契约）", RouterPath.SystemService.JetpackPermission))
         routerItems.add(RouterItem("PermissionX（运行时权限 链式开源库）", RouterPath.SystemService.PermissionX))
 
         // 悬浮窗
         routerItems.add(RouterItem("── 悬浮窗 ──", ""))
-        routerItems.add(RouterItem("FloatWindow（系统级悬浮窗 原生实现）", RouterPath.SystemService.FloatWindow))
+        routerItems.add(RouterItem("NativeFloatWindow（系统级悬浮窗 原生实现）", RouterPath.SystemService.NativeFloatWindow))
         routerItems.add(RouterItem("EasyFloat（应用内悬浮窗 第三方开源库）", RouterPath.SystemService.EasyFloat))
 
         return routerItems

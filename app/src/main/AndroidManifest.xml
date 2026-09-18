@@ -42,6 +42,11 @@
             <meta-data
                 android:name="com.example.william.my.application.initializer.StartupInitializer"
                 android:value="androidx.startup" />
+            <!-- WorkManager 由 AppHilt（Configuration.Provider + SyncWorkerFactory）装配 -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
         </provider>
     </application>
 

@@ -7,9 +7,9 @@
     <application>
         <activity android:name=".SystemServiceMainActivity" />
         <activity android:name=".activity.notification.NotificationActivity" />
-        <activity android:name=".activity.permission.PermissionActivity" />
+        <activity android:name=".activity.permission.JetpackPermissionActivity" />
         <activity android:name=".activity.permission.PermissionXActivity" />
-        <activity android:name=".activity.floatwindow.FloatWindowActivity" />
+        <activity android:name=".activity.floatwindow.NativeFloatWindowActivity" />
         <activity android:name=".activity.floatwindow.EasyFloatActivity" />
     </application>
 

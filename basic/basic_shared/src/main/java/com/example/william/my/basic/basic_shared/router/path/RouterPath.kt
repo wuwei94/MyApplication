@@ -164,7 +164,7 @@ object RouterPath {
 
         const val Coil = "$PATH/Coil"
         const val Glide = "$PATH/Glide"
-        const val ImageLoader = "$PATH/ImageLoader"
+        const val LibImageLoader = "$PATH/LibImageLoader"
     }
 
     // GPU 图像滤镜处理
@@ -202,6 +202,7 @@ object RouterPath {
 
         const val JobScheduler = "$PATH/JobScheduler"
         const val WorkManager = "$PATH/WorkManager"
+        const val SyncWorkerParallel = "$PATH/SyncWorkerParallel"
     }
 
     // 组件交互
@@ -236,11 +237,11 @@ object RouterPath {
         const val Notification = "$PATH/Notification"
 
         // 权限
-        const val Permission = "$PATH/Permission"
+        const val JetpackPermission = "$PATH/JetpackPermission"
         const val PermissionX = "$PATH/PermissionX"
 
         // 悬浮窗
-        const val FloatWindow = "$PATH/FloatWindow"
+        const val NativeFloatWindow = "$PATH/NativeFloatWindow"
         const val EasyFloat = "$PATH/EasyFloat"
     }
 
@@ -271,7 +272,7 @@ object RouterPath {
 
         // 启动与初始化优化
         const val ContentProvider = "$PATH/ContentProvider"
-        const val Startup = "$PATH/Startup"
+        const val AppStartup = "$PATH/AppStartup"
         const val AnchorTask = "$PATH/AnchorTask"
         const val BaselineProfiles = "$PATH/BaselineProfiles"
         const val IdleHandler = "$PATH/IdleHandler"

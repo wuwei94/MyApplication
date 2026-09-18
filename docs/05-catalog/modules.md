@@ -230,7 +230,7 @@
 | ImageLoaderMainActivity | 模块入口，导航到各个图片加载器示例页面 |
 | CoilActivity | Coil 3 原生加载（基础 / crossfade / placeholder / error） |
 | GlideActivity | Glide 4 原生加载（circleCrop / RoundedCorners / centerCrop / crossFade） |
-| ImageLoaderActivity | `lib_image_loader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
+| LibImageLoaderActivity | `lib_image_loader` 统一封装（IImageLoader 接口 + Coil / Glide 内核无感切换） |
 
 ---
 
@@ -431,9 +431,9 @@
 |----------|------|
 | SystemServiceMainActivity | 模块入口，导航到通知、权限与悬浮窗示例页面 |
 | NotificationActivity | NotificationChannel 通知渠道创建与通知发送 |
-| PermissionActivity | 运行时权限申请（Jetpack ActivityResult 契约模式） |
+| JetpackPermissionActivity | 运行时权限申请（Jetpack ActivityResult 契约模式） |
 | PermissionXActivity | 运行时权限申请（PermissionX 链式开源库模式） |
-| FloatWindowActivity | 系统级悬浮窗（WindowManager + TYPE_APPLICATION_OVERLAY + 拖拽 + 贴边吸附动画） |
+| NativeFloatWindowActivity | 系统级悬浮窗（WindowManager + TYPE_APPLICATION_OVERLAY + 拖拽 + 贴边吸附动画） |
 | EasyFloatActivity | 应用内悬浮窗（EasyFloat 第三方开源库，免权限） |
 
 ---
@@ -451,13 +451,14 @@
 
 ### module_scheduler（后台任务调度）
 
-演示 Android 后台任务调度，聚焦「任务调度」主题：系统原生 JobScheduler 与 Jetpack WorkManager。
+演示 Android 后台任务调度，聚焦「任务调度」主题：系统原生 JobScheduler、Jetpack WorkManager，以及 Sync Worker 依赖装配平行对（ServiceLocator vs Hilt `@HiltWorker`）。
 
 | Activity | 功能 |
 |----------|------|
-| SchedulerMainActivity | 模块入口，导航到 JobScheduler、WorkManager 示例页面 |
+| SchedulerMainActivity | 模块入口，导航到 JobScheduler、WorkManager、Sync Worker 装配平行对示例页面 |
 | JobSchedulerActivity | JobScheduler 定时任务调度 |
 | WorkManagerActivity | WorkManager 现代化可靠后台任务调度与加急前台服务 |
+| SyncWorkerParallelActivity | Sync Worker 装配平行对：`ServiceLocatorSyncWorker`（ServiceLocator 查单例）与 `HiltSyncWorker`（`@HiltWorker` 构造注入）入队与状态查询 |
 
 ---
 
@@ -499,7 +500,7 @@
 | MviActivity | MVI 架构模式（StateFlow + ArticleIntent + ArticleUiEffect + ArticleFlowUseCase） |
 | ComposeMviActivity | Compose MVI 架构模式（Jetpack Compose + StateFlow + SmartRefresh Compose + ArticleFlowUseCase） |
 | MavericksActivity | Mavericks 架构模式（Airbnb MVI，MavericksState + MavericksViewModel + MavericksRepository） |
-| OfflineFirstActivity | Offline-First 离线优先与 SSOT 单一数据源架构模式（Room Flow + NetworkMonitor 响应式网络监听/离线横幅/在线自愈 + Synchronizer / SyncWorker 增量游标幂等拉取） |
+| OfflineFirstActivity | Offline-First 离线优先与 SSOT 单一数据源架构模式（Room Flow + NetworkMonitor 响应式网络监听/离线横幅/在线自愈 + Synchronizer / ServiceLocatorSyncWorker 增量游标幂等拉取） |
 
 ---
 
@@ -549,7 +550,7 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 |----------|------|
 | PerformanceMainActivity | 模块入口，导航到启动优化、布局解析与列表复用等性能优化页面 |
 | ContentProviderActivity | ContentProvider 自动初始化机制（利用 onCreate 优先时序自动捕获 Context、跨组件数据共享与多 Provider 冷启动弊端分析） |
-| StartupActivity | Jetpack App Startup 初始化组件（单个 InitializationProvider 聚合托管、DAG 依赖拓扑排序、手动按需延迟加载与多 Provider 耗时分析） |
+| AppStartupActivity | Jetpack App Startup 初始化组件（单个 InitializationProvider 聚合托管、DAG 依赖拓扑排序、手动按需延迟加载与多 Provider 耗时分析） |
 | AnchorTaskActivity | AnchorTask 启动任务编排调度（多线程并发 DAG 依赖流转、主/子线程池分派与 CountDownLatch 锚点阻塞卡点机制） |
 | BaselineProfilesActivity | Jetpack Baseline Profiles 基线配置文件（ART 运行时 AOT 预编译提速、ProfileInstaller 本地诊断写入、CUJ 关键路径规则与 ADB 测试指令） |
 | IdleHandlerActivity | IdleHandler 主线程空闲调度（单次/持续监听与延迟初始化） |
@@ -573,9 +574,9 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 | FlowActivity | Kotlin Flow 数据流（冷流收集、数据变换、zip/combine 双流组合、debounce/flatMapLatest 防抖搜索、StateFlow/SharedFlow 热流与 catch/retry 重试） |
 | ChannelActivity | Kotlin Channel 与回调桥接（4 种缓冲模式、produce 生产消费模型、callbackFlow 回调防漏桥接与 channelFlow 跨协程并发发射） |
 | ConcurrencyActivity | Kotlin 协程高阶并发控制（Mutex 非阻塞互斥锁、Semaphore 信号量限流、select 竞速多路复用与 NonCancellable 清理保障） |
-| MyDelegateActivity | Kotlin 委托机制（类委托、自定义 ReadWriteProperty、by lazy、observable、vetoable、by map、属性重定向与 notNull） |
-| MyInlineActivity | Kotlin 内联函数（作用域函数 with/let/run/also/apply、reified 泛型实化、自定义扩展、noinline 与 crossinline） |
-| MySyntaxActivity | Kotlin 现代语法与 DSL（操作符重载 +/*/[ ]/in/invoke、中缀函数 infix fun、解构声明、密封接口 Sealed Interface 穷举与类型安全 DSL 构建器） |
+| DelegateActivity | Kotlin 委托机制（类委托、自定义 ReadWriteProperty、by lazy、observable、vetoable、by map、属性重定向与 notNull） |
+| InlineActivity | Kotlin 内联函数（作用域函数 with/let/run/also/apply、reified 泛型实化、自定义扩展、noinline 与 crossinline） |
+| SyntaxActivity | Kotlin 现代语法与 DSL（操作符重载 +/*/[ ]/in/invoke、中缀函数 infix fun、解构声明、密封接口 Sealed Interface 穷举与类型安全 DSL 构建器） |
 
 ---
 

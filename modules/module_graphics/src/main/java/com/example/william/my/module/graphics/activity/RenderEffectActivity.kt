@@ -52,8 +52,8 @@ class RenderEffectActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "View.setRenderEffect（推荐）",
-        "HardwareRenderer 离屏渲染",
+        "1. 应用 View.setRenderEffect 高斯模糊（推荐）",
+        "2. 应用 HardwareRenderer 离屏渲染模糊",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

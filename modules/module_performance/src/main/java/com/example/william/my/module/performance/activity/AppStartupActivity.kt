@@ -25,8 +25,8 @@ import com.example.william.my.module.performance.startup.SecuritySdkInitializer
  *
  * https://developer.android.com/topic/libraries/app-startup
  */
-@Route(path = RouterPath.Performance.Startup)
-class StartupActivity : BasicResponseActivity() {
+@Route(path = RouterPath.Performance.AppStartup)
+class AppStartupActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

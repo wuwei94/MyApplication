@@ -20,7 +20,7 @@ import com.google.gson.Gson
  * https://kotlinlang.org/docs/inline-functions.html
  */
 @Route(path = RouterPath.Kotlin.Inline)
-class MyInlineActivity : BasicResponseActivity() {
+class InlineActivity : BasicResponseActivity() {
 
     /**
      * 用户数据

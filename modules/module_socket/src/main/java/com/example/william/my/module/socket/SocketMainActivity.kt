@@ -18,19 +18,19 @@ class SocketMainActivity : RouterRecyclerActivity() {
     override fun buildRouter(): ArrayList<RouterItem> {
         val routerItems = arrayListOf<RouterItem>()
         routerItems.add(RouterItem("── OkHttp WebSocket ──", ""))
-        routerItems.add(RouterItem("OkHttp WebSocket", RouterPath.Socket.OkHttpWebSocketClient))
-        routerItems.add(RouterItem("OkHttp WebSocket (RxJava 封装)", RouterPath.Socket.OkHttpWebSocketClientRx))
-        routerItems.add(RouterItem("OkHttp WebSocket (Flow 封装)", RouterPath.Socket.OkHttpWebSocketClientFlow))
+        routerItems.add(RouterItem("OkHttp WebSocket（Listener 回调）", RouterPath.Socket.OkHttpWebSocketClient))
+        routerItems.add(RouterItem("OkHttp WebSocket（RxJava 封装）", RouterPath.Socket.OkHttpWebSocketClientRx))
+        routerItems.add(RouterItem("OkHttp WebSocket（Flow 封装）", RouterPath.Socket.OkHttpWebSocketClientFlow))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── Java-WebSocket ──", ""))
-        routerItems.add(RouterItem("Java-WebSocket", RouterPath.Socket.JavaWebSocketClient))
-        routerItems.add(RouterItem("Java-WebSocket (RxJava 封装)", RouterPath.Socket.JavaWebSocketClientRx))
-        routerItems.add(RouterItem("Java-WebSocket (Flow 封装)", RouterPath.Socket.JavaWebSocketClientFlow))
+        routerItems.add(RouterItem("Java-WebSocket（Listener 回调）", RouterPath.Socket.JavaWebSocketClient))
+        routerItems.add(RouterItem("Java-WebSocket（RxJava 封装）", RouterPath.Socket.JavaWebSocketClientRx))
+        routerItems.add(RouterItem("Java-WebSocket（Flow 封装）", RouterPath.Socket.JavaWebSocketClientFlow))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── Netty TCP Socket ──", ""))
-        routerItems.add(RouterItem("Netty TCP Socket", RouterPath.Socket.NettyTcpSocketClient))
-        routerItems.add(RouterItem("Netty TCP Socket (RxJava 封装)", RouterPath.Socket.NettyTcpSocketClientRx))
-        routerItems.add(RouterItem("Netty TCP Socket (Flow 封装)", RouterPath.Socket.NettyTcpSocketClientFlow))
+        routerItems.add(RouterItem("Netty TCP Socket（Listener 回调）", RouterPath.Socket.NettyTcpSocketClient))
+        routerItems.add(RouterItem("Netty TCP Socket（RxJava 封装）", RouterPath.Socket.NettyTcpSocketClientRx))
+        routerItems.add(RouterItem("Netty TCP Socket（Flow 封装）", RouterPath.Socket.NettyTcpSocketClientFlow))
         return routerItems
     }
 }

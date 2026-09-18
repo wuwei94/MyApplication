@@ -54,7 +54,7 @@ class RenderScriptActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "RenderScript 高斯模糊（已废弃）",
+        "1. 应用 RenderScript 高斯模糊（已废弃 API 教材）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

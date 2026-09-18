@@ -12,6 +12,7 @@ android {
 dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
+    implementation(projects.basic.basicSync)
 
     implementation(libs.androidx.workmanager.ktx)
 }

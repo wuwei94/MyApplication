@@ -40,7 +40,7 @@ class NotificationActivity : BasicResponseActivity() {
         showDescription("NotificationChannel 通知渠道\n\n点击下方按钮发送通知")
     }
 
-    override fun buildList(): ArrayList<String> = arrayListOf("发送通知")
+    override fun buildList(): ArrayList<String> = arrayListOf("1. 发送通知")
 
     override fun onRecyclerClick(position: Int, string: String) {
         sendNotification()

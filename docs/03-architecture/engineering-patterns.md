@@ -51,7 +51,7 @@ interface NetworkMonitor {
 
 ---
 
-## 3. 声明式后台增量数据同步（`Synchronizer` + `SyncWorker`） 【已落地】
+## 3. 声明式后台增量数据同步（`Synchronizer` + Sync Worker 平行对） 【已落地】
 
 针对后台数据同步，抽取高阶同步契约（在 [`basic/basic_sync`](../../basic/basic_sync) 落地）：
 ```kotlin
@@ -61,7 +61,7 @@ interface Synchronizer {
     suspend fun Syncable.sync(): Boolean = syncWith(this@Synchronizer)
 }
 ```
-* **WorkManager 定时调度**：通过 `SyncWorker` 声明约束（仅在有网络、充电或空闲时运行）；
+* **WorkManager 定时调度**：通过 `ServiceLocatorSyncWorker` / `HiltSyncWorker` 声明约束（仅在有网络、充电或空闲时运行）；
 * **增量变更同步（ChangeList）**：每次只拉取版本号高于本地游标的增量数据，极大节省流量与设备电量。
 
 ---

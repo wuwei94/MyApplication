@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
+    alias(libs.plugins.nowinandroid.android.hilt)
 }
 
 android {
@@ -15,6 +16,9 @@ dependencies {
     api(projects.basic.basicDatastore)
 
     implementation(libs.androidx.workmanager.ktx)
+    // api：App 侧 Hilt 聚合与 SyncWorkerFactory 需解析 androidx.hilt.work 类型
+    api(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.work.compiler)
 
     testImplementation(libs.kotlinx.coroutines.test)
 }

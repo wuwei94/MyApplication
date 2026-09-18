@@ -37,6 +37,7 @@ class GlideActivity : BasicImageActivity() {
         "4. 居中裁剪 (centerCrop)",
         "5. 占位图与渐变动画 (crossFade)",
         "6. 加载异常链接触发 error 占位图",
+        "7. 清除当前图片 (clear)",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -48,6 +49,7 @@ class GlideActivity : BasicImageActivity() {
             3 -> loadCenterCrop()
             4 -> loadWithCrossFade()
             5 -> loadError()
+            6 -> clearImage()
         }
     }
 
@@ -92,5 +94,9 @@ class GlideActivity : BasicImageActivity() {
             .placeholder(R.drawable.shared_ic_launcher)
             .error(R.drawable.shared_ic_launcher)
             .into(binding.basicsImage)
+    }
+
+    private fun clearImage() {
+        Glide.with(this).clear(binding.basicsImage)
     }
 }

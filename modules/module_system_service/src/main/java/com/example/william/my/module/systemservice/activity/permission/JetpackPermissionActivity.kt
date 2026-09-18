@@ -25,8 +25,8 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/training/permissions/requesting
  */
-@Route(path = RouterPath.SystemService.Permission)
-class PermissionActivity : BasicResponseActivity() {
+@Route(path = RouterPath.SystemService.JetpackPermission)
+class JetpackPermissionActivity : BasicResponseActivity() {
 
     private var currentActionName = ""
 
@@ -58,9 +58,9 @@ class PermissionActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
-        "申请多媒体存储权限 — READ_MEDIA_* (Android 13+) / READ_EXTERNAL_STORAGE",
-        "申请全部常用基础权限（通知 + 多媒体存储）",
+        "1. 申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
+        "2. 申请多媒体存储权限 — READ_MEDIA_* (Android 13+) / READ_EXTERNAL_STORAGE",
+        "3. 申请全部常用基础权限（通知 + 多媒体存储）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

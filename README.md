@@ -8,7 +8,7 @@
 
 - **工程化与规范**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin（完全对齐 [Now in Android](https://github.com/android/nowinandroid)），多模块 Mermaid 依赖拓扑图自动化生成（`./gradlew generateModulesGraph`，该任务与项目隔离互斥，需附加 `-Dorg.gradle.isolated-projects=false`），Spotless + ktlint 统一代码规范格式化（`./gradlew spotlessApply`），Compose Compiler 稳定性配置（`compose_compiler_config.conf`）。
 - **性能优化与基准测试**：Jetpack Macrobenchmark + Baseline Profile 基准配置文件体系，AOT 预编译冷启动提速（30%+）与列表防掉帧，DiffUtil 差量刷新、LRU 缓存、协程 Dispatcher 性能对比。
-- **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架；落地 Now in Android 离线优先（Offline-First / SSOT）、响应式网络监听（`NetworkMonitor` + UI 离线横幅 / 在线自愈）与独立同步调度模块（`basic_sync`：`SyncWorker` + WorkManager + Proto DataStore 版本游标后台幂等增量拉取）。
+- **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架；落地 Now in Android 离线优先（Offline-First / SSOT）、响应式网络监听（`NetworkMonitor` + UI 离线横幅 / 在线自愈）与独立同步调度模块（`basic_sync`：`ServiceLocatorSyncWorker` 与 `HiltSyncWorker` 平行装配 + WorkManager + Proto DataStore 版本游标后台幂等增量拉取）。
 - **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
@@ -83,7 +83,7 @@ MyApplication/
 │   ├── basic_database          # 本地持久化数据库层（Room 实体、DAO、Database 实例与本地数据源）
 │   ├── basic_network           # 远程网络通信层（Retrofit API、网络 DTO、远程数据源）
 │   ├── basic_repo              # 数据仓库层（纯数据仓库聚合门面、SSOT、Repository 基类与装配）
-│   ├── basic_sync              # 离线增量同步调度层（WorkManager + Synchronizer + 幂等拉取与门面）
+│   ├── basic_sync              # 离线增量同步调度层（WorkManager + Synchronizer；ServiceLocator / Hilt Worker 平行装配）
 │   ├── basic_server            # 服务端基础模块
 ├── flutter                     # Flutter 层（add-to-app 集成）
 │   ├── flutter_demo            # Flutter Demo Catalog 子工程（Flutter module）
@@ -138,7 +138,7 @@ MyApplication/
     │
     ├── [系统能力]
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread）
-    │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager）
+    │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager / Sync Worker 装配平行对）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
     │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / FloatWindow）
     │   ├── module_security     # 安全（Android Keystore 硬件级安全密钥与 ECDSA 签名）
@@ -384,6 +384,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 
 - JobScheduler 定时任务调度
 - WorkManager 现代化可靠后台任务调度与加急前台服务
+- Sync Worker 装配平行对：`ServiceLocatorSyncWorker`（ServiceLocator 查单例）与 `HiltSyncWorker`（`@HiltWorker` 构造注入）
 
 ### module_ipc（跨进程通信）
 

@@ -50,7 +50,7 @@ flowchart TD
 
     subgraph Layer4["4. 现代架构解耦与通信范式 (Architecture & Decoupling)"]
         A1["离线优先 (Offline-First)\nRoom 响应式流 + SSOT 单一事实源"]
-        A2["后台增量数据同步\nSynchronizer 契约 + SyncWorker 轮询调度"]
+        A2["后台增量数据同步\nSynchronizer 契约 + ServiceLocator/Hilt SyncWorker"]
         A3["响应式网络状态监听\nNetworkMonitor 提供 isOnline 状态流"]
         A4["Navigation 3 声明式导航\n类型化 NavKey 与多返回栈 Multi-BackStack"]
         A5["Material 3 Adaptive 自适应布局\nListDetailPaneScaffold 大屏与折叠屏适配"]
@@ -107,7 +107,7 @@ flowchart TD
 | | Gradle 托管设备 (GMD) | pixel6api31aosp 纯净自动化插桩 | `【已落地】` | Convention 统一声明 `managedDevices.localDevices`；CI 矩阵含 GMD Job |
 | | JaCoCo 代码覆盖率统一配置 | Convention 插件排除生成类与 BuildConfig | `【已落地】` | `build-logic` 覆盖率插件 |
 | **4. 架构解耦与通信范式** | 离线优先与 SSOT 单一数据源 | Room 响应式流驱动 UI + 乐观更新 | `【已落地】` | `basic/basic_repo` + `modules/module_arch:ssot` |
-| | 后台增量数据同步机制 | Synchronizer 契约 + SyncWorker 调度 | `【已落地】` | `basic/basic_sync`（WorkManager） |
+| | 后台增量数据同步机制 | Synchronizer 契约 + ServiceLocator/Hilt SyncWorker 调度 | `【已落地】` | `basic/basic_sync`（WorkManager） |
 | | 响应式网络状态监听 | NetworkMonitor 暴露 isOnline Flow | `【已落地】` | `basic/basic_lib/.../NetworkMonitor.kt` |
 | | 响应式系统时区监听 | TimeZoneMonitor 广播监听与自动推流 | `【演进规划 - 待落地】` | 规范已制定，为全球化与离线时间戳自愈准备 |
 | | 模块化 API-Impl 契约隔离 | 接口与实现物理双模块 + DI 自动装配 | `【演进规划 - 待落地】` | 架构已设计，规划提供 API/Impl 对应 Convention 插件 |

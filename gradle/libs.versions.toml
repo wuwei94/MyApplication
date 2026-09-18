@@ -115,6 +115,9 @@ androidxTracing = "1.3.0"
 # Google 官方依赖注入框架 Hilt
 # 文档: https://developer.android.google.cn/training/dependency-injection/hilt-android
 androidxHilt = "2.58"
+# AndroidX Hilt 扩展（WorkManager @HiltWorker / WorkerFactory）
+# 文档: https://developer.android.google.cn/training/dependency-injection/hilt-android#workmanager
+androidxHiltExt = "1.2.0"
 # Kotlin 实用轻量级依赖注入框架 Koin
 # 官网: https://insert-koin.io/
 # GitHub: https://github.com/InsertKoinIO/koin
@@ -480,6 +483,10 @@ androidx-hilt-android = { group = "com.google.dagger", name = "hilt-android", ve
 androidx-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "androidxHilt" }
 # Hilt 注解编译器
 androidx-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "androidxHilt" }
+# AndroidX Hilt WorkManager 集成：@HiltWorker + HiltWorkerFactory
+androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "androidxHiltExt" }
+# AndroidX Hilt Work 编译器（生成 Worker 注入工厂）
+androidx-hilt-work-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidxHiltExt" }
 # Koin 核心核心库
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 # Koin Android 扩展库

@@ -17,8 +17,8 @@ import com.example.william.my.core.imageloader.glide.ImageLoader as GlideImageLo
  * 2. 双实现切换：coil 与 glide 两套 ImageLoader 可在运行时替换，同一 View 调用路径保持一致
  * 3. 实现约束：各实现内部需自行处理生命周期取消与主线程回调，封装层不做二次调度
  */
-@Route(path = RouterPath.ImageLoader.ImageLoader)
-class ImageLoaderActivity : BasicImageActivity() {
+@Route(path = RouterPath.ImageLoader.LibImageLoader)
+class LibImageLoaderActivity : BasicImageActivity() {
 
     // 默认使用 Glide 实现，列表第一项可切换为 Coil 实现
     private var imageLoader: IImageLoader = GlideImageLoader
@@ -56,31 +56,31 @@ class ImageLoaderActivity : BasicImageActivity() {
 
     private fun loadImage() {
         with(imageLoader) {
-            binding.basicsImage.loadImage(this@ImageLoaderActivity, Constants.Url_Image1)
+            binding.basicsImage.loadImage(this@LibImageLoaderActivity, Constants.Url_Image1)
         }
     }
 
     private fun loadRound() {
         with(imageLoader) {
-            binding.basicsImage.loadImageRound(this@ImageLoaderActivity, Constants.Url_Image2)
+            binding.basicsImage.loadImageRound(this@LibImageLoaderActivity, Constants.Url_Image2)
         }
     }
 
     private fun loadRadius() {
         with(imageLoader) {
-            binding.basicsImage.loadImageRadius(this@ImageLoaderActivity, Constants.Url_Image1, 48)
+            binding.basicsImage.loadImageRadius(this@LibImageLoaderActivity, Constants.Url_Image1, 48)
         }
     }
 
     private fun clear() {
         with(imageLoader) {
-            binding.basicsImage.clear(this@ImageLoaderActivity)
+            binding.basicsImage.clear(this@LibImageLoaderActivity)
         }
     }
 
     private fun loadError() {
         with(imageLoader) {
-            binding.basicsImage.loadImage(this@ImageLoaderActivity, "https://invalid-url.example.com/not_exist.png")
+            binding.basicsImage.loadImage(this@LibImageLoaderActivity, "https://invalid-url.example.com/not_exist.png")
         }
     }
 }

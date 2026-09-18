@@ -284,7 +284,7 @@ class OfflineFirstActivity : BaseActivity() {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "NetworkMonitor ──(isOnline)──▶ UI 离线横幅 & 在线自愈\nWorkManager ──(SyncWorker)──▶ Synchronizer 游标增量拉取 ──▶ Room SSOT",
+                    text = "NetworkMonitor ──(isOnline)──▶ UI 离线横幅 & 在线自愈\nWorkManager ──(ServiceLocatorSyncWorker)──▶ Synchronizer 游标增量拉取 ──▶ Room SSOT",
                     fontSize = 10.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

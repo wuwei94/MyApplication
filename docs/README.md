@@ -147,7 +147,7 @@ mindmap
 | :--- | :--- | :--- | :--- |
 | **架构模式** | MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First | 复杂业务走 MVVM/MVI；强离线与多端一致走 Offline-First + SSOT；决策树见文档 | [architecture.md](03-architecture/architecture.md) |
 | **组件化与路由** | ARouter（停更）/ TheRouter / WMRouter / API-Impl | 弃黑盒路由框架，走向 API-Impl + Hilt + DeepLink 标准范式 | [modularization.md](03-architecture/modularization.md) |
-| **现代架构范式** | Offline-First / SyncWorker / Nav3 / Adaptive / API-Impl / 可插拔接口 | NiA 工程落地范式集合，各能力落地状态见成熟度矩阵 | [engineering-patterns.md](03-architecture/engineering-patterns.md) |
+| **现代架构范式** | Offline-First / ServiceLocator·Hilt SyncWorker / Nav3 / Adaptive / API-Impl / 可插拔接口 | NiA 工程落地范式集合，各能力落地状态见成熟度矩阵 | [engineering-patterns.md](03-architecture/engineering-patterns.md) |
 | **依赖注入** | Hilt vs Koin | Hilt 编译期注入更稳（团队/大型工程）；Koin 轻量起步快 | [di.md](03-architecture/di.md) |
 | **事件总线** | EventBus / RxEventBus / LiveEventBus / FlowEventBus | FlowEventBus 响应式现代首选；老代码看迁移矩阵 | [event.md](03-architecture/event.md) |
 | **启动初始化** | ContentProvider / App Startup / AnchorTask | Provider 阶段收敛 + Application 阶段并发 DAG + 锚点卡点 + IdleHandler 延迟加载 | [startup.md](03-architecture/startup.md) |

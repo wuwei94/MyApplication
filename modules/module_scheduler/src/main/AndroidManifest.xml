@@ -5,6 +5,7 @@
         <activity android:name=".SchedulerMainActivity" />
         <activity android:name=".activity.JobSchedulerActivity" />
         <activity android:name=".activity.WorkManagerActivity" />
+        <activity android:name=".activity.SyncWorkerParallelActivity" />
 
         <service
             android:name=".service.MyJobSchedulerService"

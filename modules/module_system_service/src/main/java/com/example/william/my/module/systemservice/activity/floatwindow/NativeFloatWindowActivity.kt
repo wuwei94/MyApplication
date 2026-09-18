@@ -32,8 +32,8 @@ import com.example.william.my.module.systemservice.R
  *
  * https://developer.android.com/reference/android/view/WindowManager
  */
-@Route(path = RouterPath.SystemService.FloatWindow)
-class FloatWindowActivity : BasicResponseActivity() {
+@Route(path = RouterPath.SystemService.NativeFloatWindow)
+class NativeFloatWindowActivity : BasicResponseActivity() {
 
     private lateinit var windowManager: WindowManager
 
@@ -45,18 +45,22 @@ class FloatWindowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("点击下方列表项展示/隐藏悬浮窗")
+        showDescription("点击下方列表项展示/隐藏系统级悬浮窗（与 EasyFloat 平行对齐：显示 / 隐藏）")
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         windowParams = buildWindowParams()
         floatView = inflateFloatView()
     }
 
-    override fun buildList(): ArrayList<String> = arrayListOf("显示/隐藏 悬浮窗")
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 显示悬浮窗（WindowManager addView）",
+        "2. 隐藏悬浮窗（WindowManager removeView）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
-        if (position == 0) {
-            toggleFloatWindow()
+        when (position) {
+            0 -> requestAndShowFloatWindow()
+            1 -> dismissFloatWindow()
         }
     }
 
@@ -67,14 +71,14 @@ class FloatWindowActivity : BasicResponseActivity() {
     }
 
     /**
-     * 展示 / 隐藏悬浮窗。
+     * 请求叠加层权限后展示悬浮窗。
      *
      * 叠加层是特殊权限，没有 ActivityResult 契约可申请，只能跳转系统授权页手动开启；
-     * 授权后返回本页再次点击本项即可展示。
+     * 授权后返回本页再次点击「显示悬浮窗」即可展示。
      */
-    private fun toggleFloatWindow() {
+    private fun requestAndShowFloatWindow() {
         if (isShow) {
-            dismissFloatWindow()
+            appendLog("悬浮窗已在显示")
             return
         }
         if (!Settings.canDrawOverlays(this)) {

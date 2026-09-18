@@ -35,10 +35,13 @@ class EasyFloatActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("点击下方列表项展示 EasyFloat 悬浮窗")
+        showDescription("点击下方列表项展示 EasyFloat 悬浮窗（与 NativeFloatWindow 平行对齐：显示 / 隐藏）")
     }
 
-    override fun buildList(): ArrayList<String> = arrayListOf("显示悬浮窗", "隐藏悬浮窗")
+    override fun buildList(): ArrayList<String> = arrayListOf(
+        "1. 显示悬浮窗（EasyFloat.with().show）",
+        "2. 隐藏悬浮窗（EasyFloat.dismiss）",
+    )
 
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)

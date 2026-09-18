@@ -7,9 +7,9 @@
         <activity android:name=".activity.FlowActivity" />
         <activity android:name=".activity.ChannelActivity" />
         <activity android:name=".activity.ConcurrencyActivity" />
-        <activity android:name=".activity.MyDelegateActivity" />
-        <activity android:name=".activity.MyInlineActivity" />
-        <activity android:name=".activity.MySyntaxActivity" />
+        <activity android:name=".activity.DelegateActivity" />
+        <activity android:name=".activity.InlineActivity" />
+        <activity android:name=".activity.SyntaxActivity" />
     </application>
 
 </manifest>

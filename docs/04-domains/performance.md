@@ -107,7 +107,7 @@
    - 使用 Jetpack `androidx.startup`（App Startup）将多个 SDK 的初始化聚合至单一 `InitializationProvider`，消除多 Provider 的 IPC/Binder 启动开销；
    - 依据 `dependencies()` 拓扑排序在主线程自动按序拉起轻量级组件；
    - 支持通过 `AppInitializer.initializeComponent` 进行手动按需延迟加载。
-   - **示例源码**：[`StartupActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/StartupActivity.kt)（路由：`/Performance/Startup`）
+   - **示例源码**：[`AppStartupActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AppStartupActivity.kt)（路由：`/Performance/Startup`）
 2. **多线程并发 DAG 编排与锚点卡点（AnchorTask）**：
    - 大型 App 启动涉及数十个 SDK，纯主线程串行初始化会导致首屏严重卡顿；
    - 构建有向无环图（DAG），利用入度计数在依赖就绪后自动将任务分发至后台线程池并发执行；
@@ -153,7 +153,7 @@
 
 | 演示功能 | 对应 Activity | 路由路径 | 核心演示与写法内容 |
 |---------|--------------|---------|-------------------|
-| **ContentProvider 聚合启动** | [`StartupActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/StartupActivity.kt) | `/Performance/Startup` | Jetpack App Startup 的 `InitializationProvider` 单 Provider 聚合与拓扑排序 |
+| **ContentProvider 聚合启动** | [`AppStartupActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AppStartupActivity.kt) | `/Performance/Startup` | Jetpack App Startup 的 `InitializationProvider` 单 Provider 聚合与拓扑排序 |
 | **DAG 并发编排与锚点卡点** | [`AnchorTaskActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AnchorTaskActivity.kt) | `/Performance/AnchorTask` | 多线程并发 DAG 启动编排、入度解算与 `CountDownLatch` 锚点卡点等待 |
 | **列表局部差量刷新** | [`DiffUtilActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/DiffUtilActivity.kt) | `/Performance/DiffUtil` | `DiffUtil.Callback` 差量计算、定向更新与 Payload 细粒度局部刷新写法 |
 | **多级内存缓存设计** | [`LruCacheActivity`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/LruCacheActivity.kt) | `/Performance/LruCache` | Cache-Aside 回源读取模式、容量超出自动淘汰与 `entryRemoved` 监听 |

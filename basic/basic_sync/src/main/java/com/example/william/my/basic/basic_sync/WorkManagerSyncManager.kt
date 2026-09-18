@@ -5,7 +5,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.william.my.basic.basic_repo.sync.SyncManager
-import com.example.william.my.basic.basic_sync.work.SyncWorker
+import com.example.william.my.basic.basic_sync.work.ServiceLocatorSyncWorker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
  *
  * 通过 [WorkManager.getWorkInfosForUniqueWorkFlow] 监听唯一任务的生命周期，
  * 将底层任务执行状态无缝桥接为响应式 [isSyncing] 流。
+ * Offline-First 主链路调度 [ServiceLocatorSyncWorker]。
  */
 class WorkManagerSyncManager(
     private val context: Context,
@@ -22,14 +23,14 @@ class WorkManagerSyncManager(
 
     override val isSyncing: Flow<Boolean> =
         WorkManager.getInstance(context)
-            .getWorkInfosForUniqueWorkFlow(SyncWorker.SYNC_WORK_NAME)
+            .getWorkInfosForUniqueWorkFlow(ServiceLocatorSyncWorker.SYNC_WORK_NAME)
             .map { list -> list.any { it.state == WorkInfo.State.RUNNING } }
             .conflate()
 
     override fun requestSync() {
-        val workRequest = SyncWorker.buildOneTimeWorkRequest()
+        val workRequest = ServiceLocatorSyncWorker.buildOneTimeWorkRequest()
         WorkManager.getInstance(context).enqueueUniqueWork(
-            SyncWorker.SYNC_WORK_NAME,
+            ServiceLocatorSyncWorker.SYNC_WORK_NAME,
             ExistingWorkPolicy.KEEP,
             workRequest,
         )

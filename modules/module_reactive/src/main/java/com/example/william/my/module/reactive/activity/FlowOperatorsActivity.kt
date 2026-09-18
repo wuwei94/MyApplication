@@ -61,12 +61,12 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "创建操作符（flowOf / asFlow）",
-        "变换操作符（map / flatMapConcat / buffer）",
-        "过滤操作符（filter / take / distinct）",
-        "组合操作符（zip / combine）",
-        "错误恢复（catch 降级）",
-        "错误重试（retry 重新订阅）",
+        "1. 创建操作符（flowOf / asFlow）",
+        "2. 变换操作符（map / flatMapConcat / buffer）",
+        "3. 过滤操作符（filter / take / distinct）",
+        "4. 组合操作符（zip / combine）",
+        "5. 错误恢复（catch 降级）",
+        "6. 错误重试（retry 重新订阅）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

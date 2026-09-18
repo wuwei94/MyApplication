@@ -63,10 +63,10 @@ class KoinActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> = arrayListOf(
         "1. 基础注入 (singleOf 单例 vs factoryOf 工厂)",
-        "2. 具名限定符与接口绑定 (named AliPay / WeChatPay)",
-        "3. 动态运行时参数注入 (parametersOf)",
+        "2. 接口与具名限定符绑定 (named AliPay / WeChatPay)",
+        "3. Scope 局部作用域创建与生命周期销毁",
         "4. Koin ViewModel 注入 (viewModelOf by viewModel)",
-        "5. Scope 局部作用域创建与生命周期销毁",
+        "5. 动态运行时参数注入 (parametersOf，框架特有)",
         "6. 全量依赖与 Koin 容器状态验证",
     )
 
@@ -85,28 +85,26 @@ class KoinActivity : BasicResponseActivity() {
                 appendLog("   • 实例 2 hash=${orderProcessor2.hashCode()} (不同实例 = ${orderProcessor !== orderProcessor2})")
             }
             1 -> {
-                appendLog("[2. 具名限定符注入]")
+                appendLog("[2. 接口与具名限定符]")
                 appendLog("   • AliPay:   ${aliPayService.pay(88.0)}")
                 appendLog("   • WeChatPay:${weChatPayService.pay(66.0)}")
             }
             2 -> {
-                // 运行时传入动态参数
-                val userSession: KoinUserProfileSession = get { parametersOf("VIP_User_9527") }
-                appendLog("[3. 动态传参注入] ${userSession.getSessionDetails()}")
+                val scopeId = "custom_scope_${System.currentTimeMillis()}"
+                val customScope = getKoin().createScope(scopeId, named("CustomSessionScope"))
+                val scopedSession: KoinScopedSession = customScope.get()
+                appendLog("[3. Scope 作用域] 创建 Scope [id=$scopeId]")
+                appendLog("   • 获取 Scoped 实例: hash=${scopedSession.hashCode()}, msg=${scopedSession.info}")
+                customScope.close()
+                appendLog("   • Scope 已关闭并销毁所持实例")
             }
             3 -> {
                 val count = koinSampleViewModel.incrementAndGet()
                 appendLog("[4. Koin ViewModel] 当前计数 = $count (${koinSampleViewModel.getViewModelInfo()})")
             }
             4 -> {
-                // 创建自定义 Scope
-                val scopeId = "custom_scope_${System.currentTimeMillis()}"
-                val customScope = getKoin().createScope(scopeId, named("CustomSessionScope"))
-                val scopedSession: KoinScopedSession = customScope.get()
-                appendLog("[5. Scope 作用域] 创建 Scope [id=$scopeId]")
-                appendLog("   • 获取 Scoped 实例: hash=${scopedSession.hashCode()}, msg=${scopedSession.info}")
-                customScope.close()
-                appendLog("   • Scope 已关闭并销毁所持实例")
+                val userSession: KoinUserProfileSession = get { parametersOf("VIP_User_9527") }
+                appendLog("[5. 动态传参注入] ${userSession.getSessionDetails()}")
             }
             5 -> {
                 appendLog("[6. Koin 容器状态]")

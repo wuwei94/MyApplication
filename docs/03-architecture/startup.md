@@ -188,12 +188,12 @@ modules/module_performance/
 │   └── TaskDispatcher.kt                # 轻量纯 Kotlin DAG 调度器内核、入度解算与 Anchor 锚点原语
 └── activity/
     ├── ContentProviderActivity.kt       # 演示 ContentProvider 启动时序与多 Provider 耗时分析
-    ├── StartupActivity.kt               # 演示 Jetpack App Startup 的 InitializationProvider 聚合与拓扑排序
+    ├── AppStartupActivity.kt               # 演示 Jetpack App Startup 的 InitializationProvider 聚合与拓扑排序
     ├── AnchorTaskActivity.kt            # 演示 AnchorTask 串行基准 vs DAG 并发锚点等待 (卡点放行)
     └── IdleHandlerActivity.kt           # 演示 IdleHandler 主线程空闲延迟调度
 ```
 
 - **ContentProvider 启动源码**：查阅 [`ContentProviderActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/ContentProviderActivity.kt)（路由：`/Performance/ContentProvider`）
-- **App Startup 实战源码**：查阅 [`StartupActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/StartupActivity.kt)（路由：`/Performance/Startup`）
+- **App Startup 实战源码**：查阅 [`AppStartupActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AppStartupActivity.kt)（路由：`/Performance/Startup`）
 - **AnchorTask 调度源码**：查阅 [`AnchorTaskActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/AnchorTaskActivity.kt)（路由：`/Performance/AnchorTask`）
 - **IdleHandler 调度源码**：查阅 [`IdleHandlerActivity.kt`](../../modules/module_performance/src/main/java/com/example/william/my/module/performance/activity/IdleHandlerActivity.kt)（路由：`/Performance/IdleHandler`）

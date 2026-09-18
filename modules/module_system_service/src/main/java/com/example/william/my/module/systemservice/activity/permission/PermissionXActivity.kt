@@ -33,10 +33,10 @@ class PermissionXActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
-        "申请多媒体存储权限（带理由解释弹窗）",
-        "申请多媒体存储权限（前置解释 + 永久拒绝设置引导）",
-        "申请全部常用基础权限（通知 + 多媒体存储 全流程托管）",
+        "1. 申请通知权限 — POST_NOTIFICATIONS (Android 13+)",
+        "2. 申请多媒体存储权限（带理由解释弹窗）",
+        "3. 申请多媒体存储权限（前置解释 + 永久拒绝设置引导）",
+        "4. 申请全部常用基础权限（通知 + 多媒体存储 全流程托管）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

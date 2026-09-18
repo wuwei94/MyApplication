@@ -4,7 +4,7 @@
     <application>
         <activity android:name=".PerformanceMainActivity" />
         <activity android:name=".activity.ContentProviderActivity" />
-        <activity android:name=".activity.StartupActivity" />
+        <activity android:name=".activity.AppStartupActivity" />
         <activity android:name=".activity.AnchorTaskActivity" />
         <activity android:name=".activity.BaselineProfilesActivity" />
         <activity android:name=".activity.IdleHandlerActivity" />

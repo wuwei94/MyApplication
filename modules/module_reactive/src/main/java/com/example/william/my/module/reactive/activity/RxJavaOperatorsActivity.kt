@@ -49,12 +49,12 @@ class RxJavaOperatorsActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "创建操作符（just / range）",
-        "变换操作符（map / flatMap / buffer）",
-        "过滤操作符（filter / take / distinct）",
-        "组合操作符（zip / concat）",
-        "错误恢复（onErrorReturn）",
-        "错误重试（retry 重新订阅）",
+        "1. 创建操作符（just / range）",
+        "2. 变换操作符（map / flatMap / buffer）",
+        "3. 过滤操作符（filter / take / distinct）",
+        "4. 组合操作符（zip / concat）",
+        "5. 错误恢复（onErrorReturn）",
+        "6. 错误重试（retry 重新订阅）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

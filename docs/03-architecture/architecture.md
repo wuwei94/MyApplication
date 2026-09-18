@@ -273,7 +273,7 @@ override fun invalidate() = withState(viewModel) { state ->
   - `basic/basic_database`: 本地持久化数据库（`ArticleEntity` Room 实体、`ArticleDao`、`ArticleDatabase`、`ArticleLocalDataSource`）
   - `basic/basic_network`: 远程网络数据通信（`ArticleApi` / `ArticleRxApi`、`NetworkChangeList`、`ArticleRemoteDataSource`）
   - `basic/basic_repo`: 纯数据仓库（`ArticleRepository` 聚合门面、`Synchronizer` / `Syncable` 契约、`ServiceLocator` 装配中心）
-  - `basic/basic_sync`: 增量同步调度模块（`SyncWorker` WorkManager 任务调度、`WorkManagerSyncManager`、`Sync` 门面）
+  - `basic/basic_sync`: 增量同步调度模块（`ServiceLocatorSyncWorker` / `HiltSyncWorker` WorkManager 任务调度、`WorkManagerSyncManager`、`Sync` 门面）
 - **核心架构理念**：
   1. **SSOT（唯一真理在本地）**：UI 永远只读 Room 数据库推出来的 `Flow<List<Article>>`，绝不直接碰网络接口返回的原始 DTO；
   2. **Write-Only Sync（网络写同步）**：网络拉取的数据只做一件事——写入 Room 数据库，由 Room 的 `InvalidationTracker` 自动触发 UI 更新；
@@ -286,7 +286,7 @@ override fun invalidate() = withState(viewModel) { state ->
 sequenceDiagram
     participant UI as OfflineFirstActivity (Compose)
     participant VM as OfflineFirstViewModel
-    participant Sync as WorkManager (SyncWorker)
+    participant Sync as WorkManager (ServiceLocatorSyncWorker)
     participant DB as Room Database (SSOT)
     participant Net as NetworkMonitor (Flow<Boolean>)
 

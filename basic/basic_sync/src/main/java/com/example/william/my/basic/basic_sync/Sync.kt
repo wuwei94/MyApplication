@@ -3,7 +3,7 @@ package com.example.william.my.basic.basic_sync
 import android.content.Context
 import com.example.william.my.basic.basic_datastore.SyncPreferencesDataSource
 import com.example.william.my.basic.basic_repo.sync.SyncManager
-import com.example.william.my.basic.basic_sync.work.SyncWorker
+import com.example.william.my.basic.basic_sync.work.ServiceLocatorSyncWorker
 
 /**
  * 增量同步框架门面（对齐 Now in Android 的 Sync 入口）
@@ -20,7 +20,7 @@ object Sync {
      * 初始化后台增量同步（如在 Application 启动时调用）
      */
     fun initialize(context: Context) {
-        SyncWorker.startUpSyncWork(context)
+        ServiceLocatorSyncWorker.startUpSyncWork(context)
     }
 
     /**
