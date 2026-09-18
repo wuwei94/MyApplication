@@ -58,12 +58,12 @@
 已接入两套方案的模块（`@XxxInit` 与 `registerAppInit` 一一对应）：
 
 - `module_event`：`EventApp`（手动）/ `EventInitImpl` + `EventModule`（Hilt）
-- `module_widget_thirdparty`：`WidgetThirdpartyApp` / `LoadSirInitImpl` + `LoadSirModule`
+- `module_widget_thirdparty`：`WidgetThirdpartyApp` / `WidgetThirdpartyInitImpl` + `WidgetThirdpartyModule`
 - `module_flutter`：`FlutterApp` / `FlutterInitImpl` + `FlutterModule`
-- `module_arch`：`ArchApp` / `MavericksInitImpl` + `MavericksModule`
+- `module_arch`：`ArchApp` / `ArchInitImpl` + `ArchModule`
 
 > 手动方案在 `App.initApp()` 中注册 `EventApp / ArchApp / WidgetThirdpartyApp / FlutterApp`；
-> Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → eventInit → mavericksInit → loadSirInit → flutterInit` 顺序调用。
+> Hilt 方案在 `AppHilt.onCreate()` 中按 `baseInit → appInit → eventInit → archInit → widgetThirdpartyInit → flutterInit` 顺序调用。
 
 ---
 

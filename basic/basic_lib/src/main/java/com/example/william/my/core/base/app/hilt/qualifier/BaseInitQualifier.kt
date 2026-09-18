@@ -24,18 +24,18 @@ annotation class AppInit
 annotation class EventInit
 
 /**
- * Mavericks 框架初始化限定符
+ * Arch 模块初始化限定符（module_arch，启动时初始化 Mavericks）
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class MavericksInit
+annotation class ArchInit
 
 /**
- * LoadSir 状态管理初始化限定符
+ * WidgetThirdparty 模块初始化限定符（启动时配置 LoadSir）
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class LoadSirInit
+annotation class WidgetThirdpartyInit
 
 /**
  * Flutter 引擎初始化限定符

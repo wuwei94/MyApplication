@@ -3,11 +3,11 @@ package com.example.william.my.application.app
 import android.app.Application
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.app.hilt.qualifier.AppInit
+import com.example.william.my.core.base.app.hilt.qualifier.ArchInit
 import com.example.william.my.core.base.app.hilt.qualifier.BaseInit
 import com.example.william.my.core.base.app.hilt.qualifier.EventInit
 import com.example.william.my.core.base.app.hilt.qualifier.FlutterInit
-import com.example.william.my.core.base.app.hilt.qualifier.LoadSirInit
-import com.example.william.my.core.base.app.hilt.qualifier.MavericksInit
+import com.example.william.my.core.base.app.hilt.qualifier.WidgetThirdpartyInit
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -31,13 +31,13 @@ class AppHilt : Application() {
     @Inject
     lateinit var eventInit: IAppInit
 
-    @MavericksInit
+    @ArchInit
     @Inject
-    lateinit var mavericksInit: IAppInit
+    lateinit var archInit: IAppInit
 
-    @LoadSirInit
+    @WidgetThirdpartyInit
     @Inject
-    lateinit var loadSirInit: IAppInit
+    lateinit var widgetThirdpartyInit: IAppInit
 
     @FlutterInit
     @Inject
@@ -51,8 +51,8 @@ class AppHilt : Application() {
         appInit.init(this)
 
         eventInit.init(this)
-        mavericksInit.init(this)
-        loadSirInit.init(this)
+        archInit.init(this)
+        widgetThirdpartyInit.init(this)
 
         flutterInit.init(this) // FlutterEngine
     }
