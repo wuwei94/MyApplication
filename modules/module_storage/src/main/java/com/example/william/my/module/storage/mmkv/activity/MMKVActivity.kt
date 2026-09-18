@@ -1,4 +1,4 @@
-package com.example.william.my.module.storage.mmkv
+package com.example.william.my.module.storage.mmkv.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

@@ -1,12 +1,12 @@
-package com.example.william.my.module.storage.activity
+package com.example.william.my.module.storage.datastore.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.module.storage.datastore.ExamplePreferenceDataStore
-import com.example.william.my.module.storage.datastore.ExampleProtoDataStore
+import com.example.william.my.module.storage.datastore.data.ExamplePreferenceDataStore
+import com.example.william.my.module.storage.datastore.data.ExampleProtoDataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

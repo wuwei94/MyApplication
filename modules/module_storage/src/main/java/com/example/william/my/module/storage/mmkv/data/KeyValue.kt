@@ -1,4 +1,4 @@
-package com.example.william.my.module.storage.mmkv
+package com.example.william.my.module.storage.mmkv.data
 
 import android.content.Context
 import android.os.Parcelable

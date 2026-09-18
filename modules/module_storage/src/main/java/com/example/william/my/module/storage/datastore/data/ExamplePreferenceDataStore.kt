@@ -1,4 +1,4 @@
-package com.example.william.my.module.storage.datastore
+package com.example.william.my.module.storage.datastore.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
