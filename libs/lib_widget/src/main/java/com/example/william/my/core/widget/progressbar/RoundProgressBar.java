@@ -54,8 +54,8 @@ public class RoundProgressBar extends View {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundProgressBar);
         //进度条颜色
-        roundProgressColor = a.getColor(R.styleable.RoundProgressBar_roundProgressColor, ContextCompat.getColor(context, R.color.colorProgress));
-        roundBackgroundColor = a.getColor(R.styleable.RoundProgressBar_roundBackgroundColor, ContextCompat.getColor(context, R.color.colorProgressBg));
+        roundProgressColor = a.getColor(R.styleable.RoundProgressBar_roundProgressColor, ContextCompat.getColor(context, R.color.widget_color_progress));
+        roundBackgroundColor = a.getColor(R.styleable.RoundProgressBar_roundBackgroundColor, ContextCompat.getColor(context, R.color.widget_color_progress_bg));
         //进度条宽度
         roundWidth = a.getDimension(R.styleable.RoundProgressBar_roundWidth, 10);
         //进度条最大值
@@ -64,7 +64,7 @@ public class RoundProgressBar extends View {
         //进度条样式
         style = a.getInt(R.styleable.RoundProgressBar_style, STROKE);
         //进度条进度
-        textColor = a.getColor(R.styleable.RoundProgressBar_textColor, ContextCompat.getColor(context, R.color.colorProgressText));
+        textColor = a.getColor(R.styleable.RoundProgressBar_textColor, ContextCompat.getColor(context, R.color.widget_color_progress_text));
         textSize = a.getDimension(R.styleable.RoundProgressBar_textSize, 120);
         textDisplayable = a.getBoolean(R.styleable.RoundProgressBar_textDisplayable, false);
         a.recycle();

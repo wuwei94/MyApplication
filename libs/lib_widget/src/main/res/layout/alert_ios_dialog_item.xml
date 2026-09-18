@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/shared_dp_8">
+    android:padding="@dimen/widget_dp_8">
 
     <TextView
         android:id="@+id/ios_item_dialog_tv_title"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dp_48"
+        android:layout_height="@dimen/widget_dp_48"
         android:background="@drawable/alert_selector_item_top"
         android:gravity="center"
-        android:textColor="@color/colorAlertTitle"
-        android:textSize="@dimen/shared_sp_16"
+        android:textColor="@color/widget_color_alert_title"
+        android:textSize="@dimen/widget_sp_16"
         android:visibility="gone" />
 
     <LinearLayout
@@ -24,13 +24,13 @@
     <TextView
         android:id="@+id/ios_item_dialog_tv_cancel"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_dp_button_height"
-        android:layout_marginTop="@dimen/shared_dp_8"
+        android:layout_height="@dimen/widget_dp_button_height"
+        android:layout_marginTop="@dimen/widget_dp_8"
         android:background="@drawable/alert_selector_item_single"
         android:gravity="center"
         android:text="@string/dialog_cancel"
-        android:textColor="@color/shared_color_primary"
-        android:textSize="@dimen/shared_sp_16"
+        android:textColor="@color/widget_color_alert_primary"
+        android:textSize="@dimen/widget_sp_16"
         android:textStyle="bold" />
 
 </LinearLayout>

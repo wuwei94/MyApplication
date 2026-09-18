@@ -187,7 +187,7 @@ public class IosAlertItemDialog {
 
         public AlertItem(String name, OnItemClickListener itemClickListener) {
             this.name = name;
-            this.color = R.color.colorAlertMessage;
+            this.color = R.color.widget_color_alert_message;
             this.itemClickListener = itemClickListener;
         }
 

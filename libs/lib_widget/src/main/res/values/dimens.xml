@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- libs 禁止依赖 basic_*，release 侧 verifyLibraryResources 要求资源在库闭包内可解析；
+     取值与 docs/01-rules/design.md、basic_shared dimens.xml 对齐，仅前缀改为 widget_。 -->
+<resources>
+    <dimen name="widget_dp_8">8dp</dimen>
+    <dimen name="widget_dp_12">12dp</dimen>
+    <dimen name="widget_dp_16">16dp</dimen>
+    <dimen name="widget_dp_48">48dp</dimen>
+
+    <dimen name="widget_sp_14">14sp</dimen>
+    <dimen name="widget_sp_16">16sp</dimen>
+
+    <dimen name="widget_dp_corner_8">8dp</dimen>
+    <dimen name="widget_dp_corner_16">16dp</dimen>
+
+    <dimen name="widget_dp_image_size">200dp</dimen>
+    <dimen name="widget_dp_loading_size">120dp</dimen>
+    <dimen name="widget_dp_button_height">48dp</dimen>
+    <dimen name="widget_dp_divider">1dp</dimen>
+</resources>

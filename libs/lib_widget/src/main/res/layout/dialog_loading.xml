@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="@dimen/shared_dp_loading_size"
-        android:layout_height="@dimen/shared_dp_loading_size"
+        android:layout_width="@dimen/widget_dp_loading_size"
+        android:layout_height="@dimen/widget_dp_loading_size"
         android:background="@drawable/shape_dialog_loading_bg"
         android:gravity="center"
         android:orientation="vertical"
@@ -19,16 +19,16 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/colorLoadingProgress"
+            android:indeterminateTint="@color/widget_color_loading_progress"
             tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/loading_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/shared_dp_8"
+            android:layout_marginTop="@dimen/widget_dp_8"
             android:text="@string/loading_message"
-            android:textColor="@color/colorLoadingText" />
+            android:textColor="@color/widget_color_loading_text" />
 
     </LinearLayout>
 

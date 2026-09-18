@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAlertTitle">#000000</color>
-    <color name="colorAlertMessage">#666666</color>
-    <color name="colorAlertLine">#CCCCCC</color>
-    <color name="colorAlertPressed">#CCCCCC</color>
-    <color name="colorAlertBackground">#FFFFFF</color>
+    <color name="widget_color_alert_title">#000000</color>
+    <color name="widget_color_alert_message">#666666</color>
+    <color name="widget_color_alert_line">#CCCCCC</color>
+    <color name="widget_color_alert_pressed">#CCCCCC</color>
+    <color name="widget_color_alert_background">#FFFFFF</color>
+    <color name="widget_color_alert_primary">#FFCC33</color>
 
-    <color name="colorLoadingText">#FFFFFF</color>
-    <color name="colorLoadingProgress">#FFFFFF</color>
-    <color name="colorLoadingBackground">#000000</color>
+    <color name="widget_color_loading_text">#FFFFFF</color>
+    <color name="widget_color_loading_progress">#FFFFFF</color>
+    <color name="widget_color_loading_background">#000000</color>
 
-    <color name="colorProgress">#3700B3</color>
-    <color name="colorProgressBg">#6200EE</color>
-    <color name="colorProgressText">#666666</color>
+    <color name="widget_color_progress">#3700B3</color>
+    <color name="widget_color_progress_bg">#6200EE</color>
+    <color name="widget_color_progress_text">#666666</color>
 </resources>
