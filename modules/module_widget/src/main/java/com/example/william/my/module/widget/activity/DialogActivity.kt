@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget.dialog.activity
+package com.example.william.my.module.widget.activity
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog

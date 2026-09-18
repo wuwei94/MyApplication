@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget.webview.activity
+package com.example.william.my.module.widget.activity
 
 import android.annotation.SuppressLint
 import android.net.http.SslError

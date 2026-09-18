@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget.recyclerviewnested.activity
+package com.example.william.my.module.widget.activity
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
