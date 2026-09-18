@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget.activity
+package com.example.william.my.module.widget.recyclerview.activity
 
 import android.os.Bundle
 import android.view.animation.AnimationUtils
