@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_thirdparty.widget.activity
+package com.example.william.my.module.widget_thirdparty.activity.widget
 
 import android.os.Bundle
 import android.util.TypedValue
