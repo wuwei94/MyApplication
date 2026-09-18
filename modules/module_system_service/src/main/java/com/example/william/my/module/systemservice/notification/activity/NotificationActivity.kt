@@ -1,4 +1,4 @@
-package com.example.william.my.module.systemservice.activity.notification
+package com.example.william.my.module.systemservice.notification.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

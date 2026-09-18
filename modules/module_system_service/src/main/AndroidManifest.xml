@@ -6,11 +6,11 @@
 
     <application>
         <activity android:name=".SystemServiceMainActivity" />
-        <activity android:name=".activity.notification.NotificationActivity" />
-        <activity android:name=".activity.permission.PermissionActivity" />
-        <activity android:name=".activity.permission.PermissionXActivity" />
-        <activity android:name=".activity.floatwindow.FloatWindowActivity" />
-        <activity android:name=".activity.floatwindow.EasyFloatActivity" />
+        <activity android:name=".notification.activity.NotificationActivity" />
+        <activity android:name=".permission.activity.PermissionActivity" />
+        <activity android:name=".permission.activity.PermissionXActivity" />
+        <activity android:name=".floatwindow.activity.FloatWindowActivity" />
+        <activity android:name=".floatwindow.activity.EasyFloatActivity" />
     </application>
 
 </manifest>

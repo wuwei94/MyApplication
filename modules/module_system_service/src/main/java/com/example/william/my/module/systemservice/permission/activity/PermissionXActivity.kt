@@ -1,4 +1,4 @@
-package com.example.william.my.module.systemservice.activity.permission
+package com.example.william.my.module.systemservice.permission.activity
 
 import android.Manifest
 import android.os.Build
