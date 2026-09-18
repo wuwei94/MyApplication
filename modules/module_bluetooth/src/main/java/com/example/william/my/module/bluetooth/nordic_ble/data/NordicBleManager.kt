@@ -1,4 +1,4 @@
-package com.example.william.my.module.bluetooth.nordic_ble
+package com.example.william.my.module.bluetooth.nordic_ble.data
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic

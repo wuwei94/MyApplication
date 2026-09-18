@@ -15,16 +15,16 @@
 
     <application>
         <activity android:name=".BluetoothMainActivity" />
-        <activity android:name=".native_ble.BleNativeScanActivity" />
-        <activity android:name=".native_ble.BleNativeConnectActivity" />
-        <activity android:name=".native_ble.BleNativeQueueActivity" />
-        <activity android:name=".nordic_ble.BleNordicScanActivity" />
-        <activity android:name=".nordic_ble.BleNordicConnectActivity" />
-        <activity android:name=".nordic_ble.BleNordicTransferActivity" />
-        <activity android:name=".fast_ble.BleFastScanActivity" />
-        <activity android:name=".fast_ble.BleFastConnectActivity" />
-        <activity android:name=".rx_ble.BleRxScanActivity" />
-        <activity android:name=".rx_ble.BleRxConnectActivity" />
+        <activity android:name=".native_ble.activity.BleNativeScanActivity" />
+        <activity android:name=".native_ble.activity.BleNativeConnectActivity" />
+        <activity android:name=".native_ble.activity.BleNativeQueueActivity" />
+        <activity android:name=".nordic_ble.activity.BleNordicScanActivity" />
+        <activity android:name=".nordic_ble.activity.BleNordicConnectActivity" />
+        <activity android:name=".nordic_ble.activity.BleNordicTransferActivity" />
+        <activity android:name=".fast_ble.activity.BleFastScanActivity" />
+        <activity android:name=".fast_ble.activity.BleFastConnectActivity" />
+        <activity android:name=".rx_ble.activity.BleRxScanActivity" />
+        <activity android:name=".rx_ble.activity.BleRxConnectActivity" />
     </application>
 
 </manifest>

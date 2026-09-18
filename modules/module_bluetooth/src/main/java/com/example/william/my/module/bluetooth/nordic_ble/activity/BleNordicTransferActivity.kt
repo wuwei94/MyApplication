@@ -1,4 +1,4 @@
-package com.example.william.my.module.bluetooth.nordic_ble
+package com.example.william.my.module.bluetooth.nordic_ble.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

@@ -1,4 +1,4 @@
-package com.example.william.my.module.bluetooth.native_ble
+package com.example.william.my.module.bluetooth.native_ble.activity
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter

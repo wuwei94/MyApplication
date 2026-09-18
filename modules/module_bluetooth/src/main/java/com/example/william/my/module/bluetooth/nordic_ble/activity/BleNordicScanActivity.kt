@@ -1,4 +1,4 @@
-package com.example.william.my.module.bluetooth.nordic_ble
+package com.example.william.my.module.bluetooth.nordic_ble.activity
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
@@ -14,6 +14,7 @@ import android.os.ParcelUuid
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
+import com.example.william.my.module.bluetooth.nordic_ble.data.NordicBleManager
 
 /**
  * Nordic 扫描过滤对照 — 系统 BluetoothLeScanner + Nordic 规范 UUID
