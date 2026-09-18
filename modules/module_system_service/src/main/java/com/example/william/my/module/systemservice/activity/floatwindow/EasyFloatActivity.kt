@@ -1,4 +1,4 @@
-package com.example.william.my.module.systemservice.floatwindow.activity
+package com.example.william.my.module.systemservice.activity.floatwindow
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

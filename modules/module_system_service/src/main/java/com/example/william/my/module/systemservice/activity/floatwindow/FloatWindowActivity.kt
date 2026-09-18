@@ -1,4 +1,4 @@
-package com.example.william.my.module.systemservice.floatwindow.activity
+package com.example.william.my.module.systemservice.activity.floatwindow
 
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -15,7 +15,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.systemservice.R
-import com.example.william.my.module.systemservice.floatwindow.data.FloatTouchHelper
 
 /**
  * 悬浮窗 — 系统级 WindowManager 悬浮窗实现
