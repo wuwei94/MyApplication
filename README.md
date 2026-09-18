@@ -140,7 +140,7 @@ MyApplication/
     │   ├── module_async        # 异步处理（AsyncTask / HandlerThread）
     │   ├── module_scheduler    # 后台任务调度（JobScheduler / WorkManager / Sync Worker 装配平行对）
     │   ├── module_component    # 组件交互（Broadcast / Service / ActivityResult / OnBackPressed）
-    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / FloatWindow）
+    │   ├── module_system_service  # 系统服务与底层能力（Notification / Permission / FloatWindow / TimeZoneMonitor）
     │   ├── module_security     # 安全（Android Keystore 硬件级安全密钥与 ECDSA 签名）
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
@@ -368,6 +368,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 - 运行时权限批量申请（Jetpack 契约与 PermissionX 链式开源库两套方案）
 - 系统级悬浮窗：WindowManager + TYPE_APPLICATION_OVERLAY、拖拽与边缘自动吸附、SYSTEM_ALERT_WINDOW 授权
 - 悬浮窗框架：EasyFloat（应用内悬浮窗，免权限；库亦支持全局悬浮窗）
+- TimeZoneMonitor 系统时区监视器（ACTION_TIMEZONE_CHANGED 广播 + Flow 推流；与 NetworkMonitor 同属 Environment Monitors）
 
 ### module_security（安全）
 

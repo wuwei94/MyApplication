@@ -243,6 +243,9 @@ object RouterPath {
         // 悬浮窗
         const val NativeFloatWindow = "$PATH/NativeFloatWindow"
         const val EasyFloat = "$PATH/EasyFloat"
+
+        // 环境监视器
+        const val TimeZoneMonitor = "$PATH/TimeZoneMonitor"
     }
 
     // 安全（密钥 / 签名 / 加密）

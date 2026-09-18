@@ -72,7 +72,7 @@
 | 数据存储 | module_storage | 存储 | StorageMainActivity | /Storage |
 | 系统能力 | module_async | 异步处理 | AsyncMainActivity | /Async |
 | 系统能力 | module_component | 组件交互 | ComponentMainActivity | /Component |
-| 系统能力 | module_system_service | 系统服务（通知 / 权限 / 悬浮窗） | SystemServiceMainActivity | /SystemService |
+| 系统能力 | module_system_service | 系统服务（通知 / 权限 / 悬浮窗 / 时区监视器） | SystemServiceMainActivity | /SystemService |
 | 系统能力 | module_security | 安全（Android Keystore 密钥管理与签名） | SecurityMainActivity | /Security |
 | 系统能力 | module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | 系统能力 | module_ipc | 跨进程通信 | IpcMainActivity | /Ipc |
@@ -435,6 +435,7 @@
 | PermissionXActivity | 运行时权限申请（PermissionX 链式开源库模式） |
 | NativeFloatWindowActivity | 系统级悬浮窗（WindowManager + TYPE_APPLICATION_OVERLAY + 拖拽 + 贴边吸附动画） |
 | EasyFloatActivity | 应用内悬浮窗（EasyFloat 第三方开源库，免权限） |
+| TimeZoneMonitorActivity | 系统时区监视器（ACTION_TIMEZONE_CHANGED + Flow 推流；与 NetworkMonitor 同属 Environment Monitors） |
 
 ---
 

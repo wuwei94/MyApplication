@@ -36,7 +36,7 @@ interface NetworkMonitor {
 ```
 基于系统 `ConnectivityManager.NetworkCallback` 实现，向上层暴露热状态流。UI 结合 `repeatOnLifecycle` 收集状态，离线时顶部显示离线横幅提示，在线时自动唤醒数据重试与后台同步。
 
-#### 系统时区监视器（`TimeZoneMonitor`）`【演进规划 - 待落地】`
+#### 系统时区监视器（`TimeZoneMonitor`）`【已落地】`
 * **问题痛点**：跨国用户飞行、系统时区切换或夏令时切换时，若 App 未重启，UI 上的格式化时间戳（如“发布于 2 小时前”、“2026-09-08 13:00”）将出现时区漂移或计算偏差；在截图测试时，不同机器的默认时区差异也会导致断言失败；
 * **设计契约**：
   ```kotlin
@@ -45,9 +45,9 @@ interface NetworkMonitor {
   }
   ```
 * **落地机理**：
-  1. **生产实现（`LiveTimeZoneMonitor`）**：注册广播接收器监听 `Intent.ACTION_TIMEZONE_CHANGED`，配合 `callbackFlow` 在时区变更时发射最新 `TimeZone.currentSystemDefault()`；
-  2. **测试替身（`TestTimeZoneMonitor`）**：在截图测试与单测中固定发射 UTC 或特定时区，保障时间相关的 UI 渲染绝对确定；
-  3. **UI 消费联动**：通过 CompositionLocal 注入当前时区，所有涉及时间格式化的 Composable 自动响应重组。
+  1. **生产实现（`LiveTimeZoneMonitor`）**：`basic_lib` 中以 `callbackFlow` 注册 `ACTION_TIMEZONE_CHANGED` 广播，推流系统时区；
+  2. **测试替身（`TestTimeZoneMonitor`）**：`basic_testing` 固定 UTC 或指定时区，保障时间 UI 断言确定；
+  3. **Showcase 消费**：`module_system_service` 的 `TimeZoneMonitorActivity` 演示读取、监听与格式化。
 
 ---
 

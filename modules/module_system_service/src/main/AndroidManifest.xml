@@ -11,6 +11,7 @@
         <activity android:name=".activity.permission.PermissionXActivity" />
         <activity android:name=".activity.floatwindow.NativeFloatWindowActivity" />
         <activity android:name=".activity.floatwindow.EasyFloatActivity" />
+        <activity android:name=".activity.timezone.TimeZoneMonitorActivity" />
     </application>
 
 </manifest>
