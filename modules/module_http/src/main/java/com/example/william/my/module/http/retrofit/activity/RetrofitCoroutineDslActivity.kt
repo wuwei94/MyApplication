@@ -1,6 +1,7 @@
-package com.example.william.my.module.http.activity.retrofit
+package com.example.william.my.module.http.retrofit.activity
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
@@ -8,33 +9,35 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.retrofit.createApi
 import com.example.william.my.core.retrofit.retrofit
+import com.example.william.my.module.http.retrofit.data.RetrofitParallelApi
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.ResponseBody
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
- * Retrofit + Call — 项目 DSL 封装的回调方式
+ * Retrofit + 协程（DSL）— 封装后挂起式网络请求
+ *
+ * 使用项目内 DSL 创建 Retrofit 与 API 实例，
+ * 在 lifecycleScope 中调用 suspend 接口方法，自动跟随页面生命周期取消。
  *
  * 核心机制与避坑点：
- * 1. DSL 装配：retrofit {} + createApi 提供项目默认 Converter / Client 配置
- * 2. 异步回调：enqueue 仍在 OkHttp 线程回调，UI 更新须切主线程
- * 3. 请求体注解：@FormUrlEncoded / @Body / @Multipart 分别对应 Form / JSON·Raw / Multipart
- * 4. 对照原生：与 RetrofitCallActivity 平行，便于对照手写 Builder 的配置差异
+ * 1. DSL 创建：retrofit { } 得到带项目默认配置的 Retrofit
+ * 2. 挂起接口：loginSuspend 等 suspend 方法天然异步
+ * 3. 生命周期感知：lifecycleScope 在页面销毁时取消协程
+ * 4. 请求体注解：@FormUrlEncoded / @Body / @Multipart 对应 Form / JSON·Raw / Multipart
+ * 5. 异常处理：try-catch 统一捕获网络与业务失败
  *
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RetrofitCallDsl)
-class RetrofitCallDslActivity : BasicResponseActivity() {
+@Route(path = RouterPath.Http.RetrofitCoroutineDsl)
+class RetrofitCoroutineDslActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         showDescription(
-            "Retrofit Call DSL 示例：GET / Form / JSON / Raw / Multipart 与 DSL Client 配置",
+            "Retrofit 协程 DSL 示例：GET / Form / JSON / Raw / Multipart 与 DSL Client 配置",
         )
     }
 
@@ -50,11 +53,11 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
-            0 -> getCall()
-            1 -> postFormCall(Constants.Value_Username, Constants.Value_Password)
-            2 -> postJsonCall(Constants.Value_Username, Constants.Value_Password)
-            3 -> postRawCall(Constants.Value_Username, Constants.Value_Password)
-            4 -> postMultipartCall(Constants.Value_Username, Constants.Value_Password)
+            0 -> getSuspend()
+            1 -> postFormSuspend(Constants.Value_Username, Constants.Value_Password)
+            2 -> postJsonSuspend(Constants.Value_Username, Constants.Value_Password)
+            3 -> postRawSuspend(Constants.Value_Username, Constants.Value_Password)
+            4 -> postMultipartSuspend(Constants.Value_Username, Constants.Value_Password)
             5 -> getWithConfiguredClient()
         }
     }
@@ -64,36 +67,38 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
         retrofit { baseUrl(Constants.Url_Base) },
     )
 
-    private fun getCall() {
+    private fun getSuspend() {
         appendLog("→ [GET] 发起请求...")
-        enqueue(defaultApi().getCall(0), "[GET]")
+        launchSuspend("[GET]") { api -> api.getSuspend(0).string() }
     }
 
-    private fun postFormCall(username: String, password: String) {
+    private fun postFormSuspend(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
-        enqueue(defaultApi().postFormCall(username, password), "[Form]")
+        launchSuspend("[Form]") { api -> api.postFormSuspend(username, password).string() }
     }
 
-    private fun postJsonCall(username: String, password: String) {
+    private fun postJsonSuspend(username: String, password: String) {
         appendLog("→ [JSON] 发起请求...")
         val body = JSONObject()
             .put(Constants.Key_Username, username)
             .put(Constants.Key_Password, password)
             .toString()
             .toRequestBody(JSON_MEDIA_TYPE)
-        enqueue(defaultApi().postJsonCall(body), "[JSON]")
+        launchSuspend("[JSON]") { api -> api.postJsonSuspend(body).string() }
     }
 
-    private fun postRawCall(username: String, password: String) {
+    private fun postRawSuspend(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
             .toRequestBody(RAW_MEDIA_TYPE)
-        enqueue(defaultApi().postRawCall(body), "[Raw]")
+        launchSuspend("[Raw]") { api -> api.postRawSuspend(body).string() }
     }
 
-    private fun postMultipartCall(username: String, password: String) {
+    private fun postMultipartSuspend(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
-        enqueue(defaultApi().postMultipartCall(username, password), "[Multipart]")
+        launchSuspend("[Multipart]") { api ->
+            api.postMultipartSuspend(username, password).string()
+        }
     }
 
     private fun getWithConfiguredClient() {
@@ -110,26 +115,29 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
                 )
             },
         )
-        enqueue(api.getCall(0), "[DSL]")
+        lifecycleScope.launch {
+            try {
+                val body = api.getSuspend(0).string()
+                appendFormatLog("✓ [DSL] 响应：", body)
+            } catch (e: Exception) {
+                appendLog("✗ [DSL] 失败：${e.message ?: "未知错误"}")
+            }
+        }
     }
 
-    private fun enqueue(call: Call<ResponseBody>, tag: String) {
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    appendFormatLog("✓ $tag 响应：", response.body()?.string().orEmpty())
-                } else {
-                    appendFormatLog(
-                        "✗ $tag 失败（HTTP ${response.code()}）：",
-                        response.errorBody()?.string().orEmpty(),
-                    )
-                }
+    private fun launchSuspend(
+        tag: String,
+        block: suspend (RetrofitParallelApi) -> String,
+    ) {
+        val api = defaultApi()
+        lifecycleScope.launch {
+            try {
+                val body: String = block(api)
+                appendFormatLog("✓ $tag 响应：", body)
+            } catch (e: Exception) {
+                appendLog("✗ $tag 失败：${e.message ?: "未知错误"}")
             }
-
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                appendLog("✗ $tag 失败：${t.message ?: "未知错误"}")
-            }
-        })
+        }
     }
 
     private companion object {

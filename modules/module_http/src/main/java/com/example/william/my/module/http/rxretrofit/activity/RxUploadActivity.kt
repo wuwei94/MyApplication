@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.rxretrofit
+package com.example.william.my.module.http.rxretrofit.activity
 
 import android.os.Bundle
 import android.text.format.Formatter

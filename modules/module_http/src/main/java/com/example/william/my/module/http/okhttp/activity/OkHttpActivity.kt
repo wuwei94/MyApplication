@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.okhttp
+package com.example.william.my.module.http.okhttp.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -60,7 +60,7 @@ class OkHttpActivity : BasicResponseActivity() {
         "1. 发送 GET 请求",
         "2. 发送表单请求 (FormBody)",
         "3. 发送 JSON 请求 (RequestBody)",
-        "4. 发送 Raw Body 请求 (RequestBody)",
+        "4. 发送 POST Raw Body 请求 (RequestBody)",
         "5. 发送多部分表单请求 (MultipartBody)",
         "6. 使用 DSL 配置 Client（timeout + logging + cookieJar）",
     )

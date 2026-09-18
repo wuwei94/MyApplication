@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.ktor
+package com.example.william.my.module.http.ktor.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope

@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.volley
+package com.example.william.my.module.http.volley.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

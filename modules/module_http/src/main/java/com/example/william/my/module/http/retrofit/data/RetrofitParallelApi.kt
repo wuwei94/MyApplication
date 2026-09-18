@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.retrofit
+package com.example.william.my.module.http.retrofit.data
 
 import com.example.william.my.basic.basic_shared.constant.Constants
 import io.reactivex.rxjava3.core.Single

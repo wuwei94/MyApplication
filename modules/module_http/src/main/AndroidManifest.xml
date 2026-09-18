@@ -3,20 +3,20 @@
 
     <application>
         <activity android:name=".HttpMainActivity" />
-        <activity android:name=".activity.httpurl.HttpURLActivity" />
-        <activity android:name=".activity.volley.VolleyActivity" />
-        <activity android:name=".activity.okhttp.OkHttpActivity" />
-        <activity android:name=".activity.retrofit.RetrofitCallActivity" />
-        <activity android:name=".activity.retrofit.RetrofitCallDslActivity" />
-        <activity android:name=".activity.retrofit.RetrofitCoroutineActivity" />
-        <activity android:name=".activity.retrofit.RetrofitCoroutineDslActivity" />
-        <activity android:name=".activity.retrofit.RetrofitRxActivity" />
-        <activity android:name=".activity.retrofit.RetrofitRxDslActivity" />
-        <activity android:name=".activity.rxretrofit.RxRequestActivity" />
-        <activity android:name=".activity.rxretrofit.RxDownloadActivity" />
-        <activity android:name=".activity.rxretrofit.RxUploadActivity" />
-        <activity android:name=".activity.ktor.KtorActivity" />
-        <activity android:name=".activity.ktor.KtorClientActivity" />
+        <activity android:name=".httpurl.activity.HttpURLActivity" />
+        <activity android:name=".volley.activity.VolleyActivity" />
+        <activity android:name=".okhttp.activity.OkHttpActivity" />
+        <activity android:name=".retrofit.activity.RetrofitCallActivity" />
+        <activity android:name=".retrofit.activity.RetrofitCallDslActivity" />
+        <activity android:name=".retrofit.activity.RetrofitCoroutineActivity" />
+        <activity android:name=".retrofit.activity.RetrofitCoroutineDslActivity" />
+        <activity android:name=".retrofit.activity.RetrofitRxActivity" />
+        <activity android:name=".retrofit.activity.RetrofitRxDslActivity" />
+        <activity android:name=".rxretrofit.activity.RxRequestActivity" />
+        <activity android:name=".rxretrofit.activity.RxDownloadActivity" />
+        <activity android:name=".rxretrofit.activity.RxUploadActivity" />
+        <activity android:name=".ktor.activity.KtorActivity" />
+        <activity android:name=".ktor.activity.KtorClientActivity" />
     </application>
 
 </manifest>

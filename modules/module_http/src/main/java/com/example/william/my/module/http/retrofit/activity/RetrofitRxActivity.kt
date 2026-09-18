@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.retrofit
+package com.example.william.my.module.http.retrofit.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -6,42 +6,45 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
-import com.example.william.my.core.retrofit.rx.api.createRxApi
-import com.example.william.my.core.retrofit.rx.api.rxRetrofit
+import com.example.william.my.module.http.retrofit.data.RetrofitParallelApi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
 /**
- * Retrofit + RxJava（DSL）— 封装后订阅式网络请求
+ * Retrofit + RxJava — Rx 订阅式网络请求
  *
- * 使用项目内 DSL 封装创建已安装 RxJava3 CallAdapter 的 Retrofit，
- * 通过 createRxApi 创建接口代理，在 CompositeDisposable 中管理订阅。
+ * 使用 Retrofit.Builder 手动装配 RxJava3 CallAdapter，
+ * 将接口方法返回值桥接为 Single，由页面自行管理线程与订阅释放。
  *
  * 核心机制与避坑点：
- * 1. DSL 创建：rxRetrofit { } 一行得到已装配 CallAdapter 的 Retrofit 实例
- * 2. 类型安全 API：createRxApi 创建接口代理，编译期检查方法签名
- * 3. 线程控制：subscribeOn(io) + observeOn(main) 显式切换
- * 4. 请求体注解：@FormUrlEncoded / @Body / @Multipart 对应 Form / JSON·Raw / Multipart
- * 5. 订阅释放：CompositeDisposable 在 onDestroy 统一 dispose
+ * 1. CallAdapter：RxJava3CallAdapterFactory 将 Call 桥接为 Single/Observable
+ * 2. 线程控制：subscribeOn(io) + observeOn(main) 显式切换
+ * 3. 请求体注解：@FormUrlEncoded / @Body / @Multipart 对应 Form / JSON·Raw / Multipart
+ * 4. 订阅管理：CompositeDisposable 在 onDestroy 统一 dispose
+ * 5. 原生装配：不依赖项目 DSL，便于对照 Retrofit 原生 API
  *
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RetrofitRxDsl)
-class RetrofitRxDslActivity : BasicResponseActivity() {
+@Route(path = RouterPath.Http.RetrofitRx)
+class RetrofitRxActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         showDescription(
-            "Retrofit Rx DSL 示例：GET / Form / JSON / Raw / Multipart 与 DSL Client 配置",
+            "Retrofit Rx 示例：GET / Form / JSON / Raw / Multipart 与 Client 配置",
         )
     }
 
@@ -51,7 +54,7 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
         "3. 发送 POST JSON 请求 (@Body)",
         "4. 发送 POST Raw Body 请求 (@Body)",
         "5. 发送 POST Multipart 请求 (@Multipart)",
-        "6. 使用 DSL 配置 Client（timeout + logging）后请求",
+        "6. 配置 Client（timeout + logging）后请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -66,19 +69,24 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
         }
     }
 
-    private fun defaultApi(): RetrofitParallelApi = createRxApi(
-        RetrofitParallelApi::class.java,
-        rxRetrofit { baseUrl(Constants.Url_Base) },
-    )
+    private fun createApi(retrofit: Retrofit): RetrofitParallelApi = retrofit.create(RetrofitParallelApi::class.java)
+
+    private fun defaultRetrofit(): Retrofit = Retrofit.Builder()
+        .baseUrl(Constants.Url_Base)
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .build()
 
     private fun getSingle() {
         appendLog("→ [GET] 发起请求...")
-        subscribe(defaultApi().getSingle(0), "[GET]")
+        subscribe(createApi(defaultRetrofit()).getSingle(0), "[GET]")
     }
 
     private fun postFormSingle(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
-        subscribe(defaultApi().postFormSingle(username, password), "[Form]")
+        subscribe(
+            createApi(defaultRetrofit()).postFormSingle(username, password),
+            "[Form]",
+        )
     }
 
     private fun postJsonSingle(username: String, password: String) {
@@ -88,36 +96,37 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
             .put(Constants.Key_Password, password)
             .toString()
             .toRequestBody(JSON_MEDIA_TYPE)
-        subscribe(defaultApi().postJsonSingle(body), "[JSON]")
+        subscribe(createApi(defaultRetrofit()).postJsonSingle(body), "[JSON]")
     }
 
     private fun postRawSingle(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
             .toRequestBody(RAW_MEDIA_TYPE)
-        subscribe(defaultApi().postRawSingle(body), "[Raw]")
+        subscribe(createApi(defaultRetrofit()).postRawSingle(body), "[Raw]")
     }
 
     private fun postMultipartSingle(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
-        subscribe(defaultApi().postMultipartSingle(username, password), "[Multipart]")
+        subscribe(
+            createApi(defaultRetrofit()).postMultipartSingle(username, password),
+            "[Multipart]",
+        )
     }
 
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
-        val api = createRxApi(
-            RetrofitParallelApi::class.java,
-            rxRetrofit {
-                baseUrl(Constants.Url_Base)
-                client(
-                    okHttpClient {
-                        timeout(15)
-                        logging()
-                    },
-                )
-            },
-        )
-        subscribe(api.getSingle(0), "[DSL]")
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.Url_Base)
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .client(
+                okHttpClient {
+                    timeout(15)
+                    logging(HttpLoggingInterceptor.Level.BASIC)
+                },
+            )
+            .build()
+        subscribe(createApi(retrofit).getSingle(0), "[DSL]")
     }
 
     private fun subscribe(single: Single<ResponseBody>, tag: String) {
@@ -125,10 +134,15 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
             single
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { body -> appendFormatLog("✓ $tag 响应：", body.string()) },
-                    { error -> appendLog("✗ $tag 失败：${error.message ?: "未知错误"}") },
-                ),
+                .subscribeWith(object : DisposableSingleObserver<ResponseBody>() {
+                    override fun onSuccess(response: ResponseBody) {
+                        appendFormatLog("✓ $tag 响应：", response.string())
+                    }
+
+                    override fun onError(e: Throwable) {
+                        appendLog("✗ $tag 失败：${e.message ?: "未知错误"}")
+                    }
+                }),
         )
     }
 

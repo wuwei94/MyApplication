@@ -1,4 +1,4 @@
-package com.example.william.my.module.http.activity.retrofit
+package com.example.william.my.module.http.retrofit.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
@@ -7,36 +7,33 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
-import com.example.william.my.core.retrofit.createApi
-import com.example.william.my.core.retrofit.retrofit
+import com.example.william.my.module.http.retrofit.data.RetrofitParallelApi
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
+import retrofit2.Retrofit
 
 /**
- * Retrofit + 协程（DSL）— 封装后挂起式网络请求
- *
- * 使用项目内 DSL 创建 Retrofit 与 API 实例，
- * 在 lifecycleScope 中调用 suspend 接口方法，自动跟随页面生命周期取消。
+ * Retrofit + 协程 — 现代化网络请求
  *
  * 核心机制与避坑点：
- * 1. DSL 创建：retrofit { } 得到带项目默认配置的 Retrofit
- * 2. 挂起接口：loginSuspend 等 suspend 方法天然异步
- * 3. 生命周期感知：lifecycleScope 在页面销毁时取消协程
- * 4. 请求体注解：@FormUrlEncoded / @Body / @Multipart 对应 Form / JSON·Raw / Multipart
- * 5. 异常处理：try-catch 统一捕获网络与业务失败
+ * 1. 挂起接口：suspend 方法在协程中调用，禁止在主线程 runBlocking 等待
+ * 2. 生命周期：lifecycleScope 在 DESTROYED 时取消请求，避免回调泄漏
+ * 3. 请求体注解：@FormUrlEncoded / @Body / @Multipart 分别对应 Form / JSON·Raw / Multipart
+ * 4. 异常边界：网络异常与业务错误码分开处理，勿用同一 catch 吞掉业务失败
  *
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RetrofitCoroutineDsl)
-class RetrofitCoroutineDslActivity : BasicResponseActivity() {
+@Route(path = RouterPath.Http.RetrofitCoroutine)
+class RetrofitCoroutineActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         showDescription(
-            "Retrofit 协程 DSL 示例：GET / Form / JSON / Raw / Multipart 与 DSL Client 配置",
+            "Retrofit 协程示例：GET / Form / JSON / Raw / Multipart 与 Client 配置",
         )
     }
 
@@ -46,7 +43,7 @@ class RetrofitCoroutineDslActivity : BasicResponseActivity() {
         "3. 发送 POST JSON 请求 (@Body)",
         "4. 发送 POST Raw Body 请求 (@Body)",
         "5. 发送 POST Multipart 请求 (@Multipart)",
-        "6. 使用 DSL 配置 Client（timeout + logging）后请求",
+        "6. 配置 Client（timeout + logging）后请求",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
@@ -61,10 +58,11 @@ class RetrofitCoroutineDslActivity : BasicResponseActivity() {
         }
     }
 
-    private fun defaultApi(): RetrofitParallelApi = createApi(
-        RetrofitParallelApi::class.java,
-        retrofit { baseUrl(Constants.Url_Base) },
-    )
+    private fun createApi(retrofit: Retrofit): RetrofitParallelApi = retrofit.create(RetrofitParallelApi::class.java)
+
+    private fun defaultRetrofit(): Retrofit = Retrofit.Builder()
+        .baseUrl(Constants.Url_Base)
+        .build()
 
     private fun getSuspend() {
         appendLog("→ [GET] 发起请求...")
@@ -73,7 +71,9 @@ class RetrofitCoroutineDslActivity : BasicResponseActivity() {
 
     private fun postFormSuspend(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
-        launchSuspend("[Form]") { api -> api.postFormSuspend(username, password).string() }
+        launchSuspend("[Form]") { api ->
+            api.postFormSuspend(username, password).string()
+        }
     }
 
     private fun postJsonSuspend(username: String, password: String) {
@@ -102,33 +102,24 @@ class RetrofitCoroutineDslActivity : BasicResponseActivity() {
 
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
-        val api = createApi(
-            RetrofitParallelApi::class.java,
-            retrofit {
-                baseUrl(Constants.Url_Base)
-                client(
-                    okHttpClient {
-                        timeout(15)
-                        logging()
-                    },
-                )
-            },
-        )
-        lifecycleScope.launch {
-            try {
-                val body = api.getSuspend(0).string()
-                appendFormatLog("✓ [DSL] 响应：", body)
-            } catch (e: Exception) {
-                appendLog("✗ [DSL] 失败：${e.message ?: "未知错误"}")
-            }
-        }
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.Url_Base)
+            .client(
+                okHttpClient {
+                    timeout(15)
+                    logging(HttpLoggingInterceptor.Level.BASIC)
+                },
+            )
+            .build()
+        launchSuspend("[DSL]", retrofit) { api -> api.getSuspend(0).string() }
     }
 
     private fun launchSuspend(
         tag: String,
+        retrofit: Retrofit = defaultRetrofit(),
         block: suspend (RetrofitParallelApi) -> String,
     ) {
-        val api = defaultApi()
+        val api = createApi(retrofit)
         lifecycleScope.launch {
             try {
                 val body: String = block(api)
