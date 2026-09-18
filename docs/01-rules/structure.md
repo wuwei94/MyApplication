@@ -82,6 +82,35 @@ basic_model
 
 新建模块不要模仿 `ui_` / `demo_` 例外；只在既有模块内追加资源时沿用该模块已定前缀。
 
+### modules 源码分包（能力包 → 角色包）
+
+多技术并列的 Showcase 模块，源码分包统一为：
+
+```
+module_<域>/
+├── XxxMainActivity.kt          # 模块入口，仍在 namespace 包根
+└── <capability>/               # 一级：技术能力（datastore / mmkv / nordic_ble / retrofit …）
+    ├── activity/               # 二级：该能力的示例 Activity
+    │   └── XxxActivity.kt
+    └── data/                   # 二级：该能力的数据 / 实现支撑
+        └── XxxSupport.kt
+```
+
+1. **一级按技术能力**：同一能力的多库、多实现、多样本页归入同一 `<capability>/`。
+2. **二级按角色**：示例 Activity 进 `<capability>/activity/`；支撑实现进 `<capability>/data/`。架构样板模块可在能力包内保留既有角色子包（`viewmodel/`、`usecase/`、`contract/`、`presenter/` 等），UI 宿主仍归 `activity/`（Fragment 可用 `fragment/`）。
+3. **入口 Activity** 固定在模块 namespace 包根，不进入能力包。
+4. **跨能力共享代码**（通用 helper、工具、自定义 View）放模块级角色包（`helper/`、`utils/`、`view/`、`ui/`），禁止塞进单一能力包。
+5. **单能力模块**（无多技术横评轴）可只有包根入口 + 模块级 `activity/`，不必空造能力包。
+6. **包名与 Manifest** 与源码路径一致；`@Route` 路由字符串不随分包变化。
+
+禁止：
+
+- 能力包内 Activity 与支撑代码平铺混放
+- 顶层 `activity/` 下再按技术分包（技术轴必须在一级，如 `retrofit/activity/` 而非 `activity/retrofit/`）
+- 同一模块内示例 Activity 有的在 `activity/`、有的在能力包根
+
+锚点：`modules/module_storage`（`datastore/activity|data`、`mmkv/activity|data`）。
+
 ## 分类判据与模块边界
 
 示例模块的归类遵循「主题优先、来源标注、职责分明」原则：

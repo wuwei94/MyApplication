@@ -23,7 +23,7 @@
 
 - **开工协议**：先将任务收敛为允许触碰的文件白名单；按判型只读 [docs/01-rules/README.md](docs/01-rules/README.md) 路由指向的规范与锚点，禁止无方向通读 `docs/`。
 - **分层单向依赖**：`modules` 互不依赖；`libs` 不依赖 `modules`/`app`/`basic_*`；`basic_model` 保持纯 JVM；数据栈 `basic_*` 可按需依赖更底层 `basic_*` 与 `libs`。依赖用 typesafe accessors（`projects.xxx`）（见 [docs/01-rules/structure.md](docs/01-rules/structure.md)）。
-- **组件规范**：Activity 必须 `@Route(path = RouterPath.Xxx.Yyy)`；资源前缀与包名地图见 [docs/01-rules/structure.md](docs/01-rules/structure.md)；modules 模块依赖 `basic_lib` 与 `basic_shared`。
+- **组件规范**：Activity 必须 `@Route(path = RouterPath.Xxx.Yyy)`；资源前缀、包名地图与源码分包（能力包 → `activity/`/`data/`）见 [docs/01-rules/structure.md](docs/01-rules/structure.md)；modules 模块依赖 `basic_lib` 与 `basic_shared`。
 - **构建约束**：版本只进 `libs.versions.toml`；SDK/flavor/lint/spotless 只走 Convention Plugin；源码落 `src/main/java`；Android 侧本地验证默认 `-PenableFlutter=false`。
 - **示例页架构**：一个 `buildList` 项 ↔ 一个示例方法；`when(position)` 直调库 API；`BasicResponseActivity` 须 `showDescription`（见 [docs/01-rules/showcase.md](docs/01-rules/showcase.md)）。
 - **注释与日志**：中文；Why > What；保护既有技术决策注释；日志 `→ ` / `✓ ` / `✗ `，高频用 `updateLog`，禁止 `【成功】/【失败】` 结果装饰（见 [docs/01-rules/style.md](docs/01-rules/style.md)、[docs/01-rules/showcase.md](docs/01-rules/showcase.md)）。
