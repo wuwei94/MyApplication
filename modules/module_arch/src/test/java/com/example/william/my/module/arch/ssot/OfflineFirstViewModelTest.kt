@@ -3,9 +3,9 @@ package com.example.william.my.module.arch.ssot
 import app.cash.turbine.test
 import com.example.william.my.basic.basic_datastore.SyncPreferencesDataSource
 import com.example.william.my.basic.basic_model.ArticleDetailData
-import com.example.william.my.module.arch.fake.FakeArticleRepository
 import com.example.william.my.basic.basic_testing.MainDispatcherRule
 import com.example.william.my.basic.basic_testing.TestNetworkMonitor
+import com.example.william.my.module.arch.fake.FakeArticleRepository
 import com.example.william.my.module.arch.fake.TestSyncManager
 import com.example.william.my.module.arch.ssot.data.OfflineFirstIntent
 import com.example.william.my.module.arch.ssot.viewmodel.OfflineFirstViewModel

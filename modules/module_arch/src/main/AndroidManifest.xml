@@ -3,12 +3,12 @@
 
     <application>
         <activity android:name=".ArchMainActivity" />
-        <activity android:name=".mvp.MvpActivity" />
-        <activity android:name=".mvvm.MvvmActivity" />
-        <activity android:name=".mvi.MviActivity" />
-        <activity android:name=".compose.ComposeMviActivity" />
-        <activity android:name=".mavericks.MavericksActivity" />
-        <activity android:name=".ssot.OfflineFirstActivity" />
+        <activity android:name=".mvp.activity.MvpActivity" />
+        <activity android:name=".mvvm.activity.MvvmActivity" />
+        <activity android:name=".mvi.activity.MviActivity" />
+        <activity android:name=".compose.activity.ComposeMviActivity" />
+        <activity android:name=".mavericks.activity.MavericksActivity" />
+        <activity android:name=".ssot.activity.OfflineFirstActivity" />
     </application>
 
 </manifest>

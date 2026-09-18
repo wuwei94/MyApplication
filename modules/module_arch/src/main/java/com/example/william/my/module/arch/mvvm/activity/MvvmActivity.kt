@@ -1,9 +1,10 @@
-package com.example.william.my.module.arch.mvvm
+package com.example.william.my.module.arch.mvvm.activity
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
+import com.example.william.my.module.arch.mvvm.fragment.MvvmFragment
 
 /**
  * MVVM — Model-View-ViewModel 架构模式

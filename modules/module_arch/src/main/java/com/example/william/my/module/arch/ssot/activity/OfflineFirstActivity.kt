@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.ssot
+package com.example.william.my.module.arch.ssot.activity
 
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -389,7 +390,7 @@ class OfflineFirstActivity : BaseActivity() {
                     Button(
                         onClick = onWorkManagerSyncClick,
                         modifier = Modifier.weight(1.3f).height(32.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp),
+                        contentPadding = PaddingValues(horizontal = 4.dp),
                         shape = RoundedCornerShape(6.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D9488)),
                     ) {
@@ -401,7 +402,7 @@ class OfflineFirstActivity : BaseActivity() {
                     OutlinedButton(
                         onClick = onSimulateRemoteNewVersionClick,
                         modifier = Modifier.weight(1.1f).height(32.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp),
+                        contentPadding = PaddingValues(horizontal = 4.dp),
                         shape = RoundedCornerShape(6.dp),
                     ) {
                         Icon(Icons.Default.ArrowUpward, contentDescription = null, modifier = Modifier.size(13.dp))
@@ -420,7 +421,7 @@ class OfflineFirstActivity : BaseActivity() {
                     OutlinedButton(
                         onClick = onSyncClick,
                         modifier = Modifier.weight(1f).height(30.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 2.dp),
+                        contentPadding = PaddingValues(horizontal = 2.dp),
                         shape = RoundedCornerShape(6.dp),
                     ) {
                         Text("全量写同步", fontSize = 10.sp)
@@ -429,7 +430,7 @@ class OfflineFirstActivity : BaseActivity() {
                     OutlinedButton(
                         onClick = onInsertClick,
                         modifier = Modifier.weight(1f).height(30.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 2.dp),
+                        contentPadding = PaddingValues(horizontal = 2.dp),
                         shape = RoundedCornerShape(6.dp),
                     ) {
                         Text("本地插入验证", fontSize = 10.sp)
@@ -438,7 +439,7 @@ class OfflineFirstActivity : BaseActivity() {
                     OutlinedButton(
                         onClick = onClearClick,
                         modifier = Modifier.weight(1f).height(30.dp),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 2.dp),
+                        contentPadding = PaddingValues(horizontal = 2.dp),
                         shape = RoundedCornerShape(6.dp),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFDC2626)),
                     ) {
