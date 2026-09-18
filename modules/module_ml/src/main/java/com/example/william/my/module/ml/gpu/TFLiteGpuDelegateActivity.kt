@@ -1,4 +1,4 @@
-package com.example.william.my.module.ml.gpu.activity
+package com.example.william.my.module.ml.gpu
 
 import android.os.Build
 import android.os.Bundle
