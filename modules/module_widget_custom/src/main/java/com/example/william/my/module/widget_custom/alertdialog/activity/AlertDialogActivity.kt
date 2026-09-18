@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_custom.activity
+package com.example.william.my.module.widget_custom.alertdialog.activity
 
 import android.os.Bundle
 import android.view.Gravity
