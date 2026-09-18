@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.camera.activity
+package com.example.william.my.module.gpuimage.camera
 
 import android.Manifest
 import android.content.pm.PackageManager

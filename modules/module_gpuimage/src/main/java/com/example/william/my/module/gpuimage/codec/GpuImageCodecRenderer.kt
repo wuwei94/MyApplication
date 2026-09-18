@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.codec.data
+package com.example.william.my.module.gpuimage.codec
 
 import android.opengl.EGL14
 import android.opengl.EGLConfig
@@ -7,7 +7,7 @@ import android.opengl.EGLSurface
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.module.gpuimage.codec.data.encoder.VideoEncoderCore
+import com.example.william.my.module.gpuimage.codec.encoder.VideoEncoderCore
 import jp.co.cyberagent.android.gpuimage.GPUImageRenderer
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter
 import jp.co.cyberagent.android.gpuimage.util.Rotation

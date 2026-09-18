@@ -1,6 +1,5 @@
-package com.example.william.my.module.gpuimage.codec.data
+package com.example.william.my.module.gpuimage.photo
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -20,9 +19,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.william.my.basic.basic_shared.utils.Utils
-import com.example.william.my.module.gpuimage.codec.data.encoder.AudioEncoderCore
-import com.example.william.my.module.gpuimage.codec.data.encoder.MediaMuxerWrapper
-import com.example.william.my.module.gpuimage.codec.data.encoder.VideoEncoderCore
 import com.example.william.my.module.gpuimage.helper.GpuImageYuvConverter
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageRenderer
@@ -37,21 +33,19 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
- * 经典 EGL 共享上下文 + MediaCodec 硬编录像辅助类
+ * 滤镜拍照专项辅助类
  *
  * 核心特性：
- * 1. 串联 CameraX 帧采集（ImageAnalysis + NV21 上传）与 GL 渲染线程；
- * 2. 在 GLSurfaceView 渲染管线中协调 [VideoEncoderCore]（H.264 视频硬编码）、
- *    [AudioEncoderCore]（AAC 音频硬编码）以及 [MediaMuxerWrapper]（MP4 混流封装）；
- * 3. 拍照采用高清离屏滤镜处理，录像生成纯净 MP4 本地文件。
+ * 1. 实时预览：CameraX [ImageAnalysis] 连续帧流 $\rightarrow$ [GPUImageRenderer] 实时着色上屏；
+ * 2. 高清捕获：点击拍照时由 [ImageCapture] 捕获相机传感器全尺寸大图（千万级像素）；
+ * 3. 离屏渲染：使用 [GPUImage] 离屏应用当前选中的同款 Shader 滤镜，保存高清 JPG 文件。
  */
-class GpuImageCodecRecordHelper(
+class GpuImagePhotoHelper(
     private val activity: FragmentActivity,
     private val glSurfaceView: GLSurfaceView,
 ) {
 
-    private val baseRenderer = GPUImageRenderer(GPUImageFilter())
-    private val renderer = GpuImageCodecRenderer(baseRenderer)
+    private val renderer = GPUImageRenderer(GPUImageFilter())
 
     private var cameraProvider: ProcessCameraProvider? = null
     private var analysisExecutor: ExecutorService? = null
@@ -61,16 +55,7 @@ class GpuImageCodecRecordHelper(
     private var lastRotationDegrees = -1
     private var glInitialized = false
 
-    private var currentFilter: GPUImageFilter = GPUImageFilter()
     private var currentFilterFactory: () -> GPUImageFilter = { GPUImageFilter() }
-
-    @Volatile
-    private var isRecording = false
-    private var muxerWrapper: MediaMuxerWrapper? = null
-    private var audioEncoder: AudioEncoderCore? = null
-    private var onRecordingStopped: ((file: File) -> Unit)? = null
-
-    fun isRecording(): Boolean = isRecording
 
     fun setup() {
         if (glInitialized) return
@@ -119,9 +104,7 @@ class GpuImageCodecRecordHelper(
 
     fun setFilter(factory: () -> GPUImageFilter) {
         currentFilterFactory = factory
-        val filter = factory()
-        currentFilter = filter
-        renderer.setFilter(filter)
+        renderer.setFilter(factory())
     }
 
     fun capturePhoto(onSuccess: (bitmap: Bitmap, file: File) -> Unit) {
@@ -184,76 +167,6 @@ class GpuImageCodecRecordHelper(
         }
     }
 
-    @SuppressLint("MissingPermission")
-    fun startRecording(onStopped: (file: File) -> Unit) {
-        if (isRecording) {
-            Utils.toast("录像已在进行中")
-            return
-        }
-
-        val videoFile = createVideoFile(activity) ?: run {
-            Utils.toast("创建视频文件失败")
-            return
-        }
-
-        onRecordingStopped = onStopped
-
-        try {
-            val muxer = MediaMuxerWrapper(videoFile, expectedTracks = 2)
-            muxerWrapper = muxer
-
-            // 720x1280 竖屏分辨率，3.5 Mbps 码率，30 fps 帧率
-            val videoEncoder = VideoEncoderCore(
-                width = 720,
-                height = 1280,
-                bitRate = 3_500_000,
-                frameRate = 30,
-                muxerWrapper = muxer,
-            )
-
-            val audioEnc = AudioEncoderCore(muxer)
-            audioEncoder = audioEnc
-            audioEnc.start()
-
-            glSurfaceView.queueEvent {
-                renderer.startRecording(videoEncoder)
-            }
-            isRecording = true
-            Utils.logcat(TAG, "Codec 录像启动完成: ${videoFile.absolutePath}")
-        } catch (e: Exception) {
-            isRecording = false
-            Utils.logcat(TAG, "startRecording error: ${e.message}")
-            Utils.toast("启动录像异常: ${e.message}")
-        }
-    }
-
-    fun stopRecording() {
-        if (!isRecording) return
-        isRecording = false
-
-        glSurfaceView.queueEvent {
-            renderer.stopRecording()
-        }
-
-        try {
-            audioEncoder?.stop()
-            audioEncoder?.release()
-            audioEncoder = null
-
-            muxerWrapper?.stopAndRelease()
-            val outputFile = muxerWrapper?.outputFile
-            muxerWrapper = null
-
-            if (outputFile != null && outputFile.exists() && outputFile.length() > 0) {
-                ContextCompat.getMainExecutor(activity).execute {
-                    onRecordingStopped?.invoke(outputFile)
-                }
-            }
-        } catch (e: Exception) {
-            Utils.logcat(TAG, "stopRecording error: ${e.message}")
-        }
-    }
-
     fun onResume() {
         if (glInitialized) glSurfaceView.onResume()
     }
@@ -263,9 +176,6 @@ class GpuImageCodecRecordHelper(
     }
 
     fun release() {
-        if (isRecording) {
-            stopRecording()
-        }
         cameraProvider?.unbindAll()
         cameraProvider = null
         analysisExecutor?.shutdown()
@@ -306,18 +216,11 @@ class GpuImageCodecRecordHelper(
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: context.filesDir
         if (!storageDir.exists()) storageDir.mkdirs()
-        return File(storageDir, "IMG_CODEC_$timeStamp.jpg")
-    }
-
-    private fun createVideoFile(context: Context): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES) ?: context.filesDir
-        if (!storageDir.exists()) storageDir.mkdirs()
-        return File(storageDir, "VID_CODEC_$timeStamp.mp4")
+        return File(storageDir, "IMG_FILTER_$timeStamp.jpg")
     }
 
     companion object {
-        private const val TAG = "GpuImageCodecRecordHelper"
+        private const val TAG = "GpuImagePhotoHelper"
 
         private val resolutionSelector: ResolutionSelector = ResolutionSelector.Builder()
             .setAspectRatioStrategy(

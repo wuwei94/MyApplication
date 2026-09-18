@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.effect.data
+package com.example.william.my.module.gpuimage.effect
 
 import android.Manifest
 import android.annotation.SuppressLint

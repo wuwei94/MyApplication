@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.adjust.activity
+package com.example.william.my.module.gpuimage.adjust
 
 import android.graphics.Bitmap
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.william.my.module.gpuimage.codec.data.encoder
+package com.example.william.my.module.gpuimage.codec.encoder
 
 import android.annotation.SuppressLint
 import android.media.AudioFormat
