@@ -9,7 +9,7 @@
 |---|---|---|---|
 | 知道交付时能改哪些文件、标题怎么写 | [delivery.md](delivery.md) | 禁止附赠、禁止复盘式交付、范围自检 | 根 [AGENTS.md](../../AGENTS.md) §4 |
 | 新写/改 Showcase 示例页、平行多库横评 | [showcase.md](showcase.md) | 页型、类头、日志、平行实现与平行注释 | `modules/module_http/.../OkHttpActivity.kt`；`templates/ShowcaseActivity.kt.stub` |
-| 新增/移动模块、Activity、路由、分类归属 | [structure.md](structure.md) + [../05-catalog/modules.md](../05-catalog/modules.md) | 分层依赖、包名/资源前缀、源码分包（能力包→角色包）、路由、双初始化、文档同步 | `modules/module_storage`；`basic/basic_shared/.../RouterPath.kt`；`templates/NewModuleChecklist.md` |
+| 新增/移动模块、Activity、路由、分类归属 | [structure.md](structure.md) + [../05-catalog/modules.md](../05-catalog/modules.md) | 分层依赖、包名/资源前缀、源码分包（兄弟横评=能力包；控件集合=activity/）、路由、双初始化、文档同步 | `modules/module_storage`；`modules/module_widget_custom`；`basic/basic_shared/.../RouterPath.kt` |
 | 定命名、库类/成员注释等通用代码风格 | [style.md](style.md) | 禁止 m 前缀、Why>What、KDoc | `libs/lib_okhttp/.../InterceptorLogging.kt` |
 | 改 Gradle/Convention/CI/钩子/混淆/Flutter/XML 注释 | [engineering.md](engineering.md) + [../02-engineering/](../02-engineering/engineering.md) | 工程化落点注释与文件头 | `build-logic/`；`tools/pre-push` |
 | 抄现成模板（Showcase/UDF/MVI/Compose/测试/废弃页） | [templates.md](templates.md) + 仓内 `templates/` | 模板骨架；与规则冲突时以规则为准 | `ShowcaseActivity.kt.stub`、`MviViewModel.kt.stub`、`ComposeScreen.kt.stub`、`DeprecatedShowcaseActivity.kt.stub` |

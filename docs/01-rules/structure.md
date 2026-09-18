@@ -82,34 +82,51 @@ basic_model
 
 新建模块不要模仿 `ui_` / `demo_` 例外；只在既有模块内追加资源时沿用该模块已定前缀。
 
-### modules 源码分包（能力包 → 角色包）
+### modules 源码分包
 
-多技术并列的 Showcase 模块，源码分包统一为：
+按模块是否具备「同一能力的多实现 / 兄弟横评页」二选一，禁止套错口径。
+
+#### A. 兄弟横评模块（能力包 → 角色包）
+
+**判据**：模块内存在同一能力轴上的多个并列实现页（多库、多架构、多协议栈等 Showcase 平行矩阵）。
 
 ```
 module_<域>/
 ├── XxxMainActivity.kt          # 模块入口，仍在 namespace 包根
-└── <capability>/               # 一级：技术能力（datastore / mmkv / nordic_ble / retrofit …）
-    ├── activity/               # 二级：该能力的示例 Activity
+└── <capability>/               # 一级：实现/技术来源（datastore / mmkv / retrofit / hilt …）
+    ├── activity/               # 二级：该实现的示例 Activity
     │   └── XxxActivity.kt
-    └── data/                   # 二级：该能力的数据 / 实现支撑
+    └── data/                   # 二级：该实现的数据 / 支撑代码（按需）
         └── XxxSupport.kt
 ```
 
-1. **一级按技术能力**：同一能力的多库、多实现、多样本页归入同一 `<capability>/`。
-2. **二级按角色**：示例 Activity 进 `<capability>/activity/`；支撑实现进 `<capability>/data/`。架构样板模块可在能力包内保留既有角色子包（`viewmodel/`、`usecase/`、`contract/`、`presenter/` 等），UI 宿主仍归 `activity/`（Fragment 可用 `fragment/`）。
-3. **入口 Activity** 固定在模块 namespace 包根，不进入能力包。
-4. **跨能力共享代码**（通用 helper、工具、自定义 View）放模块级角色包（`helper/`、`utils/`、`view/`、`ui/`），禁止塞进单一能力包。
-5. **单能力模块**（无多技术横评轴）可只有包根入口 + 模块级 `activity/`，不必空造能力包。
-6. **包名与 Manifest** 与源码路径一致；`@Route` 路由字符串不随分包变化。
+1. **一级按实现轴**：同一能力的不同库/架构/协议各占一个 `<capability>/`。
+2. **二级按角色**：Activity 进 `activity/`；支撑进 `data/`。架构样板模块可保留 `viewmodel/`、`usecase/`、`contract/`、`presenter/` 等角色包，UI 宿主仍归 `activity/`（Fragment 可用 `fragment/`）。
+3. **入口 Activity** 在模块 namespace 包根。
+4. **跨实现共享代码**放模块级角色包（`helper/`、`utils/`、`view/` 等）。
+5. **禁止**：能力包内 Activity 与支撑代码平铺混放；同一模块示例页有的在 `activity/`、有的在能力包根。
 
-禁止：
+锚点：`module_storage`（datastore / mmkv）、`module_database`（room / objectbox）、`module_http`（okhttp / retrofit / …）、`module_di`（hilt / koin）。
 
-- 能力包内 Activity 与支撑代码平铺混放
-- 顶层 `activity/` 下再按技术分包（技术轴必须在一级，如 `retrofit/activity/` 而非 `activity/retrofit/`）
-- 同一模块内示例 Activity 有的在 `activity/`、有的在能力包根
+#### B. 控件/主题集合模块（模块级 activity/）
 
-锚点：`modules/module_storage`（`datastore/activity|data`、`mmkv/activity|data`）。
+**判据**：模块是彼此独立的控件、API 点、Compose 原语或场景页集合，**不存在**「同一能力多实现」横评轴。
+
+```
+module_<域>/
+├── XxxMainActivity.kt          # 模块入口
+└── activity/                   # 示例 Activity
+    ├── XxxActivity.kt          # 单页主题直接平铺
+    └── <topic>/YyyActivity.kt  # 主题较多时可加 topic 子目录，仅作集合归类
+```
+
+- **不要**为每个控件/主题空造一级能力包（如 `blurview/activity/`、`banner/activity/`）。
+- 主题子目录只服务集合检索，不承载「多实现对比」语义。
+- 支撑代码按主题就近或放模块级 `utils/`、`widget/`、`adapter/` 等既有包。
+
+适用：`module_widget`、`module_widget_custom`、`module_widget_thirdparty`、`module_tab`、`module_compose`、`module_gpuimage`、`module_ml`、`module_system_service`，以及 anim/async/chart 等单点主题模块。
+
+两类共同约束：包名与 Manifest 路径一致；`@Route` 路由字符串不随分包变化。
 
 ## 分类判据与模块边界
 
