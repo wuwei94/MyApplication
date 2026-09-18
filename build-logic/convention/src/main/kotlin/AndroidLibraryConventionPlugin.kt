@@ -16,6 +16,7 @@
 
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
+import com.google.samples.apps.nowinandroid.configureAndroidDependencyGuard
 import com.google.samples.apps.nowinandroid.configureDepsAndroid
 import com.google.samples.apps.nowinandroid.configureFlavors
 import com.google.samples.apps.nowinandroid.configureKotlinAndroid
@@ -57,6 +58,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 //    path.split("""\W""".toRegex()).drop(1).distinct().joinToString(separator = "_")
                 //        .lowercase() + "_"
             }
+            // Flavor 配置完成后再锁定 prod 运行时类路径基线
+            configureAndroidDependencyGuard()
             extensions.configure<LibraryAndroidComponentsExtension> {
                 configurePrintApksTask(this)
                 disableUnnecessaryAndroidTests(target)

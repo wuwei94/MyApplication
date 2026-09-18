@@ -48,6 +48,7 @@ dependencies {
     compileOnly(libs.gradlePlugin.hilt)
     compileOnly(libs.gradlePlugin.room)
     compileOnly(libs.gradlePlugin.spotless)
+    compileOnly(libs.gradlePlugin.dependency.guard)
 }
 
 tasks {

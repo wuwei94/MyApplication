@@ -14,6 +14,7 @@
  *   limitations under the License.
  */
 
+import com.google.samples.apps.nowinandroid.configureJvmDependencyGuard
 import com.google.samples.apps.nowinandroid.configureSpotlessForJvm
 import com.google.samples.apps.nowinandroid.libs
 import org.gradle.api.JavaVersion
@@ -37,6 +38,7 @@ class JvmLibraryConventionPlugin : Plugin<Project> {
             apply(plugin = "org.jetbrains.kotlin.jvm")
             apply(plugin = "nowinandroid.android.lint")
             configureSpotlessForJvm()
+            configureJvmDependencyGuard()
 
             extensions.configure<JavaPluginExtension> {
                 sourceCompatibility = JavaVersion.VERSION_17
