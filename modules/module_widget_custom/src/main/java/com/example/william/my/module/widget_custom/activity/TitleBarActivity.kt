@@ -1,4 +1,4 @@
-package com.example.william.my.module.widget_custom.titlebar.activity
+package com.example.william.my.module.widget_custom.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
