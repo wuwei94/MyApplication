@@ -1,4 +1,4 @@
-package com.example.william.my.module.image_loader.activity
+package com.example.william.my.module.image_loader.glide.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

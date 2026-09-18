@@ -1,4 +1,4 @@
-package com.example.william.my.module.image_loader.activity
+package com.example.william.my.module.image_loader.coil.activity
 
 import android.os.Bundle
 import coil3.load
