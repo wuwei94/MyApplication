@@ -1,4 +1,4 @@
-package com.example.william.my.module.di.activity
+package com.example.william.my.module.di.hilt.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels

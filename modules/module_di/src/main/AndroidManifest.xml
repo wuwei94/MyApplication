@@ -3,8 +3,8 @@
 
     <application>
         <activity android:name=".DiMainActivity" />
-        <activity android:name=".activity.HiltActivity" />
-        <activity android:name=".activity.KoinActivity" />
+        <activity android:name=".hilt.activity.HiltActivity" />
+        <activity android:name=".koin.activity.KoinActivity" />
     </application>
 
 </manifest>
