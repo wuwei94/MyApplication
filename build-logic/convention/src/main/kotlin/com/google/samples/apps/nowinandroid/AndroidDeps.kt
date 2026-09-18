@@ -33,6 +33,12 @@ internal fun Project.configureDepsAndroid(
 
             "testImplementation"(libs.findLibrary("junit").get())
 
+            // 共享测试基建：MainDispatcherRule / TestNetworkMonitor / TestDispatchersModule
+            // basic_lib 为 basic_testing 的实现依赖方，避免形成循环测试依赖
+            if (path != ":basic:basic_lib" && path != ":basic:basic_testing") {
+                "testImplementation"(project(":basic:basic_testing"))
+            }
+
             if (projectDir.resolve("src/androidTest").exists()) {
                 "androidTestImplementation"(libs.findLibrary("androidx-test-ext").get())
                 "androidTestImplementation"(libs.findLibrary("androidx-test-espresso").get())

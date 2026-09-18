@@ -1,4 +1,4 @@
-package com.example.william.my.module.arch.util
+package com.example.william.my.basic.basic_testing
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher
@@ -9,9 +9,10 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 /**
- * 协程单元测试主调度器重定向规则（对齐 Google Now in Android 规范）
+ * 协程单元测试主调度器重定向规则
  *
- * 在测试启动时将 [Dispatchers.Main] 替换为 [testDispatcher]，在测试结束时重置。
+ * 测试启动时将 [Dispatchers.Main] 替换为 [testDispatcher]，结束时重置。
+ * 跨模块单测统一引用本规则，避免各业务模块各写一份。
  */
 class MainDispatcherRule(
     val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),

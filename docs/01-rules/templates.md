@@ -294,7 +294,7 @@ package com.example.william.my.module.arch.viewmodel
 import app.cash.turbine.test
 import com.example.william.my.module.arch.fake.FakeArticleRepository
 import com.example.william.my.module.arch.mvi.data.ArticleUiIntent
-import com.example.william.my.module.arch.util.MainDispatcherRule
+import com.example.william.my.basic.basic_testing.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

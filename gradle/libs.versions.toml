@@ -476,6 +476,8 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "androidxNavigation" }
 # Hilt Android 运行时
 androidx-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "androidxHilt" }
+# Hilt 测试支持：提供 @TestInstallIn，用于在测试中替换生产 Hilt 模块
+androidx-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "androidxHilt" }
 # Hilt 注解编译器
 androidx-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "androidxHilt" }
 # Koin 核心核心库
@@ -531,6 +533,8 @@ androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-juni
 # Roborazzi 截图测试核心库（captureRoboImage）
 # 注意：2023 年后已从 JitPack(com.github.takahirom) 迁移至 Maven Central，group 改为 io.github.takahirom.roborazzi
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+# Roborazzi 无障碍合规检查（截图同时跑 ATF：触控目标 / 对比度 / contentDescription）
+roborazzi-accessibility-check = { group = "io.github.takahirom.roborazzi", name = "roborazzi-accessibility-check", version.ref = "roborazzi" }
 # Robolectric JVM Android 运行时模拟（截图测试用 RobolectricTestRunner）
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 # Material Design 核心矢量图标
@@ -928,6 +932,7 @@ testing-android = [
 # 截图测试套件（Roborazzi 截图 + Robolectric 运行时 + Compose UI 测试）
 testing-screenshot = [
     "roborazzi",
+    "roborazzi-accessibility-check",
     "robolectric",
     "androidx-compose-ui-test"
 ]

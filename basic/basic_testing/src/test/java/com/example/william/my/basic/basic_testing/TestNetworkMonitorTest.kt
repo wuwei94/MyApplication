@@ -1,4 +1,4 @@
-package com.example.william.my.core.base.network
+package com.example.william.my.basic.basic_testing
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

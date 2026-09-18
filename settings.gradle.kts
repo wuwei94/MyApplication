@@ -97,6 +97,8 @@ include(":basic:basic_network")
 include(":basic:basic_repo")
 include(":basic:basic_server")
 include(":basic:basic_sync")
+// 共享测试基建（MainDispatcherRule / Test 调度器 / Fake 监视器）
+include(":basic:basic_testing")
 
 // HTTP 客户端（基础）
 include(":libs:lib_httpurl")
