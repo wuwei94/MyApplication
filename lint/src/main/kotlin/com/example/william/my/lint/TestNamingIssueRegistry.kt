@@ -30,5 +30,8 @@ class TestNamingIssueRegistry : IssueRegistry() {
         TestNamingDetector.ISSUE_TEST_CLASS_NAME,
         TestNamingDetector.ISSUE_TEST_METHOD_NAME,
         HungarianNotationDetector.ISSUE_HUNGARIAN_NOTATION,
+        CollectAsStateWithLifecycleDetector.ISSUE_COLLECT_AS_STATE_WITH_LIFECYCLE,
+        DateTimeApiDetector.ISSUE_DATE_TIME_API,
+        ViewModelScopeDetector.ISSUE_VIEW_MODEL_SCOPE,
     )
 }
