@@ -372,6 +372,7 @@ org.greenrobot:eventbus-java:3.3.1
 org.greenrobot:eventbus:3.3.1
 org.java-websocket:Java-WebSocket:1.6.0
 org.jctools:jctools-core:2.1.2
+org.jetbrains.androidx.core:core-bundle-android:1.0.1
 org.jetbrains.androidx.core:core-bundle:1.0.1
 org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-savedstate:2.9.5
 org.jetbrains.androidx.lifecycle:lifecycle-viewmodel:2.9.5
