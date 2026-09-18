@@ -1,4 +1,4 @@
-package com.example.william.my.module.tab.activity
+package com.example.william.my.module.tab.bottomnavigation.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
