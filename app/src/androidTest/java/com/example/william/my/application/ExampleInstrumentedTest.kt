@@ -2,7 +2,7 @@ package com.example.william.my.application
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -14,9 +14,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @Test
-    fun appContext_packageName_matchesApplicationId() {
-        // 被测应用的 Context。
+    fun appContext_packageName_usesApplicationIdPrefix() {
+        // demo/prod 与 debug/release 会叠加 applicationIdSuffix，故只校验 applicationId 前缀
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.william.my.application", appContext.packageName)
+        assertTrue(
+            "packageName=${appContext.packageName} 应以 applicationId 前缀开头",
+            appContext.packageName.startsWith("com.example.william.my.application"),
+        )
     }
 }
