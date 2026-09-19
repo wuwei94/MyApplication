@@ -82,8 +82,8 @@ import java.util.Locale
  * 核心机制与避坑点：
  * 1. SSOT 唯一数据源：UI 永远只观察 Room 数据库通过 Flow 暴露的流，ViewModel 与 UI 绝不直接持有网络 DTO
  * 2. 仅写入网络同步（Write-Only Sync）：网络拉取后直接写入 Room，由 Room 的 InvalidationTracker 自动推流触发 UI 重组
- * 3. 离线高可用（Offline-First）：优先展现 Room 本地持久化缓存，断网或无网络环境下依然秒开可用
- * 4. 全链路可观测互动：提供网络同步、本地插入、清空数据库操作，直观验证 UI 数据变更全由 Room 驱动
+ * 3. 存储分工：Room 承载文章实体等结构化 SSOT；版本游标等非结构化偏好由 Proto DataStore（SyncPreferencesDataSource）持久化
+ * 4. 离线高可用（Offline-First）：优先展现 Room 本地持久化缓存，断网或无网络环境下依然秒开可用；页内同步/插入/清空用于验证数据变更全由 Room 驱动
  *
  * https://github.com/android/nowinandroid
  */
@@ -284,7 +284,7 @@ class OfflineFirstActivity : BaseActivity() {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "NetworkMonitor ──(isOnline)──▶ UI 离线横幅 & 在线自愈\nWorkManager ──(ServiceLocatorSyncWorker)──▶ Synchronizer 游标增量拉取 ──▶ Room SSOT",
+                    text = "NetworkMonitor ──(isOnline)──▶ UI 离线横幅 & 在线自愈\nWorkManager ──(Proto DataStore 游标)──▶ Synchronizer 增量拉取 ──▶ Room SSOT",
                     fontSize = 10.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -293,7 +293,7 @@ class OfflineFirstActivity : BaseActivity() {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "• 响应式网络监听：ConnectivityManager 封装 Flow，在线自动触发在线自愈同步\n• 增量同步（ChangeList）：按版本游标增量拉取，无新数据时 0 写开销（幂等）\n• 单一真实来源（SSOT）：UI 仅观察 Room Flow，断网秒开无阻碍",
+                    text = "• 响应式网络监听：ConnectivityManager 封装 Flow，在线自动触发在线自愈同步\n• 增量同步（ChangeList）：Proto DataStore 持久化版本游标，按游标增量拉取（幂等）\n• 存储分工：Room 作实体 SSOT；Proto DataStore 存非结构化偏好/游标\n• 单一真实来源（SSOT）：UI 仅观察 Room Flow，断网秒开无阻碍",
                     fontSize = 10.sp,
                     color = Color(0xFF64748B),
                     lineHeight = 14.sp,
