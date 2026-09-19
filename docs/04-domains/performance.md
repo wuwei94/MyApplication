@@ -130,8 +130,9 @@
 ### 2. 本地存储优化
 - **淘汰 SharedPreferences**：避免 SP 的同步 `commit()` 阻塞主线程与 `apply()` 带来的隐式 ANR 风险；
 - **采用现代化存储**：
-  - 轻量键值对：采用 **MMKV**（基于 `mmap` 内存映射，读写速度提升数十倍）；
-  - 结构化数据：采用 **Jetpack DataStore** 或 **Room**（支持 Flow 异步观察、类型安全与事务隔离）。
+  - 轻量同步键值对：采用 **MMKV**（基于 `mmap` 内存映射，读写速度提升数十倍）；
+  - 非结构化偏好 / 配置对象：采用 **Jetpack DataStore**（Preferences 自由键值或 Proto schema，Flow 响应式观察）；
+  - 多实体 / 查询 / 关系 / 列表 SSOT：采用 **Room**（类型安全 DAO、事务与表变更 Flow）。
 
 ---
 
