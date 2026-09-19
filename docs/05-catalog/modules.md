@@ -391,7 +391,7 @@
 | Activity | 功能 |
 |----------|------|
 | StorageMainActivity | 模块入口，导航到 DataStore、MMKV 示例 |
-| DataStoreActivity | DataStore（写入 / Flow 读取观察 / updateData 事务 / Proto / 清空；与 MMKV 平行轴） |
+| DataStoreActivity | DataStore（Preferences 自由键值 + Proto 偏好对象：写入 / Flow 观察 / updateData 事务 / 枚举与 repeated 字段 / 清空；与 MMKV 平行轴） |
 | MMKVActivity | MMKV（写入 / 读取 / 批量 / 删除 / clearAll / ByteArray 特有；与 DataStore 平行轴） |
 
 ---

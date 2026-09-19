@@ -4,6 +4,20 @@ option java_package = "com.example.william.my.module.storage.proto";
 option java_outer_classname = "SettingsProto";
 option java_multiple_files = true;
 
+// 主题偏好：枚举字段在编译期绑定合法取值，避免字符串散落
+enum ThemeMode {
+  THEME_MODE_UNSPECIFIED = 0;
+  THEME_MODE_SYSTEM = 1;
+  THEME_MODE_LIGHT = 2;
+  THEME_MODE_DARK = 3;
+}
+
+// 应用级非结构化偏好对象：单文件 schema，适合设置/配置场景；多实体查询归 Room
 message Settings {
   int32 example_counter = 1;
+  ThemeMode theme_mode = 2;
+  string preferred_language = 3;
+  bool notification_enabled = 4;
+  int32 onboarding_version = 5;
+  repeated string enabled_feature_flags = 6;
 }
