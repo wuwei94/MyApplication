@@ -31,7 +31,7 @@
 | 64dp | `shared_dp_toolbar_height` | 顶部应用栏 / Toolbar 默认高度（Material 3 标准） |
 | 80dp | `shared_dp_tab_height` | 底部导航栏 / Tab 高度（Material 3 标准） |
 | 200dp | `shared_dp_image_size` | 正方形图片尺寸 |
-| 300dp | `shared_dp_operation_height` | 操作列表统一固定高度 |
+| 200dp | `shared_dp_operation_height` | 操作列表统一固定高度 |
 | 80dp | `shared_dp_avatar_size` | 头像、大图标尺寸 |
 | 96dp | `shared_dp_float_size` | 悬浮窗图标尺寸 |
 | 120dp | `shared_dp_loading_size` | 加载弹窗边长 |

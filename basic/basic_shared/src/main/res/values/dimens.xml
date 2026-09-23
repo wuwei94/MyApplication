@@ -36,7 +36,7 @@
     <!-- 图片尺寸 -->
     <dimen name="shared_dp_image_size">200dp</dimen>
     <!-- 操作列表统一固定高度 -->
-    <dimen name="shared_dp_operation_height">300dp</dimen>
+    <dimen name="shared_dp_operation_height">200dp</dimen>
     <!-- 头像 / 大图标 -->
     <dimen name="shared_dp_avatar_size">80dp</dimen>
 
