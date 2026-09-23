@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/constants/secrets.dart';
 import 'package:flutter_demo/core/constants/urls.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// SSE (Server-Sent Events) — 服务端推送流式传输（DeepSeek AI 大模型对话）
 ///
@@ -16,6 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// 2. 协议解析：标准解析 `data: {...}\n\n` 格式及 `[DONE]` 结束标志
 /// 3. AI 对齐：兼容 `deepseek-chat` 格式，支持实时打字机输出
 /// 4. 中断控制：支持随时主动 Cancel 中断当前生成流
+/// 5. 密钥注入：API Key 与 Android 共用 `local.properties`，编译期注入默认，输入框可覆盖/手填
+/// 6. 对话输入：页面常驻 Prompt 输入框，空文本回退默认提问
 ///
 /// 基本用法：
 /// ```dart
@@ -95,10 +97,13 @@ class _LogRecord {
 class _SseDemoViewState extends State<SseDemoView> {
   static const String _defaultPrompt = '请用一句话介绍你自己和你的核心优势';
   static const String _serverUrl = Urls.deepSeek;
-  static const String _keyDeepSeekApiKey = 'deepseek_api_key';
 
-  final SharedPreferencesAsync _prefs = SharedPreferencesAsync();
-  final TextEditingController _apiKeyController = TextEditingController();
+  final TextEditingController _apiKeyController = TextEditingController(
+    text: Secrets.deepSeekApiKey,
+  );
+  final TextEditingController _promptController = TextEditingController(
+    text: _defaultPrompt,
+  );
   final ScrollController _scrollController = ScrollController();
 
   final Dio _dio = Dio();
@@ -110,23 +115,13 @@ class _SseDemoViewState extends State<SseDemoView> {
   final StringBuffer _responseBuffer = StringBuffer();
   final List<_LogRecord> _logs = <_LogRecord>[];
 
-  @override
-  void initState() {
-    super.initState();
-    _loadSavedApiKey();
-  }
-
-  Future<void> _loadSavedApiKey() async {
-    final String? savedKey = await _prefs.getString(_keyDeepSeekApiKey);
-    if (savedKey != null && savedKey.isNotEmpty && mounted) {
-      _apiKeyController.text = savedKey;
-    }
-  }
+  bool get _hasInjectedApiKey => Secrets.deepSeekApiKey.isNotEmpty;
 
   @override
   void dispose() {
     _cancelStream();
     _apiKeyController.dispose();
+    _promptController.dispose();
     _scrollController.dispose();
     _dio.close(force: true);
     super.dispose();
@@ -146,18 +141,21 @@ class _SseDemoViewState extends State<SseDemoView> {
   }
 
   void _sendDeepSeekPrompt() async {
-    final String apiKey = _apiKeyController.text.trim();
+    final String typedKey = _apiKeyController.text.trim();
+    final String apiKey = typedKey.isEmpty ? Secrets.deepSeekApiKey : typedKey;
     if (apiKey.isEmpty) {
       _addLog('----------------------------------------');
-      _addLog('【提示】未填写 DeepSeek API Key！');
-      _addLog('👉 请在上方 API Key 输入框中填写你的 sk-xxxx 密钥');
+      _addLog('【提示】未配置 DeepSeek API Key！');
+      _addLog(
+        '👉 请在工程根目录 local.properties 配置 deepseek.api.key=sk-xxxx，'
+        '执行 dart tools/sync_dart_defines.dart 后以 '
+        'fvm flutter run --dart-define-from-file=dart_defines.json 重新编译。',
+      );
       return;
     }
 
-    const String prompt = _defaultPrompt;
-
-    // 异步保存在本地设备（不入 Git）
-    await _prefs.setString(_keyDeepSeekApiKey, apiKey);
+    final String rawPrompt = _promptController.text.trim();
+    final String prompt = rawPrompt.isEmpty ? _defaultPrompt : rawPrompt;
 
     _cancelStream();
     setState(() {
@@ -423,7 +421,7 @@ class _SseDemoViewState extends State<SseDemoView> {
           ),
           const SizedBox(height: 10),
           const Text(
-            '地址：$_serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成',
+            '地址：$_serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成\n密钥：注入默认 + 输入框可改；Prompt 页面可编辑',
             style: TextStyle(
               color: Color(0xFF94A3B8),
               fontSize: 12,
@@ -450,10 +448,50 @@ class _SseDemoViewState extends State<SseDemoView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'API Key 配置与操作',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                '操作',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: _hasInjectedApiKey
+                      ? const Color(0xFF10B981).withValues(alpha: 0.12)
+                      : const Color(0xFFF59E0B).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: _hasInjectedApiKey
+                        ? const Color(0xFF10B981).withValues(alpha: 0.45)
+                        : const Color(0xFFF59E0B).withValues(alpha: 0.45),
+                  ),
+                ),
+                child: Text(
+                  _hasInjectedApiKey ? 'API Key 已注入' : 'API Key 可手填',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: _hasInjectedApiKey
+                        ? const Color(0xFF10B981)
+                        : const Color(0xFFF59E0B),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            '密钥默认来自工程根 local.properties（deepseek.api.key）编译期注入，可在下方输入框修改；未注入时直接手填。',
+            style: TextStyle(
+              color: Color(0xFF94A3B8),
+              fontSize: 12,
+              height: 1.5,
             ),
           ),
           const SizedBox(height: 12),
@@ -461,8 +499,8 @@ class _SseDemoViewState extends State<SseDemoView> {
             controller: _apiKeyController,
             obscureText: _obscureApiKey,
             decoration: InputDecoration(
-              labelText: 'DeepSeek API Key (sk-...)',
-              hintText: '填写你的 DeepSeek API Key',
+              labelText: 'DeepSeek API Key',
+              hintText: 'sk-...（空则用注入值）',
               isDense: true,
               filled: true,
               fillColor: Colors.white,
@@ -480,6 +518,28 @@ class _SseDemoViewState extends State<SseDemoView> {
                   });
                 },
               ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _promptController,
+            maxLines: 3,
+            minLines: 2,
+            decoration: InputDecoration(
+              labelText: '对话 Prompt',
+              hintText: '输入发给 DeepSeek 的对话内容（空则用默认）',
+              isDense: true,
+              filled: true,
+              fillColor: Colors.white,
+              alignLabelWithHint: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Color(0xFFCBD5E1)),

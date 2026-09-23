@@ -30,7 +30,7 @@
 - **严禁 `print` 调试**：不要使用 `print()`；如需日志，统一使用 `lib/core/utils/logger/` 下的工具或 `debugPrint`。
 - **示例纯粹性原则**：Demo 页面优先直接展示目标库/功能的核心 API，不为了写示例而封装与演示无关的复杂业务状态编排器。
 - **禁止使用已废弃 API**：严禁使用 Flutter 已废弃的组件（如 `RaisedButton`/`FlatButton`）与废弃属性，必须使用现代替代项（如 `ElevatedButton`）。
-- **敏感信息防护**：严禁在前端代码中硬编码真实 API Key / Secret 或敏感 Token，网络请求示例一律使用占位符、配置或 Mock 数据。
+- **敏感信息防护**：严禁在前端代码中硬编码真实 API Key / Secret 或敏感 Token，网络请求示例一律使用占位符、配置或 Mock 数据。DeepSeek 等密钥与 Android 共用工程根 `local.properties`（键 `deepseek.api.key`），经 `dart tools/sync_dart_defines.dart` 同步为 `dart_defines.json` 后，以 `String.fromEnvironment` 编译期注入；示例页可再通过输入框覆盖或在未注入时手填。
 - **目录隔离**：不要编辑生成目录或临时目录，如 `.dart_tool/`、`build/`。
 - **语言风格**：现有代码和注释中英文混用，新增内容尽量保持周边风格一致。
 
@@ -71,7 +71,13 @@
 # 安装依赖
 fvm flutter pub get
 
-# 运行项目
+# 同步 local.properties → dart_defines.json（DeepSeek API Key 等）
+dart tools/sync_dart_defines.dart
+
+# 运行项目（需要密钥的示例，如 SSE / DeepSeek）
+fvm flutter run --dart-define-from-file=dart_defines.json
+
+# 运行项目（无需密钥）
 fvm flutter run
 
 # 静态检查
@@ -88,3 +94,4 @@ dart format lib test tools
 
 - **Android**：`dart tools/apply_android_fixes.dart` — 自动补齐权限、Java 8+ API 兼容、compileSdk、相机插件依赖、TFLite Kotlin JVM 目标对齐
 - **iOS**：`dart tools/apply_ios_fixes.dart` — 自动补齐 geolocator 定位权限（Info.plist 用途说明 + Podfile 编译宏）
+- **Dart Defines**：`dart tools/sync_dart_defines.dart` — 读取 monorepo 根 `local.properties`，生成 `dart_defines.json` 供 `--dart-define-from-file` 使用
