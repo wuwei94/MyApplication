@@ -306,10 +306,10 @@
 | Activity | 功能 |
 |----------|------|
 | SseMainActivity | 模块入口，导航到 OkHttp / Ktor SSE 流式示例页面 |
-| OkHttpSseClientActivity | OkHttp SSE Listener 回调（POST Prompt + 下行 Token 流监听 / Cancel 注销） |
+| OkHttpSseClientActivity | OkHttp SSE Listener 回调（页面 Prompt 输入 POST + 下行 Token 流监听 / Cancel 注销） |
 | OkHttpSseClientRxActivity | OkHttp SSE RxJava（POST Observable + 下行监听 / Dispose 注销） |
 | OkHttpSseClientFlowActivity | OkHttp SSE Coroutines Flow（POST Flow + 下行监听 / Job 取消注销） |
-| KtorSseClientActivity | Ktor SSE Listener 回调（POST Prompt + 下行 Token 流监听 / Cancel 注销） |
+| KtorSseClientActivity | Ktor SSE Listener 回调（页面 Prompt 输入 POST + 下行 Token 流监听 / Cancel 注销） |
 | KtorSseClientFlowActivity | Ktor SSE Coroutines Flow（POST Flow + 下行监听 / Job 取消注销） |
 
 ---

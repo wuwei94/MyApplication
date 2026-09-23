@@ -1,6 +1,7 @@
 package com.example.william.my.module.sse.okhttp.activity
 
 import android.os.Bundle
+import android.widget.EditText
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
@@ -8,6 +9,7 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okttpsse.client.OkHttpSseClient
 import com.example.william.my.core.okttpsse.client.OkHttpSseListener
 import com.example.william.my.module.sse.utils.LlmStreamParser
+import com.example.william.my.module.sse.utils.PromptInputHelper
 import okhttp3.Response
 import okhttp3.sse.EventSource
 
@@ -31,10 +33,15 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_DeepSeek
     private val responseBuffer = StringBuilder()
+    private lateinit var apiKeyInput: EditText
+    private lateinit var promptInput: EditText
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        showDescription("[OkHttp SSE]DeepSeek AI 流式对话 (Listener 回调)\n地址：$serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成\n覆盖上行 Prompt / 下行 Token 流监听 / 关闭注销")
+        val inputs = PromptInputHelper.install(binding)
+        apiKeyInput = inputs.apiKey
+        promptInput = inputs.prompt
+        showDescription("[OkHttp SSE]DeepSeek AI 流式对话 (Listener 回调)\n地址：$serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成\n覆盖 API Key/对话 Prompt 输入 / 下行 Token 流监听 / 关闭注销")
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
@@ -45,7 +52,7 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
     override fun onRecyclerClick(position: Int, string: String) {
         super.onRecyclerClick(position, string)
         when (position) {
-            0 -> sendDeepSeekPrompt(LlmStreamParser.DEFAULT_PROMPT)
+            0 -> sendDeepSeekPrompt(PromptInputHelper.readPrompt(promptInput))
             1 -> cancelStream()
         }
     }
@@ -56,7 +63,8 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
     }
 
     private fun sendDeepSeekPrompt(prompt: String) {
-        if (Constants.DeepSeek_ApiKey.isBlank()) {
+        val apiKey = PromptInputHelper.readApiKey(apiKeyInput)
+        if (apiKey.isBlank()) {
             appendLog("----------------------------------------")
             appendLog("[提示]未配置 DeepSeek API Key！")
             appendLog("👉 请在工程根目录 local.properties 中配置：deepseek.api.key=sk-xxxx 后重新编译。")
@@ -71,7 +79,7 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
         updateLog("deepseek_response", "[AI 思考中...]")
 
         val jsonBody = LlmStreamParser.buildChatRequestBody(prompt, "deepseek-chat")
-        val headers = mapOf("Authorization" to "Bearer ${Constants.DeepSeek_ApiKey}")
+        val headers = mapOf("Authorization" to "Bearer $apiKey")
 
         OkHttpSseClient.connect(
             url = serverUrl,
