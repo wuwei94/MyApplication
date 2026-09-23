@@ -19,6 +19,7 @@
         <activity android:name=".activity.TurntableActivity" />
         <activity android:name=".activity.MicAnimationActivity" />
         <activity android:name=".activity.CropActivity" />
+        <activity android:name=".activity.WeakNetworkActivity" />
     </application>
 
 </manifest>

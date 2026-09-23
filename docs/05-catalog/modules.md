@@ -680,7 +680,8 @@ Flutter 嵌入页入口。
 
 | Activity | 功能 |
 |----------|------|
-| FeatureMainActivity | 模块入口，导航到抽奖转盘、麦位动画与图片裁剪示例页面 |
+| FeatureMainActivity | 模块入口，导航到抽奖转盘、麦位动画、图片裁剪与弱网处理示例页面 |
 | TurntableActivity | 转盘抽奖（旋转动画） |
 | MicAnimationActivity | 麦位动画（自定义 LayoutManager） |
 | CropActivity | 图片裁剪（Intent 调用系统裁剪，支持图库选择与拍照） |
+| WeakNetworkActivity | 弱网处理（NetworkMonitor 感知 / 短超时 / 退避重试 / 离线缓存兜底 / 网络恢复自愈） |

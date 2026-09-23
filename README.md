@@ -164,7 +164,7 @@ MyApplication/
     │
     └── [Sample & Feature]
         ├── module_sample       # 技术示例（Hook / Typeface）
-        └── module_feature      # 业务功能（转盘 / 麦位动画 / 图片裁剪）
+        └── module_feature      # 业务功能（转盘 / 麦位动画 / 图片裁剪 / 弱网处理）
 ```
 
 ---
@@ -515,6 +515,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - 转盘抽奖（旋转动画）
 - 麦位动画（自定义 LayoutManager）
 - 图片裁剪（Intent 调用系统裁剪，图库选择 / 拍照裁剪 + FileProvider 授权）
+- 弱网处理（NetworkMonitor 感知 / 短超时 / 退避重试 / 离线缓存兜底 / 网络恢复自愈）
 
 ---
 

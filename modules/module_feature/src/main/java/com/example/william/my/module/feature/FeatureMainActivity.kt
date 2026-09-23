@@ -6,9 +6,9 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 特性模块入口 — 导航到麦克风动画、转盘、图片裁剪等示例页面。
+ * 特性模块入口 — 导航到麦克风动画、转盘、图片裁剪、弱网处理等示例页面。
  *
- * 展示麦克风动画、转盘、图片裁剪等特色功能的示例列表。
+ * 展示麦克风动画、转盘、图片裁剪、弱网处理等业务场景的示例列表。
  */
 @Route(path = RouterPath.Feature.Main)
 class FeatureMainActivity : RouterRecyclerActivity() {
@@ -18,6 +18,7 @@ class FeatureMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("Turntable（幸运大转盘实战）", RouterPath.Feature.Turntable))
         routerItems.add(RouterItem("MicAnimation（麦位光波音量动画）", RouterPath.Feature.MicAnimation))
         routerItems.add(RouterItem("Crop（图片裁剪实战）", RouterPath.Feature.Crop))
+        routerItems.add(RouterItem("WeakNetwork（弱网处理实战）", RouterPath.Feature.WeakNetwork))
         return routerItems
     }
 }

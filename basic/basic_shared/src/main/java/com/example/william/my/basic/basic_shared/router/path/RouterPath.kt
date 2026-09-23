@@ -302,6 +302,7 @@ object RouterPath {
         const val Turntable = "$PATH/Turntable"
         const val MicAnimation = "$PATH/MicAnimation"
         const val Crop = "$PATH/Crop"
+        const val WeakNetwork = "$PATH/WeakNetwork"
     }
 
     // 多媒体

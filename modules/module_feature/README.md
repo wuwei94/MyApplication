@@ -20,10 +20,15 @@ graph TB
     :basic:basic_lib[basic_lib]:::android-library
     :basic:basic_shared[basic_shared]:::android-library
   end
+  subgraph :libs
+    direction TB
+    :libs:lib_okhttp[lib_okhttp]:::android-library
+  end
 
   :basic:basic_shared -.-> :basic:basic_lib
   :modules:module_feature -.-> :basic:basic_lib
   :modules:module_feature -.-> :basic:basic_shared
+  :modules:module_feature -.-> :libs:lib_okhttp
 
 classDef android-application fill:#CAFFBF,stroke:#000,stroke-width:2px,color:#000;
 classDef android-feature fill:#FFD6A5,stroke:#000,stroke-width:2px,color:#000;
