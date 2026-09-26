@@ -1,45 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Center
 /// Demonstrates various usages of Center: center alignment, combining with Container, etc.
-class CenterDemoPage extends StatelessWidget {
-  const CenterDemoPage({super.key, required this.title});
-
-  final String title;
+class CenterDemoPage extends BasicLayoutPage {
+  const CenterDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return CenterDemoView(title: title);
-  }
+  BasicLayoutPageState<CenterDemoPage> createState() => _CenterDemoPageState();
 }
 
-class CenterDemoView extends StatelessWidget {
-  const CenterDemoView({super.key, required this.title});
-
-  final String title;
-
+class _CenterDemoPageState extends BasicLayoutPageState<CenterDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Basic Center'),
-            _buildBasicCenter(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Center with Size'),
-            _buildCenterWithSize(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Multiple Children Centered'),
-            _buildMultipleChildren(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Practical Examples'),
-            _buildPracticalExample(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Basic Center'),
+          _buildBasicCenter(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Center with Size'),
+          _buildCenterWithSize(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Multiple Children Centered'),
+          _buildMultipleChildren(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Practical Examples'),
+          _buildPracticalExample(),
+        ],
       ),
     );
   }
@@ -64,7 +54,7 @@ class CenterDemoView extends StatelessWidget {
       height: 150,
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Center(
@@ -73,7 +63,7 @@ class CenterDemoView extends StatelessWidget {
           height: 80,
           decoration: BoxDecoration(
             color: Colors.blue,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           ),
           child: const Icon(
             Icons.center_focus_strong,
@@ -91,12 +81,12 @@ class CenterDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Text('Center in fixed size container:'),
           const SizedBox(height: 8),
           Container(
@@ -140,13 +130,13 @@ class CenterDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             const Icon(Icons.check_circle, color: Colors.green, size: 48),
             const SizedBox(height: 8),
             const Text(
@@ -169,12 +159,12 @@ class CenterDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Text('Empty State Page:'),
           const SizedBox(height: 8),
           Container(
@@ -183,7 +173,7 @@ class CenterDemoView extends StatelessWidget {
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   Icon(Icons.inbox, size: 64, color: Colors.purple.shade300),
                   const SizedBox(height: 16),
                   Text(

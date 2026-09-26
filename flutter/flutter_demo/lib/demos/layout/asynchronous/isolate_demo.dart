@@ -3,34 +3,46 @@ import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Isolate
 /// Demonstrates multi-threading with Isolate
-class IsolateDemoPage extends StatelessWidget {
-  const IsolateDemoPage({super.key, required this.title});
-
-  final String title;
+class IsolateDemoPage extends BasicLayoutPage {
+  const IsolateDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return IsolateDemoView(title: title);
-  }
+  BasicLayoutPageState<IsolateDemoPage> createState() =>
+      _IsolateDemoPageState();
 }
 
-class IsolateDemoView extends StatefulWidget {
-  const IsolateDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<IsolateDemoView> createState() => _IsolateDemoViewState();
-}
-
-class _IsolateDemoViewState extends State<IsolateDemoView> {
-  String _result = 'Press a button to start';
+class _IsolateDemoPageState extends BasicLayoutPageState<IsolateDemoPage> {
+  String _result = 'Tap an action to start';
   bool _isRunning = false;
   Isolate? _isolate;
   ReceivePort? _receivePort;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. Spawn Isolate 执行',
+        '2. compute 后台执行',
+        '3. 结束 Isolate',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _spawnIsolate();
+      case 1:
+        _runWithCompute();
+      case 2:
+        _killIsolate();
+        setState(() {
+          _isRunning = false;
+          _result = 'Isolate killed';
+        });
+    }
+  }
 
   static void _heavyTask(SendPort sendPort) {
     int sum = 0;
@@ -46,11 +58,12 @@ class _IsolateDemoViewState extends State<IsolateDemoView> {
       _result = 'Running in isolate...';
     });
 
-    _receivePort = ReceivePort();
+    final ReceivePort receivePort = ReceivePort();
+    _receivePort = receivePort;
 
-    _isolate = await Isolate.spawn(_heavyTask, _receivePort!.sendPort);
+    _isolate = await Isolate.spawn(_heavyTask, receivePort.sendPort);
 
-    _receivePort!.listen((message) {
+    receivePort.listen((dynamic message) {
       setState(() {
         _result = 'Result from isolate: $message';
         _isRunning = false;
@@ -66,13 +79,13 @@ class _IsolateDemoViewState extends State<IsolateDemoView> {
     _receivePort = null;
   }
 
-  void _runWithCompute() async {
+  Future<void> _runWithCompute() async {
     setState(() {
       _isRunning = true;
       _result = 'Running with compute...';
     });
 
-    final result = await compute(_computeTask, 1000000000);
+    final int result = await compute(_computeTask, 1000000000);
 
     setState(() {
       _result = 'Result from compute: $result';
@@ -95,47 +108,28 @@ class _IsolateDemoViewState extends State<IsolateDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_isRunning)
-              const CircularProgressIndicator()
-            else
-              Container(
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  _result,
-                  style: const TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
+  Widget buildPreview() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          if (_isRunning)
+            const CircularProgressIndicator()
+          else
+            Container(
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
               ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _isRunning ? null : _spawnIsolate,
-              child: const Text('Spawn Isolate'),
+              child: Text(
+                _result,
+                style: const TextStyle(fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _isRunning ? null : _runWithCompute,
-              child: const Text('Run with Compute'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _killIsolate,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('Kill Isolate'),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

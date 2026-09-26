@@ -1,60 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// LayoutBuilder
 /// Demonstrates responsive layout based on parent constraints
-class LayoutBuilderDemoPage extends StatelessWidget {
-  const LayoutBuilderDemoPage({super.key, required this.title});
-
-  final String title;
+class LayoutBuilderDemoPage extends BasicLayoutPage {
+  const LayoutBuilderDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return LayoutBuilderDemoView(title: title);
-  }
+  BasicLayoutPageState<LayoutBuilderDemoPage> createState() =>
+      _LayoutBuilderDemoPageState();
 }
 
-class LayoutBuilderDemoView extends StatelessWidget {
-  const LayoutBuilderDemoView({super.key, required this.title});
-
-  final String title;
-
+class _LayoutBuilderDemoPageState
+    extends BasicLayoutPageState<LayoutBuilderDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Column(
-        children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                if (constraints.maxWidth > 600) {
-                  return _buildWideLayout();
-                } else {
-                  return _buildNarrowLayout();
-                }
-              },
-            ),
+  Widget buildPreview() {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              if (constraints.maxWidth > 600) {
+                return _buildWideLayout();
+              } else {
+                return _buildNarrowLayout();
+              }
+            },
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.grey.shade200,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return Text(
-                  'Width: ${constraints.maxWidth.toStringAsFixed(1)}\nHeight: ${constraints.maxHeight.toStringAsFixed(1)}',
-                  textAlign: TextAlign.center,
-                );
-              },
-            ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          color: Colors.grey.shade200,
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Text(
+                'Width: ${constraints.maxWidth.toStringAsFixed(1)}\n'
+                'Height: ${constraints.maxHeight.toStringAsFixed(1)}',
+                textAlign: TextAlign.center,
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget _buildWideLayout() {
     return Row(
-      children: [
+      children: <Widget>[
         Expanded(
           child: Container(
             color: Colors.blue.shade100,
@@ -78,7 +71,7 @@ class LayoutBuilderDemoView extends StatelessWidget {
 
   Widget _buildNarrowLayout() {
     return Column(
-      children: [
+      children: <Widget>[
         Container(
           height: 100,
           color: Colors.blue.shade100,

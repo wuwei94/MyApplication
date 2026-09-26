@@ -1,152 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_demo/core/utils/logger/logger.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// ScreenUtil
+/// ScreenUtil — 屏幕适配尺寸
+///
+/// 核心机制与避坑点：
+/// 1. 初始化前提：`ScreenUtilInit` 必须在使用 `.w` / `.h` / `.sp` 前完成设计稿绑定。
+/// 2. 适配语义：`.w` 按宽度、`.h` 按高度、`.sp` 按宽度缩放字号。
+///
+/// 官方参考：
 /// https://pub.dev/packages/flutter_screenutil
-class ScreenUtilDemoPage extends StatelessWidget {
-  const ScreenUtilDemoPage({super.key, required this.title});
-
-  final String title;
+class ScreenUtilDemoPage extends BasicLayoutPage {
+  const ScreenUtilDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ScreenUtilDemoView(title: title);
-  }
+  BasicLayoutPageState<ScreenUtilDemoPage> createState() =>
+      _ScreenUtilDemoPageState();
 }
 
-class ScreenUtilDemoView extends StatelessWidget {
-  const ScreenUtilDemoView({super.key, required this.title});
-
-  final String title;
-
+class _ScreenUtilDemoPageState extends BasicLayoutPageState<ScreenUtilDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    // 在 MaterialApp 组件外层包裹一层 ScreenUtilInit 组件
-    return ScreenUtilInit(
-      //填入设计稿中设备的屏幕尺寸,单位dp
-      designSize: const Size(360, 640),
-      builder: (_, child) {
-        return ScreenUtilScaffold(title: title);
-      },
-    );
-  }
-}
+  Widget buildPreview() {
+    final ThemeData theme = Theme.of(context);
 
-class ScreenUtilScaffold extends StatelessWidget {
-  const ScreenUtilScaffold({super.key, required this.title});
-
-  void logScreenInformation() {
-    logDebug('设备宽度:${1.sw}dp');
-    logDebug('设备高度:${1.sh}dp');
-    logDebug('设备的像素密度:${ScreenUtil().pixelRatio}');
-    logDebug('底部安全区距离:${ScreenUtil().bottomBarHeight}dp');
-    logDebug('状态栏高度:${ScreenUtil().statusBarHeight}dp');
-    logDebug('实际宽度和字体(dp)与设计稿(dp)的比例:${ScreenUtil().scaleWidth}');
-    logDebug('实际高度(dp)与设计稿(dp)的比例:${ScreenUtil().scaleHeight}');
-    logDebug('高度相对于设计稿放大的比例:${ScreenUtil().scaleHeight}');
-    logDebug('系统的字体缩放比例:${ScreenUtil().textScaleFactor}');
-    logDebug('屏幕宽度的0.5:${0.5.sw}dp');
-    logDebug('屏幕高度的0.5:${0.5.sh}dp');
-    logDebug('屏幕方向:${ScreenUtil().orientation}');
-  }
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    logScreenInformation();
-
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
-                  width: 180.w,
-                  height: 200.h,
-                  color: Colors.red,
-                  child: Text(
-                    '我的实际宽度:${180.w}dp \n'
-                    '我的实际高度:${200.h}dp',
-                    style: TextStyle(color: Colors.white, fontSize: 12.sp),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
-                  width: ScreenUtil().setWidth(180),
-                  height: ScreenUtil().setHeight(200),
-                  color: Colors.blue,
-                  child: Text(
-                    '我的设计稿宽度: 180dp \n'
-                    '我的设计稿高度: 200dp',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ScreenUtil().setSp(12),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(16)).w,
-                color: Colors.green,
-              ),
-              constraints: const BoxConstraints(
-                maxWidth: 200,
-                maxHeight: 200,
-              ).r,
-              padding: const EdgeInsets.all(10).w,
-              alignment: Alignment.center,
-              child: Text(
-                '我是正方形,边长是200',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ScreenUtil().setSp(12),
-                ),
-              ),
-            ),
-            Text('设备宽度:${ScreenUtil().screenWidth}dp'),
-            Text('设备高度:${ScreenUtil().screenHeight}dp'),
-            Text('设备的像素密度:${ScreenUtil().pixelRatio}'),
-            Text('底部安全区距离:${ScreenUtil().bottomBarHeight}dp'),
-            Text('状态栏高度:${ScreenUtil().statusBarHeight}dp'),
-            Text('实际宽度与设计稿的比例:${ScreenUtil().scaleWidth}'),
-            Text('实际高度与设计稿的比例:${ScreenUtil().scaleHeight}'),
-            Text('系统的字体缩放比例:${ScreenUtil().textScaleFactor}'),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '我的文字大小在设计稿上是16dp，因为设置了`textScaleFactor`,所以不会随着系统的文字缩放比例变化',
-                  style: TextStyle(color: Colors.black, fontSize: 16.sp),
-                ),
-                Text(
-                  '我的文字大小在设计稿上是16dp，会随着系统的文字缩放比例变化',
-                  style: TextStyle(color: Colors.black, fontSize: 16.sp),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          SystemChrome.setPreferredOrientations([
-            MediaQuery.of(context).orientation == Orientation.portrait
-                ? DeviceOrientation.landscapeRight
-                : DeviceOrientation.portraitUp,
-          ]);
-          //  setState(() {});
-        },
-        label: const Text('旋转'),
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('ScreenUtil 适配预览', style: theme.textTheme.titleMedium),
+          const SizedBox(height: 16),
+          Container(
+            width: 375.w,
+            height: 80.h,
+            color: Colors.blue.shade100,
+            alignment: Alignment.center,
+            child: Text('375.w × 80.h', style: TextStyle(fontSize: 16.sp)),
+          ),
+          const SizedBox(height: 16),
+          Text('12.sp 小字', style: TextStyle(fontSize: 12.sp)),
+          const SizedBox(height: 8),
+          Text('16.sp 正文字', style: TextStyle(fontSize: 16.sp)),
+          const SizedBox(height: 8),
+          Text('24.sp 标题字', style: TextStyle(fontSize: 24.sp)),
+          const SizedBox(height: 16),
+          Text(
+            'screenWidth=${1.sw} screenHeight=${1.sh}',
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }

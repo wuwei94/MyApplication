@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// RotationTransition
 /// Demonstrates rotation animation
-class RotationTransitionDemoPage extends StatelessWidget {
-  const RotationTransitionDemoPage({super.key, required this.title});
-
-  final String title;
+class RotationTransitionDemoPage extends BasicLayoutPage {
+  const RotationTransitionDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return RotationTransitionDemoView(title: title);
-  }
+  BasicLayoutPageState<RotationTransitionDemoPage> createState() =>
+      _RotationTransitionDemoPageState();
 }
 
-class RotationTransitionDemoView extends StatefulWidget {
-  const RotationTransitionDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<RotationTransitionDemoView> createState() =>
-      _RotationTransitionDemoViewState();
-}
-
-class _RotationTransitionDemoViewState extends State<RotationTransitionDemoView>
+class _RotationTransitionDemoPageState
+    extends BasicLayoutPageState<RotationTransitionDemoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
   @override
+  List<String> buildList() => const <String>[
+        '1. 切换旋转',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _toggleRotation();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
-    _animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
   }
 
   @override
@@ -48,39 +47,28 @@ class _RotationTransitionDemoViewState extends State<RotationTransitionDemoView>
   }
 
   void _toggleRotation() {
-    if (_controller.isAnimating) {
-      _controller.stop();
+    if (_controller.status == AnimationStatus.completed) {
+      _controller.reverse();
     } else {
-      _controller.repeat();
+      _controller.forward();
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RotationTransition(
-              turns: _animation,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(Icons.refresh, size: 80, color: Colors.white),
-              ),
+  Widget buildPreview() {
+    return Center(
+      child: RotationTransition(
+        turns: _animation,
+        child: Container(
+          width: 150,
+          height: 150,
+          color: Colors.purple,
+          child: const Center(
+            child: Text(
+              'Rotating Box',
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _toggleRotation,
-              child: const Text('Toggle Rotation'),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// GestureDetector
 /// Demonstrates various gesture detection capabilities
-class GestureDetectorDemoPage extends StatelessWidget {
-  const GestureDetectorDemoPage({super.key, required this.title});
-
-  final String title;
+class GestureDetectorDemoPage extends BasicLayoutPage {
+  const GestureDetectorDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetectorDemoView(title: title);
-  }
+  BasicLayoutPageState<GestureDetectorDemoPage> createState() =>
+      _GestureDetectorDemoPageState();
 }
 
-class GestureDetectorDemoView extends StatefulWidget {
-  const GestureDetectorDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<GestureDetectorDemoView> createState() =>
-      _GestureDetectorDemoViewState();
-}
-
-class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
+class _GestureDetectorDemoPageState
+    extends BasicLayoutPageState<GestureDetectorDemoPage> {
   String _gesture = 'No gesture detected';
   double _scale = 1.0;
   double _rotation = 0.0;
@@ -36,38 +25,35 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Gesture Status'),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(_gesture, style: const TextStyle(fontSize: 16)),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Gesture Status'),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
             ),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Tap Gestures'),
-            _buildTapGestures(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Pan & Drag'),
-            _buildPanGesture(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Scale & Rotate'),
-            _buildScaleRotate(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Long Press'),
-            _buildLongPress(),
-          ],
-        ),
+            child: Text(_gesture, style: const TextStyle(fontSize: 16)),
+          ),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Tap Gestures'),
+          _buildTapGestures(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Pan & Drag'),
+          _buildPanGesture(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Scale & Rotate'),
+          _buildScaleRotate(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Long Press'),
+          _buildLongPress(),
+        ],
       ),
     );
   }
@@ -89,7 +75,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
   Widget _buildTapGestures() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         GestureDetector(
           onTap: () => _updateGesture('Single Tap'),
           onDoubleTap: () => _updateGesture('Double Tap'),
@@ -98,7 +84,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
             height: 100,
             decoration: BoxDecoration(
               color: Colors.green,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
             ),
             child: const Center(
               child: Text(
@@ -118,7 +104,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
             height: 100,
             decoration: BoxDecoration(
               color: Colors.orange,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
             ),
             child: const Center(
               child: Text(
@@ -135,7 +121,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
 
   Widget _buildPanGesture() {
     return GestureDetector(
-      onPanUpdate: (details) {
+      onPanUpdate: (DragUpdateDetails details) {
         setState(() {
           _position += details.delta;
         });
@@ -153,7 +139,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
         height: 150,
         decoration: BoxDecoration(
           color: Colors.purple.shade100,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           border: Border.all(color: Colors.purple),
         ),
         child: Center(
@@ -164,7 +150,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
               height: 80,
               decoration: BoxDecoration(
                 color: Colors.purple,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
               ),
               child: const Icon(Icons.touch_app, color: Colors.white, size: 40),
             ),
@@ -176,7 +162,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
 
   Widget _buildScaleRotate() {
     return GestureDetector(
-      onScaleUpdate: (details) {
+      onScaleUpdate: (ScaleUpdateDetails details) {
         setState(() {
           _scale = details.scale;
           _rotation = details.rotation;
@@ -196,7 +182,7 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
         height: 200,
         decoration: BoxDecoration(
           color: Colors.teal.shade100,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           border: Border.all(color: Colors.teal),
         ),
         child: Center(
@@ -209,7 +195,8 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
                 height: 100,
                 decoration: BoxDecoration(
                   color: Colors.teal,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius:
+                      BorderRadius.circular(BasicDemoDimens.cornerSmall),
                 ),
                 child: const Icon(
                   Icons.crop_rotate,
@@ -229,13 +216,14 @@ class _GestureDetectorDemoViewState extends State<GestureDetectorDemoView> {
       onLongPress: () => _updateGesture('Long Press'),
       onLongPressStart: (_) => _updateGesture('Long Press Start'),
       onLongPressEnd: (_) => _updateGesture('Long Press End'),
-      onLongPressMoveUpdate: (details) => _updateGesture('Long Press Move'),
+      onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) =>
+          _updateGesture('Long Press Move'),
       child: Container(
         width: double.infinity,
         height: 100,
         decoration: BoxDecoration(
           color: Colors.red.shade100,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           border: Border.all(color: Colors.red),
         ),
         child: const Center(

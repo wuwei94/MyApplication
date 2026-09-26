@@ -1,45 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Wrap
 /// Demonstrates the usage of Wrap widget for flow layout
-class WrapDemoPage extends StatelessWidget {
-  const WrapDemoPage({super.key, required this.title});
-
-  final String title;
+class WrapDemoPage extends BasicLayoutPage {
+  const WrapDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return WrapDemoView(title: title);
-  }
+  BasicLayoutPageState<WrapDemoPage> createState() => _WrapDemoPageState();
 }
 
-class WrapDemoView extends StatelessWidget {
-  const WrapDemoView({super.key, required this.title});
-
-  final String title;
-
+class _WrapDemoPageState extends BasicLayoutPageState<WrapDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Basic Wrap'),
-            _buildBasicWrap(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Wrap with Spacing'),
-            _buildWrapSpacing(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Wrap Alignment'),
-            _buildWrapAlignment(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Vertical Wrap'),
-            _buildVerticalWrap(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Basic Wrap'),
+          _buildBasicWrap(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Wrap with Spacing'),
+          _buildWrapSpacing(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Wrap Alignment'),
+          _buildWrapAlignment(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Vertical Wrap'),
+          _buildVerticalWrap(),
+        ],
       ),
     );
   }
@@ -64,11 +54,11 @@ class WrapDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Wrap(
-        children: [
+        children: <Widget>[
           _buildChip('Flutter'),
           _buildChip('Dart'),
           _buildChip('Android'),
@@ -88,13 +78,13 @@ class WrapDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
       child: Wrap(
         spacing: 16,
         runSpacing: 12,
-        children: [
+        children: <Widget>[
           _buildChip('Spacing'),
           _buildChip('Between'),
           _buildChip('Items'),
@@ -114,11 +104,11 @@ class WrapDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           _buildAlignmentRow('start', WrapAlignment.start),
           const SizedBox(height: 8),
           _buildAlignmentRow('center', WrapAlignment.center),
@@ -134,13 +124,13 @@ class WrapDemoView extends StatelessWidget {
   Widget _buildAlignmentRow(String label, WrapAlignment alignment) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         Container(
           color: Colors.orange.shade100,
           child: Wrap(
             alignment: alignment,
-            children: [
+            children: <Widget>[
               _buildSmallChip('A'),
               _buildSmallChip('B'),
               _buildSmallChip('C'),
@@ -158,13 +148,13 @@ class WrapDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
       child: Wrap(
         direction: Axis.vertical,
         spacing: 8,
-        children: [
+        children: <Widget>[
           _buildChip('1'),
           _buildChip('2'),
           _buildChip('3'),

@@ -1,45 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Flexible & Expanded
 /// Demonstrates the usage of Flexible and Expanded widgets
-class FlexibleExpandedDemoPage extends StatelessWidget {
-  const FlexibleExpandedDemoPage({super.key, required this.title});
-
-  final String title;
+class FlexibleExpandedDemoPage extends BasicLayoutPage {
+  const FlexibleExpandedDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FlexibleExpandedDemoView(title: title);
-  }
+  BasicLayoutPageState<FlexibleExpandedDemoPage> createState() =>
+      _FlexibleExpandedDemoPageState();
 }
 
-class FlexibleExpandedDemoView extends StatelessWidget {
-  const FlexibleExpandedDemoView({super.key, required this.title});
-
-  final String title;
-
+class _FlexibleExpandedDemoPageState
+    extends BasicLayoutPageState<FlexibleExpandedDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Expanded - Fill Remaining Space'),
-            _buildExpandedDemo(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Multiple Expanded'),
-            _buildMultipleExpanded(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Flexible with Flex'),
-            _buildFlexibleFlex(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Flexible.loose vs Flexible.tight'),
-            _buildFlexibleFit(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Expanded - Fill Remaining Space'),
+          _buildExpandedDemo(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Multiple Expanded'),
+          _buildMultipleExpanded(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Flexible with Flex'),
+          _buildFlexibleFlex(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Flexible.loose vs Flexible.tight'),
+          _buildFlexibleFit(),
+        ],
       ),
     );
   }
@@ -64,11 +56,11 @@ class FlexibleExpandedDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           Container(width: 60, color: Colors.red),
           Expanded(
             child: Container(
@@ -91,11 +83,11 @@ class FlexibleExpandedDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(right: 4),
@@ -134,11 +126,11 @@ class FlexibleExpandedDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           Flexible(
             flex: 1,
             child: Container(
@@ -180,11 +172,11 @@ class FlexibleExpandedDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           Flexible(
             child: Container(
               width: 50,

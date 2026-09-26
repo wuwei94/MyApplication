@@ -1,402 +1,337 @@
-﻿import 'dart:async';
-import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:lib_bluetooth/lib_bluetooth.dart';
 
-/// BLE 设备连接与 GATT 交互示例（调用 lib_bluetooth 本地库封装）
+/// BLE 连接 — GATT 连接、服务发现与特征值读写
 ///
-/// 演示使用 [BleSession] 进行设备连接/断开、MTU 协商、GATT 树浏览（Services / Characteristics）、
-/// 特征值读写（Read / Write）与 Notify 流式订阅。
-class BleDeviceDemoPage extends StatelessWidget {
-  const BleDeviceDemoPage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return BleDeviceDemoView(title: title);
-  }
-}
-
-class BleDeviceDemoView extends StatefulWidget {
-  const BleDeviceDemoView({super.key, required this.title});
-
-  final String title;
+/// 核心机制与避坑点：
+/// 1. 调用顺序：`connect` → `discoverServices` 之后才能 `read` / `write` / `listenNotification`。
+/// 2. MTU 协商：默认 23（Payload 20），`requestMtu` 成功后再做大包写入。
+/// 3. 特征查找：`characteristicUuid` 走子串匹配，未命中抛 `StateError`。
+///
+/// 官方参考：
+/// https://pub.dev/packages/flutter_blue_plus
+class BleDeviceDemoPage extends BasicResponsePage {
+  const BleDeviceDemoPage({super.key, required super.title});
 
   @override
-  State<BleDeviceDemoView> createState() => _BleDeviceDemoViewState();
+  BasicResponsePageState<BleDeviceDemoPage> createState() =>
+      _BleDeviceDemoPageState();
 }
 
-class _BleDeviceDemoViewState extends State<BleDeviceDemoView> {
+class _BleDeviceDemoPageState
+    extends BasicResponsePageState<BleDeviceDemoPage> {
+  static const String _statusKey = 'status';
+  static const String _notifyKey = 'notify';
+  static const int _desiredMtu = 512;
+  static const Duration _scanTimeout = Duration(seconds: 4);
+  static const Duration _connectTimeout = Duration(seconds: 10);
+
   BleDeviceItem? _targetDevice;
   BleSession? _session;
-  BleConnectionStatus _connectionState = BleConnectionStatus.disconnected;
   List<BleServiceInfo> _services = <BleServiceInfo>[];
-  final List<String> _logs = <String>[];
   int _currentMtu = 23;
 
   StreamSubscription<BleConnectionStatus>? _connectionStateSub;
   StreamSubscription<int>? _mtuSub;
+  StreamSubscription<List<int>>? _notifySub;
+  StreamSubscription<List<BleDeviceItem>>? _scanPickSub;
+
+  @override
+  void initState() {
+    super.initState();
+    showDescription(
+      'BLE 连接示例：扫描选设备 → 连接 → 发现服务 → MTU 协商 → 读写 / Notify',
+    );
+  }
 
   @override
   void dispose() {
     _connectionStateSub?.cancel();
     _mtuSub?.cancel();
-    _session?.disconnect();
-    _session?.dispose();
+    _notifySub?.cancel();
+    _scanPickSub?.cancel();
+    final BleSession? session = _session;
+    _session = null;
+    if (session != null) {
+      unawaited(session.disconnect());
+      unawaited(session.dispose());
+    }
     super.dispose();
   }
 
-  void _addLog(String msg) {
-    if (mounted) {
-      setState(() {
-        _logs.insert(0, '[${DateTime.now().toIso8601String().substring(11, 19)}] $msg');
-        if (_logs.length > 50) _logs.removeLast();
-      });
+  @override
+  List<String> buildList() => const <String>[
+        '1. 扫描并选择首个设备',
+        '2. 连接目标设备',
+        '3. 发现 GATT 服务',
+        '4. 请求扩展 MTU',
+        '5. 读取首个可读特征值',
+        '6. 写入测试数据',
+        '7. 订阅 Notify 通知',
+        '8. 断开设备连接',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _scanAndSelectDevice();
+      case 1:
+        _connectDevice();
+      case 2:
+        _discoverServices();
+      case 3:
+        _requestMtu();
+      case 4:
+        _readCharacteristic();
+      case 5:
+        _writeCharacteristic();
+      case 6:
+        _toggleNotification();
+      case 7:
+        _disconnectDevice();
     }
   }
 
-  Future<void> _scanAndSelectDevice() async {
-    _addLog('正在扫描周围 BLE 设备寻找可用目标...');
-    try {
-      StreamSubscription<List<BleDeviceItem>>? sub;
-      sub = BleClient.instance.scanResults.listen((List<BleDeviceItem> results) {
-        if (results.isNotEmpty) {
-          sub?.cancel();
-          BleClient.instance.stopScan();
-          final BleDeviceItem first = results.first;
-          _addLog('发现目标设备: ${first.name} (${first.id})');
-          _attachDevice(first);
-        }
-      });
+  BleSession? get _readySession {
+    final BleSession? session = _session;
+    if (session == null) {
+      appendLog('✗ 请先扫描并连接目标设备');
+      return null;
+    }
+    return session;
+  }
 
-      await BleClient.instance.startScan(timeout: const Duration(seconds: 4));
-    } catch (e) {
-      _addLog('扫描失败: $e');
+  BleCharInfo? _pickChar(bool Function(BleCharInfo char) predicate) {
+    for (final BleServiceInfo service in _services) {
+      for (final BleCharInfo char in service.characteristics) {
+        if (predicate(char)) {
+          return char;
+        }
+      }
+    }
+    return null;
+  }
+
+  Future<void> _scanAndSelectDevice() async {
+    appendLog('→ [Scan] 正在扫描周围 BLE 设备（$_scanTimeout）...');
+    final Completer<BleDeviceItem> completer = Completer<BleDeviceItem>();
+    final StreamSubscription<List<BleDeviceItem>>? oldScanSub = _scanPickSub;
+    _scanPickSub = null;
+    if (oldScanSub != null) {
+      unawaited(oldScanSub.cancel());
+    }
+    _scanPickSub =
+        BleClient.instance.scanResults.listen((List<BleDeviceItem> results) {
+      if (results.isEmpty || completer.isCompleted) {
+        return;
+      }
+      completer.complete(results.first);
+    });
+
+    try {
+      unawaited(
+        BleClient.instance.startScan(timeout: _scanTimeout),
+      );
+      final BleDeviceItem device = await completer.future.timeout(
+        _scanTimeout + const Duration(seconds: 1),
+      );
+      await BleClient.instance.stopScan();
+      if (!mounted) return;
+      appendLog('✓ [Scan] 发现目标设备: ${device.name} (${device.id})');
+      _attachDevice(device);
+    } on TimeoutException {
+      await BleClient.instance.stopScan();
+      appendLog('✗ [Scan] 扫描超时，未发现设备');
+    } catch (error) {
+      await BleClient.instance.stopScan();
+      appendLog('✗ [Scan] 扫描失败: $error');
+    } finally {
+      final StreamSubscription<List<BleDeviceItem>>? sub = _scanPickSub;
+      _scanPickSub = null;
+      if (sub != null) {
+        unawaited(sub.cancel());
+      }
     }
   }
 
   void _attachDevice(BleDeviceItem device) {
     _connectionStateSub?.cancel();
     _mtuSub?.cancel();
-    _session?.dispose();
+    _notifySub?.cancel();
+    final BleSession? oldSession = _session;
+    _session = null;
+    if (oldSession != null) {
+      unawaited(oldSession.dispose());
+    }
 
     _targetDevice = device;
     final BleSession session = BleClient.instance.createSession(device);
     _session = session;
 
-    _connectionStateSub = session.connectionStatus.listen((BleConnectionStatus state) {
-      if (mounted) {
-        setState(() => _connectionState = state);
-      }
-      _addLog('连接状态变更: ${state.name.toUpperCase()}');
+    _connectionStateSub =
+        session.connectionStatus.listen((BleConnectionStatus state) {
+      updateLog(_statusKey, '连接状态: ${state.name}');
+      appendLog('→ [Status] 连接状态变更: ${state.name}');
       if (state == BleConnectionStatus.connected) {
         _discoverServices();
       }
     });
 
     _mtuSub = session.mtuStream.listen((int mtu) {
-      if (mounted) {
-        setState(() => _currentMtu = mtu);
-      }
-      _addLog('当前 MTU 更新为: $mtu 字节');
+      _currentMtu = mtu;
+      updateLog(_statusKey, '连接状态: connected, MTU=$_currentMtu');
     });
-
-    _connectDevice();
   }
 
   Future<void> _connectDevice() async {
     final BleSession? session = _session;
-    if (session == null) return;
-    _addLog('正在连接设备: ${session.deviceId}...');
+    if (session == null) {
+      appendLog('✗ [Connect] 请先扫描并选择设备');
+      return;
+    }
+    final BleDeviceItem? device = _targetDevice;
+    appendLog(
+      '→ [Connect] 正在连接 ${device?.name ?? session.deviceId} ...',
+    );
     try {
-      await session.connect(timeout: const Duration(seconds: 10), autoConnect: false);
-      _addLog('✓ 连接指令已发出');
-    } catch (e) {
-      _addLog('✗ 连接异常: $e');
+      await session.connect(
+        timeout: _connectTimeout,
+        autoConnect: false,
+      );
+      appendLog('✓ [Connect] 连接指令已发出');
+    } catch (error) {
+      appendLog('✗ [Connect] 连接异常: $error');
     }
   }
 
   Future<void> _disconnectDevice() async {
-    final BleSession? session = _session;
+    final BleSession? session = _readySession;
     if (session == null) return;
-    _addLog('正在断开连接...');
+    appendLog('→ [Disconnect] 正在断开连接...');
     try {
       await session.disconnect();
-      _addLog('✓ 设备已断开');
-    } catch (e) {
-      _addLog('✗ 断开异常: $e');
+      appendLog('✓ [Disconnect] 设备已断开');
+    } catch (error) {
+      appendLog('✗ [Disconnect] 断开异常: $error');
     }
   }
 
   Future<void> _discoverServices() async {
-    final BleSession? session = _session;
+    final BleSession? session = _readySession;
     if (session == null) return;
-    _addLog('正在发起服务发现 (discoverServices)...');
+    appendLog('→ [Discover] 正在发起服务发现 (discoverServices)...');
     try {
-      final List<BleServiceInfo> s = await session.discoverServices();
-      if (mounted) {
-        setState(() => _services = s);
+      final List<BleServiceInfo> services = await session.discoverServices();
+      _services = services;
+      appendLog('✓ [Discover] 发现 ${services.length} 个 GATT 服务');
+      for (final BleServiceInfo service in services) {
+        appendLog('  → Service ${service.uuid} chars=${service.characteristics.length}');
+        for (final BleCharInfo char in service.characteristics) {
+          final List<String> props = <String>[
+            if (char.canRead) 'Read',
+            if (char.canWrite) 'Write',
+            if (char.canWriteWithoutResponse) 'WriteNoResp',
+            if (char.canNotify) 'Notify',
+            if (char.canIndicate) 'Indicate',
+          ];
+          appendLog('    · Char ${char.uuid} [${props.join('/')}]');
+        }
       }
-      _addLog('✓ 发现 ${s.length} 个 GATT 服务');
-    } catch (e) {
-      _addLog('✗ 服务发现失败: $e');
+    } catch (error) {
+      appendLog('✗ [Discover] 服务发现失败: $error');
     }
   }
 
   Future<void> _requestMtu() async {
-    final BleSession? session = _session;
+    final BleSession? session = _readySession;
     if (session == null) return;
-    _addLog('正在请求扩展 MTU 至 512 字节...');
+    appendLog('→ [MTU] 正在请求扩展 MTU 至 $_desiredMtu 字节...');
     try {
-      final int mtu = await session.requestMtu(512);
-      _addLog('✓ MTU 协商成功: $mtu 字节');
-    } catch (e) {
-      _addLog('✗ 请求 MTU 失败: $e');
+      final int mtu = await session.requestMtu(_desiredMtu);
+      _currentMtu = mtu;
+      appendLog('✓ [MTU] 协商成功: $mtu 字节');
+    } catch (error) {
+      appendLog('✗ [MTU] 请求失败: $error');
     }
   }
 
-  Future<void> _readCharacteristic(BleCharInfo char) async {
-    final BleSession? session = _session;
+  Future<void> _readCharacteristic() async {
+    final BleSession? session = _readySession;
     if (session == null) return;
-    _addLog('正在读取特征值: ${char.uuid.substring(0, 8)}...');
+    final BleCharInfo? char = _pickChar((BleCharInfo c) => c.canRead);
+    if (char == null) {
+      appendLog('✗ [Read] 未找到可读特征值，请先发现服务');
+      return;
+    }
+    appendLog('→ [Read] 正在读取特征值: ${char.uuid}...');
     try {
-      final List<int> val = await session.read(characteristicUuid: char.uuid);
-      final String hex = BleUtils.bytesToHex(val);
-      _addLog('✓ 读取成功: Hex=[$hex] (长度: ${val.length} 字节)');
-    } catch (e) {
-      _addLog('✗ 读取失败: $e');
+      final List<int> value =
+          await session.read(characteristicUuid: char.uuid);
+      final String hex = BleUtils.bytesToHex(value);
+      appendLog('✓ [Read] Hex=[$hex]（长度: ${value.length} 字节）');
+    } catch (error) {
+      appendLog('✗ [Read] 读取失败: $error');
     }
   }
 
-  Future<void> _writeCharacteristic(BleCharInfo char) async {
-    final BleSession? session = _session;
+  Future<void> _writeCharacteristic() async {
+    final BleSession? session = _readySession;
     if (session == null) return;
+    final BleCharInfo? char = _pickChar(
+      (BleCharInfo c) => c.canWrite || c.canWriteWithoutResponse,
+    );
+    if (char == null) {
+      appendLog('✗ [Write] 未找到可写特征值，请先发现服务');
+      return;
+    }
     final List<int> data = 'Hello BLE from lib_bluetooth!'.codeUnits;
-    _addLog('正在写入数据 (${data.length} 字节) 到特征值: ${char.uuid.substring(0, 8)}...');
+    appendLog(
+      '→ [Write] 正在写入 ${data.length} 字节到特征值: ${char.uuid}...',
+    );
     try {
       await session.write(
         characteristicUuid: char.uuid,
         data: data,
-        withoutResponse: false,
+        withoutResponse: !char.canWrite,
       );
-      _addLog('✓ 写入成功并收到响应');
-    } catch (e) {
-      _addLog('✗ 写入失败: $e');
+      appendLog('✓ [Write] 写入成功');
+    } catch (error) {
+      appendLog('✗ [Write] 写入失败: $error');
     }
   }
 
-  Future<void> _toggleNotification(BleCharInfo char) async {
-    final BleSession? session = _session;
+  void _toggleNotification() {
+    final BleSession? session = _readySession;
     if (session == null) return;
-    _addLog('正在监听 Notify 通知: ${char.uuid.substring(0, 8)}...');
+    final BleCharInfo? char = _pickChar(
+      (BleCharInfo c) => c.canNotify || c.canIndicate,
+    );
+    if (char == null) {
+      appendLog('✗ [Notify] 未找到可订阅特征值，请先发现服务');
+      return;
+    }
+    appendLog('→ [Notify] 正在监听 Notify: ${char.uuid}...');
     try {
       final Stream<List<int>> stream = session.listenNotification(
         characteristicUuid: char.uuid,
         enable: true,
       );
-      stream.listen((List<int> value) {
+      final StreamSubscription<List<int>>? oldNotifySub = _notifySub;
+      _notifySub = null;
+      if (oldNotifySub != null) {
+        unawaited(oldNotifySub.cancel());
+      }
+      _notifySub = stream.listen((List<int> value) {
+        if (!mounted) return;
         final String hex = BleUtils.bytesToHex(value);
-        _addLog('🔔 收到 Notify 推送 [${char.uuid.substring(0, 8)}]: Hex=[$hex]');
+        updateLog(_notifyKey, 'Notify ${char.uuid}: Hex=[$hex]');
       });
-      _addLog('✓ Notify 数据流已就绪');
-    } catch (e) {
-      _addLog('✗ Notify 设置失败: $e');
+      appendLog('✓ [Notify] 数据流已就绪');
+    } catch (error) {
+      appendLog('✗ [Notify] 设置失败: $error');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search_rounded),
-            tooltip: '扫描并选择首个设备',
-            onPressed: _scanAndSelectDevice,
-          ),
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          // 设备与状态头部
-          Container(
-            padding: const EdgeInsets.all(12),
-            color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      _connectionState == BleConnectionStatus.connected
-                          ? Icons.link_rounded
-                          : Icons.link_off_rounded,
-                      color: _connectionState == BleConnectionStatus.connected
-                          ? Colors.green
-                          : Colors.grey,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        _targetDevice != null
-                            ? '${_targetDevice!.name} (${_targetDevice!.id})'
-                            : '尚未选择设备（点击右上角扫描）',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: _connectionState == BleConnectionStatus.connected
-                            ? Colors.green.withValues(alpha: 0.1)
-                            : Colors.grey.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        _connectionState.name.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: _connectionState == BleConnectionStatus.connected
-                              ? Colors.green
-                              : Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: <Widget>[
-                    Text('当前 MTU: $_currentMtu 字节', style: const TextStyle(fontSize: 12)),
-                    const Spacer(),
-                    if (_connectionState == BleConnectionStatus.connected) ...<Widget>[
-                      OutlinedButton(
-                        onPressed: _requestMtu,
-                        child: const Text('协商 MTU (512)', style: TextStyle(fontSize: 12)),
-                      ),
-                      const SizedBox(width: 8),
-                      OutlinedButton(
-                        onPressed: _disconnectDevice,
-                        child: const Text('断开', style: TextStyle(fontSize: 12)),
-                      ),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // GATT 树展示区
-          Expanded(
-            flex: 6,
-            child: _services.isEmpty
-                ? const Center(
-                    child: Text('暂无 GATT 服务数据，连接成功后自动展示',
-                        style: TextStyle(color: Colors.grey)),
-                  )
-                : ListView.builder(
-                    itemCount: _services.length,
-                    itemBuilder: (BuildContext context, int sIndex) {
-                      final BleServiceInfo service = _services[sIndex];
-                      final String shortUuid = service.uuid.length > 8
-                          ? service.uuid.substring(0, 8)
-                          : service.uuid;
-                      return ExpansionTile(
-                        leading: const Icon(Icons.folder_open_rounded, color: Colors.blue),
-                        title: Text('Service: $shortUuid...'),
-                        subtitle: Text('Full UUID: ${service.uuid}', style: const TextStyle(fontSize: 11)),
-                        children: service.characteristics.map((BleCharInfo char) {
-                          final String cShortUuid = char.uuid.length > 8
-                              ? char.uuid.substring(0, 8)
-                              : char.uuid;
-                          return ListTile(
-                            contentPadding: const EdgeInsets.only(left: 32, right: 16),
-                            title: Text('Char: $cShortUuid...'),
-                            subtitle: Text(
-                              '属性: [${<String>[
-                                if (char.canRead) 'Read',
-                                if (char.canWrite) 'Write',
-                                if (char.canWriteWithoutResponse) 'WriteNoResp',
-                                if (char.canNotify) 'Notify',
-                                if (char.canIndicate) 'Indicate',
-                              ].join('/')}]',
-                              style: const TextStyle(fontSize: 11),
-                            ),
-                            trailing: Wrap(
-                              spacing: 4,
-                              children: <Widget>[
-                                if (char.canRead)
-                                  IconButton(
-                                    icon: const Icon(Icons.download_rounded, size: 18),
-                                    tooltip: '读取',
-                                    onPressed: () => _readCharacteristic(char),
-                                  ),
-                                if (char.canWrite || char.canWriteWithoutResponse)
-                                  IconButton(
-                                    icon: const Icon(Icons.upload_rounded, size: 18),
-                                    tooltip: '写入',
-                                    onPressed: () => _writeCharacteristic(char),
-                                  ),
-                                if (char.canNotify || char.canIndicate)
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.notifications_none_rounded,
-                                      size: 18,
-                                    ),
-                                    tooltip: '开启 Notify',
-                                    onPressed: () => _toggleNotification(char),
-                                  ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
-          ),
-          const Divider(height: 1),
-          // 日志控制台
-          Expanded(
-            flex: 4,
-            child: Container(
-              color: const Color(0xFF1E293B),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    color: const Color(0xFF0F172A),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Text('通信与交互日志', style: TextStyle(color: Colors.white70, fontSize: 12)),
-                        TextButton(
-                          onPressed: () => setState(() => _logs.clear()),
-                          child: const Text('清空日志', style: TextStyle(fontSize: 11, color: Colors.blueAccent)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      reverse: true,
-                      padding: const EdgeInsets.all(8),
-                      itemCount: _logs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Text(
-                          _logs[index],
-                          style: const TextStyle(color: Color(0xFF38BDF8), fontSize: 12, fontFamily: 'monospace'),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

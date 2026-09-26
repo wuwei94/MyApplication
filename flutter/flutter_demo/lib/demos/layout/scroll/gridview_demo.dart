@@ -1,42 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// GridView
 /// Demonstrates the usage of GridView widget
-class GridViewDemoPage extends StatelessWidget {
-  const GridViewDemoPage({super.key, required this.title});
-
-  final String title;
+class GridViewDemoPage extends BasicLayoutPage {
+  const GridViewDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return GridViewDemoView(title: title);
-  }
+  BasicLayoutPageState<GridViewDemoPage> createState() =>
+      _GridViewDemoPageState();
 }
 
-class GridViewDemoView extends StatelessWidget {
-  const GridViewDemoView({super.key, required this.title});
-
-  final String title;
-
+class _GridViewDemoPageState extends BasicLayoutPageState<GridViewDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('GridView.count'),
-            SizedBox(height: 200, child: _buildGridViewCount()),
-            const SizedBox(height: 24),
-            _buildSectionTitle('GridView.builder'),
-            SizedBox(height: 200, child: _buildGridViewBuilder()),
-            const SizedBox(height: 24),
-            _buildSectionTitle('GridView.extent'),
-            SizedBox(height: 200, child: _buildGridViewExtent()),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('GridView.count'),
+          SizedBox(height: 200, child: _buildGridViewCount()),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('GridView.builder'),
+          SizedBox(height: 200, child: _buildGridViewBuilder()),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('GridView.extent'),
+          SizedBox(height: 200, child: _buildGridViewExtent()),
+        ],
       ),
     );
   }
@@ -60,11 +51,11 @@ class GridViewDemoView extends StatelessWidget {
       crossAxisCount: 3,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      children: List.generate(9, (index) {
+      children: List<Widget>.generate(9, (int index) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.blue.shade100,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           ),
           child: Center(child: Text('Item $index')),
         );
@@ -80,11 +71,11 @@ class GridViewDemoView extends StatelessWidget {
         mainAxisSpacing: 8,
       ),
       itemCount: 12,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.green.shade100,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           ),
           child: Center(child: Text('$index')),
         );
@@ -97,11 +88,11 @@ class GridViewDemoView extends StatelessWidget {
       maxCrossAxisExtent: 80,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      children: List.generate(12, (index) {
+      children: List<Widget>.generate(12, (int index) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.orange.shade100,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           ),
           child: Center(child: Text('$index')),
         );

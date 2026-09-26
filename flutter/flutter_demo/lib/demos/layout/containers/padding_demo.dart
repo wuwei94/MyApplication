@@ -1,51 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Padding
 /// Demonstrates various usages of Padding: different EdgeInsets constructors
-class PaddingDemoPage extends StatelessWidget {
-  const PaddingDemoPage({super.key, required this.title});
-
-  final String title;
+class PaddingDemoPage extends BasicLayoutPage {
+  const PaddingDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return PaddingDemoView(title: title);
-  }
+  BasicLayoutPageState<PaddingDemoPage> createState() =>
+      _PaddingDemoPageState();
 }
 
-class PaddingDemoView extends StatelessWidget {
-  const PaddingDemoView({super.key, required this.title});
-
-  final String title;
-
+class _PaddingDemoPageState extends BasicLayoutPageState<PaddingDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('EdgeInsets.all - Uniform Padding'),
-            _buildAllPadding(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('EdgeInsets.symmetric - Symmetric Padding'),
-            _buildSymmetricPadding(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('EdgeInsets.only - Single Side Padding'),
-            _buildOnlyPadding(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('EdgeInsets.fromLTRB - Individual Settings'),
-            _buildLTRBPadding(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('EdgeInsets.zero - Zero Padding'),
-            _buildZeroPadding(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Practical Examples'),
-            _buildPracticalExample(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('EdgeInsets.all - Uniform Padding'),
+          _buildAllPadding(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('EdgeInsets.symmetric - Symmetric Padding'),
+          _buildSymmetricPadding(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('EdgeInsets.only - Single Side Padding'),
+          _buildOnlyPadding(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('EdgeInsets.fromLTRB - Individual Settings'),
+          _buildLTRBPadding(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('EdgeInsets.zero - Zero Padding'),
+          _buildZeroPadding(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Practical Examples'),
+          _buildPracticalExample(),
+        ],
       ),
     );
   }

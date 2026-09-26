@@ -4,33 +4,23 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_luban/flutter_luban.dart';
 import 'package:image_picker/image_picker.dart' as img_picker;
 import 'package:path_provider/path_provider.dart';
 
 /// flutter_luban
 /// https://pub.dev/packages/flutter_luban
-class FlutterLubanDemoPage extends StatelessWidget {
-  const FlutterLubanDemoPage({super.key, required this.title});
-
-  final String title;
+class FlutterLubanDemoPage extends BasicImagePage {
+  const FlutterLubanDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FlutterLubanDemoView(title: title);
-  }
+  BasicImagePageState<FlutterLubanDemoPage> createState() =>
+      _FlutterLubanDemoPageState();
 }
 
-class FlutterLubanDemoView extends StatefulWidget {
-  const FlutterLubanDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<FlutterLubanDemoView> createState() => _FlutterLubanDemoViewState();
-}
-
-class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
+class _FlutterLubanDemoPageState
+    extends BasicImagePageState<FlutterLubanDemoPage> {
   static const Color _accentColor = Color(0xFF2F6F9F);
 
   final img_picker.ImagePicker _picker = img_picker.ImagePicker();
@@ -48,11 +38,27 @@ class _FlutterLubanDemoViewState extends State<FlutterLubanDemoView> {
   bool get _isBusy => _isPicking || _isCompressing;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
+  List<String> buildList() => const <String>[
+        '1. 选择源图片',
+        '2. 执行 Luban 压缩',
+        '3. 重置演示',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _pickImage(img_picker.ImageSource.gallery);
+      case 1:
+        _compressCurrentImage();
+      case 2:
+        _reset();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    return getBody();
   }
 
   Widget getBody() {

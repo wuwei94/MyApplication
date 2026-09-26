@@ -1,75 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Custom Google Font
-/// 使用 Google Fonts 第三方字体的示例页面
-class CustomGoogleFontDemoPage extends StatelessWidget {
-  const CustomGoogleFontDemoPage({super.key, required this.title});
-
-  final String title;
+/// Custom Google Font — Google Fonts 字体展示
+///
+/// 核心机制与避坑点：
+/// 1. 加载语义：`GoogleFonts.roboto()` 按需下载并缓存字体，首次可能有网络耗时。
+/// 2. 权重映射：通过 `FontWeight` 映射到对应字重，无需手写字体文件。
+///
+/// 官方参考：
+/// https://pub.dev/packages/google_fonts
+class CustomGoogleFontDemoPage extends BasicLayoutPage {
+  const CustomGoogleFontDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return CustomGoogleFontDemoView(title: title);
-  }
+  BasicLayoutPageState<CustomGoogleFontDemoPage> createState() =>
+      _CustomGoogleFontDemoPageState();
 }
 
-class CustomGoogleFontDemoView extends StatelessWidget {
-  const CustomGoogleFontDemoView({super.key, required this.title});
-
-  final String title;
-
+class _CustomGoogleFontDemoPageState
+    extends BasicLayoutPageState<CustomGoogleFontDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('字体展示'),
-            const SizedBox(height: 16),
-            _buildFontShowcase(),
-            const SizedBox(height: 32),
-            _buildSectionTitle('不同字体权重'),
-            const SizedBox(height: 16),
-            _buildWeightShowcase(),
-            const SizedBox(height: 32),
-            _buildSectionTitle('与其他字体对比'),
-            const SizedBox(height: 16),
-            _buildComparisonDemo(),
-            const SizedBox(height: 32),
-            _buildSectionTitle('使用说明'),
-            const SizedBox(height: 16),
-            _buildUsageInstructions(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.blue,
-      ),
-    );
-  }
-
-  Widget _buildFontShowcase() {
-    return Container(
+  Widget buildPreview() {
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
+          _buildSectionTitle('字体展示'),
           Text('Roboto Font', style: GoogleFonts.roboto(fontSize: 28)),
           const SizedBox(height: 12),
           Text('Hello World 你好世界', style: GoogleFonts.roboto(fontSize: 22)),
@@ -78,21 +36,8 @@ class CustomGoogleFontDemoView extends StatelessWidget {
             'The quick brown fox jumps over the lazy dog',
             style: GoogleFonts.roboto(fontSize: 18),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWeightShowcase() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          const SizedBox(height: 24),
+          _buildSectionTitle('不同字体权重'),
           Text(
             'Regular (400)',
             style: GoogleFonts.roboto(
@@ -124,22 +69,8 @@ class CustomGoogleFontDemoView extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildComparisonDemo() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.orange[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.orange[200]!),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          const SizedBox(height: 24),
+          _buildSectionTitle('与其他字体对比'),
           const Text('System Default Font', style: TextStyle(fontSize: 18)),
           const SizedBox(height: 12),
           Text('Roboto Google Font', style: GoogleFonts.roboto(fontSize: 18)),
@@ -148,31 +79,16 @@ class CustomGoogleFontDemoView extends StatelessWidget {
     );
   }
 
-  Widget _buildUsageInstructions() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.green[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.green[200]!),
-      ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '1. 添加 google_fonts 依赖到 pubspec.yaml',
-            style: TextStyle(fontSize: 14, height: 1.6),
-          ),
-          Text(
-            '2. 导入 package:google_fonts/google_fonts.dart',
-            style: TextStyle(fontSize: 14, height: 1.6),
-          ),
-          Text(
-            '3. 使用 GoogleFonts.roboto() 等方法应用字体',
-            style: TextStyle(fontSize: 14, height: 1.6),
-          ),
-          Text('4. 字体会自动从网络下载并缓存', style: TextStyle(fontSize: 14, height: 1.6)),
-        ],
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.blue,
+        ),
       ),
     );
   }

@@ -1,48 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// DecoratedBox
 /// Demonstrates the usage of DecoratedBox widget
-class DecoratedBoxDemoPage extends StatelessWidget {
-  const DecoratedBoxDemoPage({super.key, required this.title});
-
-  final String title;
+class DecoratedBoxDemoPage extends BasicLayoutPage {
+  const DecoratedBoxDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return DecoratedBoxDemoView(title: title);
-  }
+  BasicLayoutPageState<DecoratedBoxDemoPage> createState() =>
+      _DecoratedBoxDemoPageState();
 }
 
-class DecoratedBoxDemoView extends StatelessWidget {
-  const DecoratedBoxDemoView({super.key, required this.title});
-
-  final String title;
-
+class _DecoratedBoxDemoPageState
+    extends BasicLayoutPageState<DecoratedBoxDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('BoxDecoration with Border'),
-            _buildBorderDecoration(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('BoxDecoration with BorderRadius'),
-            _buildBorderRadiusDecoration(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('BoxDecoration with Shadow'),
-            _buildShadowDecoration(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Gradient Decoration'),
-            _buildGradientDecoration(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Shape Decoration'),
-            _buildShapeDecoration(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('BoxDecoration with Border'),
+          _buildBorderDecoration(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('BoxDecoration with BorderRadius'),
+          _buildBorderRadiusDecoration(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('BoxDecoration with Shadow'),
+          _buildShadowDecoration(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Gradient Decoration'),
+          _buildGradientDecoration(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Shape Decoration'),
+          _buildShapeDecoration(),
+        ],
       ),
     );
   }
@@ -95,8 +87,8 @@ class DecoratedBoxDemoView extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 8,
@@ -116,11 +108,11 @@ class DecoratedBoxDemoView extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.blue.shade400, Colors.purple.shade400],
+          colors: <Color>[Colors.blue.shade400, Colors.purple.shade400],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
       ),
       child: const SizedBox(
         width: double.infinity,
@@ -135,7 +127,7 @@ class DecoratedBoxDemoView extends StatelessWidget {
   Widget _buildShapeDecoration() {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         DecoratedBox(
           decoration: BoxDecoration(
             color: Colors.orange,

@@ -1,16 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// 动态环形饼图与扇区触摸放大联动示例
 ///
 /// 演示环形甜甜圈图与实心饼图切换、扇区触摸动画凸起放大、中心动态数据展示与双向图例联动。
-class PieChartDemoPage extends StatefulWidget {
-  const PieChartDemoPage({super.key, required this.title});
-
-  final String title;
+class PieChartDemoPage extends BasicLayoutPage {
+  const PieChartDemoPage({super.key, required super.title});
 
   @override
-  State<PieChartDemoPage> createState() => _PieChartDemoPageState();
+  BasicLayoutPageState<PieChartDemoPage> createState() =>
+      _PieChartDemoPageState();
 }
 
 class _CategoryItem {
@@ -27,7 +27,7 @@ class _CategoryItem {
   final IconData icon;
 }
 
-class _PieChartDemoPageState extends State<PieChartDemoPage> {
+class _PieChartDemoPageState extends BasicLayoutPageState<PieChartDemoPage> {
   int _touchedIndex = 0; // 默认选中第一项
   bool _isDonut = true; // 甜甜圈环形 vs 实心饼图
 
@@ -68,7 +68,23 @@ class _PieChartDemoPageState extends State<PieChartDemoPage> {
       _categories.fold<double>(0.0, (double sum, _CategoryItem item) => sum + item.amount);
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 切换甜甜圈环形',
+        '2. 切换实心饼图',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        setState(() => _isDonut = true);
+      case 1:
+        setState(() => _isDonut = false);
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
@@ -76,70 +92,19 @@ class _PieChartDemoPageState extends State<PieChartDemoPage> {
     final double touchedPercentage =
         (touchedCategory.amount / _totalAmount) * 100;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // 控制卡片
-            _buildControlCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 饼图核心卡片
-            _buildPieCard(
-              colorScheme,
-              touchedCategory,
-              touchedPercentage,
-            ),
-            const SizedBox(height: 16),
-
-            // 图例与明细列表卡片（可点击图例双向联动）
-            _buildLegendCard(colorScheme),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildControlCard(ColorScheme colorScheme) {
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Row(
-          children: <Widget>[
-            Icon(Icons.pie_chart_rounded, color: colorScheme.primary, size: 20),
-            const SizedBox(width: 8),
-            const Text(
-              '图表样式：',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            const Spacer(),
-            SegmentedButton<bool>(
-              segments: const <ButtonSegment<bool>>[
-                ButtonSegment<bool>(
-                  value: true,
-                  label: Text('甜甜圈环形'),
-                  icon: Icon(Icons.donut_large_rounded, size: 16),
-                ),
-                ButtonSegment<bool>(
-                  value: false,
-                  label: Text('实心饼图'),
-                  icon: Icon(Icons.pie_chart_outline_rounded, size: 16),
-                ),
-              ],
-              selected: <bool>{_isDonut},
-              onSelectionChanged: (Set<bool> val) {
-                setState(() {
-                  _isDonut = val.first;
-                });
-              },
-            ),
-          ],
-        ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildPieCard(
+            colorScheme,
+            touchedCategory,
+            touchedPercentage,
+          ),
+          const SizedBox(height: 16),
+          _buildLegendCard(colorScheme),
+        ],
       ),
     );
   }
@@ -190,11 +155,13 @@ class _PieChartDemoPageState extends State<PieChartDemoPage> {
                       pieTouchData: PieTouchData(
                         touchCallback:
                             (FlTouchEvent event, PieTouchResponse? res) {
-                          if (res != null &&
-                              res.touchedSection != null &&
+                          final PieTouchResponse? response = res;
+                          if (response != null &&
+                              response.touchedSection != null &&
                               event is! FlPointerExitEvent) {
                             final int index =
-                                res.touchedSection!.touchedSectionIndex;
+                                response.touchedSection?.touchedSectionIndex ??
+                                    -1;
                             if (index >= 0 &&
                                 index < _categories.length &&
                                 index != _touchedIndex) {

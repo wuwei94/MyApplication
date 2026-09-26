@@ -1,31 +1,21 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:image_picker/image_picker.dart';
 
 /// Image Picker
 /// https://pub.dev/packages/image_picker
-class ImagePickerDemoPage extends StatelessWidget {
-  const ImagePickerDemoPage({super.key, required this.title});
-
-  final String title;
+class ImagePickerDemoPage extends BasicImagePage {
+  const ImagePickerDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ImagePickerDemoView(title: title);
-  }
+  BasicImagePageState<ImagePickerDemoPage> createState() =>
+      _ImagePickerDemoPageState();
 }
 
-class ImagePickerDemoView extends StatefulWidget {
-  const ImagePickerDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ImagePickerDemoView> createState() => _ImagePickerDemoViewState();
-}
-
-class _ImagePickerDemoViewState extends State<ImagePickerDemoView> {
+class _ImagePickerDemoPageState
+    extends BasicImagePageState<ImagePickerDemoPage> {
   static const Color _accentColor = Color(0xFF0F5DAA);
 
   final ImagePicker _picker = ImagePicker();
@@ -41,13 +31,31 @@ class _ImagePickerDemoViewState extends State<ImagePickerDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+  List<String> buildList() => const <String>[
+        '1. 选择单张图片',
+        '2. 选择多张图片',
+        '3. 拍照选择',
+        '4. 清空已选',
+      ];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(theme),
-    );
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _pickSingleImage();
+      case 1:
+        _pickMultipleImages();
+      case 2:
+        _pickFromCamera();
+      case 3:
+        _clearSelection();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    final ThemeData theme = Theme.of(context);
+    return getBody(theme);
   }
 
   Widget getBody(ThemeData theme) {
@@ -319,7 +327,7 @@ class _SelectedImagesSection extends StatelessWidget {
         icon: Icons.image_outlined,
         title: '还没有选择图片',
         description: '可以先体验系统拍照，或者从相册中单选、多选图片。',
-        accentColor: _ImagePickerDemoViewState._accentColor,
+        accentColor: _ImagePickerDemoPageState._accentColor,
       );
     }
 
@@ -354,7 +362,7 @@ class _PickedImageTile extends StatelessWidget {
     return MediaPickerTileFrame(
       badge: MediaPickerIndexBadge(
         index: index,
-        accentColor: _ImagePickerDemoViewState._accentColor,
+        accentColor: _ImagePickerDemoPageState._accentColor,
       ),
       footer: MediaPickerFooter(
         child: Column(

@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// FadeTransition
 /// Demonstrates fade animation
-class FadeTransitionDemoPage extends StatelessWidget {
-  const FadeTransitionDemoPage({super.key, required this.title});
-
-  final String title;
+class FadeTransitionDemoPage extends BasicLayoutPage {
+  const FadeTransitionDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FadeTransitionDemoView(title: title);
-  }
+  BasicLayoutPageState<FadeTransitionDemoPage> createState() =>
+      _FadeTransitionDemoPageState();
 }
 
-class FadeTransitionDemoView extends StatefulWidget {
-  const FadeTransitionDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<FadeTransitionDemoView> createState() => _FadeTransitionDemoViewState();
-}
-
-class _FadeTransitionDemoViewState extends State<FadeTransitionDemoView>
+class _FadeTransitionDemoPageState
+    extends BasicLayoutPageState<FadeTransitionDemoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 切换淡入淡出',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _toggleFade();
+    }
+  }
 
   @override
   void initState() {
@@ -52,33 +55,20 @@ class _FadeTransitionDemoViewState extends State<FadeTransitionDemoView>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FadeTransition(
-              opacity: _animation,
-              child: Container(
-                width: 200,
-                height: 200,
-                color: Colors.blue,
-                child: const Center(
-                  child: Text(
-                    'Fading Box',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                ),
-              ),
+  Widget buildPreview() {
+    return Center(
+      child: FadeTransition(
+        opacity: _animation,
+        child: Container(
+          width: 200,
+          height: 200,
+          color: Colors.blue,
+          child: const Center(
+            child: Text(
+              'Fading Box',
+              style: TextStyle(color: Colors.white, fontSize: 24),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _toggleFade,
-              child: const Text('Toggle Fade'),
-            ),
-          ],
+          ),
         ),
       ),
     );

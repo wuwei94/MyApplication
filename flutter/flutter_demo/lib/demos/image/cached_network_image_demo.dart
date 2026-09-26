@@ -1,32 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// cached_network_image
 /// https://pub.dev/packages/cached_network_image
 /// 直接使用 cached_network_image 原生 API，适合普通网络图加载、缓存、占位图和错误图场景。
-class CachedNetworkImageDemoPage extends StatelessWidget {
-  const CachedNetworkImageDemoPage({super.key, required this.title});
-
-  final String title;
+class CachedNetworkImageDemoPage extends BasicImagePage {
+  const CachedNetworkImageDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return CachedNetworkImageDemoView(title: title);
-  }
+  BasicImagePageState<CachedNetworkImageDemoPage> createState() =>
+      _CachedNetworkImageDemoPageState();
 }
 
-class CachedNetworkImageDemoView extends StatefulWidget {
-  const CachedNetworkImageDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<CachedNetworkImageDemoView> createState() =>
-      _CachedNetworkImageDemoViewState();
-}
-
-class _CachedNetworkImageDemoViewState
-    extends State<CachedNetworkImageDemoView> {
+class _CachedNetworkImageDemoPageState
+    extends BasicImagePageState<CachedNetworkImageDemoPage> {
   static const Color _accentColor = Color(0xFF2563EB);
   static const List<String> _capabilities = <String>['网络缓存', '占位图', '错误态'];
   static const String _basicImageUrl =
@@ -41,11 +29,21 @@ class _CachedNetworkImageDemoViewState
       '本示例直接使用 cached_network_image 原生 API，展示 CachedNetworkImage 组件与 evictFromCache 缓存清理。';
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
+  List<String> buildList() => const <String>[
+        '1. 清理图片缓存',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _clearCache();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    return getBody();
   }
 
   Widget getBody() {

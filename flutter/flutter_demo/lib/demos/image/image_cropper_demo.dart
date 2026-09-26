@@ -3,32 +3,22 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 /// Image Cropper
 /// https://pub.dev/packages/image_cropper
-class ImageCropperDemoPage extends StatelessWidget {
-  const ImageCropperDemoPage({super.key, required this.title});
-
-  final String title;
+class ImageCropperDemoPage extends BasicImagePage {
+  const ImageCropperDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ImageCropperDemoView(title: title);
-  }
+  BasicImagePageState<ImageCropperDemoPage> createState() =>
+      _ImageCropperDemoPageState();
 }
 
-class ImageCropperDemoView extends StatefulWidget {
-  const ImageCropperDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ImageCropperDemoView> createState() => _ImageCropperDemoViewState();
-}
-
-class _ImageCropperDemoViewState extends State<ImageCropperDemoView> {
+class _ImageCropperDemoPageState
+    extends BasicImagePageState<ImageCropperDemoPage> {
   static const Color _accentColor = Color(0xFF2563EB);
   static const List<CropAspectRatioPresetData> _aspectRatioPresets =
       <CropAspectRatioPresetData>[
@@ -60,11 +50,30 @@ class _ImageCropperDemoViewState extends State<ImageCropperDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
+  List<String> buildList() => const <String>[
+        '1. 从相册选择图片',
+        '2. 拍照选择图片',
+        '3. 打开裁剪界面',
+        '4. 重置演示',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _pickImage(ImageSource.gallery);
+      case 1:
+        _pickImage(ImageSource.camera);
+      case 2:
+        _cropCurrentImage(context);
+      case 3:
+        _reset();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    return getBody();
   }
 
   Widget getBody() {
@@ -590,12 +599,18 @@ class _CropperHeroCard extends StatelessWidget {
         children: <Widget>[
           _StatChip(
             label: '源图',
-            value: sourceImage == null ? '未选择' : sourceImage!.formattedSize,
+            value: switch (sourceImage) {
+              null => '未选择',
+              final _DemoImageData data => data.formattedSize,
+            },
             accentColor: accentColor,
           ),
           _StatChip(
             label: '结果',
-            value: croppedImage == null ? '待裁剪' : croppedImage!.formattedSize,
+            value: switch (croppedImage) {
+              null => '待裁剪',
+              final _DemoImageData data => data.formattedSize,
+            },
             accentColor: accentColor,
           ),
           _StatChip(label: '质量', value: '$quality%', accentColor: accentColor),
@@ -738,7 +753,7 @@ class _SliderTile extends StatelessWidget {
             Text(
               valueLabel,
               style: theme.textTheme.labelLarge?.copyWith(
-                color: _ImageCropperDemoViewState._accentColor,
+                color: _ImageCropperDemoPageState._accentColor,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -750,7 +765,7 @@ class _SliderTile extends StatelessWidget {
           max: max,
           divisions: divisions,
           label: valueLabel,
-          activeColor: _ImageCropperDemoViewState._accentColor,
+          activeColor: _ImageCropperDemoPageState._accentColor,
           onChanged: onChanged,
         ),
       ],
@@ -943,7 +958,7 @@ class _EmptyStateCard extends StatelessWidget {
             Icon(
               icon,
               size: 44,
-              color: _ImageCropperDemoViewState._accentColor,
+              color: _ImageCropperDemoPageState._accentColor,
             ),
             const SizedBox(height: 12),
             Text(

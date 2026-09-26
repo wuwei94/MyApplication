@@ -1,34 +1,41 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Stream
 /// Demonstrates Stream usage patterns
-class StreamDemoPage extends StatelessWidget {
-  const StreamDemoPage({super.key, required this.title});
-
-  final String title;
+class StreamDemoPage extends BasicLayoutPage {
+  const StreamDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return StreamDemoView(title: title);
-  }
+  BasicLayoutPageState<StreamDemoPage> createState() => _StreamDemoPageState();
 }
 
-class StreamDemoView extends StatefulWidget {
-  const StreamDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<StreamDemoView> createState() => _StreamDemoViewState();
-}
-
-class _StreamDemoViewState extends State<StreamDemoView> {
+class _StreamDemoPageState extends BasicLayoutPageState<StreamDemoPage> {
   StreamSubscription<int>? _subscription;
   StreamController<int>? _controller;
-  final List<int> _values = [];
+  final List<int> _values = <int>[];
   bool _isPaused = false;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 启动计时流',
+        '2. 暂停/恢复订阅',
+        '3. 取消订阅并清空',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _startStream();
+      case 1:
+        _pauseResume();
+      case 2:
+        _cancel();
+    }
+  }
 
   void _startStream() {
     _controller?.close();
@@ -36,26 +43,31 @@ class _StreamDemoViewState extends State<StreamDemoView> {
     _values.clear();
 
     int counter = 0;
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_controller?.isClosed ?? true) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      final StreamController<int>? controller = _controller;
+      if (controller == null || controller.isClosed) {
         timer.cancel();
         return;
       }
-      _controller?.add(counter++);
+      controller.add(counter++);
       if (counter >= 10) {
         timer.cancel();
-        _controller?.close();
+        controller.close();
       }
     });
 
-    _subscription = _controller?.stream.listen(
-      (data) {
-        setState(() => _values.add(data));
-      },
-      onDone: () {
-        setState(() => _values.add(-1)); // -1 marks done
-      },
-    );
+    final StreamController<int>? controller = _controller;
+    if (controller != null) {
+      _subscription = controller.stream.listen(
+        (int data) {
+          setState(() => _values.add(data));
+        },
+        onDone: () {
+          setState(() => _values.add(-1)); // -1 marks done
+        },
+      );
+    }
+    setState(() {});
   }
 
   void _pauseResume() {
@@ -84,60 +96,31 @@ class _StreamDemoViewState extends State<StreamDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Padding(
+  Widget buildPreview() {
+    return Padding(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: _startStream,
-                  child: const Text('Start Stream'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _pauseResume,
-                  child: Text(_isPaused ? 'Resume' : 'Pause'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _cancel,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  child: const Text('Cancel'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.green.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: _values.isEmpty
-                    ? const Center(child: Text('Press Start to begin'))
-                    : Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: _values.map((v) {
-                          if (v == -1) {
-                            return Chip(
-                              label: const Text('DONE'),
-                              backgroundColor: Colors.green.shade200,
-                            );
-                          }
-                          return Chip(label: Text('$v'));
-                        }).toList(),
-                      ),
-              ),
-            ),
-          ],
+        decoration: BoxDecoration(
+          color: Colors.green.shade50,
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
         ),
+        child: _values.isEmpty
+            ? const Center(child: Text('Tap start to begin'))
+            : Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: _values.map((int v) {
+                  if (v == -1) {
+                    return Chip(
+                      label: const Text('DONE'),
+                      backgroundColor: Colors.green.shade200,
+                    );
+                  }
+                  return Chip(label: Text('$v'));
+                }).toList(),
+              ),
       ),
     );
   }

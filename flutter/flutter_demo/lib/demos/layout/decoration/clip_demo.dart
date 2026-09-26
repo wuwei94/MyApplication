@@ -1,47 +1,37 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Clip
 /// Demonstrates ClipRect, ClipRRect, ClipOval, ClipPath
-class ClipDemoPage extends StatelessWidget {
-  const ClipDemoPage({super.key, required this.title});
-
-  final String title;
+class ClipDemoPage extends BasicLayoutPage {
+  const ClipDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ClipDemoView(title: title);
-  }
+  BasicLayoutPageState<ClipDemoPage> createState() => _ClipDemoPageState();
 }
 
-class ClipDemoView extends StatelessWidget {
-  const ClipDemoView({super.key, required this.title});
-
-  final String title;
-
+class _ClipDemoPageState extends BasicLayoutPageState<ClipDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('ClipRRect - 圆角裁剪'),
-            _buildClipRRect(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('ClipOval - 椭圆裁剪'),
-            _buildClipOval(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('ClipRect - 矩形裁剪'),
-            _buildClipRect(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('ClipPath - 路径裁剪'),
-            _buildClipPath(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('ClipRRect - 圆角裁剪'),
+          _buildClipRRect(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('ClipOval - 椭圆裁剪'),
+          _buildClipOval(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('ClipRect - 矩形裁剪'),
+          _buildClipRect(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('ClipPath - 路径裁剪'),
+          _buildClipPath(),
+        ],
       ),
     );
   }
@@ -63,7 +53,7 @@ class ClipDemoView extends StatelessWidget {
   Widget _buildClipRRect() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Container(
@@ -92,7 +82,7 @@ class ClipDemoView extends StatelessWidget {
   Widget _buildClipOval() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         ClipOval(
           child: Container(
             width: 100,
@@ -140,7 +130,7 @@ class ClipDemoView extends StatelessWidget {
   Widget _buildClipPath() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         ClipPath(
           clipper: _TriangleClipper(),
           child: Container(
@@ -171,7 +161,7 @@ class ClipDemoView extends StatelessWidget {
 class _TriangleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final path = Path();
+    final Path path = Path();
     path.moveTo(size.width / 2, 0);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
@@ -186,15 +176,15 @@ class _TriangleClipper extends CustomClipper<Path> {
 class _StarClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final path = Path();
-    final centerX = size.width / 2;
-    final centerY = size.height / 2;
-    final radius = size.width / 2;
+    final Path path = Path();
+    final double centerX = size.width / 2;
+    final double centerY = size.height / 2;
+    final double radius = size.width / 2;
 
     for (int i = 0; i < 5; i++) {
-      final angle = (i * 144 - 90) * 3.14159 / 180;
-      final x = centerX + radius * cos(angle);
-      final y = centerY + radius * sin(angle);
+      final double angle = (i * 144 - 90) * 3.14159 / 180;
+      final double x = centerX + radius * cos(angle);
+      final double y = centerY + radius * sin(angle);
       if (i == 0) {
         path.moveTo(x, y);
       } else {

@@ -1,16 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// 柱状图与触摸联动示例
 ///
 /// 演示多维度分组柱状图（目标值 vs 实际值）、正负收支堆叠柱状图与触摸高亮联动面板。
-class BarChartDemoPage extends StatefulWidget {
-  const BarChartDemoPage({super.key, required this.title});
-
-  final String title;
+class BarChartDemoPage extends BasicLayoutPage {
+  const BarChartDemoPage({super.key, required super.title});
 
   @override
-  State<BarChartDemoPage> createState() => _BarChartDemoPageState();
+  BasicLayoutPageState<BarChartDemoPage> createState() =>
+      _BarChartDemoPageState();
 }
 
 enum _BarMode {
@@ -18,7 +18,7 @@ enum _BarMode {
   stackedProfit, // 正负堆叠收益
 }
 
-class _BarChartDemoPageState extends State<BarChartDemoPage> {
+class _BarChartDemoPageState extends BasicLayoutPageState<BarChartDemoPage> {
   _BarMode _mode = _BarMode.grouped;
   int _touchedGroupIndex = 2; // 默认选中 Q3
 
@@ -41,70 +41,35 @@ class _BarChartDemoPageState extends State<BarChartDemoPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 切换分组对比',
+        '2. 切换正负收支',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        setState(() => _mode = _BarMode.grouped);
+      case 1:
+        setState(() => _mode = _BarMode.stackedProfit);
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // 模式切换卡片
-            _buildModeSwitchCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 柱状图展示卡片
-            _buildChartCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 触摸联动详细面板
-            _buildDetailCard(colorScheme),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildModeSwitchCard(ColorScheme colorScheme) {
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          children: <Widget>[
-            Icon(Icons.bar_chart_rounded, color: colorScheme.primary, size: 20),
-            const SizedBox(width: 8),
-            const Text(
-              '图表模式：',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            const Spacer(),
-            SegmentedButton<_BarMode>(
-              segments: const <ButtonSegment<_BarMode>>[
-                ButtonSegment<_BarMode>(
-                  value: _BarMode.grouped,
-                  label: Text('分组对比'),
-                  icon: Icon(Icons.compare_arrows_rounded, size: 16),
-                ),
-                ButtonSegment<_BarMode>(
-                  value: _BarMode.stackedProfit,
-                  label: Text('正负收支'),
-                  icon: Icon(Icons.stacked_bar_chart_rounded, size: 16),
-                ),
-              ],
-              selected: <_BarMode>{_mode},
-              onSelectionChanged: (Set<_BarMode> newSelection) {
-                setState(() {
-                  _mode = newSelection.first;
-                });
-              },
-            ),
-          ],
-        ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildChartCard(colorScheme),
+          const SizedBox(height: 16),
+          _buildDetailCard(colorScheme),
+        ],
       ),
     );
   }
@@ -238,8 +203,9 @@ class _BarChartDemoPageState extends State<BarChartDemoPage> {
       barTouchData: BarTouchData(
         handleBuiltInTouches: true,
         touchCallback: (FlTouchEvent event, BarTouchResponse? res) {
-          if (res != null && res.spot != null) {
-            final int index = res.spot!.touchedBarGroupIndex;
+          final BarTouchResponse? response = res;
+          if (response != null && response.spot != null) {
+            final int index = response.spot?.touchedBarGroupIndex ?? -1;
             if (index >= 0 &&
                 index < _quarters.length &&
                 index != _touchedGroupIndex) {
@@ -382,8 +348,9 @@ class _BarChartDemoPageState extends State<BarChartDemoPage> {
       barTouchData: BarTouchData(
         handleBuiltInTouches: true,
         touchCallback: (FlTouchEvent event, BarTouchResponse? res) {
-          if (res != null && res.spot != null) {
-            final int index = res.spot!.touchedBarGroupIndex;
+          final BarTouchResponse? response = res;
+          if (response != null && response.spot != null) {
+            final int index = response.spot?.touchedBarGroupIndex ?? -1;
             if (index >= 0 &&
                 index < _quarters.length &&
                 index != _touchedGroupIndex) {

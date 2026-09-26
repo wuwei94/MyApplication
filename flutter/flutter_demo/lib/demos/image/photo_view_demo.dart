@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 /// photo_view
 /// https://pub.dev/packages/photo_view
 /// 适合大图查看、双击放大、拖拽平移和图库浏览。
-class PhotoViewDemoPage extends StatelessWidget {
-  const PhotoViewDemoPage({super.key, required this.title});
-
-  final String title;
+class PhotoViewDemoPage extends BasicImagePage {
+  const PhotoViewDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return PhotoViewDemoView(title: title);
-  }
+  BasicImagePageState<PhotoViewDemoPage> createState() =>
+      _PhotoViewDemoPageState();
 }
 
-class PhotoViewDemoView extends StatefulWidget {
-  const PhotoViewDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<PhotoViewDemoView> createState() => _PhotoViewDemoViewState();
-}
-
-class _PhotoViewDemoViewState extends State<PhotoViewDemoView> {
+class _PhotoViewDemoPageState extends BasicImagePageState<PhotoViewDemoPage> {
   static const Color _accentColor = Color(0xFF0284C7);
   static const List<String> _capabilities = <String>[
     '双击放大',
@@ -69,11 +58,24 @@ class _PhotoViewDemoViewState extends State<PhotoViewDemoView> {
   int _selectedIndex = 0;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
+  List<String> buildList() => const <String>[
+        '1. 打开相册浏览',
+        '2. 切换下一张样例',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _openGallery(initialIndex: _selectedIndex);
+      case 1:
+        _selectNextSample();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    return getBody();
   }
 
   Widget getBody() {

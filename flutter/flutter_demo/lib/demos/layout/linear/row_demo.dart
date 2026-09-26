@@ -1,45 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Row
 /// Demonstrates horizontal layout with Row
-class RowDemoPage extends StatelessWidget {
-  const RowDemoPage({super.key, required this.title});
-
-  final String title;
+class RowDemoPage extends BasicLayoutPage {
+  const RowDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return RowDemoView(title: title);
-  }
+  BasicLayoutPageState<RowDemoPage> createState() => _RowDemoPageState();
 }
 
-class RowDemoView extends StatelessWidget {
-  const RowDemoView({super.key, required this.title});
-
-  final String title;
-
+class _RowDemoPageState extends BasicLayoutPageState<RowDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Basic Row'),
-            _buildBasicRow(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('MainAxisAlignment'),
-            _buildMainAxisAlignment(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('CrossAxisAlignment'),
-            _buildCrossAxisAlignment(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Expanded'),
-            _buildExpanded(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Basic Row'),
+          _buildBasicRow(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('MainAxisAlignment'),
+          _buildMainAxisAlignment(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('CrossAxisAlignment'),
+          _buildCrossAxisAlignment(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Expanded'),
+          _buildExpanded(),
+        ],
       ),
     );
   }
@@ -63,13 +53,13 @@ class RowDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               _buildBox(Colors.red, 'A'),
               _buildBox(Colors.green, 'B'),
               _buildBox(Colors.blue, 'C'),
@@ -85,11 +75,11 @@ class RowDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           _buildAlignmentRow('start', MainAxisAlignment.start),
           const SizedBox(height: 8),
           _buildAlignmentRow('center', MainAxisAlignment.center),
@@ -109,13 +99,13 @@ class RowDemoView extends StatelessWidget {
   Widget _buildAlignmentRow(String label, MainAxisAlignment alignment) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         Container(
           color: Colors.green.shade100,
           child: Row(
             mainAxisAlignment: alignment,
-            children: [
+            children: <Widget>[
               Container(width: 30, height: 30, color: Colors.green),
               Container(width: 30, height: 30, color: Colors.green.shade400),
               Container(width: 30, height: 30, color: Colors.green.shade800),
@@ -131,11 +121,11 @@ class RowDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           _buildCrossRow('start', CrossAxisAlignment.start),
           const SizedBox(height: 8),
           _buildCrossRow('center', CrossAxisAlignment.center),
@@ -149,14 +139,14 @@ class RowDemoView extends StatelessWidget {
   Widget _buildCrossRow(String label, CrossAxisAlignment alignment) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         Container(
           height: 60,
           color: Colors.orange.shade100,
           child: Row(
             crossAxisAlignment: alignment,
-            children: [
+            children: <Widget>[
               Container(width: 30, height: 20, color: Colors.orange),
               Container(width: 30, height: 40, color: Colors.orange.shade400),
               Container(width: 30, height: 30, color: Colors.orange.shade800),
@@ -172,15 +162,15 @@ class RowDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
             color: Colors.purple.shade100,
             child: Row(
-              children: [
+              children: <Widget>[
                 _buildBox(Colors.purple, 'Fixed'),
                 Expanded(
                   child: Container(

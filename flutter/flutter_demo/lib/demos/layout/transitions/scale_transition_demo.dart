@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// ScaleTransition
 /// Demonstrates scale animation
-class ScaleTransitionDemoPage extends StatelessWidget {
-  const ScaleTransitionDemoPage({super.key, required this.title});
-
-  final String title;
+class ScaleTransitionDemoPage extends BasicLayoutPage {
+  const ScaleTransitionDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ScaleTransitionDemoView(title: title);
-  }
+  BasicLayoutPageState<ScaleTransitionDemoPage> createState() =>
+      _ScaleTransitionDemoPageState();
 }
 
-class ScaleTransitionDemoView extends StatefulWidget {
-  const ScaleTransitionDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ScaleTransitionDemoView> createState() =>
-      _ScaleTransitionDemoViewState();
-}
-
-class _ScaleTransitionDemoViewState extends State<ScaleTransitionDemoView>
+class _ScaleTransitionDemoPageState
+    extends BasicLayoutPageState<ScaleTransitionDemoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 切换缩放',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _toggleScale();
+    }
+  }
 
   @override
   void initState() {
@@ -35,10 +37,7 @@ class _ScaleTransitionDemoViewState extends State<ScaleTransitionDemoView>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOutBack,
-    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
   }
 
   @override
@@ -56,31 +55,20 @@ class _ScaleTransitionDemoViewState extends State<ScaleTransitionDemoView>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ScaleTransition(
-              scale: _animation,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(Icons.zoom_in, size: 80, color: Colors.white),
-              ),
+  Widget buildPreview() {
+    return Center(
+      child: ScaleTransition(
+        scale: _animation,
+        child: Container(
+          width: 150,
+          height: 150,
+          color: Colors.orange,
+          child: const Center(
+            child: Text(
+              'Scaling Box',
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _toggleScale,
-              child: const Text('Toggle Scale'),
-            ),
-          ],
+          ),
         ),
       ),
     );

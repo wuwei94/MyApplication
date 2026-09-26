@@ -1,19 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// 折线图与触摸 Tooltip 联动示例
 ///
 /// 演示多曲线趋势对比（收入 vs 支出）、面积渐变填充、平滑曲线切换与触摸十字线联动指标卡。
-class LineChartDemoPage extends StatefulWidget {
-  const LineChartDemoPage({super.key, required this.title});
-
-  final String title;
+class LineChartDemoPage extends BasicLayoutPage {
+  const LineChartDemoPage({super.key, required super.title});
 
   @override
-  State<LineChartDemoPage> createState() => _LineChartDemoPageState();
+  BasicLayoutPageState<LineChartDemoPage> createState() =>
+      _LineChartDemoPageState();
 }
 
-class _LineChartDemoPageState extends State<LineChartDemoPage> {
+class _LineChartDemoPageState extends BasicLayoutPageState<LineChartDemoPage> {
   bool _isCurved = true;
   bool _showDots = true;
   bool _showFill = true;
@@ -65,7 +65,26 @@ class _LineChartDemoPageState extends State<LineChartDemoPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 切换平滑曲线',
+        '2. 切换数据圆点',
+        '3. 切换面积填充',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        setState(() => _isCurved = !_isCurved);
+      case 1:
+        setState(() => _showDots = !_showDots);
+      case 2:
+        setState(() => _showFill = !_showFill);
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
@@ -74,81 +93,21 @@ class _LineChartDemoPageState extends State<LineChartDemoPage> {
     final double currentProfit = currentIncome - currentExpense;
     final double profitMargin = (currentProfit / currentIncome) * 100;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // 顶部说明与控制开关
-            _buildControlCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 折线图主卡片
-            _buildChartCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 触摸联动详细指标卡
-            _buildDetailMetricsCard(
-              colorScheme,
-              currentIncome,
-              currentExpense,
-              currentProfit,
-              profitMargin,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildControlCard(ColorScheme colorScheme) {
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Icon(Icons.tune_rounded, size: 18, color: colorScheme.primary),
-                const SizedBox(width: 8),
-                Text(
-                  '图表参数控制与交互',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              children: <Widget>[
-                FilterChip(
-                  label: const Text('平滑贝塞尔曲线'),
-                  selected: _isCurved,
-                  onSelected: (bool val) => setState(() => _isCurved = val),
-                ),
-                FilterChip(
-                  label: const Text('显示数据圆点'),
-                  selected: _showDots,
-                  onSelected: (bool val) => setState(() => _showDots = val),
-                ),
-                FilterChip(
-                  label: const Text('面积渐变填充'),
-                  selected: _showFill,
-                  onSelected: (bool val) => setState(() => _showFill = val),
-                ),
-              ],
-            ),
-          ],
-        ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildChartCard(colorScheme),
+          const SizedBox(height: 16),
+          _buildDetailMetricsCard(
+            colorScheme,
+            currentIncome,
+            currentExpense,
+            currentProfit,
+            profitMargin,
+          ),
+        ],
       ),
     );
   }
@@ -269,11 +228,12 @@ class _LineChartDemoPageState extends State<LineChartDemoPage> {
                       FlTouchEvent event,
                       LineTouchResponse? touchResponse,
                     ) {
+                      final List<LineBarSpot>? spots =
+                          touchResponse?.lineBarSpots;
                       if (touchResponse != null &&
-                          touchResponse.lineBarSpots != null &&
-                          touchResponse.lineBarSpots!.isNotEmpty) {
-                        final int index =
-                            touchResponse.lineBarSpots!.first.x.toInt();
+                          spots != null &&
+                          spots.isNotEmpty) {
+                        final int index = spots.first.x.toInt();
                         if (index >= 0 &&
                             index < _months.length &&
                             index != _selectedMonthIndex) {

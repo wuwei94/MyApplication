@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:video_player/video_player.dart';
 
 enum _VideoSourceType { asset, network }
 
 /// Video Player
 /// https://pub.dev/packages/video_player
-class VideoPlayerDemoPage extends StatelessWidget {
-  const VideoPlayerDemoPage({super.key, required this.title});
-
-  final String title;
+class VideoPlayerDemoPage extends BasicImagePage {
+  const VideoPlayerDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return VideoPlayerDemoView(title: title);
-  }
+  BasicImagePageState<VideoPlayerDemoPage> createState() =>
+      _VideoPlayerDemoPageState();
 }
 
-class VideoPlayerDemoView extends StatefulWidget {
-  const VideoPlayerDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<VideoPlayerDemoView> createState() => _VideoPlayerDemoViewState();
-}
-
-class _VideoPlayerDemoViewState extends State<VideoPlayerDemoView> {
+class _VideoPlayerDemoPageState
+    extends BasicImagePageState<VideoPlayerDemoPage> {
   static const String _assetVideoPath = 'assets/video/sample.mp4';
   static const String _networkVideoUrl =
       'https://samplelib.com/lib/preview/mp4/sample-5s.mp4';
@@ -48,58 +38,93 @@ class _VideoPlayerDemoViewState extends State<VideoPlayerDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 播放视频',
+        '2. 暂停视频',
+        '3. 切换本地资源源',
+        '4. 切换网络源',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _play();
+      case 1:
+        _pause();
+      case 2:
+        _handleSourceChanged(_VideoSourceType.asset);
+      case 3:
+        _handleSourceChanged(_VideoSourceType.network);
+    }
+  }
+
+  Future<void> _play() async {
+    final VideoPlayerController? controller = _videoController;
+    if (controller != null && controller.value.isInitialized) {
+      await controller.play();
+      setState(() {});
+    }
+  }
+
+  Future<void> _pause() async {
+    final VideoPlayerController? controller = _videoController;
+    if (controller != null && controller.value.isInitialized) {
+      await controller.pause();
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final VideoPlayerController? controller = _videoController;
     final bool isReady =
         controller != null && controller.value.isInitialized && !_isLoading;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          _VideoSummaryCard(
-            title: 'video_player',
-            description: _statusMessage,
-            accentColor: const Color(0xFF1C8A63),
-            sourceLabel: _sourceLabel(_selectedSource),
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: <Widget>[
+        _VideoSummaryCard(
+          title: 'video_player',
+          description: _statusMessage,
+          accentColor: const Color(0xFF1C8A63),
+          sourceLabel: _sourceLabel(_selectedSource),
+        ),
+        const SizedBox(height: 16),
+        _VideoSourceSelector(
+          selectedSource: _selectedSource,
+          isLoading: _isLoading,
+          onSourceSelected: _handleSourceChanged,
+        ),
+        const SizedBox(height: 20),
+        Text(
+          '播放区域',
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
           ),
-          const SizedBox(height: 16),
-          _VideoSourceSelector(
-            selectedSource: _selectedSource,
-            isLoading: _isLoading,
-            onSourceSelected: _handleSourceChanged,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '这个页面只使用 video_player，不额外封装控制条。',
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
           ),
-          const SizedBox(height: 20),
-          Text(
-            '播放区域',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '这个页面只使用 video_player，不额外封装控制条。',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 16),
-          _VideoPreviewCard(
-            isLoading: _isLoading,
-            isReady: isReady,
-            controller: controller,
-            statusMessage: _statusMessage,
-          ),
-          const SizedBox(height: 16),
-          _VideoInfoCard(
-            currentSource: _selectedSource,
-            assetPath: _assetVideoPath,
-            networkUrl: _networkVideoUrl,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 16),
+        _VideoPreviewCard(
+          isLoading: _isLoading,
+          isReady: isReady,
+          controller: controller,
+          statusMessage: _statusMessage,
+        ),
+        const SizedBox(height: 16),
+        _VideoInfoCard(
+          currentSource: _selectedSource,
+          assetPath: _assetVideoPath,
+          networkUrl: _networkVideoUrl,
+        ),
+      ],
     );
   }
 

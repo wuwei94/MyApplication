@@ -1,40 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:flutter_demo/core/utils/ui/toast.dart';
 
 /// CustomDialog
 /// Demonstrates custom dialog creation
-class CustomDialogDemoPage extends StatelessWidget {
-  const CustomDialogDemoPage({super.key, required this.title});
-
-  final String title;
+class CustomDialogDemoPage extends BasicLayoutPage {
+  const CustomDialogDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return CustomDialogDemoView(title: title);
-  }
+  BasicLayoutPageState<CustomDialogDemoPage> createState() =>
+      _CustomDialogDemoPageState();
 }
 
-class CustomDialogDemoView extends StatelessWidget {
-  const CustomDialogDemoView({super.key, required this.title});
+class _CustomDialogDemoPageState
+    extends BasicLayoutPageState<CustomDialogDemoPage> {
+  @override
+  List<String> buildList() => const <String>[
+        '1. 显示成功自定义对话框',
+        '2. 显示加载对话框',
+        '3. 显示图片对话框',
+      ];
 
-  final String title;
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _showCustomDialog();
+      case 1:
+        _showLoadingDialog();
+      case 2:
+        _showImageDialog();
+    }
+  }
 
-  void _showCustomDialog(BuildContext context) {
+  void _showCustomDialog() {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      builder: (BuildContext dialogContext) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
-              colors: [Colors.blue.shade100, Colors.purple.shade100],
+              colors: <Color>[Colors.blue.shade100, Colors.purple.shade100],
             ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               const Icon(Icons.check_circle, size: 60, color: Colors.green),
               const SizedBox(height: 16),
               const Text(
@@ -45,7 +62,10 @@ class CustomDialogDemoView extends StatelessWidget {
               const Text('Your operation was completed successfully.'),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                  showToast('Custom dialog closed');
+                },
                 child: const Text('OK'),
               ),
             ],
@@ -55,16 +75,16 @@ class CustomDialogDemoView extends StatelessWidget {
     );
   }
 
-  void _showLoadingDialog(BuildContext context) {
+  void _showLoadingDialog() {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Dialog(
+      builder: (BuildContext dialogContext) => const Dialog(
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               CircularProgressIndicator(),
               SizedBox(width: 20),
               Text('Loading...'),
@@ -75,19 +95,20 @@ class CustomDialogDemoView extends StatelessWidget {
     );
 
     Future<void>.delayed(const Duration(seconds: 2), () {
-      if (context.mounted) {
+      if (mounted) {
         Navigator.pop(context);
+        showToast('Loading dialog dismissed');
       }
     });
   }
 
-  void _showImageDialog(BuildContext context) {
+  void _showImageDialog() {
     showDialog<void>(
       context: context,
-      builder: (context) => Dialog(
+      builder: (BuildContext dialogContext) => Dialog(
         insetPadding: EdgeInsets.zero,
         child: Stack(
-          children: [
+          children: <Widget>[
             Image.network(
               'https://picsum.photos/400/600',
               fit: BoxFit.cover,
@@ -99,7 +120,7 @@ class CustomDialogDemoView extends StatelessWidget {
               right: 8,
               child: IconButton(
                 icon: const Icon(Icons.close, color: Colors.white),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pop(dialogContext),
               ),
             ),
           ],
@@ -109,29 +130,15 @@ class CustomDialogDemoView extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _showCustomDialog(context),
-              child: const Text('Show Custom Dialog'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _showLoadingDialog(context),
-              child: const Text('Show Loading Dialog'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _showImageDialog(context),
-              child: const Text('Show Image Dialog'),
-            ),
-          ],
-        ),
+  Widget buildPreview() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.picture_in_picture_alt, size: 48),
+          SizedBox(height: 16),
+          Text('Custom Dialog / Loading Dialog / Image Dialog'),
+        ],
       ),
     );
   }

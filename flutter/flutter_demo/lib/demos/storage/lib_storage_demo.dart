@@ -1,43 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:lib_storage/lib_storage.dart';
 
-/// lib_storage
-/// 本地 package：../flutter_libs/lib_storage
-/// 演示 IStorage 统一接口与 Storage 门面内核切换。
-class LibStorageDemoPage extends StatelessWidget {
-  const LibStorageDemoPage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return LibStorageDemoView(title: title);
-  }
-}
-
-class LibStorageDemoView extends StatefulWidget {
-  const LibStorageDemoView({super.key, required this.title});
-
-  final String title;
+/// lib_storage — IStorage 统一接口与 Storage 门面内核切换
+///
+/// 核心机制与避坑点：
+/// 1. 门面模式：业务只依赖 `Storage`，替换 `Storage.kernel` 即可切换 SharedPreferences / Hive 后端。
+/// 2. 敏感数据不走本门面（统一 SecureStorage）；示例退出时恢复默认 Hive 内核，避免污染其它页面。
+///
+/// 本地 package：
+/// ../flutter_libs/lib_storage
+class LibStorageDemoPage extends BasicResponsePage {
+  const LibStorageDemoPage({super.key, required super.title});
 
   @override
-  State<LibStorageDemoView> createState() => _LibStorageDemoViewState();
+  BasicResponsePageState<LibStorageDemoPage> createState() =>
+      _LibStorageDemoPageState();
 }
 
-class _LibStorageDemoViewState extends State<LibStorageDemoView> {
+class _LibStorageDemoPageState
+    extends BasicResponsePageState<LibStorageDemoPage> {
   static const String _counterKey = 'lib_storage_counter';
-  int _counter = 0;
-
-  String get _kernelName {
-    return Storage.kernel is SharedPreferencesStorage
-        ? 'SharedPreferencesStorage'
-        : 'HiveStorage';
-  }
 
   @override
   void initState() {
     super.initState();
-    _load();
+    showDescription('lib_storage 示例：读取 / 写入 / 切换内核 / 清空');
+    _loadCounter();
   }
 
   @override
@@ -47,151 +35,85 @@ class _LibStorageDemoViewState extends State<LibStorageDemoView> {
     super.dispose();
   }
 
-  Future<void> _load() async {
-    final int counter = await Storage.getValue<int>(_counterKey, 0);
+  @override
+  List<String> buildList() => const <String>[
+        '1. 读取计数',
+        '2. 写入计数 +1',
+        '3. 重置计数',
+        '4. 切换内核',
+        '5. 清空全部',
+      ];
 
-    if (!mounted) return;
-    setState(() {
-      _counter = counter;
-    });
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _loadCounter();
+      case 1:
+        _incrementCounter();
+      case 2:
+        _resetCounter();
+      case 3:
+        _switchKernel();
+      case 4:
+        _clearAll();
+    }
   }
 
-  Future<void> _increment() async {
-    final int counter = await Storage.getValue<int>(_counterKey, 0);
-    await Storage.setValue(_counterKey, counter + 1);
-
-    if (!mounted) return;
-    setState(() {
-      _counter = counter + 1;
-    });
+  String get _kernelName {
+    return Storage.kernel is SharedPreferencesStorage
+        ? 'SharedPreferencesStorage'
+        : 'HiveStorage';
   }
 
-  Future<void> _clear() async {
-    await Storage.clearAll();
+  Future<void> _loadCounter() async {
+    appendLog('→ [Read] Storage.getValue($_counterKey) kernel=$_kernelName');
+    try {
+      final int counter = await Storage.getValue<int>(_counterKey, 0);
+      appendLog('✓ counter = $counter');
+    } catch (error) {
+      appendLog('✗ 读取失败: $error');
+    }
+  }
 
-    if (!mounted) return;
-    setState(() {
-      _counter = 0;
-    });
+  Future<void> _incrementCounter() async {
+    try {
+      final int counter = await Storage.getValue<int>(_counterKey, 0);
+      final int next = counter + 1;
+      appendLog('→ [Write] Storage.setValue($_counterKey, $next)');
+      await Storage.setValue(_counterKey, next);
+      appendLog('✓ counter = $next');
+    } catch (error) {
+      appendLog('✗ 写入失败: $error');
+    }
+  }
+
+  Future<void> _resetCounter() async {
+    appendLog('→ [Remove] Storage.remove($_counterKey)');
+    try {
+      await Storage.remove(_counterKey);
+      appendLog('✓ counter 已重置');
+    } catch (error) {
+      appendLog('✗ 删除失败: $error');
+    }
   }
 
   void _switchKernel() {
-    setState(() {
-      Storage.kernel = Storage.kernel is SharedPreferencesStorage
-          ? const HiveStorage()
-          : const SharedPreferencesStorage();
-    });
+    final IStorage next = Storage.kernel is SharedPreferencesStorage
+        ? const HiveStorage()
+        : const SharedPreferencesStorage();
+    Storage.kernel = next;
+    appendLog('→ [Switch] Storage.kernel = $_kernelName');
+    appendLog('✓ 内核已切换，后续读写走新后端');
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          _KernelCard(kernelName: _kernelName, onSwitch: _switchKernel),
-          const SizedBox(height: 16),
-          _CounterCard(
-            counter: _counter,
-            theme: theme,
-            onIncrement: _increment,
-            onClear: _clear,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _KernelCard extends StatelessWidget {
-  const _KernelCard({required this.kernelName, required this.onSwitch});
-
-  final String kernelName;
-  final VoidCallback onSwitch;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: <Widget>[
-            const Icon(Icons.swap_horiz_rounded),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('当前内核：$kernelName'),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Storage.kernel 可整体替换，调用方 API 不变；'
-                    '切换后计数器读写自不同后端。',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 12),
-            FilledButton.tonal(onPressed: onSwitch, child: const Text('切换内核')),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _CounterCard extends StatelessWidget {
-  const _CounterCard({
-    required this.counter,
-    required this.theme,
-    required this.onIncrement,
-    required this.onClear,
-  });
-
-  final int counter;
-  final ThemeData theme;
-  final VoidCallback onIncrement;
-  final VoidCallback onClear;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Storage 门面（getValue / setValue / clearAll）',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text('计数器：$counter', style: theme.textTheme.titleLarge),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 12,
-              children: <Widget>[
-                FilledButton.icon(
-                  onPressed: onIncrement,
-                  icon: const Icon(Icons.add),
-                  label: const Text('计数 +1'),
-                ),
-                OutlinedButton.icon(
-                  onPressed: onClear,
-                  icon: const Icon(Icons.delete_outline_rounded),
-                  label: const Text('清空'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+  Future<void> _clearAll() async {
+    appendLog('→ [Clear] Storage.clearAll()');
+    try {
+      await Storage.clearAll();
+      appendLog('✓ 当前内核数据已清空');
+    } catch (error) {
+      appendLog('✗ 清空失败: $error');
+    }
   }
 }

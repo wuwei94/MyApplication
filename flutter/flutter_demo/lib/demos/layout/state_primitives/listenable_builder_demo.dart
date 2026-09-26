@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// ListenableBuilder
 /// Demonstrates listening to any Listenable
-class ListenableBuilderDemoPage extends StatelessWidget {
-  const ListenableBuilderDemoPage({super.key, required this.title});
-
-  final String title;
+class ListenableBuilderDemoPage extends BasicLayoutPage {
+  const ListenableBuilderDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ListenableBuilderDemoView(title: title);
+  BasicLayoutPageState<ListenableBuilderDemoPage> createState() =>
+      _ListenableBuilderDemoPageState();
+}
+
+class _ListenableBuilderDemoPageState
+    extends BasicLayoutPageState<ListenableBuilderDemoPage> {
+  final CounterNotifier _counterNotifier = CounterNotifier();
+  final TextNotifier _textNotifier = TextNotifier();
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 计数器加一',
+        '2. 计数器减一',
+        '3. 更新文本',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _counterNotifier.increment();
+      case 1:
+        _counterNotifier.decrement();
+      case 2:
+        _textNotifier.updateText('Updated ${DateTime.now().second}');
+    }
   }
-}
-
-class ListenableBuilderDemoView extends StatefulWidget {
-  const ListenableBuilderDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ListenableBuilderDemoView> createState() =>
-      _ListenableBuilderDemoViewState();
-}
-
-class _ListenableBuilderDemoViewState extends State<ListenableBuilderDemoView> {
-  final _counterNotifier = CounterNotifier();
-  final _textNotifier = TextNotifier();
 
   @override
   void dispose() {
@@ -35,70 +43,42 @@ class _ListenableBuilderDemoViewState extends State<ListenableBuilderDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // ListenableBuilder with custom notifier
-            ListenableBuilder(
-              listenable: _counterNotifier,
-              builder: (context, child) {
-                return Text(
-                  'Counter: ${_counterNotifier.value}',
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () => _counterNotifier.decrement(),
-                  child: const Text('-'),
+  Widget buildPreview() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ListenableBuilder(
+            listenable: _counterNotifier,
+            builder: (BuildContext context, Widget? child) {
+              return Text(
+                'Counter: ${_counterNotifier.value}',
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(width: 16),
-                ElevatedButton(
-                  onPressed: () => _counterNotifier.increment(),
-                  child: const Text('+'),
-                ),
-              ],
+              );
+            },
+          ),
+          const SizedBox(height: 32),
+          const Divider(),
+          const SizedBox(height: 32),
+          const _AnimationDemo(),
+          const SizedBox(height: 32),
+          const Divider(),
+          const SizedBox(height: 32),
+          ListenableBuilder(
+            listenable: Listenable.merge(
+              <Listenable>[_counterNotifier, _textNotifier],
             ),
-            const SizedBox(height: 32),
-            const Divider(),
-            const SizedBox(height: 32),
-            // ListenableBuilder with AnimationController
-            const _AnimationDemo(),
-            const SizedBox(height: 32),
-            const Divider(),
-            const SizedBox(height: 32),
-            // ListenableBuilder with multiple listenables
-            ListenableBuilder(
-              listenable: Listenable.merge([_counterNotifier, _textNotifier]),
-              builder: (context, child) {
-                return Column(
-                  children: [
-                    Text(
-                      'Combined: ${_counterNotifier.value} - ${_textNotifier.text}',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ],
-                );
-              },
-            ),
-            ElevatedButton(
-              onPressed: () =>
-                  _textNotifier.updateText('Updated ${DateTime.now().second}'),
-              child: const Text('Update Text'),
-            ),
-          ],
-        ),
+            builder: (BuildContext context, Widget? child) {
+              return Text(
+                'Combined: ${_counterNotifier.value} - ${_textNotifier.text}',
+                style: const TextStyle(fontSize: 18),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -161,7 +141,7 @@ class _AnimationDemoState extends State<_AnimationDemo>
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: _controller,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return Container(
           width: 100 + (_controller.value * 100),
           height: 50,

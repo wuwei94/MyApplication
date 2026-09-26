@@ -1,262 +1,92 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-const List<_PermissionModel> _permissionDefinitions = <_PermissionModel>[
-  _PermissionModel(
-    permission: Permission.notification,
-    title: '通知权限',
-    subtitle: '消息提醒和系统通知',
-  ),
-  _PermissionModel(
-    permission: Permission.locationWhenInUse,
-    title: '定位权限',
-    subtitle: '使用期间获取位置信息',
-  ),
-  _PermissionModel(
-    permission: Permission.camera,
-    title: '相机权限',
-    subtitle: '拍照、扫码和图像采集',
-  ),
-  _PermissionModel(
-    permission: Permission.photos,
-    title: '相册权限',
-    subtitle: '读取照片和媒体文件',
-  ),
-];
-
-/// Permission Handler
+/// Permission Handler — 权限查询与申请
+///
+/// 核心机制与避坑点：
+/// 1. 状态先行：先 `permission.status` 读当前态，再按需 `request()`。
+/// 2. 永久拒绝：`permanentlyDenied` 只能 `openAppSettings()` 手动开启。
+///
+/// 官方参考：
 /// https://pub.dev/packages/permission_handler
-class PermissionDemoPage extends StatelessWidget {
-  const PermissionDemoPage({super.key, required this.title});
-
-  final String title;
+class PermissionDemoPage extends BasicResponsePage {
+  const PermissionDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return PermissionDemoView(title: title);
-  }
+  BasicResponsePageState<PermissionDemoPage> createState() =>
+      _PermissionDemoPageState();
 }
 
-class PermissionDemoView extends StatefulWidget {
-  const PermissionDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<PermissionDemoView> createState() => _PermissionDemoViewState();
-}
-
-class _PermissionDemoViewState extends State<PermissionDemoView> {
-  Map<Permission, PermissionStatus> _statuses =
-      <Permission, PermissionStatus>{};
-
+class _PermissionDemoPageState extends BasicResponsePageState<PermissionDemoPage> {
   @override
   void initState() {
     super.initState();
-    _refreshAllPermissions();
+    showDescription('permission_handler 示例：查询 / 申请运行时权限');
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
-  }
-
-  Widget getBody() {
-    final ThemeData theme = Theme.of(context);
-
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: <Widget>[
-        for (final _PermissionModel definition in _permissionDefinitions)
-          _buildPermissionCard(definition, theme),
-      ],
-    );
-  }
-
-  Widget _buildPermissionCard(_PermissionModel definition, ThemeData theme) {
-    final PermissionStatus status = _statusOf(definition.permission);
-
-    return _PermissionCard(
-      title: definition.title,
-      subtitle: definition.subtitle,
-      accentColor: _accentColor(status, theme),
-      buttonLabel: _actionLabel(status),
-      description: _statusDescription(status),
-      onPressed: () => _handlePermissionAction(definition),
-    );
-  }
-
-  Future<void> _refreshAllPermissions() async {
-    final Map<Permission, PermissionStatus> nextStatuses =
-        <Permission, PermissionStatus>{};
-
-    for (final _PermissionModel definition in _permissionDefinitions) {
-      nextStatuses[definition.permission] = await definition.permission.status;
-    }
-
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _statuses = nextStatuses;
-    });
-  }
-
-  PermissionStatus _statusOf(Permission permission) {
-    return _statuses[permission] ?? PermissionStatus.denied;
-  }
-
-  Future<void> _handlePermissionAction(_PermissionModel definition) async {
-    final PermissionStatus currentStatus = _statusOf(definition.permission);
-
-    if (currentStatus.isPermanentlyDenied) {
-      await openAppSettings();
-      return;
-    }
-
-    final PermissionStatus nextStatus = await definition.permission.request();
-
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _statuses[definition.permission] = nextStatus;
-    });
-  }
-
-  String _statusText(PermissionStatus status) {
-    switch (status) {
-      case PermissionStatus.denied:
-        return '未授权';
-      case PermissionStatus.granted:
-        return '已授权';
-      case PermissionStatus.restricted:
-        return '受限制';
-      case PermissionStatus.limited:
-        return '部分授权';
-      case PermissionStatus.permanentlyDenied:
-        return '已永久拒绝';
-      case PermissionStatus.provisional:
-        return '临时授权';
-    }
-  }
-
-  String _statusDescription(PermissionStatus status) {
-    return '申请状态：${_statusText(status)}';
-  }
-
-  String _actionLabel(PermissionStatus status) {
-    return status.isPermanentlyDenied ? '设置' : '申请';
-  }
-
-  Color _accentColor(PermissionStatus status, ThemeData theme) {
-    if (status.isGranted || status.isLimited || status.isProvisional) {
-      return const Color(0xFF1C8A63);
-    }
-    if (status.isPermanentlyDenied) {
-      return theme.colorScheme.error;
-    }
-    if (status.isRestricted) {
-      return const Color(0xFFE08A00);
-    }
-    return const Color(0xFF0F5DAA);
-  }
-}
-
-class _PermissionCard extends StatelessWidget {
-  const _PermissionCard({
-    required this.title,
-    required this.subtitle,
-    required this.accentColor,
-    required this.buttonLabel,
-    required this.description,
-    required this.onPressed,
-  });
-
-  final String title;
-  final String subtitle;
-  final Color accentColor;
-  final String buttonLabel;
-  final String description;
-  final VoidCallback onPressed;
+  List<String> buildList() => const <String>[
+        '1. 查询通知权限状态',
+        '2. 申请通知权限',
+        '3. 查询定位权限状态',
+        '4. 申请定位权限',
+        '5. 查询相机权限状态',
+        '6. 申请相机权限',
+        '7. 打开应用设置',
+      ];
 
   @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: accentColor.withValues(alpha: 0.16)),
-          boxShadow: const <BoxShadow>[
-            BoxShadow(
-              color: Color(0x120A2533),
-              blurRadius: 18,
-              offset: Offset(0, 8),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          title,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          subtitle,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  FilledButton(onPressed: onPressed, child: Text(buttonLabel)),
-                ],
-              ),
-              const SizedBox(height: 14),
-              Text(
-                description,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _queryStatus(Permission.notification, '通知');
+      case 1:
+        _request(Permission.notification, '通知');
+      case 2:
+        _queryStatus(Permission.locationWhenInUse, '定位');
+      case 3:
+        _request(Permission.locationWhenInUse, '定位');
+      case 4:
+        _queryStatus(Permission.camera, '相机');
+      case 5:
+        _request(Permission.camera, '相机');
+      case 6:
+        _openSettings();
+    }
   }
-}
 
-class _PermissionModel {
-  const _PermissionModel({
-    required this.permission,
-    required this.title,
-    required this.subtitle,
-  });
+  Future<void> _queryStatus(Permission permission, String name) async {
+    appendLog('→ [status] $name');
+    try {
+      final PermissionStatus status = await permission.status;
+      appendLog('✓ $name=${status.name}');
+    } catch (error) {
+      appendLog('✗ unexpected: $error');
+    }
+  }
 
-  final Permission permission;
-  final String title;
-  final String subtitle;
+  Future<void> _request(Permission permission, String name) async {
+    appendLog('→ [request] $name');
+    try {
+      final PermissionStatus current = await permission.status;
+      if (current.isPermanentlyDenied) {
+        appendLog('✗ 已永久拒绝，请到应用设置手动开启');
+        return;
+      }
+      final PermissionStatus status = await permission.request();
+      appendLog('✓ $name=${status.name}');
+    } catch (error) {
+      appendLog('✗ unexpected: $error');
+    }
+  }
+
+  Future<void> _openSettings() async {
+    appendLog('→ [openAppSettings] permission_handler.openAppSettings()');
+    try {
+      final bool opened = await openAppSettings();
+      appendLog('✓ opened=$opened');
+    } catch (error) {
+      appendLog('✗ unexpected: $error');
+    }
+  }
 }

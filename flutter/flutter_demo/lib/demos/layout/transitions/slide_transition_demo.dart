@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// SlideTransition
 /// Demonstrates slide animation
-class SlideTransitionDemoPage extends StatelessWidget {
-  const SlideTransitionDemoPage({super.key, required this.title});
-
-  final String title;
+class SlideTransitionDemoPage extends BasicLayoutPage {
+  const SlideTransitionDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SlideTransitionDemoView(title: title);
-  }
+  BasicLayoutPageState<SlideTransitionDemoPage> createState() =>
+      _SlideTransitionDemoPageState();
 }
 
-class SlideTransitionDemoView extends StatefulWidget {
-  const SlideTransitionDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<SlideTransitionDemoView> createState() =>
-      _SlideTransitionDemoViewState();
-}
-
-class _SlideTransitionDemoViewState extends State<SlideTransitionDemoView>
+class _SlideTransitionDemoPageState
+    extends BasicLayoutPageState<SlideTransitionDemoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 切换滑动',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _toggleSlide();
+    }
+  }
 
   @override
   void initState() {
@@ -56,35 +58,22 @@ class _SlideTransitionDemoViewState extends State<SlideTransitionDemoView>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipRect(
-              child: SlideTransition(
-                position: _animation,
-                child: Container(
-                  width: 200,
-                  height: 100,
-                  color: Colors.green,
-                  child: const Center(
-                    child: Text(
-                      'Sliding Box',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ),
+  Widget buildPreview() {
+    return Center(
+      child: ClipRect(
+        child: SlideTransition(
+          position: _animation,
+          child: Container(
+            width: 200,
+            height: 100,
+            color: Colors.green,
+            child: const Center(
+              child: Text(
+                'Sliding Box',
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _toggleSlide,
-              child: const Text('Toggle Slide'),
-            ),
-          ],
+          ),
         ),
       ),
     );

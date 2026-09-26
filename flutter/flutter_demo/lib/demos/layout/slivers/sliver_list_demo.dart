@@ -1,53 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// SliverList
 /// Demonstrates the usage of SliverList widget
-class SliverListDemoPage extends StatelessWidget {
-  const SliverListDemoPage({super.key, required this.title});
-
-  final String title;
+class SliverListDemoPage extends BasicLayoutPage {
+  const SliverListDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SliverListDemoView(title: title);
-  }
+  BasicLayoutPageState<SliverListDemoPage> createState() =>
+      _SliverListDemoPageState();
 }
 
-class SliverListDemoView extends StatelessWidget {
-  const SliverListDemoView({super.key, required this.title});
-
-  final String title;
-
+class _SliverListDemoPageState extends BasicLayoutPageState<SliverListDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 200,
-            floating: false,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(title),
-              background: Container(
-                color: Colors.blue,
-                child: const Center(
-                  child: Icon(Icons.list, size: 80, color: Colors.white54),
-                ),
+  Widget buildPreview() {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          expandedHeight: 200,
+          floating: false,
+          pinned: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(widget.title),
+            background: Container(
+              color: Colors.blue,
+              child: const Center(
+                child: Icon(Icons.list, size: 80, color: Colors.white54),
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
               return ListTile(
                 leading: CircleAvatar(child: Text('$index')),
                 title: Text('SliverList Item $index'),
                 subtitle: const Text('Part of CustomScrollView'),
               );
-            }, childCount: 20),
+            },
+            childCount: 20,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

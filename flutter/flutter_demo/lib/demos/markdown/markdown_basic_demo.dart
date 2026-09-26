@@ -1,117 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/core/utils/ui/toast.dart';
-import 'package:flutter_demo/demos/markdown/widgets/markdown_case_selector.dart';
 import 'package:flutter_demo/demos/markdown/widgets/markdown_code_highlighter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
-/// Markdown 基础与扩展渲染示例
+/// Markdown — 基础与扩展渲染
 ///
-/// 对标 Android module_markdown 的 `MarkwonBasicActivity`（Markwon 引擎），
-/// Flutter 侧使用 flutter_markdown_plus 渲染引擎（flutter_markdown 停更后的
-/// 社区延续维护版，API 兼容，默认 GitHub Flavored），业务逻辑保持一致。
+/// 核心机制与避坑点：
+/// 1. GFM 能力：标题 / 引用 / 列表 / 表格 / 任务清单 / 删除线默认可用。
+/// 2. 能力边界：flutter_markdown_plus 不支持内联 HTML，需用 Widget 或行内样式替代。
+/// 3. 主题定制：`MarkdownStyleSheet` 控制引用条、代码块与列表圆点，`SyntaxHighlighter`
+///    只作用于 `pre` 代码块文字。
 ///
-/// 页面交互：顶部横滑标签切换案例（内容型页面将纵向空间留给阅读区，
-/// 案例文案与功能逐项对齐 Android `MarkwonBasicActivity`）。
-///
-/// 引擎能力对照（Markwon → flutter_markdown_plus 逐项映射）：
-/// 1. 基础语法：标题（H1~H6）、粗体、斜体、引用块、无序/有序多级列表、分割线
-/// 2. GFM 扩展表格：多列对齐的标准 Markdown 表格
-/// 3. 任务清单：GFM 复选框（`- [x] Task`）渲染为原生 Checkbox
-/// 4. 删除线与富文本标签：与 Markwon HtmlPlugin 不同，flutter_markdown_plus
-///    不支持内联 HTML，本示例显式说明该能力差异（案例 4）
-/// 5. 图片加载：网络图片（https）异步加载并内联展示
-/// 6. 主题与样式定制：MarkdownStyleSheet 定制引用条颜色/宽度、
-///    代码块背景与文字颜色、列表圆点
-/// 7. 交互拦截：onTapLink 链接点击回调
-///
+/// 官方参考：
 /// https://pub.dev/packages/flutter_markdown_plus
-class MarkdownBasicDemoPage extends StatefulWidget {
-  final String title;
-
-  const MarkdownBasicDemoPage({super.key, required this.title});
+class MarkdownBasicDemoPage extends BasicLayoutPage {
+  const MarkdownBasicDemoPage({super.key, required super.title});
 
   @override
-  State<MarkdownBasicDemoPage> createState() => _MarkdownBasicDemoPageState();
+  BasicLayoutPageState<MarkdownBasicDemoPage> createState() =>
+      _MarkdownBasicDemoPageState();
 }
 
-class _MarkdownBasicDemoPageState extends State<MarkdownBasicDemoPage> {
-  /// 案例操作列表（文案与 Android `MarkwonBasicActivity.buildList()` 一致）
-  static const List<String> _caseTitles = <String>[
-    '1. 基础排版（标题 / 引用 / 列表 / 分割线）',
-    '2. GFM 扩展表格（多列对齐 & 复杂表格）',
-    '3. 任务清单 TaskLists（复选框状态）',
-    '4. HTML 标签与删除线（颜色 / 下划线 / 强调）',
-    '5. 超链接与图片（交互拦截与异步渲染）',
-    '6. 自定义主题样式（引用条绿色 / 暗色代码块 / 粗圆点）',
-    '7. 综合长文档（技术文档综合实战测试）',
-  ];
-
+class _MarkdownBasicDemoPageState
+    extends BasicLayoutPageState<MarkdownBasicDemoPage> {
   int _caseIndex = 0;
-  final ScrollController _scrollController = ScrollController();
 
-  /// 自定义绿色主题案例（下标 5）使用定制样式表
   bool get _useCustomTheme => _caseIndex == 5;
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+  List<String> buildList() => const <String>[
+        '1. 预览基础排版',
+        '2. 渲染 GFM 扩展表格',
+        '3. 渲染任务清单',
+        '4. 预览删除线与标签差异',
+        '5. 预览超链接与图片',
+        '6. 应用自定义主题样式',
+        '7. 预览综合长文档',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    setState(() {
+      _caseIndex = position;
+    });
   }
 
-  void _selectCase(int index) {
-    if (_caseIndex == index) return;
-    setState(() {
-      _caseIndex = index;
-    });
-    // 切换案例后回到顶部
-    WidgetsBinding.instance.addPostFrameCallback((Duration _) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(0);
-      }
-    });
+  @override
+  Widget buildPreview() {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: BasicDemoDimens.itemPadding,
+        vertical: BasicDemoDimens.itemPadding,
+      ),
+      child: Markdown(
+        data: _markdownByCase(_caseIndex),
+        selectable: true,
+        onTapLink: _onTapLink,
+        syntaxHighlighter: MarkdownCodeHighlighter(
+          textColor: _useCustomTheme
+              ? const Color(0xFF80CBC4)
+              : const Color(0xFF0F172A),
+        ),
+        styleSheet: _useCustomTheme
+            ? _buildCustomTheme(context)
+            : MarkdownStyleSheet.fromTheme(Theme.of(context)),
+      ),
+    );
   }
 
   void _onTapLink(String text, String? href, String title) {
     showToast('点击了链接: ${href ?? text}');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Column(
-        children: <Widget>[
-          // 顶部案例选择器（横向可滚动）
-          MarkdownCaseSelector(
-            titles: _caseTitles,
-            index: _caseIndex,
-            onSelected: _selectCase,
-          ),
-          const Divider(height: 1),
-          // 内容区域（Markdown 自带滚动）
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Markdown(
-                controller: _scrollController,
-                data: _markdownByCase(_caseIndex),
-                selectable: true,
-                onTapLink: _onTapLink,
-                syntaxHighlighter: MarkdownCodeHighlighter(
-                  // 暗色代码块上使用浅青文字，浅色页面使用深色文字
-                  textColor: _useCustomTheme
-                      ? const Color(0xFF80CBC4)
-                      : const Color(0xFF0F172A),
-                ),
-                styleSheet: _useCustomTheme
-                    ? _buildCustomTheme(context)
-                    : MarkdownStyleSheet.fromTheme(Theme.of(context)),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   /// 自定义主题：绿色引用条 / 暗色代码块 / 行内代码配色 / 粗圆点
@@ -146,16 +105,15 @@ class _MarkdownBasicDemoPageState extends State<MarkdownBasicDemoPage> {
   }
 
   String _markdownByCase(int index) => switch (index) {
-    0 => _basicMarkdown,
-    1 => _tableMarkdown,
-    2 => _taskListMarkdown,
-    3 => _htmlStrikethroughMarkdown,
-    4 => _linkImageMarkdown,
-    5 => _customThemeMarkdown,
-    _ => _comprehensiveMarkdown,
-  };
+        0 => _basicMarkdown,
+        1 => _tableMarkdown,
+        2 => _taskListMarkdown,
+        3 => _htmlStrikethroughMarkdown,
+        4 => _linkImageMarkdown,
+        5 => _customThemeMarkdown,
+        _ => _comprehensiveMarkdown,
+      };
 
-  /// 1. 基础排版示例（正文与 Android 对齐，仅引擎相关表述替换为 Flutter 侧实现）
   String get _basicMarkdown => '''
 # 一级标题 (H1)
 ## 二级标题 (H2)
@@ -183,7 +141,6 @@ class _MarkdownBasicDemoPageState extends State<MarkdownBasicDemoPage> {
 3. 第三步：实现打字机流控与代码高亮
 ''';
 
-  /// 2. GFM 表格示例
   String get _tableMarkdown => '''
 ## GFM 扩展表格 (TablePlugin)
 
@@ -206,7 +163,6 @@ flutter_markdown_plus 默认支持 GitHub Flavored Markdown 规范的表格语�
 | 内联图片 | ✅ | 网络 / 本地 / asset 均可 |
 ''';
 
-  /// 3. 任务清单示例
   String get _taskListMarkdown => '''
 ## 任务清单 (TaskListPlugin)
 
@@ -230,7 +186,6 @@ flutter_markdown_plus 任务列表支持 GFM 复选框语法，呈现直观的�
   - [ ] 智能贴底平滑滚动与手势打断
 ''';
 
-  /// 4. HTML 标签与删除线示例（能力差异已在文中说明）
   String get _htmlStrikethroughMarkdown => '''
 ## 删除线 (StrikethroughPlugin) 与富文本标签说明
 
@@ -261,7 +216,6 @@ Text.rich(
 > 行内 `code` 代码与 GFM 自动链接、Emoji 语法不受影响，可直接使用。
 ''';
 
-  /// 5. 超链接与图片示例
   String get _linkImageMarkdown => '''
 ## 超链接与图片 (网络异步渲染)
 
@@ -280,7 +234,6 @@ Text.rich(
 > 图片加载走原生网络栈，支持自动缓存与占位、本地文件与 asset 加载。
 ''';
 
-  /// 6. 自定义主题样式示例
   String get _customThemeMarkdown => '''
 ## 自定义主题样式 (MarkdownStyleSheet)
 
@@ -319,7 +272,6 @@ syntaxHighlighter: MarkdownCodeHighlighter(textColor: Color(0xFF80CBC4)),
 ```
 ''';
 
-  /// 7. 综合长文档示例
   String get _comprehensiveMarkdown => '''
 # 现代 Flutter AI 流式客户端设计与架构实践
 
@@ -340,7 +292,7 @@ syntaxHighlighter: MarkdownCodeHighlighter(textColor: Color(0xFF80CBC4)),
 ## 二、 关键技术选型对比
 
 | 技术方案 | 解析性能 | 扩展性 | 流式支持友好度 | 推荐指数 |
-| :--- | :--- | :--- | :--- | :---: |
+| :--- | :--- | :--- | :--- | ---: |
 | **flutter_markdown_plus (原生)** | 极高（基于 Widget 树） | 极高（Builder 体系完善） | 优秀（支持逐帧重建） | ⭐⭐⭐⭐⭐ |
 | **MarkdownWidget 扩展库** | 较高（声明式 Widget） | 中等 | 中等（需拆分 Block 避免重建） | ⭐⭐⭐⭐ |
 | **WebView / WebKit** | 中等（DOM 操作） | 较高（CSS 高度自由） | 较差（跨进程通信开销大） | ⭐⭐⭐ |

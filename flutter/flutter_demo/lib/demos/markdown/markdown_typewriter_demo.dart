@@ -1,69 +1,44 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/core/utils/ui/toast.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/markdown/engine/markdown_stream_fixer.dart';
 import 'package:flutter_demo/demos/markdown/engine/typewriter_engine.dart';
-import 'package:flutter_demo/demos/markdown/widgets/markdown_case_selector.dart';
 import 'package:flutter_demo/demos/markdown/widgets/markdown_code_highlighter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
-/// 流式 Markdown 打字机与未闭合语法容错示例
+/// TypewriterEngine — 流式打字机与语法容错
 ///
-/// 对标 Android module_markdown 的 `StreamTypewriterActivity`，业务逻辑一致：
-/// 1. TypewriterEngine：动态自适应出字速率控制（积压加速 + 标点呼吸停顿
-///    + 暂停/恢复/跳过）；
-/// 2. MarkdownStreamFixer：实时检测未闭合的 ``` 代码块与行内富文本标签，
-///    虚拟闭合防止界面跳动闪烁；
-/// 3. 渲染管线：每次出字对全文做一次「修复 + 渲染」，保持单调递增的流畅体验。
+/// 核心机制与避坑点：
+/// 1. 自适应流控：积压加速 + 标点呼吸停顿，保证出字既有节奏又不落后推流。
+/// 2. 语法容错：`MarkdownStreamFixer` 虚拟闭合未完成代码块 / 富文本标签，消除闪烁。
+/// 3. 生命周期：`feed` / `complete` / `pause` / `resume` / `skipToFinish` / `reset`。
 ///
-/// 页面交互：顶部横滑标签切换案例（流式演示 1~4 与暂停/跳过/重置控制项），
-/// 标签下方为引擎指标条（状态 / 缓冲积压 / 出字时钟），正文区域占满剩余空间。
-/// 案例文案与功能逐项对齐 Android `StreamTypewriterActivity`。
-class MarkdownTypewriterDemoPage extends StatefulWidget {
-  final String title;
-
-  const MarkdownTypewriterDemoPage({super.key, required this.title});
+/// 官方参考：
+/// https://pub.dev/packages/flutter_markdown_plus
+class MarkdownTypewriterDemoPage extends BasicLayoutPage {
+  const MarkdownTypewriterDemoPage({super.key, required super.title});
 
   @override
-  State<MarkdownTypewriterDemoPage> createState() =>
+  BasicLayoutPageState<MarkdownTypewriterDemoPage> createState() =>
       _MarkdownTypewriterDemoPageState();
 }
 
 class _MarkdownTypewriterDemoPageState
-    extends State<MarkdownTypewriterDemoPage> {
-  /// 案例操作项（文案与 Android `StreamTypewriterActivity.buildList()` 一致）
-  static const List<String> _caseTitles = <String>[
-    '1. 突发推流 (Burst Stream - 大段 Markdown 自适应加速)',
-    '2. 平缓推流 (Smooth Stream - 逐字细腻呼吸感)',
-    '3. 代码块补全验证 (Auto-close Fixer - 流式语法不崩溃)',
-    '4. 标点节奏停顿演示 (Punctuation Rhythm)',
-    '5. 暂停 / 恢复 (Pause & Resume)',
-    '6. 一键跳过 / 立即完成 (Skip to Finish)',
-    '7. 重置清空 (Reset)',
-  ];
-
+    extends BasicLayoutPageState<MarkdownTypewriterDemoPage> {
   final TypewriterEngine _engine = TypewriterEngine();
   final ScrollController _scrollController = ScrollController();
 
   String _displayText = '';
-
-  // 引擎流控指标
   TypewriterState _engineState = TypewriterState.idle;
   int _backlog = 0;
   int _speedMs = 0;
-
-  // 标签高亮：仅流式演示类(0~3)持久高亮，动作类(4~6)不改变高亮
-  int _caseIndex = 0;
-
-  // 模拟网络推流任务令牌：切换 / 重置时使旧任务安全退出
   int _feedToken = 0;
 
   @override
   void initState() {
     super.initState();
     _initEngine();
-    // 首帧后默认开始突发推流演示
     WidgetsBinding.instance.addPostFrameCallback((Duration _) {
       if (mounted) _startBurstStreamDemo();
     });
@@ -77,13 +52,43 @@ class _MarkdownTypewriterDemoPageState
     super.dispose();
   }
 
+  @override
+  List<String> buildList() => const <String>[
+        '1. 启动突发推流演示',
+        '2. 启动平缓推流演示',
+        '3. 启动代码块补全验证',
+        '4. 启动标点节奏演示',
+        '5. 暂停或恢复打字',
+        '6. 跳过并立即完成',
+        '7. 重置清空',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _startBurstStreamDemo();
+      case 1:
+        _startSmoothStreamDemo();
+      case 2:
+        _startCodeFixerDemo();
+      case 3:
+        _startPunctuationRhythmDemo();
+      case 4:
+        _togglePauseResume();
+      case 5:
+        _engine.skipToFinish();
+      case 6:
+        _resetAll();
+    }
+  }
+
   void _initEngine() {
     _engine.onTextUpdate = (String text, bool isFinished) {
       if (!mounted) return;
       setState(() {
         _displayText = MarkdownStreamFixer.fix(text, appendCursor: !isFinished);
       });
-      // 每次出字后平滑滚动到底部
       WidgetsBinding.instance.addPostFrameCallback((Duration _) {
         if (_scrollController.hasClients) {
           _scrollController.animateTo(
@@ -105,7 +110,6 @@ class _MarkdownTypewriterDemoPageState
     };
   }
 
-  /// 以「整段 chunk 推送 + 间隔」或「逐字推送」两种节奏模拟网络推流
   void _startStreamTask(
     List<String> chunks, {
     bool feedWholeChunk = false,
@@ -141,32 +145,6 @@ class _MarkdownTypewriterDemoPageState
     unawaited(task());
   }
 
-  // ---------- 案例操作 ----------
-
-  void _selectCase(int index) {
-    switch (index) {
-      case 0:
-        _startBurstStreamDemo();
-      case 1:
-        _startSmoothStreamDemo();
-      case 2:
-        _startCodeFixerDemo();
-      case 3:
-        _startPunctuationRhythmDemo();
-      case 4:
-        _togglePauseResume();
-      case 5:
-        _engine.skipToFinish();
-      case 6:
-        _resetAll();
-    }
-    setState(() {
-      // 流式演示类操作高亮当前项，动作类操作不持久高亮
-      if (index <= 3) _caseIndex = index;
-    });
-  }
-
-  /// 1. 突发推流演示（内容与 Android 版一致）
   void _startBurstStreamDemo() {
     _resetAll();
     _engine.start();
@@ -192,14 +170,9 @@ class _MarkdownTypewriterDemoPageState
       '```\n\n',
       '整个流式过程自然丝滑，毫无界面闪烁！',
     ];
-    _startStreamTask(
-      chunks,
-      feedWholeChunk: true,
-      chunkDelayMs: 120, // 模拟网络突发间隔
-    );
+    _startStreamTask(chunks, feedWholeChunk: true, chunkDelayMs: 120);
   }
 
-  /// 2. 平缓细腻推流演示
   void _startSmoothStreamDemo() {
     _resetAll();
     _engine.start();
@@ -209,7 +182,6 @@ class _MarkdownTypewriterDemoPageState
     _startStreamTask(<String>[text], perCharDelayMs: 30);
   }
 
-  /// 3. 复杂语法与嵌套补全演示
   void _startCodeFixerDemo() {
     _resetAll();
     _engine.start();
@@ -232,7 +204,6 @@ class _MarkdownTypewriterDemoPageState
     _startStreamTask(chunks, perCharDelayMs: 22, chunkDelayMs: 80);
   }
 
-  /// 4. 标点呼吸停顿演示（叙述文案与 Android 版一致）
   void _startPunctuationRhythmDemo() {
     _resetAll();
     _engine.start();
@@ -247,15 +218,11 @@ class _MarkdownTypewriterDemoPageState
     _startStreamTask(sentences, perCharDelayMs: 25);
   }
 
-  // ---------- 生命周期控制 ----------
-
   void _togglePauseResume() {
     if (_engineState == TypewriterState.paused) {
       _engine.resume();
-      showToast('打字机已继续');
     } else if (_engineState == TypewriterState.typing) {
       _engine.pause();
-      showToast('打字机已暂停');
     }
     setState(() {});
   }
@@ -274,37 +241,27 @@ class _MarkdownTypewriterDemoPageState
     }
   }
 
-  // ---------- UI ----------
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Column(
-        children: <Widget>[
-          // 顶部案例选择器（横向可滚动）
-          MarkdownCaseSelector(
-            titles: _caseTitles,
-            index: _caseIndex,
-            onSelected: _selectCase,
-          ),
-          const Divider(height: 1),
-          _buildMetricsBar(),
-          const Divider(height: 1),
-          Expanded(child: _buildMarkdownArea()),
-        ],
-      ),
+  Widget buildPreview() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        _buildMetricsBar(),
+        const Divider(height: 1),
+        Expanded(child: _buildMarkdownArea()),
+      ],
     );
   }
 
-  /// 引擎流控指标条（状态 / 缓冲积压 / 出字时钟，配色对齐 Android）
   Widget _buildMetricsBar() {
     final (String label, Color color) = _statePresentation(_engineState);
-
     return Container(
       width: double.infinity,
       color: const Color(0xFFF8FAFC),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: BasicDemoDimens.cardPadding,
+        vertical: BasicDemoDimens.itemPadding,
+      ),
       child: Row(
         children: <Widget>[
           _metricItem(label: '引擎状态', value: label, valueColor: color),
@@ -325,7 +282,6 @@ class _MarkdownTypewriterDemoPageState
     );
   }
 
-  /// 指标条目（小标签 + 加粗数值）
   Widget _metricItem({
     required String label,
     required String value,
@@ -338,13 +294,16 @@ class _MarkdownTypewriterDemoPageState
       children: <Widget>[
         Text(
           label,
-          style: TextStyle(fontSize: 11, color: theme.colorScheme.outline),
+          style: TextStyle(
+            fontSize: BasicDemoDimens.fontBody,
+            color: theme.colorScheme.outline,
+          ),
         ),
         const SizedBox(height: 2),
         Text(
           value,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: BasicDemoDimens.fontTitle,
             fontWeight: FontWeight.w700,
             color: valueColor,
           ),
@@ -353,7 +312,6 @@ class _MarkdownTypewriterDemoPageState
     );
   }
 
-  /// 状态 → 展示文案与颜色（与 Android 状态色映射一致）
   (String, Color) _statePresentation(TypewriterState state) {
     return switch (state) {
       TypewriterState.typing => ('TYPING', const Color(0xFF4CAF50)),
@@ -363,19 +321,18 @@ class _MarkdownTypewriterDemoPageState
     };
   }
 
-  /// Markdown 渲染区（代码块暗色底，自带滚动）
   Widget _buildMarkdownArea() {
     final ThemeData theme = Theme.of(context);
     final MarkdownStyleSheet styleSheet = MarkdownStyleSheet.fromTheme(theme)
         .copyWith(
           codeblockDecoration: const BoxDecoration(
-            color: Color(0xFF282C34), // 多行代码块暗黑底色
+            color: Color(0xFF282C34),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           codeblockPadding: const EdgeInsets.all(10),
           code: const TextStyle(
-            color: Color(0xFFD81B60), // 行内代码高亮粉红色
-            backgroundColor: Color(0x14000000), // 行内代码浅色背景
+            color: Color(0xFFD81B60),
+            backgroundColor: Color(0x14000000),
             fontFamily: 'monospace',
             fontSize: 12.5,
           ),
@@ -384,7 +341,7 @@ class _MarkdownTypewriterDemoPageState
     if (_displayText.isEmpty) {
       return Center(
         child: Text(
-          '选择上方操作项开始流式打字机演示…',
+          '选择下方操作项开始流式打字机演示…',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -393,7 +350,7 @@ class _MarkdownTypewriterDemoPageState
     }
 
     return Container(
-      margin: const EdgeInsets.all(4),
+      margin: const EdgeInsets.all(BasicDemoDimens.compact),
       child: Markdown(
         controller: _scrollController,
         data: _displayText,

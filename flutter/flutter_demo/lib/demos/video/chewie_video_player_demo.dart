@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:video_player/video_player.dart';
 
 enum _VideoSourceType { asset, network }
@@ -7,28 +8,16 @@ enum _VideoSourceType { asset, network }
 /// Chewie + Video Player
 /// https://pub.dev/packages/chewie
 /// https://pub.dev/packages/video_player
-class ChewieVideoPlayerDemoPage extends StatelessWidget {
-  const ChewieVideoPlayerDemoPage({super.key, required this.title});
-
-  final String title;
+class ChewieVideoPlayerDemoPage extends BasicImagePage {
+  const ChewieVideoPlayerDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ChewieVideoPlayerDemoView(title: title);
-  }
+  BasicImagePageState<ChewieVideoPlayerDemoPage> createState() =>
+      _ChewieVideoPlayerDemoPageState();
 }
 
-class ChewieVideoPlayerDemoView extends StatefulWidget {
-  const ChewieVideoPlayerDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ChewieVideoPlayerDemoView> createState() =>
-      _ChewieVideoPlayerDemoViewState();
-}
-
-class _ChewieVideoPlayerDemoViewState extends State<ChewieVideoPlayerDemoView> {
+class _ChewieVideoPlayerDemoPageState
+    extends BasicImagePageState<ChewieVideoPlayerDemoPage> {
   static const String _assetVideoPath = 'assets/video/sample.mp4';
   static const String _networkVideoUrl =
       'https://samplelib.com/lib/preview/mp4/sample-5s.mp4';
@@ -52,56 +41,91 @@ class _ChewieVideoPlayerDemoViewState extends State<ChewieVideoPlayerDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 播放视频',
+        '2. 暂停视频',
+        '3. 切换本地资源源',
+        '4. 切换网络源',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _play();
+      case 1:
+        _pause();
+      case 2:
+        _handleSourceChanged(_VideoSourceType.asset);
+      case 3:
+        _handleSourceChanged(_VideoSourceType.network);
+    }
+  }
+
+  Future<void> _play() async {
+    final VideoPlayerController? controller = _videoController;
+    if (controller != null && controller.value.isInitialized) {
+      await controller.play();
+      setState(() {});
+    }
+  }
+
+  Future<void> _pause() async {
+    final VideoPlayerController? controller = _videoController;
+    if (controller != null && controller.value.isInitialized) {
+      await controller.pause();
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final bool isReady = _chewieController != null && !_isLoading;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          _VideoSummaryCard(
-            title: 'chewie + video_player',
-            description: _statusMessage,
-            accentColor: const Color(0xFF4B57D1),
-            sourceLabel: _sourceLabel(_selectedSource),
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: <Widget>[
+        _VideoSummaryCard(
+          title: 'chewie + video_player',
+          description: _statusMessage,
+          accentColor: const Color(0xFF4B57D1),
+          sourceLabel: _sourceLabel(_selectedSource),
+        ),
+        const SizedBox(height: 16),
+        _VideoSourceSelector(
+          selectedSource: _selectedSource,
+          isLoading: _isLoading,
+          onSourceSelected: _handleSourceChanged,
+        ),
+        const SizedBox(height: 20),
+        Text(
+          '播放区域',
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
           ),
-          const SizedBox(height: 16),
-          _VideoSourceSelector(
-            selectedSource: _selectedSource,
-            isLoading: _isLoading,
-            onSourceSelected: _handleSourceChanged,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '这个页面使用 chewie 包装 video_player，直接提供默认控制条、全屏和倍速。',
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
           ),
-          const SizedBox(height: 20),
-          Text(
-            '播放区域',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '这个页面使用 chewie 包装 video_player，直接提供默认控制条、全屏和倍速。',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 16),
-          _VideoPreviewCard(
-            isLoading: _isLoading,
-            isReady: isReady,
-            chewieController: _chewieController,
-            statusMessage: _statusMessage,
-          ),
-          const SizedBox(height: 16),
-          _VideoInfoCard(
-            currentSource: _selectedSource,
-            assetPath: _assetVideoPath,
-            networkUrl: _networkVideoUrl,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 16),
+        _VideoPreviewCard(
+          isLoading: _isLoading,
+          isReady: isReady,
+          chewieController: _chewieController,
+          statusMessage: _statusMessage,
+        ),
+        const SizedBox(height: 16),
+        _VideoInfoCard(
+          currentSource: _selectedSource,
+          assetPath: _assetVideoPath,
+          networkUrl: _networkVideoUrl,
+        ),
+      ],
     );
   }
 

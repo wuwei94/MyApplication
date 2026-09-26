@@ -1,37 +1,44 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_svga/flutter_svga.dart';
 
 /// SVGA animation
 /// https://pub.dev/packages/flutter_svga
-class SvgaDemoPage extends StatelessWidget {
-  const SvgaDemoPage({super.key, required this.title});
-
-  final String title;
+class SvgaDemoPage extends BasicImagePage {
+  const SvgaDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SvgaDemoView(title: title);
-  }
+  BasicImagePageState<SvgaDemoPage> createState() => _SvgaDemoPageState();
 }
 
-class SvgaDemoView extends StatefulWidget {
-  const SvgaDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<SvgaDemoView> createState() => _SvgaDemoViewState();
-}
-
-class _SvgaDemoViewState extends State<SvgaDemoView>
+class _SvgaDemoPageState extends BasicImagePageState<SvgaDemoPage>
     with SingleTickerProviderStateMixin {
   static const String _sampleAsset = 'assets/anim/svga/diamond.svga';
 
   late final SVGAAnimationController _controller;
   Object? _loadError;
   bool _isLoading = true;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 循环播放',
+        '2. 暂停动画',
+        '3. 重新加载资源',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        unawaited(_controller.repeat());
+      case 1:
+        _controller.stop();
+      case 2:
+        _loadAnimation();
+    }
+  }
 
   @override
   void initState() {
@@ -80,32 +87,29 @@ class _SvgaDemoViewState extends State<SvgaDemoView>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Local SVGA sample',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            SelectableText(
-              _sampleAsset,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 16),
-            Expanded(child: _buildPreview(context)),
-          ],
-        ),
+  Widget buildPreview() {
+    return Padding(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(
+            'Local SVGA sample',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          SelectableText(
+            _sampleAsset,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: 16),
+          Expanded(child: _buildCanvas(context)),
+        ],
       ),
     );
   }
 
-  Widget _buildPreview(BuildContext context) {
+  Widget _buildCanvas(BuildContext context) {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -114,7 +118,7 @@ class _SvgaDemoViewState extends State<SvgaDemoView>
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             const Icon(Icons.error_outline, size: 40),
             const SizedBox(height: 12),
             const Text('Failed to load SVGA animation'),
@@ -132,7 +136,7 @@ class _SvgaDemoViewState extends State<SvgaDemoView>
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
       ),
       child: Center(
         child: SVGAImage(

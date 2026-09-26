@@ -1,63 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// SingleChildScrollView
 /// Demonstrates single child scrolling
-class SingleChildScrollViewDemoPage extends StatelessWidget {
-  const SingleChildScrollViewDemoPage({super.key, required this.title});
-
-  final String title;
+class SingleChildScrollViewDemoPage extends BasicLayoutPage {
+  const SingleChildScrollViewDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollViewDemoView(title: title);
-  }
+  BasicLayoutPageState<SingleChildScrollViewDemoPage> createState() =>
+      _SingleChildScrollViewDemoPageState();
 }
 
-class SingleChildScrollViewDemoView extends StatelessWidget {
-  const SingleChildScrollViewDemoView({super.key, required this.title});
-
-  final String title;
-
+class _SingleChildScrollViewDemoPageState
+    extends BasicLayoutPageState<SingleChildScrollViewDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'SingleChildScrollView',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'This is a simple scrollable container that can hold a single child widget. '
-              'It is useful when you have a widget that might overflow the screen.',
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 24),
-            ...List.generate(
-              20,
-              (index) => Container(
-                width: double.infinity,
-                height: 80,
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    'Item ${index + 1}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text(
+            'SingleChildScrollView',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'This is a simple scrollable container that can hold a single child widget. '
+            'It is useful when you have a widget that might overflow the screen.',
+            style: TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          ...List<Widget>.generate(
+            20,
+            (int index) => Container(
+              width: double.infinity,
+              height: 80,
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade100,
+                borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
+              ),
+              child: Center(
+                child: Text(
+                  'Item ${index + 1}',
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

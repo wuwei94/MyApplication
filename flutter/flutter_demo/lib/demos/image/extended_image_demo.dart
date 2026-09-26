@@ -1,30 +1,20 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// extended_image
 /// https://pub.dev/packages/extended_image
 /// 直接使用 extended_image 原生 API，在常规网络图加载能力之外，还额外提供更丰富的图片交互能力。
-class ExtendedImageDemoPage extends StatelessWidget {
-  const ExtendedImageDemoPage({super.key, required this.title});
-
-  final String title;
+class ExtendedImageDemoPage extends BasicImagePage {
+  const ExtendedImageDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ExtendedImageDemoView(title: title);
-  }
+  BasicImagePageState<ExtendedImageDemoPage> createState() =>
+      _ExtendedImageDemoPageState();
 }
 
-class ExtendedImageDemoView extends StatefulWidget {
-  const ExtendedImageDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ExtendedImageDemoView> createState() => _ExtendedImageDemoViewState();
-}
-
-class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
+class _ExtendedImageDemoPageState
+    extends BasicImagePageState<ExtendedImageDemoPage> {
   static const Color _accentColor = Color(0xFF0F766E);
   static const List<String> _capabilities = <String>[
     '网络缓存',
@@ -46,11 +36,21 @@ class _ExtendedImageDemoViewState extends State<ExtendedImageDemoView> {
       '本示例直接使用 extended_image 原生 API，展示 ExtendedImage.network 组件、手势预览与缓存清理。';
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
+  List<String> buildList() => const <String>[
+        '1. 清理图片缓存',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _clearCache();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    return getBody();
   }
 
   Widget getBody() {

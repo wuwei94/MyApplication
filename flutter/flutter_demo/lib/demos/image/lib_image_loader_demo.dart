@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:lib_image_loader/image_loader.dart';
 
 /// lib_image_loader
 /// 本地 package：../flutter_libs/lib_image_loader
 /// 演示 IImageLoader 统一接口与 ImageLoader 门面的常规网络图加载与缓存清理。
-class LibImageLoaderDemoPage extends StatelessWidget {
-  const LibImageLoaderDemoPage({super.key, required this.title});
-
-  final String title;
+class LibImageLoaderDemoPage extends BasicImagePage {
+  const LibImageLoaderDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return LibImageLoaderDemoView(title: title);
-  }
+  BasicImagePageState<LibImageLoaderDemoPage> createState() =>
+      _LibImageLoaderDemoPageState();
 }
 
-class LibImageLoaderDemoView extends StatefulWidget {
-  const LibImageLoaderDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<LibImageLoaderDemoView> createState() => _LibImageLoaderDemoViewState();
-}
-
-class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
+class _LibImageLoaderDemoPageState
+    extends BasicImagePageState<LibImageLoaderDemoPage> {
   static const String _imageUrl =
       'https://picsum.photos/seed/lib-image-loader/900/520';
   static const String _avatarUrl =
@@ -41,79 +31,89 @@ class _LibImageLoaderDemoViewState extends State<LibImageLoaderDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 清理图片缓存',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _clearCache();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          const _KernelCard(),
-          const SizedBox(height: 16),
-          _PreviewCard(
-            title: 'ImageLoader.load（基础图）',
-            subtitle: '默认包含缓存、占位图与错误态，内核可整体替换。',
-            child: ImageLoader.load(
-              url: _imageUrl,
-              width: double.infinity,
-              height: 220,
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: <Widget>[
+        const _KernelCard(),
+        const SizedBox(height: 16),
+        _PreviewCard(
+          title: 'ImageLoader.load（基础图）',
+          subtitle: '默认包含缓存、占位图与错误态，内核可整体替换。',
+          child: ImageLoader.load(
+            url: _imageUrl,
+            width: double.infinity,
+            height: 220,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _PreviewCard(
+          title: 'ImageLoader.radius（圆角图）',
+          subtitle: '圆角场景沿用统一调用方式，适合 Banner、卡片头图。',
+          child: ImageLoader.radius(
+            url: _imageUrl,
+            width: double.infinity,
+            height: 220,
+            borderRadius: 24,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _PreviewCard(
+          title: 'ImageLoader.round（圆形图）',
+          subtitle: '固定尺寸小图可直接用于头像、群组缩略图。',
+          child: Center(child: ImageLoader.round(url: _avatarUrl, size: 120)),
+        ),
+        const SizedBox(height: 16),
+        _PreviewCard(
+          title: 'ImageLoader.provider（ImageProvider）',
+          subtitle:
+              '返回 ImageProvider，可直接用于 CircleAvatar、FadeInImage、Hero 等组件。',
+          child: Center(
+            child: CircleAvatar(
+              radius: 48,
+              backgroundImage: ImageLoader.provider(_avatarUrl),
             ),
           ),
-          const SizedBox(height: 16),
-          _PreviewCard(
-            title: 'ImageLoader.radius（圆角图）',
-            subtitle: '圆角场景沿用统一调用方式，适合 Banner、卡片头图。',
-            child: ImageLoader.radius(
-              url: _imageUrl,
-              width: double.infinity,
-              height: 220,
-              borderRadius: 24,
-            ),
-          ),
-          const SizedBox(height: 16),
-          _PreviewCard(
-            title: 'ImageLoader.round（圆形图）',
-            subtitle: '固定尺寸小图可直接用于头像、群组缩略图。',
-            child: Center(child: ImageLoader.round(url: _avatarUrl, size: 120)),
-          ),
-          const SizedBox(height: 16),
-          _PreviewCard(
-            title: 'ImageLoader.provider（ImageProvider）',
-            subtitle:
-                '返回 ImageProvider，可直接用于 CircleAvatar、FadeInImage、Hero 等组件。',
-            child: Center(
-              child: CircleAvatar(
-                radius: 48,
-                backgroundImage: ImageLoader.provider(_avatarUrl),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'ImageLoader.clear（缓存清理）',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+        ),
+        const SizedBox(height: 16),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'ImageLoader.clear（缓存清理）',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
                   ),
-                  const SizedBox(height: 12),
-                  OutlinedButton.icon(
-                    onPressed: _clearCache,
-                    icon: const Icon(Icons.delete_outline_rounded),
-                    label: const Text('清除本页图片缓存'),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: _clearCache,
+                  icon: const Icon(Icons.delete_outline_rounded),
+                  label: const Text('清除本页图片缓存'),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

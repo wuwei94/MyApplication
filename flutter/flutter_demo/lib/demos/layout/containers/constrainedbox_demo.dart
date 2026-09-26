@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// ConstrainedBox
 /// Demonstrates various constraint usages of ConstrainedBox
-class ConstrainedBoxDemoPage extends StatelessWidget {
-  const ConstrainedBoxDemoPage({super.key, required this.title});
-
-  final String title;
+class ConstrainedBoxDemoPage extends BasicLayoutPage {
+  const ConstrainedBoxDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ConstrainedBoxDemoView(title: title);
-  }
+  BasicLayoutPageState<ConstrainedBoxDemoPage> createState() =>
+      _ConstrainedBoxDemoPageState();
 }
 
-class ConstrainedBoxDemoView extends StatelessWidget {
-  const ConstrainedBoxDemoView({super.key, required this.title});
-
-  final String title;
-
+class _ConstrainedBoxDemoPageState
+    extends BasicLayoutPageState<ConstrainedBoxDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('BoxConstraints - Min/Max'),
-            _buildMinMaxConstraints(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('BoxConstraints.tight - Fixed Size'),
-            _buildTightConstraints(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('BoxConstraints.expand'),
-            _buildExpandConstraints(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('BoxConstraints - Min/Max'),
+          _buildMinMaxConstraints(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('BoxConstraints.tight - Fixed Size'),
+          _buildTightConstraints(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('BoxConstraints.expand'),
+          _buildExpandConstraints(),
+        ],
       ),
     );
   }
@@ -60,11 +52,11 @@ class ConstrainedBoxDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           ConstrainedBox(
             constraints: const BoxConstraints(
               minWidth: 100,
@@ -89,7 +81,7 @@ class ConstrainedBoxDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
       child: ConstrainedBox(
@@ -110,7 +102,7 @@ class ConstrainedBoxDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: ConstrainedBox(

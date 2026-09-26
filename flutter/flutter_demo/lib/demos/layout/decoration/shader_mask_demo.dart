@@ -1,45 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// ShaderMask
 /// Demonstrates gradient masks and shader effects
-class ShaderMaskDemoPage extends StatelessWidget {
-  const ShaderMaskDemoPage({super.key, required this.title});
-
-  final String title;
+class ShaderMaskDemoPage extends BasicLayoutPage {
+  const ShaderMaskDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ShaderMaskDemoView(title: title);
-  }
+  BasicLayoutPageState<ShaderMaskDemoPage> createState() =>
+      _ShaderMaskDemoPageState();
 }
 
-class ShaderMaskDemoView extends StatelessWidget {
-  const ShaderMaskDemoView({super.key, required this.title});
-
-  final String title;
-
+class _ShaderMaskDemoPageState extends BasicLayoutPageState<ShaderMaskDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Gradient Text'),
-            _buildGradientText(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Gradient Image'),
-            _buildGradientImage(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Fade Edge Effect'),
-            _buildFadeEdge(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Mask with Icon'),
-            _buildIconMask(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Gradient Text'),
+          _buildGradientText(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Gradient Image'),
+          _buildGradientImage(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Fade Edge Effect'),
+          _buildFadeEdge(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Mask with Icon'),
+          _buildIconMask(),
+        ],
       ),
     );
   }
@@ -76,7 +67,7 @@ class ShaderMaskDemoView extends StatelessWidget {
 
   static Shader _gradientTextShader(Rect bounds) {
     return const LinearGradient(
-      colors: [Colors.blue, Colors.purple, Colors.pink],
+      colors: <Color>[Colors.blue, Colors.purple, Colors.pink],
     ).createShader(bounds);
   }
 
@@ -92,7 +83,7 @@ class ShaderMaskDemoView extends StatelessWidget {
 
   static Shader _gradientImageShader(Rect bounds) {
     return const RadialGradient(
-      colors: [Colors.yellow, Colors.orange, Colors.red],
+      colors: <Color>[Colors.yellow, Colors.orange, Colors.red],
       center: Alignment.center,
     ).createShader(bounds);
   }
@@ -102,26 +93,26 @@ class ShaderMaskDemoView extends StatelessWidget {
       height: 100,
       decoration: BoxDecoration(
         color: Colors.blue.shade100,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
       ),
       child: ShaderMask(
-        shaderCallback: (bounds) {
+        shaderCallback: (Rect bounds) {
           return const LinearGradient(
-            colors: [
+            colors: <Color>[
               Colors.transparent,
               Colors.black,
               Colors.black,
               Colors.transparent,
             ],
-            stops: [0.0, 0.2, 0.8, 1.0],
+            stops: <double>[0.0, 0.2, 0.8, 1.0],
           ).createShader(bounds);
         },
         blendMode: BlendMode.dstIn,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          children: List.generate(
+          children: List<Widget>.generate(
             10,
-            (index) => Container(
+            (int index) => Container(
               width: 80,
               margin: const EdgeInsets.all(8),
               color: Colors.blue,
@@ -141,19 +132,19 @@ class ShaderMaskDemoView extends StatelessWidget {
   Widget _buildIconMask() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: <Widget>[
         ShaderMask(
-          shaderCallback: (bounds) {
+          shaderCallback: (Rect bounds) {
             return const LinearGradient(
-              colors: [Colors.green, Colors.blue],
+              colors: <Color>[Colors.green, Colors.blue],
             ).createShader(bounds);
           },
           child: const Icon(Icons.favorite, size: 60, color: Colors.white),
         ),
         ShaderMask(
-          shaderCallback: (bounds) {
+          shaderCallback: (Rect bounds) {
             return const SweepGradient(
-              colors: [
+              colors: <Color>[
                 Colors.red,
                 Colors.orange,
                 Colors.yellow,
@@ -167,9 +158,9 @@ class ShaderMaskDemoView extends StatelessWidget {
           child: const Icon(Icons.star, size: 60, color: Colors.white),
         ),
         ShaderMask(
-          shaderCallback: (bounds) {
+          shaderCallback: (Rect bounds) {
             return const LinearGradient(
-              colors: [Colors.purple, Colors.pink],
+              colors: <Color>[Colors.purple, Colors.pink],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ).createShader(bounds);

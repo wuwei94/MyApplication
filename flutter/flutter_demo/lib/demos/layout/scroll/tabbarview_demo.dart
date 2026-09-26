@@ -1,47 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// TabBarView
 /// Demonstrates tab navigation with TabBarView
-class TabBarViewDemoPage extends StatelessWidget {
-  const TabBarViewDemoPage({super.key, required this.title});
-
-  final String title;
+class TabBarViewDemoPage extends BasicLayoutPage {
+  const TabBarViewDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return TabBarViewDemoView(title: title);
-  }
+  BasicLayoutPageState<TabBarViewDemoPage> createState() =>
+      _TabBarViewDemoPageState();
 }
 
-class TabBarViewDemoView extends StatelessWidget {
-  const TabBarViewDemoView({super.key, required this.title});
-
-  final String title;
-
+class _TabBarViewDemoPageState extends BasicLayoutPageState<TabBarViewDemoPage> {
   @override
-  Widget build(BuildContext context) {
+  Widget buildPreview() {
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          bottom: const TabBar(
-            tabs: [
+      child: Column(
+        children: <Widget>[
+          const TabBar(
+            tabs: <Widget>[
               Tab(icon: Icon(Icons.home), text: 'Home'),
               Tab(icon: Icon(Icons.search), text: 'Search'),
               Tab(icon: Icon(Icons.favorite), text: 'Likes'),
               Tab(icon: Icon(Icons.person), text: 'Profile'),
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            _buildTabContent('Home', Colors.blue),
-            _buildTabContent('Search', Colors.green),
-            _buildTabContent('Likes', Colors.red),
-            _buildTabContent('Profile', Colors.purple),
-          ],
-        ),
+          Expanded(
+            child: TabBarView(
+              children: <Widget>[
+                _buildTabContent('Home', Colors.blue),
+                _buildTabContent('Search', Colors.green),
+                _buildTabContent('Likes', Colors.red),
+                _buildTabContent('Profile', Colors.purple),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -50,7 +45,7 @@ class TabBarViewDemoView extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Icon(Icons.tab, size: 100, color: color),
           const SizedBox(height: 20),
           Text(

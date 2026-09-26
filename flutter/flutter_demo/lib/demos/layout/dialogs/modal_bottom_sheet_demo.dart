@@ -1,31 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:flutter_demo/core/utils/ui/toast.dart';
 
 /// ModalBottomSheet
 /// Demonstrates various bottom sheet types
-class ModalBottomSheetDemoPage extends StatelessWidget {
-  const ModalBottomSheetDemoPage({super.key, required this.title});
-
-  final String title;
+class ModalBottomSheetDemoPage extends BasicLayoutPage {
+  const ModalBottomSheetDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ModalBottomSheetDemoView(title: title);
-  }
+  BasicLayoutPageState<ModalBottomSheetDemoPage> createState() =>
+      _ModalBottomSheetDemoPageState();
 }
 
-class ModalBottomSheetDemoView extends StatelessWidget {
-  const ModalBottomSheetDemoView({super.key, required this.title});
+class _ModalBottomSheetDemoPageState
+    extends BasicLayoutPageState<ModalBottomSheetDemoPage> {
+  @override
+  List<String> buildList() => const <String>[
+        '1. 显示 Modal Bottom Sheet',
+        '2. 显示 Draggable Sheet',
+      ];
 
-  final String title;
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _showModalBottomSheet();
+      case 1:
+        _showDraggableSheet();
+    }
+  }
 
-  void _showModalBottomSheet(BuildContext context) {
+  void _showModalBottomSheet() {
     showModalBottomSheet<void>(
       context: context,
-      builder: (context) => Container(
+      builder: (BuildContext sheetContext) => Container(
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             const Text(
               'Modal Bottom Sheet',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -34,17 +46,26 @@ class ModalBottomSheetDemoView extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.share),
               title: const Text('Share'),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                showToast('Modal · Share');
+              },
             ),
             ListTile(
               leading: const Icon(Icons.link),
               title: const Text('Copy Link'),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                showToast('Modal · Copy Link');
+              },
             ),
             ListTile(
               leading: const Icon(Icons.delete),
               title: const Text('Delete'),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                showToast('Modal · Delete');
+              },
             ),
           ],
         ),
@@ -52,13 +73,13 @@ class ModalBottomSheetDemoView extends StatelessWidget {
     );
   }
 
-  void _showDraggableSheet(BuildContext context) {
+  void _showDraggableSheet() {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => DraggableScrollableSheet(
+      builder: (BuildContext sheetContext) => DraggableScrollableSheet(
         expand: false,
-        builder: (context, scrollController) {
+        builder: (BuildContext sheetContext, ScrollController scrollController) {
           return Container(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -67,7 +88,7 @@ class ModalBottomSheetDemoView extends StatelessWidget {
             child: ListView.builder(
               controller: scrollController,
               itemCount: 30,
-              itemBuilder: (context, index) =>
+              itemBuilder: (BuildContext context, int index) =>
                   ListTile(title: Text('Item $index')),
             ),
           );
@@ -77,24 +98,15 @@ class ModalBottomSheetDemoView extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _showModalBottomSheet(context),
-              child: const Text('Show Modal Bottom Sheet'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _showDraggableSheet(context),
-              child: const Text('Show Draggable Sheet'),
-            ),
-          ],
-        ),
+  Widget buildPreview() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.vertical_align_bottom, size: 48),
+          SizedBox(height: 16),
+          Text('Modal Bottom Sheet / Draggable Scrollable Sheet'),
+        ],
       ),
     );
   }

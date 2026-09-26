@@ -1,16 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// 多维能力雷达图与触摸联动示例
 ///
 /// 演示六维技术能力评估模型、双数据集对比（自我评定 vs 团队期望）与触摸维度联动评级。
-class RadarChartDemoPage extends StatefulWidget {
-  const RadarChartDemoPage({super.key, required this.title});
-
-  final String title;
+class RadarChartDemoPage extends BasicLayoutPage {
+  const RadarChartDemoPage({super.key, required super.title});
 
   @override
-  State<RadarChartDemoPage> createState() => _RadarChartDemoPageState();
+  BasicLayoutPageState<RadarChartDemoPage> createState() =>
+      _RadarChartDemoPageState();
 }
 
 class _RadarDim {
@@ -27,7 +27,7 @@ class _RadarDim {
   final String description;
 }
 
-class _RadarChartDemoPageState extends State<RadarChartDemoPage> {
+class _RadarChartDemoPageState extends BasicLayoutPageState<RadarChartDemoPage> {
   int _selectedDimIndex = 0; // 默认选中第一个维度
   bool _showTargetSet = true;
 
@@ -71,62 +71,38 @@ class _RadarChartDemoPageState extends State<RadarChartDemoPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 显示目标数据集',
+        '2. 隐藏目标数据集',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        setState(() => _showTargetSet = true);
+      case 1:
+        setState(() => _showTargetSet = false);
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
     final _RadarDim currentDim = _dimensions[_selectedDimIndex];
     final double scoreDiff = currentDim.selfScore - currentDim.targetScore;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // 控制卡片
-            _buildControlCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 雷达图卡片
-            _buildRadarCard(colorScheme),
-            const SizedBox(height: 16),
-
-            // 触摸联动详细面板
-            _buildDetailDimCard(colorScheme, currentDim, scoreDiff),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildControlCard(ColorScheme colorScheme) {
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Row(
-          children: <Widget>[
-            Icon(Icons.radar_rounded, color: colorScheme.primary, size: 20),
-            const SizedBox(width: 8),
-            const Text(
-              '双数据集对照：',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            const Spacer(),
-            FilterChip(
-              avatar: Icon(
-                _showTargetSet ? Icons.check_rounded : Icons.add_rounded,
-                size: 16,
-              ),
-              label: const Text('显示职级基准线'),
-              selected: _showTargetSet,
-              onSelected: (bool val) => setState(() => _showTargetSet = val),
-            ),
-          ],
-        ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _buildRadarCard(colorScheme),
+          const SizedBox(height: 16),
+          _buildDetailDimCard(colorScheme, currentDim, scoreDiff),
+        ],
       ),
     );
   }
@@ -177,7 +153,7 @@ class _RadarChartDemoPageState extends State<RadarChartDemoPage> {
                           res.touchedSpot != null &&
                           event is! FlPointerExitEvent) {
                         final int index =
-                            res.touchedSpot!.touchedRadarEntryIndex;
+                            res.touchedSpot?.touchedRadarEntryIndex ?? -1;
                         if (index >= 0 &&
                             index < _dimensions.length &&
                             index != _selectedDimIndex) {

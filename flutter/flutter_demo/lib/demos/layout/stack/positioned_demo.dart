@@ -1,45 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Positioned
-/// Demonstrates the usage of Positioned widget for absolute positioning
-class PositionedDemoPage extends StatelessWidget {
-  const PositionedDemoPage({super.key, required this.title});
-
-  final String title;
+/// Demonstrates absolute positioning inside Stack with Positioned
+class PositionedDemoPage extends BasicLayoutPage {
+  const PositionedDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return PositionedDemoView(title: title);
-  }
+  BasicLayoutPageState<PositionedDemoPage> createState() =>
+      _PositionedDemoPageState();
 }
 
-class PositionedDemoView extends StatelessWidget {
-  const PositionedDemoView({super.key, required this.title});
-
-  final String title;
-
+class _PositionedDemoPageState extends BasicLayoutPageState<PositionedDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Positioned - Absolute Positioning'),
-            _buildPositionedDemo(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Positioned.fill'),
-            _buildPositionedFill(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Positioned.directional'),
-            _buildPositionedDirectional(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Align in Stack'),
-            _buildAlignInStack(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Basic Positioned'),
+          _buildBasicPositioned(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Positioned Edges'),
+          _buildPositionedEdges(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Positioned.fill'),
+          _buildPositionedFill(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Practical Corner Tag'),
+          _buildCornerTag(),
+        ],
       ),
     );
   }
@@ -58,63 +49,113 @@ class PositionedDemoView extends StatelessWidget {
     );
   }
 
-  Widget _buildPositionedDemo() {
+  Widget _buildBasicPositioned() {
     return Container(
       width: double.infinity,
-      height: 200,
+      height: 180,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Stack(
-        children: [
+        children: <Widget>[
           Container(
-            color: Colors.blue.shade100,
             width: double.infinity,
             height: double.infinity,
+            color: Colors.blue.shade100,
           ),
           Positioned(
-            left: 0,
-            top: 0,
-            child: _buildPositionedItem('Top Left', Colors.red),
+            left: 20,
+            top: 20,
+            child: _buildDot('left:20 top:20'),
           ),
           Positioned(
-            right: 0,
-            top: 0,
-            child: _buildPositionedItem('Top Right', Colors.orange),
+            right: 20,
+            top: 20,
+            child: _buildDot('right:20 top:20'),
           ),
           Positioned(
-            left: 0,
-            bottom: 0,
-            child: _buildPositionedItem('Bottom Left', Colors.green),
+            left: 20,
+            bottom: 20,
+            child: _buildDot('left:20 bottom:20'),
           ),
           Positioned(
-            right: 0,
-            bottom: 0,
-            child: _buildPositionedItem('Bottom Right', Colors.blue),
-          ),
-          Positioned(
-            left: 60,
-            top: 40,
-            child: _buildPositionedItem('Custom', Colors.purple),
+            right: 20,
+            bottom: 20,
+            child: _buildDot('right:20 bottom:20'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPositionedItem(String text, Color color) {
+  Widget _buildDot(String label) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(4),
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
       ),
       child: Text(
-        text,
-        style: const TextStyle(color: Colors.white, fontSize: 12),
+        label,
+        style: const TextStyle(color: Colors.white, fontSize: 10),
+      ),
+    );
+  }
+
+  Widget _buildPositionedEdges() {
+    return Container(
+      width: double.infinity,
+      height: 140,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.green.shade50,
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
+        border: Border.all(color: Colors.green.shade200),
+      ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.green.shade100,
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 10,
+            child: Container(
+              height: 30,
+              color: Colors.green,
+              child: const Center(
+                child: Text(
+                  'left:0 right:0 (stretched horizontally)',
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            bottom: 0,
+            right: 10,
+            child: Container(
+              width: 30,
+              color: Colors.green.shade700,
+              child: const Center(
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text(
+                    'top:0 bottom:0',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -122,124 +163,80 @@ class PositionedDemoView extends StatelessWidget {
   Widget _buildPositionedFill() {
     return Container(
       width: double.infinity,
-      height: 150,
+      height: 140,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.green.shade200),
+        color: Colors.orange.shade50,
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
+        border: Border.all(color: Colors.orange.shade200),
       ),
       child: Stack(
-        children: [
+        children: <Widget>[
           Container(
-            color: Colors.green.shade100,
             width: double.infinity,
             height: double.infinity,
+            color: Colors.orange.shade100,
           ),
           Positioned.fill(
-            left: 20,
-            top: 10,
-            right: 20,
-            bottom: 10,
             child: Container(
-              color: Colors.green,
+              color: Colors.black.withValues(alpha: 0.3),
               child: const Center(
                 child: Text(
                   'Positioned.fill',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
             ),
           ),
-          const Positioned(
-            top: 0,
-            right: 0,
-            child: Icon(Icons.star, color: Colors.orange),
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildPositionedDirectional() {
+  Widget _buildCornerTag() {
     return Container(
       width: double.infinity,
-      height: 120,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.orange.shade200),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            color: Colors.orange.shade100,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Positioned.directional(
-            textDirection: TextDirection.ltr,
-            start: 10,
-            top: 10,
-            child: _buildPositionedItem('Start', Colors.orange),
-          ),
-          Positioned.directional(
-            textDirection: TextDirection.ltr,
-            end: 10,
-            top: 10,
-            child: _buildPositionedItem('End', Colors.orange.shade700),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAlignInStack() {
-    return Container(
-      width: double.infinity,
-      height: 200,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
-      child: Stack(
-        children: [
-          Container(
+      child: Center(
+        child: Container(
+          width: 160,
+          height: 120,
+          decoration: BoxDecoration(
             color: Colors.purple.shade100,
-            width: double.infinity,
-            height: double.infinity,
+            borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
           ),
-          const Align(alignment: Alignment.topLeft, child: Text('Top Left')),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Text('Top Center'),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              const Center(child: Text('Product Card')),
+              Positioned(
+                right: -8,
+                top: -8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(
+                      BasicDemoDimens.cornerSmall,
+                    ),
+                  ),
+                  child: const Text(
+                    'HOT',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const Align(alignment: Alignment.topRight, child: Text('Top Right')),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Center Left'),
-          ),
-          const Align(alignment: Alignment.center, child: Text('Center')),
-          const Align(
-            alignment: Alignment.centerRight,
-            child: Text('Center Right'),
-          ),
-          const Align(
-            alignment: Alignment.bottomLeft,
-            child: Text('Bottom Left'),
-          ),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: Text('Bottom Center'),
-          ),
-          const Align(
-            alignment: Alignment.bottomRight,
-            child: Text('Bottom Right'),
-          ),
-        ],
+        ),
       ),
     );
   }

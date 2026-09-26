@@ -2,181 +2,109 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/core/constants/secrets.dart';
 import 'package:flutter_demo/core/constants/urls.dart';
 
-/// SSE (Server-Sent Events) — 服务端推送流式传输（DeepSeek AI 大模型对话）
+/// SSE — 服务端推送流式传输（DeepSeek）
 ///
-/// 演示标准 POST + SSE 流式响应协议，对标 Android module_sse。
-/// 包含逐 Token 流式响应、打字机实时渲染与随时中断生成。
+/// 核心机制与避坑点：
+/// 1. 流式读取：`ResponseType.stream` 搭配 `utf8.decoder` + `LineSplitter` 逐行消费。
+/// 2. 协议解析：`data: {...}` 为载荷行，`data: [DONE]` 为结束标志；Cancel 走
+///    `DioExceptionType.cancel` 静默处理。
+/// 3. 密钥注入：API Key 来自 `Secrets.deepSeekApiKey` 编译期注入，禁止硬编码。
 ///
-/// 核心特性：
-/// 1. 流式读取：基于 `dio` 流式管道实时消费 SSE 数据
-/// 2. 协议解析：标准解析 `data: {...}\n\n` 格式及 `[DONE]` 结束标志
-/// 3. AI 对齐：兼容 `deepseek-chat` 格式，支持实时打字机输出
-/// 4. 中断控制：支持随时主动 Cancel 中断当前生成流
-/// 5. 密钥注入：API Key 与 Android 共用 `local.properties`，编译期注入默认，输入框可覆盖/手填
-/// 6. 对话输入：页面常驻 Prompt 输入框，空文本回退默认提问
-///
-/// 基本用法：
-/// ```dart
-/// final Response<ResponseBody> response = await dio.post<ResponseBody>(
-///   'https://api.deepseek.com/chat/completions',
-///   data: jsonEncode({
-///     'model': 'deepseek-chat',
-///     'stream': true,
-///     'messages': [{'role': 'user', 'content': prompt}],
-///   }),
-///   options: Options(
-///     responseType: ResponseType.stream,
-///     headers: {'Authorization': 'Bearer $apiKey'},
-///   ),
-/// );
-/// ```
-///
-/// 适用场景：
-/// - AI 大模型对话流式打字输出（DeepSeek、ChatGPT、Claude 等）
-/// - 服务端实时事件流单向通知
-///
-/// See also:
-///
-///  * [WebSocketDemoPage], 全双工双向实时通信方案
-///  * [DioDemoPage], 标准 HTTP/RESTful 请求方案
-///
+/// 官方参考：
 /// https://api-docs.deepseek.com
-class SseDemoPage extends StatelessWidget {
-  const SseDemoPage({super.key, required this.title});
-
-  final String title;
+class SseDemoPage extends BasicResponsePage {
+  const SseDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SseDemoView(title: title);
-  }
+  BasicResponsePageState<SseDemoPage> createState() => _SseDemoPageState();
 }
 
-class SseDemoView extends StatefulWidget {
-  const SseDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<SseDemoView> createState() => _SseDemoViewState();
-}
-
-enum _SseState {
-  idle('就绪', Color(0xFF64748B), Icons.radio_button_unchecked_rounded),
-  connecting('连接中...', Color(0xFFD97706), Icons.sync_rounded),
-  streaming('生成中...', Color(0xFF0284C7), Icons.bolt_rounded),
-  completed('已完成', Color(0xFF10B981), Icons.check_circle_outline_rounded),
-  cancelled('已中断', Color(0xFFF59E0B), Icons.cancel_outlined),
-  error('异常', Color(0xFFEF4444), Icons.error_outline_rounded);
-
-  const _SseState(this.label, this.color, this.icon);
-
-  final String label;
-  final Color color;
-  final IconData icon;
-}
-
-class _LogRecord {
-  const _LogRecord({required this.message, required this.time});
-
-  final String message;
-  final DateTime time;
-
-  String get formattedTime {
-    final String hour = time.hour.toString().padLeft(2, '0');
-    final String minute = time.minute.toString().padLeft(2, '0');
-    final String second = time.second.toString().padLeft(2, '0');
-    return '$hour:$minute:$second';
-  }
-}
-
-class _SseDemoViewState extends State<SseDemoView> {
+class _SseDemoPageState extends BasicResponsePageState<SseDemoPage> {
   static const String _defaultPrompt = '请用一句话介绍你自己和你的核心优势';
   static const String _serverUrl = Urls.deepSeek;
-
-  final TextEditingController _apiKeyController = TextEditingController(
-    text: Secrets.deepSeekApiKey,
-  );
-  final TextEditingController _promptController = TextEditingController(
-    text: _defaultPrompt,
-  );
-  final ScrollController _scrollController = ScrollController();
+  static const String _streamKey = 'sse_stream';
 
   final Dio _dio = Dio();
-  CancelToken? _cancelToken;
-  StreamSubscription<dynamic>? _subscription;
-
-  _SseState _sseState = _SseState.idle;
-  bool _obscureApiKey = true;
   final StringBuffer _responseBuffer = StringBuffer();
-  final List<_LogRecord> _logs = <_LogRecord>[];
+  CancelToken? _cancelToken;
+  // 订阅在流式回调中创建，dispose 时显式 cancel。
+  // ignore: cancel_subscriptions
+  StreamSubscription<String>? _subscription;
+  bool _streaming = false;
 
-  bool get _hasInjectedApiKey => Secrets.deepSeekApiKey.isNotEmpty;
+  @override
+  void initState() {
+    super.initState();
+    showDescription('SSE 示例：DeepSeek 流式对话（POST Stream → 逐 Token → [DONE]）');
+  }
 
   @override
   void dispose() {
-    _cancelStream();
-    _apiKeyController.dispose();
-    _promptController.dispose();
-    _scrollController.dispose();
+    final StreamSubscription<String>? subscription = _subscription;
+    _subscription = null;
+    if (subscription != null) {
+      unawaited(subscription.cancel());
+    }
+    _cancelToken?.cancel('Widget disposed');
+    _cancelToken = null;
     _dio.close(force: true);
     super.dispose();
   }
 
-  void _addLog(String message) {
-    if (!mounted) return;
-    setState(() {
-      _logs.insert(0, _LogRecord(message: message, time: DateTime.now()));
-    });
+  @override
+  List<String> buildList() => const <String>[
+        '1. 发起 DeepSeek 流式对话',
+        '2. 中断当前流式生成',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _sendPrompt();
+      case 1:
+        _handleCancel();
+    }
   }
 
-  void _clearLogs() {
-    setState(() {
-      _logs.clear();
-    });
-  }
-
-  void _sendDeepSeekPrompt() async {
-    final String typedKey = _apiKeyController.text.trim();
-    final String apiKey = typedKey.isEmpty ? Secrets.deepSeekApiKey : typedKey;
+  Future<void> _sendPrompt() async {
+    final String apiKey = Secrets.deepSeekApiKey;
     if (apiKey.isEmpty) {
-      _addLog('----------------------------------------');
-      _addLog('【提示】未配置 DeepSeek API Key！');
-      _addLog(
-        '👉 请在工程根目录 local.properties 配置 deepseek.api.key=sk-xxxx，'
+      appendLog('✗ [SSE] 未配置 DeepSeek API Key');
+      appendLog(
+        '→ [SSE] 请在工程根目录 local.properties 配置 deepseek.api.key=sk-xxxx，'
         '执行 dart tools/sync_dart_defines.dart 后以 '
         'fvm flutter run --dart-define-from-file=dart_defines.json 重新编译。',
       );
       return;
     }
 
-    final String rawPrompt = _promptController.text.trim();
-    final String prompt = rawPrompt.isEmpty ? _defaultPrompt : rawPrompt;
+    if (_streaming) {
+      appendLog('✗ [SSE] 已有流式任务进行中，请先中断');
+      return;
+    }
 
-    _cancelStream();
-    setState(() {
-      _sseState = _SseState.connecting;
-      _responseBuffer.clear();
-    });
+    _cancelStream(notify: false);
+    _responseBuffer.clear();
 
-    _addLog('----------------------------------------');
-    _addLog('【目标】$_serverUrl');
-    _addLog('【提问】$prompt');
-    _addLog('【连接】正在建立 DeepSeek SSE 流式连接...');
+    appendLog('→ [SSE] 目标 $_serverUrl');
+    appendLog('→ [SSE] 提问 $_defaultPrompt');
+    appendLog('→ [SSE] 正在建立流式连接...');
 
     final String jsonBody = jsonEncode(<String, dynamic>{
       'model': 'deepseek-chat',
       'stream': true,
       'messages': <Map<String, String>>[
-        <String, String>{'role': 'user', 'content': prompt},
+        <String, String>{'role': 'user', 'content': _defaultPrompt},
       ],
     });
 
-    _cancelToken = CancelToken();
+    final CancelToken cancelToken = CancelToken();
+    _cancelToken = cancelToken;
 
     try {
       final Response<ResponseBody> response = await _dio.post<ResponseBody>(
@@ -190,46 +118,51 @@ class _SseDemoViewState extends State<SseDemoView> {
             'Accept': 'text/event-stream',
           },
         ),
-        cancelToken: _cancelToken,
+        cancelToken: cancelToken,
       );
+
+      final ResponseBody? body = response.data;
+      if (body == null) {
+        appendLog('✗ [SSE] 响应体为空');
+        _cancelToken = null;
+        return;
+      }
 
       if (!mounted) return;
-      setState(() {
-        _sseState = _SseState.streaming;
-      });
-      _addLog(
-        '【连接成功】HTTP ${response.statusCode}，开始接收流式 Token...',
-      );
+      _streaming = true;
+      appendLog('✓ [SSE] HTTP ${response.statusCode}，开始接收流式 Token...');
 
-      _subscription = response.data!.stream
+      _subscription = body.stream
           .cast<List<int>>()
           .transform(utf8.decoder)
           .transform(const LineSplitter())
           .listen(
-            (String line) => _handleLine(line),
-            onError: (dynamic error) {
+            _handleLine,
+            onError: (Object error) {
               if (error is DioException &&
                   error.type == DioExceptionType.cancel) {
                 return;
               }
-              _handleError(error.toString());
+              _handleError('$error');
             },
-            onDone: () => _handleDone(),
+            onDone: _handleDone,
             cancelOnError: true,
           );
-    } on DioException catch (e) {
-      if (e.type == DioExceptionType.cancel) return;
-      _handleError(e.message ?? e.toString());
-    } catch (e) {
-      _handleError(e.toString());
+    } on DioException catch (error) {
+      if (error.type == DioExceptionType.cancel) {
+        return;
+      }
+      _handleError(error.message ?? '$error');
+    } catch (error) {
+      _handleError('$error');
     }
   }
 
   void _handleLine(String line) {
     final String trimmed = line.trim();
-    if (trimmed.isEmpty) return;
-
-    if (!trimmed.startsWith('data:')) return;
+    if (trimmed.isEmpty || !trimmed.startsWith('data:')) {
+      return;
+    }
 
     final String data = trimmed.substring(5).trim();
     if (data == '[DONE]') {
@@ -238,501 +171,87 @@ class _SseDemoViewState extends State<SseDemoView> {
     }
 
     final String delta = _parseDeltaContent(data);
-    if (delta.isNotEmpty) {
-      if (!mounted) return;
-      setState(() {
-        _responseBuffer.write(delta);
-      });
+    if (delta.isEmpty || !mounted) {
+      return;
     }
+    _responseBuffer.write(delta);
+    updateLog(_streamKey, '流式输出: $_responseBuffer');
   }
 
   void _handleDone() {
-    if (!mounted) return;
-    setState(() {
-      _sseState = _SseState.completed;
-    });
-    _addLog('【完成】收到 [DONE] 标志，DeepSeek 模型生成完毕！');
+    if (!mounted || !_streaming) {
+      return;
+    }
+    _streaming = false;
     _cancelToken = null;
-    _subscription?.cancel();
+    final StreamSubscription<String>? subscription = _subscription;
     _subscription = null;
+    if (subscription != null) {
+      unawaited(subscription.cancel());
+    }
+    removeUpdatingLog(_streamKey);
+    appendLog('✓ [SSE] 收到 [DONE]，模型生成完毕');
+    if (_responseBuffer.isNotEmpty) {
+      appendLog('✓ [SSE] 完整响应: $_responseBuffer');
+    }
   }
 
   void _handleError(String error) {
     if (!mounted) return;
-    setState(() {
-      _sseState = _SseState.error;
-    });
-    _addLog('【错误】$error');
+    _streaming = false;
+    removeUpdatingLog(_streamKey);
+    appendLog('✗ [SSE] $error');
   }
 
-  void _cancelStream() {
-    _subscription?.cancel();
-    _subscription = null;
-    _cancelToken?.cancel('User cancelled');
-    _cancelToken = null;
+  void _handleCancel() {
+    if (!_streaming && _cancelToken == null) {
+      appendLog('→ [Cancel] 当前没有进行中的流式任务');
+      return;
+    }
+    _cancelStream(notify: true);
+  }
 
-    if (_sseState == _SseState.streaming || _sseState == _SseState.connecting) {
-      setState(() {
-        _sseState = _SseState.cancelled;
-      });
-      _addLog('【中断】已主动取消当前大模型流式输出');
+  void _cancelStream({required bool notify}) {
+    final StreamSubscription<String>? subscription = _subscription;
+    _subscription = null;
+    if (subscription != null) {
+      unawaited(subscription.cancel());
+    }
+    final CancelToken? cancelToken = _cancelToken;
+    _cancelToken = null;
+    cancelToken?.cancel('User cancelled');
+
+    final bool wasStreaming = _streaming;
+    _streaming = false;
+    if (!mounted) return;
+    removeUpdatingLog(_streamKey);
+    if (notify && wasStreaming) {
+      appendLog('→ [Cancel] 已主动中断当前流式输出');
     }
   }
 
   String _parseDeltaContent(String data) {
-    if (data.trim() == '[DONE]') return '';
     try {
       final Map<String, dynamic> json =
           jsonDecode(data) as Map<String, dynamic>;
       final List<dynamic>? choices = json['choices'] as List<dynamic>?;
-      if (choices != null && choices.isNotEmpty) {
-        final Map<String, dynamic>? first =
-            choices.first as Map<String, dynamic>?;
-        final Map<String, dynamic>? delta =
-            first?['delta'] as Map<String, dynamic>?;
-        if (delta != null) {
-          final String content = delta['content'] as String? ?? '';
-          final String reasoning = delta['reasoning_content'] as String? ?? '';
-          if (reasoning.isNotEmpty) {
-            return '[思考] $reasoning';
-          }
-          if (content.isNotEmpty) {
-            return content;
-          }
-        }
+      if (choices == null || choices.isEmpty) {
+        return '';
       }
-      return '';
+      final Map<String, dynamic>? first =
+          choices.first as Map<String, dynamic>?;
+      final Map<String, dynamic>? delta =
+          first?['delta'] as Map<String, dynamic>?;
+      if (delta == null) {
+        return '';
+      }
+      final String reasoning = delta['reasoning_content'] as String? ?? '';
+      if (reasoning.isNotEmpty) {
+        return '[思考] $reasoning';
+      }
+      return delta['content'] as String? ?? '';
     } catch (_) {
       return data;
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.delete_outline_rounded),
-            tooltip: '清空日志',
-            onPressed: _logs.isEmpty ? null : _clearLogs,
-          ),
-        ],
-      ),
-      body: ListView(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          _buildInfoCard(),
-          const SizedBox(height: 16),
-          _buildActionCard(),
-          const SizedBox(height: 16),
-          _buildResponseCard(),
-          const SizedBox(height: 16),
-          _buildLogSectionHeader(),
-          const SizedBox(height: 12),
-          if (_logs.isEmpty)
-            _buildEmptyLogsCard()
-          else
-            for (final _LogRecord log in _logs)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: _buildLogItem(log),
-              ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoCard() {
-    final ThemeData theme = Theme.of(context);
-    final bool isStreaming =
-        _sseState == _SseState.streaming || _sseState == _SseState.connecting;
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: const LinearGradient(
-          colors: <Color>[Color(0xFF0F172A), Color(0xFF1E293B)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: const <BoxShadow>[
-          BoxShadow(
-            color: Color(0x1E0F172A),
-            blurRadius: 16,
-            offset: Offset(0, 8),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'DeepSeek AI 流式对话',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: _sseState.color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: _sseState.color.withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (isStreaming)
-                      const SizedBox(
-                        width: 12,
-                        height: 12,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Color(0xFF38BDF8),
-                        ),
-                      )
-                    else
-                      Icon(_sseState.icon, size: 14, color: _sseState.color),
-                    const SizedBox(width: 6),
-                    Text(
-                      _sseState.label,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: _sseState.color,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            '地址：$_serverUrl\n模型：deepseek-chat\n特性：POST Prompt -> 逐 Token 流式响应 -> 收到 [DONE] 完成\n密钥：注入默认 + 输入框可改；Prompt 页面可编辑',
-            style: TextStyle(
-              color: Color(0xFF94A3B8),
-              fontSize: 12,
-              height: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionCard() {
-    final ThemeData theme = Theme.of(context);
-    final bool isStreaming =
-        _sseState == _SseState.streaming || _sseState == _SseState.connecting;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                '操作',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: _hasInjectedApiKey
-                      ? const Color(0xFF10B981).withValues(alpha: 0.12)
-                      : const Color(0xFFF59E0B).withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: _hasInjectedApiKey
-                        ? const Color(0xFF10B981).withValues(alpha: 0.45)
-                        : const Color(0xFFF59E0B).withValues(alpha: 0.45),
-                  ),
-                ),
-                child: Text(
-                  _hasInjectedApiKey ? 'API Key 已注入' : 'API Key 可手填',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: _hasInjectedApiKey
-                        ? const Color(0xFF10B981)
-                        : const Color(0xFFF59E0B),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            '密钥默认来自工程根 local.properties（deepseek.api.key）编译期注入，可在下方输入框修改；未注入时直接手填。',
-            style: TextStyle(
-              color: Color(0xFF94A3B8),
-              fontSize: 12,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _apiKeyController,
-            obscureText: _obscureApiKey,
-            decoration: InputDecoration(
-              labelText: 'DeepSeek API Key',
-              hintText: 'sk-...（空则用注入值）',
-              isDense: true,
-              filled: true,
-              fillColor: Colors.white,
-              prefixIcon: const Icon(Icons.vpn_key_outlined, size: 20),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _obscureApiKey
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  size: 20,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _obscureApiKey = !_obscureApiKey;
-                  });
-                },
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _promptController,
-            maxLines: 3,
-            minLines: 2,
-            decoration: InputDecoration(
-              labelText: '对话 Prompt',
-              hintText: '输入发给 DeepSeek 的对话内容（空则用默认）',
-              isDense: true,
-              filled: true,
-              fillColor: Colors.white,
-              alignLabelWithHint: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
-              ),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: FilledButton.icon(
-                  onPressed: isStreaming ? null : _sendDeepSeekPrompt,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFF0284C7),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  icon: const Icon(Icons.play_arrow_rounded),
-                  label: const Text('发起 DeepSeek 对话（POST Stream）'),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: isStreaming ? _cancelStream : null,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFFEF4444),
-                    side: BorderSide(
-                      color: isStreaming
-                          ? const Color(0xFFEF4444)
-                          : const Color(0xFFCBD5E1),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  icon: const Icon(Icons.stop_rounded),
-                  label: const Text('中断当前生成（Cancel Stream）'),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildResponseCard() {
-    final ThemeData theme = Theme.of(context);
-    final String content = _responseBuffer.toString();
-    final bool isStreaming = _sseState == _SseState.streaming;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const <BoxShadow>[
-          BoxShadow(
-            color: Color(0x06000000),
-            blurRadius: 12,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              const Icon(
-                Icons.chat_bubble_outline_rounded,
-                size: 18,
-                color: Color(0xFF0284C7),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'AI 流式响应结果',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          if (content.isNotEmpty)
-            SelectableText(
-              content + (isStreaming ? ' ▍' : ''),
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontSize: 14,
-                height: 1.6,
-                color: const Color(0xFF1E293B),
-              ),
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Center(
-                child: Text(
-                  '点击上方按钮发起对话，AI 将在此处实时流式打字输出...',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: const Color(0xFF94A3B8),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLogSectionHeader() {
-    final ThemeData theme = Theme.of(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          '通信日志 (${_logs.length})',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildEmptyLogsCard() {
-    final ThemeData theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Center(
-        child: Text(
-          '暂无通信日志',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLogItem(_LogRecord log) {
-    final ThemeData theme = Theme.of(context);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            log.formattedTime,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: const Color(0xFF94A3B8),
-              fontSize: 11,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: SelectableText(
-              log.message,
-              style: const TextStyle(
-                fontFamily: 'monospace',
-                fontSize: 12,
-                color: Color(0xFF1E293B),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
-

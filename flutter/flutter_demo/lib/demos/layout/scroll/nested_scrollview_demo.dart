@@ -1,76 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// NestedScrollView
 /// Demonstrates nested scrolling with header and tab bar
-class NestedScrollViewDemoPage extends StatelessWidget {
-  const NestedScrollViewDemoPage({super.key, required this.title});
-
-  final String title;
+class NestedScrollViewDemoPage extends BasicLayoutPage {
+  const NestedScrollViewDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return NestedScrollViewDemoView(title: title);
-  }
+  BasicLayoutPageState<NestedScrollViewDemoPage> createState() =>
+      _NestedScrollViewDemoPageState();
 }
 
-class NestedScrollViewDemoView extends StatelessWidget {
-  const NestedScrollViewDemoView({super.key, required this.title});
-
-  final String title;
-
+class _NestedScrollViewDemoPageState
+    extends BasicLayoutPageState<NestedScrollViewDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: DefaultTabController(
-        length: 3,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                expandedHeight: 200,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(title),
-                  background: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Colors.blue.shade400, Colors.purple.shade400],
-                      ),
+  Widget buildPreview() {
+    return DefaultTabController(
+      length: 3,
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              expandedHeight: 200,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(widget.title),
+                background: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[
+                        Colors.blue.shade400,
+                        Colors.purple.shade400,
+                      ],
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.landscape,
-                        size: 80,
-                        color: Colors.white54,
-                      ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.landscape,
+                      size: 80,
+                      color: Colors.white54,
                     ),
                   ),
                 ),
               ),
-              SliverPersistentHeader(
-                delegate: _SliverTabBarDelegate(
-                  const TabBar(
-                    tabs: [
-                      Tab(text: 'Tab 1'),
-                      Tab(text: 'Tab 2'),
-                      Tab(text: 'Tab 3'),
-                    ],
-                  ),
+            ),
+            SliverPersistentHeader(
+              delegate: _SliverTabBarDelegate(
+                const TabBar(
+                  tabs: <Widget>[
+                    Tab(text: 'Tab 1'),
+                    Tab(text: 'Tab 2'),
+                    Tab(text: 'Tab 3'),
+                  ],
                 ),
-                pinned: true,
               ),
-            ];
-          },
-          body: TabBarView(
-            children: [
-              _buildList('List 1'),
-              _buildList('List 2'),
-              _buildList('List 3'),
-            ],
-          ),
+              pinned: true,
+            ),
+          ];
+        },
+        body: TabBarView(
+          children: <Widget>[
+            _buildList('List 1'),
+            _buildList('List 2'),
+            _buildList('List 3'),
+          ],
         ),
       ),
     );
@@ -80,7 +76,7 @@ class NestedScrollViewDemoView extends StatelessWidget {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: 30,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         return Card(
           child: ListTile(
             title: Text('$label - Item $index'),

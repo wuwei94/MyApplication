@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Future
 /// Demonstrates Future usage patterns
-class FutureDemoPage extends StatelessWidget {
-  const FutureDemoPage({super.key, required this.title});
-
-  final String title;
+class FutureDemoPage extends BasicLayoutPage {
+  const FutureDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureDemoView(title: title);
+  BasicLayoutPageState<FutureDemoPage> createState() => _FutureDemoPageState();
+}
+
+class _FutureDemoPageState extends BasicLayoutPageState<FutureDemoPage> {
+  String _result = 'Tap an action to start';
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 执行 .then/.catchError',
+        '2. 执行 async/await',
+        '3. 执行 .whenComplete',
+        '4. 执行 .timeout',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _thenCatch();
+      case 1:
+        _asyncAwait();
+      case 2:
+        _whenComplete();
+      case 3:
+        _timeout();
+    }
   }
-}
-
-class FutureDemoView extends StatefulWidget {
-  const FutureDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<FutureDemoView> createState() => _FutureDemoViewState();
-}
-
-class _FutureDemoViewState extends State<FutureDemoView> {
-  String _result = 'Press a button to start';
 
   Future<String> _delayedOperation() async {
     await Future<void>.delayed(const Duration(seconds: 2));
@@ -33,7 +43,7 @@ class _FutureDemoViewState extends State<FutureDemoView> {
   void _thenCatch() {
     setState(() => _result = 'Loading...');
     _delayedOperation()
-        .then((value) {
+        .then((String value) {
           setState(() => _result = 'Then: $value');
         })
         .catchError((Object error) {
@@ -41,10 +51,10 @@ class _FutureDemoViewState extends State<FutureDemoView> {
         });
   }
 
-  void _asyncAwait() async {
+  Future<void> _asyncAwait() async {
     setState(() => _result = 'Loading...');
     try {
-      final result = await _delayedOperation();
+      final String result = await _delayedOperation();
       setState(() => _result = 'Await: $result');
     } on Exception catch (e) {
       setState(() => _result = 'Error: $e');
@@ -67,48 +77,17 @@ class _FutureDemoViewState extends State<FutureDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Padding(
+  Widget buildPreview() {
+    return Padding(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                ElevatedButton(
-                  onPressed: _thenCatch,
-                  child: const Text('.then/.catchError'),
-                ),
-                ElevatedButton(
-                  onPressed: _asyncAwait,
-                  child: const Text('async/await'),
-                ),
-                ElevatedButton(
-                  onPressed: _whenComplete,
-                  child: const Text('.whenComplete'),
-                ),
-                ElevatedButton(
-                  onPressed: _timeout,
-                  child: const Text('.timeout'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(_result, style: const TextStyle(fontSize: 16)),
-            ),
-          ],
+        decoration: BoxDecoration(
+          color: Colors.blue.shade50,
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
         ),
+        child: Text(_result, style: const TextStyle(fontSize: 16)),
       ),
     );
   }

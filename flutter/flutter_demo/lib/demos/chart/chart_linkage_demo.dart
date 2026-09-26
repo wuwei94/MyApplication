@@ -1,16 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// 商业看板多图表深度联动示例 (Dashboard Linkage)
 ///
 /// 演示顶部月度折线图与中部部门开销柱状图、底部渠道占比饼图的双向实时数据联动。
-class ChartLinkageDemoPage extends StatefulWidget {
-  const ChartLinkageDemoPage({super.key, required this.title});
-
-  final String title;
+class ChartLinkageDemoPage extends BasicLayoutPage {
+  const ChartLinkageDemoPage({super.key, required super.title});
 
   @override
-  State<ChartLinkageDemoPage> createState() => _ChartLinkageDemoPageState();
+  BasicLayoutPageState<ChartLinkageDemoPage> createState() =>
+      _ChartLinkageDemoPageState();
 }
 
 class _MonthlyOverview {
@@ -27,7 +27,8 @@ class _MonthlyOverview {
   final List<double> channelShares;
 }
 
-class _ChartLinkageDemoPageState extends State<ChartLinkageDemoPage> {
+class _ChartLinkageDemoPageState
+    extends BasicLayoutPageState<ChartLinkageDemoPage> {
   int _activeMonthIndex = 2; // 默认选中 3月
 
   static const List<String> _deptNames = <String>['研发', '运营', '市场', '行政'];
@@ -86,7 +87,28 @@ class _ChartLinkageDemoPageState extends State<ChartLinkageDemoPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  List<String> buildList() => const <String>[
+        '1. 切换到上一月',
+        '2. 切换到下一月',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        setState(() {
+          _activeMonthIndex =
+              (_activeMonthIndex - 1 + _records.length) % _records.length;
+        });
+      case 1:
+        setState(() {
+          _activeMonthIndex = (_activeMonthIndex + 1) % _records.length;
+        });
+    }
+  }
+
+  @override
+  Widget buildPreview() {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
@@ -96,29 +118,26 @@ class _ChartLinkageDemoPageState extends State<ChartLinkageDemoPage> {
       (double sum, double val) => sum + val,
     );
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // 联动说明
-            _buildNoticeBanner(colorScheme, currentRecord),
-            const SizedBox(height: 16),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // 联动说明
+          _buildNoticeBanner(colorScheme, currentRecord),
+          const SizedBox(height: 16),
 
-            // 图表 1：顶部时间轴折线图（主控图）
-            _buildTimelineLineChart(colorScheme),
-            const SizedBox(height: 16),
+          // 图表 1：顶部时间轴折线图（主控图）
+          _buildTimelineLineChart(colorScheme),
+          const SizedBox(height: 16),
 
-            // 图表 2：中部部门支出柱状图（联动从属）
-            _buildDeptBarChart(colorScheme, currentRecord, totalDeptExpense),
-            const SizedBox(height: 16),
+          // 图表 2：中部部门支出柱状图（联动从属）
+          _buildDeptBarChart(colorScheme, currentRecord, totalDeptExpense),
+          const SizedBox(height: 16),
 
-            // 图表 3：底部渠道来源分布饼图（联动从属）
-            _buildChannelPieChart(colorScheme, currentRecord),
-          ],
-        ),
+          // 图表 3：底部渠道来源分布饼图（联动从属）
+          _buildChannelPieChart(colorScheme, currentRecord),
+        ],
       ),
     );
   }
@@ -281,10 +300,11 @@ class _ChartLinkageDemoPageState extends State<ChartLinkageDemoPage> {
                     handleBuiltInTouches: true,
                     touchCallback:
                         (FlTouchEvent event, LineTouchResponse? res) {
+                      final List<LineBarSpot>? spots = res?.lineBarSpots;
                       if (res != null &&
-                          res.lineBarSpots != null &&
-                          res.lineBarSpots!.isNotEmpty) {
-                        final int idx = res.lineBarSpots!.first.x.toInt();
+                          spots != null &&
+                          spots.isNotEmpty) {
+                        final int idx = spots.first.x.toInt();
                         if (idx >= 0 &&
                             idx < _records.length &&
                             idx != _activeMonthIndex) {

@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// AnimatedList
 /// Demonstrates animated list items
-class AnimatedListDemoPage extends StatelessWidget {
-  const AnimatedListDemoPage({super.key, required this.title});
-
-  final String title;
+class AnimatedListDemoPage extends BasicLayoutPage {
+  const AnimatedListDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedListDemoView(title: title);
-  }
+  BasicLayoutPageState<AnimatedListDemoPage> createState() =>
+      _AnimatedListDemoPageState();
 }
 
-class AnimatedListDemoView extends StatefulWidget {
-  const AnimatedListDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<AnimatedListDemoView> createState() => _AnimatedListDemoViewState();
-}
-
-class _AnimatedListDemoViewState extends State<AnimatedListDemoView> {
+class _AnimatedListDemoPageState
+    extends BasicLayoutPageState<AnimatedListDemoPage> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final List<String> _items = ['Item 1', 'Item 2', 'Item 3'];
+  final List<String> _items = <String>['Item 1', 'Item 2', 'Item 3'];
   int _counter = 4;
 
+  @override
+  List<String> buildList() => const <String>[
+        '1. 插入末尾条目',
+        '2. 删除首个条目',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _addItem();
+      case 1:
+        if (_items.isNotEmpty) {
+          _removeItem(0);
+        }
+    }
+  }
+
   void _addItem() {
-    final index = _items.length;
+    final int index = _items.length;
     _items.add('Item $_counter');
     _listKey.currentState?.insertItem(index);
     _counter++;
   }
 
   void _removeItem(int index) {
-    final removedItem = _items[index];
+    final String removedItem = _items[index];
     _items.removeAt(index);
     _listKey.currentState?.removeItem(
       index,
-      (context, animation) => _buildRemovedItem(removedItem, animation),
+      (BuildContext context, Animation<double> animation) =>
+          _buildRemovedItem(removedItem, animation),
     );
   }
 
@@ -74,19 +83,17 @@ class _AnimatedListDemoViewState extends State<AnimatedListDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: _addItem)],
-      ),
-      body: AnimatedList(
-        key: _listKey,
-        initialItemCount: _items.length,
-        itemBuilder: (context, index, animation) {
-          return _buildItem(_items[index], index, animation);
-        },
-      ),
+  Widget buildPreview() {
+    return AnimatedList(
+      key: _listKey,
+      initialItemCount: _items.length,
+      itemBuilder: (
+        BuildContext context,
+        int index,
+        Animation<double> animation,
+      ) {
+        return _buildItem(_items[index], index, animation);
+      },
     );
   }
 }

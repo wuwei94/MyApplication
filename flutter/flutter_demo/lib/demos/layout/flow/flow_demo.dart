@@ -1,41 +1,31 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Flow
 /// Demonstrates custom flow layout with Flow widget
-class FlowDemoPage extends StatelessWidget {
-  const FlowDemoPage({super.key, required this.title});
-
-  final String title;
+class FlowDemoPage extends BasicLayoutPage {
+  const FlowDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FlowDemoView(title: title);
-  }
+  BasicLayoutPageState<FlowDemoPage> createState() => _FlowDemoPageState();
 }
 
-class FlowDemoView extends StatelessWidget {
-  const FlowDemoView({super.key, required this.title});
-
-  final String title;
-
+class _FlowDemoPageState extends BasicLayoutPageState<FlowDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Flow - 自定义布局'),
-            _buildBasicFlow(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Flow 菜单动画'),
-            _buildFlowMenu(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Flow - 自定义布局'),
+          _buildBasicFlow(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Flow 菜单动画'),
+          _buildFlowMenu(),
+        ],
       ),
     );
   }
@@ -60,12 +50,12 @@ class FlowDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Flow(
         delegate: _SimpleFlowDelegate(padding: const EdgeInsets.all(8)),
-        children: [
+        children: <Widget>[
           _buildFlowItem('Flutter', Colors.red),
           _buildFlowItem('Dart', Colors.green),
           _buildFlowItem('Android', Colors.blue),
@@ -82,7 +72,7 @@ class FlowDemoView extends StatelessWidget {
       height: 200,
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
       child: const _FlowMenuDemo(),
@@ -95,7 +85,7 @@ class FlowDemoView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
         border: Border.all(color: color),
       ),
       child: Text(label, style: TextStyle(color: color)),
@@ -110,12 +100,12 @@ class _SimpleFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    var x = padding.left;
-    var y = padding.top;
-    var maxHeight = 0.0;
+    double x = padding.left;
+    double y = padding.top;
+    double maxHeight = 0.0;
 
-    for (var i = 0; i < context.childCount; i++) {
-      final size = context.getChildSize(i);
+    for (int i = 0; i < context.childCount; i++) {
+      final Size? size = context.getChildSize(i);
       if (size == null) continue;
 
       if (x + size.width > context.size.width - padding.right) {
@@ -151,7 +141,7 @@ class _FlowMenuDemoState extends State<_FlowMenuDemo>
   late AnimationController _controller;
   bool _isOpen = false;
 
-  final List<IconData> _icons = [
+  static const List<IconData> _icons = <IconData>[
     Icons.home,
     Icons.search,
     Icons.favorite,
@@ -189,8 +179,8 @@ class _FlowMenuDemoState extends State<_FlowMenuDemo>
   Widget build(BuildContext context) {
     return Flow(
       delegate: _FlowMenuDelegate(controller: _controller),
-      children: [
-        ...List.generate(_icons.length, (index) {
+      children: <Widget>[
+        ...List<Widget>.generate(_icons.length, (int index) {
           return FloatingActionButton.small(
             heroTag: 'flow_$index',
             onPressed: () {},
@@ -220,23 +210,25 @@ class _FlowMenuDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    final size = context.size;
-    final xStart = size.width - 70;
-    final yStart = size.height - 70;
+    final Size size = context.size;
+    final double xStart = size.width - 70;
+    final double yStart = size.height - 70;
 
     context.paintChild(
       context.childCount - 1,
       transform: Matrix4.translationValues(xStart, yStart, 0),
     );
 
-    for (var i = context.childCount - 2; i >= 0; i--) {
-      final childSize = context.getChildSize(i);
+    for (int i = context.childCount - 2; i >= 0; i--) {
+      final Size? childSize = context.getChildSize(i);
       if (childSize == null) continue;
 
-      final radius = 80 * controller.value;
-      final angle = (i / (context.childCount - 2)) * pi / 2;
-      final x = xStart - radius * cos(angle) - childSize.width / 2 + 28;
-      final y = yStart - radius * sin(angle) - childSize.height / 2 + 28;
+      final double radius = 80 * controller.value;
+      final double angle = (i / (context.childCount - 2)) * pi / 2;
+      final double x =
+          xStart - radius * cos(angle) - childSize.width / 2 + 28;
+      final double y =
+          yStart - radius * sin(angle) - childSize.height / 2 + 28;
 
       context.paintChild(
         i,

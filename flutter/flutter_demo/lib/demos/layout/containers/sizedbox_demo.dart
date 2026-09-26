@@ -1,51 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// SizedBox
 /// Demonstrates various usages of SizedBox: fixed size, expand, shrink, square, etc.
-class SizedBoxDemoPage extends StatelessWidget {
-  const SizedBoxDemoPage({super.key, required this.title});
-
-  final String title;
+class SizedBoxDemoPage extends BasicLayoutPage {
+  const SizedBoxDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBoxDemoView(title: title);
-  }
+  BasicLayoutPageState<SizedBoxDemoPage> createState() =>
+      _SizedBoxDemoPageState();
 }
 
-class SizedBoxDemoView extends StatelessWidget {
-  const SizedBoxDemoView({super.key, required this.title});
-
-  final String title;
-
+class _SizedBoxDemoPageState extends BasicLayoutPageState<SizedBoxDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Fixed Size'),
-            _buildFixedSize(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('SizedBox.expand - Fill Available Space'),
-            _buildExpandSize(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('SizedBox.shrink - Shrink to Child'),
-            _buildShrinkSize(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('SizedBox.square - Square'),
-            _buildSquareSize(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Used as Spacing'),
-            _buildAsSpacing(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Practical Examples'),
-            _buildPracticalExample(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Fixed Size'),
+          _buildFixedSize(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('SizedBox.expand - Fill Available Space'),
+          _buildExpandSize(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('SizedBox.shrink - Shrink to Child'),
+          _buildShrinkSize(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('SizedBox.square - Square'),
+          _buildSquareSize(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Used as Spacing'),
+          _buildAsSpacing(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Practical Examples'),
+          _buildPracticalExample(),
+        ],
       ),
     );
   }

@@ -1,45 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Stack
-/// Demonstrates the usage of Stack widget for overlaying children
-class StackDemoPage extends StatelessWidget {
-  const StackDemoPage({super.key, required this.title});
-
-  final String title;
+/// Demonstrates layered layout with Stack
+class StackDemoPage extends BasicLayoutPage {
+  const StackDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return StackDemoView(title: title);
-  }
+  BasicLayoutPageState<StackDemoPage> createState() => _StackDemoPageState();
 }
 
-class StackDemoView extends StatelessWidget {
-  const StackDemoView({super.key, required this.title});
-
-  final String title;
-
+class _StackDemoPageState extends BasicLayoutPageState<StackDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Basic Stack'),
-            _buildBasicStack(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Stack with Alignment'),
-            _buildStackAlignment(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Stack with Fit'),
-            _buildStackFit(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Stack with Clip'),
-            _buildStackClip(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Basic Stack'),
+          _buildBasicStack(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Stack Alignment'),
+          _buildStackAlignment(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('StackFit'),
+          _buildStackFit(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Practical Badge Example'),
+          _buildBadgeExample(),
+        ],
       ),
     );
   }
@@ -61,19 +51,19 @@ class StackDemoView extends StatelessWidget {
   Widget _buildBasicStack() {
     return Container(
       width: double.infinity,
-      height: 150,
+      height: 200,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Stack(
-        children: [
-          Container(color: Colors.red, width: 150, height: 150),
-          Container(color: Colors.green, width: 120, height: 120),
-          Container(color: Colors.blue, width: 90, height: 90),
-          Container(color: Colors.yellow, width: 60, height: 60),
+        children: <Widget>[
+          Container(width: 120, height: 120, color: Colors.blue),
+          Container(width: 90, height: 90, color: Colors.green),
+          Container(width: 60, height: 60, color: Colors.orange),
+          Container(width: 30, height: 30, color: Colors.red),
         ],
       ),
     );
@@ -82,21 +72,41 @@ class StackDemoView extends StatelessWidget {
   Widget _buildStackAlignment() {
     return Container(
       width: double.infinity,
-      height: 150,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(color: Colors.green.shade100, width: 150, height: 150),
-          Container(color: Colors.green.shade300, width: 100, height: 100),
-          Container(color: Colors.green.shade500, width: 50, height: 50),
+      child: Column(
+        children: <Widget>[
+          _buildAlignmentStack('topLeft', Alignment.topLeft),
+          const SizedBox(height: 8),
+          _buildAlignmentStack('center', Alignment.center),
+          const SizedBox(height: 8),
+          _buildAlignmentStack('bottomRight', Alignment.bottomRight),
         ],
       ),
+    );
+  }
+
+  Widget _buildAlignmentStack(String label, Alignment alignment) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+        Container(
+          height: 80,
+          color: Colors.green.shade100,
+          child: Stack(
+            alignment: alignment,
+            children: <Widget>[
+              Container(width: 50, height: 50, color: Colors.green),
+              Container(width: 30, height: 30, color: Colors.green.shade800),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -106,30 +116,39 @@ class StackDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Column(
-        children: [
-          const Text('StackFit.loose (default)'),
-          Container(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text('StackFit.expand:'),
+          const SizedBox(height: 8),
+          SizedBox(
             height: 100,
-            color: Colors.orange.shade100,
             child: Stack(
-              fit: StackFit.loose,
-              children: [
-                Container(color: Colors.orange, width: 50, height: 50),
+              fit: StackFit.expand,
+              children: <Widget>[
+                Container(color: Colors.orange.shade100),
+                const Center(child: Text('Expanded to fill Stack')),
               ],
             ),
           ),
+          const SizedBox(height: 16),
+          const Text('StackFit.loose (default):'),
           const SizedBox(height: 8),
-          const Text('StackFit.expand'),
-          Container(
+          SizedBox(
             height: 100,
-            color: Colors.orange.shade200,
             child: Stack(
-              fit: StackFit.expand,
-              children: [Container(color: Colors.orange.shade700)],
+              fit: StackFit.loose,
+              children: <Widget>[
+                Container(width: 80, height: 80, color: Colors.orange),
+                const Positioned(
+                  left: 90,
+                  top: 10,
+                  child: Text('Loose fit child'),
+                ),
+              ],
             ),
           ),
         ],
@@ -137,35 +156,49 @@ class StackDemoView extends StatelessWidget {
     );
   }
 
-  Widget _buildStackClip() {
+  Widget _buildBadgeExample() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
-      child: Column(
-        children: [
-          const Text('Clip.hardEdge'),
-          Container(
-            height: 100,
-            color: Colors.purple.shade100,
-            child: Stack(
-              clipBehavior: Clip.hardEdge,
-              children: [
-                Positioned(
-                  left: 50,
-                  top: 50,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.purple,
+      child: Row(
+        children: <Widget>[
+          Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
+                ),
+                child: const Icon(Icons.person, color: Colors.white, size: 36),
+              ),
+              Positioned(
+                right: -4,
+                top: -4,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Text(
+                    '3',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          const SizedBox(width: 16),
+          const Expanded(
+            child: Text('Avatar with notification badge (Stack + Positioned)'),
           ),
         ],
       ),

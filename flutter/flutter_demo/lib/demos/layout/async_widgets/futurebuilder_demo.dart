@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// FutureBuilder
 /// Demonstrates async data handling with FutureBuilder
-class FutureBuilderDemoPage extends StatelessWidget {
-  const FutureBuilderDemoPage({super.key, required this.title});
-
-  final String title;
+class FutureBuilderDemoPage extends BasicLayoutPage {
+  const FutureBuilderDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilderDemoView(title: title);
-  }
+  BasicLayoutPageState<FutureBuilderDemoPage> createState() =>
+      _FutureBuilderDemoPageState();
 }
 
-class FutureBuilderDemoView extends StatefulWidget {
-  const FutureBuilderDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<FutureBuilderDemoView> createState() => _FutureBuilderDemoViewState();
-}
-
-class _FutureBuilderDemoViewState extends State<FutureBuilderDemoView> {
+class _FutureBuilderDemoPageState
+    extends BasicLayoutPageState<FutureBuilderDemoPage> {
   Future<String>? _future;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 加载成功数据',
+        '2. 加载失败数据',
+        '3. 重置状态',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _loadData();
+      case 1:
+        _loadError();
+      case 2:
+        _reset();
+    }
+  }
 
   Future<String> _fetchData() async {
     await Future<void>.delayed(const Duration(seconds: 2));
@@ -54,117 +63,73 @@ class _FutureBuilderDemoViewState extends State<FutureBuilderDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('FutureBuilder Demo'),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: _loadData,
-                  child: const Text('Load Data'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _loadError,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  child: const Text('Load Error'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _reset,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                  child: const Text('Reset'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Result'),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.blue.shade200),
-                ),
-                child: _future == null
-                    ? const Center(child: Text('Press a button to start'))
-                    : FutureBuilder<String>(
-                        future: _future,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircularProgressIndicator(),
-                                  SizedBox(height: 16),
-                                  Text('Loading...'),
-                                ],
-                              ),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 48,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text('Error: ${snapshot.error}'),
-                                ],
-                              ),
-                            );
-                          } else if (snapshot.hasData) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green,
-                                    size: 48,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    snapshot.data!,
-                                    style: const TextStyle(fontSize: 18),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
-                      ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String text) {
+  Widget buildPreview() {
+    final Future<String>? future = _future;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.blue,
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.blue.shade50,
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
+          border: Border.all(color: Colors.blue.shade200),
         ),
+        child: future == null
+            ? const Center(child: Text('Tap an action to start'))
+            : FutureBuilder<String>(
+                future: future,
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<String> snapshot,
+                ) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                          SizedBox(height: 16),
+                          Text('Loading...'),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                            size: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          Text('Error: ${snapshot.error}'),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                            size: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            snapshot.data ?? '',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
       ),
     );
   }

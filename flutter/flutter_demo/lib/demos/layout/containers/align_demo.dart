@@ -1,45 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
-/// Align
-/// Demonstrates various alignment methods of Align
-class AlignDemoPage extends StatelessWidget {
-  const AlignDemoPage({super.key, required this.title});
-
-  final String title;
+/// Align — 布局预览：九宫格对齐、坐标系、FractionalOffset 与 factor
+///
+/// 纯布局预览，无操作列表；画布直接展示 Align 关键对齐形态。
+class AlignDemoPage extends BasicLayoutPage {
+  const AlignDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return AlignDemoView(title: title);
-  }
+  BasicLayoutPageState<AlignDemoPage> createState() => _AlignDemoPageState();
 }
 
-class AlignDemoView extends StatelessWidget {
-  const AlignDemoView({super.key, required this.title});
-
-  final String title;
-
+class _AlignDemoPageState extends BasicLayoutPageState<AlignDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('9 Standard Alignment Types'),
-            _buildStandardAlignments(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Alignment Coordinate System'),
-            _buildAlignmentCoordinate(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('FractionalOffset'),
-            _buildFractionalOffset(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Align with Factor'),
-            _buildAlignWithFactor(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('9 Standard Alignment Types'),
+          _buildStandardAlignments(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Alignment Coordinate System'),
+          _buildAlignmentCoordinate(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('FractionalOffset'),
+          _buildFractionalOffset(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Align with Factor'),
+          _buildAlignWithFactor(),
+        ],
       ),
     );
   }
@@ -64,24 +55,24 @@ class AlignDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.blue.shade200),
       ),
       child: Column(
-        children: [
-          _buildAlignmentRow([
+        children: <Widget>[
+          _buildAlignmentRow(<Alignment>[
             Alignment.topLeft,
             Alignment.topCenter,
             Alignment.topRight,
           ]),
           const SizedBox(height: 8),
-          _buildAlignmentRow([
+          _buildAlignmentRow(<Alignment>[
             Alignment.centerLeft,
             Alignment.center,
             Alignment.centerRight,
           ]),
           const SizedBox(height: 8),
-          _buildAlignmentRow([
+          _buildAlignmentRow(<Alignment>[
             Alignment.bottomLeft,
             Alignment.bottomCenter,
             Alignment.bottomRight,
@@ -93,7 +84,7 @@ class AlignDemoView extends StatelessWidget {
 
   Widget _buildAlignmentRow(List<Alignment> alignments) {
     return Row(
-      children: alignments.map((alignment) {
+      children: alignments.map((Alignment alignment) {
         return Expanded(
           child: Container(
             height: 80,
@@ -122,20 +113,19 @@ class AlignDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.green.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Text('Alignment(x, y) range: (-1, -1) to (1, 1)'),
           const SizedBox(height: 12),
           Container(
             height: 200,
             color: Colors.green.shade100,
             child: Stack(
-              children: [
-                // Center point
+              children: <Widget>[
                 Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -147,7 +137,6 @@ class AlignDemoView extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Four corners
                 Align(
                   alignment: const Alignment(-0.8, -0.8),
                   child: _buildCoordinateDot('(-0.8, -0.8)'),
@@ -164,7 +153,6 @@ class AlignDemoView extends StatelessWidget {
                   alignment: const Alignment(0.8, 0.8),
                   child: _buildCoordinateDot('(0.8, 0.8)'),
                 ),
-                // Custom position
                 Align(
                   alignment: const Alignment(-0.5, 0.3),
                   child: _buildCoordinateDot(
@@ -183,7 +171,7 @@ class AlignDemoView extends StatelessWidget {
   Widget _buildCoordinateDot(String label, {Color color = Colors.green}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         Container(
           width: 16,
           height: 16,
@@ -204,19 +192,19 @@ class AlignDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.orange.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.orange.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Text('FractionalOffset range: (0, 0) to (1, 1)'),
           const SizedBox(height: 12),
           Container(
             height: 150,
             color: Colors.orange.shade100,
             child: Stack(
-              children: [
+              children: <Widget>[
                 Align(
                   alignment: const FractionalOffset(0.0, 0.0),
                   child: _buildFractionalDot('(0, 0)'),
@@ -265,12 +253,12 @@ class AlignDemoView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.purple.shade50,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
         border: Border.all(color: Colors.purple.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const Text('widthFactor and heightFactor:'),
           const SizedBox(height: 12),
           Container(

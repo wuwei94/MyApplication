@@ -4,35 +4,23 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart' as fic;
 import 'package:image_picker/image_picker.dart' as img_picker;
 import 'package:path_provider/path_provider.dart';
 
 /// flutter_image_compress
 /// https://pub.dev/packages/flutter_image_compress
-class FlutterImageCompressDemoPage extends StatelessWidget {
-  const FlutterImageCompressDemoPage({super.key, required this.title});
-
-  final String title;
+class FlutterImageCompressDemoPage extends BasicImagePage {
+  const FlutterImageCompressDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return FlutterImageCompressDemoView(title: title);
-  }
+  BasicImagePageState<FlutterImageCompressDemoPage> createState() =>
+      _FlutterImageCompressDemoPageState();
 }
 
-class FlutterImageCompressDemoView extends StatefulWidget {
-  const FlutterImageCompressDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<FlutterImageCompressDemoView> createState() =>
-      _FlutterImageCompressDemoViewState();
-}
-
-class _FlutterImageCompressDemoViewState
-    extends State<FlutterImageCompressDemoView> {
+class _FlutterImageCompressDemoPageState
+    extends BasicImagePageState<FlutterImageCompressDemoPage> {
   static const Color _accentColor = Color(0xFF0F766E);
   static const int _defaultTargetSide = 1440;
 
@@ -51,11 +39,27 @@ class _FlutterImageCompressDemoViewState
   bool get _isBusy => _isPicking || _isCompressing;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(),
-    );
+  List<String> buildList() => const <String>[
+        '1. 选择源图片',
+        '2. 执行压缩',
+        '3. 重置演示',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _pickImage(img_picker.ImageSource.gallery);
+      case 1:
+        _compressCurrentImage();
+      case 2:
+        _reset();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    return getBody();
   }
 
   Widget getBody() {
@@ -810,54 +814,62 @@ class _PreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _DemoImageData? resolvedImage = image;
     return _DemoSectionCard(
       title: title,
-      subtitle: image == null ? '完成压缩后，这里会展示处理后的图片预览和文件信息。' : '当前图片信息与输出路径如下。',
-      child: image == null
+      subtitle: resolvedImage == null
+          ? '完成压缩后，这里会展示处理后的图片预览和文件信息。'
+          : '当前图片信息与输出路径如下。',
+      child: resolvedImage == null
           ? const _EmptyStateCard(
               icon: Icons.auto_awesome_motion_outlined,
               title: '暂无压缩结果',
               description: '调整参数后点击“开始压缩”，这里会展示输出文件。',
               isEmbedded: true,
             )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: AspectRatio(
-                    aspectRatio: image!.aspectRatio,
-                    child: Image.memory(image!.bytes, fit: BoxFit.cover),
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
+          : Builder(
+              builder: (BuildContext context) {
+                final _DemoImageData data = resolvedImage;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    _MetaItem(label: '文件名', value: image!.name),
-                    _MetaItem(label: '文件大小', value: image!.formattedSize),
-                    _MetaItem(label: '尺寸', value: image!.dimensionLabel),
-                    _MetaItem(label: '文件路径', value: image!.path),
-                  ],
-                ),
-                const SizedBox(height: 14),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: accentColor.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text(
-                      '适合上传前直接使用：compressAndGetFile 会把结果写入临时目录，并返回 XFile 供后续处理。',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(height: 1.5),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: AspectRatio(
+                        aspectRatio: data.aspectRatio,
+                        child: Image.memory(data.bytes, fit: BoxFit.cover),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                    const SizedBox(height: 14),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: <Widget>[
+                        _MetaItem(label: '文件名', value: data.name),
+                        _MetaItem(label: '文件大小', value: data.formattedSize),
+                        _MetaItem(label: '尺寸', value: data.dimensionLabel),
+                        _MetaItem(label: '文件路径', value: data.path),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: accentColor.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          '适合上传前直接使用：compressAndGetFile 会把结果写入临时目录，并返回 XFile 供后续处理。',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(height: 1.5),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
     );
   }

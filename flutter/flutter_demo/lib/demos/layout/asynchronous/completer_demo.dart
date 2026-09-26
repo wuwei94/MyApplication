@@ -1,42 +1,54 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Completer
 /// Demonstrates manual Future completion
-class CompleterDemoPage extends StatelessWidget {
-  const CompleterDemoPage({super.key, required this.title});
-
-  final String title;
+class CompleterDemoPage extends BasicLayoutPage {
+  const CompleterDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return CompleterDemoView(title: title);
-  }
+  BasicLayoutPageState<CompleterDemoPage> createState() =>
+      _CompleterDemoPageState();
 }
 
-class CompleterDemoView extends StatefulWidget {
-  const CompleterDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<CompleterDemoView> createState() => _CompleterDemoViewState();
-}
-
-class _CompleterDemoViewState extends State<CompleterDemoView> {
+class _CompleterDemoPageState extends BasicLayoutPageState<CompleterDemoPage> {
   String _status = 'Idle';
   Completer<String>? _completer;
 
+  @override
+  List<String> buildList() => const <String>[
+        '1. 启动手动完成操作',
+        '2. 成功完成',
+        '3. 失败完成',
+        '4. 启动超时自动完成',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _startOperation();
+      case 1:
+        _completeSuccess();
+      case 2:
+        _completeError();
+      case 3:
+        _timeoutOperation();
+    }
+  }
+
   Future<String> _asyncOperation() {
-    _completer = Completer<String>();
+    final Completer<String> completer = Completer<String>();
+    _completer = completer;
     setState(() => _status = 'Operation started...');
-    return _completer!.future;
+    return completer.future;
   }
 
   void _startOperation() {
     _asyncOperation()
-        .then((result) {
+        .then((String result) {
           setState(() => _status = 'Completed: $result');
         })
         .catchError((Object error) {
@@ -53,7 +65,7 @@ class _CompleterDemoViewState extends State<CompleterDemoView> {
   }
 
   void _timeoutOperation() {
-    final completer = Completer<String>();
+    final Completer<String> completer = Completer<String>();
 
     Timer(const Duration(seconds: 3), () {
       if (!completer.isCompleted) {
@@ -61,7 +73,7 @@ class _CompleterDemoViewState extends State<CompleterDemoView> {
       }
     });
 
-    completer.future.then((result) {
+    completer.future.then((String result) {
       setState(() => _status = 'Timeout result: $result');
     });
 
@@ -69,65 +81,19 @@ class _CompleterDemoViewState extends State<CompleterDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Padding(
+  Widget buildPreview() {
+    return Padding(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Status: $_status',
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Manual Completion:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: _startOperation,
-                  child: const Text('Start'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _completeSuccess,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                  ),
-                  child: const Text('Complete'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _completeError,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  child: const Text('Error'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Auto Timeout:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: _timeoutOperation,
-              child: const Text('Start with Timeout'),
-            ),
-          ],
+        decoration: BoxDecoration(
+          color: Colors.blue.shade50,
+          borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
+        ),
+        child: Text(
+          'Status: $_status',
+          style: const TextStyle(fontSize: 16),
         ),
       ),
     );

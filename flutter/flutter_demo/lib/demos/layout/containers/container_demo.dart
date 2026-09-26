@@ -1,48 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Container
 /// Demonstrates various usages of Container: size, decoration, transform, constraints, etc.
-class ContainerDemoPage extends StatelessWidget {
-  const ContainerDemoPage({super.key, required this.title});
-
-  final String title;
+class ContainerDemoPage extends BasicLayoutPage {
+  const ContainerDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ContainerDemoView(title: title);
-  }
+  BasicLayoutPageState<ContainerDemoPage> createState() =>
+      _ContainerDemoPageState();
 }
 
-class ContainerDemoView extends StatelessWidget {
-  const ContainerDemoView({super.key, required this.title});
-
-  final String title;
-
+class _ContainerDemoPageState extends BasicLayoutPageState<ContainerDemoPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('Basic Container'),
-            _buildBasicContainer(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Decoration Effects'),
-            _buildDecorationContainer(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Shadow Effects'),
-            _buildShadowContainer(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Transform Effects'),
-            _buildTransformContainer(),
-            const SizedBox(height: 24),
-            _buildSectionTitle('Constraints & Alignment'),
-            _buildConstraintContainer(),
-          ],
-        ),
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildSectionTitle('Basic Container'),
+          _buildBasicContainer(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Decoration Effects'),
+          _buildDecorationContainer(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Shadow Effects'),
+          _buildShadowContainer(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Transform Effects'),
+          _buildTransformContainer(),
+          const SizedBox(height: BasicDemoDimens.sectionGap),
+          _buildSectionTitle('Constraints & Alignment'),
+          _buildConstraintContainer(),
+        ],
       ),
     );
   }

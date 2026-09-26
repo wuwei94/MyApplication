@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// SizeTransition
 /// Demonstrates size animation
-class SizeTransitionDemoPage extends StatelessWidget {
-  const SizeTransitionDemoPage({super.key, required this.title});
-
-  final String title;
+class SizeTransitionDemoPage extends BasicLayoutPage {
+  const SizeTransitionDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return SizeTransitionDemoView(title: title);
-  }
+  BasicLayoutPageState<SizeTransitionDemoPage> createState() =>
+      _SizeTransitionDemoPageState();
 }
 
-class SizeTransitionDemoView extends StatefulWidget {
-  const SizeTransitionDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<SizeTransitionDemoView> createState() => _SizeTransitionDemoViewState();
-}
-
-class _SizeTransitionDemoViewState extends State<SizeTransitionDemoView>
+class _SizeTransitionDemoPageState
+    extends BasicLayoutPageState<SizeTransitionDemoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+
+  @override
+  List<String> buildList() => const <String>[
+        '1. 切换尺寸展开',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _toggleSize();
+    }
+  }
 
   @override
   void initState() {
@@ -52,40 +55,21 @@ class _SizeTransitionDemoViewState extends State<SizeTransitionDemoView>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizeTransition(
-              sizeFactor: _animation,
-              axis: Axis.vertical,
-              alignment: const Alignment(0, -1),
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Size Transition',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
+  Widget buildPreview() {
+    return Center(
+      child: SizeTransition(
+        sizeFactor: _animation,
+        axis: Axis.vertical,
+        child: Container(
+          width: 200,
+          height: 150,
+          color: Colors.teal,
+          child: const Center(
+            child: Text(
+              'Sizing Box',
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _toggleSize,
-              child: const Text('Toggle Size'),
-            ),
-          ],
+          ),
         ),
       ),
     );

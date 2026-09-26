@@ -1,38 +1,28 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/core/constants/urls.dart';
 import 'package:flutter_demo/core/utils/logger/logger.dart';
 import 'package:lib_network_dio/lib_network_dio.dart';
 
-/// dio
+/// dio — 请求发送与 CancelToken 取消
+///
+/// 核心机制与避坑点：
+/// 1. 取消语义：`CancelToken.cancel` 触发 `DioExceptionType.cancel`，需与业务异常分支区分。
+/// 2. 生命周期：`DioClient.close` 不关闭外部注入的 `Dio`，dispose 时两者都要关闭。
+///
+/// 官方参考：
 /// https://pub.dev/packages/dio
-class DioDemoPage extends StatelessWidget {
-  const DioDemoPage({super.key, required this.title});
-
-  final String title;
+class DioDemoPage extends BasicResponsePage {
+  const DioDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return DioDemoView(title: title);
-  }
+  BasicResponsePageState<DioDemoPage> createState() => _DioDemoPageState();
 }
 
-class DioDemoView extends StatefulWidget {
-  const DioDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<DioDemoView> createState() => _DioDemoViewState();
-}
-
-class _DioDemoViewState extends State<DioDemoView> {
+class _DioDemoPageState extends BasicResponsePageState<DioDemoPage> {
   late final Dio _dio;
   late final DioClient _dioClient;
   CancelToken? _cancelToken;
-
-  String _info = 'Tap the button to send a POST request.';
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -48,6 +38,7 @@ class _DioDemoViewState extends State<DioDemoView> {
         ),
       );
     _dioClient = DioClient(dio: _dio);
+    showDescription('dio 示例：POST 表单请求与 CancelToken 取消');
   }
 
   @override
@@ -58,6 +49,22 @@ class _DioDemoViewState extends State<DioDemoView> {
     super.dispose();
   }
 
+  @override
+  List<String> buildList() => const <String>[
+        '1. 发送 POST 表单请求',
+        '2. 取消进行中的请求',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _handlePost();
+      case 1:
+        _handleCancel();
+    }
+  }
+
   Map<String, String> _buildLoginData() {
     return <String, String>{
       Urls.keyUsername: Urls.valueUsername,
@@ -66,105 +73,50 @@ class _DioDemoViewState extends State<DioDemoView> {
   }
 
   Future<void> _handlePost() async {
-    _cancelToken = CancelToken();
-    await _handleRequest(
-      request: () => _dioClient.post<Map<String, dynamic>>(
+    final CancelToken cancelToken = CancelToken();
+    _cancelToken = cancelToken;
+    appendLog('→ [POST Form] ${Urls.login}');
+
+    try {
+      final NetworkResponse<Map<String, dynamic>> response =
+          await _dioClient.post<Map<String, dynamic>>(
         Urls.login,
         body: _buildLoginData(),
         bodyType: RequestBodyType.form,
-        cancelToken: _cancelToken,
+        cancelToken: cancelToken,
         decoder: (dynamic data) => data as Map<String, dynamic>,
-      ),
-      successPrefix: 'POST success',
-    );
-  }
-
-  Future<void> _handleRequest<T>({
-    required Future<NetworkResponse<T>> Function() request,
-    required String successPrefix,
-  }) async {
-    _setStateIfMounted(() {
-      _isLoading = true;
-      _info = 'Loading...';
-    });
-
-    try {
-      final NetworkResponse<T> response = await request();
-      _setStateIfMounted(() {
-        _info = _formatResponse(successPrefix, response);
-      });
+      );
+      appendLog(
+        '✓ [POST Form] code=${response.code} success=${response.isSuccess}',
+      );
+      appendFormatLog(
+        '[POST Form] data: ',
+        response.data?.toString() ?? 'null',
+      );
+    } on DioException catch (error) {
+      if (error.type == DioExceptionType.cancel) {
+        appendLog('✗ [POST Form] 请求被取消');
+        return;
+      }
+      appendLog('✗ [POST Form] ${error.message ?? error}');
     } on NetworkException catch (error) {
-      _setStateIfMounted(() {
-        _info =
-            'Request failed\nCode: ${error.code}\n'
-            'Message: ${error.message}';
-      });
+      appendLog('✗ [POST Form] code=${error.code} message=${error.message}');
     } catch (error) {
-      _setStateIfMounted(() {
-        _info = 'Unexpected error\n$error';
-      });
+      appendLog('✗ [POST Form] unexpected: $error');
     } finally {
-      _setStateIfMounted(() {
-        _isLoading = false;
-      });
+      if (identical(_cancelToken, cancelToken)) {
+        _cancelToken = null;
+      }
     }
   }
 
-  void _setStateIfMounted(VoidCallback fn) {
-    if (!mounted) {
+  void _handleCancel() {
+    final CancelToken? cancelToken = _cancelToken;
+    if (cancelToken == null || cancelToken.isCancelled) {
+      appendLog('→ [Cancel] 当前没有进行中的请求');
       return;
     }
-
-    setState(fn);
-  }
-
-  String _formatResponse<T>(String successPrefix, NetworkResponse<T> response) {
-    final dynamic data = response.data;
-    final String dataPreview;
-
-    if (data is List<dynamic>) {
-      dataPreview = data.isEmpty ? '[]' : data.first.toString();
-    } else {
-      dataPreview = data?.toString() ?? 'null';
-    }
-
-    return '$successPrefix\n'
-        'Code: ${response.code}\n'
-        'Message: ${response.message}\n'
-        'Success: ${response.isSuccess}\n'
-        'Data: $dataPreview';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: _buildBody(),
-      floatingActionButton: getFAB(),
-    );
-  }
-
-  Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: SizedBox.expand(child: SingleChildScrollView(child: Text(_info))),
-    );
-  }
-
-  Widget getFAB() {
-    return FloatingActionButton(
-      onPressed: _isLoading ? null : _handlePost,
-      tooltip: 'Send POST Request',
-      child: _isLoading
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 2,
-              ),
-            )
-          : const Icon(Icons.send),
-    );
+    cancelToken.cancel('User cancelled');
+    appendLog('→ [Cancel] 已触发 CancelToken.cancel');
   }
 }

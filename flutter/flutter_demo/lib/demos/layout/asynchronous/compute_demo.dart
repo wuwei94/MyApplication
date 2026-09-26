@@ -1,29 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 
 /// Compute
 /// Demonstrates background computation using isolate
-class ComputeDemoPage extends StatelessWidget {
-  const ComputeDemoPage({super.key, required this.title});
-
-  final String title;
+class ComputeDemoPage extends BasicLayoutPage {
+  const ComputeDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return ComputeDemoView(title: title);
-  }
+  BasicLayoutPageState<ComputeDemoPage> createState() =>
+      _ComputeDemoPageState();
 }
 
-class ComputeDemoView extends StatefulWidget {
-  const ComputeDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<ComputeDemoView> createState() => _ComputeDemoViewState();
-}
-
-class _ComputeDemoViewState extends State<ComputeDemoView> {
+class _ComputeDemoPageState extends BasicLayoutPageState<ComputeDemoPage> {
   int _result = 0;
   bool _isCalculating = false;
 
@@ -38,6 +27,22 @@ class _ComputeDemoViewState extends State<ComputeDemoView> {
     return sum;
   }
 
+  @override
+  List<String> buildList() => const <String>[
+        '1. 主线程执行重计算',
+        '2. compute 后台执行',
+      ];
+
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _runOnMainThread();
+      case 1:
+        _runWithCompute();
+    }
+  }
+
   Future<void> _runOnMainThread() async {
     setState(() {
       _isCalculating = true;
@@ -45,7 +50,7 @@ class _ComputeDemoViewState extends State<ComputeDemoView> {
     });
 
     // This blocks the UI
-    final result = _heavyCalculation(100);
+    final int result = _heavyCalculation(100);
 
     setState(() {
       _result = result;
@@ -60,7 +65,7 @@ class _ComputeDemoViewState extends State<ComputeDemoView> {
     });
 
     // This runs on background isolate
-    final result = await compute(_heavyCalculation, 100);
+    final int result = await compute(_heavyCalculation, 100);
 
     setState(() {
       _result = result;
@@ -69,44 +74,31 @@ class _ComputeDemoViewState extends State<ComputeDemoView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_isCalculating)
-              const CircularProgressIndicator()
-            else
-              Text(
-                'Result: $_result',
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _isCalculating ? null : _runOnMainThread,
-              child: const Text('Run on Main Thread (Blocks UI)'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _isCalculating ? null : _runWithCompute,
-              child: const Text('Run with Compute (Background)'),
-            ),
-            const SizedBox(height: 32),
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                'Try running on main thread and notice the UI freezes. '
-                'Then try with compute for smooth UI.',
-                textAlign: TextAlign.center,
+  Widget buildPreview() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          if (_isCalculating)
+            const CircularProgressIndicator()
+          else
+            Text(
+              'Result: $_result',
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        ),
+          const SizedBox(height: 32),
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              'Try running on main thread and notice the UI freezes. '
+              'Then try with compute for smooth UI.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }

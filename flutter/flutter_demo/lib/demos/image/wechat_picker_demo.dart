@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
@@ -6,27 +7,16 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 /// https://pub.dev/packages/wechat_assets_picker
 /// WeChat Camera Picker
 /// https://pub.dev/packages/wechat_camera_picker
-class WechatPickerDemoPage extends StatelessWidget {
-  const WechatPickerDemoPage({super.key, required this.title});
-
-  final String title;
+class WechatPickerDemoPage extends BasicImagePage {
+  const WechatPickerDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return WechatPickerDemoView(title: title);
-  }
+  BasicImagePageState<WechatPickerDemoPage> createState() =>
+      _WechatPickerDemoPageState();
 }
 
-class WechatPickerDemoView extends StatefulWidget {
-  const WechatPickerDemoView({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<WechatPickerDemoView> createState() => _WechatPickerDemoViewState();
-}
-
-class _WechatPickerDemoViewState extends State<WechatPickerDemoView> {
+class _WechatPickerDemoPageState
+    extends BasicImagePageState<WechatPickerDemoPage> {
   static const Color _accentColor = Color(0xFF1C8A63);
 
   bool _isLoading = false;
@@ -34,13 +24,31 @@ class _WechatPickerDemoViewState extends State<WechatPickerDemoView> {
   List<AssetEntity> _selectedAssets = <AssetEntity>[];
 
   @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+  List<String> buildList() => const <String>[
+        '1. 选择单张图片',
+        '2. 选择多张图片',
+        '3. 拍照选择',
+        '4. 清空已选',
+      ];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: getBody(theme),
-    );
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _pickSingleImage();
+      case 1:
+        _pickMultipleImages();
+      case 2:
+        _pickFromCamera();
+      case 3:
+        _clearSelection();
+    }
+  }
+
+  @override
+  Widget buildPreview() {
+    final ThemeData theme = Theme.of(context);
+    return getBody(theme);
   }
 
   Widget getBody(ThemeData theme) {
@@ -257,7 +265,7 @@ class _SelectedAssetsSection extends StatelessWidget {
         icon: Icons.perm_media_outlined,
         title: '还没有选择图片',
         description: '可以先体验微信拍照，或者从相册中单选、多选图片。',
-        accentColor: _WechatPickerDemoViewState._accentColor,
+        accentColor: _WechatPickerDemoPageState._accentColor,
       );
     }
 
@@ -292,7 +300,7 @@ class _SelectedAssetTile extends StatelessWidget {
     return MediaPickerTileFrame(
       badge: MediaPickerIndexBadge(
         index: index + 1,
-        accentColor: _WechatPickerDemoViewState._accentColor,
+        accentColor: _WechatPickerDemoPageState._accentColor,
       ),
       footer: MediaPickerFooter(
         child: Column(

@@ -1,38 +1,59 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:flutter_demo/core/utils/ui/toast.dart';
 
 /// Cupertino Dialogs
 /// Demonstrates iOS-style dialogs
-class CupertinoDialogsDemoPage extends StatelessWidget {
-  const CupertinoDialogsDemoPage({super.key, required this.title});
-
-  final String title;
+class CupertinoDialogsDemoPage extends BasicLayoutPage {
+  const CupertinoDialogsDemoPage({super.key, required super.title});
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoDialogsDemoView(title: title);
-  }
+  BasicLayoutPageState<CupertinoDialogsDemoPage> createState() =>
+      _CupertinoDialogsDemoPageState();
 }
 
-class CupertinoDialogsDemoView extends StatelessWidget {
-  const CupertinoDialogsDemoView({super.key, required this.title});
+class _CupertinoDialogsDemoPageState
+    extends BasicLayoutPageState<CupertinoDialogsDemoPage> {
+  @override
+  List<String> buildList() => const <String>[
+        '1. 显示 Cupertino AlertDialog',
+        '2. 显示 Cupertino ActionSheet',
+        '3. 显示 Cupertino DatePicker',
+      ];
 
-  final String title;
+  @override
+  void onRecyclerClick(int position, String label) {
+    switch (position) {
+      case 0:
+        _showAlertDialog();
+      case 1:
+        _showActionSheet();
+      case 2:
+        _showDatePicker();
+    }
+  }
 
-  void _showAlertDialog(BuildContext context) {
+  void _showAlertDialog() {
     showCupertinoDialog<void>(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
+      builder: (BuildContext dialogContext) => CupertinoAlertDialog(
         title: const Text('Cupertino Alert'),
         content: const Text('This is an iOS-style alert dialog.'),
-        actions: [
+        actions: <Widget>[
           CupertinoDialogAction(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(dialogContext);
+              showToast('Cupertino Alert · Cancel');
+            },
             child: const Text('Cancel'),
           ),
           CupertinoDialogAction(
             isDefaultAction: true,
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(dialogContext);
+              showToast('Cupertino Alert · OK');
+            },
             child: const Text('OK'),
           ),
         ],
@@ -40,46 +61,58 @@ class CupertinoDialogsDemoView extends StatelessWidget {
     );
   }
 
-  void _showActionSheet(BuildContext context) {
+  void _showActionSheet() {
     showCupertinoModalPopup<void>(
       context: context,
-      builder: (context) => CupertinoActionSheet(
+      builder: (BuildContext sheetContext) => CupertinoActionSheet(
         title: const Text('Action Sheet'),
         message: const Text('Choose an option'),
-        actions: [
+        actions: <Widget>[
           CupertinoActionSheetAction(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(sheetContext);
+              showToast('ActionSheet · Option 1');
+            },
             child: const Text('Option 1'),
           ),
           CupertinoActionSheetAction(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(sheetContext);
+              showToast('ActionSheet · Option 2');
+            },
             child: const Text('Option 2'),
           ),
           CupertinoActionSheetAction(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(sheetContext);
+              showToast('ActionSheet · Option 3');
+            },
             child: const Text('Option 3'),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           isDefaultAction: true,
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(sheetContext);
+            showToast('ActionSheet · Cancel');
+          },
           child: const Text('Cancel'),
         ),
       ),
     );
   }
 
-  void _showDatePicker(BuildContext context) {
+  void _showDatePicker() {
     showCupertinoModalPopup<void>(
       context: context,
-      builder: (context) => Container(
+      builder: (BuildContext pickerContext) => Container(
         height: 250,
         color: Colors.white,
         child: CupertinoDatePicker(
           mode: CupertinoDatePickerMode.date,
           initialDateTime: DateTime.now(),
-          onDateTimeChanged: (date) {
-            // Handle date change
+          onDateTimeChanged: (DateTime date) {
+            showToast('Cupertino date ${date.toString().split(' ')[0]}');
           },
         ),
       ),
@@ -87,29 +120,15 @@ class CupertinoDialogsDemoView extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _showAlertDialog(context),
-              child: const Text('Cupertino AlertDialog'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _showActionSheet(context),
-              child: const Text('Cupertino ActionSheet'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _showDatePicker(context),
-              child: const Text('Cupertino DatePicker'),
-            ),
-          ],
-        ),
+  Widget buildPreview() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.phone_iphone, size: 48),
+          SizedBox(height: 16),
+          Text('CupertinoAlertDialog / ActionSheet / DatePicker'),
+        ],
       ),
     );
   }

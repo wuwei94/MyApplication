@@ -1,96 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/core/utils/ui/toast.dart';
-import 'package:flutter_demo/demos/markdown/widgets/markdown_case_selector.dart';
+import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:highlight/highlight.dart' as hl;
 
-/// 多语言代码语法高亮示例
+/// flutter_highlight — 多语言代码语法高亮
 ///
-/// 对标 Android module_markdown 的 `MarkwonHighlightActivity`
-/// （Markwon + Prism4j 离线词法着色），Flutter 侧使用 flutter_highlight
-/// （基于 highlight.js 词法规则的纯 Dart 高亮组件），业务逻辑保持一致。
+/// 核心机制与避坑点：
+/// 1. 词法着色：基于 highlight.js 规则的纯 Dart 高亮，结果直接绑定 TextSpan。
+/// 2. 主题切换：atom-one-dark（暗黑）与 github（明亮）两套配色对照。
+/// 3. 耗时度量：`hl.highlight.parse` 可同步度量解析耗时，长代码建议下沉 Isolate。
 ///
-/// 页面交互：顶部横滑标签切换案例（内容型页面将纵向空间留给阅读区，
-/// 案例文案与功能逐项对齐 Android `MarkwonHighlightActivity`）。
-///
-/// 核心特性与技术亮点：
-/// 1. 多语言语法表覆盖：Kotlin、Java、Python、JavaScript、JSON、SQL、Bash、C/C++
-/// 2. 丰富的主题色彩：atom-one-dark（对标 Darkula 暗黑）与 github（对标 Default 明亮）两种主题
-/// 3. 原生 Widget 渲染：词法着色结果直接以 TextSpan 渲染，内存极轻、无 WebView 损耗
-/// 4. 耗时评测：展示如何度量高亮解析耗时（Android 端对应后台协程方案）
-///
+/// 官方参考：
 /// https://pub.dev/packages/flutter_highlight
-class MarkdownHighlightDemoPage extends StatefulWidget {
-  final String title;
-
-  const MarkdownHighlightDemoPage({super.key, required this.title});
+class MarkdownHighlightDemoPage extends BasicLayoutPage {
+  const MarkdownHighlightDemoPage({super.key, required super.title});
 
   @override
-  State<MarkdownHighlightDemoPage> createState() =>
+  BasicLayoutPageState<MarkdownHighlightDemoPage> createState() =>
       _MarkdownHighlightDemoPageState();
 }
 
-class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
-  /// 案例操作列表（文案与 Android `MarkwonHighlightActivity.buildList()` 一致）
-  static const List<String> _caseTitles = <String>[
-    '1. Kotlin & Java 高阶语法高亮（协程 / 泛型 / 注解）',
-    '2. Python & JS / TS（装饰器 / 异步 / JSON）',
-    '3. SQL & Linux Shell / Bash 脚本',
-    '4. C / C++ 系统编程（宏 / 模板 / 指针）',
-    '5. 暗黑主题模式 (Prism4jThemeDarkula)',
-    '6. 明亮主题模式 (Prism4jThemeDefault)',
-    '7. 异步后台协程高亮与耗时评测',
-  ];
-
+class _MarkdownHighlightDemoPageState
+    extends BasicLayoutPageState<MarkdownHighlightDemoPage> {
   int _caseIndex = 0;
-  final ScrollController _scrollController = ScrollController();
+  int? _benchmarkMs;
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
+  List<String> buildList() => const <String>[
+        '1. 预览 Kotlin 与 Java 高亮',
+        '2. 预览 Python 与 JS 高亮',
+        '3. 预览 SQL 与 Bash 高亮',
+        '4. 预览 C / C++ 高亮',
+        '5. 切换暗黑代码主题',
+        '6. 切换明亮代码主题',
+        '7. 运行高亮耗时评测',
+      ];
 
-  void _selectCase(int index) {
-    if (_caseIndex == index) return;
+  @override
+  void onRecyclerClick(int position, String label) {
     setState(() {
-      _caseIndex = index;
-    });
-    WidgetsBinding.instance.addPostFrameCallback((Duration _) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(0);
-      }
-      // Android 在点击第 7 项时同步触发后台异步高亮评测
-      if (index == 6 && mounted) {
+      _caseIndex = position;
+      if (position == 6) {
         _runBenchmark();
       }
     });
   }
 
+  void _runBenchmark() {
+    final Stopwatch stopwatch = Stopwatch()..start();
+    hl.highlight.parse(_heavyDartBenchmarkCode, language: 'dart');
+    stopwatch.stop();
+    _benchmarkMs = stopwatch.elapsedMilliseconds;
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Column(
-        children: <Widget>[
-          // 顶部案例选择器（横向可滚动）
-          MarkdownCaseSelector(
-            titles: _caseTitles,
-            index: _caseIndex,
-            onSelected: _selectCase,
-          ),
-          const Divider(height: 1),
-          // 内容区域
-          Expanded(
-            child: ListView(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(12),
-              children: _buildCaseContent(_caseIndex),
-            ),
-          ),
-        ],
+  Widget buildPreview() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(BasicDemoDimens.pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _buildCaseContent(_caseIndex),
       ),
     );
   }
@@ -102,30 +73,18 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
       2 => _buildSqlBash(),
       3 => _buildCpp(),
       4 => _buildTheme(
-        title: '暗黑代码主题 (Prism4jThemeDarkula → atom-one-dark)',
-        desc: '当前正在使用 **暗黑主题** 配色，适合暗黑模式或代码气泡背景：',
-        theme: atomOneDarkTheme,
-        background: const Color(0xFF282C34),
-        samples: const <(String, String)>[
-          ('kotlin', _userProfileKotlin),
-          ('json', _userProfileJson),
-        ],
-      ),
+            title: '暗黑代码主题 (Prism4jThemeDarkula → atom-one-dark)',
+            theme: atomOneDarkTheme,
+            background: const Color(0xFF282C34),
+          ),
       5 => _buildTheme(
-        title: '明亮代码主题 (Prism4jThemeDefault → github)',
-        desc: '当前正在使用 **明亮主题** 配色，适合浅色卡片背景：',
-        theme: githubTheme,
-        background: const Color(0xFFF6F8FA),
-        samples: const <(String, String)>[
-          ('kotlin', _userProfileKotlin),
-          ('json', _userProfileJson),
-        ],
-      ),
+            title: '明亮代码主题 (Prism4jThemeDefault → github)',
+            theme: githubTheme,
+            background: const Color(0xFFF6F8FA),
+          ),
       _ => _buildBenchmark(),
     };
   }
-
-  // ---------- 1. Kotlin & Java ----------
 
   List<Widget> _buildKotlinJava() {
     return <Widget>[
@@ -137,8 +96,6 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
     ];
   }
 
-  // ---------- 2. Python & JS ----------
-
   List<Widget> _buildPythonJs() {
     return <Widget>[
       const _CodeSectionTitle('Python 异步与类型提示 (FastAPI Server)'),
@@ -148,8 +105,6 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
       _codeCard('javascript', _jsStreamCode, dark: true),
     ];
   }
-
-  // ---------- 3. SQL & Bash ----------
 
   List<Widget> _buildSqlBash() {
     return <Widget>[
@@ -161,8 +116,6 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
     ];
   }
 
-  // ---------- 4. C / C++ ----------
-
   List<Widget> _buildCpp() {
     return <Widget>[
       const _CodeSectionTitle('C / C++ 底层系统与 NDK 编程'),
@@ -170,52 +123,34 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
     ];
   }
 
-  // ---------- 5 / 6. 主题对比 ----------
-
   List<Widget> _buildTheme({
     required String title,
-    required String desc,
     required Map<String, TextStyle> theme,
     required Color background,
-    required List<(String, String)> samples,
   }) {
     return <Widget>[
       Text(
         title,
-        style: Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(fontWeight: FontWeight.w700),
       ),
-      const SizedBox(height: 6),
-      Text(desc, style: Theme.of(context).textTheme.bodySmall),
       const SizedBox(height: 12),
-      for (final (String language, String code) in samples) ...<Widget>[
-        _codeCard(language, code, theme: theme, background: background),
-        const SizedBox(height: 12),
-      ],
+      _codeCard('kotlin', _userProfileKotlin, theme: theme, background: background),
+      const SizedBox(height: 12),
+      _codeCard('json', _userProfileJson, theme: theme, background: background),
     ];
   }
 
-  // ---------- 7. 高亮耗时评测 ----------
-
   List<Widget> _buildBenchmark() {
+    final int? ms = _benchmarkMs;
     return <Widget>[
-      const Text(
-        '异步协程后台高亮解析评测',
-        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-      ),
-      const SizedBox(height: 6),
       Text(
-        '在流式输出长代码块时，如果每帧在主线程重复构建 AST 并做词法染色极易掉帧；'
-        '推荐将高亮解析下沉到后台 Isolate / compute，再回主线程一次性绑定 TextSpan。'
-        '以下展示大段代码的解析耗时度量。',
+        ms == null
+            ? '点击下方「运行高亮耗时评测」度量大段代码词法解析耗时'
+            : 'hl.highlight.parse 耗时: $ms ms',
         style: Theme.of(context).textTheme.bodySmall,
-      ),
-      const SizedBox(height: 10),
-      ElevatedButton.icon(
-        onPressed: _runBenchmark,
-        icon: const Icon(Icons.timer_outlined, size: 18),
-        label: const Text('运行高亮解析耗时评测'),
       ),
       const SizedBox(height: 12),
       const _CodeSectionTitle('后台异步解析模式示例 (Kotlin → Dart)'),
@@ -226,15 +161,6 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
     ];
   }
 
-  void _runBenchmark() {
-    final Stopwatch stopwatch = Stopwatch()..start();
-    hl.highlight.parse(_heavyDartBenchmarkCode, language: 'dart');
-    stopwatch.stop();
-    showToast('后台解析耗时: ${stopwatch.elapsedMilliseconds}ms（界面零卡顿）');
-  }
-
-  // ---------- 代码卡片 ----------
-
   Widget _codeCard(
     String language,
     String code, {
@@ -244,26 +170,25 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
   }) {
     final Map<String, TextStyle> effectiveTheme =
         theme ?? (dark ? atomOneDarkTheme : githubTheme);
-    final Color effectiveBackground =
-        background ??
+    final Color effectiveBackground = background ??
         (dark ? const Color(0xFF282C34) : const Color(0xFFF6F8FA));
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: effectiveBackground,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(BasicDemoDimens.cornerSmall),
         border: Border.all(color: const Color(0x1FFFFFFF)),
       ),
       clipBehavior: Clip.antiAlias,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(BasicDemoDimens.itemPadding),
         child: HighlightView(
           code,
           language: language,
           theme: effectiveTheme,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           textStyle: const TextStyle(
             fontFamily: 'monospace',
             fontSize: 12,
@@ -273,8 +198,6 @@ class _MarkdownHighlightDemoPageState extends State<MarkdownHighlightDemoPage> {
       ),
     );
   }
-
-  // ================= 示例代码内容 =================
 
   static const String _kotlinFlowCode = '''
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -340,8 +263,8 @@ async def generate_chat_stream(prompt: str) -> AsyncGenerator[str, None]:
     chunks = ["你好！", "这是", "由 Fast", "API 推送", "的流式 Markdown", "内容。"]
     for chunk in chunks:
         await asyncio.sleep(0.08)  # 模拟大模型推理延迟
-        yield f"data: {chunk}\\n\\n"
-    yield "data: [DONE]\\n\\n"
+        yield f"data: {chunk}\\\\n\\\\n"
+    yield "data: [DONE]\\\\n\\\\n"
 
 @app.post("/v1/chat/completions")
 async def chat_endpoint(prompt: str):
@@ -531,9 +454,9 @@ class PerformanceMetrics:
 }
 
 class _CodeSectionTitle extends StatelessWidget {
-  final String text;
-
   const _CodeSectionTitle(this.text);
+
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -541,9 +464,10 @@ class _CodeSectionTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: Theme.of(
-          context,
-        ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+        style: Theme.of(context)
+            .textTheme
+            .titleSmall
+            ?.copyWith(fontWeight: FontWeight.w700),
       ),
     );
   }
