@@ -45,3 +45,5 @@ lib/
 6. 禁止使用已废弃 Flutter API，禁止在代码中硬编码真实 API Key 或敏感 Secret
 7. 交付前必须通过 `fvm flutter analyze` 静态检查（0 warning, 0 error）
 8. 修改代码时必须同步更新文档，详见 `docs/conventions.md`
+9. API/控制台/预览型示例页统一继承 `lib/core/basic/` 的 `BasicControlPage` / `BasicResponsePage` / `BasicLayoutPage` / `BasicImagePage`，契约见 `docs/conventions.md`「示例页骨架」
+10. 完整小型应用（`basics/*`、`state_management/*`）可自带壳，属文档化例外；其余叶子示例禁止自造 Scaffold 双区结构

@@ -2,6 +2,25 @@
 
 > 所有代码和文档必须遵守的规则。
 
+## 示例页骨架（Basic* 页面族）
+
+与 Android `basic_shared.activity.Basic*Activity` 对齐，叶子示例页统一继承 `lib/core/basic/`：
+
+| 基类 | 布局 | 适用 |
+|------|------|------|
+| `BasicControlPage` | 仅操作列表 | 纯按钮/Toast 反馈 |
+| `BasicResponsePage` | 控制台 + 操作列表 | 网络、存储、系统能力等 API 演示 |
+| `BasicLayoutPage` | 预览画布 + 可选操作列表 | 布局/控件形态、图表、弹出层画布 |
+| `BasicImagePage` | 图片/动画预览 + 操作列表 | 图片加载、媒体播放 |
+
+契约：
+
+1. `buildList()` 文案统一 `"N. 动词短语"`；`onRecyclerClick(position, label)` 内 `switch (position)` 直调示例方法。
+2. `BasicResponsePage` 必须 `showDescription("...")` 交代演示目标；日志用 `appendLog`（`→ ` / `✓ ` / `✗ `），高频用 `updateLog`。
+3. 页面直接调用目标库公开 API，禁止自造与演示无关的业务编排器或产品化卡片墙。
+4. 纯布局预览可不建 `buildList`。
+5. 完整小型应用（`basics/counter`、`basics/getx_app`、`state_management/*` 计数应用）允许自带壳，属文档化例外。
+
 ## Catalog 设计约定
 
 - 每个顶层分组使用一个 `catalog.dart` 描述目录结构
