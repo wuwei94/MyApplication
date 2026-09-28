@@ -24,7 +24,10 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("── 第三方动画库 ──", ""))
         routerItems.add(RouterItem("PAG（布局预览）", RouterPath.Anim.Pag))
         routerItems.add(RouterItem("Lottie（布局预览）", RouterPath.Anim.Lottie))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── SVGA ──", ""))
         routerItems.add(RouterItem("Svga（布局预览）", RouterPath.Anim.Svga))
+        routerItems.add(RouterItem("Svga（插入图片）", RouterPath.Anim.SvgaImage))
         return routerItems
     }
 }

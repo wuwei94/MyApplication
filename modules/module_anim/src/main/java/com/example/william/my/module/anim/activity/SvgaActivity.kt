@@ -3,11 +3,11 @@ package com.example.william.my.module.anim.activity
 import android.net.http.HttpResponseCache
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.anim.databinding.AnimActivitySvgaBinding
 import com.opensource.svgaplayer.SVGADrawable
+import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
 import com.opensource.svgaplayer.SVGAVideoEntity
 import java.io.File
@@ -24,14 +24,27 @@ import java.io.File
  * https://github.com/svga/SVGAPlayer-Android
  */
 @Route(path = RouterPath.Anim.Svga)
-class SvgaActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
+class SvgaActivity : BasicLayoutActivity() {
 
-    override fun getViewBinding(): AnimActivitySvgaBinding = AnimActivitySvgaBinding.inflate(layoutInflater)
+    private lateinit var svgaImageView: SVGAImageView
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
+        initPreview()
         initSvgaPlayer()
+    }
+
+    private fun initPreview() {
+        val previewView = layoutInflater.inflate(
+            com.example.william.my.module.anim.R.layout.anim_layout_svga_preview,
+            container,
+            false,
+        )
+        svgaImageView = previewView.findViewById(
+            com.example.william.my.module.anim.R.id.anim_svga_player,
+        )
+        setView(previewView)
     }
 
     /**
@@ -47,13 +60,12 @@ class SvgaActivity : BaseVBActivity<AnimActivitySvgaBinding>() {
         SVGAParser.shareParser().init(this)
         SVGAParser.shareParser()
             .decodeFromAssets(
-                Constants.Url_SVGA,
+                Constants.Url_SVGA_Heartbeat,
                 object : SVGAParser.ParseCompletion {
                     override fun onError() {}
                     override fun onComplete(videoItem: SVGAVideoEntity) {
-                        val drawable = SVGADrawable(videoItem)
-                        binding.svgaImageView.setImageDrawable(drawable)
-                        binding.svgaImageView.startAnimation()
+                        svgaImageView.setImageDrawable(SVGADrawable(videoItem))
+                        svgaImageView.startAnimation()
                     }
                 },
             )

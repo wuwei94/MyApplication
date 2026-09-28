@@ -204,6 +204,7 @@
 | PagActivity | PAG 动画播放器 |
 | LottieActivity | Lottie 动画播放器 |
 | SvgaActivity | SVGA 动画播放器（与 Pag / Lottie 平行） |
+| SvgaImageActivity | SVGA 动态图片插入（SVGADynamicEntity 按 imageKey 替换图槽并居中裁切对齐） |
 
 ---
 

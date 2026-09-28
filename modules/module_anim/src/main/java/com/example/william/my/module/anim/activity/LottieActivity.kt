@@ -2,9 +2,8 @@ package com.example.william.my.module.anim.activity
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
-import com.example.william.my.core.base.ui.activity.BaseVBActivity
-import com.example.william.my.module.anim.databinding.AnimActivityLottieBinding
 
 /**
  * Lottie — JSON 矢量动画布局预览
@@ -18,13 +17,21 @@ import com.example.william.my.module.anim.databinding.AnimActivityLottieBinding
  * https://github.com/airbnb/lottie-android
  */
 @Route(path = RouterPath.Anim.Lottie)
-class LottieActivity : BaseVBActivity<AnimActivityLottieBinding>() {
-
-    override fun getViewBinding(): AnimActivityLottieBinding = AnimActivityLottieBinding.inflate(layoutInflater)
+class LottieActivity : BasicLayoutActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
+        initPreview()
         // 布局已配置 lottie_autoPlay；需要结束/取消回调时再挂 AnimatorListener
+    }
+
+    private fun initPreview() {
+        val previewView = layoutInflater.inflate(
+            com.example.william.my.module.anim.R.layout.anim_layout_lottie_preview,
+            container,
+            false,
+        )
+        setView(previewView)
     }
 }

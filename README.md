@@ -241,6 +241,7 @@ MyApplication/
 - PAG 动画播放器（腾讯 libpag）
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
+- SVGA 动态图片插入（SVGADynamicEntity 按 imageKey 换图）
 
 ### module_markdown（Markdown 渲染与 AI 流式交互）
 

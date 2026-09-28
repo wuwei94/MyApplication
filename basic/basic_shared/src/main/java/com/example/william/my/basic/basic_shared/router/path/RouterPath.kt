@@ -90,6 +90,7 @@ object RouterPath {
         const val Pag = "$PATH/Pag"
         const val Lottie = "$PATH/Lottie"
         const val Svga = "$PATH/Svga"
+        const val SvgaImage = "$PATH/SvgaImage"
     }
 
     // 图形与渲染特效（RenderEffect / RenderScript / 图像与图形着色计算）

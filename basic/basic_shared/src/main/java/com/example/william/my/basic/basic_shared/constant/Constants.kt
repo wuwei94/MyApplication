@@ -40,7 +40,11 @@ object Constants {
     const val Url_NinePatchNetwork =
         "https://raw.githubusercontent.com/Anatolii/NinePatchChunk/master/NinePatchChunk/Library/src/androidTest/assets/lib_bg.9.png"
     const val Url_PAG = "assets://pag/diamond.pag"
-    const val Url_SVGA = "svga/diamond.svga"
+
+    /** 官方 SVGA-Samples 心跳动效，imageKey="heart" 可换图；"heartbeat" 为音轨图层 */
+    const val Url_SVGA_Heartbeat = "svga/heartbeat.svga"
+    const val SVGA_Avatar_A = "svga/avatar_a.png"
+    const val SVGA_Avatar_B = "svga/avatar_b.png"
     const val Url_Audio = "https://video.fanqievv.com/user_sound/2021/01/10/1610291672209.mp3"
 
     const val Key_Username = "username"
