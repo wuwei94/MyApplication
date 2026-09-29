@@ -191,7 +191,9 @@
 
 ### module_anim（动画）
 
-演示 Android 原生动画机制与第三方动画库（PAG、Lottie、SVGA）。
+演示 Android 原生动画机制与第三方动画库（Lottie、SVGA、PAG）。
+
+源码分包：`activity/system/`（系统原生：属性动画与过渡动画）、`activity/thirdparty/`（第三方库：Lottie / SVGA / PAG）。
 
 | Activity | 功能 |
 |----------|------|
@@ -201,10 +203,22 @@
 | ValueAnimatorActivity | ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator |
 | TransitionFirstActivity | 视图过渡动画（ChangeBounds/Fade/Slide/AutoTransition） |
 | TransitionSecondActivity | 视图过渡动画目标页 |
-| PagActivity | PAG 动画播放器 |
 | LottieActivity | Lottie 动画播放器 |
-| SvgaActivity | SVGA 动画播放器（与 Pag / Lottie 平行） |
+| SvgaActivity | SVGA 动画播放器（与 Lottie / Pag 平行） |
 | SvgaImageActivity | SVGA 动态图片插入（SVGADynamicEntity 按 imageKey 替换图槽并居中裁切对齐） |
+| PagPlaybackActivity | PAG 播放（PAGFile.Load → setComposition → play，无限循环） |
+| PagImageActivity | PAG 替换图像（PAGImage 灌入图片槽，含相册选图与还原原图） |
+| PagTextActivity | PAG 替换文字（PAGText 取副本 → 改字段 → replaceText 回灌，分槽独立改写） |
+
+PAG 三页与 SVGA 同构，按 **能力**切分（播放 / 替换图像 / 替换文字），共用 `anim_layout_pag_lab.xml`
+骨架：`PAGView` 铺满容器作为纯渲染画布，页面上不放标题、说明与读数面板；底部 `buildList` 每项直连一个库 API
+（`replaceImage` / `replaceText`），不做业务包装层。播放页不挂操作项，只做加载与循环播放。
+页面名称由入口列表承载，槽位数、tagLevel 这类排障信息记在各页类头注释，加载失败提示走 Toast。
+
+> **能力边界**：官方文档明确 PAG Community Edition 不支持音视频内容。社区版可读 `numVideos()`
+> 与 `getVideoRanges()`，但没有 `replaceVideo`，对视频层只能 `replaceImage` 塞静态图；真正替换视频内容、
+> 播放音频、导出视频均需企业版（`PAGMovie` / `PAGAudioReader` / `PAGMovieExporter`，包名带 movie 后缀）。
+> 这条边界记在 `PagPlaybackActivity` 类头注释里，页面不提供视频替换入口。
 
 ---
 

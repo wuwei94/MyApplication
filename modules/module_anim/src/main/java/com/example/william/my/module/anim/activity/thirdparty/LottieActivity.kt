@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+package com.example.william.my.module.anim.activity.thirdparty
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

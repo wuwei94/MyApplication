@@ -21,13 +21,17 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("AnimatorSet（组合动画集合）", RouterPath.Anim.AnimatorSet))
         routerItems.add(RouterItem("Transition（转场过渡动画）", RouterPath.Anim.Transition))
         routerItems.add(RouterItem("", ""))
-        routerItems.add(RouterItem("── 第三方动画库 ──", ""))
-        routerItems.add(RouterItem("PAG（布局预览）", RouterPath.Anim.Pag))
+        routerItems.add(RouterItem("── Lottie ──", ""))
         routerItems.add(RouterItem("Lottie（布局预览）", RouterPath.Anim.Lottie))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── SVGA ──", ""))
         routerItems.add(RouterItem("Svga（布局预览）", RouterPath.Anim.Svga))
         routerItems.add(RouterItem("Svga（插入图片）", RouterPath.Anim.SvgaImage))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── PAG ──", ""))
+        routerItems.add(RouterItem("PAG（播放）", RouterPath.Anim.PagPlayback))
+        routerItems.add(RouterItem("PAG（替换图像）", RouterPath.Anim.PagImage))
+        routerItems.add(RouterItem("PAG（替换文字）", RouterPath.Anim.PagText))
         return routerItems
     }
 }

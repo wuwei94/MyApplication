@@ -86,11 +86,15 @@ object RouterPath {
         const val Transition = "$PATH/Transition"
         const val Transition2 = "$PATH/Transition2"
 
-        // 第三方动画库
-        const val Pag = "$PATH/Pag"
+        // 第三方动画库 — Lottie / SVGA
         const val Lottie = "$PATH/Lottie"
         const val Svga = "$PATH/Svga"
         const val SvgaImage = "$PATH/SvgaImage"
+
+        // 第三方动画库 — PAG（播放 / 替换图像 / 替换文字）
+        const val PagPlayback = "$PATH/PagPlayback"
+        const val PagImage = "$PATH/PagImage"
+        const val PagText = "$PATH/PagText"
     }
 
     // 图形与渲染特效（RenderEffect / RenderScript / 图像与图形着色计算）

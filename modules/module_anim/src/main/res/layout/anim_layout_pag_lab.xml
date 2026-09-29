@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PAG 能力实验台通用骨架（播放 / 替换图像 / 替换文字 三页共用）。
+
+  结构契约：
+  - 整个骨架就是一块纯渲染画布，铺满上方容器，不留标题、机制说明与读数面板；
+    页面名称由入口列表承载，API 机制与排障信息（槽位数、tagLevel 等）写进各页类头 KDoc，
+    与 SvgaActivity / LottieActivity 的纯预览形态一致；加载失败走 Toast 提示。
+  - 外层不再套 LinearLayout：去掉标题后单子布局只剩一层冗余父容器（lint UselessParent），
+    上下留白由承载容器自身的 margin / padding 提供。
+
+  页面只把真实的 PAG 素材与库调用接进来；可操作项全部由底部 buildList() 提供，
+  页面自身不构造业务叙事容器。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/shared_color_console_bg"
+    tools:ignore="Overdraw">
+
+    <!--
+      深色底：PAG 素材多为「透明底 + 浅色内容」的叠加型（gift_moonlight 的白线月牙、
+      template_text 的白字标题），落在浅色画布上肉眼几乎不可辨。深色底让这类素材正常显影，
+      也让实色素材的边界更清楚。
+
+      深色底必须挂在这个外层容器，不能写在 PAGView 上：PAGView 自身 setOpaque(false)（透明），
+      但在 Android 7.0+ 重写了 setBackgroundDrawable 并直接忽略背景，写在它身上不会生效。
+
+      抑制 Overdraw 的依据：该告警假设「带背景的根节点 = 窗口根，与主题窗口背景重复绘制」，
+      而本布局始终由 layoutInflater.inflate(..., container, false) 挂进 basics_response_container，
+      从不作为窗口根；深色底是该画布的必要视觉，去掉它 PAG 叠加型素材就看不见了。
+    -->
+    <org.libpag.PAGView
+        android:id="@+id/anim_pag_view_player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

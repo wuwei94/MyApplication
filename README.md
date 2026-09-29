@@ -113,7 +113,7 @@ MyApplication/
     ├── [UI 交互]
     │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
-    │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 PAG / Lottie / SVGA）
+    │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 Lottie / SVGA / PAG）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   ├── module_chart        # 数据可视化（MPAndroidChart：折线图 / 柱状图 / 饼图 / 雷达图 / 多图表联动看板）
@@ -238,10 +238,10 @@ MyApplication/
 - ValueAnimator 差值动画 + 插值器对比 + ViewPropertyAnimator
 - 视图过渡动画（ChangeBounds / Fade / Slide / AutoTransition）
 - Activity 过渡动画（分解 / 滑动 / 淡入 / 共享元素）
-- PAG 动画播放器（腾讯 libpag）
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
 - SVGA 动态图片插入（SVGADynamicEntity 按 imageKey 换图）
+- PAG 能力三则（腾讯 libpag，与 SVGA 同构：播放 / 替换图像 / 替换文字；播放页纯预览，另两页操作项直连 `replaceImage` / `replaceText` 库 API）
 
 ### module_markdown（Markdown 渲染与 AI 流式交互）
 

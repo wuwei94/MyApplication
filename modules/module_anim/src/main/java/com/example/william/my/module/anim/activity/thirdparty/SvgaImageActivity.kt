@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+package com.example.william.my.module.anim.activity.thirdparty
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

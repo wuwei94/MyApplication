@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+package com.example.william.my.module.anim.activity.system
 
 import android.os.Bundle
 import android.transition.Explode

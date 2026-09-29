@@ -1,4 +1,4 @@
-package com.example.william.my.module.anim.activity
+package com.example.william.my.module.anim.activity.system
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
