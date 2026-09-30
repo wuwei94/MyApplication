@@ -209,11 +209,20 @@
 | PagPlaybackActivity | PAG 播放（PAGFile.Load → setComposition → play，无限循环） |
 | PagImageActivity | PAG 替换图像（PAGImage 灌入图片槽，含相册选图与还原原图） |
 | PagTextActivity | PAG 替换文字（PAGText 取副本 → 改字段 → replaceText 回灌，分槽独立改写） |
+| PagLayerActivity | PAG 图层属性（PAGLayer 通用属性：setMatrix / setAlpha / setVisible / setStartTime，批量作用于顶层子图层） |
+| PagCompositionActivity | PAG 渲染树组合（PAGComposition.Make + addLayer / swapLayerAt / setLayerIndex / removeLayer 组合两个素材） |
 
-PAG 三页与 SVGA 同构，按 **能力**切分（播放 / 替换图像 / 替换文字），共用 `anim_layout_pag_lab.xml`
+PAG 五页与 SVGA 同构，按 **能力**切分，共用 `anim_layout_pag_lab.xml`
 骨架：`PAGView` 铺满容器作为纯渲染画布，页面上不放标题、说明与读数面板；底部 `buildList` 每项直连一个库 API
-（`replaceImage` / `replaceText`），不做业务包装层。播放页不挂操作项，只做加载与循环播放。
+（`replaceImage` / `replaceText` / `setMatrix` / `addLayer` 等），不做业务包装层。播放页不挂操作项，只做加载与循环播放。
 页面名称由入口列表承载，槽位数、tagLevel 这类排障信息记在各页类头注释，加载失败提示走 Toast。
+
+五页的分工：前三页（播放 / 替换图像 / 替换文字）与 SVGA 对齐，改的是**内容与槽位**；后两页改的是
+**图层自身与渲染树结构**。「图层属性」页用 0 槽位素材即可演示——属性定义在 `PAGLayer` 基类上，与图层类型无关；
+「渲染树组合」页依赖 `PAGFile extends PAGComposition`，把多个素材拼成一棵渲染树。这两轴 **SVGA 无对应 API**
+（`SVGADynamicEntity` 的公开接口只有 `setDynamicImage` / `setDynamicText` / `setHidden` / `setDynamicDrawer` 等按
+`imageKey` 的内容替换，`SVGAVideoEntity.spriteList` 为 internal，拿不到图层数组，因而没有图层属性与图层树入口），
+故不补 SVGA 平行页。
 
 > **能力边界**：官方文档明确 PAG Community Edition 不支持音视频内容。社区版可读 `numVideos()`
 > 与 `getVideoRanges()`，但没有 `replaceVideo`，对视频层只能 `replaceImage` 塞静态图；真正替换视频内容、

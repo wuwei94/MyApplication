@@ -14,6 +14,8 @@
         <activity android:name=".activity.thirdparty.PagPlaybackActivity" />
         <activity android:name=".activity.thirdparty.PagImageActivity" />
         <activity android:name=".activity.thirdparty.PagTextActivity" />
+        <activity android:name=".activity.thirdparty.PagLayerActivity" />
+        <activity android:name=".activity.thirdparty.PagCompositionActivity" />
     </application>
 
 </manifest>

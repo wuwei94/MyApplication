@@ -91,10 +91,12 @@ object RouterPath {
         const val Svga = "$PATH/Svga"
         const val SvgaImage = "$PATH/SvgaImage"
 
-        // 第三方动画库 — PAG（播放 / 替换图像 / 替换文字）
+        // 第三方动画库 — PAG（播放 / 替换图像 / 替换文字 / 图层属性 / 渲染树组合）
         const val PagPlayback = "$PATH/PagPlayback"
         const val PagImage = "$PATH/PagImage"
         const val PagText = "$PATH/PagText"
+        const val PagLayer = "$PATH/PagLayer"
+        const val PagComposition = "$PATH/PagComposition"
     }
 
     // 图形与渲染特效（RenderEffect / RenderScript / 图像与图形着色计算）

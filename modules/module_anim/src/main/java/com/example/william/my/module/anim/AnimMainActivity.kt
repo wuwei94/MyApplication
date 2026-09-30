@@ -32,6 +32,8 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("PAG（播放）", RouterPath.Anim.PagPlayback))
         routerItems.add(RouterItem("PAG（替换图像）", RouterPath.Anim.PagImage))
         routerItems.add(RouterItem("PAG（替换文字）", RouterPath.Anim.PagText))
+        routerItems.add(RouterItem("PAG（图层属性）", RouterPath.Anim.PagLayer))
+        routerItems.add(RouterItem("PAG（渲染树组合）", RouterPath.Anim.PagComposition))
         return routerItems
     }
 }

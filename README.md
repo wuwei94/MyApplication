@@ -241,7 +241,7 @@ MyApplication/
 - Lottie 动画播放器（Airbnb Lottie）
 - SVGA 动画播放器（YY SVGA）
 - SVGA 动态图片插入（SVGADynamicEntity 按 imageKey 换图）
-- PAG 能力三则（腾讯 libpag，与 SVGA 同构：播放 / 替换图像 / 替换文字；播放页纯预览，另两页操作项直连 `replaceImage` / `replaceText` 库 API）
+- PAG 能力五则（腾讯 libpag：播放 / 替换图像 / 替换文字 / 图层属性 / 渲染树组合；播放页纯预览，另四页操作项直连 `replaceImage` / `replaceText` / `setMatrix` / `addLayer` 等库 API。后两则是 PAG 独有能力：图层属性定义在 `PAGLayer` 基类、与槽位无关；渲染树组合依赖 `PAGFile extends PAGComposition`，可把多个素材拼成一棵渲染树，SVGA 无对应 API）
 
 ### module_markdown（Markdown 渲染与 AI 流式交互）
 
