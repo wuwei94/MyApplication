@@ -104,6 +104,7 @@
 - [Auto Size Text](https://pub.dev/packages/auto_size_text) — 自动缩放文本
 - [ConstraintLayout](https://pub.dev/packages/flutter_constraintlayout) — 约束布局
 - [Google Fonts](https://pub.dev/packages/google_fonts) — Google 字体
+- [Hiblob](https://pub.dev/packages/hiblob) — 确定性几何 blob 头像
 
 ## 蓝牙通信（本地 package）
 

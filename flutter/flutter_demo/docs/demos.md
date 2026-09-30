@@ -181,6 +181,14 @@ TensorFlow Lite 端侧推理与 GPU 加速示例。
 
 常用三方包示例，包含通知、权限、WebView、URL 启动器、屏幕适配、下拉刷新等。
 
+#### content（内容与头像）
+
+| 示例 | 说明 |
+|------|------|
+| flutter-linkify | 正文链接识别、点击跳转与可选择预览 |
+| custom-google-font | 动态加载 Google Fonts 并对比展示 |
+| hiblob | name 驱动的确定性 blob 头像（静态 Hiblob / AnimatedHiblob / 多 name 网格，expression 与 backdrop 切换） |
+
 ### markdown（富文本渲染与 AI 流式交互）
 
 对标 Android `module_markdown` 的 4 个示例页面，业务逻辑保持一致。渲染引擎使用 `flutter_markdown_plus`（flutter_markdown 停更后的社区延续维护版，默认 GitHub Flavored：表格 / 任务清单复选 / 删除线 / 网络图片 / 链接），代码高亮使用 `flutter_highlight`。

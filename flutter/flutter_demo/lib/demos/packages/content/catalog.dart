@@ -2,11 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_demo/catalog/models/catalog_entry.dart';
 import 'package:flutter_demo/demos/packages/content/custom_google_font_demo.dart';
 import 'package:flutter_demo/demos/packages/content/flutter_linkify_demo.dart';
+import 'package:flutter_demo/demos/packages/content/hiblob_demo.dart';
 
 final CatalogEntry packagesContentCatalog = CatalogEntry.catalog(
   path: 'content',
   title: 'Content',
-  subtitle: '文本编辑、链接识别与字体展示',
+  subtitle: '文本编辑、链接识别、字体展示与确定性头像',
   children: <CatalogEntry>[
     // CatalogEntry.page(
     //   path: 'extended-text-field',
@@ -28,6 +29,12 @@ final CatalogEntry packagesContentCatalog = CatalogEntry.catalog(
       subtitle: '动态加载 Google Fonts 并对比展示',
       pageBuilder: (BuildContext context) =>
           const CustomGoogleFontDemoPage(title: 'Custom Google Font'),
+    ),
+    CatalogEntry.page(
+      path: 'hiblob',
+      title: 'Hiblob',
+      subtitle: 'name 驱动的确定性 blob 头像与动态表情',
+      pageBuilder: (BuildContext context) => const HiblobDemoPage(title: 'Hiblob'),
     ),
   ],
 );
