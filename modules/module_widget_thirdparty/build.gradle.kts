@@ -11,6 +11,7 @@ android {
 dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
+    implementation(projects.libs.libWidget)
 
     // 第三方 UI 控件库
     implementation(libs.banner)

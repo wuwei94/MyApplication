@@ -134,6 +134,7 @@ object RouterPath {
         const val Main = "$PATH/Main"
 
         const val Banner = "$PATH/Banner"
+        const val Barrage = "$PATH/Barrage"
         const val CountdownView = "$PATH/CountdownView"
         const val PhotoView = "$PATH/PhotoView"
         const val RealtimeBlurView = "$PATH/RealtimeBlurView"

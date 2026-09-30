@@ -106,5 +106,5 @@ com.example.william.my.core.rx.request/
 
 - `lib_image_loader`：图片加载封装（IImageLoader 接口 + Glide / Coil 内核）。
 - `lib_eventbus`：EventBus 注册、注销和事件发送。
-- `lib_widget`：项目自定义 View。
+- `lib_widget`：项目自定义 View，含弹幕引擎（`barrage` 包，源自 xujiaji/Barrage）。
 - `lib_ninepatch`：NinePatch 图片处理工具。

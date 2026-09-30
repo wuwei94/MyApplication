@@ -143,6 +143,7 @@
 |----------|------|
 | WidgetThirdpartyMainActivity | 模块入口，导航到各 UI 库示例页面 |
 | BannerActivity | Youth Banner 轮播图 |
+| BarrageActivity | Barrage 弹幕引擎（View→Bitmap 轨道绘制，DMTextureView / DMSurfaceView） |
 | CountdownActivity | CountdownView 倒计时 |
 | PhotoViewActivity | PhotoView 图片手势缩放 |
 | ShadowLayoutActivity | ShadowLayout 阴影布局 |
