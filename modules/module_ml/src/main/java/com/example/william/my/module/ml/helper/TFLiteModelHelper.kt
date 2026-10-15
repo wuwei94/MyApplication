@@ -1,196 +1,267 @@
 package com.example.william.my.module.ml.helper
 
 import android.content.Context
-import android.content.res.AssetFileDescriptor
+import android.content.res.AssetManager
 import android.graphics.Bitmap
+import com.google.ai.edge.litert.Accelerator
+import com.google.ai.edge.litert.CompiledModel
+import com.google.ai.edge.litert.support.metadata.MetadataExtractor
+import org.tensorflow.lite.Interpreter
 import java.io.BufferedReader
-import java.io.FileInputStream
+import java.io.InputStream
 import java.io.InputStreamReader
 import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.channels.FileChannel
-import kotlin.math.exp
 
 /**
- * TensorFlow Lite 模型加载、张量映射与数据预处理/后处理核心工具类
+ * LiteRT CompiledModel 推理工具类
+ *
+ * 统一收口三件事：推理配置与引擎构建、位图到输入张量的编码、模型输出到业务结果解码；
+ * 同时作为模块内推理配置的唯一入口，避免各示例页出现线程数与加速后端不一致。
+ *
+ * 全部实现基于 `com.google.ai.edge.litert` 的 CompiledModel API。位图解码与后处理
+ * 全部是纯函数（不接收 Context），落在 JVM 单测覆盖范围内。
+ *
+ * **后处理一律不叠加 Softmax**：本模块 5 个模型里 4 个的输出张量本身就是概率
+ * （`digit_classifier` / `efficientnet_lite0` / `average_word_classifier` / `bert_classifier`
+ * 的末算子就是 `SOFTMAX`，实测各类之和为 1）；唯一输出 logits 的 `selfie_multiclass`
+ * （末算子 `CONCATENATION`）只做 argmax，而 argmax 在 Softmax 前后不变。
+ * 对已是概率的输出再叠加 Softmax 会把 0.90 压到 ≈0.21，置信度与柱状图严重失真，
+ * 因此本模块**不提供** Softmax 工具函数。
  */
 object TFLiteModelHelper {
 
     /**
-     * 通过 AssetFileDescriptor 以零拷贝方式（Zero-copy mmap）内存映射加载 TFLite 模型文件
+     * 模块统一的 CPU 推理线程数
+     *
+     * 各示例页共用同一档配置，避免同模块内出现 2T / 4T 混用导致时延数据无法横向比较。
+     * 取值按设备可用核心数自适应并封顶 4 线程：主流手机大小核混合，超过 4 线程后
+     * 小核参与计算反而拉长时延。
      */
+    val CPU_THREADS: Int = Runtime.getRuntime().availableProcessors().coerceIn(2, 4)
+
     /**
-     * 通过 AssetFileDescriptor 以零拷贝方式（Zero-copy mmap）内存映射加载 TFLite 模型文件。
-     * 若遇到压缩 Asset 或系统 openFd 限制，自动降级为 Direct ByteBuffer 安全加载。
+     * `TFLITE_XNNPACK_DELEGATE_FLAG_FORCE_FP16`
+     *
+     * 让 XNNPACK 用 fp16 执行一张 fp32 图。这是官方 `text_to_speech_lm` 样例对
+     * `codec_partB` 的明确要求（那一半图在 fp16 下才跑得动实时），因此放在单一入口里
+     * 作为具名常量，而不是把魔数 4 散落到页面。
+     */
+    const val XNNPACK_FORCE_FP16: Int = 4
+
+    // ─────────────────── 推理配置与引擎构建 ───────────────────
+
+    /**
+     * 构建模块统一的 CPU 推理配置：多线程 + XNNPACK ARM NEON 指令集优化
+     *
+     * 线程数统一由 [CPU_THREADS] 提供，保证各示例页的时延数据可以直接横向比较。
+     *
+     * @param xnnPackFlags XNNPACK 标志位；默认（null）沿用运行时的默认值，只有明确要求
+     *   低精度执行的模型才显式传 [XNNPACK_FORCE_FP16]（属于**模型规格**，不是性能调优）。
+     */
+    fun createCpuOptions(
+        threads: Int = CPU_THREADS,
+        xnnPackFlags: Int? = null,
+    ): CompiledModel.Options = CompiledModel.Options(Accelerator.CPU).apply {
+        cpuOptions = CompiledModel.CpuOptions(numThreads = threads, xnnPackFlags = xnnPackFlags)
+    }
+
+    /**
+     * 构建 GPU 推理配置：通过 [Accelerator.GPU] 在引擎编译期选定加速后端
+     *
+     * 后端属于**编译期**选项而非运行时挂载的插件，因此页面上「切换加速后端」的实现
+     * 是重建引擎，而不是替换某个对象。设备不支持时构建会直接抛异常，由调用方回退 CPU。
+     *
+     * @param precision GPU 计算精度；默认（null）沿用运行时的默认精度。
+     *   个别模型要求显式 FP32（Laya 零样本分类的主图即如此，官方样例明确指定），
+     *   这类精度要求属于**模型规格**而非性能调优，因此在此处显式声明而不是散落在页面里。
+     */
+    fun createGpuOptions(
+        precision: CompiledModel.GpuOptions.Precision? = null,
+    ): CompiledModel.Options = CompiledModel.Options(Accelerator.GPU).apply {
+        if (precision != null) {
+            gpuOptions = CompiledModel.GpuOptions(precision = precision)
+        }
+    }
+
+    /**
+     * CPU 打底 + 追加一个可选后端的配置
+     *
+     * 官方 ASR 样例传的是 `setOf(Accelerator.CPU, accelerator)` —— 把 CPU **一起**塞进后端集合，
+     * 由运行时在目标后端不可用时自行退回，而不是等编译期抛异常。这与其它页面
+     * 「先试 [createGpuOptions]，失败再重建 CPU 引擎」是两条不同的容错路径，
+     * 因此单独开一个入口，避免页面自己拼 `Options(...)` 破坏「推理配置单一入口」。
+     *
+     * @param accelerator 期望的目标后端；传 [Accelerator.CPU] 时等价于 [createCpuOptions]
+     * @param gpuOptions 仅在 [accelerator] 为 GPU 时生效
+     */
+    fun createFallbackOptions(
+        accelerator: Accelerator,
+        gpuOptions: CompiledModel.GpuOptions? = null,
+    ): CompiledModel.Options = CompiledModel.Options(setOf(Accelerator.CPU, accelerator)).apply {
+        cpuOptions = createCpuOptions().cpuOptions
+        if (accelerator == Accelerator.GPU && gpuOptions != null) {
+            this.gpuOptions = gpuOptions
+        }
+    }
+
+    /**
+     * 从 assets 直接构建 CompiledModel
+     *
+     * `CompiledModel.create(assets, ...)` 内部走原生 AssetManager 读取，模型无需先读进 JVM 堆；
+     * `Environment` 传 null 时由运行时创建默认环境。构建会解析并编译计算图，耗时较长，
+     * 调用方一律通过 [buildOffMainThreadSafely] 在后台线程执行。
      */
     @Throws(Exception::class)
-    fun loadModelFile(context: Context, modelPath: String): ByteBuffer = try {
-        val fileDescriptor: AssetFileDescriptor = context.assets.openFd(modelPath)
-        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
-        val fileChannel: FileChannel = inputStream.channel
-        val startOffset: Long = fileDescriptor.startOffset
-        val declaredLength: Long = fileDescriptor.declaredLength
-        fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
-    } catch (e: Exception) {
-        context.assets.open(modelPath).use { inputStream ->
-            val bytes = inputStream.readBytes()
-            val buffer = ByteBuffer.allocateDirect(bytes.size).apply {
-                order(ByteOrder.nativeOrder())
-                put(bytes)
-                rewind()
-            }
-            buffer
+    fun createModel(
+        assets: AssetManager,
+        fileName: String,
+        options: CompiledModel.Options,
+    ): CompiledModel = CompiledModel.create(assets, fileName, options, null)
+
+    /**
+     * 构建经典 `Interpreter` 的推理配置
+     *
+     * **为什么模块里还留着这套 API**：LiteRT 2.x 的 `litert` 同一个 artifact 里同时提供
+     * `CompiledModel` 与旧的 `org.tensorflow.lite.Interpreter`，二者不是「1.x / 2.x」的分野。
+     * 官方 2.x 的**流式语音合成**样例就同时用两套：它的 predictor / prosody 两张图把
+     * 定长 LSTM 的隐状态放在 TFLite *variable tensors* 里，而 CompiledModel 的模型加载器
+     * 目前不接受这类图（官方注释 b/365299994），所以那两张图只能走 `Interpreter`，
+     * 靠 `resizeInput` + `resetVariableTensors` 逐句驱动。
+     *
+     * 其余示例页一律仍用 `CompiledModel`（见 [createCpuOptions] / [createGpuOptions]）。
+     * 线程数同样取 [CPU_THREADS] 并开启 XNNPACK，保证与 CompiledModel 页面的时延可比。
+     */
+    fun createInterpreterOptions(threads: Int = CPU_THREADS): Interpreter.Options = Interpreter.Options()
+        .setNumThreads(threads)
+        .setUseXNNPACK(true)
+
+    // ─────────────────── 模型元数据 ───────────────────
+
+    /**
+     * 读取模型内嵌关联文件（标签表、词表等）的文本行
+     *
+     * 官方 2.x 样例把标签表写在模型 metadata 里而非独立 asset，这里保持一致。
+     * 返回**未过滤**的原始行 —— 行号即类别下标，过滤空行会让 index 整体错位。
+     */
+    fun loadMetadataLines(
+        context: Context,
+        modelFileName: String,
+        associatedFile: String,
+    ): List<String> = try {
+        val bytes = context.assets.open(modelFileName).use { it.readBytes() }
+        val extractor = MetadataExtractor(ByteBuffer.wrap(bytes))
+        if (!extractor.hasMetadata()) {
+            emptyList()
+        } else {
+            extractor.getAssociatedFile(associatedFile)?.let(::readLines).orEmpty()
         }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        emptyList()
+    }
+
+    private fun readLines(inputStream: InputStream): List<String> = BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8)).use { it.readLines() }
+
+    /**
+     * 把词表文本行解析为 `token -> id` 映射
+     *
+     * 本模块的两个文本模型内嵌的 `vocab.txt` **格式并不相同**，必须都支持
+     * （官方 `litert-samples` 的 iOS 侧同样写了两套加载器：`loadBertVocabularies` /
+     * `loadAverageVocabularies`）：
+     *
+     * - **单列**：整行就是 token，**行号即 id**（`bert_classifier.tflite`，形如 `[PAD]` / `[unused0]`）；
+     * - **双列**：形如 `<PAD> 0` / `the 3`，以**第二列的数字**为 id
+     *   （`average_word_classifier.tflite`）。
+     *
+     * 判别方式是「最后一个空格之后能否解析成整数」：单列词表里 token 不含空格，
+     * 所以不会误判。注意**不能过滤空行** —— 单列格式下行号参与 id 计算，过滤会让后续 id 整体错位。
+     */
+    fun buildVocabulary(lines: List<String>): Map<String, Int> {
+        val vocabulary = HashMap<String, Int>(lines.size * 2)
+        lines.forEachIndexed { index, line ->
+            val separator = line.lastIndexOf(' ')
+            val explicitId = if (separator > 0) line.substring(separator + 1).toIntOrNull() else null
+            if (explicitId != null) {
+                vocabulary[line.substring(0, separator)] = explicitId
+            } else {
+                vocabulary[line] = index
+            }
+        }
+        return vocabulary
+    }
+
+    // ─────────────────── 位图 → 输入张量 ───────────────────
+
+    /**
+     * 位图整图重采样为目标尺寸，编码为交错 RGB 的 FloatArray（行优先，长度 w * h * 3）
+     *
+     * 一律**整图拉伸**，不做裁剪 —— 与官方 2.x 样例保持一致（官方即 `createScaledBitmap`
+     * 后直接取像素）。两个理由：
+     * - 图像分类的输出是整图级向量，拉伸带来的长宽比变化不影响「图里有什么」；
+     * - 语义分割的掩码相对**整幅输入图**逐像素输出，先裁剪会让掩码与原图整体错位，
+     *   无法再叠加回原图。
+     */
+    fun bitmapToFloatArray(
+        bitmap: Bitmap,
+        targetWidth: Int,
+        targetHeight: Int,
+        normalize: InputNormalize,
+    ): FloatArray = encodeBitmap(toSizedBitmap(bitmap, targetWidth, targetHeight), normalize, bitmap)
+
+    private fun toSizedBitmap(bitmap: Bitmap, targetWidth: Int, targetHeight: Int): Bitmap = if (bitmap.width == targetWidth && bitmap.height == targetHeight) {
+        bitmap
+    } else {
+        Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
     }
 
     /**
-     * 从 assets 加载分类标签列表
+     * 逐像素写成交错 RGB 浮点数组
+     *
+     * @param source 实际取像素的位图（可能是缩放/裁剪产物）
+     * @param original 调用方传入的位图；两者不同才回收 [source]，避免误回收调用方对象
      */
-    fun loadLabels(context: Context, labelPath: String): List<String> {
-        val labels = mutableListOf<String>()
-        try {
-            context.assets.open(labelPath).use { inputStream ->
-                BufferedReader(InputStreamReader(inputStream)).use { reader ->
-                    var line: String? = reader.readLine()
-                    while (line != null) {
-                        if (line.isNotBlank()) {
-                            labels.add(line.trim())
-                        }
-                        line = reader.readLine()
-                    }
+    private fun encodeBitmap(source: Bitmap, normalize: InputNormalize, original: Bitmap): FloatArray {
+        val width = source.width
+        val height = source.height
+        val pixels = IntArray(width * height)
+        source.getPixels(pixels, 0, width, 0, 0, width, height)
+
+        val output = FloatArray(width * height * 3)
+        for (i in pixels.indices) {
+            val pixel = pixels[i]
+            val r = (pixel shr 16) and 0xFF
+            val g = (pixel shr 8) and 0xFF
+            val b = pixel and 0xFF
+            val base = i * 3
+            when (normalize) {
+                InputNormalize.RAW_0_255 -> {
+                    output[base] = r.toFloat()
+                    output[base + 1] = g.toFloat()
+                    output[base + 2] = b.toFloat()
+                }
+
+                InputNormalize.FLOAT_MINUS1_1 -> {
+                    output[base] = (r - 127.5f) / 127.5f
+                    output[base + 1] = (g - 127.5f) / 127.5f
+                    output[base + 2] = (b - 127.5f) / 127.5f
+                }
+
+                InputNormalize.FLOAT_0_1 -> {
+                    output[base] = r / 255.0f
+                    output[base + 1] = g / 255.0f
+                    output[base + 2] = b / 255.0f
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
-        return labels
+
+        // 缩放产生新对象时及时回收，避免原生像素内存堆积
+        if (source !== original) {
+            source.recycle()
+        }
+        return output
     }
 
-    /**
-     * 检查 Asset 下文件是否存在
-     */
-    fun isAssetFileExists(context: Context, fileName: String): Boolean {
-        return try {
-            val list = context.assets.list("") ?: return false
-            list.contains(fileName)
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    /**
-     * 将 Bitmap 转换为 MNIST 单通道灰度 Direct ByteBuffer [1, targetWidth, targetHeight, 1]
-     * 格式为 FP32 浮点型，归一化范围 [0.0f, 1.0f]
-     */
-    fun convertBitmapToDigitByteBuffer(
-        bitmap: Bitmap,
-        targetWidth: Int = 28,
-        targetHeight: Int = 28,
-    ): ByteBuffer {
-        val scaled = if (bitmap.width == targetWidth && bitmap.height == targetHeight) {
-            bitmap
-        } else {
-            Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
-        }
-
-        val byteBuffer = ByteBuffer.allocateDirect(targetWidth * targetHeight * 4).apply {
-            order(ByteOrder.nativeOrder())
-            rewind()
-        }
-
-        val pixels = IntArray(targetWidth * targetHeight)
-        scaled.getPixels(pixels, 0, targetWidth, 0, 0, targetWidth, targetHeight)
-
-        for (pixel in pixels) {
-            val r = (pixel shr 16) and 0xFF
-            val g = (pixel shr 8) and 0xFF
-            val b = pixel and 0xFF
-            // 灰度加权公式：Y = 0.299R + 0.587G + 0.114B
-            val gray = (0.299f * r + 0.587f * g + 0.114f * b) / 255.0f
-            byteBuffer.putFloat(gray)
-        }
-
-        byteBuffer.rewind()
-        return byteBuffer
-    }
-
-    /**
-     * 将彩色 Bitmap 转换为 RGB 3 通道 Direct ByteBuffer [1, targetWidth, targetHeight, 3]
-     *
-     * @param isQuantized true 表示 UINT8 量化模型 [0, 255]，false 表示 FP32 浮点模型 [-1.0f, 1.0f]
-     */
-    fun convertBitmapToRgbByteBuffer(
-        bitmap: Bitmap,
-        targetWidth: Int = 224,
-        targetHeight: Int = 224,
-        isQuantized: Boolean = true,
-    ): ByteBuffer {
-        // 1. 中心正方形等比裁剪，避免非 1:1 图片拉伸变形失真
-        val minDim = minOf(bitmap.width, bitmap.height)
-        val xOffset = (bitmap.width - minDim) / 2
-        val yOffset = (bitmap.height - minDim) / 2
-        val cropped = if (bitmap.width != bitmap.height) {
-            Bitmap.createBitmap(bitmap, xOffset, yOffset, minDim, minDim)
-        } else {
-            bitmap
-        }
-
-        // 2. 缩放到目标 224x224 尺寸
-        val scaled = if (cropped.width == targetWidth && cropped.height == targetHeight) {
-            cropped
-        } else {
-            Bitmap.createScaledBitmap(cropped, targetWidth, targetHeight, true)
-        }
-
-        val bytesPerChannel = if (isQuantized) 1 else 4
-        val byteBuffer = ByteBuffer.allocateDirect(targetWidth * targetHeight * 3 * bytesPerChannel).apply {
-            order(ByteOrder.nativeOrder())
-            rewind()
-        }
-
-        val pixels = IntArray(targetWidth * targetHeight)
-        scaled.getPixels(pixels, 0, targetWidth, 0, 0, targetWidth, targetHeight)
-
-        for (pixel in pixels) {
-            val r = (pixel shr 16) and 0xFF
-            val g = (pixel shr 8) and 0xFF
-            val b = pixel and 0xFF
-
-            if (isQuantized) {
-                // UINT8 量化输入 [0, 255]
-                byteBuffer.put(r.toByte())
-                byteBuffer.put(g.toByte())
-                byteBuffer.put(b.toByte())
-            } else {
-                // FP32 归一化输入 [-1.0f, 1.0f] (ImageNet 标准)
-                byteBuffer.putFloat((r - 127.5f) / 127.5f)
-                byteBuffer.putFloat((g - 127.5f) / 127.5f)
-                byteBuffer.putFloat((b - 127.5f) / 127.5f)
-            }
-        }
-
-        byteBuffer.rewind()
-        return byteBuffer
-    }
-
-    /**
-     * 计算 Softmax 概率归一化
-     */
-    fun softmax(logits: FloatArray): FloatArray {
-        val max = logits.maxOrNull() ?: 0.0f
-        var sum = 0.0f
-        val expArray = FloatArray(logits.size)
-        for (i in logits.indices) {
-            expArray[i] = exp(logits[i] - max)
-            sum += expArray[i]
-        }
-        if (sum > 0f) {
-            for (i in expArray.indices) {
-                expArray[i] /= sum
-            }
-        }
-        return expArray
-    }
+    // ─────────────────── 后处理 ───────────────────
 
     /**
      * 获取置信度最高的 Top-K 索引与概率值
@@ -199,4 +270,79 @@ object TFLiteModelHelper {
         .mapIndexed { index, score -> Pair(index, score) }
         .sortedByDescending { it.second }
         .take(k)
+
+    /**
+     * 逐像素 argmax 解码语义分割输出
+     *
+     * 入参为 CompiledModel 的平坦输出 `[H * W * C]`（行优先，通道交错），
+     * 对每个像素在 C 个类别通道上取最大响应，返回长度为 H * W 的类别索引掩码。
+     */
+    fun decodeSegmentationMask(
+        logits: FloatArray,
+        width: Int,
+        height: Int,
+        classCount: Int,
+    ): IntArray {
+        val pixelCount = width * height
+        if (classCount <= 0 || logits.size < pixelCount * classCount) return IntArray(pixelCount)
+        val mask = IntArray(pixelCount)
+        for (pixel in 0 until pixelCount) {
+            val base = pixel * classCount
+            var bestIndex = 0
+            var bestScore = -Float.MAX_VALUE
+            for (c in 0 until classCount) {
+                val score = logits[base + c]
+                if (score > bestScore) {
+                    bestScore = score
+                    bestIndex = c
+                }
+            }
+            mask[pixel] = bestIndex
+        }
+        return mask
+    }
+
+    /**
+     * 统计掩码中各类别的像素数量，索引即类别 id
+     */
+    fun countSegmentationClasses(mask: IntArray, classCount: Int): IntArray {
+        val counts = IntArray(classCount)
+        for (index in mask) {
+            if (index in 0 until classCount) {
+                counts[index]++
+            }
+        }
+        return counts
+    }
+
+    /**
+     * 将类别掩码映射为 ARGB 像素数组，便于直接构建叠加层 Bitmap
+     *
+     * @param backgroundTransparent true 时类别 0（背景）输出全透明，只保留前景色块
+     */
+    fun colorizeSegmentationMask(
+        mask: IntArray,
+        colors: IntArray,
+        backgroundTransparent: Boolean = true,
+    ): IntArray = IntArray(mask.size) { i ->
+        val index = mask[i]
+        if (backgroundTransparent && index == 0) 0 else colors.getOrElse(index) { 0 }
+    }
+}
+
+/**
+ * 位图到模型输入的归一化区间
+ *
+ * 区间由模型规格决定，必须以实测为准 —— 官方 2.x 样例中 EfficientNet / SelfieMulticlass
+ * 取 `(v - 127.5) / 127.5`（即 [-1, 1]），MNIST 手写数字模型则直接喂 0~255 原始值。
+ */
+enum class InputNormalize {
+    /** 原始 0~255，不做归一化 */
+    RAW_0_255,
+
+    /** 归一化到 [-1, 1]：(v - 127.5) / 127.5 */
+    FLOAT_MINUS1_1,
+
+    /** 归一化到 [0, 1]：v / 255 */
+    FLOAT_0_1,
 }

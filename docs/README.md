@@ -56,7 +56,7 @@ mindmap
       mqtt.md["MQTT 发布/订阅（HiveMQ / Paho）"]
       bluetooth.md["低功耗蓝牙（BLE 客户端）"]
       markdown.md["Markdown 渲染与 AI 流式聊天"]
-      ml.md["端侧 AI（LiteRT / TFLite）"]
+      ml.md["端侧 AI（LiteRT）"]
       performance.md["性能优化与基准度量"]
     05-catalog
       modules.md["各功能模块与 Activity 清单"]
@@ -125,7 +125,7 @@ mindmap
 | [mqtt.md](04-domains/mqtt.md) | **MQTT 发布/订阅** | HiveMQ（异步 API）vs Paho Android Service、QoS 0/1/2、EMQX 公共 Broker 闭环 |
 | [bluetooth.md](04-domains/bluetooth.md) | **低功耗蓝牙 (BLE)** | 8 大核心功能流程、原生 BLE 踩坑指南与第三方开源 BLE 方案评估 |
 | [markdown.md](04-domains/markdown.md) | **Markdown 渲染与 AI 流式交互** | Markwon 渲染、Prism4j 高亮、流式打字机与语法容错、AI 聊天 Payload 增量刷新实战 |
-| [ml.md](04-domains/ml.md) | **端侧机器学习** | LiteRT / TFLite 模型加载、图像预处理、硬件加速（GPU / XNNPACK）与推理 |
+| [ml.md](04-domains/ml.md) | **端侧机器学习** | LiteRT 2.x `CompiledModel` 引擎构建（variable-tensor 图保留经典 `Interpreter`）、整图拉伸预处理与归一化区间、`Accelerator` 硬件加速（CPU / XNNPACK / GPU / NPU）、模型资产双轨（内嵌 assets / 运行时下载）、Native 资源生命周期 |
 | [performance.md](04-domains/performance.md) | **性能优化实战** | 内存抖动与对象池治理、卡顿掉帧排查、启动加速与基准度量闭环 |
 
 ---
@@ -161,7 +161,7 @@ mindmap
 | **MQTT 客户端** | HiveMQ vs Paho Android Service | HiveMQ 异步 API 现代、支持 MQTT 5.0；Paho 借 Service 后台保活、自动重连 | [mqtt.md](04-domains/mqtt.md)（第二章） |
 | **Markdown 渲染** | Markwon / WebView / Compose RichText | 原生 Spannable 流式最优；重排版 WebView；纯 Compose 页面用 RichText | [markdown.md](04-domains/markdown.md)（第二章） |
 | **BLE 客户端方案** | 原生 / Nordic / FastBle / RxAndroidBle | 各有适用：可控性 / 工程化 / 链式 / 响应式 | [bluetooth.md](04-domains/bluetooth.md) |
-| **端侧推理加速** | CPU 多核 / XNNPACK / GPU Delegate | GPU 加速显著，需权衡模型兼容与内存 | [ml.md](04-domains/ml.md) |
+| **端侧推理加速** | CPU 多核 / XNNPACK / GPU（`Accelerator`）/ 经典 `Interpreter` | 后端在引擎编译期选定，切换即重建引擎；GPU 不可用时如实回退 CPU；带 variable tensor 的图仍走 `Interpreter` | [ml.md](04-domains/ml.md) |
 | **测试替身** | 手写 Fake vs MockK / Mockito | 零 Mock，接口签名变化编译期强制同步 | [testing.md](02-engineering/testing.md) |
 | **性能度量手段** | Macrobenchmark / Baseline Profile / JankStats / Tracing | 压测 + 运行时归因 + 深挖追踪三件套 | [performance.md](04-domains/performance.md)（第八章） |
 | **Git 门禁** | commit-msg / pre-push / CI 矩阵 | 质量左移：本地钩子 + CI 回归双层拦截 | [git.md](01-rules/git.md) + [engineering.md](02-engineering/engineering.md) |

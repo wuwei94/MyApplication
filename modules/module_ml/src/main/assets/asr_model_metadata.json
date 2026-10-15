@@ -1,0 +1,59 @@
+{
+  "parakeet-tdt-0.6b-v3": {
+    "modelRemoteUrl": "https://hf-mirror.com/litert-community/parakeet-tdt-0.6b-v3/resolve/main/parakeet_tdt_0.6b_v3_5s_i8_stateful.tflite",
+    "tokenizerUrl": "https://hf-mirror.com/nvidia/parakeet-tdt-0.6b-v3/resolve/main/tokenizer.json",
+    "inputMilliseconds": 5000,
+    "logMelSpectro": { "nFFT": 512, "nMels": 128, "nFrames": 500, "preemphasis": 0.97 },
+    "decodeStartTokenId": 8192,
+    "approxBytesModel": 614261072,
+    "approxBytesTokenizer": 1159960
+  },
+  "parakeet-ctc-0.6b": {
+    "modelRemoteUrl": "https://hf-mirror.com/litert-community/parakeet-ctc-0.6b/resolve/main/parakeet_ctc_0.6b_5s_i8.tflite",
+    "tokenizerUrl": "https://hf-mirror.com/nvidia/parakeet-ctc-0.6b/resolve/main/tokenizer.json",
+    "inputMilliseconds": 5000,
+    "logMelSpectro": { "nFFT": 512, "transpose": true, "preemphasis": 0.97 },
+    "approxBytesModel": 596365072,
+    "approxBytesTokenizer": 412363
+  },
+  "parakeet-tdt_ctc-0.6b-ja": {
+    "modelRemoteUrl": "https://hf-mirror.com/litert-community/parakeet-tdt_ctc-0.6b-ja/resolve/main/parakeet_tdt_ctc_0.6b_ja_5s_i8.tflite",
+    "tokenizerUrl": "https://hf-mirror.com/litert-community/parakeet-tdt_ctc-0.6b-ja/resolve/main/tokenizer.json",
+    "inputMilliseconds": 5000,
+    "logMelSpectro": { "nFFT": 512, "nFrames": 500, "preemphasis": 0.97 },
+    "decodeStartTokenId": 3072,
+    "approxBytesModel": 607908368,
+    "approxBytesTokenizer": 501571
+  },
+  "moonshine-tiny": {
+    "modelRemoteUrl": "https://hf-mirror.com/litert-community/moonshine-tiny/resolve/main/moonshine_tiny_5s_i8.tflite",
+    "tokenizerUrl": "https://hf-mirror.com/UsefulSensors/moonshine-tiny/resolve/main/tokenizer.json",
+    "inputMilliseconds": 5000,
+    "decodeStartTokenId": 1,
+    "decodeStopTokenId": 2,
+    "approxBytesModel": 51936896,
+    "approxBytesTokenizer": 1985530
+  },
+  "whisper-tiny": {
+    "modelRemoteUrl": "https://hf-mirror.com/litert-community/whisper-tiny/resolve/main/whisper_tiny_30s_i8.tflite",
+    "tokenizerUrl": "https://hf-mirror.com/openai/whisper-tiny/resolve/main/tokenizer.json",
+    "inputMilliseconds": 30000,
+    "logMelSpectro": { "nFFT": 400, "nFrames": 3000, "normType": "whisper" },
+    "decodeStartTokenId": 50258,
+    "decodeStopTokenId": 50257,
+    "approxBytesModel": 41116288,
+    "approxBytesTokenizer": 2480466
+  },
+  "qwen3-asr-0.6b": {
+    "modelRemoteUrl": "https://hf-mirror.com/litert-community/Qwen3-ASR-0.6B/resolve/main/qwen3_asr_0.6b_5s_i8.tflite",
+    "tokenizerUrl": "https://hf-mirror.com/Qwen/Qwen2.5-0.5B-Instruct/resolve/main/tokenizer.json",
+    "inputMilliseconds": 5000,
+    "logMelSpectro": { "nFFT": 400, "nMels": 128, "nFrames": 500, "normType": "whisper" },
+    "decodeStartTokenId": 198,
+    "decodeStopTokenId": 151645,
+    "decodeSkipUntilTokenId": 151704,
+    "supportsGpu": false,
+    "approxBytesModel": 793931296,
+    "approxBytesTokenizer": 7031645
+  }
+}

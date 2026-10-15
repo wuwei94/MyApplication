@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MNIST 手写数字实时识别 (28x28 灰度模型)"
+        android:text="MNIST 手写数字实时识别 (LiteRT · 28x28x3 输入)"
         android:textColor="@color/ml_black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -18,9 +18,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="请在下方黑底画板中用手指写一个 0~9 的数字，抬手后将自动进行 TFLite 实时推理。"
+        android:text="请在下方黑底画板中写一个 0~9 的数字（尽量写大、居中），抬手后自动进行 LiteRT 实时推理。"
         android:textColor="@color/ml_gray"
         android:textSize="13sp" />
+
+    <!-- 硬件加速开关（对应官方 sample 的 Accelerator 切换） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="启用 GPU 硬件加速 (切换即重建引擎):"
+            android:textColor="@color/ml_black"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchGpu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <!-- 涂鸦画板 -->
     <androidx.cardview.widget.CardView
@@ -103,8 +125,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="#E0E0E0" />
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/ml_divider" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -122,7 +145,7 @@
                     android:fontFamily="monospace"
                     android:lineSpacingExtra="4dp"
                     android:text="0: -\n1: -\n2: -\n3: -\n4: -\n5: -\n6: -\n7: -\n8: -\n9: -"
-                    android:textColor="#333333"
+                    android:textColor="@color/ml_text_primary"
                     android:textSize="13sp" />
             </LinearLayout>
         </ScrollView>

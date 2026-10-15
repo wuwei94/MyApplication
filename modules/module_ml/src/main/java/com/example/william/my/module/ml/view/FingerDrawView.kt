@@ -16,7 +16,7 @@ import android.view.View
  * 1. 默认黑底白字（符合标准 MNIST 数据集规范）
  * 2. 支持手指贝塞尔曲线平滑绘制与画笔粗细自适应
  * 3. 支持画布清空与实时触摸事件回调
- * 4. 支持将笔迹渲染并精确等比缩放为 28x28 灰度 Bitmap 供 TFLite 直接推理
+ * 4. 导出时整图拉伸到 28×28，与官方样例的预处理完全一致
  */
 class FingerDrawView @JvmOverloads constructor(
     context: Context,
@@ -24,11 +24,19 @@ class FingerDrawView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
+    private val density = resources.displayMetrics.density
+
+    /** 笔迹粗细：以 dp 为基准换算成像素，保证不同 dpi 设备上视觉粗细一致 */
+    private val strokeWidthPx = 18f * density
+
+    /** 相邻触摸点位移超过该像素阈值才追加一段，避免高频抖动点淹没路径 */
+    private val minSampleDistancePx = 2f * density
+
     private val drawPath = Path()
     private val drawPaint = Paint().apply {
         color = Color.WHITE
         isAntiAlias = true
-        strokeWidth = 56f
+        strokeWidth = strokeWidthPx
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
@@ -82,7 +90,7 @@ class FingerDrawView @JvmOverloads constructor(
             MotionEvent.ACTION_MOVE -> {
                 val dx = Math.abs(x - lastX)
                 val dy = Math.abs(y - lastY)
-                if (dx >= 4 || dy >= 4) {
+                if (dx >= minSampleDistancePx || dy >= minSampleDistancePx) {
                     drawPath.quadTo(lastX, lastY, (x + lastX) / 2, (y + lastY) / 2)
                     lastX = x
                     lastY = y
@@ -96,11 +104,18 @@ class FingerDrawView @JvmOverloads constructor(
                 drawCanvas?.drawPath(drawPath, drawPaint)
                 drawPath.reset()
                 invalidate()
+                // 自绘 View 需自行上报点击语义，否则无障碍服务无法感知这次触摸
+                performClick()
                 onStrokeFinishedListener?.invoke()
                 return true
             }
         }
         return super.onTouchEvent(event)
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
     }
 
     fun clear() {
@@ -113,12 +128,19 @@ class FingerDrawView @JvmOverloads constructor(
     fun isCanvasEmpty(): Boolean = isCanvasEmpty
 
     /**
-     * 导出缩放为指定尺寸（默认 28x28）的 Bitmap
+     * 导出 [targetSize]×[targetSize] 的位图供模型推理
+     *
+     * 整图直接拉伸，等价于官方样例的 `Bitmap.createScaledBitmap(bitmap, 28, 28, true)`，
+     * 预处理与官方 sample 保持一致。
+     *
+     * 返回的必定是**新对象**：画布位图由 `Bitmap.createBitmap(w, h, config)` 创建，
+     * 始终可变，因此 `createScaledBitmap` 不会原样返回画布本体，调用方可以安全回收。
+     * 画布尚未就绪时返回 null。
      */
-    fun exportBitmap(targetWidth: Int = 28, targetHeight: Int = 28): Bitmap? {
+    fun exportScaledBitmap(targetSize: Int = SCALED_SIZE): Bitmap? {
         val src = canvasBitmap ?: return null
         if (src.isRecycled) return null
-        return Bitmap.createScaledBitmap(src, targetWidth, targetHeight, true)
+        return Bitmap.createScaledBitmap(src, targetSize, targetSize, true)
     }
 
     override fun onDetachedFromWindow() {
@@ -126,5 +148,10 @@ class FingerDrawView @JvmOverloads constructor(
         canvasBitmap?.recycle()
         canvasBitmap = null
         drawCanvas = null
+    }
+
+    private companion object {
+        /** MNIST 模型输入边长 */
+        const val SCALED_SIZE = 28
     }
 }

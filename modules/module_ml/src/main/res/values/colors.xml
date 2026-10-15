@@ -4,4 +4,8 @@
     <color name="ml_gray">#757575</color>
     <color name="ml_primary">#1976D2</color>
     <color name="ml_bg_card">#F8F9FA</color>
+
+    <!-- 正文与分隔线 -->
+    <color name="ml_text_primary">#333333</color>
+    <color name="ml_divider">#E0E0E0</color>
 </resources>

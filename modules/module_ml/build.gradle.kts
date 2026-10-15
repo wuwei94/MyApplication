@@ -16,6 +16,10 @@ dependencies {
     implementation(projects.basic.basicLib)
     implementation(projects.basic.basicShared)
 
-    // LiteRT / TensorFlow Lite 端侧推理与 GPU 加速套件
-    implementation(libs.bundles.tensorflow.lite)
+    // LiteRT（原 TensorFlow Lite）端侧推理套件：CompiledModel 运行时 + GPU 后端 + 模型元数据
+    implementation(libs.bundles.litert)
+
+    // ASR 的分词器 / 模型元数据解析用 org.json；它在 Android 上是框架内置的（主代码零依赖），
+    // 但单测跑的是 android.jar 里的空桩，因此只在测试期补一份真实实现 —— 官方 ASR 样例同样如此。
+    testImplementation(libs.json.org)
 }

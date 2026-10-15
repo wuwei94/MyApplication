@@ -16,7 +16,7 @@
 | animation | 动画资源和播放示例 | 4 |
 | engine | Flutter 引擎层特性深度示例 | 8 |
 | video | 视频播放示例 | 2 |
-| ml | 端侧机器学习与 GPU 加速 | 4 |
+| ml | 端侧机器学习（TensorFlow Lite） | 2 |
 | chart | 复杂图表与触摸 Tooltip 联动 | 5 |
 | packages | 常用三方包示例 | 大量 |
 | markdown | 富文本渲染、代码高亮与 AI 流式交互 | 4 |
@@ -156,14 +156,17 @@ Flutter 引擎层原生特性深度示例：自绘渲染、动画与布局协议
 
 ### ml（机器学习 / AI）
 
-TensorFlow Lite 端侧推理与 GPU 加速示例。
+TensorFlow Lite / LiteRT 端侧推理示例（手写数字识别与图像分类）。
+
+> Android 侧 `:modules:module_ml` 与此处是两套独立演进的实现，不与彼此严格同步。
+> Android 侧已整体迁移到 LiteRT 2.x 的 CompiledModel API，覆盖官方 `samples/litert/`
+> 9 个「Android + Kotlin」任务的全部（视觉 3 / 文本 2 / 语音 4），模型资产走
+> 「内嵌 assets + 运行时下载」双轨；本侧仍基于 `tflite_flutter` 插件，只覆盖前两页。
 
 | 示例 | 说明 |
 |------|------|
 | digit_classifier | MNIST 手写数字实时识别（自定义手写板涂鸦与 Softmax 置信度条形图） |
 | image_classification | MobileNet 图像物体分类（4:3 无黑边容器与 1000 类纯中文 Top-5 排序） |
-| gpu_benchmark | CPU 多核 vs GPU 硬件加速跑分（2×3 对照矩阵：单核/多核/XNN/GPU Delegate） |
-| tensor_basics | TFLite 张量底层操作与内存架构（FlatBuffers 零拷贝与 Direct ByteData） |
 
 ### chart（复杂图表）
 

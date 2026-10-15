@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MobileNet 图像物体分类 (ImageNet 1000 类)"
+        android:text="EfficientNet-Lite 图像物体分类 (ImageNet 1000 类)"
         android:textColor="@color/ml_black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="启用 GPU 硬件加速 (Delegate):"
+            android:text="启用 GPU 硬件加速 (切换即重建引擎):"
             android:textColor="@color/ml_black"
             android:textSize="14sp" />
 
@@ -53,64 +53,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- 预览图的信息由下方 Top-5 结果文字承载，对无障碍服务标记为装饰性，避免重复播报 -->
             <ImageView
                 android:id="@+id/ivPreview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 快速选择样本 & 相册按钮 -->
-    <LinearLayout
+    <!-- 图库选图（对应官方样例的 GalleryScreen 入口） -->
+    <Button
+        android:id="@+id/btnPickImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnSample1"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:text="金毛犬"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnSample2"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:text="跑车"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnSample3"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:text="咖啡杯"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnPickImage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1.2"
-            android:padding="0dp"
-            android:text="相册选图"
-            android:textSize="12sp" />
-    </LinearLayout>
+        android:text="相册选图"
+        android:textSize="14sp" />
 
     <!-- 识别结果面板 -->
     <androidx.cardview.widget.CardView
@@ -136,7 +96,7 @@
                     android:id="@+id/tvEngineInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="推理引擎: CPU (4 线程 + XNNPACK)"
+                    android:text="推理引擎: 初始化中..."
                     android:textColor="@color/ml_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -153,8 +113,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="#E0E0E0" />
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/ml_divider" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -172,7 +133,7 @@
                     android:fontFamily="monospace"
                     android:lineSpacingExtra="6dp"
                     android:text="Top 1:   0.00%  ──  -\nTop 2:   0.00%  ──  -\nTop 3:   0.00%  ──  -\nTop 4:   0.00%  ──  -\nTop 5:   0.00%  ──  -"
-                    android:textColor="#333333"
+                    android:textColor="@color/ml_text_primary"
                     android:textSize="13sp" />
             </LinearLayout>
         </ScrollView>

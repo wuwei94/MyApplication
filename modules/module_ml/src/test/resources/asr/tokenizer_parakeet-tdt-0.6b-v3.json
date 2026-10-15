@@ -1,0 +1,108 @@
+{
+ "model": {
+  "type": "BPE",
+  "vocab": {
+   "<unk>": 0,
+   "1": 235,
+   "2": 236,
+   "3": 237,
+   "4": 238,
+   "es": 283,
+   "▁c": 298,
+   "▁o": 299,
+   "▁j": 300,
+   "▁h": 303,
+   "▁na": 358,
+   "▁qu": 363,
+   "um": 385,
+   "▁la": 393,
+   "▁the": 506,
+   "ve": 507,
+   "zy": 569,
+   "lo": 630,
+   "ck": 725,
+   "▁ü": 906,
+   "▁fo": 1361,
+   "▁over": 1388,
+   "af": 1389,
+   "ick": 1413,
+   "ps": 1447,
+   "wn": 1471,
+   "▁The": 1502,
+   "▁wor": 2088,
+   "▁ok": 2148,
+   "▁tim": 2272,
+   "▁It": 2336,
+   "ld": 2493,
+   "ello": 3164,
+   "ode": 3241,
+   "▁dog": 4522,
+   "▁bro": 4870,
+   "▁": 7863,
+   "n": 7867,
+   "s": 7870,
+   ",": 7877,
+   "c": 7880,
+   ".": 7883,
+   "é": 7906,
+   "'": 7931,
+   "x": 7950,
+   "?": 7956,
+   "!": 8020,
+   "ï": 8129
+  }
+ },
+ "added_tokens": [
+  {
+   "id": 0,
+   "content": "<unk>",
+   "single_word": false,
+   "lstrip": false,
+   "rstrip": false,
+   "normalized": false,
+   "special": true
+  },
+  {
+   "id": 235,
+   "content": "1",
+   "single_word": false,
+   "lstrip": false,
+   "rstrip": false,
+   "normalized": false,
+   "special": false
+  },
+  {
+   "id": 236,
+   "content": "2",
+   "single_word": false,
+   "lstrip": false,
+   "rstrip": false,
+   "normalized": false,
+   "special": false
+  },
+  {
+   "id": 237,
+   "content": "3",
+   "single_word": false,
+   "lstrip": false,
+   "rstrip": false,
+   "normalized": false,
+   "special": false
+  },
+  {
+   "id": 238,
+   "content": "4",
+   "single_word": false,
+   "lstrip": false,
+   "rstrip": false,
+   "normalized": false,
+   "special": false
+  }
+ ],
+ "decoder": {
+  "type": "Metaspace",
+  "replacement": "▁",
+  "prepend_scheme": "always",
+  "split": true
+ }
+}

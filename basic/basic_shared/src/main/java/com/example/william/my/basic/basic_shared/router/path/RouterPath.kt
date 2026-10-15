@@ -329,8 +329,13 @@ object RouterPath {
         const val Main = "$PATH/Main"
         const val DigitClassifier = "$PATH/DigitClassifier"
         const val ImageClassification = "$PATH/ImageClassification"
-        const val GpuDelegate = "$PATH/GpuDelegate"
-        const val TensorBasics = "$PATH/TensorBasics"
+        const val ImageSegmentation = "$PATH/ImageSegmentation"
+        const val TextClassification = "$PATH/TextClassification"
+        const val TextToSpeech = "$PATH/TextToSpeech"
+        const val TextToSpeechStreaming = "$PATH/TextToSpeechStreaming"
+        const val TextToSpeechLm = "$PATH/TextToSpeechLm"
+        const val SpeechRecognition = "$PATH/SpeechRecognition"
+        const val ZeroShotClassification = "$PATH/ZeroShotClassification"
     }
 
     // ───────────────────────────────────────────

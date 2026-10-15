@@ -35,7 +35,7 @@
 | Image       | Glide · Coil |
 | Reactive    | Coroutines · Flow · RxJava 3 · LiveData |
 | Messaging   | EventBus · RxEventBus · LiveEventBus · FlowEventBus |
-| ML / AI     | TensorFlow Lite · LiteRT · GPU Delegate |
+| ML / AI     | LiteRT（原 TensorFlow Lite）· CompiledModel / Interpreter · Accelerator（CPU / GPU / NPU） |
 | Others      | WorkManager · Paging 3 · SplashScreen · MMKV |
 | Performance | Jetpack Macrobenchmark · Baseline Profile · Compose Compiler Stability · DiffUtil · LruCache |
 | Quality     | Spotless · ktlint · Dependency Guard · Android Lint |
@@ -145,7 +145,7 @@ MyApplication/
     │   └── module_ipc          # 跨进程通信（AIDL / Messenger）
     │
     ├── [AI 与机器学习]
-    │   └── module_ml           # 机器学习（TensorFlow Lite / LiteRT 端侧推理、GPU 硬件加速与端侧 AI）
+    │   └── module_ml           # 机器学习（LiteRT 2.x 端侧推理：手写识别 / 图像分类 / 语义分割 / 文本情感分类 / 零样本分类 / 三套语音合成 + CPU/GPU 硬件加速）
     │
     ├── [架构与工程]
     │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Compose MVI / Mavericks 并列分包）
@@ -397,12 +397,16 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 
 ### module_ml（机器学习）
 
-演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、硬件加速与落地实践。
+演示 Google 官方轻量级端侧推理框架 LiteRT（原 TensorFlow Lite）的核心技术链路、多模态模型实战、硬件加速与落地实践。推理 API 以 **LiteRT 2.x 的 `CompiledModel`** 为主（流式语音合成的两张 variable-tensor 图与官方一样走 `Interpreter`），覆盖官方 `samples/litert/` 中 **9 个有 Android 实现的示例的全部**（视觉 3 / 文本 2 / 语音 4），实现与预处理均与官方 sample 对齐。
 
-- **基础张量与数值回归**：Direct ByteBuffer 内存映射、连续函数数值拟合与批量推理延迟测试
-- **图像预处理与分类**：Bitmap 裁剪缩放、RGB 像素归一化、Softmax 分布与 Top-K 置信度标签解析
-- **GPU 硬件加速与 Benchmark**：CompatibilityList 兼容性检查、CPU 单/多线程 vs GPU Delegate 多轮基准性能对比
-- **LiteRT 架构演进**：从 TFLite 到 LiteRT 演进、FlatBuffers 零拷贝 mmap、模型量化收益与端侧大模型 SLM 落地架构
+- **视觉模型实战**：MNIST 手写数字识别（画板整图拉伸 28×28，模型输出末尾即 Softmax）、EfficientNet-Lite 图像分类（**1000 类输出，无背景类**，与内嵌标签表直接下标对齐）、Selfie Multiclass 人像语义分割（6 类逐像素 argmax）
+- **文本模型实战**：文本情感分类（词表取自模型内嵌 metadata，两套格式分别解析；支持平均词向量与 MobileBERT 两套输入签名，INT32 定长输入张量）、Laya 多语言零样本分类（提示词构建 + 主图/动作头双图 + 校准解码）
+- **语音模型实战**：Matcha-TTS 英文语音合成（神经 G2P + 扩散解码器 + 声码器）、KittenTTS 流式语音合成（动态序列长度 + 逐句生产者/消费者边合成边播放）、Qwen3-TTS 语音语言模型合成（talker + MTP + codec **三图宿主循环**，KV cache ping-pong）、语音识别（**6 个 ASR 模型**，文件 / 麦克风双输入，重叠窗口 + 编辑距离对齐，未确认文本标灰）
+- **图像预处理与内存规范**：整图拉伸重采样（与官方 `createScaledBitmap` 一致）、`RAW_0_255` / `[-1,1]` / `[0,1]` 三类归一化、`TensorBuffer` 读写与 Top-K / argmax 后处理（模型输出已是概率，**不叠加 Softmax**）
+- **硬件加速**：`Accelerator` 在引擎编译期选定后端（CPU 多线程 / XNNPACK / GPU / NPU），切换即重建引擎；GPU 后端失败时如实回退 CPU 并注明原因
+- **模型资产双轨**：5 个轻量模型内嵌 assets（约 62 MB），其余 5 个任务的模型（44 MB ~ 1.67 GB）**首次使用时运行时下载**，带断点续传与「已下载不重下」——与官方这几个 sample 的做法一致
+- **质量保障**：`TFLiteModelHelper` 的纯函数、生命周期闸门、语音合成解析逻辑与 ASR 的宿主侧算法（log-Mel 对真 librosa、分词器对真 HF `tokenizers`）由 **132 个 JVM 单元测试**覆盖（含变异法验证）
+- **底层内存规范**：assets / 私有目录两种引擎构建路径、引擎串行队列下的 Native 资源生命周期管理、端侧大模型 SLM 落地架构
 
 ### module_arch（架构模式）
 

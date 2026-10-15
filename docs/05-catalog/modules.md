@@ -30,7 +30,7 @@
 │   ├── 安全：Android Keystore 密钥管理与 ECDSA 签名
 │   └── 跨进程通信：AIDL、Messenger
 ├── AI 与机器学习
-│   └── 端侧推理：TensorFlow Lite、LiteRT
+│   └── 端侧推理：LiteRT（原 TensorFlow Lite）
 ├── 架构与工程
 │   ├── 架构模式：MVP、MVVM、MVI、Mavericks
 │   ├── 依赖注入：Hilt、Koin
@@ -76,7 +76,7 @@
 | 系统能力 | module_security | 安全（Android Keystore 密钥管理与签名） | SecurityMainActivity | /Security |
 | 系统能力 | module_scheduler | 后台任务调度 | SchedulerMainActivity | /Scheduler |
 | 系统能力 | module_ipc | 跨进程通信 | IpcMainActivity | /Ipc |
-| AI 与机器学习 | module_ml | 机器学习（TFLite / LiteRT） | MlMainActivity | /Ml |
+| AI 与机器学习 | module_ml | 机器学习（LiteRT） | MlMainActivity | /Ml |
 | 架构与工程 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | 架构与工程 | module_di | 依赖注入 | DiMainActivity | /Di |
 | 架构与工程 | module_event | 事件总线 | EventMainActivity | /Event |
@@ -502,15 +502,20 @@ PAG 五页与 SVGA 同构，按 **能力**切分，共用 `anim_layout_pag_lab.x
 
 ### module_ml（机器学习 / AI）
 
-演示 Google 官方轻量级端侧推理框架（TensorFlow Lite / LiteRT）的核心技术链路、真实模型推理、硬件加速与落地实践。详细技术指南参见 [ml.md](../04-domains/ml.md)。
+演示 Google 官方轻量级端侧推理框架 LiteRT（原 TensorFlow Lite）的核心技术链路、真实模型推理、硬件加速与落地实践。推理 API 以 **LiteRT 2.x 的 `CompiledModel`**（`com.google.ai.edge.litert.*`）为主，流式语音合成的两张 variable-tensor 图与官方一样走 `Interpreter`；覆盖官方 [litert-samples/samples/litert](https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert) 中 **9 个有 Android 实现的示例的全部**（视觉 3 / 文本 2 / 语音 4），实现与预处理均与官方 sample 对齐。详细技术指南参见 [ml.md](../04-domains/ml.md)。
 
 | Activity | 功能 |
 |----------|------|
-| MlMainActivity | 模块入口，导航到 MNIST 手写识别、MobileNet 图像分类、GPU 硬件加速与张量底层操作页面 |
-| TFLiteDigitClassifierActivity | MNIST 手写数字实时识别（自定义 FingerDrawView 画板涂鸦、28x28 灰度提取、实时 TFLite 推理与 0~9 置信度条形图） |
-| TFLiteImageClassificationActivity | MobileNet 图像物体分类（4:3 黄金比例无黑边、Center-Crop 等比裁剪、1000 类别纯中文标签、Top-5 识别结果与 CPU/GPU 切换） |
-| TFLiteGpuDelegateActivity | CPU 多核 vs GPU 硬件加速跑分实测（2×3 对照矩阵：单核 1T、单核+XNN、多核 4T、多核+XNN、GPU Delegate 30 轮真实性能实测） |
-| TFLiteTensorBasicsActivity | TFLite 张量底层操作与内存架构（FlatBuffers 零拷贝 mmap、Direct ByteBuffer 内存排布、动态张量调整与 Native 资源防泄漏） |
+| MlMainActivity | 模块入口，导航到视觉模型实战、文本模型实战、语音模型实战三节共 9 个示例页面 |
+| TFLiteDigitClassifierActivity | MNIST 手写数字实时识别（自定义 FingerDrawView 画板涂鸦、画板整图拉伸到 28x28 后交给 CompiledModel 推理，模型输出末尾即 Softmax 故直接展示 0~9 置信度条形图） |
+| TFLiteImageClassificationActivity | EfficientNet-Lite 图像物体分类（整图拉伸到 224x224、标签表取自模型内嵌 metadata 共 1000 行、输出 [1,1000] 与标签表直接下标对齐取 Top-5、切换 CPU / GPU 后端即重建引擎） |
+| TFLiteImageSegmentationActivity | Selfie Multiclass 人像语义分割（256x256 [-1,1] 整图拉伸输入、[1,256,256,6] 平坦张量逐像素 argmax 解码、人像 6 类调色板、半透明色块叠加与类别占比图例） |
+| TFLiteTextClassificationActivity | 文本情感分类（词表取自模型内嵌 metadata：BERT 为单列裸词、行号即 id，平均词向量为双列 token id、取第二列；支持平均词向量单输入 [1,256] 与 MobileBERT 三输入 [1,128] 两个模型、INT32 输入张量、二分类概率与耗时统计） |
+| TFLiteZeroShotClassificationActivity | Laya 多语言零样本分类（29 语言提示词模板 + 主图/动作头双图串联 + 校准温度解码，按 choice / score / noul 三类问题分别呈现；模型运行时下载约 679 MB） |
+| TFLiteTextToSpeechActivity | Matcha-TTS 英文语音合成（神经 G2P 文字前端 + 文本编码 / 扩散解码 / 声码器四图串联、24 kHz 播放；扩散解码器必须跑 CPU，官方标注其在 Mali ML Drift delegate 上有算子融合缺陷；模型运行时下载约 92 MB） |
+| TFLiteTextToSpeechStreamingActivity | KittenTTS 流式语音合成（三张动态序列长度图，逐句生产者/消费者协程边合成边播放、首音延迟只有一句；定长 LSTM 图走 Interpreter + resetVariableTensors；模型运行时下载约 61 MB） |
+| TFLiteTextToSpeechLmActivity | Qwen3-TTS 语音语言模型合成（0.6B 语音 LM：talker 28 层 + MTP 5 层 + 两段 codec 由**宿主循环串联**，16 层码本逐帧生成、KV cache ping-pong、分词器启动自检；模型运行时下载约 1.67 GB，CPU 实测 RTF ≈ 6.7 慢于实时） |
+| TFLiteSpeechRecognitionActivity | 语音识别（6 个 ASR 模型可选：3 个 Parakeet + Moonshine + Whisper + Qwen3-ASR；文件 WAV / 麦克风双输入，5 秒窗口 + 2 秒重叠滚动拼接，重叠区用编辑距离对齐、未确认文本标灰；解码策略按模型名在宿主侧分派 CTC / TDT / 无状态自回归；分词器与 log-Mel 均为纯 Kotlin 实现；模型与分词器运行时下载，44 MB ~ 801 MB） |
 
 ---
 

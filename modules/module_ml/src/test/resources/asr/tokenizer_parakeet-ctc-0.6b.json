@@ -1,0 +1,64 @@
+{
+ "model": {
+  "type": "BPE",
+  "vocab": {
+   "<unk>": 0,
+   "▁the": 5,
+   "▁o": 9,
+   "es": 27,
+   "ll": 30,
+   "▁n": 42,
+   "▁it": 45,
+   "ve": 47,
+   "▁he": 67,
+   "▁j": 92,
+   "▁do": 97,
+   "od": 186,
+   "um": 196,
+   "▁tim": 222,
+   "▁qu": 264,
+   "own": 332,
+   "▁over": 335,
+   "ick": 363,
+   "▁br": 369,
+   "▁fo": 453,
+   "▁ok": 464,
+   "▁la": 490,
+   "▁world": 575,
+   "▁ca": 658,
+   "ock": 809,
+   "ps": 842,
+   "▁": 996,
+   "e": 997,
+   "a": 999,
+   "o": 1000,
+   "n": 1002,
+   "s": 1003,
+   "l": 1006,
+   "c": 1009,
+   "y": 1011,
+   "g": 1013,
+   "f": 1014,
+   "'": 1019,
+   "x": 1021,
+   "z": 1023
+  }
+ },
+ "added_tokens": [
+  {
+   "id": 0,
+   "content": "<unk>",
+   "single_word": false,
+   "lstrip": false,
+   "rstrip": false,
+   "normalized": false,
+   "special": true
+  }
+ ],
+ "decoder": {
+  "type": "Metaspace",
+  "replacement": "▁",
+  "prepend_scheme": "always",
+  "split": true
+ }
+}
