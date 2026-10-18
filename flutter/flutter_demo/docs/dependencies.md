@@ -27,7 +27,8 @@
 
 ### 数据库
 
-- [Drift](https://pub.dev/packages/drift) — SQLite 数据库
+- [Drift](https://pub.dev/packages/drift) — SQLite 数据库，类型安全 DSL + 代码生成
+- [Sqflite](https://pub.dev/packages/sqflite) — SQLite 数据库，手写 SQL 的薄封装（仅 Android / iOS / macOS）
 - [Isar](https://pub.dev/packages/isar) — NoSQL 数据库
 - [ObjectBox](https://pub.dev/packages/objectbox) — ObjectBox 数据库
 - [Path Provider](https://pub.dev/packages/path_provider) — 数据库路径管理

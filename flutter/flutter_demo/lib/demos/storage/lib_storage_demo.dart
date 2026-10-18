@@ -24,7 +24,10 @@ class _LibStorageDemoPageState
   @override
   void initState() {
     super.initState();
-    showDescription('lib_storage 示例：读取 / 写入 / 切换内核 / 清空');
+    showDescription(
+      'lib_storage 示例：封装 Hive / SharedPreferences 双内核，'
+      '演示读取 / 写入 / 切换内核 / 清空',
+    );
     _loadCounter();
   }
 

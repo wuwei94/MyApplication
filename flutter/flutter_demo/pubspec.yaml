@@ -100,6 +100,8 @@ dependencies:
   # lib/demos/storage — 关系型 / 对象数据库
   # https://pub.dev/packages/drift
   drift: ^2.32.1
+  # https://pub.dev/packages/sqflite
+  sqflite: ^2.4.4
   # https://pub.dev/packages/isar_community
   isar_community: ^3.3.2
   # https://pub.dev/packages/isar_community_flutter_libs

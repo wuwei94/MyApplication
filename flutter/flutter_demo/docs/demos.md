@@ -11,7 +11,7 @@
 | state_management | 状态管理示例 | 4 |
 | network | 网络请求示例 | 4 |
 | bluetooth | 低功耗蓝牙示例 | 3 |
-| storage | 本地存储示例 | 8 |
+| storage | 本地存储示例 | 9 |
 | image | 图片加载与选择示例 | 9 |
 | animation | 动画资源和播放示例 | 4 |
 | engine | Flutter 引擎层特性深度示例 | 8 |
@@ -90,18 +90,19 @@
 
 ### storage（本地存储）
 
-本地存储示例，覆盖多种存储方案。
+本地存储示例，覆盖多种存储方案；按类别排列（键值存储 → 关系型数据库 → 对象数据库 → 门面封装 → 路径工具）。
 
 | 示例 | 说明 |
 |------|------|
-| shared_preferences | SharedPreferences 键值存储 |
-| secure_storage | FlutterSecureStorage 安全存储 |
-| hive | Hive NoSQL 数据库 |
-| lib_storage | lib_storage 统一键值存储封装（内核可切换 + 安全存储） |
-| drift | Drift SQLite 数据库 |
-| isar | Isar NoSQL 数据库 |
-| objectbox | ObjectBox 数据库 |
-| path_provider | PathProvider 路径管理 |
+| shared_preferences | 键值存储 · 轻量键值存储与计数器持久化 |
+| secure_storage | 键值存储（加密） · 敏感数据持久化与读取 |
+| hive | 键值存储 · 本地键值存储与计数器持久化 |
+| drift | 关系型数据库 · SQLite 任务列表与查询监听 |
+| sqflite | 关系型数据库 · 手写 SQL 的任务 CRUD 与事务 |
+| isar | 对象数据库 · 任务列表与变更监听 |
+| objectbox | 对象数据库 · 任务列表与自动刷新 |
+| lib_storage | 门面封装 · Hive / SharedPreferences 双内核可切换 |
+| path_provider | 路径工具 · 系统目录探测与示例文件读写 |
 
 ### image（图片加载与选择）
 
