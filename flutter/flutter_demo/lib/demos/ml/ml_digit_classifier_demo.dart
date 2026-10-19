@@ -1,20 +1,22 @@
-import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:flutter_demo/demos/ml/engines/ml_tflite_helper.dart';
 import 'package:flutter_demo/demos/ml/widgets/finger_draw_widget.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
-/// MNIST — 手写数字识别
+/// MNIST — 手写数字识别（LiteRT / TFLite 端侧推理）
 ///
-/// 核心机制与避坑点：
-/// 1. 手写预处理：`export28x28Grayscale` 外接框居中缩放为 MNIST 标准 28x28 灰度。
-/// 2. 推理契约：Float32 张量直写后 `invoke`，Softmax 归一化得到 0~9 置信度。
-/// 3. 画布交互：预览区仅承载手写绘制，识别 / 清空一律走下方操作列表。
+/// 与 Android `:modules:module_ml` 的 `TFLiteDigitClassifierActivity` 一一对应，
+/// 预处理契约完全一致：
+/// 1. 模型 `digit_classifier.tflite`，输入 `[1, 28, 28, 3]` FP32，取值 0~255 不归一化；
+/// 2. 画布**整图拉伸**到 28x28（外接框裁剪 / 居中重排已撤掉，与官方 sample 一致）；
+/// 3. 模型末算子即 SOFTMAX，**输出已是概率，不再二次归一化** —— 对概率再叠加
+///    Softmax 会把 0.90 压到 ≈0.21，置信度与柱状图严重失真；
+/// 4. CPU / GPU 切换即重建引擎（delegate 挂在解释器实例上，无法热替换）。
 ///
 /// 官方参考：
-/// https://www.tensorflow.org/lite/examples/digit_classification/overview
+/// https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert/digit_classifier
 class MlDigitClassifierDemoPage extends BasicImagePage {
   const MlDigitClassifierDemoPage({super.key, required super.title});
 
@@ -28,8 +30,11 @@ class _MlDigitClassifierDemoPageState
   final GlobalKey<FingerDrawWidgetState> _drawKey =
       GlobalKey<FingerDrawWidgetState>();
 
+  static const String _modelAsset = 'assets/ml/digit_classifier.tflite';
+
   Interpreter? _interpreter;
-  bool _isModelLoaded = false;
+  bool _useGpu = false;
+  String _engineLabel = '初始化中';
   int _predictedDigit = -1;
   double _confidence = 0.0;
   double _latencyMs = 0.0;
@@ -38,7 +43,7 @@ class _MlDigitClassifierDemoPageState
   @override
   void initState() {
     super.initState();
-    _loadModel();
+    _rebuildModel(useGpu: false);
   }
 
   @override
@@ -48,9 +53,10 @@ class _MlDigitClassifierDemoPageState
   }
 
   @override
-  List<String> buildList() => const <String>[
+  List<String> buildList() => <String>[
         '1. 识别手写数字',
         '2. 清空画板',
+        '3. 切换 GPU 加速（当前：${_useGpu ? "GPU" : "CPU"}）',
       ];
 
   @override
@@ -60,6 +66,9 @@ class _MlDigitClassifierDemoPageState
         _runClassification();
       case 1:
         _clearCanvas();
+      case 2:
+        _useGpu = !_useGpu;
+        _rebuildModel(useGpu: _useGpu);
     }
   }
 
@@ -75,13 +84,19 @@ class _MlDigitClassifierDemoPageState
             style: TextStyle(fontSize: BasicDemoDimens.fontTitle),
           ),
           const SizedBox(height: BasicDemoDimens.itemPadding),
-          AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
-              child: FingerDrawWidget(
-                key: _drawKey,
-                onStrokeFinished: _runClassification,
+          // 画板取剩余空间内最大的正方形：竖屏时预览区高度小于宽度，
+          // 直接 AspectRatio(1) 会按宽度撑高而溢出 Column（实测溢出 597 px）
+          Flexible(
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(BasicDemoDimens.cornerCard),
+                  child: FingerDrawWidget(
+                    key: _drawKey,
+                    onStrokeFinished: _runClassification,
+                  ),
+                ),
               ),
             ),
           ),
@@ -130,6 +145,14 @@ class _MlDigitClassifierDemoPageState
                     color: Colors.green,
                   ),
                 ),
+              Text(
+                _engineLabel,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: BasicDemoDimens.fontBody,
+                  color: _useGpu ? Colors.deepPurple : Colors.blueGrey,
+                ),
+              ),
             ],
           ),
         ),
@@ -194,66 +217,83 @@ class _MlDigitClassifierDemoPageState
     );
   }
 
-  Future<void> _loadModel() async {
+  /// 按当前加速开关重建引擎；GPU 构建失败时由 helper 回退 CPU 并如实写进引擎描述
+  Future<void> _rebuildModel({required bool useGpu}) async {
+    final Interpreter? previous = _interpreter;
+    _interpreter = null;
+    setState(() {
+      _engineLabel = '初始化中';
+    });
+
     try {
-      final Interpreter interpreter = await Interpreter.fromAsset(
-        'assets/ml/mnist.tflite',
-        options: InterpreterOptions()..threads = 2,
-      );
-      interpreter.allocateTensors();
-      if (!mounted) return;
-      setState(() {
-        _interpreter = interpreter;
-        _isModelLoaded = true;
-      });
+      final MlEngineBundle built =
+          await MlTfliteHelper.createInterpreter(_modelAsset, useGpu: useGpu);
+      _interpreter = built.interpreter;
+      _engineLabel = built.engineLabel;
+      if (mounted) setState(() {});
+
+      // 旧引擎在新引擎就绪后再关：与 Android 页「先建新再关旧」同序，
+      // 避免构建失败时页面退化成「引擎已置空」的半死状态
+      previous?.close();
+
+      // 画板上还有笔迹时用新后端重跑一次，避免结果停留在旧后端的输出上
+      if (_drawKey.currentState?.hasStrokes ?? false) {
+        await _runClassification();
+      }
     } catch (error) {
-      debugPrint('加载 MNIST 模型失败: $error');
+      debugPrint('初始化模型失败: $error');
+      _engineLabel = '初始化失败: $error';
+      if (mounted) setState(() {});
     }
   }
 
   Future<void> _runClassification() async {
-    final Interpreter? interpreter = _interpreter;
-    if (interpreter == null || !_isModelLoaded) return;
+    final FingerDrawWidgetState? drawState = _drawKey.currentState;
+    if (drawState == null || !drawState.hasStrokes) {
+      setState(() {
+        _predictedDigit = -1;
+        _confidence = 0.0;
+      });
+      return;
+    }
 
-    final Float32List? inputBuffer =
-        await _drawKey.currentState?.export28x28Grayscale();
-    if (inputBuffer == null) return;
+    final Float32List? input = await drawState.export28x28Rgb();
+    if (input == null) return;
+
+    // 引擎字段在每次 await 后都要重新校验：导出是异步的，期间用户可能已拨动
+    // GPU 开关重建引擎，此刻字段里的实例已不是发起时那个
+    final Interpreter? interpreter = _interpreter;
+    if (interpreter == null) return;
 
     try {
       final Stopwatch stopwatch = Stopwatch()..start();
-      interpreter.getInputTensor(0).data = inputBuffer.buffer.asUint8List();
+      MlTfliteHelper.writeFloatInput(interpreter, 0, input);
       interpreter.invoke();
-      final Uint8List rawOutput = interpreter.getOutputTensor(0).data;
-      final Float32List rawScores = rawOutput.buffer.asFloat32List();
+      // 模型末算子即 SOFTMAX：输出已经是概率，直接使用
+      final Float32List scores =
+          MlTfliteHelper.readFloatOutput(interpreter);
       stopwatch.stop();
 
-      final double maxScore = rawScores.reduce(math.max);
-      final List<double> expScores =
-          rawScores.map((double s) => math.exp(s - maxScore)).toList();
-      final double sumExp = expScores.reduce((double a, double b) => a + b);
-      final List<double> probs = expScores
-          .map((double e) => e / (sumExp == 0 ? 1.0 : sumExp))
-          .toList();
-
-      int maxIdx = 0;
-      double maxProb = probs[0];
-      for (int i = 1; i < probs.length; i++) {
-        if (probs[i] > maxProb) {
-          maxProb = probs[i];
-          maxIdx = i;
-        }
-      }
+      final int predicted = _argMax(scores);
 
       if (!mounted) return;
       setState(() {
-        _predictedDigit = maxIdx;
-        _confidence = maxProb;
+        _predictedDigit = predicted;
+        _confidence = scores[predicted];
         _latencyMs = stopwatch.elapsedMicroseconds / 1000.0;
-        _probabilities = probs;
+        _probabilities = scores;
       });
     } catch (error) {
       debugPrint('手写识别异常: $error');
     }
+  }
+
+  int _argMax(List<double> values) {
+    int best = 0;
+    for (int i = 1; i < values.length; i++) {
+      if (values[i] > values[best]) best = i;
+    }
+    return best;
   }
 
   void _clearCanvas() {

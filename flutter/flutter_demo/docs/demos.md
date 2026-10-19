@@ -16,7 +16,7 @@
 | animation | 动画资源和播放示例 | 4 |
 | engine | Flutter 引擎层特性深度示例 | 8 |
 | video | 视频播放示例 | 2 |
-| ml | 端侧机器学习（TensorFlow Lite） | 2 |
+| ml | 端侧机器学习（LiteRT / TensorFlow Lite） | 9 |
 | chart | 复杂图表与触摸 Tooltip 联动 | 5 |
 | packages | 常用三方包示例 | 大量 |
 | markdown | 富文本渲染、代码高亮与 AI 流式交互 | 4 |
@@ -157,17 +157,33 @@ Flutter 引擎层原生特性深度示例：自绘渲染、动画与布局协议
 
 ### ml（机器学习 / AI）
 
-TensorFlow Lite / LiteRT 端侧推理示例（手写数字识别与图像分类）。
+LiteRT / TensorFlow Lite 端侧推理示例，示例集合同步对齐官方
+`litert-samples/samples/litert` 任务清单（当前进度 **视觉 3/3 · 文本 2/2 · 语音 4/4，
+9 个官方任务全部到位**）。
 
-> Android 侧 `:modules:module_ml` 与此处是两套独立演进的实现，不与彼此严格同步。
+> Android 侧 `:modules:module_ml` 与此处是两套独立演进的实现，但示例清单一一对应。
 > Android 侧已整体迁移到 LiteRT 2.x 的 CompiledModel API，覆盖官方 `samples/litert/`
-> 9 个「Android + Kotlin」任务的全部（视觉 3 / 文本 2 / 语音 4），模型资产走
-> 「内嵌 assets + 运行时下载」双轨；本侧仍基于 `tflite_flutter` 插件，只覆盖前两页。
+> **顶层 9 个通用任务**的全部（视觉 3 / 文本 2 / 语音 4），模型资产走
+> 「内嵌 assets + 运行时下载」双轨；本侧基于 `tflite_flutter` 插件（经典 Interpreter
+> API），按同一批模型与同一套预处理契约逐页对应。**本侧运行时已通过补丁脚本升到
+> LiteRT 2.3.0**（`libLiteRt.so`，与 Android 侧同版本）—— 详见
+> [`docs/dependencies.md`](dependencies.md#tflite-flutter-插件补丁jvm-目标--litert-运行时升级)。
+> 多签名图与 `encode` / `decode` 这类**按签名调用**的模型（Qwen3-TTS、ASR 全系列）
+> 走 `engines/ml_signature.dart` 的 FFI 直调，因为 `tflite_flutter` 没有暴露
+> `SignatureRunner`；该封装同时负责加速后端：CPU 走 XNNPACK、GPU 走
+> `GpuDelegateV2`（`libtensorflowlite_gpu_jni.so` 随 APK 全 ABI 打包）。
 
 | 示例 | 说明 |
 |------|------|
-| digit_classifier | MNIST 手写数字实时识别（自定义手写板涂鸦与 Softmax 置信度条形图） |
-| image_classification | MobileNet 图像物体分类（4:3 无黑边容器与 1000 类纯中文 Top-5 排序） |
+| digit_classifier | MNIST 手写数字实时识别（画板整图拉伸 28x28、0~255 不归一化、输出即概率） |
+| image_classification | EfficientNet-Lite 图像物体分类（Lite0 224x224 / Lite2 260x260 可切换、(v-127.5)/127.5、1000 类 Top-5） |
+| image_segmentation | Selfie Multiclass 人像语义分割（256x256 逐像素 6 类 argmax + 半透明色块叠加） |
+| text_classification | 文本情感分类（MobileBERT / 平均词向量双模型、定长 INT32 分词、负面/正面二分类） |
+| zero_shot_classification | Laya 多语零样本分类（提示词 + 候选标准直接作答，choice/score/noul 三题型 + 温度校准，三图 + BPE 分词器 + fp16 嵌入表，模型约 679 MB 运行时下载） |
+| text_to_speech | Matcha-TTS 端侧语音合成（G2P + 文本编码 + 扩散 ODE + HiFi-GAN，四图约 88 MB 运行时下载，GPU/CPU 分工、ODE 步数可调） |
+| text_to_speech_streaming | KittenTTS 流式语音合成（StyleTTS2 + ISTFTNet 三图动态形状，按句切分 + 后台 isolate 合成 + 逐句播放，首音延迟只有一句，8 音色，三图约 32 MB 运行时下载） |
+| text_to_speech_lm | Qwen3-TTS 语音语言模型合成（talker 双签名 KV ping-pong + 折叠 MTP + 分段 codec 四图由宿主循环串联，12.5 Hz × 16 层码本、24 kHz，后台 isolate 合成，11 个文件约 1.67 GB 运行时下载） |
+| speech_recognition | 语音识别（6 个模型按名分派解码策略：`-ctc-` 帧级 argmax + 压重复、`-tdt` 时间下标驱动 + LSTM 状态 ping-pong、其余无状态自回归；重叠窗口拼接 + 编辑距离对齐成「已确认 / 未确认」两段，未确认标灰；文件 + 麦克风两条输入路径；最大约 614 MB 运行时下载） |
 
 ### chart（复杂图表）
 

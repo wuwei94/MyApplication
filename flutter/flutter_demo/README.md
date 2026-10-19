@@ -29,7 +29,7 @@ lib/
 
 | 文档 | 内容 |
 |------|------|
-| docs/demos.md | 示例分组详情（15 个分组，142 个叶子页面） |
+| docs/demos.md | 示例分组详情（15 个分组，149 个叶子页面） |
 | docs/dependencies.md | 依赖清单（按分类列出所有三方包） |
 | docs/conventions.md | 开发约定（Catalog 设计、路由模式、编码规范） |
 

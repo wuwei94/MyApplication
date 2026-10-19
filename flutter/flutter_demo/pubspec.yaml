@@ -244,6 +244,21 @@ dependencies:
   tflite_flutter: ^0.12.1
   image: ^4.9.2
   fl_chart: ^1.2.0
+  # lib/demos/ml — 端侧语音合成（Matcha / Kitten / Qwen3-LM）播放 PCM 波形
+  # https://pub.dev/packages/audioplayers
+  audioplayers: ^6.8.1
+
+  # lib/demos/ml/engines/ml_signature.dart — 多签名 LiteRT 图的 FFI 直调
+  # （tflite_flutter 未暴露 SignatureRunner，见该文件头注释）
+  # https://pub.dev/packages/ffi
+  ffi: ^2.1.0
+
+  # lib/demos/ml/engines/qwen_bpe_tokenizer.dart — Qwen2 词表要求先做 NFC 归一化，
+  # 而 dart:core 没有 Unicode 归一化（Android 侧用的是 java.text.Normalizer）
+  # https://pub.dev/packages/unorm_dart
+  unorm_dart: ^0.3.3
+  record: ^7.1.2
+  file_picker: ^13.1.0
 
 
 dev_dependencies:
@@ -253,6 +268,11 @@ dev_dependencies:
   # 分析与测试
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^6.0.0
+
+  # 纯 Dart 单测（lib/demos/ml/engines 的格式解析器不依赖 Flutter 绑定，
+  # 走 VM 直跑；`flutter test` 亦可跑同一批用例）
+  # https://pub.dev/packages/test
+  test: ^1.25.0
 
   # 代码生成
   # https://pub.dev/packages/build_runner

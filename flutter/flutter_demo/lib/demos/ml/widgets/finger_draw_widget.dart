@@ -1,10 +1,15 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 /// 触摸涂鸦手写板组件
 ///
-/// 支持平滑笔迹绘制、一键清屏与自动渲染导出 28x28 灰度张量数据
+/// 支持平滑笔迹绘制、一键清屏与自动渲染导出 28x28 RGB 张量数据。
+///
+/// 导出契约与 Android `FingerDrawView.exportScaledBitmap` 对齐：
+/// **整图拉伸**到 28x28，不做外接框裁剪 / 居中重排（与官方 sample 一致）；
+/// 取值 0~255 不归一化（`digit_classifier.tflite` 的输入规格）。
 class FingerDrawWidget extends StatefulWidget {
   final VoidCallback? onStrokeFinished;
 
@@ -32,86 +37,65 @@ class FingerDrawWidgetState extends State<FingerDrawWidget> {
   /// 是否有笔迹
   bool get hasStrokes => _strokes.isNotEmpty;
 
-  /// 将当前手写笔迹光栅化并缩放到 28x28 灰度 Float32 数组 [1, 28, 28, 1]
-  Future<Float32List?> export28x28Grayscale() async {
+  /// 将当前手写笔迹光栅化并**整图拉伸**到 28x28，导出交错 RGB Float32 数组
+  ///
+  /// 长度为 `28 * 28 * 3`，取值 0~255（不除 255）—— 与 Android 页
+  /// `InputNormalize.RAW_0_255` 的写入口径一致。画布为白字黑底，
+  /// 三个通道取值相同，仍按 RGB 交错写入以匹配模型 `[1, 28, 28, 3]` 的输入签名。
+  Future<Float32List?> export28x28Rgb() async {
     if (_strokes.isEmpty) return null;
+    final Size? size = context.size;
+    if (size == null || size.width <= 0 || size.height <= 0) return null;
 
     final ui.PictureRecorder recorder = ui.PictureRecorder();
-    final Canvas canvas = Canvas(recorder, const Rect.fromLTWH(0, 0, 28, 28));
+    final Canvas canvas = Canvas(recorder);
+
+    // 整图拉伸：把整个画布坐标空间等比映射到 28x28（不裁剪、不居中重排）
+    canvas.scale(28.0 / size.width, 28.0 / size.height);
 
     // 背景全黑
     final Paint bgPaint = Paint()..color = Colors.black;
-    canvas.drawRect(const Rect.fromLTWH(0, 0, 28, 28), bgPaint);
+    canvas.drawRect(Offset.zero & size, bgPaint);
 
-    // 计算当前笔迹的外接矩形（Bounding Box）并居中等比缩放到 20x20（留 4px 边距，符合 MNIST 标准）
-    double minX = double.infinity, minY = double.infinity;
-    double maxX = -double.infinity, maxY = -double.infinity;
+    final Paint strokePaint = Paint()
+      ..color = Colors.white
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
+      ..strokeWidth = 18.0
+      ..style = PaintingStyle.stroke;
 
     for (final List<Offset> stroke in _strokes) {
-      for (final Offset point in stroke) {
-        if (point.dx < minX) minX = point.dx;
-        if (point.dy < minY) minY = point.dy;
-        if (point.dx > maxX) maxX = point.dx;
-        if (point.dy > maxY) maxY = point.dy;
-      }
-    }
-
-    final double strokeWidth = maxX - minX;
-    final double strokeHeight = maxY - minY;
-
-    if (strokeWidth > 0 && strokeHeight > 0) {
-      final double maxDim = strokeWidth > strokeHeight ? strokeWidth : strokeHeight;
-      final double scale = 20.0 / maxDim;
-      final double targetCenterX = 14.0;
-      final double targetCenterY = 14.0;
-      final double currentCenterX = (minX + maxX) / 2.0;
-      final double currentCenterY = (minY + maxY) / 2.0;
-
-      canvas.save();
-      canvas.translate(
-        targetCenterX - currentCenterX * scale,
-        targetCenterY - currentCenterY * scale,
-      );
-      canvas.scale(scale, scale);
-
-      final Paint strokePaint = Paint()
-        ..color = Colors.white
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round
-        ..strokeWidth = (2.4 / scale).clamp(1.5, 3.5)
-        ..style = PaintingStyle.stroke;
-
-      for (final List<Offset> stroke in _strokes) {
-        if (stroke.length == 1) {
-          canvas.drawCircle(stroke.first, 1.2 / scale, strokePaint..style = PaintingStyle.fill);
-          strokePaint.style = PaintingStyle.stroke;
-        } else {
-          final Path path = Path()..moveTo(stroke.first.dx, stroke.first.dy);
-          for (int i = 1; i < stroke.length; i++) {
-            path.lineTo(stroke[i].dx, stroke[i].dy);
-          }
-          canvas.drawPath(path, strokePaint);
+      if (stroke.length == 1) {
+        canvas.drawCircle(
+          stroke.first,
+          9.0,
+          strokePaint..style = PaintingStyle.fill,
+        );
+        strokePaint.style = PaintingStyle.stroke;
+      } else {
+        final Path path = Path()..moveTo(stroke.first.dx, stroke.first.dy);
+        for (int i = 1; i < stroke.length; i++) {
+          path.lineTo(stroke[i].dx, stroke[i].dy);
         }
+        canvas.drawPath(path, strokePaint);
       }
-      canvas.restore();
     }
 
     final ui.Picture picture = recorder.endRecording();
-    final ui.Image img = await picture.toImage(28, 28);
-    final ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.rawRgba);
-
+    final ui.Image image = await picture.toImage(28, 28);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+    image.dispose();
     if (byteData == null) return null;
 
-    final Float32List buffer = Float32List(28 * 28);
+    // 白字黑底 → R = G = B，取 R 通道按 RGB 交错展开
+    final Float32List buffer = Float32List(28 * 28 * 3);
     for (int i = 0; i < 28 * 28; i++) {
-      final int offset = i * 4;
-      final int r = byteData.getUint8(offset);
-      final int g = byteData.getUint8(offset + 1);
-      final int b = byteData.getUint8(offset + 2);
-      // 灰度公式 Y = 0.299R + 0.587G + 0.114B，并归一化到 [0.0, 1.0]
-      buffer[i] = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0;
+      final double value = byteData.getUint8(i * 4).toDouble();
+      buffer[i * 3] = value;
+      buffer[i * 3 + 1] = value;
+      buffer[i * 3 + 2] = value;
     }
-
     return buffer;
   }
 

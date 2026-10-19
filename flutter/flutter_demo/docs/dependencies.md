@@ -79,11 +79,57 @@
 
 > Flutter 升级后 `compileSdkVersion` 默认值变化时，重新执行一次该脚本即可；上游修复插件脚本后按 `apply_android_fixes.dart` 中的注释清理对应注册。
 
-## TFLite Flutter 插件 JVM 目标兼容修复
+## TFLite Flutter 插件补丁（JVM 目标 + LiteRT 运行时升级）
 
-`tflite_flutter` 插件的 `android/build.gradle` 声明了 `compileOptions { sourceCompatibility 11; targetCompatibility 11 }`，但未配置 `kotlinOptions.jvmTarget`。在 JDK 17/21+ 环境下，Kotlin Gradle Plugin 默认继承更高 JVM Target，导致 Kotlin 与 Java 编译目标不一致（报 `Inconsistent JVM Target Compatibility Between Java and Kotlin Tasks: compileDebugJavaWithJavac (11) and compileDebugKotlin (17)`）。
+`tflite_flutter` 0.12.1 有两处需要在本机修正，统一由
+`tools/android/apply_android_tflite_flutter.dart` 在 `flutter pub get` 之后处理
+（已注册进 `dart tools/apply_android_fixes.dart`）。
 
-由 `tools/android/apply_android_tflite_flutter.dart` 在 `flutter pub get` 之后对 pub cache 中的 `tflite_flutter` 补全 `kotlinOptions { jvmTarget = "11" }`（已注册进 `dart tools/apply_android_fixes.dart`）。
+### 1. Kotlin / Java 编译目标不一致
+
+插件的 `android/build.gradle` 声明了 `compileOptions { sourceCompatibility 11; targetCompatibility 11 }`，但未配置 `kotlinOptions.jvmTarget`。在 JDK 17/21+ 环境下，Kotlin Gradle Plugin 默认继承更高 JVM Target，导致 Kotlin 与 Java 编译目标不一致（报 `Inconsistent JVM Target Compatibility Between Java and Kotlin Tasks: compileDebugJavaWithJavac (11) and compileDebugKotlin (17)`）。
+
+补丁补全 `kotlinOptions { jvmTarget = "11" }`。
+
+### 2. LiteRT 运行时 1.4.0 → 2.3.0
+
+插件默认依赖 `com.google.ai.edge.litert:litert:1.4.0`，对应原生库
+`libtensorflowlite_jni.so`。**1.4.0 不解析「外置权重」布局**：litert-community 的部分
+`.tflite` 把权重放在 flatbuffer 之外，用 `Buffer.offset`（字段 1）/ `Buffer.size`
+（字段 2）按**绝对文件偏移**引用，`Buffer.data` 为空（`Model.version = 3`）。1.4.0 读不到
+这些权重 → 权重张量 `data.raw == nullptr` → 任何 `invoke` 都会在 `Subgraph::Invoke()`
+的节点预检处失败，报 `Input tensor %d lacks data`。
+
+受影响的模型：Matcha TTS 全部 4 图、Kitten 共用的 G2P、Laya 零样本嵌入表、
+Qwen3-TTS talker（int4 / fp32 均外置）、whisper 等 ASR 模型。
+
+改成 `litert:2.3.0` 即可。2.3.0 的 `libLiteRt.so` 是 1.4.0 那个库的**超集**：同时导出
+207 个 `TfLite*` 经典 C API 与 431 个 `LiteRt*` 新 C API，因此 **Dart 侧无需手写任何
+`LiteRt*` 绑定**，只用把插件的动态库名指过去。
+
+实测（同一探针二进制 / 同一模型 `matcha_decoder_fp16`，仅换运行时）：
+
+| 运行时 | 无数据指针张量 | `invoke` 状态 |
+|---|---|---|
+| 1.4.0 `libtensorflowlite_jni.so` | 181 | 1（`Input tensor %d lacks data`） |
+| 2.3.0 `libLiteRt.so` | 0 | 0 |
+
+`litert-gpu` **保持 1.4.0 不动**：GPU delegate 的 `libtensorflowlite_gpu_jni.so` 只有
+1.4.0 的 AAR 提供（2.3.0 换成了 `libLiteRtClGlAccelerator.so`，且 2.x 已无
+`GpuDelegateV2`），而本仓视觉页仍在用 `GpuDelegateV2` 开关。
+
+补丁同时把插件 `lib/src/bindings/bindings.dart` 里写死的
+`DynamicLibrary.open('libtensorflowlite_jni.so')` 改成 `libLiteRt.so`。
+
+> 注意：`litert:2.3.0` 的 `minSdkVersion` 是 24，与本工程 `minSdk = 24` 一致。
+> 2.3.0 只提供 `arm64-v8a` / `armeabi-v7a` / `x86_64`，**没有 32 位 `x86`**。
+
+### 3. 已知的上游绑定错误（不要踩）
+
+`tflite_flutter` 0.12.1 的 `TfLiteInterpreterGetInputTensorCount` 被生成成
+`int32_t f(Pointer<TfLiteInterpreter>)`，而真实 C 签名是
+`void f(const TfLiteInterpreter*, int32_t* out_count)` —— **调用即错**。
+需要输入个数时用公开 API `Interpreter.getInputTensors().length`。
 
 ## 动画与多媒体
 

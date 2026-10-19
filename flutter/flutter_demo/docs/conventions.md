@@ -105,6 +105,12 @@ fvm flutter analyze
 # 运行测试
 fvm flutter test
 
+# 无头 / 沙箱环境（flutter_tester 起不来）时，纯 Dart 用例可直跑 VM：
+# dart test test/asr_engine_test.dart test/ml_zip_npy_test.dart
+# 注意：widget 测试必须用 fvm flutter test，dart test 载不动 flutter 绑定。
+# 引擎层里 asr_types/asr_tokenizer/asr_audio_source/asr_merger 刻意保持零原生依赖，
+# 就是为了让这部分逻辑能被 VM 测试覆盖（见 test/asr_engine_test.dart 头部说明）。
+
 # 代码格式化
 dart format lib test tools
 ```
