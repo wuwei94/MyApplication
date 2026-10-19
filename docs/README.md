@@ -1,7 +1,7 @@
 # MyApplication 技术文档导航
 
 > 本目录收录项目的所有技术规范、架构决策、技术选型对比与专项开发指南。
-> 文档按用途**物理分组**为五类（见下），本文件是全仓唯一的**阅读入口**：先看「阅读建议」定位需求，再按分组表或「选型对比速查」跳转到目标文档，无需逐个打开。
+> 文档按用途**物理分组**为五类（见下），另设第六节作为 Flutter 子仓的入口索引（内容留在 `flutter/` 内）。本文件是全仓唯一的**阅读入口**：先看「阅读建议」定位需求，再按分组表或「选型对比速查」跳转到目标文档，无需逐个打开。
 
 ---
 
@@ -14,13 +14,15 @@
 | 摸清工程化全貌与各能力落地状态 | [02-engineering/engineering.md](02-engineering/engineering.md) | 全景图 + 成熟度矩阵 + 各维度入口 |
 | 做技术选型 / 想对比方案 | 跳到「选型对比速查」表 | 全仓对比类文档一张表聚合 |
 | 查某个模块有哪些页面 | [05-catalog/modules.md](05-catalog/modules.md) | 各功能模块 × Activity 清单，Ctrl+F 直达 |
-| 查某个 libs 库怎么用 | [05-catalog/libs.md](05-catalog/libs.md) | 库职责 + 专题文档索引 |
+| 查某个 libs 库怎么用 | [05-catalog/libs.md](05-catalog/libs.md) | 库职责 + 专题文档索引（含 8 个 Flutter 本地 package） |
+| 改 Flutter 子仓 / 新增 Flutter 示例页 | [flutter_demo/AGENTS.md](../flutter/flutter_demo/AGENTS.md) → [flutter_demo/docs/demos.md](../flutter/flutter_demo/docs/demos.md) | 子仓契约与 15 个分组清单；新增页面必须在 `catalog.dart` 注册 |
+| 对比同一能力在 Android / Flutter 两端的实现 | [05-catalog/modules.md](05-catalog/modules.md) 的 `module_flutter` 节 + [flutter_demo/docs/demos.md](../flutter/flutter_demo/docs/demos.md) | 功能对应，不照搬架构 |
 
 > 各文档普遍采用「先结论后细节」结构（核心结论速览 / 对比矩阵 / 决策树在正文前部），按需跳读章节即可。
 
 ---
 
-## 🗂 文档全景（五组）
+## 🗂 文档全景（五组 + Flutter 子仓）
 
 ```mermaid
 mindmap
@@ -61,6 +63,10 @@ mindmap
     05-catalog
       modules.md["各功能模块与 Activity 清单"]
       libs.md["库封装层职责索引"]
+    Flutter
+      flutter_demo["flutter_demo / README.md 子工程总览"]
+      agents["flutter_demo / AGENTS.md 子仓契约"]
+      demos["flutter_demo / docs/demos.md 分组清单"]
 ```
 
 ---
@@ -137,7 +143,25 @@ mindmap
 | 文档 | 说明 | 核心关注点 |
 | :--- | :--- | :--- |
 | [modules.md](05-catalog/modules.md) | **功能模块详情** | 36 个功能业务模块的定位、依赖拓扑与各 Activity 页面清单 |
-| [libs.md](05-catalog/libs.md) | **库封装层索引** | `libs/` 目录下各无 UI 基础库的对外 API 与职责边界说明 |
+| [libs.md](05-catalog/libs.md) | **库封装层索引** | `libs/` 目录下各无 UI 基础库的对外 API 与职责边界说明；Flutter 8 个本地 package 的对齐关系 |
+
+---
+
+## 六、Flutter 子仓（`flutter/`）
+
+Flutter 侧的示例与文档随子仓走，本导航只做入口索引，不复制内容——避免两处维护同一份清单。
+
+| 入口 | 内容 |
+| :--- | :--- |
+| [flutter/flutter_demo/README.md](../flutter/flutter_demo/README.md) | 子工程总览：Catalog 架构、15 个顶层分组 / 148 个叶子示例页、双路由、测试与 add-to-app 集成 |
+| [flutter/flutter_demo/AGENTS.md](../flutter/flutter_demo/AGENTS.md) | 子仓硬性契约：项目定位、架构、文档同步与完成门禁（改 Flutter 代码前必读） |
+| [flutter/flutter_demo/SKILLS.md](../flutter/flutter_demo/SKILLS.md) | 页面新增与开发任务的自定义 Skill 指引 |
+| [flutter_demo/docs/demos.md](../flutter/flutter_demo/docs/demos.md) | 15 个分组的页面清单与能力说明 |
+| [flutter_demo/docs/dependencies.md](../flutter/flutter_demo/docs/dependencies.md) | 依赖清单，含 `tflite_flutter` 的 LiteRT 运行时升级 |
+| [flutter_demo/docs/conventions.md](../flutter/flutter_demo/docs/conventions.md) | 开发约定（Catalog 设计、路由模式、编码规范、文档同步） |
+| [flutter/flutter_libs/](../flutter/flutter_libs) | 8 个可复用本地 package，契约见 [05-catalog/libs.md](05-catalog/libs.md) |
+
+> 宿主侧：`modules/module_flutter` 以 add-to-app 方式嵌入子工程，页面清单见 [05-catalog/modules.md](05-catalog/modules.md) 的 `module_flutter` 节。
 
 ---
 
@@ -162,6 +186,7 @@ mindmap
 | **Markdown 渲染** | Markwon / WebView / Compose RichText | 原生 Spannable 流式最优；重排版 WebView；纯 Compose 页面用 RichText | [markdown.md](04-domains/markdown.md)（第二章） |
 | **BLE 客户端方案** | 原生 / Nordic / FastBle / RxAndroidBle | 各有适用：可控性 / 工程化 / 链式 / 响应式 | [bluetooth.md](04-domains/bluetooth.md) |
 | **端侧推理加速** | CPU 多核 / XNNPACK / GPU（`Accelerator`）/ 经典 `Interpreter` | 后端在引擎编译期选定，切换即重建引擎；GPU 不可用时如实回退 CPU；带 variable tensor 的图仍走 `Interpreter` | [ml.md](04-domains/ml.md) |
+| **双端实现对照** | Android 原生 ↔ Flutter | 同一能力两套独立演进实现，功能对应不照搬架构（例：LiteRT `CompiledModel` ↔ `tflite_flutter` 经典 `Interpreter` + 签名图 FFI） | [modules.md](05-catalog/modules.md)（`module_flutter` 节）+ [demos.md](../flutter/flutter_demo/docs/demos.md) |
 | **测试替身** | 手写 Fake vs MockK / Mockito | 零 Mock，接口签名变化编译期强制同步 | [testing.md](02-engineering/testing.md) |
 | **性能度量手段** | Macrobenchmark / Baseline Profile / JankStats / Tracing | 压测 + 运行时归因 + 深挖追踪三件套 | [performance.md](04-domains/performance.md)（第八章） |
 | **Git 门禁** | commit-msg / pre-push / CI 矩阵 | 质量左移：本地钩子 + CI 回归双层拦截 | [git.md](01-rules/git.md) + [engineering.md](02-engineering/engineering.md) |
@@ -175,3 +200,4 @@ mindmap
 - **03-architecture**：以「多方案对比 → 选型决策」为主线的文档全部聚于此（架构/组件化/DI/事件总线 + 现代范式分册）。
 - **04-domains**：偏"怎么用/怎么做"的领域手册；其中含对比小节时，在「选型对比一页通」中横向收录。
 - **05-catalog**：面向检索的索引类文档。
+- **Flutter 子仓**：文档随子仓走（`flutter/flutter_demo/{README,AGENTS,SKILLS}.md` + `flutter/flutter_demo/docs/*`），本导航只维护入口，不复制子仓内容；子仓内的架构、门禁与清单以子仓文件为准。

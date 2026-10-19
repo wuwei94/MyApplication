@@ -684,11 +684,15 @@ Kotlin Flow 与 RxJava 操作符对照演示，两组页面分组一一对应，
 
 ### module_flutter（Flutter 集成）
 
-Flutter 嵌入页入口。
+**定位：Flutter 双栈落地的宿主模块**。以 add-to-app 方式嵌入 `flutter/flutter_demo` 子工程（Flutter Demo Catalog，**15 个顶层分组 / 148 个叶子示例页**）；模块自身只提供引擎入口与初始化装配，示例页面全部在 Flutter 侧，分组清单见 [flutter_demo/docs/demos.md](../../flutter/flutter_demo/docs/demos.md)。
 
 | Activity | 功能 |
 |----------|------|
-| FlutterMainActivity | Flutter 嵌入页 |
+| FlutterMainActivity | Flutter 引擎入口跳板：`/Flutter/Main` 进入后按缓存引擎启动 `FlutterActivity` 并 `finish()` 自身；同文件保留默认引擎（`createDefaultIntent()`）与新引擎（`withNewEngine()`）两种启动方式作为对照 |
+
+- **引擎预热**：`FlutterApp` 在 Application 阶段创建 `FlutterEngine`、执行 Dart 代码预热并写入 `FlutterEngineCache`（`cached_engine_id`），入口页 `withCachedEngine()` 复用，避免每次进入 Flutter 重新冷启
+- **初始化双轨**：`FlutterApp`（手动 `registerAppInit`）/ `FlutterInitImpl` + `FlutterModule`（Hilt `@FlutterInit`）与全仓 AppInit 约定一致
+- **源集开关**：`-PenableFlutter=false` 时切到 `src/noFlutter`，`FlutterMainActivity` 变为提示开启 Flutter 的占位页，且模块不依赖 `:flutter` 子工程
 
 ---
 

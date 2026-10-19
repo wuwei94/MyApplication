@@ -33,6 +33,11 @@
 | `lib_network_dio` | Flutter Dio 请求封装 | Dio | [package README](../../flutter/flutter_libs/lib_network_dio/README.md) |
 | `lib_network_http` | Flutter `package:http` 请求封装 | `package:http` | [package README](../../flutter/flutter_libs/lib_network_http/README.md) |
 | `lib_storage` | Flutter 键值存储封装（内核可切换，默认 Hive） | Hive、shared_preferences | [package README](../../flutter/flutter_libs/lib_storage/README.md) |
+| `lib_image_loader` | Flutter 图片加载门面（`IImageLoader` 接口 + 内核可切换） | cached_network_image | [package README](../../flutter/flutter_libs/lib_image_loader/README.md) |
+| `lib_event_bus` | Flutter 事件总线封装（与 `lib_eventbus` 对齐） | event_bus | [package README](../../flutter/flutter_libs/lib_event_bus/README.md) |
+| `lib_bluetooth` | Flutter BLE 通信封装（扫描 / GATT 读写 / Notify / 分包） | flutter_blue_plus | [package README](../../flutter/flutter_libs/lib_bluetooth/README.md) |
+| `lib_mqtt` | Flutter MQTT 客户端封装（QoS 0/1/2） | mqtt_client | [package README](../../flutter/flutter_libs/lib_mqtt/README.md) |
+| `lib_websocket` | Flutter WebSocket 客户端封装 | web_socket_channel | [package README](../../flutter/flutter_libs/lib_websocket/README.md) |
 
 ## 通用约定
 
@@ -108,3 +113,19 @@ com.example.william.my.core.rx.request/
 - `lib_eventbus`：EventBus 注册、注销和事件发送。
 - `lib_widget`：项目自定义 View，含弹幕引擎（`barrage` 包，源自 xujiaji/Barrage）。
 - `lib_ninepatch`：NinePatch 图片处理工具。
+
+### Flutter 本地库（`flutter/flutter_libs`）
+
+8 个包各自独立（独立 `pubspec.yaml`、公共 API 从包根导出），只被 `flutter/flutter_demo` 消费，不反向依赖示例工程，也不走 Android 的 `projects.libs.*` 访问器：
+
+| 包 | 职责 | Android 对齐目标 |
+|----|------|------------------|
+| `lib_network_dio` / `lib_network_http` | Dio 与 `package:http` 两套独立网络封装，共享业务信封与异常契约 | `lib_httpurl` / `lib_okhttp` / `lib_retrofit` |
+| `lib_storage` | 键值存储门面（Hive / shared_preferences 双内核可切换） | `basic_datastore` / `module_storage`（DataStore / MMKV） |
+| `lib_image_loader` | 图片加载门面（`IImageLoader` 接口 + 内核可切换） | `libs/lib_image_loader`（Glide / Coil） |
+| `lib_event_bus` | 事件总线注册、注销与发送 | `lib_eventbus` |
+| `lib_bluetooth` | BLE 客户端（基于 flutter_blue_plus 的面向对象抽象） | `module_bluetooth` 原生 BLE 线 |
+| `lib_mqtt` | MQTT 客户端（QoS 0/1/2） | `lib_mqtt_hivemq` / `lib_mqtt_paho_service` |
+| `lib_websocket` | WebSocket 客户端 | `lib_websocket_okhttp` / `lib_websocket_java` |
+
+对齐口径是**功能对应**，不是 API 照搬：Flutter 侧没有 Parcelable、LiveData 与 Retrofit 命名缓存，也不复制线程调度与回调风格。各包 README 记录自己的契约细节。
