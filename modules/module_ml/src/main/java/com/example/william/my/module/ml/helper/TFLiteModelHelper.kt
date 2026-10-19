@@ -24,7 +24,8 @@ import java.nio.ByteBuffer
  * **后处理一律不叠加 Softmax**：本模块 5 个模型里 4 个的输出张量本身就是概率
  * （`digit_classifier` / `efficientnet_lite0` / `average_word_classifier` / `bert_classifier`
  * 的末算子就是 `SOFTMAX`，实测各类之和为 1）；唯一输出 logits 的 `selfie_multiclass`
- * （末算子 `CONCATENATION`）只做 argmax，而 argmax 在 Softmax 前后不变。
+ * （实测末算子是 `CONV_2D`，其前一个算子是 `TRANSPOSE_CONV`，输出通道未过 Softmax）
+ * 只做 argmax，而 argmax 在 Softmax 前后不变。
  * 对已是概率的输出再叠加 Softmax 会把 0.90 压到 ≈0.21，置信度与柱状图严重失真，
  * 因此本模块**不提供** Softmax 工具函数。
  */
@@ -91,16 +92,27 @@ object TFLiteModelHelper {
      * 「先试 [createGpuOptions]，失败再重建 CPU 引擎」是两条不同的容错路径，
      * 因此单独开一个入口，避免页面自己拼 `Options(...)` 破坏「推理配置单一入口」。
      *
+     * 目标后端是 GPU 时**一律**填 [CompiledModel.GpuOptions]（即使两个参数都是 null）：
+     * 官方 `LiteRtRunner` 正是这样写的，而 `GpuOptions` 的 null 字段等价于「沿用运行时默认值」，
+     * 所以行为不会因为填了一个空壳对象而改变，反而与官方结构一一对应。
+     *
      * @param accelerator 期望的目标后端；传 [Accelerator.CPU] 时等价于 [createCpuOptions]
-     * @param gpuOptions 仅在 [accelerator] 为 GPU 时生效
+     * @param gpuPrecision GPU 计算精度；`null` 或 [CompiledModel.GpuOptions.Precision.DEFAULT]
+     *   表示允许低精度（fp16）。官方 ASR 清单的 `gpuEnforceFloat32` 默认为 true，
+     *   即**必须**传 [CompiledModel.GpuOptions.Precision.FP32]。
+     * @param gpuConstantTensorSharing 是否允许 GPU 共享常量张量；仅在 [accelerator] 为 GPU 时生效
      */
     fun createFallbackOptions(
         accelerator: Accelerator,
-        gpuOptions: CompiledModel.GpuOptions? = null,
+        gpuPrecision: CompiledModel.GpuOptions.Precision? = null,
+        gpuConstantTensorSharing: Boolean? = null,
     ): CompiledModel.Options = CompiledModel.Options(setOf(Accelerator.CPU, accelerator)).apply {
         cpuOptions = createCpuOptions().cpuOptions
-        if (accelerator == Accelerator.GPU && gpuOptions != null) {
-            this.gpuOptions = gpuOptions
+        if (accelerator == Accelerator.GPU) {
+            gpuOptions = CompiledModel.GpuOptions(
+                precision = gpuPrecision,
+                constantTensorSharing = gpuConstantTensorSharing,
+            )
         }
     }
 
@@ -117,6 +129,43 @@ object TFLiteModelHelper {
         fileName: String,
         options: CompiledModel.Options,
     ): CompiledModel = CompiledModel.create(assets, fileName, options, null)
+
+    /**
+     * 从应用私有目录的文件构建 CompiledModel（运行时下载的模型走这条路径）
+     *
+     * `create(path, ...)` 与 `create(assets, ...)` 是两条并列的原生入口：前者按绝对路径打开
+     * 文件，后者交给 AssetManager。两者都只接受完整落地后的文件，因此调用方必须先经
+     * `ModelStore` 确认下载完成（`.part` 不会被当成模型）。
+     */
+    @Throws(Exception::class)
+    fun createModel(
+        path: String,
+        options: CompiledModel.Options,
+    ): CompiledModel = CompiledModel.create(path, options, null)
+
+    /**
+     * 读取模型输入张量的正方形边长（H 与 W）
+     *
+     * **不能按模型名硬编码 224**：官方 `image_classification` 的两个模型输入并不相同 ——
+     * `efficientnet_lite0` 是 `[1, 224, 224, 3]`，`efficientnet_lite2` 是 `[1, 260, 260, 3]`
+     * （两者均由 flatbuffer 实测）。官方样例在 `classify()` 里写死了 224 并在注释里标注
+     * 「typically use 224x224, but let's check if we can get it dynamically」，切到 Lite2
+     * 后预处理的数组长度与输入张量不符 —— 本模块改为从引擎读取真实形状。
+     *
+     * 只处理 NHWC / NCHW 这类「batch + 两个空间维 + 通道」的 4 维输入；形状读不到
+     * （或非 4 维、两空间维不等）时回退 [fallback]，由调用方给出该模型的已知值。
+     *
+     * 传空字符串表示「默认签名 / 第一个输入」：`getInputTensorType` 的 `signatureName`
+     * 有默认值而 `inputName` 没有，且空串与本模块 `createInputBuffers()`（同样走默认签名）
+     * 的语义一致。
+     */
+    fun readInputEdge(model: CompiledModel, fallback: Int): Int {
+        val dimensions = runCatching {
+            model.getInputTensorType("", "").layout?.dimensions
+        }.getOrNull().orEmpty()
+        val spatial = dimensions.drop(1).dropLast(1).filter { it > 0 }
+        return if (spatial.size == 2 && spatial[0] == spatial[1]) spatial[0] else fallback
+    }
 
     /**
      * 构建经典 `Interpreter` 的推理配置
@@ -140,8 +189,14 @@ object TFLiteModelHelper {
     /**
      * 读取模型内嵌关联文件（标签表、词表等）的文本行
      *
-     * 官方 2.x 样例把标签表写在模型 metadata 里而非独立 asset，这里保持一致。
+     * 只对**确实内嵌了关联文件**的模型有效：本模块两个文本模型的 `vocab.txt` 走这里。
      * 返回**未过滤**的原始行 —— 行号即类别下标，过滤空行会让 index 整体错位。
+     *
+     * 注意**不要指望 EfficientNet 系列**：实测 `efficientnet_lite0` 与 `efficientnet_lite2`
+     * 的 `TFLITE_METADATA` 都只有 1088 字节，内容仅 name / description / version 与
+     * 输入输出张量的 name，`SubGraphMetadata.associated_files` 为空 —— 官方样例注释里
+     * 说的 `labels_without_background.txt` 并没有随模型分发。标签表因此以独立 asset
+     * 分发（见 [loadAssetLines]），两个模型共用同一份 ImageNet 1000 类。
      */
     fun loadMetadataLines(
         context: Context,
@@ -160,21 +215,38 @@ object TFLiteModelHelper {
         emptyList()
     }
 
+    /**
+     * 读取 assets 里文本文件的原始行（标签表等小体积资产）
+     *
+     * 与 [loadMetadataLines] 一样**不过滤空行**：调用方按行号对齐类别下标，
+     * 过滤会让后续标签整体错位。标签表末尾的换行会解析出一个空行，由调用方
+     * 在加载后自行去掉尾部空元素（参见 `TFLiteImageClassificationActivity`）。
+     */
+    fun loadAssetLines(context: Context, assetFileName: String): List<String> = try {
+        context.assets.open(assetFileName).use { readLines(it) }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        emptyList()
+    }
+
     private fun readLines(inputStream: InputStream): List<String> = BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8)).use { it.readLines() }
 
     /**
      * 把词表文本行解析为 `token -> id` 映射
      *
-     * 本模块的两个文本模型内嵌的 `vocab.txt` **格式并不相同**，必须都支持
-     * （官方 `litert-samples` 的 iOS 侧同样写了两套加载器：`loadBertVocabularies` /
-     * `loadAverageVocabularies`）：
+     * 本模块两个文本模型内嵌的 `vocab.txt` **文本格式并不相同**，解析器要同时吃得下两种形式：
      *
-     * - **单列**：整行就是 token，**行号即 id**（`bert_classifier.tflite`，形如 `[PAD]` / `[unused0]`）；
+     * - **单列**：整行就是 token，**行号即 id**（`bert_classifier.tflite`，形如 `[PAD]` /
+     *   `[unused0]`；实测 `[UNK]` 的行下标为 100，即 id = 100）；
      * - **双列**：形如 `<PAD> 0` / `the 3`，以**第二列的数字**为 id
-     *   （`average_word_classifier.tflite`）。
+     *   （`average_word_classifier.tflite`；实测该词表每一行的显式 id 都等于行号，
+     *   两种解法结果一致，这里仍按显式 id 解析，避免将来换词表时整体错位）。
      *
      * 判别方式是「最后一个空格之后能否解析成整数」：单列词表里 token 不含空格，
-     * 所以不会误判。注意**不能过滤空行** —— 单列格式下行号参与 id 计算，过滤会让后续 id 整体错位。
+     * 所以不会误判。注意**不能过滤空行** —— 行号参与 id 计算，过滤会让后续 id 整体错位。
+     *
+     * 官方 Android 的 `TextClassificationHelper.getVocabulary` 只实现了前一种（纯按行号建表），
+     * 本模块多支持一列显式 id，属于**增强**而不是偏离。
      */
     fun buildVocabulary(lines: List<String>): Map<String, Int> {
         val vocabulary = HashMap<String, Int>(lines.size * 2)

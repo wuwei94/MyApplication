@@ -502,13 +502,13 @@ PAG 五页与 SVGA 同构，按 **能力**切分，共用 `anim_layout_pag_lab.x
 
 ### module_ml（机器学习 / AI）
 
-演示 Google 官方轻量级端侧推理框架 LiteRT（原 TensorFlow Lite）的核心技术链路、真实模型推理、硬件加速与落地实践。推理 API 以 **LiteRT 2.x 的 `CompiledModel`**（`com.google.ai.edge.litert.*`）为主，流式语音合成的两张 variable-tensor 图与官方一样走 `Interpreter`；覆盖官方 [litert-samples/samples/litert](https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert) 中 **9 个有 Android 实现的示例的全部**（视觉 3 / 文本 2 / 语音 4），实现与预处理均与官方 sample 对齐。详细技术指南参见 [ml.md](../04-domains/ml.md)。
+演示 Google 官方轻量级端侧推理框架 LiteRT（原 TensorFlow Lite）的核心技术链路、真实模型推理、硬件加速与落地实践。推理 API 以 **LiteRT 2.x 的 `CompiledModel`**（`com.google.ai.edge.litert.*`）为主，流式语音合成的两张 variable-tensor 图与官方一样走 `Interpreter`；覆盖官方 [litert-samples/samples/litert](https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert) **顶层 9 个通用任务的全部**（视觉 3 / 文本 2 / 语音 4），实现与预处理均与官方 sample 对齐。不计入 `qualcomm/*`、`phototalk_sample_app` / `google/sample_app_tpu`（需 NPU / TPU 或 LiteRT-LM 运行时）、`semantic_similarity`（C++）、`image_generation`（iOS / macOS）与 `flutter*`（Flutter 实现）。详细技术指南参见 [ml.md](../04-domains/ml.md)。
 
 | Activity | 功能 |
 |----------|------|
 | MlMainActivity | 模块入口，导航到视觉模型实战、文本模型实战、语音模型实战三节共 9 个示例页面 |
 | TFLiteDigitClassifierActivity | MNIST 手写数字实时识别（自定义 FingerDrawView 画板涂鸦、画板整图拉伸到 28x28 后交给 CompiledModel 推理，模型输出末尾即 Softmax 故直接展示 0~9 置信度条形图） |
-| TFLiteImageClassificationActivity | EfficientNet-Lite 图像物体分类（整图拉伸到 224x224、标签表取自模型内嵌 metadata 共 1000 行、输出 [1,1000] 与标签表直接下标对齐取 Top-5、切换 CPU / GPU 后端即重建引擎） |
+| TFLiteImageClassificationActivity | EfficientNet-Lite 图像物体分类（Lite0 输入 224x224、Lite2 输入 260x260、模型可切换且 Lite2 运行时下载、标签表为独立资产共 1000 行、输出 [1,1000] 与标签表直接下标对齐取 Top-5、切换 CPU / GPU 后端即重建引擎） |
 | TFLiteImageSegmentationActivity | Selfie Multiclass 人像语义分割（256x256 [-1,1] 整图拉伸输入、[1,256,256,6] 平坦张量逐像素 argmax 解码、人像 6 类调色板、半透明色块叠加与类别占比图例） |
 | TFLiteTextClassificationActivity | 文本情感分类（词表取自模型内嵌 metadata：BERT 为单列裸词、行号即 id，平均词向量为双列 token id、取第二列；支持平均词向量单输入 [1,256] 与 MobileBERT 三输入 [1,128] 两个模型、INT32 输入张量、二分类概率与耗时统计） |
 | TFLiteZeroShotClassificationActivity | Laya 多语言零样本分类（29 语言提示词模板 + 主图/动作头双图串联 + 校准温度解码，按 choice / score / noul 三类问题分别呈现；模型运行时下载约 679 MB） |

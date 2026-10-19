@@ -3,8 +3,9 @@
 > 本文档系统梳理 `:modules:module_ml` 模块的架构设计、端侧 AI 推理流程、图像预处理与防失真规范、视觉 / 文本 / 语音三类模态的模型实战、`Accelerator` 硬件加速、Native 内存生命周期管理以及纯函数单元测试体系。
 >
 > **推理 API 以 LiteRT 2.x 的 `CompiledModel` 为主**（`com.google.ai.edge.litert.*`）：
-> 官方 `samples/litert/` 下有 Android + Kotlin 实现的一共 **9 个任务**，本模块**全覆盖**
-> （视觉 3 + 文本 2 + 语音 4），实现与预处理逐项对齐。
+> 覆盖官方 `samples/litert/` 顶层 **9 个通用任务**（视觉 3 + 文本 2 + 语音 4），实现与预处理逐项对齐。
+> 统计边界见第二节末「覆盖范围说明」——`qualcomm/*`、`phototalk_sample_app`、
+> `google/sample_app_tpu` 依赖 NPU / TPU 或 LiteRT-LM 运行时，不计入这 9 个之中。
 > 唯一例外是流式语音合成的两张定长 LSTM 图 —— 它们把隐状态放在 TFLite *variable tensors*
 > 里，而 `CompiledModel` 的加载器目前不接受这类图（官方注释 `b/365299994`），
 > 因此与官方一样改走 **`org.tensorflow.lite.Interpreter`**（该 API 就在 `litert-2.3.0.aar` 内，
@@ -43,37 +44,36 @@
 
 ## 二、 核心功能模块详解（Android 原生 & Flutter 双端对照）
 
-模块现共 **9 个示例页**，对应官方 2.x 样例集（[`litert-samples/samples/litert/`](https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert)）中 **9 个「Android + Kotlin」任务的全部**，功能与预处理逐项对齐：
+模块现共 **9 个示例页**，对应官方 2.x 样例集（[`litert-samples/samples/litert/`](https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert)）**顶层 9 个通用任务的全部**（视觉 3 / 文本 2 / 语音 4），功能与预处理逐项对齐：
 
 | 功能模块 | Android 原生实现 (`:modules:module_ml`) | Flutter 跨平台实现 (`flutter_demo/demos/ml`) | 核心技术点 |
 | :--- | :--- | :--- | :--- |
 | **MNIST 手写识别** | `digit/TFLiteDigitClassifierActivity.kt` (`/Ml/DigitClassifier`) | `ml_digit_classifier_demo.dart` (`ml/digit_classifier`) | • 自定义 `FingerDrawView` / `CustomPainter` 画板<br>• 画板整图拉伸到 28×28，预处理与官方 sample 完全一致<br>• 输入 `[1,28,28,3]` FP32，取值 0~255 **不归一化**<br>• 模型末尾算子即 `SOFTMAX`，输出**已是概率**，直接展示 0~9 概率分布与柱状图<br>• CPU / GPU 切换即重建引擎（`Accelerator` 是**编译期**选项） |
-| **EfficientNet-Lite 图像分类** | `image/TFLiteImageClassificationActivity.kt` (`/Ml/ImageClassification`) | `ml_image_classification_demo.dart` (`ml/image_classification`) | • 整图拉伸到 224×224，与官方 sample 一致<br>• 224×224 FLOAT `[-1,1]` 输入<br>• 标签表取自模型内嵌 metadata（`labels_without_background.txt`，**1000 行**）<br>• 输出 `[1,1000]` FP32 概率，**模型没有背景类**，与标签表**直接下标一一对应**（取 Top-5，不做置零、不做偏移）<br>• CPU / GPU 切换即重建引擎 |
-| **Selfie Multiclass 语义分割** | `segmentation/TFLiteImageSegmentationActivity.kt` (`/Ml/ImageSegmentation`) | — | • 256×256 FP32 `[-1,1]` **整图拉伸**输入<br>• 输出 `[1,256,256,6]` 平坦 FloatArray，按 `像素序号 * 类别数 + 类别` 取通道 argmax<br>• 该输出是**未归一化的 logits**（末算子 `CONCATENATION`），页面只做 argmax，无需 Softmax<br>• 人像专属 6 类调色板（背景 / 头发 / 身体皮肤 / 面部皮肤 / 衣物 / 其他配饰）<br>• 半透明色块叠加与类别占比图例<br>• CPU / GPU 切换即重建引擎 |
-| **文本情感分类** | `text/TFLiteTextClassificationActivity.kt` (`/Ml/TextClassification`) | — | • 词表取自模型内嵌 metadata（`vocab.txt`）：**BERT 为单列裸词（行号即 id），平均词向量为双列 `token id`（取第二列）**<br>• 两个模型：平均词向量（单输入 `[1,256]`）与 MobileBERT（三输入 `[1,128]`，声明顺序 `input_word_ids` → `input_type_ids` → `input_mask`）<br>• 输入为 **INT32**，用 `writeInt` 写入<br>• 输出 `[1,2]` FP32 概率（负面 / 正面），无需反量化与 Softmax |
-| **Laya 多语言零样本分类** | `zsc/TFLiteZeroShotClassificationActivity.kt` (`/Ml/ZeroShotClassification`) | — | • 把「陈述 + 问句」拼成提示词模板，**从零构建**文本序列（`LayaPromptBuilder`）<br>• 主图（250 MB，含嵌入表）与动作头（0.8 MB）**两张图串联**；后者是**编译期** `Precision.FP32`<br>• 校准解码：温度/阈值取自仓库里的 `laya_ml_calibration.json`，页面上按 3 类问题（choice / score / noul）分别呈现<br>• 分词器为多语言 BPE（`tokenizer.json` 34 MB），嵌入表走 `token_embeddings_fp16.bin`<br>• CPU / GPU 切换即重建引擎；模型 **运行时下载**（约 679 MB） |
-| **Matcha-TTS 英文语音合成** | `tts/TFLiteTextToSpeechActivity.kt` (`/Ml/TextToSpeech`) | — | • 前端是神经 G2P（DeepPhonemizer，`dp_g2p_matcha_fp16.tflite`）+ 词表/元数据，与流式页**共用同一张 G2P 图**<br>• 四张图串联：文本编码 → 扩散解码器 → 声码器（24 kHz）<br>• **扩散解码器必须跑 CPU**：该图在 Mali ML Drift delegate 上有算子融合缺陷（官方注释：整图残差相关性塌到 0.006，单独成图 0.98）<br>• 模型 **运行时下载**（约 92 MB） |
-| **KittenTTS 流式语音合成** | `tts/TFLiteTextToSpeechStreamingActivity.kt` (`/Ml/TextToSpeechStreaming`) | — | • 三张图都是**动态序列长度**，不做 padding 分桶：每句先 `resizeInput` 再跑<br>• 文本先按句切分（`SentenceChunker`，每块补逗号收尾），再由**生产者/消费者一对协程**边合成边播放（流式 `AudioTrack`），首音延迟只有一句<br>• 两张定长 LSTM 图（predictor / prosody）走 `Interpreter` + `resetVariableTensors()`；声码器输出是动态形状波形<br>• 8 个音色、24 kHz，音色表是**长度条件化**的（行号 = `min(字符数, 399)`），直接从 `voices.npz` 端侧解包<br>• 模型 **运行时下载**（约 61 MB） |
-| **Qwen3-TTS 语音语言模型合成** | `tts/TFLiteTextToSpeechLmActivity.kt` (`/Ml/TextToSpeechLm`) | — | • 0.6B 参数语音 LM，**三张图由宿主循环串联**：talker（28 层，`prefill_32` + `decode` 双签名 + 显式 KV cache）→ MTP（5 层，一次调用在图内跑完 15 步自回归）→ codec（64 帧一块 + 25 帧左上下文，上采样 1920）<br>• 图之间的一切都在宿主侧：byte-level BPE、提示词拼装（控制 token + 说话人 x-vector + 逐帧文本条件）、16 层码本嵌入求和、带重复惩罚的 top-50 采样<br>• KV cache 用两份缓冲区 **ping-pong** 交替读写，避免每步拷贝约 235 MB<br>• 分词器带**启动自检**（官方 baked 的 `tokenizer_test_vectors.json`，含日文与全角空格）<br>• 模型 **运行时下载**（约 1.67 GB）；CPU 实测 **慢于实时**（RTF ≈ 6.7） |
-| **语音识别（ASR）** | `asr/TFLiteSpeechRecognitionActivity.kt` (`/Ml/SpeechRecognition`) | — | • **6 个模型可选**（3 个 Parakeet + Moonshine + Whisper + Qwen3-ASR），清单纯 JSON 驱动（`assets/asr_model_metadata.json`），模型与分词器都**运行时下载**<br>• **文件（16 kHz 单声道 WAV）与麦克风双输入**：模型都不是流式的，靠 5 秒窗口 + 2 秒重叠滚动拼接<br>• 三级流水由两条 `Channel` 串成生产者/消费者：`AudioPreprocessor`（log-Mel 或原样透传）→ `SpeechRecognizer` → `Postprocessor`（编辑距离对齐，**未确认文本标灰**）<br>• 解码策略按模型名在宿主侧分派：`-ctc-` 逐帧 argmax + 压重复、`-tdt` 时间下标驱动 + LSTM 状态 ping-pong、其余无状态自回归 + 因果掩码<br>• 分词器是**纯 Kotlin** 实现的 HF 解码链（BPE map / Unigram list + ByteLevel / Metaspace / ByteFallback / Fuse / Strip / Replace），替代官方不可获取的 JNI `tokenizers-cpp`<br>• log-Mel 用纯 Kotlin 复刻 librosa 语义，替代官方构建期联网下载的 `jlibrosa` JAR<br>• 后端走 `Options(setOf(CPU, accelerator))`：目标后端不可用时由运行时**自行退回** CPU（而非编译期抛异常） |
+| **EfficientNet-Lite 图像分类** | `image/TFLiteImageClassificationActivity.kt` (`/Ml/ImageClassification`) | `ml_image_classification_demo.dart` (`ml/image_classification`) | • 整图拉伸到模型输入边长（**Lite0 224 / Lite2 260**，从引擎张量形状读取；官方样例写死 224，切 Lite2 会数组长度不符）<br>• FLOAT `[-1,1]` 输入<br>• 标签表为独立资产 `imagenet_labels.txt`（**1000 行**）：实测两模型 metadata 均无 `labels_without_background.txt`，且三个样本上 top-1 索引完全一致<br>• 输出 `[1,1000]` FP32 概率，**模型没有背景类**，与标签表**直接下标一一对应**（取 Top-5，不做置零、不做偏移）<br>• 模型可切 Lite0 / Lite2（Lite2 首次选中时下载 24 MB）<br>• CPU / GPU 切换即重建引擎 |
+| **Selfie Multiclass 语义分割** | `segmentation/TFLiteImageSegmentationActivity.kt` (`/Ml/ImageSegmentation`) | `ml_image_segmentation_demo.dart` (`ml/image_segmentation`) | • 256×256 FP32 `[-1,1]` **整图拉伸**输入<br>• 输出 `[1,256,256,6]` 平坦 FloatArray，按 `像素序号 * 类别数 + 类别` 取通道 argmax<br>• 该输出是**未归一化的 logits**（输出张量名 `Identity`，末算子 `CONV_2D`、前一算子 `TRANSPOSE_CONV`），页面只做 argmax，无需 Softmax<br>• 人像专属 6 类调色板（背景 / 头发 / 身体皮肤 / 面部皮肤 / 衣物 / 其他配饰）<br>• 半透明色块叠加与类别占比图例<br>• CPU / GPU 切换即重建引擎 |
+| **文本情感分类** | `text/TFLiteTextClassificationActivity.kt` (`/Ml/TextClassification`) | `ml_text_classification_demo.dart` (`ml/text_classification`) | • 词表取自模型内嵌 metadata（`vocab.txt`）：**BERT 为单列裸词（行号即 id），平均词向量为双列 `token id`（取第二列）**<br>• 两个模型：平均词向量（单输入 `[1,256]`）与 MobileBERT（三输入 `[1,128]`，声明顺序 `input_word_ids` → `input_type_ids` → `input_mask`）<br>• 输入为 **INT32**，用 `writeInt` 写入<br>• 输出 `[1,2]` FP32 概率（负面 / 正面），无需反量化与 Softmax |
+| **Laya 多语言零样本分类** | `zsc/TFLiteZeroShotClassificationActivity.kt` (`/Ml/ZeroShotClassification`) | `ml_zero_shot_classification_demo.dart` (`ml/zero_shot_classification`) | • 把「陈述 + 问句」拼成提示词模板，**从零构建**文本序列（`LayaPromptBuilder`）<br>• 主图（250 MB，含嵌入表）与动作头（0.8 MB）**两张图串联**；后者是**编译期** `Precision.FP32`<br>• 校准解码：温度/阈值取自仓库里的 `laya_ml_calibration.json`，页面上按 3 类问题（choice / score / noul）分别呈现<br>• 分词器为多语言 BPE（`tokenizer.json` 34 MB），嵌入表走 `token_embeddings_fp16.bin`<br>• CPU / GPU 切换即重建引擎；模型 **运行时下载**（约 679 MB） |
+| **Matcha-TTS 英文语音合成** | `tts/TFLiteTextToSpeechActivity.kt` (`/Ml/TextToSpeech`) | `ml_text_to_speech_demo.dart` (`ml/text_to_speech`) | • 前端是神经 G2P（DeepPhonemizer，`dp_g2p_matcha_fp16.tflite`）+ 词表/元数据，与流式页**共用同一张 G2P 图**<br>• 四张图串联：文本编码 → 扩散解码器 → 声码器（24 kHz）<br>• **扩散解码器必须跑 CPU**：该图在 Mali ML Drift delegate 上有算子融合缺陷（官方注释：整图残差相关性塌到 0.006，单独成图 0.98）<br>• 模型 **运行时下载**（约 92 MB） |
+| **KittenTTS 流式语音合成** | `tts/TFLiteTextToSpeechStreamingActivity.kt` (`/Ml/TextToSpeechStreaming`) | `ml_text_to_speech_streaming_demo.dart` (`ml/text_to_speech_streaming`) | • 三张图都是**动态序列长度**，不做 padding 分桶：每句先 `resizeInput` 再跑<br>• 文本先按句切分（`SentenceChunker`，每块补逗号收尾），再由**生产者/消费者一对协程**边合成边播放（流式 `AudioTrack`），首音延迟只有一句<br>• 两张定长 LSTM 图（predictor / prosody）走 `Interpreter` + `resetVariableTensors()`；声码器输出是动态形状波形<br>• 8 个音色、24 kHz，音色表是**长度条件化**的（行号 = `min(字符数, 399)`），直接从 `voices.npz` 端侧解包<br>• 模型 **运行时下载**（约 61 MB） |
+| **Qwen3-TTS 语音语言模型合成** | `tts/TFLiteTextToSpeechLmActivity.kt` (`/Ml/TextToSpeechLm`) | `ml_text_to_speech_lm_demo.dart` (`ml/text_to_speech_lm`) | • 0.6B 参数语音 LM，**三张图由宿主循环串联**：talker（28 层，`prefill_32` + `decode` 双签名 + 显式 KV cache）→ MTP（5 层，一次调用在图内跑完 15 步自回归）→ codec（64 帧一块 + 25 帧左上下文，上采样 1920）<br>• 图之间的一切都在宿主侧：byte-level BPE、提示词拼装（控制 token + 说话人 x-vector + 逐帧文本条件）、16 层码本嵌入求和、带重复惩罚的 top-50 采样<br>• KV cache 用两份缓冲区 **ping-pong** 交替读写，避免每步拷贝约 235 MB<br>• 分词器带**启动自检**（官方 baked 的 `tokenizer_test_vectors.json`，含日文与全角空格）<br>• 模型 **运行时下载**（约 1.67 GB）；CPU 实测 **慢于实时**（RTF ≈ 6.7） |
+| **语音识别（ASR）** | `asr/TFLiteSpeechRecognitionActivity.kt` (`/Ml/SpeechRecognition`) | `ml_speech_recognition_demo.dart` (`ml/speech_recognition`) | • **6 个模型可选**（3 个 Parakeet + Moonshine + Whisper + Qwen3-ASR），清单纯 JSON 驱动（`assets/asr_model_metadata.json`），模型与分词器都**运行时下载**<br>• **文件（16 kHz 单声道 WAV）与麦克风双输入**：模型都不是流式的，靠 5 秒窗口 + 2 秒重叠滚动拼接<br>• 三级流水由两条 `Channel` 串成生产者/消费者：`AudioPreprocessor`（log-Mel 或原样透传）→ `SpeechRecognizer` → `Postprocessor`（编辑距离对齐，**未确认文本标灰**）<br>• 解码策略按模型名在宿主侧分派：`-ctc-` 逐帧 argmax + 压重复、`-tdt` 时间下标驱动 + LSTM 状态 ping-pong、其余无状态自回归 + 因果掩码<br>• 分词器是**纯 Kotlin** 实现的 HF 解码链（BPE map / Unigram list + ByteLevel / Metaspace / ByteFallback / Fuse / Strip / Replace），替代官方不可获取的 JNI `tokenizers-cpp`<br>• log-Mel 用纯 Kotlin 复刻 librosa 语义，替代官方构建期联网下载的 `jlibrosa` JAR<br>• 后端走 `Options(setOf(CPU, accelerator))`：目标后端不可用时由运行时**自行退回** CPU（而非编译期抛异常）；GPU 上按清单里的 `gpuEnforceFloat32` / `gpuShareConstantTensors`（均默认 true，与官方 schema 一致）设置 `GpuOptions`，即默认强制 FP32 + 常量张量共享 |
 
-> **双端差异说明**：Flutter 侧是独立演进的一套实现，不与 Android 严格同步。
-> 目前 Flutter 已覆盖 `digit_classifier` 与 `image_classification` 两页，图像分类页
-> 基于 MobileNet 与 `tflite_flutter` 插件（TensorFlow Lite 运行时）；
-> 语义分割 / 文本分类 / 零样本 / 三个语音合成页 / 语音识别页则集中在 Android 侧提供。
+> **双端差异说明**：Flutter 侧（`flutter/flutter_demo/lib/demos/ml`）是独立演进的一套实现，
+> 示例清单与 Android 侧一一对应（9/9），但运行时不同：Android 侧走 2.x 的 `CompiledModel`，
+> Flutter 侧走 `tflite_flutter` 的经典 `Interpreter` + FFI 签名调用（原生库由补丁脚本升到
+> LiteRT 2.3.0）。两端的预处理与后处理契约同参，UI 各按平台习惯实现。
 
-> **覆盖范围说明**：官方 `samples/litert/` 下共 **17 个目录 = 11 个任务 + 6 个非任务**
-> （`.vscode` / `colab` / `flutter` / `google` / `qualcomm` / `phototalk_sample_app`）。
-> 11 个任务里有 Android Kotlin 实现的共 **9 个**：
+> **覆盖范围说明**：官方 `samples/litert/` 顶层现共 **17 个目录**，本模块对齐其中 **9 个通用任务**：
 > `digit_classifier` / `image_classification` / `image_segmentation` / `text_classification` /
 > `zero_shot_classification` / `speech_recognition` / `text_to_speech` / `text_to_speech_lm` /
 > `text_to_speech_streaming`。
-> 本模块据此落地全部 9 个任务（视觉 3 + 文本 2 + 语音 4，末位补齐的是
-> `speech_recognition`）。其余两个任务 `semantic_similarity`（C++）与
-> `image_generation`（ios / macos）在 Android 上以原生方式承载；`kotlin_npu` 是同一
-> 示例的加速器配置（高通 NPU），不单独计数。
-> 官方 9 个任务之外，`object_detection` / `pose_estimation` / `retrieval` /
-> `audio_classification` 属于其它官方示例集，不在本模块对齐范围内。
+> **不计入**（依赖本模块没有的运行时，或不是 Android 实现）：
+> - `qualcomm/*`（`mobilenet_v2` / `object_detection/efficientdet` / `gemma3` / `gemma4` /
+>   `fast_vlm` / `llm_chatbot_npu`）：需要 Qualcomm NPU 运行时（`litert_npu_runtime_libraries`）
+>   或 LiteRT-LM 运行时；
+> - `phototalk_sample_app`、`google/sample_app_tpu`：LiteRT-LM 应用，后者还绑定 Google Tensor TPU；
+> - `semantic_similarity`（C++）、`image_generation`（iOS / macOS）、
+>   `flutter` / `flutter_intel_npu`（Flutter 实现）、`colab`（notebook）。
 
 ---
 
@@ -94,7 +94,7 @@ val scaled = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
 
 | 任务类型 | 输入尺寸 | 不裁剪的原因 |
 | :--- | :--- | :--- |
-| **图像分类** | 224 × 224 | 输出是整图级向量，长宽比变化不影响「图里有什么」 |
+| **图像分类** | 224 × 224（Lite0）/ 260 × 260（Lite2） | 输出是整图级向量，长宽比变化不影响「图里有什么」 |
 | **语义分割** | 256 × 256 | 掩码相对**整幅输入图**逐像素生成，先裁剪会让色块整体偏移、无法叠加回原图 |
 | **手写数字** | 28 × 28 | 画板本身是正方形，拉伸无几何损失 |
 
@@ -162,7 +162,7 @@ KittenTTS / Matcha 用的是 `_fp16` 图），Java 层照旧 `writeFloat` / `rea
 | `efficientnet_lite0` | `Softmax` | `SOFTMAX` | 概率，1000 类之和 = 1.000000 |
 | `average_word_classifier` | `StatefulPartitionedCall:0` | `SOFTMAX` | 概率，2 类之和 = 1.000000 |
 | `bert_classifier` | `StatefulPartitionedCall:0` | `SOFTMAX` | 概率，2 类之和 = 1.000000 |
-| `selfie_multiclass` | `Identity` | `CONCATENATION` | **logits**，每像素 6 通道之和 ≈ **-2.3**（≠ 1） |
+| `selfie_multiclass` | `Identity` | `CONV_2D`（前一算子 `TRANSPOSE_CONV`） | **logits**，每像素 6 通道之和 ≈ **-2.3**（≠ 1） |
 
 因此页面一律**直接读用、不叠加 Softmax**：
 
@@ -297,7 +297,8 @@ interpreter.getOutputTensor(i).asReadOnlyBuffer()   // 真实波形长度只有�
 
 | 资产 | 体积 | 用途 |
 | :--- | ---: | :--- |
-| `efficientnet_lite0.tflite` | ~18 MB | 图像分类（附内嵌 `labels_without_background.txt`，**1000 行**，与模型 1000 类输出一一对应） |
+| `efficientnet_lite0.tflite` | ~18 MB | 图像分类默认模型（Lite0）。模型 metadata 实测只有 1088 B，**不含** `labels_without_background.txt`，标签由下方独立资产提供 |
+| `imagenet_labels.txt` | ~10 KB | ImageNet 1000 类标签（Lite0 / Lite2 共用；实测三个样本上两模型 top-1 索引完全一致） |
 | `selfie_multiclass.tflite` | ~16 MB | 人像语义分割 |
 | `bert_classifier.tflite` | ~25 MB | 文本情感分类（MobileBERT，附内嵌 `vocab.txt`） |
 | `digit_classifier.tflite` | ~1.2 MB | MNIST 手写数字 |
@@ -330,10 +331,14 @@ interpreter.getOutputTensor(i).asReadOnlyBuffer()   // 真实波形长度只有�
 | 流式语音合成（KittenTTS） | `kitten-tts-nano-0.8` | predictor / prosody / vocoder 三图 + `voices.npz` + 共用 G2P 图 | ~61 MB |
 | 语音语言模型合成（Qwen3-TTS） | `Qwen3-TTS-12Hz-0.6B-Base` | talker + 折叠 MTP + 两段 codec + 4 张宿主表 + 分词器 | ~1.67 GB |
 | 语音识别（ASR） | `litert-community/*` 与各家上游 | 6 个模型各自「主图 + 分词器」两项；**同一时刻只会下载所选的那一套** | 44 MB ~ 801 MB |
+| 图像分类（可选 Lite2） | 不在 HuggingFace：官方 GCS | `efficientnet_lite2.tflite`（输入 **260×260**，Lite0 是 224） | ~24 MB |
 
 落盘位置是应用私有目录 `filesDir/models/`（`ModelStore`），下载完成后完全离线可用。
-下载源固定为 `hf-mirror.com`（官方下载器硬编码 `huggingface.co`，本机不可达，镜像内容一致），
-切换镜像只需改 `RemoteModel.MIRROR_BASE` 一处。
+除图像分类的 Lite2 外，下载源固定为 `hf-mirror.com`（官方下载器硬编码 `huggingface.co`，
+本机不可达，镜像内容一致），切换镜像只需改 `RemoteModel.MIRROR_BASE` 一处；
+Lite2 的上游是 `storage.googleapis.com`（官方 `download_model.gradle` 的原地址），
+因此 `RemoteModel` 额外支持 `directUrl`，非空时优先于镜像拼装；下载失败时页面直接提示
+原因并把模型选择拨回 Lite0。
 
 两个 TTS 页共用同一张神经 G2P 图（`dp_g2p_matcha_fp16.tflite`），落盘同名，
 因此先做过任一页之后另一页不会重复下载。
@@ -351,7 +356,7 @@ assets 未被 `.gitignore` 排除，二进制会永久写入 git 历史；将来
 
 ## 七、 纯函数单元测试与并发约束测试
 
-模块共 **132 个 JVM 用例**，全部不依赖 Android 运行时，覆盖五类「静默出错代价极高」的逻辑。
+模块共 **140 个 JVM 用例**，全部不依赖 Android 运行时，覆盖五类「静默出错代价极高」的逻辑。
 
 ### 1. 推理工具与分词（`helper/TFLiteModelHelperTest.kt`，12 例）
 

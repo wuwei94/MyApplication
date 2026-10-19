@@ -19,7 +19,8 @@ import kotlin.time.Duration.Companion.milliseconds
  *    调 `resetPipeline()` 兜底，这里靠构造函数内的补偿关闭达到同样效果。
  *
  * 与官方的其余差异：后端走 [TFLiteModelHelper.createFallbackOptions]（`CPU + accelerator`
- * 的集合，与官方 `setOf(Accelerator.CPU, accelerator)` 一致），NPU 分支不保留
+ * 的集合，与官方 `setOf(Accelerator.CPU, accelerator)` 一致；GPU 的精度与常量张量共享
+ * 同样取自清单里的 `gpuEnforceFloat32` / `gpuShareConstantTensors`），NPU 分支不保留
  * （见 [AsrModelConfig] 的说明）。
  *
  * ⚠️ 生成的实例**必须**在与推理、引擎关闭同一条队列上 `close()` —— 主图的原生 handle
@@ -46,9 +47,19 @@ internal class AsrEngine(
 
     init {
         val path = ModelStore.pathIn(filesDir, config.modelFileName)
+        // 与官方 LiteRtRunner 同参：CPU 打底，GPU 上按清单的 gpuEnforceFloat32 /
+        // gpuShareConstantTensors 决定精度与常量张量共享（官方默认都是 true）。
         val model = CompiledModel.create(
             path,
-            TFLiteModelHelper.createFallbackOptions(accelerator),
+            TFLiteModelHelper.createFallbackOptions(
+                accelerator = accelerator,
+                gpuPrecision = if (config.gpuEnforceFloat32) {
+                    CompiledModel.GpuOptions.Precision.FP32
+                } else {
+                    CompiledModel.GpuOptions.Precision.DEFAULT
+                },
+                gpuConstantTensorSharing = config.gpuShareConstantTensors,
+            ),
             null,
         )
         recognizer =

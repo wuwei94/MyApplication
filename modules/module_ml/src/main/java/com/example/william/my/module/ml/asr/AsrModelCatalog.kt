@@ -27,6 +27,17 @@ internal data class AsrModelConfig(
     val decodeStartTokenId: Int,
     val decodeStopTokenId: Int,
     val decodeSkipUntilTokenId: Int,
+    /**
+     * GPU 上是否强制 fp32（官方清单字段 `gpuEnforceFloat32`）
+     *
+     * 官方 `LiteRtRunner` 在 `accelerator == GPU` 时按此字段选 `Precision.FP32` /
+     * `Precision.DEFAULT`（源码注释：Force float32 and constant tensors sharing for GPU
+     * inference）。官方 schema 的默认值是 **true**，本模块沿用同一默认值 ——
+     * 没有在真机上对比过 fp16 的识别质量，因此不擅自放宽。
+     */
+    val gpuEnforceFloat32: Boolean = true,
+    /** 是否允许 GPU 共享常量张量（官方 `gpuShareConstantTensors`，官方默认 true） */
+    val gpuShareConstantTensors: Boolean = true,
     /** 是否支持 GPU 后端（官方 README 的能力表里 Qwen3-ASR 只标了 CPU） */
     val supportsGpu: Boolean,
     val approxModelBytes: Long,
@@ -105,6 +116,9 @@ internal class AsrModelCatalog(json: String) {
                 decodeStartTokenId = entry.optInt("decodeStartTokenId", -1),
                 decodeStopTokenId = entry.optInt("decodeStopTokenId", -1),
                 decodeSkipUntilTokenId = entry.optInt("decodeSkipUntilTokenId", -1),
+                // 这两个字段在官方 JSON 里通常省略，默认值与官方 `ModelConfigJson` 一致为 true
+                gpuEnforceFloat32 = entry.optBoolean("gpuEnforceFloat32", true),
+                gpuShareConstantTensors = entry.optBoolean("gpuShareConstantTensors", true),
                 supportsGpu = entry.optBoolean("supportsGpu", true),
                 approxModelBytes = modelBytes,
                 approxTokenizerBytes = tokenizerBytes,

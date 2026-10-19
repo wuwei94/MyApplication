@@ -14,7 +14,47 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <!-- 硬件加速与模式控制栏 -->
+    <!-- 模型选择：Lite0 随包分发，Lite2 首次选中时下载（约 24 MB） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="模型 (切换即重建引擎):"
+            android:textColor="@color/ml_black"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rgModel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbLite0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Lite0"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rbLite2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lite2"
+                android:textSize="14sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <!-- 硬件加速控制栏 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +75,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <!-- 首次选中 Lite2 时的下载进度；就绪后不占位 -->
+    <ProgressBar
+        android:id="@+id/progressDownload"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:max="100"
+        android:visibility="gone" />
 
     <!-- 图像预览卡片 (4:3 黄金比例自适应容器) -->
     <androidx.constraintlayout.widget.ConstraintLayout

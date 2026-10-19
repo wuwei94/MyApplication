@@ -318,7 +318,12 @@ class TFLiteTextClassificationActivity :
         /** 平均词向量模型的定长序列长度 */
         const val WORD_VEC_SEQUENCE_LENGTH = 256
 
-        /** [PAD] 与 [UNK] 在词表中的 id 均为 0 */
+        /**
+         * `[PAD]` 在词表里的 id，同时**也用作未登录词（OOV）的回落值**
+         *
+         * `[UNK]` 的真实 id 是 100（实测词表第 101 行），本页刻意不用它：下方 input_mask 的
+         * 判定是 `id != 0`，OOV 回落到 0 才能与 padding 在掩码上一致，理由见 [tokenize]。
+         */
         const val PAD_TOKEN_ID = 0
 
         /** 去标点，仅保留字母、数字与空格 */

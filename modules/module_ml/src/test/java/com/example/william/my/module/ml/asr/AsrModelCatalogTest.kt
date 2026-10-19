@@ -14,10 +14,12 @@ import java.io.File
  * 直接读 `src/main/assets/asr_model_metadata.json` 本体（而不是另抄一份到测试资源里），
  * 否则夹具迟早与线上清单漂移 —— 这个文件的每一行都会被下载层和预处理层直接消费。
  *
- * 覆盖三类容易出错的地方：
- * 1. **默认值**：清单里省略的字段要与官方 `LogMelSpectroConfig` 的默认值一致（`nMels` 默认 80）；
+ * 覆盖四类容易出错的地方：
+ * 1. **默认值**：清单里省略的字段要与官方默认值一致（`nMels` 默认 80；
+ *    `gpuEnforceFloat32` / `gpuShareConstantTensors` 默认 true）；
  * 2. **落盘名**：6 个远端分词器都叫 `tokenizer.json`，必须按模型名区分，否则互相覆盖；
- * 3. **URL 还原**：完整 URL 要能拆回 `repo` + `remotePath` 供下载层使用。
+ * 3. **URL 还原**：完整 URL 要能拆回 `repo` + `remotePath` 供下载层使用；
+ * 4. **GPU 精度开关**：显式写 false 时要真的生效（不能被默认值覆盖）。
  */
 class AsrModelCatalogTest {
 
@@ -89,6 +91,38 @@ class AsrModelCatalogTest {
         assertEquals(198, qwen.decodeStartTokenId)
         assertEquals(151645, qwen.decodeStopTokenId)
         assertTrue(catalog.configOf("whisper-tiny").supportsGpu)
+    }
+
+    /**
+     * GPU 精度开关的默认值必须与官方 `ModelConfigJson` 一致（两者都是 true）
+     *
+     * 官方 `LiteRtRunner` 用这两个字段决定 GPU 上的 `GpuOptions`。清单里省略时若不落到
+     * 「强制 FP32 + 共享常量张量」，GPU 上就会静默按运行时默认精度（通常允许 fp16）执行，
+     * 与官方不同参而界面上看不出来。
+     */
+    @Test
+    fun configOf_gpuFlagsDefaultToTrue_likeOfficialSchema() {
+        catalog.modelNames.forEach { name ->
+            val config = catalog.configOf(name)
+            assertTrue("$name 的 gpuEnforceFloat32 应默认 true", config.gpuEnforceFloat32)
+            assertTrue("$name 的 gpuShareConstantTensors 应默认 true", config.gpuShareConstantTensors)
+        }
+    }
+
+    /** 清单显式写 false 时必须生效，不能被默认值吞掉 */
+    @Test
+    fun configOf_gpuFlagsCanBeOverriddenByJson() {
+        val json = JSONObject(readAsset())
+        json.getJSONObject("whisper-tiny").apply {
+            put("gpuEnforceFloat32", false)
+            put("gpuShareConstantTensors", false)
+        }
+        val custom = AsrModelCatalog(json.toString())
+
+        assertFalse(custom.configOf("whisper-tiny").gpuEnforceFloat32)
+        assertFalse(custom.configOf("whisper-tiny").gpuShareConstantTensors)
+        // 未改动的项仍应落到默认 true
+        assertTrue(custom.configOf("moonshine-tiny").gpuEnforceFloat32)
     }
 
     @Test

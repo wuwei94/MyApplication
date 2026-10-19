@@ -9,21 +9,31 @@ package com.example.william.my.module.ml.download
  * （见 [ModelStore]）。这与官方一致，也避免让 APK 膨胀到 GB 量级。
  *
  * @property fileName 落盘后的文件名，同时也是加载 [com.google.ai.edge.litert.CompiledModel] 时使用的名字
- * @property repo 模型仓库（`owner/name`，见 [MIRROR_BASE]）
- * @property remotePath 仓库内相对路径
  * @property approxBytes 预估字节数，仅用于下载进度展示（真实长度以响应头为准）
+ * @property repo 模型仓库（`owner/name`，见 [MIRROR_BASE]）；走 [directUrl] 时可省略
+ * @property remotePath 仓库内相对路径；走 [directUrl] 时可省略
  * @property revision 仓库修订号；官方清单里是钉死的 commit，填 `null` 表示跟随默认分支
+ * @property directUrl 绝对下载地址。上游不在 HuggingFace 时使用（例如官方
+ *   `image_classification` 的 `efficientnet_lite2.tflite` 由官方 Gradle 从
+ *   `storage.googleapis.com` 拉取），非空时**优先于** `repo + remotePath` 拼装
  */
 data class RemoteModel(
     val fileName: String,
-    val repo: String,
-    val remotePath: String,
     val approxBytes: Long,
+    val repo: String = "",
+    val remotePath: String = "",
     val revision: String? = null,
+    val directUrl: String? = null,
 ) {
+    init {
+        require(directUrl != null || (repo.isNotEmpty() && remotePath.isNotEmpty())) {
+            "$fileName 需要提供 directUrl，或同时提供 repo 与 remotePath"
+        }
+    }
+
     /** 下载地址 */
     val url: String
-        get() = "$MIRROR_BASE/$repo/resolve/${revision ?: "main"}/$remotePath"
+        get() = directUrl ?: "$MIRROR_BASE/$repo/resolve/${revision ?: "main"}/$remotePath"
 
     companion object {
         /**
@@ -31,6 +41,10 @@ data class RemoteModel(
          * （DNS 解析后 443 一律超时），改用内容一致的镜像站。切换镜像只需改这一处。
          */
         const val MIRROR_BASE = "https://hf-mirror.com"
+
+        /** 官方 `image_classification` 的 Gradle 下载脚本里 `efficientnet_lite2` 的原始地址 */
+        const val EFFICIENTNET_LITE2_URL =
+            "https://storage.googleapis.com/ai-edge/interpreter-samples/image_classification/android/efficientnet_lite2.tflite"
     }
 }
 
@@ -42,6 +56,23 @@ data class RemoteModel(
  * 与量化变体（`*_i8` / `*_int4`），那些是实验性路径，**不在本清单内**。
  */
 object RemoteModels {
+
+    /**
+     * 图像分类的可选模型 EfficientNet-Lite2（24 MB）
+     *
+     * 官方 `image_classification` 样例在设置面板里可切换 Lite0 / Lite2，两张图由官方
+     * Gradle 任务下载到 assets。本模块遵循「新增模型不入库、运行时下载」的既定策略：
+     * Lite0 仍随 APK 分发（切换默认值不能依赖网络），Lite2 首次选中时下载。
+     *
+     * 上游是 Google Cloud Storage 而非 HuggingFace，因此走 [RemoteModel.directUrl]。
+     * 实测输入 `[1, 260, 260, 3]`、输出 `[1, 1000]` FP32 Softmax —— 与 Lite0 的
+     * 224 输入不同，页面必须按模型分别取尺寸（见 `TFLiteModelHelper.readInputEdge`）。
+     */
+    val EFFICIENTNET_LITE2: RemoteModel = RemoteModel(
+        fileName = "efficientnet_lite2.tflite",
+        approxBytes = 24_325_765L,
+        directUrl = RemoteModel.EFFICIENTNET_LITE2_URL,
+    )
 
     private const val REPO_MATCHA = "litert-community/Matcha-TTS"
 

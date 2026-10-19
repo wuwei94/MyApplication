@@ -11,8 +11,11 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 官方文档: https://ai.google.dev/edge/litert
  * 官方样例: https://github.com/google-ai-edge/litert-samples
  *
- * 覆盖官方 `litert-samples/samples/litert/` 下**全部有 Android + Kotlin 实现的任务**
- * （共 9 个；`semantic_similarity` 只有 C++、`image_generation` 只有 ios/macos，不在范围内）：
+ * 覆盖官方 `litert-samples/samples/litert/` 顶层 **9 个通用任务**（视觉 3 / 文本 2 / 语音 4）。
+ * 不计入的目录：`qualcomm` 下的各子目录（需要 Qualcomm NPU 运行时或 LiteRT-LM）、`phototalk_sample_app`
+ * 与 `google/sample_app_tpu`（LiteRT-LM，后者还绑定 Google Tensor TPU）、
+ * `semantic_similarity`（C++）、`image_generation`（iOS / macOS）、
+ * `flutter` / `flutter_intel_npu`（Flutter 实现）、`colab`（notebook）：
  *
  * 视觉
  * 1. MNIST 手写数字实时识别（画板涂鸦 + 28x28 输入 + 置信度条形图）
