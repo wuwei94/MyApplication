@@ -12,7 +12,7 @@
 - **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
-- **跨端**：Android Native + Flutter 双栈落地，Flutter 内覆盖 Dio / http / SSE / Provider / GetX / BloC。
+- **跨端**：Android Native + Flutter 双栈落地。Flutter 侧是独立的 Demo Catalog 子工程（`flutter/flutter_demo`，**15 个顶层分组 / 148 个叶子示例页**），覆盖布局与交互、状态管理、网络、蓝牙、存储、图片、动画、视频、端侧 ML、图表、Markdown 与引擎层特性；网络线为 Dio / package:http / WebSocket / MQTT，状态管理并列 Provider / GetX / Bloc / Riverpod。
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
 - **自定义 View & 图表**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等；MPAndroidChart 折线/柱状/饼图/雷达图与多图表全景看板联动。
 - **Compose**：Navigation 2.8+ 类型安全导航与 Nav3、Edge-to-Edge 沉浸与 Insets 软键盘避让、Material 3 完整组件体系、手势/缩放/拖拽、SmartRefresh、Canvas 自绘贝塞尔折线/柱状/饼图/雷达图等多图表全景看板。
@@ -86,8 +86,8 @@ MyApplication/
 │   ├── basic_sync              # 离线增量同步调度层（WorkManager + Synchronizer；ServiceLocator / Hilt Worker 平行装配）
 │   ├── basic_server            # 服务端基础模块
 ├── flutter                     # Flutter 层（add-to-app 集成）
-│   ├── flutter_demo            # Flutter Demo Catalog 子工程（Flutter module）
-│   └── flutter_libs            # Flutter 本地库（lib_network_dio / lib_network_http 独立封装、lib_image_loader 内核可切换封装、lib_event_bus 事件总线封装、lib_storage 键值存储封装、lib_bluetooth 蓝牙通信封装）
+│   ├── flutter_demo            # Flutter Demo Catalog 子工程（15 个顶层分组 / 148 个叶子示例页，GoRouter + AutoRoute 双路由）
+│   └── flutter_libs            # Flutter 本地库（lib_network_dio / lib_network_http 独立网络封装、lib_image_loader 内核可切换、lib_event_bus 事件总线、lib_storage 键值存储、lib_bluetooth 蓝牙、lib_mqtt MQTT、lib_websocket WebSocket）
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp              # OkHttp 封装（DSL、多实例及缓存生命周期、安全日志、OkHttp 控制 Header、上传下载进度）
 │   ├── lib_retrofit            # Retrofit 封装（DSL、Gson 响应转换、可空 Parcelable 响应、加载状态 View）
@@ -405,7 +405,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 - **图像预处理与内存规范**：整图拉伸重采样（与官方 `createScaledBitmap` 一致）、`RAW_0_255` / `[-1,1]` / `[0,1]` 三类归一化、`TensorBuffer` 读写与 Top-K / argmax 后处理（模型输出已是概率，**不叠加 Softmax**）
 - **硬件加速**：`Accelerator` 在引擎编译期选定后端（CPU 多线程 / XNNPACK / GPU / NPU），切换即重建引擎；GPU 后端失败时如实回退 CPU 并注明原因
 - **模型资产双轨**：5 个轻量模型内嵌 assets（约 62 MB），其余 5 个任务的模型（44 MB ~ 1.67 GB）**首次使用时运行时下载**，带断点续传与「已下载不重下」——与官方这几个 sample 的做法一致
-- **质量保障**：`TFLiteModelHelper` 的纯函数、生命周期闸门、语音合成解析逻辑与 ASR 的宿主侧算法（log-Mel 对真 librosa、分词器对真 HF `tokenizers`）由 **132 个 JVM 单元测试**覆盖（含变异法验证）
+- **质量保障**：`TFLiteModelHelper` 的纯函数、生命周期闸门、语音合成解析逻辑与 ASR 的宿主侧算法（log-Mel 对真 librosa、分词器对真 HF `tokenizers`）由 **140 个 JVM 单元测试**覆盖（含变异法验证）
 - **底层内存规范**：assets / 私有目录两种引擎构建路径、引擎串行队列下的 Native 资源生命周期管理、端侧大模型 SLM 落地架构
 
 ### module_arch（架构模式）
@@ -493,18 +493,29 @@ Jetpack Compose 示例，覆盖声明式 UI 核心能力。
 
 ### module_flutter（Flutter 子工程）
 
-Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
+Flutter 双栈落地的宿主模块：以 add-to-app 方式嵌入 `flutter/flutter_demo` 子工程，入口 `FlutterMainActivity`（`/Flutter/Main`）。子工程本身是一个独立的 Demo Catalog——首页 → 目录页 → 示例页三层，**15 个顶层分组 / 148 个叶子示例页**，`catalog.dart` 描述目录树、`GoRouter` 与 `AutoRoute` 双路由并存（`AppRouterType` 常量切换）。完整清单见 [flutter_demo README](flutter/flutter_demo/README.md) 与 [demos.md](flutter/flutter_demo/docs/demos.md)。
 
-- **布局类**：Row / Column / Flex / Wrap / Flow / Stack
-- **容器类**：Container / Padding / Align / Center / ConstrainedBox / DecoratedBox / SizedBox
-- **可滚动**：ListView / GridView / SingleChildScrollView / PageView / TabBarView / AnimatedList / CustomScrollView / NestedScrollView
-- **功能型**：LayoutBuilder / GestureDetector / PopScope / InheritedWidget / FutureBuilder / StreamBuilder
-- **其他**：Animation / Dialog / Isolate
-- **网络请求**：`lib_network_dio`（DioClient）与 `lib_network_http`（HttpClient）两个独立本地 package，与 Retrofit 共享 `code/message/data` 业务响应和 `code/message/cause` 异常契约，并统一常用 HTTP 方法、请求体和请求取消；支持 SSE（Server-Sent Events）流式传输与 AI 大模型（DeepSeek）打字机对话；日志沿用各自实现且不做脱敏
+| 分组 | 内容 | Android 对照 |
+|------|------|--------------|
+| basics / layout | 完整小型应用；14 个子目录的布局与交互（容器 / 线性 / 层叠 / 流式 / Sliver / 滚动 / 弹窗 / 手势 / 过渡 / 自适应 / 异步 / 异步组件 / 装饰 / 状态原语） | module_widget、module_tab |
+| state_management | Provider / Cubit / Bloc / Riverpod | module_arch |
+| network | Dio / package:http / WebSocket / MQTT | module_http、module_socket、module_mqtt |
+| bluetooth | 扫描与权限、GATT 服务发现与读写、Notify 监听、MTU 协商与分包拼包 | module_bluetooth |
+| storage | shared_preferences / secure_storage / Hive / Drift / Sqflite / Isar / ObjectBox / 路径工具 | module_storage、module_database |
+| image | cached_network_image / ExtendedImage / 压缩 / 裁剪 / 选择 / PhotoView / 微信风格选择器 | module_image_loader |
+| animation | Lottie / PAG / SVGA / SVG | module_anim |
+| video | video_player / Chewie | module_media |
+| ml | 9 个 LiteRT 示例（视觉 3 / 文本 2 / 语音 4） | module_ml |
+| chart | fl_chart 折线 / 柱状 / 饼图 / 雷达图 / 多图表联动看板 | module_chart |
+| markdown | 渲染 / 多语言代码高亮 / 流式打字机 / AI 流式对话 | module_markdown |
+| engine | CustomPainter 粒子系统、贝塞尔签名板、自定义 RenderObject 环形布局、交错动画、GLSL 片段着色器、沿路径动画、3D 翻转卡片、自定义手势识别 | 无对应（Flutter 引擎层专有） |
+| packages | 通知 / 权限 / WebView / URL 启动 / 屏幕适配 / 下拉刷新 / 字体 / 链接识别等三方包 | module_widget_thirdparty |
+| showcase | 杂项展示（本地字体等） | module_sample |
+
+- **网络请求**：`lib_network_dio`（DioClient）与 `lib_network_http`（HttpClient）两个独立本地 package，与 Retrofit 共享 `code/message/data` 业务响应和 `code/message/cause` 异常契约，并统一常用 HTTP 方法、请求体与请求取消；日志沿用各自实现且不做脱敏
 - **图片加载**：`lib_image_loader` 本地 package（`IImageLoader` 接口 + `ImageLoader` 门面），默认内核 cached_network_image，切换内核调用方零改动，与 Android `lib_image_loader` 结构对齐
-- **状态管理**：[Provider](https://pub.dev/packages/provider) / [GetX](https://pub.dev/packages/get) / [BloC](https://pub.dev/packages/flutter_bloc)
-- **三方框架**：Toast / Notification / SharedPreferences / ScreenUtil
-- **引擎层特性**：CustomPainter 粒子系统、贝塞尔签名板、自定义 RenderObject 环形布局、交错动画、GLSL 片段着色器、沿路径动画、3D 翻转卡片、双指缩放旋转手势识别
+- **ML 双端对照**：与 `module_ml` 是两套独立演进的实现——本侧走 `tflite_flutter` 经典 `Interpreter` + 多签名图 FFI（原生库由 `tools/android/apply_android_tflite_flutter.dart` 补丁升到 LiteRT 2.3.0），Android 侧走 2.x `CompiledModel`；示例清单一一对应
+- **构建开关**：`-PenableFlutter=false` 时本模块切到 `src/noFlutter` 源集、不依赖 `:flutter` 子工程（无 Flutter SDK 的环境与 CI 使用）
 
 ### module_sample（技术示例）
 
@@ -559,6 +570,7 @@ Flutter 子工程，覆盖 Flutter 核心组件与状态管理。
 - **代码规范**：Spotless + ktlint，执行 `./gradlew spotlessApply` 自动格式化
 - **测试体系**：Turbine + 手写测试替身的单测（样板 `module_reactive`）、测试命名 Lint 规则（`lint` 模块强制 `被测对象_场景_预期结果`）、Roborazzi 截图回归（样板 `module_compose`），详见 `docs/02-engineering/testing.md`
 - **工程化实践**：基于 Now in Android 的构建与版本治理、测试三支柱、性能基准（Macrobenchmark + Baseline Profile）与门禁防御，详见 `docs/02-engineering/engineering.md`（总览）与 `docs/02-engineering/engineering-build.md`（分册）
+- **Flutter 侧**：`fvm flutter analyze` 保持零 warning / 零 error，测试走 `fvm flutter test`；Android 侧本地验证默认 `-PenableFlutter=false`。子仓契约见 [flutter/flutter_demo/AGENTS.md](flutter/flutter_demo/AGENTS.md)
 - **注释语言**：代码注释与文档默认使用中文
 - 完整技术文档导航详见 [docs/README.md](docs/README.md)，专项规范见 [docs/01-rules/README.md](docs/01-rules/README.md)（delivery / structure / showcase / style / engineering / templates / design / git）与 `docs/02-engineering/engineering.md`、`docs/03-architecture/architecture.md`
 
