@@ -221,12 +221,17 @@ com.github.lihangleo2:ShadowLayout:3.3.2
 com.github.mmin18:realtimeblurview:1.2.1
 com.github.princekin-f:EasyFloat:2.0.4
 com.github.yyued:SVGAPlayer-Android:2.6.1
-com.google.ai.edge.litert:litert-api:1.4.0
-com.google.ai.edge.litert:litert-gpu-api:1.4.0
-com.google.ai.edge.litert:litert-gpu:1.4.0
-com.google.ai.edge.litert:litert:1.4.0
+com.google.ai.edge.litert:litert-api:2.3.0
+com.google.ai.edge.litert:litert-gpu:2.3.0
+com.google.ai.edge.litert:litert-metadata:2.3.0
+com.google.ai.edge.litert:litert:2.3.0
 com.google.android.flexbox:flexbox:3.0.0
+com.google.android.gms:play-services-basement:18.4.0
+com.google.android.gms:play-services-tasks:18.2.0
 com.google.android.material:material:1.13.0
+com.google.android.play:ai-delivery:0.1.1-alpha01
+com.google.android.play:asset-delivery:2.3.0
+com.google.android.play:core-common:2.0.4
 com.google.auto.value:auto-value-annotations:1.6.3
 com.google.code.findbugs:jsr305:3.0.2
 com.google.code.gson:gson:2.13.1
@@ -235,6 +240,7 @@ com.google.dagger:dagger:2.58
 com.google.dagger:hilt-android:2.58
 com.google.dagger:hilt-core:2.58
 com.google.errorprone:error_prone_annotations:2.41.0
+com.google.flatbuffers:flatbuffers-java:25.2.10
 com.google.guava:failureaccess:1.0.3
 com.google.guava:guava:33.5.0-android
 com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
@@ -368,6 +374,7 @@ javax.inject:javax.inject:1
 jp.co.cyberagent.android:gpuimage:2.1.0
 no.nordicsemi.android:ble-ktx:2.9.0
 no.nordicsemi.android:ble:2.9.0
+org.checkerframework:checker-qual:2.5.8
 org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5
 org.greenrobot:essentials:3.1.0
 org.greenrobot:eventbus-java:3.3.1
@@ -389,6 +396,7 @@ org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2
+org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.10.2
