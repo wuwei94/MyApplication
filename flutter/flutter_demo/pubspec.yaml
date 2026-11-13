@@ -269,11 +269,6 @@ dev_dependencies:
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^6.0.0
 
-  # 纯 Dart 单测（lib/demos/ml/engines 的格式解析器不依赖 Flutter 绑定，
-  # 走 VM 直跑；`flutter test` 亦可跑同一批用例）
-  # https://pub.dev/packages/test
-  test: ^1.25.0
-
   # 代码生成
   # https://pub.dev/packages/build_runner
   build_runner: ^2.13.1

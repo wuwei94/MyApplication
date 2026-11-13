@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_demo/demos/ml/engines/ml_npy.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_zip.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 /// `MlNpy` / `MlZipReader` 的对拍测试。
 ///

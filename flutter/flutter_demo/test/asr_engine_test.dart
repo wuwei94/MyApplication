@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_demo/demos/ml/engines/asr/asr_audio_source.dart';
 import 'package:flutter_demo/demos/ml/engines/asr/asr_merger.dart';
 import 'package:flutter_demo/demos/ml/engines/asr/asr_types.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 /// ASR 引擎层里**不依赖 `tflite_flutter`** 的部分的对拍测试。
 ///
