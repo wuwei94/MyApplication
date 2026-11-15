@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  VAP 播放画布：AnimView 铺满上方容器，深色底让透明素材显影（与 PAG 实验台同一考虑）。
+  背景挂外层容器而非 AnimView：其内部 TextureView isOpaque=false，透明区域透出的是父容器底色。
+  本布局始终 inflate 进 basics_response_container，不作为窗口根，Overdraw 告警的
+  「根节点背景与窗口背景重复绘制」前提不成立，故抑制。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/shared_color_console_bg"
+    tools:ignore="Overdraw">
+
+    <com.tencent.qgame.animplayer.AnimView
+        android:id="@+id/anim_vap_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="VAP 动画" />
+
+</FrameLayout>

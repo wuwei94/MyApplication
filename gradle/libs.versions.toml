@@ -266,6 +266,10 @@ lottie = "6.6.7"
 # 移动端高性能矢量动画播放器 SVGAPlayer
 # GitHub: https://github.com/svga/SVGAPlayer-Android
 svgaPlayer = "2.6.1"
+# 腾讯开源 Alpha 视频动画播放器 VAP（MP4 分区存储 Alpha + MediaCodec 硬解 + OpenGL 合成透明帧）
+# 仅开源版（MIT）发布到 Maven Central；Vap Pro / 企业版为腾讯云商业 SDK 需 License，不在本仓范围
+# GitHub: https://github.com/Tencent/vap/tree/vap_open_source
+vap = "2.0.28"
 
 # ==============================================================================
 # 12. 常用实用工具与第三方 UI 增强库
@@ -689,6 +693,8 @@ pag = { group = "com.tencent.tav", name = "libpag", version.ref = "pag" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 # SVGAPlayer 动效播放器
 svgaPlayer = { group = "com.github.yyued", name = "SVGAPlayer-Android", version.ref = "svgaPlayer" }
+# 腾讯 VAP Alpha 视频动画播放器（开源版）
+vap = { group = "io.github.tencent", name = "vap", version.ref = "vap" }
 
 # ==============================================================================
 # 12. 常用实用工具与第三方 UI 增强库

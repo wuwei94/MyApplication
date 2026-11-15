@@ -66,6 +66,13 @@ object Constants {
     const val Url_SVGA_Heartbeat = "svga/heartbeat.svga"
     const val SVGA_Avatar_A = "svga/avatar_a.png"
     const val SVGA_Avatar_B = "svga/avatar_b.png"
+
+    // VAP 演示素材（module_anim assets/vap，取自官方开源 demo，MIT，MD5 与官方 demo 校验值一致）
+    /** 基础 Alpha 视频：736×576 · 80 帧 · 25fps · 无融合槽位 */
+    const val Vap_Demo = "vap/demo.mp4"
+
+    /** 融合动画：672×1504 · 240 帧 · 20fps · 文字槽 [sTxt1] + 图片槽 [sImg1]（66×66） */
+    const val Vap_Mix = "vap/vapx.mp4"
     const val Url_Audio = "https://video.fanqievv.com/user_sound/2021/01/10/1610291672209.mp3"
 
     const val Key_Username = "username"

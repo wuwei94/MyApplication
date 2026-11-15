@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 动画模块入口 — 导航到属性动画、过渡动画、Lottie、SVGA、PAG 等示例页面。
+ * 动画模块入口 — 导航到属性动画、过渡动画、Lottie、SVGA、PAG、VAP 等示例页面。
  *
  * 展示各类动画技术的示例列表，点击列表项跳转到对应的示例页。
  */
@@ -34,6 +34,9 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("PAG（替换文字）", RouterPath.Anim.PagText))
         routerItems.add(RouterItem("PAG（图层属性）", RouterPath.Anim.PagLayer))
         routerItems.add(RouterItem("PAG（渲染树组合）", RouterPath.Anim.PagComposition))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── VAP ──", ""))
+        routerItems.add(RouterItem("VAP（Alpha 视频动画）", RouterPath.Anim.Vap))
         return routerItems
     }
 }

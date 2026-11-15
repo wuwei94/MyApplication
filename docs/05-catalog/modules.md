@@ -192,9 +192,9 @@
 
 ### module_anim（动画）
 
-演示 Android 原生动画机制与第三方动画库（Lottie、SVGA、PAG）。
+演示 Android 原生动画机制与第三方动画库（Lottie、SVGA、PAG、VAP）。
 
-源码分包：`activity/system/`（系统原生：属性动画与过渡动画）、`activity/thirdparty/`（第三方库：Lottie / SVGA / PAG）。
+源码分包：`activity/system/`（系统原生：属性动画与过渡动画）、`activity/thirdparty/`（第三方库：Lottie / SVGA / PAG / VAP）。
 
 | Activity | 功能 |
 |----------|------|
@@ -212,6 +212,7 @@
 | PagTextActivity | PAG 替换文字（PAGText 取副本 → 改字段 → replaceText 回灌，分槽独立改写） |
 | PagLayerActivity | PAG 图层属性（PAGLayer 通用属性：setMatrix / setAlpha / setVisible / setStartTime，批量作用于顶层子图层） |
 | PagCompositionActivity | PAG 渲染树组合（PAGComposition.Make + addLayer / swapLayerAt / setLayerIndex / removeLayer 组合两个素材） |
+| VapActivity | VAP Alpha 视频动画（AnimView 硬解播放 + IFetchResource 按 srcTag 融合图文，setLoop 次数倒计时） |
 
 PAG 五页与 SVGA 同构，按 **能力**切分，共用 `anim_layout_pag_lab.xml`
 骨架：`PAGView` 铺满容器作为纯渲染画布，页面上不放标题、说明与读数面板；底部 `buildList` 每项直连一个库 API
@@ -229,6 +230,11 @@ PAG 五页与 SVGA 同构，按 **能力**切分，共用 `anim_layout_pag_lab.x
 > 与 `getVideoRanges()`，但没有 `replaceVideo`，对视频层只能 `replaceImage` 塞静态图；真正替换视频内容、
 > 播放音频、导出视频均需企业版（`PAGMovie` / `PAGAudioReader` / `PAGMovieExporter`，包名带 movie 后缀）。
 > 这条边界记在 `PagPlaybackActivity` 类头注释里，页面不提供视频替换入口。
+
+VAP 页接入 MIT 开源版（`io.github.tencent:vap`，素材取自官方 demo）：MP4 分区存储 Alpha，
+`AnimView` 硬解后 OpenGL 合成透明帧；`IFetchResource` 按 srcTag 供给融合图文。`setLoop` 是剩余次数
+倒计时，无 PAG 式 `-1` 无限循环；`stopPlay` 异步生效，切换素材在 `onVideoComplete` 中接力起播。
+官方已转向需 License 的 Vap Pro 商业 SDK，本仓不接入。
 
 ---
 

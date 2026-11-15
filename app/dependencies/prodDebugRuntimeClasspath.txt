@@ -293,6 +293,7 @@ io.github.scwang90:refresh-drawable-paint:2.1.1
 io.github.scwang90:refresh-footer-classics:2.1.1
 io.github.scwang90:refresh-header-classics:2.1.1
 io.github.scwang90:refresh-layout-kernel:2.1.1
+io.github.tencent:vap:2.0.28
 io.github.youth5201314:banner:2.2.3
 io.insert-koin:koin-android:4.0.2
 io.insert-koin:koin-core-jvm:4.0.2

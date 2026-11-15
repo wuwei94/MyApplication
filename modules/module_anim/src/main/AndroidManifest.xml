@@ -16,6 +16,7 @@
         <activity android:name=".activity.thirdparty.PagTextActivity" />
         <activity android:name=".activity.thirdparty.PagLayerActivity" />
         <activity android:name=".activity.thirdparty.PagCompositionActivity" />
+        <activity android:name=".activity.thirdparty.VapActivity" />
     </application>
 
 </manifest>

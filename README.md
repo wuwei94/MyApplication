@@ -113,7 +113,7 @@ MyApplication/
     ├── [UI 交互]
     │   ├── module_widget       # 标准控件（Dialog / PopupWindow / FlexBox / RecyclerView / ViewPager / ViewFlipper / WebView）
     │   ├── module_tab          # Tab 导航（FragmentTabHost / RadioGroup / ViewPager / ViewPager2 / FlycoTabLayout 联动）
-    │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 Lottie / SVGA / PAG）
+    │   ├── module_anim         # 动画（原生属性/过渡动画 + 第三方动画库 Lottie / SVGA / PAG / VAP）
     │   ├── module_widget_custom  # 自定义控件（AlertDialog / CustomPopWindow / BlurView / NinePatch / 跑马灯 / 验证码）
     │   ├── module_widget_thirdparty   # 第三方 UI 库（Banner / CountdownView / PhotoView / ShadowLayout / SwipeLayout / RealtimeBlurView / CityPicker / PickerView / PictureSelector / LoadSir）
     │   ├── module_chart        # 数据可视化（MPAndroidChart：折线图 / 柱状图 / 饼图 / 雷达图 / 多图表联动看板）
@@ -242,6 +242,7 @@ MyApplication/
 - SVGA 动画播放器（YY SVGA）
 - SVGA 动态图片插入（SVGADynamicEntity 按 imageKey 换图）
 - PAG 能力五则（腾讯 libpag：播放 / 替换图像 / 替换文字 / 图层属性 / 渲染树组合；播放页纯预览，另四页操作项直连 `replaceImage` / `replaceText` / `setMatrix` / `addLayer` 等库 API。后两则是 PAG 独有能力：图层属性定义在 `PAGLayer` 基类、与槽位无关；渲染树组合依赖 `PAGFile extends PAGComposition`，可把多个素材拼成一棵渲染树，SVGA 无对应 API）
+- VAP Alpha 视频动画（腾讯开源版：AnimView 硬解播放 + IFetchResource 按 srcTag 融合图文 + 循环/缩放模式切换）
 
 ### module_markdown（Markdown 渲染与 AI 流式交互）
 
