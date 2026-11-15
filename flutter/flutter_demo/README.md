@@ -111,7 +111,7 @@ test/                                  # asr_engine_test（46）/ ml_zip_npy_tes
 
 ### 环境要求
 
-- Flutter：项目通过 `.fvmrc` 固定为 `3.47.0`
+- Flutter：项目通过 `.fvmrc` 固定为 `3.50.0`
 - Dart SDK：随 Flutter SDK 提供（`pubspec.yaml` 约束 `^3.10.8`）
 - 推荐使用 `fvm`
 

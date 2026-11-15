@@ -80,8 +80,8 @@
 
 ## 环境要求
 
-- Flutter：项目通过 `.fvmrc` 固定为 `3.47.0`
-- Dart SDK：`3.13.0`（随 Flutter SDK 提供）
+- Flutter：项目通过 `.fvmrc` 固定为 `3.50.0`
+- Dart SDK：`3.14.0`（随 Flutter SDK 提供）
 - 推荐使用 `fvm`
 
 ## 常用命令

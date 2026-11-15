@@ -8,8 +8,8 @@
 - 路由支持 `GoRouter` 与 `AutoRoute`，核心配置在 `lib/app/router/`。
 - 新示例优先放进已有分类目录，不要随意在 `lib/` 顶层新增无关文件。
 - 修改代码后，优先运行 `fvm flutter analyze` 和 `fvm flutter test`。
-- 项目固定 Flutter 版本为 `3.47.0`（见 `.fvmrc`），命令优先使用 `fvm flutter ...`。
-- 若 `fvm flutter ...` 在受限 agent 环境中无法启动子进程，可直连 SDK：`%USERPROFILE%\fvm\versions\3.47.0\bin\flutter.bat analyze`（`test` 同理）。
+- 项目固定 Flutter 版本为 `3.50.0`（见 `.fvmrc`），命令优先使用 `fvm flutter ...`。
+- 若 `fvm flutter ...` 在受限 agent 环境中无法启动子进程，可直连 SDK：`%USERPROFILE%\fvm\versions\3.50.0\bin\flutter.bat analyze`（`test` 同理）。
 
 ## 项目自定义 Skill
 
