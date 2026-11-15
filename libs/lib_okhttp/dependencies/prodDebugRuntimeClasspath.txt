@@ -9,7 +9,7 @@ androidx.concurrent:concurrent-futures:1.1.0
 androidx.core:core-ktx:1.17.0
 androidx.core:core-viewtree:1.0.0
 androidx.core:core:1.17.0
-androidx.databinding:viewbinding:9.1.0
+androidx.databinding:viewbinding:9.3.1
 androidx.interpolator:interpolator:1.0.0
 androidx.lifecycle:lifecycle-common:2.6.2
 androidx.lifecycle:lifecycle-runtime:2.6.2
@@ -25,8 +25,8 @@ com.squareup.okhttp3:okhttp-android:5.1.0
 com.squareup.okhttp3:okhttp:5.1.0
 com.squareup.okio:okio-jvm:3.15.0
 com.squareup.okio:okio:3.15.0
-org.jetbrains.kotlin:kotlin-parcelize-runtime:2.4.0
-org.jetbrains.kotlin:kotlin-stdlib:2.4.0
+org.jetbrains.kotlin:kotlin-parcelize-runtime:2.4.20
+org.jetbrains.kotlin:kotlin-stdlib:2.4.20
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2

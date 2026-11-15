@@ -93,7 +93,7 @@ build-logic/convention/src/main/kotlin/
 
 为 Library 模块提供统一配置：
 - 应用插件：`com.android.library`、`kotlin-android`、`kotlin-kapt`、`kotlin-parcelize`、`lint`
-- 构建配置：`compileSdk = 37`、`minSdk = 24`
+- 构建配置：`compileSdk = 37` + `compileSdkMinor = 2`、`minSdk = 24`
 - 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`、`configureSpotlessForAndroid`
 - 资源前缀：**不由插件自动生成**；各模块在自身 `build.gradle.kts` 中声明 `resourcePrefix(...)`（见 [structure.md](../01-rules/structure.md)）
 
@@ -101,7 +101,7 @@ build-logic/convention/src/main/kotlin/
 
 为 Application 模块提供统一配置：
 - 应用插件：`com.android.application`、`kotlin-android`、`kotlin-kapt`、`kotlin-parcelize`、`lint`
-- 构建配置：`compileSdk = 37`、`minSdk = 24`、`targetSdk = 37`
+- 构建配置：`compileSdk = 37` + `compileSdkMinor = 2`、`minSdk = 24`、`targetSdk = 37`
 - 调用：`configureKotlinAndroid`、`configureFlavors`、`configureDepsAndroid`、`configureFeatureAndroid`、`configureSpotlessForAndroid`
 
 ### AndroidFeatureConventionPlugin.kt

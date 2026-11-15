@@ -36,6 +36,7 @@ class AndroidTestConventionPlugin : Plugin<Project> {
 
             extensions.configure<TestExtension> {
                 compileSdk = 37
+                compileSdkMinor = 2
                 defaultConfig.minSdk = 28
                 defaultConfig.targetSdk = 37
                 configureKotlinAndroid(this)

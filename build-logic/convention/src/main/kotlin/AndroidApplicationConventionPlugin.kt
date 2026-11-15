@@ -44,6 +44,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             configureSpotlessForAndroid()
             extensions.configure<ApplicationExtension> {
                 compileSdk = 37
+                compileSdkMinor = 2
                 defaultConfig.minSdk = 24
                 defaultConfig.targetSdk = 37
                 testOptions.animationsDisabled = true

@@ -12,11 +12,11 @@ androidx.core:core-ktx:1.13.1
 androidx.core:core-viewtree:1.0.0
 androidx.core:core:1.13.1
 androidx.customview:customview:1.0.0
-androidx.databinding:databinding-adapters:9.1.0
-androidx.databinding:databinding-common:9.1.0
-androidx.databinding:databinding-ktx:9.1.0
-androidx.databinding:databinding-runtime:9.1.0
-androidx.databinding:viewbinding:9.1.0
+androidx.databinding:databinding-adapters:9.3.1
+androidx.databinding:databinding-common:9.3.1
+androidx.databinding:databinding-ktx:9.3.1
+androidx.databinding:databinding-runtime:9.3.1
+androidx.databinding:viewbinding:9.3.1
 androidx.fragment:fragment-ktx:1.8.9
 androidx.fragment:fragment:1.8.9
 androidx.interpolator:interpolator:1.0.0
@@ -48,8 +48,8 @@ androidx.viewpager:viewpager:1.0.0
 com.google.guava:listenablefuture:1.0
 io.reactivex.rxjava3:rxandroid:3.0.2
 io.reactivex.rxjava3:rxjava:3.1.5
-org.jetbrains.kotlin:kotlin-parcelize-runtime:2.4.0
-org.jetbrains.kotlin:kotlin-stdlib:2.4.0
+org.jetbrains.kotlin:kotlin-parcelize-runtime:2.4.20
+org.jetbrains.kotlin:kotlin-stdlib:2.4.20
 org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2
 org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2

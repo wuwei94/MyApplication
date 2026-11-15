@@ -63,7 +63,7 @@ src/test/
 
 ### 维护注意
 
-- lint-api 版本（`androidLint` in `libs.versions.toml`）**必须与 AGP 内置 Lint 对齐**：AGP 9.1.0 → Lint 32.1.0。AGP 升级时同步调整，否则规则无法加载；
+- lint-api 版本（`androidLint` in `libs.versions.toml`）**必须与 AGP 内置 Lint 对齐**：AGP 9.3.1 → Lint 32.3.1。AGP 升级时同步调整，否则规则无法加载；
 - 规则自身的单测在 `lint/src/test`（`TestLintTask` 喂源码断言，含合规 / 违规双向用例），运行 `./gradlew :lint:test`。
 
 ## 三、Roborazzi 截图测试

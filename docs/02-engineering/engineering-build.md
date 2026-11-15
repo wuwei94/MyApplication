@@ -155,7 +155,7 @@ org.gradle.isolated-projects=true
 ksp.project.isolation.enabled=true
 ```
 * **与 NiA 保持一致**：显式声明该属性后与 NiA 完全对齐，消除对 KSP 隐式跟随行为的依赖，保障在 Gradle Project Isolation 开启时 KSP 的配置解耦与并发编译行为更明确、更稳健。
-* 版本前提：该属性由 KSP 2.3.x 引入（要求 KGP ≥ 2.3.0）。本仓采用 Kotlin 2.4.0 + KSP 2.3.9，完全满足该特性的运行要求。
+* 版本前提：该属性由 KSP 2.3.x 引入（要求 KGP ≥ 2.3.0）。本仓采用 Kotlin 2.4.20 + KSP 2.3.9，完全满足该特性的运行要求。
 
 #### Kotlin 警告门禁控制（warningsAsErrors） 【已落地】
 对齐 NiA 规范，在 `gradle.properties` 中提供统一声明：

@@ -44,6 +44,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             configureSpotlessForAndroid()
             extensions.configure<LibraryExtension> {
                 compileSdk = 37
+                compileSdkMinor = 2
                 defaultConfig.minSdk = 24
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 if (file("consumer-rules.pro").exists()) {

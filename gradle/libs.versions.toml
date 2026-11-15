@@ -24,7 +24,7 @@ kotlinxSerialization = "1.8.1"
 turbine = "1.2.0"
 # Roborazzi: Compose 截图测试（record/verify 基准图，依赖 Robolectric 在 JVM 跑）
 # GitHub: https://github.com/takahirom/roborazzi
-# 本仓实测基线：Kotlin 2.4.0 / AGP 9.1.0 / Gradle 9.3.1 下录图与校验均通过；其 Compose 支持带 Kotlin 编译器插件，若报插件版本不匹配须同步升级本库
+# 本仓实测基线：Kotlin 2.4.20 / AGP 9.3.1 / Gradle 9.5.0 下录图与校验均通过；其 Compose 支持带 Kotlin 编译器插件，若报插件版本不匹配须同步升级本库
 roborazzi = "1.73.0"
 # Robolectric: JVM 上模拟 Android 运行时（截图测试依赖）
 robolectric = "4.16.1"
@@ -372,16 +372,16 @@ ktlint = "1.4.0"
 # ==============================================================================
 # Android Gradle Plugin (AGP) 构建工具
 # 发行注记: https://developer.android.google.cn/studio/releases/gradle-plugin
-gradlePluginAndroid = "9.1.0"
+gradlePluginAndroid = "9.3.1"
 # Android Lint 工具链版本（com.android.tools.lint:* 系列：lint-api / lint-checks / lint-test-utils）
 # 注意：lint 工具链有独立版本号（当前 32.x），【不】跟随 AGP 的 9.x 版本。
 # 必须与 AGP 捆绑的 lint 版本严格一致，否则自定义 Detector 编译/运行会因 lint-api 版本错配失败。
-# 依据：AGP 9.1.0 的 POM 依赖 com.android.tools.lint:lint-model:32.1.0（同工具链版本），故固定 32.1.0。
-lint = "32.1.0"
+# 依据：AGP 9.3.1 的 POM 依赖 com.android.tools.lint:lint-model:32.3.1（同工具链版本），故固定 32.3.1。
+lint = "32.3.1"
 # Kotlin Gradle 编译插件
 # 发行注记: https://kotlinlang.org/docs/releases.html
 # 与 flutter/flutter_demo/.android 生成工程的 Kotlin 版本保持一致
-gradlePluginKotlin = "2.4.0"
+gradlePluginKotlin = "2.4.20"
 # Google Protocol Buffers Gradle 插件
 gradlePluginProtobuf = "0.9.6"
 # 阿里 ARouter 路由自动注册插件
