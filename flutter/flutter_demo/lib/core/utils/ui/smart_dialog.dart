@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// flutter_smart_dialog 项目级统一封装
 class AppSmartDialog {

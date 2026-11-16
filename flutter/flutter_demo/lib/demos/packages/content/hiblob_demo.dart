@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:hiblob/flutter.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Hiblob — 由 name 确定性生成的几何 blob 头像
 ///

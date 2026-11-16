@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic_demo_colors.dart';
 import 'package:flutter_demo/core/basic/basic_demo_dimens.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 单条历史日志。
 @immutable

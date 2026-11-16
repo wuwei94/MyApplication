@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// StaggeredGridView — 瀑布 / 拼贴网格预览
 ///

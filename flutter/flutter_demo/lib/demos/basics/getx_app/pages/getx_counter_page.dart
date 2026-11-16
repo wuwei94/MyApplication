@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/basics/getx_app/controllers/getx_counter_controller.dart';
 import 'package:get/get.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GetXCounterPage extends StatelessWidget {
   const GetXCounterPage({super.key, required this.title});

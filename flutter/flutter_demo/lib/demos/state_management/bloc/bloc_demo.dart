@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/demos/state_management/bloc/blocs/counter_bloc.dart';
 import 'package:flutter_demo/demos/state_management/bloc/observers/counter_bloc_observer.dart';
 import 'package:flutter_demo/demos/state_management/bloc/pages/counter_bloc_page.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Bloc
 /// https://pub.dev/packages/flutter_bloc

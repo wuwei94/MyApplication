@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// StreamBuilder
 /// Demonstrates real-time data handling with StreamBuilder

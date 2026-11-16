@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/basics/getx_app/navigation/getx_routes.dart';
 import 'package:flutter_demo/demos/basics/getx_app/pages/getx_home_page.dart';
 import 'package:flutter_demo/l10n/app_translations.dart';
 import 'package:get/get.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// GetX
 /// https://pub.dev/packages/get

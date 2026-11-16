@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as legacy; // ignore: deprecated_member_use
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/markdown/engine/markdown_stream_fixer.dart';
 import 'package:flutter_demo/demos/markdown/engine/typewriter_engine.dart';
 import 'package:flutter_demo/demos/markdown/widgets/markdown_code_highlighter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// TypewriterEngine — 流式打字机与语法容错
 ///
@@ -322,7 +323,7 @@ class _MarkdownTypewriterDemoPageState
   }
 
   Widget _buildMarkdownArea() {
-    final ThemeData theme = Theme.of(context);
+    final legacy.ThemeData theme = legacy.Theme.of(context);
     final MarkdownStyleSheet styleSheet = MarkdownStyleSheet.fromTheme(theme)
         .copyWith(
           codeblockDecoration: const BoxDecoration(

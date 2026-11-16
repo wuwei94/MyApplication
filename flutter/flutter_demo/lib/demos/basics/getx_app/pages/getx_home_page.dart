@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/basics/getx_app/navigation/modules/getx_features_route.dart';
 import 'package:get/get.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// GetX 示例列表页面
 /// 用于展示所有 GetX 示例的入口

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 控制台色板 — 与 Android `basic_shared` `shared_color_console_*` 对齐。
 ///

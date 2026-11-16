@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/state_management/riverpod/pages/counter_riverpod_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Riverpod
 /// https://pub.dev/packages/flutter_riverpod

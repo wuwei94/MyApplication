@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 代码块文本着色器（仅作用于 Markdown `pre` 代码块内容）
 ///

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as legacy; // ignore: deprecated_member_use
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/core/utils/ui/toast.dart';
 import 'package:flutter_demo/demos/markdown/widgets/markdown_code_highlighter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Markdown — 基础与扩展渲染
 ///
@@ -64,7 +65,7 @@ class _MarkdownBasicDemoPageState
         ),
         styleSheet: _useCustomTheme
             ? _buildCustomTheme(context)
-            : MarkdownStyleSheet.fromTheme(Theme.of(context)),
+            : MarkdownStyleSheet.fromTheme(legacy.Theme.of(context)),
       ),
     );
   }
@@ -75,7 +76,7 @@ class _MarkdownBasicDemoPageState
 
   /// 自定义主题：绿色引用条 / 暗色代码块 / 行内代码配色 / 粗圆点
   MarkdownStyleSheet _buildCustomTheme(BuildContext context) {
-    return MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+    return MarkdownStyleSheet.fromTheme(legacy.Theme.of(context)).copyWith(
       blockquoteDecoration: const BoxDecoration(
         color: Color(0x1A4CAF50),
         border: Border(left: BorderSide(color: Color(0xFF4CAF50), width: 4)),

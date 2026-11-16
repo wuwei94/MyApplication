@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/ml/engines/english_g2p.dart';
 import 'package:flutter_demo/demos/ml/engines/kitten_synthesizer.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_demo/demos/ml/engines/kitten_worker.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_audio.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_model_download.dart';
 import 'package:flutter_demo/demos/ml/engines/sentence_chunker.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// LiteRT — 流式语音合成（KittenTTS nano）
 ///

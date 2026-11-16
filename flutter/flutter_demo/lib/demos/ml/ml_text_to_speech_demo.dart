@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/ml/engines/english_g2p.dart';
 import 'package:flutter_demo/demos/ml/engines/matcha_synthesizer.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_audio.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_model_download.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// LiteRT — 端侧语音合成（Matcha-TTS）
 ///

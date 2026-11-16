@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// AutoSizeText — 有限空间自动缩放字号
 ///

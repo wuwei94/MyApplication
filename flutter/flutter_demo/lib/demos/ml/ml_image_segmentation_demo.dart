@@ -1,12 +1,12 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_tflite_helper.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// MediaPipe Selfie Multiclass — 人像多类语义分割（LiteRT / TFLite 端侧推理）

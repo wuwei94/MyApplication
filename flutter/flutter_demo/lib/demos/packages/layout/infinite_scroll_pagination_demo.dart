@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Infinite Scroll Pagination — 分页列表状态机
 ///

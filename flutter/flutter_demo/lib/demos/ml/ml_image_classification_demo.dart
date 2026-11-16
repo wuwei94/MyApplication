@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_model_download.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_tflite_helper.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// EfficientNet-Lite — 图像物体分类 Top-5（LiteRT / TFLite 端侧推理）

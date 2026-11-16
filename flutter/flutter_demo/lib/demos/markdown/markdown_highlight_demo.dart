@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:highlight/highlight.dart' as hl;
+import 'package:material_ui/material_ui.dart';
 
 /// flutter_highlight — 多语言代码语法高亮
 ///

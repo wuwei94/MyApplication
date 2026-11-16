@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/core/utils/ui/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Cupertino Dialogs
 /// Demonstrates iOS-style dialogs

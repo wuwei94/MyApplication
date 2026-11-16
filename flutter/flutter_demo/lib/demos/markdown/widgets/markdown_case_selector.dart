@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 顶部横滑案例选择器（Markdown 示例页通用）
 ///

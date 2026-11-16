@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// SizedBox
 /// Demonstrates various usages of SizedBox: fixed size, expand, shrink, square, etc.

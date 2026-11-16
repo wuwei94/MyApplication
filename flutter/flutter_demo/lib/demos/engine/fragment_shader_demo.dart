@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Fragment Shader 示例
 ///

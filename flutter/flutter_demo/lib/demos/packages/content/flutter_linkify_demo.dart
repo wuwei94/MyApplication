@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/core/utils/ui/toast.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// FlutterLinkify — 正文 URL 自动识别与点击

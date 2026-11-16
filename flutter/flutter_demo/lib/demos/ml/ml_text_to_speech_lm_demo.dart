@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_audio.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_model_download.dart';
 import 'package:flutter_demo/demos/ml/engines/qwen3_tts_engine.dart';
 import 'package:flutter_demo/demos/ml/engines/qwen3_tts_worker.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// LiteRT — 语音语言模型语音合成（Qwen3-TTS 12Hz）
 ///

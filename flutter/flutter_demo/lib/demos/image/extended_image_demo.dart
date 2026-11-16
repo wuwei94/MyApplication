@@ -1,6 +1,6 @@
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// extended_image
 /// https://pub.dev/packages/extended_image

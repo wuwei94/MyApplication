@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_demo/demos/ml/engines/laya/laya_calibration.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_demo/demos/ml/engines/laya/laya_engine.dart';
 import 'package:flutter_demo/demos/ml/engines/laya/laya_json.dart';
 import 'package:flutter_demo/demos/ml/engines/laya/laya_prompt_builder.dart';
 import 'package:flutter_demo/demos/ml/engines/ml_model_download.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// LiteRT — Laya 多语言零样本分类（LiteRT / TFLite 侧推理）
 ///

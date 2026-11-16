@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 粒子系统示例
 ///

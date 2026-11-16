@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_demo/demos/state_management/cubit/cubits/counter_cubit.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CounterCubitPage extends StatelessWidget {
   const CounterCubitPage({super.key, required this.title});

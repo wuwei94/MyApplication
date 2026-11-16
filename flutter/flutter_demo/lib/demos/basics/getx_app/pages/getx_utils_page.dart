@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GetXUtilsPage extends StatelessWidget {
   const GetXUtilsPage({super.key, required this.title});

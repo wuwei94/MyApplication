@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/app/navigation/app_navigator.dart';
 import 'package:flutter_demo/catalog/models/resolved_catalog_entry.dart';
 import 'package:flutter_demo/core/utils/logger/logger.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// 通用 Demo 目录页：首页展示分组，分组页展示具体示例
 class CatalogPage extends StatelessWidget {

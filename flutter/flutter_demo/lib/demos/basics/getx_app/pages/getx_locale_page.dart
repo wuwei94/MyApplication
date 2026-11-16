@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/l10n/app_strings.dart';
 import 'package:get/get.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GetXLocalePage extends StatelessWidget {
   const GetXLocalePage({super.key, required this.title});

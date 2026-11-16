@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/core/basic/basic.dart';
 import 'package:flutter_svga/flutter_svga.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// SVGA animation
 /// https://pub.dev/packages/flutter_svga

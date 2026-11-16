@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/basics/getx_app/utils/getx_storage_utils.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GetXStoragePage extends StatelessWidget {
   const GetXStoragePage({super.key, required this.title});

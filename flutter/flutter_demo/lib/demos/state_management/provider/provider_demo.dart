@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/state_management/provider/notifiers/counter_provider_change_notifier.dart';
 import 'package:flutter_demo/demos/state_management/provider/pages/counter_provider_page.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 
 /// Provider

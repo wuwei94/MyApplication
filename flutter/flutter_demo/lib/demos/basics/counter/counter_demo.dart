@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CounterDemoPage extends StatelessWidget {
   const CounterDemoPage({super.key, required this.title});

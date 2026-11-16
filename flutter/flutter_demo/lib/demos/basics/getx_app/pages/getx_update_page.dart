@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/basics/getx_app/controllers/getx_update_controller.dart';
 import 'package:get/get.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GetXUpdatePage extends StatelessWidget {
   const GetXUpdatePage({super.key, required this.title});

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_demo/demos/state_management/provider/notifiers/counter_provider_change_notifier.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 
 class CounterProviderPage extends StatelessWidget {
