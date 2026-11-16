@@ -25,14 +25,13 @@ import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 
 /**
- * 文章数据仓库接口（服务于 module_arch 的 MVP / MVVM / MVI 与 Mavericks 架构模式教学对比演示）。
+ * 文章数据仓库接口（服务于 module_arch 的 MVP / MVVM / MVI 与 Offline-First 架构模式教学对比演示）。
  *
  * 架构对应关系：
  * 1. MVP           -> 传统回调 API ([getArticleCallback])
  * 2. MVVM          -> 基础请求与响应式流 API ([getArticleSingle], [getArticleSuspend], [getArticleLiveData] 等)
  * 3. MVI           -> Flow 响应式数据流 API ([getArticleFlow] 等)
- * 4. Mavericks     -> 挂起函数 API ([getArticleSuspend])，由专用的 [ArticleMavericksRepository] 包装驱动状态
- * 5. Offline-First -> Room 响应式流 ([getArticlesStream]) + 网络写同步 ([syncArticles]) + 增量后台同步 ([syncWith])，实现单一真实数据源（SSOT）
+ * 4. Offline-First -> Room 响应式流 ([getArticlesStream]) + 网络写同步 ([syncArticles]) + 增量后台同步 ([syncWith])，实现单一真实数据源（SSOT）
  */
 interface ArticleRepository : Syncable {
 

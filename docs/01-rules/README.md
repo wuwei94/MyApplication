@@ -15,7 +15,7 @@
 | 抄现成模板（Showcase/UDF/MVI/Compose/测试/废弃页） | [templates.md](templates.md) + 仓内 `templates/` | 模板骨架；与规则冲突时以规则为准 | `ShowcaseActivity.kt.stub`、`MviViewModel.kt.stub`、`ComposeScreen.kt.stub`、`DeprecatedShowcaseActivity.kt.stub` |
 | 查 UI 尺寸、字体、图标规范 | [design.md](design.md) + `basic_shared` `dimens.xml` | 4dp 网格与设计体系 | `shared_dp_*` |
 | 写 Commit / 装钩子 / 确认提交粒度 | [git.md](git.md) | Conventional Commits、提交粒度与门禁 | `tools/commit-msg`；`tools/pre-push` |
-| 写架构演进页（MVP/MVVM/MVI/Mavericks） | [showcase.md](showcase.md) §1.4 + [../03-architecture/architecture.md](../03-architecture/architecture.md) | SSOT/UDF 载体与模式对比 | `modules/module_arch`；`templates/MviViewModel.kt.stub` |
+| 写架构演进页（MVP/MVVM/MVI） | [showcase.md](showcase.md) §1.4 + [../03-architecture/architecture.md](../03-architecture/architecture.md) | SSOT/UDF 载体与模式对比 | `modules/module_arch`；`templates/MviViewModel.kt.stub` |
 | 写 Compose UI 原语页 | [showcase.md](showcase.md) §1.3 + [templates.md](templates.md) Compose 节 | Stateful/Stateless 分离、单页自包含 | `modules/module_compose`；`templates/ComposeScreen.kt.stub` |
 | 改 Flutter Demo 侧 | [../../flutter/flutter_demo/AGENTS.md](../../flutter/flutter_demo/AGENTS.md) | 子仓不变量与静态检查 | `fvm flutter analyze` |
 | 查模块/库全景与 Activity 清单 | [../05-catalog/modules.md](../05-catalog/modules.md)、[../05-catalog/libs.md](../05-catalog/libs.md) | 检索型索引 | — |

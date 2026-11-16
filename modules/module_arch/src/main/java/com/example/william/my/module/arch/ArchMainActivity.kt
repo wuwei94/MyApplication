@@ -6,9 +6,9 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 架构模块入口 — 导航到 MVP、MVVM、MVI、Mavericks、Offline-First 等示例页面。
+ * 架构模块入口 — 导航到 MVP、MVVM、MVI、Offline-First 等示例页面。
  *
- * 展示 MVP/MVVM/MVI/Mavericks 等架构模式的示例列表。
+ * 展示 MVP/MVVM/MVI 等架构模式的示例列表。
  */
 @Route(path = RouterPath.Arch.Main)
 class ArchMainActivity : RouterRecyclerActivity() {
@@ -19,7 +19,6 @@ class ArchMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("MVVM（LiveData + UseCase 数据驱动）", RouterPath.Arch.MVVM))
         routerItems.add(RouterItem("MVI（StateFlow + Intent + Effect 单向数据流）", RouterPath.Arch.MVI))
         routerItems.add(RouterItem("Compose MVI（Compose + StateFlow 单向数据流）", RouterPath.Arch.ComposeMVI))
-        routerItems.add(RouterItem("Mavericks（Airbnb 现代化响应式 MVI 架构）", RouterPath.Arch.Mavericks))
         routerItems.add(RouterItem("Offline-First（Room 唯一数据源 SSOT 离线优先架构）", RouterPath.Arch.OfflineFirst))
         return routerItems
     }

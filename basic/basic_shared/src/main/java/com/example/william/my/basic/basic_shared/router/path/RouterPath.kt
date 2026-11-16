@@ -463,7 +463,6 @@ object RouterPath {
         const val MVP = "$PATH/MVP"
         const val MVVM = "$PATH/MVVM"
         const val MVI = "$PATH/MVI"
-        const val Mavericks = "$PATH/Mavericks"
         const val ComposeMVI = "$PATH/ComposeMVI"
         const val OfflineFirst = "$PATH/OfflineFirst"
         const val SSOT = OfflineFirst

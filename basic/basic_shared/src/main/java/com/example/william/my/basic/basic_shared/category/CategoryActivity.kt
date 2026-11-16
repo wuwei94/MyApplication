@@ -150,7 +150,7 @@ class CategoryActivity : RouterRecyclerActivity() {
 
     /**
      * 架构与工程
-     * - 架构模式：Arch (MVP, MVVM, MVI, Mavericks)
+     * - 架构模式：Arch (MVP, MVVM, MVI)
      * - 依赖注入：DI (Hilt, Koin)
      * - 事件通信：Event（事件总线）
      * - 响应式编程：Reactive（Flow / RxJava 操作符对照）

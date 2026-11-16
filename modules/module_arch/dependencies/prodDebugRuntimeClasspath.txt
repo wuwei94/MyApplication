@@ -171,8 +171,6 @@ androidx.window:window-core:1.5.0
 androidx.window:window:1.5.0
 androidx.work:work-runtime-ktx:2.11.1
 androidx.work:work-runtime:2.11.1
-com.airbnb.android:mavericks-common:3.0.10
-com.airbnb.android:mavericks:3.0.10
 com.alibaba:arouter-annotation:1.0.6
 com.alibaba:arouter-api:1.5.2
 com.blankj:utilcodex:1.31.1

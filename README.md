@@ -1,6 +1,6 @@
 # MyApplication — Android 个人技术栈沉淀工程
 
-一个用于沉淀 Android 技术栈、源码阅读与跨端实践的个人学习工程。工程上采用 **Kotlin DSL + Version Catalogs + Convention Plugin**（参考 [Now in Android](https://github.com/android/nowinandroid) 结构）进行统一版本管理和组件化拆分；能力层覆盖 **MVP / MVVM / MVI / Mavericks**，并接入 **Jetpack Compose / Flutter** 双栈视图层，方便横向对比不同架构与 UI 方案。
+一个用于沉淀 Android 技术栈、源码阅读与跨端实践的个人学习工程。工程上采用 **Kotlin DSL + Version Catalogs + Convention Plugin**（参考 [Now in Android](https://github.com/android/nowinandroid) 结构）进行统一版本管理和组件化拆分；能力层覆盖 **MVP / MVVM / MVI**，并接入 **Jetpack Compose / Flutter** 双栈视图层，方便横向对比不同架构与 UI 方案。
 
 ---
 
@@ -8,7 +8,7 @@
 
 - **工程化与规范**：Kotlin DSL + Version Catalogs + `build-logic` Convention Plugin（完全对齐 [Now in Android](https://github.com/android/nowinandroid)），多模块 Mermaid 依赖拓扑图自动化生成（`./gradlew generateModulesGraph`，该任务与项目隔离互斥，需附加 `-Dorg.gradle.isolated-projects=false`），Spotless + ktlint 统一代码规范格式化（`./gradlew spotlessApply`），Compose Compiler 稳定性配置（`compose_compiler_config.conf`）。
 - **性能优化与基准测试**：Jetpack Macrobenchmark + Baseline Profile 基准配置文件体系，AOT 预编译冷启动提速（30%+）与列表防掉帧，DiffUtil 差量刷新、LRU 缓存、协程 Dispatcher 性能对比。
-- **架构层**：MVP / MVVM / MVI / Mavericks 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架；落地 Now in Android 离线优先（Offline-First / SSOT）、响应式网络监听（`NetworkMonitor` + UI 离线横幅 / 在线自愈）与独立同步调度模块（`basic_sync`：`ServiceLocatorSyncWorker` 与 `HiltSyncWorker` 平行装配 + WorkManager + Proto DataStore 版本游标后台幂等增量拉取）。
+- **架构层**：MVP / MVVM / MVI 全覆盖，配套 `UseCase` + `Repository` + `ServiceLocator` 脚手架；落地 Now in Android 离线优先（Offline-First / SSOT）、响应式网络监听（`NetworkMonitor` + UI 离线横幅 / 在线自愈）与独立同步调度模块（`basic_sync`：`ServiceLocatorSyncWorker` 与 `HiltSyncWorker` 平行装配 + WorkManager + Proto DataStore 版本游标后台幂等增量拉取）。
 - **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
@@ -27,7 +27,7 @@
 | Build       | Gradle Kotlin DSL · Version Catalogs · Convention Plugin · Spotless (ktlint) |
 | UI          | Android Views · Jetpack Compose · Material3 · Flutter |
 | Charts      | MPAndroidChart · Compose Canvas · Flutter fl_chart |
-| Architecture| MVP · MVVM · MVI · Compose MVI · Mavericks · Offline-First (SSOT) |
+| Architecture| MVP · MVVM · MVI · Compose MVI · Offline-First (SSOT) |
 | DI          | Hilt · Koin |
 | Navigation  | ARouter · Navigation Component |
 | Network     | OkHttp · Retrofit · Ktor · Volley · WebSocket · Netty · MQTT · Bluetooth BLE · NanoHTTPD |
@@ -148,7 +148,7 @@ MyApplication/
     │   └── module_ml           # 机器学习（LiteRT 2.x 端侧推理：手写识别 / 图像分类 / 语义分割 / 文本情感分类 / 零样本分类 / 三套语音合成 + CPU/GPU 硬件加速）
     │
     ├── [架构与工程]
-    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Compose MVI / Mavericks 并列分包）
+    │   ├── module_arch         # 架构模式（MVP / MVVM / MVI / Compose MVI 并列分包）
     │   ├── module_di           # 依赖注入（Hilt / Koin）
     │   ├── module_event        # 事件总线（EventBus / RxEventBus / LiveEventBus / FlowEventBus）
     │   ├── module_reactive     # 响应式编程（Flow / RxJava 操作符对照）
@@ -412,7 +412,7 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 
 ### module_arch（架构模式）
 
-架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。各架构在模块内按 `mvp`、`mvvm`、`mvi`、`compose`、`mavericks` 分包并列管理。
+架构模式对比 Demo，覆盖 Android 开发中主流的架构方案。各架构在模块内按 `mvp`、`mvvm`、`mvi`、`compose` 分包并列管理。
 
 | 模式 | 说明 |
 |------|------|
@@ -420,7 +420,6 @@ MQTT 消息队列遥测传输专项演示，使用 EMQX 公共 Broker，提供�
 | MVVM | LiveData + ViewModel，UseCase 封装单一业务逻辑 |
 | MVI | 单向数据流：State → UI → Intent → ViewModel → State |
 | Compose MVI | Jetpack Compose + MVI 单向数据流 + SmartRefresh 下拉刷新与分页 |
-| Mavericks | 基于 Airbnb [Mavericks](https://airbnb.io/mavericks/) 框架的 MVI 实现，包含不可变状态、状态持久化与异步请求 |
 
 ### module_di（依赖注入）
 

@@ -1,6 +1,6 @@
-# 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First）
+# 架构模式演进与选型指南（MVP / MVVM / MVI / Compose MVI / Offline-First）
 
-本文档系统梳理 Android 移动端应用架构的演进脉络，全面解析 `modules/module_arch` 中落地的 6 种主流架构范式：**MVP**、**MVVM**、**MVI**、**Compose MVI**、**Airbnb Mavericks** 与 **Offline-First & SSOT（离线优先单一数据源）**。从核心原理、数据流向、状态容器、生命周期安全到实战代码切片进行纵向对比，并提供生产环境下的技术选型决策树。
+本文档系统梳理 Android 移动端应用架构的演进脉络，全面解析 `modules/module_arch` 中落地的 5 种主流架构范式：**MVP**、**MVVM**、**MVI**、**Compose MVI** 与 **Offline-First & SSOT（离线优先单一数据源）**。从核心原理、数据流向、状态容器、生命周期安全到实战代码切片进行纵向对比，并提供生产环境下的技术选型决策树。
 
 ---
 
@@ -19,7 +19,6 @@ flowchart LR
     subgraph S3["第三代：单向数据流"]
         C["MVI\n(StateFlow + UDF)"]
         D["Compose MVI\n(声明式 UI + 重组)"]
-        E["Airbnb Mavericks\n(Async<T> 状态容器)"]
     end
     subgraph S4["第四代：离线优先与自愈"]
         F["Offline-First & SSOT\n(Room Flow + WorkManager 同步)"]
@@ -28,27 +27,26 @@ flowchart LR
     A -->|"解决内存泄漏与冗余接口"| B
     B -->|"解决多状态分散与流向不可控"| C
     C -->|"声明式组件与状态提升"| D
-    C -->|"消除样板代码与状态模板"| E
     C -->|"解决弱网白屏与多页状态割裂"| F
 ```
 
-### 2. 六大架构横向对比矩阵
+### 2. 五大架构横向对比矩阵
 
-| 维度 | MVP | MVVM | MVI | Compose MVI | Airbnb Mavericks | Offline-First & SSOT |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **数据流动** | 双向通信（P 调 V，V 调 P） | 双向/单向混合（观察者驱动） | **严格单向（UDF）** | **严格单向（UDF）** | **严格单向（UDF）** | **全局单向（数据库环形流）** |
-| **真实数据源 (SSOT)** | Presenter 临时变量 | ViewModel 中的各 `LiveData` | ViewModel 的单一 `ViewState` | ViewModel 的单一 `ComposeState` | ViewModel 的 `MavericksState` | **本地数据库 (Room)** |
-| **状态持有与表示** | 分散在 View 与 Presenter | 多个离散的 `LiveData<T>` | 单一不可变 `data class` | 单一不可变 `data class` | 单一不可变且包含 `Async<T>` | 数据库持久化实体 + `UiState` |
-| **UI 交互机制** | 接口回调（`showLoading` 等） | `observe()` 局部更新 View | `collect()` 监听状态刷新 | `collectAsState()` 局部重组 | `withState()` / 订阅推流 | `collectAsState()` 局部重组 |
-| **一次性副作用 (Effect)** | Presenter 直接调 View 接口 | `SingleLiveEvent` / 共享 Flow | 独立 `Channel<UiEffect>` 缓冲流 | 独立 `Channel<UiEffect>` 缓冲流 | 状态内置标志位或独立通知 | 独立 `Channel<UiEffect>` 缓冲流 |
-| **离线可用性** | 弱（通常直接报错） | 弱（除非手动读本地缓存） | 弱（除非手动读本地缓存） | 弱（除非手动读本地缓存） | 中等（内置序列化持久化） | **极高（秒开、断网可用、自动增量同步）** |
-| **生命周期安全性** | 差（需手动 `attach`/`detach`） | 优（`LiveData` 自动解绑） | 优（结合 `repeatOnLifecycle`）| 优（Compose 生命周期协同） | 优（框架托管生命周期） | 优（结合 `repeatOnLifecycle`） |
-| **样板代码量** | 高（接口、实现类双倍代码） | 中等 | 较高（Intent/State/Effect） | 中等（无 ViewBinding 胶水层） | **极低（自动封装 Loading/Success）** | 中高（需维护数据库与同步器） |
-| **单元测试成本** | 需大量 Mock View 接口 | 需测试各 `LiveData` 变化 | 仅测 `Intent -> ViewState` 输入输出 | 仅测 `Intent -> ViewState` 输入输出 | 仅测 State 转移与 `Async` 状态 | 可利用手写替身测试端到端同步链路 |
+| 维度 | MVP | MVVM | MVI | Compose MVI | Offline-First & SSOT |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **数据流动** | 双向通信（P 调 V，V 调 P） | 双向/单向混合（观察者驱动） | **严格单向（UDF）** | **严格单向（UDF）** | **全局单向（数据库环形流）** |
+| **真实数据源 (SSOT)** | Presenter 临时变量 | ViewModel 中的各 `LiveData` | ViewModel 的单一 `ViewState` | ViewModel 的单一 `ComposeState` | **本地数据库 (Room)** |
+| **状态持有与表示** | 分散在 View 与 Presenter | 多个离散的 `LiveData<T>` | 单一不可变 `data class` | 单一不可变 `data class` | 数据库持久化实体 + `UiState` |
+| **UI 交互机制** | 接口回调（`showLoading` 等） | `observe()` 局部更新 View | `collect()` 监听状态刷新 | `collectAsState()` 局部重组 | `collectAsState()` 局部重组 |
+| **一次性副作用 (Effect)** | Presenter 直接调 View 接口 | `SingleLiveEvent` / 共享 Flow | 独立 `Channel<UiEffect>` 缓冲流 | 独立 `Channel<UiEffect>` 缓冲流 | 独立 `Channel<UiEffect>` 缓冲流 |
+| **离线可用性** | 弱（通常直接报错） | 弱（除非手动读本地缓存） | 弱（除非手动读本地缓存） | 弱（除非手动读本地缓存） | **极高（秒开、断网可用、自动增量同步）** |
+| **生命周期安全性** | 差（需手动 `attach`/`detach`） | 优（`LiveData` 自动解绑） | 优（结合 `repeatOnLifecycle`）| 优（Compose 生命周期协同） | 优（结合 `repeatOnLifecycle`） |
+| **样板代码量** | 高（接口、实现类双倍代码） | 中等 | 较高（Intent/State/Effect） | 中等（无 ViewBinding 胶水层） | 中高（需维护数据库与同步器） |
+| **单元测试成本** | 需大量 Mock View 接口 | 需测试各 `LiveData` 变化 | 仅测 `Intent -> ViewState` 输入输出 | 仅测 `Intent -> ViewState` 输入输出 | 可利用手写替身测试端到端同步链路 |
 
 ---
 
-## 二、六大架构落地剖析（基于 `module_arch`）
+## 二、五大架构落地剖析（基于 `module_arch`）
 
 ### 2.1 MVP（Model-View-Presenter 契约架构）
 
@@ -216,54 +214,7 @@ fun ArticleScreen(
 
 ---
 
-### 2.5 Airbnb Mavericks（现代化轻量级 MVI）
-
-- **模块源码位置**：[`com.example.william.my.module.arch.mavericks`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/mavericks)
-- **核心组件**：
-  - `ArticleMavericksState`：实现 `MavericksState`；
-  - `ArticleMavericksViewModel`：继承 `MavericksViewModel`；
-  - `ArticleMavericksFragment`：通过 `fragmentViewModel()` 托管并复写 `invalidate()`。
-
-#### 核心杀手锏：`Async<T>` 原语
-Mavericks 将网络或异步操作的标准四态封装为第一公民类型 `Async<T>`（`Uninitialized`、`Loading`、`Success`、`Fail`），彻底消除了手写 `isLoading`、`isError`、`errorMsg` 的繁琐样板：
-
-```kotlin
-data class ArticleMavericksState(
-    val articleResponse: Async<RetrofitResponse<ArticleData>> = Uninitialized
-) : MavericksState
-
-class ArticleMavericksViewModel(
-    initialState: ArticleMavericksState,
-    private val repository: ArticleRepository
-) : MavericksViewModel<ArticleMavericksState>(initialState) {
-
-    fun loadArticle(page: Int) {
-        // suspend 代码直接 execute，自动经历 Loading -> Success/Fail 转换！
-        suspend { repository.getArticleSuspend(page) }
-            .execute { copy(articleResponse = it) }
-    }
-}
-```
-
-#### View 层响应：`withState` 安全读取
-```kotlin
-override fun invalidate() = withState(viewModel) { state ->
-    when (val response = state.articleResponse) {
-        is Uninitialized -> { /* 初始状态 */ }
-        is Loading -> showLoading()
-        is Success -> showData(response().data?.datas)
-        is Fail -> showError(response.error.message)
-    }
-}
-```
-
-#### 优缺点与适用场景
-- **优势**：代码极度精炼，消除了原生 MVI 80% 的状态流转胶水代码；内置状态持久化与协程生命周期自动取消。
-- **劣势**：属于三方深度侵入框架，有一定学习门槛。
-
----
-
-### 2.6 Offline-First & SSOT（离线优先与单一真实数据源架构）
+### 2.5 Offline-First & SSOT（离线优先与单一真实数据源架构）
 
 - **模块源码位置**：[`com.example.william.my.module.arch.ssot`](../../modules/module_arch/src/main/java/com/example/william/my/module/arch/ssot)
 - **基础支撑层（完全对齐 Google Now in Android 标准数据层解耦）**：
@@ -328,9 +279,7 @@ flowchart TD
     Q3 -- "常规或复杂页面" --> A2["【选型：Compose MVI】\nStateFlow + 单一不可变 State + Channel 副作用"]
     Q3 -- "超简单展示页" --> A3["【选型：轻量 MVVM】\nViewModel + 简单的 mutableStateOf"]
     
-    Q2 -- "传统 Android Views (XML)" --> Q4{"团队对第三方框架的接纳度？"}
-    Q4 -- "接纳 Airbnb 开源体系\n(追求极低样板代码)" --> A4["【选型：Airbnb Mavericks】\n利用 Async<T> 状态原语与自动持久化"]
-    Q4 -- "推崇 Google 官方标准\n(追求团队通用规范)" --> Q5{"页面交互与状态复杂度？"}
+    Q2 -- "传统 Android Views (XML)" --> Q5{"页面交互与状态复杂度？"}
     
     Q5 -- "表单复杂、状态联动多、多按钮事件" --> A5["【选型：原生 MVI】\n严格单向数据流与 StateFlow 防冲突"]
     Q5 -- "标准列表展示、简单 CRUD" --> A6["【选型：标准 MVVM】\nViewModel + UseCase + LiveData/StateFlow"]

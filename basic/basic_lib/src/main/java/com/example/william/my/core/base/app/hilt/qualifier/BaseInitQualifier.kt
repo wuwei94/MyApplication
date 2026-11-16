@@ -24,7 +24,7 @@ annotation class AppInit
 annotation class EventInit
 
 /**
- * Arch 模块初始化限定符（module_arch，启动时初始化 Mavericks）
+ * Arch 模块初始化限定符（module_arch，启动时排队增量同步 Worker）
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

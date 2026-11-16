@@ -215,7 +215,7 @@ include(":modules:module_database")
 include(":modules:module_storage")
 // 依赖注入
 include(":modules:module_di")
-// MVP，MVI，MVVM，Mavericks 架构
+// MVP，MVI，MVVM 架构
 include(":modules:module_arch")
 
 // Compose

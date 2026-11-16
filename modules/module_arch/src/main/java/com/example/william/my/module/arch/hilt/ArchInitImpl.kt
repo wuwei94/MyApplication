@@ -1,7 +1,6 @@
 package com.example.william.my.module.arch.hilt
 
 import android.app.Application
-import com.airbnb.mvrx.Mavericks
 import com.example.william.my.basic.basic_sync.Sync
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import javax.inject.Inject
@@ -15,7 +14,7 @@ import javax.inject.Inject
  *  - Hilt 方案：实现 IAppInit，由本类经 @ArchInit 绑定后注入 AppHilt 触发。
  * 切换 AndroidManifest 中的 android:name（App / AppHilt）即可二选一。
  *
- * 启动时初始化 Mavericks，并调用 [Sync.initialize] 排队增量同步 Worker。
+ * 启动时调用 [Sync.initialize] 排队增量同步 Worker。
  */
 class ArchInitImpl @Inject constructor() : IAppInit {
 
@@ -24,13 +23,8 @@ class ArchInitImpl @Inject constructor() : IAppInit {
     override fun init(app: Application) {
         this.app = app
 
-        initMavericks(app)
         Sync.initialize(app)
     }
 
     override fun getApp(): Application = app
-
-    private fun initMavericks(app: Application) {
-        Mavericks.initialize(app)
-    }
 }

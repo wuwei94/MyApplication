@@ -108,7 +108,7 @@ mindmap
 
 | 文档 | 说明 | 核心关注点 |
 | :--- | :--- | :--- |
-| [architecture.md](03-architecture/architecture.md) | **架构模式演进与选型** | MVP、MVVM、MVI、Compose MVI、Mavericks 与 Offline-First 全景对比及选型树 |
+| [architecture.md](03-architecture/architecture.md) | **架构模式演进与选型** | MVP、MVVM、MVI、Compose MVI 与 Offline-First 全景对比及选型树 |
 | [modularization.md](03-architecture/modularization.md) | **现代组件化演进** | ARouter 现状、业界主流解耦方案（TheRouter / WMRouter）、API-Impl 架构设计 |
 | [engineering-patterns.md](03-architecture/engineering-patterns.md) | **现代架构范式（NiA 落地）** | Offline-First、Environment Monitors、Synchronizer、Navigation 3、M3 Adaptive 与可插拔接口 |
 | [di.md](03-architecture/di.md) | **依赖注入对比** | Hilt（编译期注入）vs Koin（运行时注入）对比矩阵与实战 |
@@ -171,7 +171,7 @@ Flutter 侧的示例与文档随子仓走，本导航只做入口索引，不复
 
 | 决策主题 | 对比对象 | 关键结论（速览） | 详细文档 |
 | :--- | :--- | :--- | :--- |
-| **架构模式** | MVP / MVVM / MVI / Compose MVI / Mavericks / Offline-First | 复杂业务走 MVVM/MVI；强离线与多端一致走 Offline-First + SSOT；决策树见文档 | [architecture.md](03-architecture/architecture.md) |
+| **架构模式** | MVP / MVVM / MVI / Compose MVI / Offline-First | 复杂业务走 MVVM/MVI；强离线与多端一致走 Offline-First + SSOT；决策树见文档 | [architecture.md](03-architecture/architecture.md) |
 | **组件化与路由** | ARouter（停更）/ TheRouter / WMRouter / API-Impl | 弃黑盒路由框架，走向 API-Impl + Hilt + DeepLink 标准范式 | [modularization.md](03-architecture/modularization.md) |
 | **现代架构范式** | Offline-First / ServiceLocator·Hilt SyncWorker / Nav3 / Adaptive / API-Impl / 可插拔接口 | NiA 工程落地范式集合，各能力落地状态见成熟度矩阵 | [engineering-patterns.md](03-architecture/engineering-patterns.md) |
 | **依赖注入** | Hilt vs Koin | Hilt 编译期注入更稳（团队/大型工程）；Koin 轻量起步快 | [di.md](03-architecture/di.md) |

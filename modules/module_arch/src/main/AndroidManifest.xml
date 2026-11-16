@@ -7,7 +7,6 @@
         <activity android:name=".mvvm.activity.MvvmActivity" />
         <activity android:name=".mvi.activity.MviActivity" />
         <activity android:name=".compose.activity.ComposeMviActivity" />
-        <activity android:name=".mavericks.activity.MavericksActivity" />
         <activity android:name=".ssot.activity.OfflineFirstActivity" />
     </application>
 

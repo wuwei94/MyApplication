@@ -61,7 +61,7 @@ Compose 官方 UI 与交互原语的「代码活字典」：
 
 ### 1.4 架构演进型（`module_arch`）
 
-MVP / MVVM / MVI / Mavericks / SSOT 对比载体：
+MVP / MVVM / MVI / SSOT 对比载体：
 
 1. SSOT：Room Flow 为唯一事实源，派生不可变 `UiState`（`stateIn(WhileSubscribed)`）。
 2. Activity/Fragment 仅渲染，`collectWithLifecycle` 监听。

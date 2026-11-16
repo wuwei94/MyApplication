@@ -73,7 +73,6 @@ object ServiceLocator {
      * - MVP：ArticlePresenter
      * - MVVM：ArticleLiveDataViewModel（伴生 Factory）
      * - MVI：ArticleStateFlowViewModel（伴生 Factory）
-     * - Mavericks：ArticleMavericksViewModel、ArticleMavericksRepository
      */
     fun provideArticleRepository(context: Context): ArticleRepository {
         synchronized(lock) {

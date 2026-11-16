@@ -163,7 +163,7 @@ module_<域>/
 | 手动 | `app.App` | 提供 `XxxApp : BaseAppInit`，并在 `App.initApp()` 中 `registerAppInit(...)` |
 | Hilt | `app.AppHilt` | 提供 `XxxInitImpl : IAppInit` + `@XxxInit` 限定符 + `XxxModule`，并纳入 `AppHilt.onCreate()` 调用顺序 |
 
-**命名约定**：`Xxx` 取**模块短名**（`module_arch` → `Arch`，`module_widget_thirdparty` → `WidgetThirdparty`），手动轨与 Hilt 轨共用同一前缀；禁止 Hilt 轨改用初始化目标库名（如 Mavericks、LoadSir）另起一套。
+**命名约定**：`Xxx` 取**模块短名**（`module_arch` → `Arch`，`module_widget_thirdparty` → `WidgetThirdparty`），手动轨与 Hilt 轨共用同一前缀；禁止 Hilt 轨改用初始化目标库名（如 LoadSir）另起一套。
 
 只接一条链路会导致另一方案下模块初始化静默失效。已接入模块见根 `README.md`。
 
