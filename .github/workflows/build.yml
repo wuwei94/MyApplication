@@ -9,6 +9,8 @@ name: Android CI
 #      CI 侧做全量兜底，并补齐本地做不了的项：release 混淆打包、依赖膨胀、全量单元测试、Badging、GMD。
 #   3. Flutter 集成：Android 侧统一传 -PenableFlutter=false，纯 Android 改动不被 Flutter 构建拖慢；
 #      Flutter 自身的 analyze / test / build 由 flutter.yml 独立流水线负责。
+#   4. JDK 下限 21：Kotlin 2.3.x 编译器（AGP Lint 解析 KDoc 依赖）调用了 JDK 21 新增的
+#      java.util.List.removeLast()，CI 用 JDK 17 跑 lintProdDebug 会随机 NoSuchMethodError 崩溃。
 #
 # 未纳入本矩阵（演进规划）：Roborazzi 截图验证（需先在 CI 环境生成截图基准）。
 
@@ -32,10 +34,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -55,10 +57,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -78,10 +80,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -103,10 +105,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -127,10 +129,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -164,10 +166,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -188,10 +190,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Enable KVM
