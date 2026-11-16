@@ -270,6 +270,10 @@ svgaPlayer = "2.6.1"
 # 仅开源版（MIT）发布到 Maven Central；Vap Pro / 企业版为腾讯云商业 SDK 需 License，不在本仓范围
 # GitHub: https://github.com/Tencent/vap/tree/vap_open_source
 vap = "2.0.28"
+# Rive 交互式矢量动画运行时（After Effects 后继工具链导出 .riv，含状态机；本仓走官方 View 轨道 RiveAnimationView API）
+# 官网: https://rive.app/
+# GitHub: https://github.com/rive-app/rive-android
+rive = "11.16.3"
 
 # ==============================================================================
 # 12. 常用实用工具与第三方 UI 增强库
@@ -695,6 +699,8 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 svgaPlayer = { group = "com.github.yyued", name = "SVGAPlayer-Android", version.ref = "svgaPlayer" }
 # 腾讯 VAP Alpha 视频动画播放器（开源版）
 vap = { group = "io.github.tencent", name = "vap", version.ref = "vap" }
+# Rive 矢量动画运行时（含状态机交互，View 轨道 API 在 app.rive.runtime.kotlin 包）
+rive = { group = "app.rive", name = "rive-android", version.ref = "rive" }
 
 # ==============================================================================
 # 12. 常用实用工具与第三方 UI 增强库

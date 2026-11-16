@@ -195,6 +195,7 @@ androidx.window:window-core:1.5.0
 androidx.window:window:1.5.0
 androidx.work:work-runtime-ktx:2.11.1
 androidx.work:work-runtime:2.11.1
+app.rive:rive-android:11.16.3
 co.touchlab:stately-concurrency-jvm:2.1.0
 co.touchlab:stately-concurrency:2.1.0
 co.touchlab:stately-concurrent-collections-jvm:2.1.0
@@ -214,6 +215,7 @@ com.blankj:utilcodex:1.31.1
 com.contrarywind:Android-PickerView:4.1.9
 com.contrarywind:wheelview:4.1.0
 com.daimajia.swipelayout:library:1.2.0
+com.getkeepsafe.relinker:relinker:1.4.5
 com.github.AppDevNext.Logcat:LogcatCoreLib:3.4
 com.github.Jasonchenlijian:FastBle:2.4.0
 com.github.PhilJay:MPAndroidChart:v3.1.0

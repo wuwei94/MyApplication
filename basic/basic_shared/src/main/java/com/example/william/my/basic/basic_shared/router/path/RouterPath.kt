@@ -100,6 +100,9 @@ object RouterPath {
 
         // 第三方动画库 — VAP（Alpha 视频动画）
         const val Vap = "$PATH/Vap"
+
+        // 第三方动画库 — Rive（矢量动画与状态机，View 轨道）
+        const val Rive = "$PATH/Rive"
     }
 
     // 图形与渲染特效（RenderEffect / RenderScript / 图像与图形着色计算）

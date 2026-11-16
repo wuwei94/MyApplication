@@ -6,7 +6,7 @@ import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * 动画模块入口 — 导航到属性动画、过渡动画、Lottie、SVGA、PAG、VAP 等示例页面。
+ * 动画模块入口 — 导航到属性动画、过渡动画、Lottie、Rive、SVGA、PAG、VAP 等示例页面。
  *
  * 展示各类动画技术的示例列表，点击列表项跳转到对应的示例页。
  */
@@ -23,6 +23,9 @@ class AnimMainActivity : RouterRecyclerActivity() {
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── Lottie ──", ""))
         routerItems.add(RouterItem("Lottie（布局预览）", RouterPath.Anim.Lottie))
+        routerItems.add(RouterItem("", ""))
+        routerItems.add(RouterItem("── Rive ──", ""))
+        routerItems.add(RouterItem("Rive（矢量动画与状态机）", RouterPath.Anim.Rive))
         routerItems.add(RouterItem("", ""))
         routerItems.add(RouterItem("── SVGA ──", ""))
         routerItems.add(RouterItem("Svga（布局预览）", RouterPath.Anim.Svga))

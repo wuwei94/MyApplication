@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.svgaPlayer)
     implementation(libs.vap)
+    implementation(libs.rive)
 }

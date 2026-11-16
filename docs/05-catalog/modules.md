@@ -11,7 +11,7 @@
 ├── UI 交互
 │   ├── 控件：标准控件、自定义控件、第三方控件
 │   ├── 导航：Tab 导航
-│   ├── 动画：原生动画与第三方动画库（PAG、Lottie、SVGA）
+│   ├── 动画：原生动画与第三方动画库（PAG、Lottie、Rive、SVGA、VAP）
 │   ├── 内容渲染：Markdown 渲染与 AI 流式交互
 │   └── 数据可视化：MPAndroidChart（折线 / 柱状 / 饼图 / 雷达）
 ├── 多媒体
@@ -192,9 +192,9 @@
 
 ### module_anim（动画）
 
-演示 Android 原生动画机制与第三方动画库（Lottie、SVGA、PAG、VAP）。
+演示 Android 原生动画机制与第三方动画库（Lottie、Rive、SVGA、PAG、VAP）。
 
-源码分包：`activity/system/`（系统原生：属性动画与过渡动画）、`activity/thirdparty/`（第三方库：Lottie / SVGA / PAG / VAP）。
+源码分包：`activity/system/`（系统原生：属性动画与过渡动画）、`activity/thirdparty/`（第三方库：Lottie / Rive / SVGA / PAG / VAP）。
 
 | Activity | 功能 |
 |----------|------|
@@ -213,6 +213,7 @@
 | PagLayerActivity | PAG 图层属性（PAGLayer 通用属性：setMatrix / setAlpha / setVisible / setStartTime，批量作用于顶层子图层） |
 | PagCompositionActivity | PAG 渲染树组合（PAGComposition.Make + addLayer / swapLayerAt / setLayerIndex / removeLayer 组合两个素材） |
 | VapActivity | VAP Alpha 视频动画（AnimView 硬解播放 + IFetchResource 按 srcTag 融合图文，setLoop 次数倒计时） |
+| RiveActivity | Rive 矢量动画与状态机（View 轨道 RiveAnimationView：setRiveResource 装载 skills.riv，play/pause/reset + setNumberState 切 Level 输入） |
 
 PAG 五页与 SVGA 同构，按 **能力**切分，共用 `anim_layout_pag_lab.xml`
 骨架：`PAGView` 铺满容器作为纯渲染画布，页面上不放标题、说明与读数面板；底部 `buildList` 每项直连一个库 API
