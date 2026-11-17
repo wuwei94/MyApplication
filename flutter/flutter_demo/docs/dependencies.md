@@ -137,6 +137,8 @@ Qwen3-TTS talker（int4 / fp32 均外置）、whisper 等 ASR 模型。
 - [Flutter SVGA](https://pub.dev/packages/flutter_svga) — SVGA 动画
 - [Lottie](https://pub.dev/packages/lottie) — Lottie 动画
 - [PAG Flutter](https://pub.dev/packages/pag_flutter) — PAG 动画
+- [Rive](https://pub.dev/packages/rive) — Rive 矢量动画与状态机（0.14.x 新运行时，C++ 运行时经 [rive_native](https://pub.dev/packages/rive_native) 在构建期下载预编译动态库，与 Android 侧 `app.rive:rive-android` 同源）
+- [flutter_vap_plus](https://pub.dev/packages/flutter_vap_plus) — VAP Alpha 视频（官方无 Dart 运行时；`flutter_vap` 停更后的社区延续分支，支持融合动画，Android 侧依赖 `io.github.tencent:vap:2.0.28`，与 `module_anim` 同坐标）
 - [Video Player](https://pub.dev/packages/video_player) — 视频播放
 - [Chewie](https://pub.dev/packages/chewie) — 视频播放器
 

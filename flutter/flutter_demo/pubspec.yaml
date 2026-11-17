@@ -146,6 +146,14 @@ dependencies:
   flutter_svga: ^0.0.13
   # https://pub.dev/packages/pag_flutter
   pag_flutter: ^0.0.1
+  # Rive 交互式矢量动画运行时；0.14.x 为官方新运行时（C++ 经 rive_native 提供，
+  # 与 Android 侧 rive-android 同源），native 库在构建时自动下载
+  # https://pub.dev/packages/rive
+  rive: ^0.14.11
+  # 腾讯 VAP Alpha 视频的 Flutter 封装；官方无 Dart 运行时，flutter_vap 已停更，
+  # flutter_vap_plus 为社区延续分支（补融合动画支持），Android 侧同为 io.github.tencent:vap:2.0.28
+  # https://pub.dev/packages/flutter_vap_plus
+  flutter_vap_plus: ^1.2.10
 
   # lib/demos/video
   # https://pub.dev/packages/video_player
@@ -322,7 +330,9 @@ flutter:
     - assets/anim/svg/
     - assets/anim/lottie/
     - assets/anim/pag/
+    - assets/anim/rive/
     - assets/anim/svga/
+    - assets/anim/vap/
     - assets/ml/
 
   # 自定义片段着色器（.frag）必须在 shaders 段声明，

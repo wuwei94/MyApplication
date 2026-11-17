@@ -13,7 +13,7 @@
 | bluetooth | 低功耗蓝牙示例 | 3 |
 | storage | 本地存储示例 | 9 |
 | image | 图片加载与选择示例 | 9 |
-| animation | 动画资源和播放示例 | 4 |
+| animation | 动画资源和播放示例 | 6 |
 | engine | Flutter 引擎层特性深度示例 | 8 |
 | video | 视频播放示例 | 2 |
 | ml | 端侧机器学习（LiteRT / TensorFlow Lite） | 9 |
@@ -122,14 +122,16 @@
 
 ### animation（动画播放）
 
-动画资源和播放示例。
+动画资源和播放示例，与 Android `module_anim` 的第三方库矩阵一一对应。
 
 | 示例 | 说明 |
 |------|------|
 | lottie | Lottie 动画播放 |
 | pag | PAG 动画播放 |
+| rive | Rive 矢量动画与状态机（0.14 新运行时，素材与 Android 侧同源 skills.riv） |
 | svg | SVG 图片渲染 |
 | svga | SVGA 动画播放 |
+| vap | VAP Alpha 视频播放与融合动画（原生 AnimView PlatformView，素材同源） |
 
 ### engine（引擎层特性）
 

@@ -12,7 +12,7 @@
 - **网络层**：Volley / OkHttp / Retrofit / Retrofit Rx / Ktor / Flutter Dio / Flutter http / WebSocket / Netty / MQTT / NanoHTTPD。Ktor 固定使用 OkHttp Engine，覆盖异常、超时、Cookie、缓存、安全日志与扩展插件；Flutter Dio/http 的普通请求与 Retrofit 统一业务响应、`ServerResultException` 业务失败原因和 `1000–1004` 网络错误码。
 - **持久层**：Room / ObjectBox + DataStore（Preferences / Proto）。
 - **消息总线**：EventBus / RxEventBus / LiveEventBus / FlowEventBus 四种方案对比实现。
-- **跨端**：Android Native + Flutter 双栈落地。Flutter 侧是独立的 Demo Catalog 子工程（`flutter/flutter_demo`，**15 个顶层分组 / 148 个叶子示例页**），覆盖布局与交互、状态管理、网络、蓝牙、存储、图片、动画、视频、端侧 ML、图表、Markdown 与引擎层特性；网络线为 Dio / package:http / WebSocket / MQTT，状态管理并列 Provider / GetX / Bloc / Riverpod。
+- **跨端**：Android Native + Flutter 双栈落地。Flutter 侧是独立的 Demo Catalog 子工程（`flutter/flutter_demo`，**15 个顶层分组 / 150 个叶子示例页**），覆盖布局与交互、状态管理、网络、蓝牙、存储、图片、动画、视频、端侧 ML、图表、Markdown 与引擎层特性；网络线为 Dio / package:http / WebSocket / MQTT，状态管理并列 Provider / GetX / Bloc / Riverpod。
 - **Coroutines + Flow**：配合 `repeatOnLifecycle`、`DataStore`、`Paging`、`WorkManager` 等 Jetpack 组件实践。
 - **自定义 View & 图表**：高斯模糊、裸眼 3D、跑马灯、无限滚动 ImageView、验证码控件等；MPAndroidChart 折线/柱状/饼图/雷达图与多图表全景看板联动。
 - **Compose**：Navigation 2.8+ 类型安全导航与 Nav3、Edge-to-Edge 沉浸与 Insets 软键盘避让、Material 3 完整组件体系、手势/缩放/拖拽、SmartRefresh、Canvas 自绘贝塞尔折线/柱状/饼图/雷达图等多图表全景看板。
@@ -86,7 +86,7 @@ MyApplication/
 │   ├── basic_sync              # 离线增量同步调度层（WorkManager + Synchronizer；ServiceLocator / Hilt Worker 平行装配）
 │   ├── basic_server            # 服务端基础模块
 ├── flutter                     # Flutter 层（add-to-app 集成）
-│   ├── flutter_demo            # Flutter Demo Catalog 子工程（15 个顶层分组 / 148 个叶子示例页，GoRouter + AutoRoute 双路由）
+│   ├── flutter_demo            # Flutter Demo Catalog 子工程（15 个顶层分组 / 150 个叶子示例页，GoRouter + AutoRoute 双路由）
 │   └── flutter_libs            # Flutter 本地库（lib_network_dio / lib_network_http 独立网络封装、lib_image_loader 内核可切换、lib_event_bus 事件总线、lib_storage 键值存储、lib_bluetooth 蓝牙、lib_mqtt MQTT、lib_websocket WebSocket）
 ├── libs                        # 可复用的业务能力库
 │   ├── lib_okhttp              # OkHttp 封装（DSL、多实例及缓存生命周期、安全日志、OkHttp 控制 Header、上传下载进度）
@@ -494,7 +494,7 @@ Jetpack Compose 示例，覆盖声明式 UI 核心能力。
 
 ### module_flutter（Flutter 子工程）
 
-Flutter 双栈落地的宿主模块：以 add-to-app 方式嵌入 `flutter/flutter_demo` 子工程，入口 `FlutterMainActivity`（`/Flutter/Main`）。子工程本身是一个独立的 Demo Catalog——首页 → 目录页 → 示例页三层，**15 个顶层分组 / 148 个叶子示例页**，`catalog.dart` 描述目录树、`GoRouter` 与 `AutoRoute` 双路由并存（`AppRouterType` 常量切换）。完整清单见 [flutter_demo README](flutter/flutter_demo/README.md) 与 [demos.md](flutter/flutter_demo/docs/demos.md)。
+Flutter 双栈落地的宿主模块：以 add-to-app 方式嵌入 `flutter/flutter_demo` 子工程，入口 `FlutterMainActivity`（`/Flutter/Main`）。子工程本身是一个独立的 Demo Catalog——首页 → 目录页 → 示例页三层，**15 个顶层分组 / 150 个叶子示例页**，`catalog.dart` 描述目录树、`GoRouter` 与 `AutoRoute` 双路由并存（`AppRouterType` 常量切换）。完整清单见 [flutter_demo README](flutter/flutter_demo/README.md) 与 [demos.md](flutter/flutter_demo/docs/demos.md)。
 
 | 分组 | 内容 | Android 对照 |
 |------|------|--------------|
@@ -504,7 +504,7 @@ Flutter 双栈落地的宿主模块：以 add-to-app 方式嵌入 `flutter/flutt
 | bluetooth | 扫描与权限、GATT 服务发现与读写、Notify 监听、MTU 协商与分包拼包 | module_bluetooth |
 | storage | shared_preferences / secure_storage / Hive / Drift / Sqflite / Isar / ObjectBox / 路径工具 | module_storage、module_database |
 | image | cached_network_image / ExtendedImage / 压缩 / 裁剪 / 选择 / PhotoView / 微信风格选择器 | module_image_loader |
-| animation | Lottie / PAG / SVGA / SVG | module_anim |
+| animation | Lottie / PAG / Rive / SVGA / SVG / VAP | module_anim |
 | video | video_player / Chewie | module_media |
 | ml | 9 个 LiteRT 示例（视觉 3 / 文本 2 / 语音 4） | module_ml |
 | chart | fl_chart 折线 / 柱状 / 饼图 / 雷达图 / 多图表联动看板 | module_chart |

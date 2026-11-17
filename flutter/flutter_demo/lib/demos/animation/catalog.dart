@@ -3,12 +3,14 @@ import 'package:flutter_demo/catalog/models/catalog_entry.dart';
 import 'package:flutter_demo/catalog/models/catalog_section.dart';
 import 'package:flutter_demo/demos/animation/lottie_demo.dart';
 import 'package:flutter_demo/demos/animation/pag_demo.dart';
+import 'package:flutter_demo/demos/animation/rive_demo.dart';
 import 'package:flutter_demo/demos/animation/svg_demo.dart';
 import 'package:flutter_demo/demos/animation/svga_demo.dart';
+import 'package:flutter_demo/demos/animation/vap_demo.dart';
 
 /// Animation 模块
 ///
-/// 包含：SVG、SVGA、Lottie、PAG 等动画组件示例
+/// 包含：SVG、Lottie、Rive、SVGA、PAG、VAP 等动画组件示例
 class AnimationCatalog extends CatalogSection {
   const AnimationCatalog._();
 
@@ -39,6 +41,12 @@ class AnimationCatalog extends CatalogSection {
           const LottieDemoPage(title: 'Lottie'),
     ),
     CatalogEntry.page(
+      path: 'rive',
+      title: 'Rive',
+      subtitle: 'Rive 矢量动画与状态机播放',
+      pageBuilder: (BuildContext context) => const RiveDemoPage(title: 'Rive'),
+    ),
+    CatalogEntry.page(
       path: 'svga',
       title: 'SVGA',
       subtitle: 'SVGA 动画资源加载与循环播放',
@@ -49,6 +57,12 @@ class AnimationCatalog extends CatalogSection {
       title: 'PAG',
       subtitle: 'PAG 特效动画播放与适配展示',
       pageBuilder: (BuildContext context) => const PagDemoPage(title: 'PAG'),
+    ),
+    CatalogEntry.page(
+      path: 'vap',
+      title: 'VAP',
+      subtitle: 'VAP Alpha 视频播放与融合动画',
+      pageBuilder: (BuildContext context) => const VapDemoPage(title: 'VAP'),
     ),
   ];
 }

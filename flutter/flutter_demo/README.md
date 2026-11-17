@@ -7,7 +7,7 @@
 ## 项目特点
 
 - **Demo Catalog First 架构**：`app` 负责壳层与路由，`catalog` 负责目录模型、注册表、解析与路由工厂，`demos` 负责示例内容——新增示例只需要加页面 + 在 `catalog.dart` 注册
-- **15 个顶层分组、148 个叶子示例页**：basics / layout / state_management / network / bluetooth / storage / image / animation / engine / video / ml / chart / packages / markdown / showcase
+- **15 个顶层分组、150 个叶子示例页**：basics / layout / state_management / network / bluetooth / storage / image / animation / engine / video / ml / chart / packages / markdown / showcase
 - **双路由支持**：`GoRouter` 与 `AutoRoute` 同时实现，在 `lib/app/router/app_router_type.dart` 用 `AppRouterType` 常量切换，路由表互不影响
 - **双端主题对照**：与仓内 Android Demo 按主题一一对应（见下方对照表），用于对比同一能力在两端的技术选型差异
 - **add-to-app 集成**：作为 Flutter module 被 Android `:modules:module_flutter` 嵌入，宿主侧用 `-PenableFlutter=false` 可整体摘除 Flutter 依赖
@@ -47,7 +47,7 @@ test/                                  # asr_engine_test（46）/ ml_zip_npy_tes
 | bluetooth | 扫描 / GATT 读写与 Notify / MTU 协商与分包 | 3 | module_bluetooth |
 | storage | 键值（shared_preferences / secure_storage / Hive）、关系型（Drift / Sqflite）、对象库（Isar / ObjectBox）、门面与路径工具 | 9 | module_storage、module_database |
 | image | 加载与缓存、压缩、裁剪、选择、缩放 | 9 | module_image_loader |
-| animation | Lottie / PAG / SVG / SVGA | 4 | module_anim |
+| animation | Lottie / PAG / Rive / SVG / SVGA / VAP | 6 | module_anim |
 | engine | CustomPainter 粒子、签名板、自定义 RenderObject 环形布局、交错动画、GLSL 着色器、沿路径动画、3D 翻转、自定义手势识别 | 8 | 无对应（Flutter 引擎层专有） |
 | video | video_player / Chewie | 2 | module_media |
 | ml | LiteRT 端侧推理 9 个任务（视觉 3 / 文本 2 / 语音 4） | 9 | module_ml |
