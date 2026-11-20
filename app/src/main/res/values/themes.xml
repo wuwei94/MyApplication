@@ -3,16 +3,13 @@
     <style name="Theme.MyApplication" parent="base_AppTheme" />
 
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
-        <!-- Set the splash screen background, animated icon, and animation
-        duration. -->
+        <!-- 启动页背景色、图标与动画时长配置 -->
         <item name="windowSplashScreenBackground">@android:color/white</item>
-        <!-- Use windowSplashScreenAnimatedIcon to add a drawable or an animated
-             drawable. One of these is required. -->
+        <!-- 启动页中心图标（支持静态或动态 Drawable） -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/shared_ic_launcher</item>
-        <!-- Required for animated icons. -->
+        <!-- 动态图标播放时长（毫秒） -->
         <item name="windowSplashScreenAnimationDuration">1000</item>
-        <!-- Set the theme of the Activity that directly follows your splash
-        screen. This is required. -->
+        <!-- 启动页结束后切换的主应用主题 -->
         <item name="postSplashScreenTheme">@style/Theme.MyApplication</item>
     </style>
 </resources>
