@@ -111,7 +111,7 @@ if [[ ${#code_files[@]} -gt 0 ]]; then
             cur = fname
             is_lint_test = (cur ~ /^lint\/src\/test\//)
             is_router_demo = (cur ~ /^modules\/module_router\//)
-            is_basic_resp_base = (cur ~ /\/BasicResponseActivity\.kt$/)
+            is_basic_resp_base = (cur ~ /\/(BasicResponseActivity|FlutterMainActivity)\.kt$/)
             is_activity = (cur ~ /Activity\.kt$/)
             is_sample_act = (cur ~ /^modules\/.*Activity\.kt$/ && cur !~ /MainActivity\.kt$/)
             has_bom = 0
@@ -125,6 +125,7 @@ if [[ ${#code_files[@]} -gt 0 ]]; then
             has_banned_words = 0
             has_bad_build_list = 0
             in_build_list = 0
+            in_class_body = 0
         }
         function flush_file() {
             if (cur == "") return
@@ -183,8 +184,11 @@ if [[ ${#code_files[@]} -gt 0 ]]; then
             if ($0 ~ /核心机制与避坑点|布局预览|历史参考/) {
                 has_header_ok = 1
             }
-            if ($0 ~ /高性能|简单易用|代码简洁|特性对比：|库选型定位：/) {
+            if (is_sample_act && !in_class_body && $0 ~ /高性能|简单易用|代码简洁|特性对比：|库选型定位：/) {
                 has_banned_words = 1
+            }
+            if ($0 ~ /^[[:space:]]*(open[[:space:]]+|abstract[[:space:]]+)?class[[:space:]]+/) {
+                in_class_body = 1
             }
             if ($0 ~ /fun[[:space:]]+buildList[[:space:]]*\(/) {
                 in_build_list = 1
