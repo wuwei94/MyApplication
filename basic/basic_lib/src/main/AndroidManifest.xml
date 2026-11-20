@@ -26,7 +26,7 @@
         android:networkSecurityConfig="@xml/base_network_security"
         android:supportsRtl="true"
         tools:ignore="UnusedAttribute">
-        <!--FileProvider-->
+        <!-- 文件共享 FileProvider（供拍照、分享等跨应用文件 URI 授权） -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -41,7 +41,7 @@
             android:authorities="${applicationId}.InitProvider"
             android:exported="false"
             android:initOrder="100" />
-        <!--Apache HTTP client-->
+        <!-- 兼容旧版 Apache HTTP 客户端库（非强制依赖） -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
