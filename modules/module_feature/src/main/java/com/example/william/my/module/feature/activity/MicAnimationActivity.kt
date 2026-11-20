@@ -8,8 +8,6 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.feature.databinding.FeatureActivityMicAnimationBinding
 import com.example.william.my.module.feature.layoutmanager.MicLayoutManager
@@ -28,7 +26,6 @@ import com.example.william.my.module.feature.layoutmanager.MicLayoutManager
  *
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
-@Route(path = RouterPath.Feature.MicAnimation)
 class MicAnimationActivity : BaseVBActivity<FeatureActivityMicAnimationBinding>() {
 
     private lateinit var micLayoutManager: MicLayoutManager

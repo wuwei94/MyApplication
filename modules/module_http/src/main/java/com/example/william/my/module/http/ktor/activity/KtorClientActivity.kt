@@ -2,11 +2,9 @@ package com.example.william.my.module.http.ktor.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.ktor.ktorClient
 import com.example.william.my.core.ktor.request.getResponse
 import com.example.william.my.core.ktor.request.postFormResponse
@@ -34,7 +32,6 @@ import org.json.JSONObject
  * 官方参考：
  * https://ktor.io/
  */
-@Route(path = RouterPath.Http.KtorClient)
 class KtorClientActivity : BasicResponseActivity() {
 
     private val clientDelegate = lazy {

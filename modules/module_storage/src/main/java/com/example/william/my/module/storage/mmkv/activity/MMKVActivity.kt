@@ -1,9 +1,7 @@
 package com.example.william.my.module.storage.mmkv.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.tencent.mmkv.MMKV
 
 /**
@@ -18,7 +16,6 @@ import com.tencent.mmkv.MMKV
  * 官方参考：
  * https://github.com/Tencent/MMKV
  */
-@Route(path = RouterPath.Storage.MMKV)
 class MMKVActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

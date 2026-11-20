@@ -1,9 +1,7 @@
 package com.example.william.my.module.widget_thirdparty.activity.widget
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityBannerBinding
 import com.youth.banner.adapter.BannerImageAdapter
@@ -23,7 +21,6 @@ import com.youth.banner.indicator.CircleIndicator
  *
  * https://github.com/youth5201314/banner
  */
-@Route(path = RouterPath.WidgetThirdparty.Banner)
 class BannerActivity : BaseVBActivity<WidgetThirdpartyActivityBannerBinding>() {
 
     override fun getViewBinding(): WidgetThirdpartyActivityBannerBinding = WidgetThirdpartyActivityBannerBinding.inflate(layoutInflater)

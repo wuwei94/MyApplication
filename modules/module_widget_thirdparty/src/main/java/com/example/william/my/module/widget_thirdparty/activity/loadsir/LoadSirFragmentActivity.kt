@@ -1,8 +1,6 @@
 package com.example.william.my.module.widget_thirdparty.activity.loadsir
 
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 import com.example.william.my.module.widget_thirdparty.fragment.LoadSirFragment
 
@@ -19,7 +17,6 @@ import com.example.william.my.module.widget_thirdparty.fragment.LoadSirFragment
  *
  * https://github.com/kingja/LoadSir
  */
-@Route(path = RouterPath.WidgetThirdparty.LoadSirFragment)
 class LoadSirFragmentActivity : BaseFragmentActivity() {
 
     override fun setFragment(): Fragment = LoadSirFragment()

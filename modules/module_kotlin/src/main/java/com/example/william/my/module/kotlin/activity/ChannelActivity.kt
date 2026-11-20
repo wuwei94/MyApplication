@@ -2,9 +2,7 @@ package com.example.william.my.module.kotlin.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
@@ -31,7 +29,6 @@ import kotlinx.coroutines.launch
  * https://kotlinlang.org/docs/channels.html
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-@Route(path = RouterPath.Kotlin.Channel)
 class ChannelActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

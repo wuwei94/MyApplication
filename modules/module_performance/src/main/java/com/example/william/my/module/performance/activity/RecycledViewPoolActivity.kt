@@ -1,9 +1,7 @@
 package com.example.william.my.module.performance.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.performance.adapter.PoolItemAdapter
 import com.example.william.my.module.performance.adapter.PoolPagerAdapter
@@ -25,7 +23,6 @@ import com.google.android.material.tabs.TabLayoutMediator
  *
  * https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.RecycledViewPool
  */
-@Route(path = RouterPath.Performance.RecycledViewPool)
 class RecycledViewPoolActivity : BasicRecyclerActivity() {
 
     private lateinit var poolBinding: PerformanceLayoutPoolPagerBinding

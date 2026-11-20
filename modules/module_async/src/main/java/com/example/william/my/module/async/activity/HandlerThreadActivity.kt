@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * HandlerThread — 子线程通信
@@ -25,7 +23,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/reference/android/os/HandlerThread
  */
-@Route(path = RouterPath.Async.HandlerThread)
 class HandlerThreadActivity : BasicResponseActivity() {
 
     private var handler: Handler? = null

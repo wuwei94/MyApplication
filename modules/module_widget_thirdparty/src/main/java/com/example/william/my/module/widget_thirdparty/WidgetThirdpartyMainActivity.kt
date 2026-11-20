@@ -1,6 +1,5 @@
 package com.example.william.my.module.widget_thirdparty
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -8,7 +7,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * UI 库模块入口 — 导航到各第三方 UI 控件库示例页面。
  */
-@Route(path = RouterPath.WidgetThirdparty.Main)
 class WidgetThirdpartyMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

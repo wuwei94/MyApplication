@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_custom.R
 import com.example.william.my.module.widget_custom.databinding.WidgetActivityMarqueeViewBinding
@@ -23,7 +21,6 @@ import com.example.william.my.module.widget_custom.databinding.WidgetActivityMar
  * 3. 自定义布局：支持自定义每项的布局样式
  * 4. 点击事件：支持每项的点击事件
  */
-@Route(path = RouterPath.WidgetCustom.MarqueeView)
 class MarqueeViewActivity : BaseVBActivity<WidgetActivityMarqueeViewBinding>() {
 
     override fun getViewBinding(): WidgetActivityMarqueeViewBinding = WidgetActivityMarqueeViewBinding.inflate(layoutInflater)

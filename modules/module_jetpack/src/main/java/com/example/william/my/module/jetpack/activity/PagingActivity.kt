@@ -6,9 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.jetpack.paging.adapter.PagingAdapter
 import com.example.william.my.module.jetpack.paging.adapter.PagingStateAdapter
@@ -39,7 +37,6 @@ import kotlinx.coroutines.launch
  *
  * https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
  */
-@Route(path = RouterPath.Jetpack.Paging)
 class PagingActivity : BasicRecyclerActivity() {
 
     private val viewModel: PagingViewModel by viewModels {

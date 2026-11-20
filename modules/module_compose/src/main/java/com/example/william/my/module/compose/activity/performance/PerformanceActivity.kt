@@ -35,8 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
 
@@ -70,7 +68,6 @@ data class UnstableUser(
  *
  * https://developer.android.google.cn/develop/ui/compose/performance
  */
-@Route(path = RouterPath.Compose.Performance)
 class PerformanceActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

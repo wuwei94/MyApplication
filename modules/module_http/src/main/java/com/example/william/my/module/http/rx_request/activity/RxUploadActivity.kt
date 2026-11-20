@@ -2,10 +2,8 @@ package com.example.william.my.module.http.rx_request.activity
 
 import android.os.Bundle
 import android.text.format.Formatter
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.rx.api.rxRetrofit
 import com.example.william.my.core.rx.upload.RxUpload
@@ -31,7 +29,6 @@ import java.io.File
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RxUpload)
 class RxUploadActivity : BasicResponseActivity() {
 
     private val uploadRetrofit = rxRetrofit {

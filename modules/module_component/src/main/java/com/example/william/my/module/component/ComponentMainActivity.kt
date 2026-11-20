@@ -1,6 +1,5 @@
 package com.example.william.my.module.component
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -10,7 +9,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 展示 ActivityResult、广播、Service 等 Android 组件的示例列表。
  */
-@Route(path = RouterPath.Component.Main)
 class ComponentMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

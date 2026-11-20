@@ -5,9 +5,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.ipc.IMyAidlInterface
 import com.example.william.my.module.ipc.service.MyAIDLService
 
@@ -28,7 +26,6 @@ import com.example.william.my.module.ipc.service.MyAIDLService
  *
  * https://developer.android.com/guide/components/aidl
  */
-@Route(path = RouterPath.Ipc.AIDL)
 class AIDLActivity : BasicResponseActivity() {
 
     private var aidlService: IMyAidlInterface? = null

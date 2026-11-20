@@ -1,10 +1,8 @@
 package com.example.william.my.module.http.okhttp.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
 import okhttp3.Call
 import okhttp3.Callback
@@ -32,7 +30,6 @@ import org.json.JSONObject
  * 官方参考：
  * https://square.github.io/okhttp
  */
-@Route(path = RouterPath.Http.OkHttp)
 class OkHttpActivity : BasicResponseActivity() {
 
     /**

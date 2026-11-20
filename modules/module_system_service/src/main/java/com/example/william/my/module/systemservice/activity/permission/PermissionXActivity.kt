@@ -3,9 +3,7 @@ package com.example.william.my.module.systemservice.activity.permission
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.permissionx.guolindev.PermissionX
 
 /**
@@ -24,7 +22,6 @@ import com.permissionx.guolindev.PermissionX
  *
  * https://github.com/guolindev/PermissionX
  */
-@Route(path = RouterPath.SystemService.PermissionX)
 class PermissionXActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -1,6 +1,5 @@
 package com.example.william.my.module.performance
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -10,7 +9,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 展示启动优化、DiffUtil、异步加载等性能优化方案的示例列表。
  */
-@Route(path = RouterPath.Performance.Main)
 class PerformanceMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

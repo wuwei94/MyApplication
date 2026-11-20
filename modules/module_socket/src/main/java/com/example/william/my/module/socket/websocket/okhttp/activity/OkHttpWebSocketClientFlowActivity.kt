@@ -2,10 +2,8 @@ package com.example.william.my.module.socket.websocket.okhttp.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttpws.OkHttpWebSocketInfo
 import com.example.william.my.core.okhttpws.client.OkHttpWebSocketClientFlow
 import kotlinx.coroutines.Job
@@ -27,7 +25,6 @@ import kotlinx.coroutines.launch
  * 官方参考：
  * https://square.github.io/okhttp/features/websockets
  */
-@Route(path = RouterPath.Socket.OkHttpWebSocketClientFlow)
 class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

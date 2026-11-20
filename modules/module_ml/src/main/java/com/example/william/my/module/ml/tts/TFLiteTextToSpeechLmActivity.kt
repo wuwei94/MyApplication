@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.ml.databinding.MlActivityTextToSpeechLmBinding
 import com.example.william.my.module.ml.download.ModelDownloader
@@ -44,7 +42,6 @@ import org.json.JSONArray
  * 模型走运行时下载（约 1.67 GB，11 个文件），下载层带断点续传；已下载的不会重下。
  * 推理、引擎构建、引擎关闭共用同一条引擎串行队列（见 [createEngineDispatcher]）。
  */
-@Route(path = RouterPath.Ml.TextToSpeechLm)
 class TFLiteTextToSpeechLmActivity :
     BaseVBActivity<MlActivityTextToSpeechLmBinding>(),
     View.OnClickListener {

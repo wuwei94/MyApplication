@@ -1,9 +1,7 @@
 package com.example.william.my.module.reactive.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.reactive.samples.FALLBACK_NUMBER_RX
 import com.example.william.my.module.reactive.samples.bufferObservable
 import com.example.william.my.module.reactive.samples.concatObservable
@@ -38,7 +36,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
  *
  * https://github.com/ReactiveX/RxJava
  */
-@Route(path = RouterPath.Reactive.RxJavaOperators)
 class RxJavaOperatorsActivity : BasicResponseActivity() {
 
     private val compositeDisposable = CompositeDisposable()

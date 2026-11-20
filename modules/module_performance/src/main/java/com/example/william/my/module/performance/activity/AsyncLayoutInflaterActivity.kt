@@ -5,9 +5,7 @@ import android.view.Gravity
 import android.widget.TextView
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.R
 import com.example.william.my.module.performance.manager.ViewPreloadManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -27,7 +25,6 @@ import com.example.william.my.basic.basic_shared.R as SharedR
  *
  * https://developer.android.com/reference/androidx/asynclayoutinflater/view/AsyncLayoutInflater
  */
-@Route(path = RouterPath.Performance.AsyncLayoutInflater)
 class AsyncLayoutInflaterActivity : BasicLayoutActivity() {
 
     private lateinit var asyncInflater: AsyncLayoutInflater

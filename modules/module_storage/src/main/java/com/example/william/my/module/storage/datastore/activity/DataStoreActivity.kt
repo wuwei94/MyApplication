@@ -2,9 +2,7 @@ package com.example.william.my.module.storage.datastore.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.coroutine.collectWithLifecycle
 import com.example.william.my.module.storage.datastore.data.ExamplePreferenceDataStore
 import com.example.william.my.module.storage.datastore.data.ExampleProtoDataStore
@@ -26,7 +24,6 @@ import kotlinx.coroutines.withContext
  * 官方参考：
  * https://developer.android.com/topic/libraries/architecture/datastore
  */
-@Route(path = RouterPath.Storage.DataStore)
 class DataStoreActivity : BasicResponseActivity() {
 
     private val preDataStore by lazy { ExamplePreferenceDataStore(applicationContext) }

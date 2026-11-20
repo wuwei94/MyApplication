@@ -2,9 +2,7 @@ package com.example.william.my.module.async.activity
 
 import android.os.AsyncTask
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.lang.ref.WeakReference
 
 /**
@@ -23,7 +21,6 @@ import java.lang.ref.WeakReference
  *
  * https://developer.android.google.cn/reference/android/os/AsyncTask
  */
-@Route(path = RouterPath.Async.AsyncTask)
 class AsyncTaskActivity : BasicResponseActivity() {
 
     private var asyncTask: MyAsyncTask? = null

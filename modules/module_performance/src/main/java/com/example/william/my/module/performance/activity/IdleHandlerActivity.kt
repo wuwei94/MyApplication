@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.MessageQueue
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * IdleHandler — 主线程 MessageQueue 空闲调度
@@ -22,7 +20,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/reference/android/os/MessageQueue.IdleHandler
  */
-@Route(path = RouterPath.Performance.IdleHandler)
 class IdleHandlerActivity : BasicResponseActivity() {
 
     private val mainHandler = Handler(Looper.getMainLooper())

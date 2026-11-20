@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.chart.databinding.ChartActivityMpLineChartBinding
 import com.example.william.my.module.chart.view.CustomChartMarkerView
@@ -33,7 +31,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.Chart.MPLineChart)
 class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {
 
     private val months = listOf("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月")

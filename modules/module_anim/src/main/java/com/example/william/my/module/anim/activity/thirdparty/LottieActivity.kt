@@ -1,9 +1,7 @@
 package com.example.william.my.module.anim.activity.thirdparty
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Lottie — JSON 矢量动画布局预览
@@ -16,7 +14,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 官方参考：
  * https://github.com/airbnb/lottie-android
  */
-@Route(path = RouterPath.Anim.Lottie)
 class LottieActivity : BasicLayoutActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

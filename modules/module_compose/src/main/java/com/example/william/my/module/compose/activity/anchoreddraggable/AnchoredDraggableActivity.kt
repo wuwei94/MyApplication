@@ -44,8 +44,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -74,7 +72,6 @@ private enum class DragValue {
  * 官方文档：
  * https://developer.android.google.cn/reference/kotlin/androidx/compose/foundation/gestures/package-summary#anchoredDraggable
  */
-@Route(path = RouterPath.Compose.AnchoredDraggable)
 class AnchoredDraggableActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

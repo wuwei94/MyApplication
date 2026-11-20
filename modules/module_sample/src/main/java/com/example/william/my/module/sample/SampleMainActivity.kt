@@ -1,6 +1,5 @@
 package com.example.william.my.module.sample
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -10,7 +9,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 展示 Hook、字体等示例。
  */
-@Route(path = RouterPath.Sample.Main)
 class SampleMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

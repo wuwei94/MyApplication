@@ -3,8 +3,6 @@ package com.example.william.my.module.ml.zsc
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.ml.databinding.MlActivityZeroShotClassificationBinding
 import com.example.william.my.module.ml.download.ModelDownloader
@@ -48,7 +46,6 @@ import kotlinx.coroutines.withContext
  *
  * 模型约 648 MB，与官方一致地运行时下载、不入 APK（见 [ModelDownloader]）。
  */
-@Route(path = RouterPath.Ml.ZeroShotClassification)
 class TFLiteZeroShotClassificationActivity :
     BaseVBActivity<MlActivityZeroShotClassificationBinding>(),
     View.OnClickListener {

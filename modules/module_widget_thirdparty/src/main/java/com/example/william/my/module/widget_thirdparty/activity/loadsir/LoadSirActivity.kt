@@ -2,9 +2,7 @@ package com.example.william.my.module.widget_thirdparty.activity.loadsir
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.widget_thirdparty.R
 import com.example.william.my.module.widget_thirdparty.callback.DefaultCallback
 import com.example.william.my.module.widget_thirdparty.callback.ErrorCallback
@@ -24,7 +22,6 @@ import com.kingja.loadsir.core.LoadSir
  *
  * https://github.com/kingja/LoadSir
  */
-@Route(path = RouterPath.WidgetThirdparty.LoadSir)
 class LoadSirActivity : BasicLayoutActivity() {
 
     private lateinit var loadService: LoadService<Any>

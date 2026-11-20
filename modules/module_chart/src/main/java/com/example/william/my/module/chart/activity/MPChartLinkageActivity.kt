@@ -3,8 +3,6 @@ package com.example.william.my.module.chart.activity
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.chart.databinding.ChartActivityMpChartLinkageBinding
 import com.github.mikephil.charting.animation.Easing
@@ -37,7 +35,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.Chart.MPChartLinkage)
 class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding>() {
 
     private val months = listOf("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月")

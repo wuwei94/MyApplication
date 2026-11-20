@@ -43,8 +43,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Adaptive — 响应式多端自适应布局示例页
@@ -58,7 +56,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/compose/layouts/adaptive
  */
-@Route(path = RouterPath.Compose.Adaptive)
 class AdaptiveActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

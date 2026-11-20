@@ -1,11 +1,9 @@
 package com.example.william.my.module.http.httpurl.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ThreadUtils
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.httpurl.HttpURLUtils
 import org.json.JSONObject
 import java.net.HttpURLConnection
@@ -23,7 +21,6 @@ import java.net.URL
  * 官方参考：
  * https://developer.android.com/reference/java/net/HttpURLConnection
  */
-@Route(path = RouterPath.Http.HttpURL)
 class HttpURLActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

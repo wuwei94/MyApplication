@@ -1,7 +1,5 @@
 package com.example.william.my.module.widget.activity
 
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.databinding.UiActivityViewFlipperBinding
 
@@ -25,7 +23,6 @@ import com.example.william.my.module.widget.databinding.UiActivityViewFlipperBin
  *
  * https://developer.android.com/reference/android/widget/ViewFlipper
  */
-@Route(path = RouterPath.Widget.ViewFlipper)
 class ViewFlipperActivity : BaseVBActivity<UiActivityViewFlipperBinding>() {
 
     override fun getViewBinding(): UiActivityViewFlipperBinding = UiActivityViewFlipperBinding.inflate(layoutInflater)

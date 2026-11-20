@@ -7,9 +7,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.lang.ref.WeakReference
 
 /**
@@ -34,7 +32,6 @@ import java.lang.ref.WeakReference
  *
  * https://developer.android.com/guide/components/broadcasts
  */
-@Route(path = RouterPath.Component.Broadcast)
 class BroadcastActivity : BasicResponseActivity() {
 
     private var messageReceiver: MessageReceiver? = null

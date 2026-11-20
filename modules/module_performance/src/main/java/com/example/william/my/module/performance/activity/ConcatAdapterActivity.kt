@@ -3,9 +3,7 @@ package com.example.william.my.module.performance.activity
 import android.os.Bundle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.adapter.ConcatBannerAdapter
 import com.example.william.my.module.performance.adapter.ConcatFeedAdapter
 import com.example.william.my.module.performance.adapter.ConcatFooterAdapter
@@ -24,7 +22,6 @@ import com.example.william.my.module.performance.adapter.ConcatHeaderAdapter
  *
  * https://developer.android.com/reference/androidx/recyclerview/widget/ConcatAdapter
  */
-@Route(path = RouterPath.Performance.ConcatAdapter)
 class ConcatAdapterActivity : BasicRecyclerActivity() {
 
     private lateinit var concatAdapter: ConcatAdapter

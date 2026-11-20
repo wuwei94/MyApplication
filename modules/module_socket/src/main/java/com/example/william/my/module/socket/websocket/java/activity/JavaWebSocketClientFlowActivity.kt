@@ -2,10 +2,8 @@ package com.example.william.my.module.socket.websocket.java.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.javaws.JavaWebSocketInfo
 import com.example.william.my.core.javaws.client.JavaWebSocketClientFlow
 import kotlinx.coroutines.Job
@@ -26,7 +24,6 @@ import kotlinx.coroutines.launch
  * 官方参考：
  * https://github.com/TooTallNate/Java-WebSocket
  */
-@Route(path = RouterPath.Socket.JavaWebSocketClientFlow)
 class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

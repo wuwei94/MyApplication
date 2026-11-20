@@ -1,6 +1,5 @@
 package com.example.william.my.module.feature
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -10,7 +9,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 展示麦克风动画、转盘、图片裁剪、弱网处理等业务场景的示例列表。
  */
-@Route(path = RouterPath.Feature.Main)
 class FeatureMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

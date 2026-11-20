@@ -1,9 +1,7 @@
 package com.example.william.my.module.bluetooth.nordic_ble.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.Locale
 
 /**
@@ -21,7 +19,6 @@ import java.util.Locale
  * 官方参考：
  * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
-@Route(path = RouterPath.Bluetooth.NordicTransfer)
 class BleNordicTransferActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

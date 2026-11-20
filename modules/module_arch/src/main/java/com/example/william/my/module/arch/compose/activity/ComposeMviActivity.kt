@@ -42,9 +42,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseActivity
 import com.example.william.my.module.arch.compose.data.ArticleComposeIntent
 import com.example.william.my.module.arch.compose.data.ArticleComposeUiEffect
@@ -73,7 +71,6 @@ import java.util.Locale
  *
  * https://developer.android.google.cn/topic/architecture/ui-layer
  */
-@Route(path = RouterPath.Arch.ComposeMVI)
 class ComposeMviActivity : BaseActivity() {
 
     private val viewModel: ArticleComposeViewModel by viewModels {

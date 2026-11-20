@@ -34,8 +34,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Image — 图片显示与变换特性
@@ -49,7 +47,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/jetpack/compose/graphics/images/loading
  */
-@Route(path = RouterPath.Compose.Image)
 class ImageActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

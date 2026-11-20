@@ -59,8 +59,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Animation — 声明式动画与状态平滑过渡示例页
@@ -76,7 +74,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/compose/animation
  */
-@Route(path = RouterPath.Compose.Animation)
 class AnimationActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

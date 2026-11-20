@@ -2,9 +2,7 @@ package com.example.william.my.module.performance.activity
 
 import android.os.Bundle
 import android.os.SystemClock
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.task.ApmBackgroundTask
 import com.example.william.my.module.performance.task.IAnchorTask
 import com.example.william.my.module.performance.task.InitLogTask
@@ -23,7 +21,6 @@ import com.example.william.my.module.performance.task.UserConfigAnchorTask
  * 2. 主/子线程分流：UI 强相关任务分配在主线程，耗时 I/O 与计算任务派发到线程池并发，榨干多核 CPU；
  * 3. Anchor 锚点阻断机制：基于 CountDownLatch 仅阻塞主线程等待标有 [IAnchorTask] 的关键任务（如核心配置、推送通道），非关键任务持续在后台运行，兼顾核心数据就绪与主线程极速放行。
  */
-@Route(path = RouterPath.Performance.AnchorTask)
 class AnchorTaskActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

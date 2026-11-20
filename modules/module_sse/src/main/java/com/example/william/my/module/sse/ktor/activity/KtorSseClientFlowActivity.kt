@@ -3,10 +3,8 @@ package com.example.william.my.module.sse.ktor.activity
 import android.os.Bundle
 import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.ktorsse.KtorSseClientFlow
 import com.example.william.my.core.ktorsse.KtorSseInfo
 import com.example.william.my.module.sse.utils.LlmStreamParser
@@ -30,7 +28,6 @@ import kotlinx.coroutines.launch
  * 官方参考：
  * https://ktor.io/docs/client-server-sent-events.html
  */
-@Route(path = RouterPath.SSE.KtorSseClientFlow)
 class KtorSseClientFlowActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_DeepSeek

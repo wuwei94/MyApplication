@@ -15,9 +15,7 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.UUID
 
 /**
@@ -36,7 +34,6 @@ import java.util.UUID
  * https://developer.android.com/guide/topics/connectivity/bluetooth-le
  */
 @SuppressLint("MissingPermission")
-@Route(path = RouterPath.Bluetooth.NativeConnect)
 class BleNativeConnectActivity : BasicResponseActivity() {
 
     companion object {

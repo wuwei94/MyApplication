@@ -45,8 +45,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlin.math.roundToInt
 
@@ -101,7 +99,6 @@ class TriStateSelectionState(initialItemsCount: Int = 3) {
  *
  * https://developer.android.google.cn/develop/ui/compose/components/switch
  */
-@Route(path = RouterPath.Compose.Selection)
 class SelectionActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

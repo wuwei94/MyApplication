@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.R
 import com.example.william.my.module.widget.adapter.RecyclerAdapter
@@ -53,7 +51,6 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBi
  *
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
-@Route(path = RouterPath.Widget.RecyclerView)
 class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {
 
     override fun getViewBinding(): UiActivityRecyclerViewBinding = UiActivityRecyclerViewBinding.inflate(layoutInflater)

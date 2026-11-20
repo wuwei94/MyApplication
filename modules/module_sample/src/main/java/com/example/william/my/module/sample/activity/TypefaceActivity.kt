@@ -4,9 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.sample.R
 
 /**
@@ -23,7 +21,6 @@ import com.example.william.my.module.sample.R
  *
  * https://developer.android.com/develop/ui/views/text-and-emoji/fonts-in-xml
  */
-@Route(path = RouterPath.Sample.Typeface)
 class TypefaceActivity : BasicLayoutActivity() {
 
     private lateinit var nameView: TextView

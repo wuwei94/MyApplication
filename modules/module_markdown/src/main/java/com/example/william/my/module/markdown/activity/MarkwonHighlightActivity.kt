@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.markdown.databinding.MarkdownActivityHighlightBinding
 import com.example.william.my.module.markdown.grammar.MyGrammarLocator
 import io.noties.markwon.Markwon
@@ -40,7 +38,6 @@ import kotlin.system.measureTimeMillis
  *
  * https://github.com/noties/Prism4j
  */
-@Route(path = RouterPath.Markdown.MarkwonHighlight)
 class MarkwonHighlightActivity : BasicLayoutActivity() {
 
     private lateinit var highlightBinding: MarkdownActivityHighlightBinding

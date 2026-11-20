@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.ml.R
 import com.example.william.my.module.ml.databinding.MlActivityImageClassificationBinding
@@ -60,7 +58,6 @@ import kotlin.system.measureNanoTime
  *
  * 官方样例：https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert/image_classification
  */
-@Route(path = RouterPath.Ml.ImageClassification)
 class TFLiteImageClassificationActivity :
     BaseVBActivity<MlActivityImageClassificationBinding>(),
     View.OnClickListener {

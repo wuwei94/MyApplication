@@ -43,8 +43,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 
 /**
@@ -60,7 +58,6 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * https://developer.android.google.cn/develop/ui/compose/components/chip
  */
-@Route(path = RouterPath.Compose.Chip)
 class ChipActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

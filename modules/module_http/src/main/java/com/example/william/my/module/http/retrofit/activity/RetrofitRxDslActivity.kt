@@ -1,10 +1,8 @@
 package com.example.william.my.module.http.retrofit.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.retrofit.rx.api.createRxApi
 import com.example.william.my.core.retrofit.rx.api.rxRetrofit
@@ -34,7 +32,6 @@ import org.json.JSONObject
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RetrofitRxDsl)
 class RetrofitRxDslActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()

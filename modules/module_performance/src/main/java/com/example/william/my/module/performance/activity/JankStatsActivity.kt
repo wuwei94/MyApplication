@@ -7,9 +7,7 @@ import androidx.metrics.performance.JankStats
 import androidx.metrics.performance.PerformanceMetricsState
 import androidx.tracing.Trace
 import androidx.tracing.trace
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.Locale
 
 /**
@@ -29,7 +27,6 @@ import java.util.Locale
  *
  * https://developer.android.com/jetpack/androidx/releases/metrics
  */
-@Route(path = RouterPath.Performance.JankStats)
 class JankStatsActivity : BasicResponseActivity() {
 
     private val mainHandler = Handler(Looper.getMainLooper())

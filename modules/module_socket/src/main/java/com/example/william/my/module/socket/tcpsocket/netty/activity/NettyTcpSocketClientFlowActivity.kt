@@ -3,18 +3,17 @@ package com.example.william.my.module.socket.tcpsocket.netty.activity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.server.NettyServerService
 import com.example.william.my.core.netty.NettyClientInfo
 import com.example.william.my.core.netty.client.NettyClientFlow
 import com.example.william.my.core.netty.server.NettyServer
 import com.example.william.my.core.netty.server.NettyServerHandler
 import com.example.william.my.module.socket.utils.NetworkUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
@@ -36,12 +35,11 @@ import com.example.william.my.basic.basic_shared.R as SharedR
  * 官方参考：
  * https://github.com/netty/netty
  */
-@Route(path = RouterPath.Socket.NettyTcpSocketClientFlow)
+@AndroidEntryPoint
 class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
 
-    @JvmField
-    @Autowired
-    var nettyServerService: NettyServerService? = null
+    @Inject
+    lateinit var nettyServerService: NettyServerService
 
     private val host: String get() = NetworkUtils.getIPAddress(true)
     private val port: Int = 5567
@@ -147,17 +145,17 @@ class NettyTcpSocketClientFlowActivity : BasicResponseActivity() {
         super.onDestroy()
         connectJob?.cancel()
         NettyClientFlow.close(host, port)
-        nettyServerService?.stopServer(this)
+        nettyServerService.stopServer(this)
     }
 
     private fun startServer() {
-        nettyServerService?.startServer(this)
+        nettyServerService.startServer(this)
         // 启动为异步操作，真实结果由服务端事件（【服务端】已启动）写入控制台
         appendLog("[操作]已发起启动服务端，等待就绪...")
     }
 
     private fun stopServer() {
-        nettyServerService?.stopServer(this)
+        nettyServerService.stopServer(this)
         // 停止结果由服务端事件（【服务端】已停止）写入控制台
         appendLog("[操作]已发起停止服务端...")
     }

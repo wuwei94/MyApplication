@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.chart.databinding.ChartActivityMpPieChartBinding
 import com.github.mikephil.charting.animation.Easing
@@ -32,7 +30,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.Chart.MPPieChart)
 class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
 
     private val pieCategories = listOf("云计算研发", "市场营销", "人力薪酬", "办公行政", "流动储备")

@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * ConstraintLayout — 声明式相对约束布局
@@ -34,7 +32,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/compose/layouts/constraintlayout
  */
-@Route(path = RouterPath.Compose.ConstraintLayout)
 class ConstraintLayoutActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,9 +2,7 @@ package com.example.william.my.module.widget_custom.activity
 
 import android.os.Bundle
 import android.widget.TextView
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.widget.popwindow.CustomPopWindow
 import com.example.william.my.module.widget_custom.R
 
@@ -30,7 +28,6 @@ import com.example.william.my.module.widget_custom.R
  * 3. 背景变暗：弹出时背景自动变暗，dismiss 时自动还原
  * 4. 兼容处理：兼容 Android 6.0+ 点击外部区域关闭
  */
-@Route(path = RouterPath.WidgetCustom.CustomPopWindow)
 class CustomPopWindowActivity : BasicResponseActivity() {
 
     private var customPopWindow: CustomPopWindow? = null

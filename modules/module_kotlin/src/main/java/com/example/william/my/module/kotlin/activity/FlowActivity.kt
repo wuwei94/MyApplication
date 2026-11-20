@@ -5,10 +5,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.kotlin.data.NetworkResult
 import com.example.william.my.module.kotlin.viewmodel.FlowViewModel
 import kotlinx.coroutines.launch
@@ -28,7 +26,6 @@ import kotlinx.coroutines.launch
  *
  * https://developer.android.google.cn/kotlin/flow
  */
-@Route(path = RouterPath.Kotlin.Flow)
 class FlowActivity : BasicResponseActivity() {
 
     private val viewModel: FlowViewModel by viewModels {

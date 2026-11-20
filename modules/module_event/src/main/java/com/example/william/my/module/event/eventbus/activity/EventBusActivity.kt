@@ -1,9 +1,7 @@
 package com.example.william.my.module.event.eventbus.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.eventbus.EventBusHelper
 import com.example.william.my.module.event.event.GlobalEvent
 import com.example.william.my.module.event.event.StickyEvent
@@ -22,7 +20,6 @@ import org.greenrobot.eventbus.ThreadMode
  * 官方参考：
  * https://github.com/greenrobot/EventBus
  */
-@Route(path = RouterPath.Event.EventBus)
 class EventBusActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -4,10 +4,8 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * AnimatorSet — 动画组合与编排
@@ -24,7 +22,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/views/animations/prop-animation#choreography
  */
-@Route(path = RouterPath.Anim.AnimatorSet)
 class AnimatorSetActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

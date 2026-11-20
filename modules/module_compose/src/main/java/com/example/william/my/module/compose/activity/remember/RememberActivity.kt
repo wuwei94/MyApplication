@@ -18,8 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.ImeAction
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Remember — 重组记忆与状态持久化对比
@@ -34,7 +32,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/compose/state-saving
  */
-@Route(path = RouterPath.Compose.Remember)
 class RememberActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

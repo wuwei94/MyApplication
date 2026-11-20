@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
+import com.example.william.my.basic.basic_shared.navigator.AppNavigator
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.anim.R
@@ -26,7 +25,6 @@ import com.example.william.my.module.anim.databinding.AnimActivityTransitionFirs
  *
  * https://developer.android.google.cn/develop/ui/views/animations/transitions
  */
-@Route(path = RouterPath.Anim.Transition)
 class TransitionFirstActivity :
     BaseVBActivity<AnimActivityTransitionFirstBinding>(),
     View.OnClickListener {
@@ -64,10 +62,9 @@ class TransitionFirstActivity :
             }
 
             R.id.transition_share -> {
-                ARouter.getInstance()
-                    .build(RouterPath.Anim.Transition2)
+                AppNavigator.build(RouterPath.Anim.Transition2)
                     .withString("transition", "share")
-                    .withOptionsCompat(
+                    .withOptions(
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                             this,
                             Pair(binding.transitionShare, "shareTransition"),

@@ -2,7 +2,6 @@ package com.example.william.my.module.bluetooth.fast_ble.activity
 
 import android.bluetooth.BluetoothGatt
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback
 import com.clj.fastble.callback.BleMtuChangedCallback
@@ -13,7 +12,6 @@ import com.clj.fastble.callback.BleWriteCallback
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.exception.BleException
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * FastBle 连接与读写回调 — 字符串 UUID 直调
@@ -30,7 +28,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 官方参考：
  * https://github.com/Jasonchenlijian/FastBle
  */
-@Route(path = RouterPath.Bluetooth.FastConnect)
 class BleFastConnectActivity : BasicResponseActivity() {
 
     private var connectedDevice: BleDevice? = null

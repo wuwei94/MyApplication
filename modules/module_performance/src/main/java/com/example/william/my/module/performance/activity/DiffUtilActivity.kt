@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicRecyclerActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.adapter.ArticleAdapter
 import com.example.william.my.module.performance.bean.ArticleItem
 
@@ -23,7 +21,6 @@ import com.example.william.my.module.performance.bean.ArticleItem
  *
  * https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil
  */
-@Route(path = RouterPath.Performance.DiffUtil)
 class DiffUtilActivity : BasicRecyclerActivity() {
 
     private var currentList = mutableListOf<ArticleItem>()

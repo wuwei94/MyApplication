@@ -1,6 +1,5 @@
 package com.example.william.my.module.socket
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -12,7 +11,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * - WebSocket（应用层）：OkHttp WebSocket / Java-WebSocket（普通 / RxJava / Flow）
  * - TCP Socket（传输层）：Netty TCP Socket（普通 / RxJava / Flow）
  */
-@Route(path = RouterPath.Socket.Main)
 class SocketMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

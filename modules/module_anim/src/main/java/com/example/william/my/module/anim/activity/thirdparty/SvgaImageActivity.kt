@@ -8,10 +8,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.opensource.svgaplayer.SVGADynamicEntity
 import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
@@ -35,7 +33,6 @@ import com.opensource.svgaplayer.SVGAVideoEntity
  * 官方参考：
  * https://github.com/svga/SVGAPlayer-Android
  */
-@Route(path = RouterPath.Anim.SvgaImage)
 class SvgaImageActivity : BasicLayoutActivity() {
 
     private lateinit var svgaImageView: SVGAImageView

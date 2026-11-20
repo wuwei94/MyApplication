@@ -1,8 +1,6 @@
 package com.example.william.my.module.arch.mvp.activity
 
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseFragmentActivity
 import com.example.william.my.module.arch.mvp.fragment.MvpFragment
 
@@ -24,7 +22,6 @@ import com.example.william.my.module.arch.mvp.fragment.MvpFragment
  *
  * https://developer.android.com/topic/architecture
  */
-@Route(path = RouterPath.Arch.MVP)
 class MvpActivity : BaseFragmentActivity() {
 
     override fun setFragment(): Fragment = MvpFragment()

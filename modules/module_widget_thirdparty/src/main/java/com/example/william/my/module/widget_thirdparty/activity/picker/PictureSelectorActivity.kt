@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_thirdparty.adapter.PictureSelectorAdapter
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityPictureSelectorBinding
@@ -29,7 +27,6 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener
  *
  * https://github.com/LuckSiege/PictureSelector
  */
-@Route(path = RouterPath.WidgetThirdparty.PictureSelector)
 class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSelectorBinding>() {
 
     private lateinit var adapter: PictureSelectorAdapter

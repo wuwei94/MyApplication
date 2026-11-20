@@ -5,11 +5,9 @@ import coil3.load
 import coil3.request.crossfade
 import coil3.request.error
 import coil3.request.placeholder
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Coil 3 — 基于 Kotlin 协程的图片加载库
@@ -23,7 +21,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 官方参考：
  * https://coil-kt.github.io/coil/
  */
-@Route(path = RouterPath.ImageLoader.Coil)
 class CoilActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -1,6 +1,5 @@
 package com.example.william.my.module.widget
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -10,7 +9,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 展示 Dialog、RecyclerView、ViewPager、WebView 等控件的示例列表。
  */
-@Route(path = RouterPath.Widget.Main)
 class WidgetMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

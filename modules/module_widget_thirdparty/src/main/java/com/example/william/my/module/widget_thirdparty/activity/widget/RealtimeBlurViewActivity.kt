@@ -2,8 +2,6 @@ package com.example.william.my.module.widget_thirdparty.activity.widget
 
 import android.os.Bundle
 import android.util.TypedValue
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityBlurViewBinding
 
@@ -18,7 +16,6 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  * 官方参考：
  * https://github.com/mmin18/RealtimeBlurView
  */
-@Route(path = RouterPath.WidgetThirdparty.RealtimeBlurView)
 class RealtimeBlurViewActivity : BaseVBActivity<WidgetThirdpartyActivityBlurViewBinding>() {
 
     override fun getViewBinding(): WidgetThirdpartyActivityBlurViewBinding = WidgetThirdpartyActivityBlurViewBinding.inflate(layoutInflater)

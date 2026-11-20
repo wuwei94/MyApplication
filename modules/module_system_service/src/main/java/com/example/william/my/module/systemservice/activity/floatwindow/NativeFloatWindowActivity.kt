@@ -11,9 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.net.toUri
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.systemservice.R
 
 /**
@@ -32,7 +30,6 @@ import com.example.william.my.module.systemservice.R
  *
  * https://developer.android.com/reference/android/view/WindowManager
  */
-@Route(path = RouterPath.SystemService.NativeFloatWindow)
 class NativeFloatWindowActivity : BasicResponseActivity() {
 
     private lateinit var windowManager: WindowManager

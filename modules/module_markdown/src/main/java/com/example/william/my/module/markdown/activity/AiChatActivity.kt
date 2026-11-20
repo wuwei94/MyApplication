@@ -9,8 +9,6 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.markdown.chat.adapter.ChatAdapter
 import com.example.william.my.module.markdown.chat.model.ChatMessage
@@ -48,7 +46,6 @@ import java.util.UUID
  *
  * https://github.com/noties/Markwon
  */
-@Route(path = RouterPath.Markdown.AiChat)
 class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {
 
     private lateinit var markwon: Markwon

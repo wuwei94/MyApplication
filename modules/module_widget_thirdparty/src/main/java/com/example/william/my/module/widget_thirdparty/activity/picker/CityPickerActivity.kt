@@ -1,9 +1,7 @@
 package com.example.william.my.module.widget_thirdparty.activity.picker
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.zaaach.citypicker.CityPicker
 import com.zaaach.citypicker.R
 import com.zaaach.citypicker.adapter.OnPickListener
@@ -24,7 +22,6 @@ import com.zaaach.citypicker.model.LocatedCity
  *
  * https://github.com/zaaach/CityPicker
  */
-@Route(path = RouterPath.WidgetThirdparty.CityPicker)
 class CityPickerActivity : BasicResponseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

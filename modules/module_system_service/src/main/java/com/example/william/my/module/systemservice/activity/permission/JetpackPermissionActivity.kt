@@ -6,9 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * 运行时权限 — Jetpack ActivityResultContracts 原生契约方案
@@ -25,7 +23,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/training/permissions/requesting
  */
-@Route(path = RouterPath.SystemService.JetpackPermission)
 class JetpackPermissionActivity : BasicResponseActivity() {
 
     private var currentActionName = ""

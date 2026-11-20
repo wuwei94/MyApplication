@@ -7,10 +7,8 @@ import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
 import com.example.william.my.module.tab.databinding.TabActivityFrameLayoutTabBinding
@@ -29,7 +27,6 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  *
  * https://developer.android.com/reference/android/widget/RadioGroup
  */
-@Route(path = RouterPath.Tab.FrameLayoutTab)
 class FrameLayoutTabActivity :
     BaseVBActivity<TabActivityFrameLayoutTabBinding>(),
     RadioGroup.OnCheckedChangeListener {

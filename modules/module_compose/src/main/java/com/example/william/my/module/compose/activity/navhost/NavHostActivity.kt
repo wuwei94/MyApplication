@@ -29,8 +29,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.serialization.Serializable
 
 /**
@@ -87,7 +85,6 @@ sealed interface NavRoute {
  *
  * https://developer.android.google.cn/guide/navigation/design/type-safety
  */
-@Route(path = RouterPath.Compose.NavHost)
 class NavHostActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

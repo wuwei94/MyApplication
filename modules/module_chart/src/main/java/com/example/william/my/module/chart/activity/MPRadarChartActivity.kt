@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.chart.databinding.ChartActivityMpRadarChartBinding
 import com.example.william.my.module.chart.view.CustomChartMarkerView
@@ -33,7 +31,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.Chart.MPRadarChart)
 class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() {
 
     private val radarDims = listOf("架构设计", "性能优化", "源码理解", "跨端实战", "工程运维", "团队协作")

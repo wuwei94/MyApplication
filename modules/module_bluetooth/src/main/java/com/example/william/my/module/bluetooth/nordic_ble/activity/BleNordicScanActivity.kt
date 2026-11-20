@@ -11,9 +11,7 @@ import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.os.Bundle
 import android.os.ParcelUuid
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.bluetooth.nordic_ble.data.NordicBleManager
 
 /**
@@ -32,7 +30,6 @@ import com.example.william.my.module.bluetooth.nordic_ble.data.NordicBleManager
  * https://github.com/NordicSemiconductor/Android-BLE-Library
  */
 @SuppressLint("MissingPermission")
-@Route(path = RouterPath.Bluetooth.NordicScan)
 class BleNordicScanActivity : BasicResponseActivity() {
 
     private var bluetoothAdapter: BluetoothAdapter? = null

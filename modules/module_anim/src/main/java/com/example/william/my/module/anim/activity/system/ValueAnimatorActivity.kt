@@ -13,10 +13,8 @@ import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * ValueAnimator — 差值动画 + ViewPropertyAnimator
@@ -40,7 +38,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/views/animations/prop-animation
  */
-@Route(path = RouterPath.Anim.ValueAnimator)
 class ValueAnimatorActivity : BasicImageActivity() {
 
     private var isAnimating = false

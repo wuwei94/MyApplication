@@ -44,8 +44,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlin.random.Random
 
@@ -72,7 +70,6 @@ data class ContactItem(
  *
  * https://developer.android.google.cn/develop/ui/compose/lists#item-animations
  */
-@Route(path = RouterPath.Compose.LazyLayout)
 class LazyLayoutActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -6,9 +6,7 @@ import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.component.service.MyBoundService
 import com.example.william.my.module.component.service.MyForegroundService
 
@@ -29,7 +27,6 @@ import com.example.william.my.module.component.service.MyForegroundService
  *
  * https://developer.android.com/guide/components/services
  */
-@Route(path = RouterPath.Component.Service)
 class ServiceActivity : BasicResponseActivity() {
 
     private var boundConnection: ServiceConnection? = null

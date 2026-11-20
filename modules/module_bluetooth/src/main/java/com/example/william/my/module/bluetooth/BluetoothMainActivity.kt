@@ -1,6 +1,5 @@
 package com.example.william.my.module.bluetooth
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -17,7 +16,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * - FastBle 链式封装方案（字符串 UUID + 回调，入门成本最低）
  * - RxAndroidBle 响应式流方案（Observable 化扫描/连接，适合重度 Rx 架构）
  */
-@Route(path = RouterPath.Bluetooth.Main)
 class BluetoothMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

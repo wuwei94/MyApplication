@@ -1,13 +1,11 @@
 package com.example.william.my.module.bluetooth.fast_ble.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleScanCallback
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.scan.BleScanRuleConfig
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.UUID
 
 /**
@@ -24,7 +22,6 @@ import java.util.UUID
  * 官方参考：
  * https://github.com/Jasonchenlijian/FastBle
  */
-@Route(path = RouterPath.Bluetooth.FastScan)
 class BleFastScanActivity : BasicResponseActivity() {
 
     private var isScanning = false

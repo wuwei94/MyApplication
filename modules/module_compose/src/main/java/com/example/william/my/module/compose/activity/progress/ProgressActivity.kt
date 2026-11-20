@@ -36,8 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlin.math.roundToInt
 
@@ -53,7 +51,6 @@ import kotlin.math.roundToInt
  *
  * https://developer.android.google.cn/develop/ui/compose/components/progress
  */
-@Route(path = RouterPath.Compose.Progress)
 class ProgressActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

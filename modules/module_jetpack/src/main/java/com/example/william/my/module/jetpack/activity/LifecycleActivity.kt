@@ -8,9 +8,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
@@ -30,7 +28,6 @@ import kotlinx.coroutines.launch
  *
  * https://developer.android.google.cn/topic/libraries/architecture/lifecycle
  */
-@Route(path = RouterPath.Jetpack.Lifecycle)
 class LifecycleActivity : BasicResponseActivity() {
 
     private var repeatJob: Job? = null

@@ -41,8 +41,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlin.math.roundToInt
 
@@ -59,7 +57,6 @@ import kotlin.math.roundToInt
  *
  * https://developer.android.google.cn/develop/ui/compose/touch-input/pointer-input/understand-gestures#multitouch-gestures
  */
-@Route(path = RouterPath.Compose.TransformGestures)
 class TransformGesturesActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

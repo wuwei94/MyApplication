@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
+    alias(libs.plugins.nowinandroid.android.hilt)
     // Compose 基础能力（由 convention 插件自动配置 Kotlin 2.0 Compose 编译器、BOM、UI 核心库与稳定性配置）
     alias(libs.plugins.nowinandroid.android.library.compose)
-    alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     // Roborazzi 截图测试（提供 recordRoborazziDemoDebug / verifyRoborazziDemoDebug 任务）
     alias(libs.plugins.roborazzi)

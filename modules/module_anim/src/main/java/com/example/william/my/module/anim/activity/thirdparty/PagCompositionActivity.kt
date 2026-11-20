@@ -3,10 +3,8 @@ package com.example.william.my.module.anim.activity.thirdparty
 import android.graphics.Matrix
 import android.os.Bundle
 import android.widget.Toast
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.anim.R
 import org.libpag.PAGComposition
 import org.libpag.PAGFile
@@ -40,7 +38,6 @@ import org.libpag.PAGView
  * 官方参考：
  * https://pag.io/docs/en/api-instructions.html
  */
-@Route(path = RouterPath.Anim.PagComposition)
 class PagCompositionActivity : BasicLayoutActivity() {
 
     private lateinit var pagView: PAGView

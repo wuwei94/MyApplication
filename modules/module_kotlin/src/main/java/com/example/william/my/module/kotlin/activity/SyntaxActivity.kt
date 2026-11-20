@@ -1,9 +1,7 @@
 package com.example.william.my.module.kotlin.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.hypot
 
 /**
@@ -22,7 +20,6 @@ import kotlin.math.hypot
  * https://kotlinlang.org/docs/operator-overloading.html
  * https://kotlinlang.org/docs/type-safe-builders.html
  */
-@Route(path = RouterPath.Kotlin.Syntax)
 class SyntaxActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

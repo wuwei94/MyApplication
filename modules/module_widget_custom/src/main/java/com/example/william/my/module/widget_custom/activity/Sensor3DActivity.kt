@@ -1,7 +1,5 @@
 package com.example.william.my.module.widget_custom.activity
 
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_custom.databinding.WidgetActivitySensor3dBinding
 
@@ -24,7 +22,6 @@ import com.example.william.my.module.widget_custom.databinding.WidgetActivitySen
  * - midgroundAccelerationX / midgroundAccelerationY — 中景加速度比率
  * - backgroundAccelerationX / backgroundAccelerationY — 背景加速度比率
  */
-@Route(path = RouterPath.WidgetCustom.Sensor3DView)
 class Sensor3DActivity : BaseVBActivity<WidgetActivitySensor3dBinding>() {
 
     override fun getViewBinding(): WidgetActivitySensor3dBinding = WidgetActivitySensor3dBinding.inflate(layoutInflater)

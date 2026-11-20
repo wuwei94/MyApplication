@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.gpuimage.databinding.GpuimageActivityAdjustBinding
 import com.example.william.my.module.gpuimage.helper.GpuImageChipHelper
@@ -41,7 +39,6 @@ import kotlinx.coroutines.withContext
  *
  * https://github.com/cats-oss/android-gpuimage
  */
-@Route(path = RouterPath.GpuImage.Adjust)
 class GpuImageAdjustActivity :
     BaseVBActivity<GpuimageActivityAdjustBinding>(),
     SeekBar.OnSeekBarChangeListener,

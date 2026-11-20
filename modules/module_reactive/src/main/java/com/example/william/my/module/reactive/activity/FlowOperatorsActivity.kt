@@ -1,9 +1,7 @@
 package com.example.william.my.module.reactive.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.coroutine.launchAndRepeatWithLifecycle
 import com.example.william.my.module.reactive.samples.FALLBACK_NUMBER
 import com.example.william.my.module.reactive.samples.NumberSource
@@ -41,7 +39,6 @@ import kotlinx.coroutines.flow.onEach
  *
  * https://developer.android.google.cn/kotlin/flow
  */
-@Route(path = RouterPath.Reactive.FlowOperators)
 class FlowOperatorsActivity : BasicResponseActivity() {
 
     /**

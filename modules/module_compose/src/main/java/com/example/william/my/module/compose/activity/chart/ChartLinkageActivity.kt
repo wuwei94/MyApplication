@@ -43,8 +43,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Jetpack Compose — 多图表全景联动看板 (Chart Linkage Dashboard)
@@ -56,7 +54,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/develop/ui/compose/state-hoisting
  */
-@Route(path = RouterPath.Compose.ChartLinkage)
 class ChartLinkageActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

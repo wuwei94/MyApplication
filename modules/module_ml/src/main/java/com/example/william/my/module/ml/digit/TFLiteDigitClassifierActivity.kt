@@ -3,8 +3,6 @@ package com.example.william.my.module.ml.digit
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.ml.databinding.MlActivityDigitClassificationBinding
 import com.example.william.my.module.ml.helper.InputNormalize
@@ -40,7 +38,6 @@ import kotlin.system.measureNanoTime
  *
  * 官方样例：https://github.com/google-ai-edge/litert-samples/tree/main/samples/litert/digit_classifier
  */
-@Route(path = RouterPath.Ml.DigitClassifier)
 class TFLiteDigitClassifierActivity :
     BaseVBActivity<MlActivityDigitClassificationBinding>(),
     View.OnClickListener {

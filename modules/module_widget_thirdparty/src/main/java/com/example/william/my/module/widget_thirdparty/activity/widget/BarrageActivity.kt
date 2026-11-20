@@ -7,8 +7,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.core.widget.barrage.Direction
 import com.example.william.my.core.widget.barrage.widget.DMTextureView
@@ -30,7 +28,6 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  *
  * https://github.com/xujiaji/Barrage
  */
-@Route(path = RouterPath.WidgetThirdparty.Barrage)
 class BarrageActivity : BaseVBActivity<WidgetThirdpartyActivityBarrageBinding>() {
 
     private var sendCount = 0

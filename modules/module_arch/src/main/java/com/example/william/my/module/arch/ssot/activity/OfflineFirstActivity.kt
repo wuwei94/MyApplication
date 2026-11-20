@@ -56,9 +56,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_repo.bean.ArticleDetailData
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseActivity
 import com.example.william.my.module.arch.ssot.data.OfflineFirstIntent
 import com.example.william.my.module.arch.ssot.data.OfflineFirstUiEffect
@@ -87,7 +85,6 @@ import java.util.Locale
  *
  * https://github.com/android/nowinandroid
  */
-@Route(path = RouterPath.Arch.OfflineFirst)
 class OfflineFirstActivity : BaseActivity() {
 
     private val viewModel: OfflineFirstViewModel by viewModels {

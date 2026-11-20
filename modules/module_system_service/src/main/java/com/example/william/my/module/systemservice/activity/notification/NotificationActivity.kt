@@ -5,10 +5,8 @@ import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * NotificationChannel — 通知渠道创建与通知发送
@@ -27,7 +25,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/develop/ui/views/notifications
  */
-@Route(path = RouterPath.SystemService.Notification)
 class NotificationActivity : BasicResponseActivity() {
 
     private var notificationManager: NotificationManager? = null

@@ -3,10 +3,8 @@ package com.example.william.my.module.feature.activity
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.coroutine.collectWithLifecycle
 import com.example.william.my.core.base.network.ConnectivityManagerNetworkMonitor
 import com.example.william.my.core.base.network.NetworkMonitor
@@ -38,7 +36,6 @@ import kotlin.coroutines.resume
  * https://developer.android.com/training/monitoring-device-state/connectivity-status
  * https://square.github.io/okhttp/features/timeouts
  */
-@Route(path = RouterPath.Feature.WeakNetwork)
 class WeakNetworkActivity : BasicResponseActivity() {
 
     private lateinit var networkMonitor: NetworkMonitor

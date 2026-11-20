@@ -2,10 +2,8 @@ package com.example.william.my.module.anim.activity.thirdparty
 
 import android.net.http.HttpResponseCache
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.opensource.svgaplayer.SVGADrawable
 import com.opensource.svgaplayer.SVGAImageView
 import com.opensource.svgaplayer.SVGAParser
@@ -23,7 +21,6 @@ import java.io.File
  * 官方参考：
  * https://github.com/svga/SVGAPlayer-Android
  */
-@Route(path = RouterPath.Anim.Svga)
 class SvgaActivity : BasicLayoutActivity() {
 
     private lateinit var svgaImageView: SVGAImageView

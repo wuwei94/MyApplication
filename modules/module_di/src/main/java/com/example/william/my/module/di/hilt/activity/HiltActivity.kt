@@ -2,9 +2,7 @@ package com.example.william.my.module.di.hilt.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.di.hilt.entrypoint.NonHiltComponentHelper
 import com.example.william.my.module.di.hilt.model.HiltActivityScopedHelper
 import com.example.william.my.module.di.hilt.model.HiltApiService
@@ -32,7 +30,6 @@ import javax.inject.Inject
  * 官方参考：
  * https://dagger.dev/hilt/
  */
-@Route(path = RouterPath.Di.Hilt)
 @AndroidEntryPoint
 class HiltActivity : BasicResponseActivity() {
 

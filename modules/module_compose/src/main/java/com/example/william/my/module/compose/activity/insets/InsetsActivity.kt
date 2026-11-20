@@ -52,8 +52,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 
 /**
@@ -69,7 +67,6 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * https://developer.android.google.cn/develop/ui/compose/layouts/insets
  */
-@Route(path = RouterPath.Compose.Insets)
 class InsetsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

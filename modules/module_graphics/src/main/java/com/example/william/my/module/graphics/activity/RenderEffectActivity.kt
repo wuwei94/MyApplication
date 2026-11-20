@@ -14,10 +14,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.max
 import kotlin.math.min
 
@@ -36,7 +34,6 @@ import kotlin.math.min
  * @see RenderScriptActivity RenderScript 模糊方案（已废弃）
  * https://developer.android.com/develop/ui/views/graphics/rendereffects
  */
-@Route(path = RouterPath.Graphics.RenderEffect)
 class RenderEffectActivity : BasicImageActivity() {
 
     private lateinit var originalBitmap: Bitmap

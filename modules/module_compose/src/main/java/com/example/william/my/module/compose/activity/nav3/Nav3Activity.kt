@@ -59,8 +59,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * 声明式导航键接口契约 (Navigation 3 NavKey)
@@ -198,7 +196,6 @@ class Nav3State(initial: DemoNavKey = DemoNavKey.Home) {
  * - 系统级物理返回键 [BackHandler] 统一拦截与受控出栈；
  * - 实时可视化的返回栈深度看板（BackStack Visualizer）。
  */
-@Route(path = RouterPath.Compose.Nav3)
 class Nav3Activity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

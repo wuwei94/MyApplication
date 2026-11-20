@@ -1,6 +1,5 @@
 package com.example.william.my.module.reactive
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -8,7 +7,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 /**
  * 响应式模块入口 — 导航到 Kotlin Flow 与 RxJava 操作符对照等示例页面。
  */
-@Route(path = RouterPath.Reactive.Main)
 class ReactiveMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

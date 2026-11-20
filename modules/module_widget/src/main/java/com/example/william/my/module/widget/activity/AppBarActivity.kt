@@ -3,11 +3,9 @@ package com.example.william.my.module.widget.activity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.databinding.UiActivityAppBarBinding
 import com.google.android.material.tabs.TabLayout
@@ -40,7 +38,6 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
  *
  * https://developer.android.com/develop/ui/views/components/app-bar
  */
-@Route(path = RouterPath.Widget.Appbar)
 class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
 
     override fun getViewBinding(): UiActivityAppBarBinding = UiActivityAppBarBinding.inflate(layoutInflater)

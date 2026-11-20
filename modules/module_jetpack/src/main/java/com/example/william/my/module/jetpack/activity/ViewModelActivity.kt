@@ -3,8 +3,6 @@ package com.example.william.my.module.jetpack.activity
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseActivity
 import com.example.william.my.core.base.ui.fragment.BaseFragment
 import com.example.william.my.module.jetpack.viewmodel.FactoryViewModel
@@ -27,7 +25,6 @@ import com.example.william.my.module.jetpack.viewmodel.SimpleViewModel
  *
  * https://developer.android.google.cn/topic/libraries/architecture/viewmodel
  */
-@Route(path = RouterPath.Jetpack.ViewModel)
 class ViewModelActivity : BaseActivity() {
 
     /**

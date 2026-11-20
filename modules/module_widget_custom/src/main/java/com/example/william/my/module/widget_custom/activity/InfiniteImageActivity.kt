@@ -1,7 +1,5 @@
 package com.example.william.my.module.widget_custom.activity
 
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_custom.databinding.WidgetActivityInfiniteImageBinding
 
@@ -16,7 +14,6 @@ import com.example.william.my.module.widget_custom.databinding.WidgetActivityInf
  * 3. 手动滑动：支持手势滑动切换
  * 4. 指示器：支持自定义指示器样式
  */
-@Route(path = RouterPath.WidgetCustom.InfiniteImage)
 class InfiniteImageActivity : BaseVBActivity<WidgetActivityInfiniteImageBinding>() {
 
     override fun getViewBinding(): WidgetActivityInfiniteImageBinding = WidgetActivityInfiniteImageBinding.inflate(layoutInflater)

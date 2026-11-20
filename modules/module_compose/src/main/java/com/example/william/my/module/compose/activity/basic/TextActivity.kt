@@ -34,8 +34,6 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.component.TextExample
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 
@@ -53,7 +51,6 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * https://developer.android.google.cn/develop/ui/compose/text/style-text
  */
-@Route(path = RouterPath.Compose.Text)
 class TextActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

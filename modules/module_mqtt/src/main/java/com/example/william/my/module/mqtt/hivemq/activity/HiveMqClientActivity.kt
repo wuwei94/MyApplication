@@ -1,10 +1,8 @@
 package com.example.william.my.module.mqtt.hivemq.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.mqtt.MqttClientListener
 import com.example.william.my.core.mqtt.hivemq.HiveMqClientManager
 
@@ -20,7 +18,6 @@ import com.example.william.my.core.mqtt.hivemq.HiveMqClientManager
  * 官方参考：
  * https://github.com/hivemq/hivemq-mqtt-client
  */
-@Route(path = RouterPath.Mqtt.HiveMqClient)
 class HiveMqClientActivity : BasicResponseActivity() {
 
     private val host: String = Constants.Mqtt_Host

@@ -1,10 +1,8 @@
 package com.example.william.my.module.widget_custom.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.widget.titlebar.TitleBar
 
 /**
@@ -20,7 +18,6 @@ import com.example.william.my.core.widget.titlebar.TitleBar
  * 4. 背景主题色动态切换
  * 5. 布局查找初始化：TitleBar.build(rootView) 从布局中查找并绑定
  */
-@Route(path = RouterPath.WidgetCustom.TitleBar)
 class TitleBarActivity : BasicResponseActivity() {
 
     private var titleBar: TitleBar? = null

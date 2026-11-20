@@ -40,8 +40,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -56,7 +54,6 @@ import kotlin.math.sin
  *
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
-@Route(path = RouterPath.Compose.RadarChart)
 class RadarChartActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

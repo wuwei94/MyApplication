@@ -3,10 +3,8 @@ package com.example.william.my.module.widget_custom.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.ninepatch.NinePatchHelper
 import com.example.william.my.module.widget_custom.R
 
@@ -24,7 +22,6 @@ import com.example.william.my.module.widget_custom.R
  *
  * https://developer.android.com/guide/topics/graphics/drawables#nine-patch
  */
-@Route(path = RouterPath.WidgetCustom.NinePatch)
 class NinePatchActivity : BasicLayoutActivity() {
 
     private lateinit var tipView: TextView

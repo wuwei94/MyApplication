@@ -2,10 +2,8 @@ package com.example.william.my.module.kotlin.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
 
 /**
@@ -24,7 +22,6 @@ import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
  *
  * https://developer.android.google.cn/kotlin/coroutines
  */
-@Route(path = RouterPath.Kotlin.Coroutines)
 class CoroutinesActivity : BasicResponseActivity() {
 
     private val viewModel: CoroutinesViewModel by viewModels {

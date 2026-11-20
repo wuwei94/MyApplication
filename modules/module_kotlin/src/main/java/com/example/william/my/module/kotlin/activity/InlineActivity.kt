@@ -1,9 +1,7 @@
 package com.example.william.my.module.kotlin.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.google.gson.Gson
 
 /**
@@ -19,7 +17,6 @@ import com.google.gson.Gson
  *
  * https://kotlinlang.org/docs/inline-functions.html
  */
-@Route(path = RouterPath.Kotlin.Inline)
 class InlineActivity : BasicResponseActivity() {
 
     /**

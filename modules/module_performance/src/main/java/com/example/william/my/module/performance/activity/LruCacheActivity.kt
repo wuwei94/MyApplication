@@ -2,9 +2,7 @@ package com.example.william.my.module.performance.activity
 
 import android.os.Bundle
 import android.util.LruCache
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.bean.UserProfile
 
 /**
@@ -20,7 +18,6 @@ import com.example.william.my.module.performance.bean.UserProfile
  *
  * https://developer.android.com/reference/android/util/LruCache
  */
-@Route(path = RouterPath.Performance.LruCache)
 class LruCacheActivity : BasicResponseActivity() {
 
     // 容量为 3 个 Key 的演示缓存

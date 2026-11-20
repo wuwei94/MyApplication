@@ -2,9 +2,7 @@ package com.example.william.my.module.performance.activity
 
 import android.os.Bundle
 import androidx.startup.AppInitializer
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.performance.startup.LogSdk
 import com.example.william.my.module.performance.startup.LogSdkInitializer
 import com.example.william.my.module.performance.startup.ManualLazyInitializer
@@ -25,7 +23,6 @@ import com.example.william.my.module.performance.startup.SecuritySdkInitializer
  *
  * https://developer.android.com/topic/libraries/app-startup
  */
-@Route(path = RouterPath.Performance.AppStartup)
 class AppStartupActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

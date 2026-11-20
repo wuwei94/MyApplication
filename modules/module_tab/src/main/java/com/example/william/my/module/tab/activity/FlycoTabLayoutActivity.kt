@@ -3,10 +3,8 @@ package com.example.william.my.module.tab.activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.tab.databinding.TabActivityFlycoTabLayoutBinding
 import com.example.william.my.module.tab.utils.TabLayoutUtils
@@ -24,7 +22,6 @@ import com.example.william.my.module.tab.utils.TabLayoutUtils
  *
  * https://github.com/H07000223/FlycoTabLayout
  */
-@Route(path = RouterPath.Tab.FlycoTabLayout)
 class FlycoTabLayoutActivity : BaseVBActivity<TabActivityFlycoTabLayoutBinding>() {
 
     override fun getViewBinding(): TabActivityFlycoTabLayoutBinding = TabActivityFlycoTabLayoutBinding.inflate(layoutInflater)

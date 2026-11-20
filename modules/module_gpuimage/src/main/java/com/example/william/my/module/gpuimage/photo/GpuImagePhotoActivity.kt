@@ -9,8 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.gpuimage.databinding.GpuimageActivityPhotoBinding
@@ -31,7 +29,6 @@ import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
  *
  * https://github.com/cats-oss/android-gpuimage
  */
-@Route(path = RouterPath.GpuImage.Photo)
 class GpuImagePhotoActivity :
     BaseVBActivity<GpuimageActivityPhotoBinding>(),
     View.OnClickListener {

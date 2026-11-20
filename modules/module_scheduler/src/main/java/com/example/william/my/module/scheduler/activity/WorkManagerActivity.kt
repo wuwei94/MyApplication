@@ -11,9 +11,7 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.scheduler.work.ExpeditedWorker
 import com.example.william.my.module.scheduler.work.UploadWorker
 import java.util.UUID
@@ -38,7 +36,6 @@ import java.util.concurrent.TimeUnit
  *
  * https://developer.android.google.cn/topic/libraries/architecture/workmanager
  */
-@Route(path = RouterPath.Scheduler.WorkManager)
 class WorkManagerActivity : BasicResponseActivity() {
 
     private val workManager by lazy { WorkManager.getInstance(applicationContext) }

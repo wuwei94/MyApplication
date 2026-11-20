@@ -1,9 +1,7 @@
 package com.example.william.my.module.security.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.security.utils.SecureKeyDemoUtils
 
 /**
@@ -20,7 +18,6 @@ import com.example.william.my.module.security.utils.SecureKeyDemoUtils
  *
  * https://developer.android.com/training/articles/keystore
  */
-@Route(path = RouterPath.Security.SecureKey)
 class SecureKeyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

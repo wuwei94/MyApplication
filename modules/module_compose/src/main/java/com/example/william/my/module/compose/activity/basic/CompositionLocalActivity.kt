@@ -41,8 +41,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 
 /**
@@ -57,7 +55,6 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * https://developer.android.com/develop/ui/compose/composition-local
  */
-@Route(path = RouterPath.Compose.CompositionLocal)
 class CompositionLocalActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,8 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.gpuimage.databinding.GpuimageActivityCameraFilterBinding
@@ -35,7 +33,6 @@ import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
  *
  * https://github.com/cats-oss/android-gpuimage
  */
-@Route(path = RouterPath.GpuImage.CameraFilter)
 class GpuImageCameraFilterActivity : BaseVBActivity<GpuimageActivityCameraFilterBinding>() {
 
     private val cameraHelper by lazy { GpuImageCameraHelper(this, binding.glSurfaceView) }

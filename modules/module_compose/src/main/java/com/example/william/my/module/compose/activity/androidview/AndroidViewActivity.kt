@@ -33,8 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -55,7 +53,6 @@ import kotlin.math.roundToInt
  *
  * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
-@Route(path = RouterPath.Compose.AndroidView)
 class AndroidViewActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

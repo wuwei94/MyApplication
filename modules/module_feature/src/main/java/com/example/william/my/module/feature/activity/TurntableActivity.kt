@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import kotlin.random.Random
 
@@ -24,7 +22,6 @@ import kotlin.random.Random
  *
  * https://developer.android.com/develop/ui/views/animations/prop-animation
  */
-@Route(path = RouterPath.Feature.Turntable)
 class TurntableActivity : BasicImageActivity() {
 
     private var currentDegree = 0f // 当前停靠角度

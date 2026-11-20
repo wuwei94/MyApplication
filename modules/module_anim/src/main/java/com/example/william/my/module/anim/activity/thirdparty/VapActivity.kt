@@ -4,10 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.anim.R
 import com.tencent.qgame.animplayer.AnimConfig
 import com.tencent.qgame.animplayer.AnimView
@@ -37,7 +35,6 @@ import java.io.File
  * 官方参考：
  * https://github.com/Tencent/vap/tree/vap_open_source
  */
-@Route(path = RouterPath.Anim.Vap)
 class VapActivity : BasicLayoutActivity() {
 
     private lateinit var animView: AnimView

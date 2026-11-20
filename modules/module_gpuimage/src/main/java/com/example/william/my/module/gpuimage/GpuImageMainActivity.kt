@@ -1,6 +1,5 @@
 package com.example.william.my.module.gpuimage
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -25,7 +24,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *    - CameraEffect 官方管线方案：SurfaceProcessor 拦截并由 GPUImage 离屏渲染录制 MP4
  *    - EGL + MediaCodec 硬编方案：EGL 共享上下文 + 离屏 FBO 渲染 + MediaCodec 硬编码录制 MP4
  */
-@Route(path = RouterPath.GpuImage.Main)
 class GpuImageMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

@@ -35,8 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.launch
 
 /**
@@ -52,7 +50,6 @@ import kotlinx.coroutines.launch
  * https://developer.android.google.cn/develop/ui/compose/components/tab-row
  * https://developer.android.google.cn/jetpack/compose/layouts/pager
  */
-@Route(path = RouterPath.Compose.ScrollableTab)
 class ScrollableTabActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

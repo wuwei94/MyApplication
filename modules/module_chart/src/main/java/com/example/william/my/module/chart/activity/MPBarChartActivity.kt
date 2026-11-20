@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.chart.databinding.ChartActivityMpBarChartBinding
 import com.example.william.my.module.chart.view.CustomChartMarkerView
@@ -34,7 +32,6 @@ import kotlin.math.abs
  *
  * https://github.com/PhilJay/MPAndroidChart
  */
-@Route(path = RouterPath.Chart.MPBarChart)
 class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {
 
     private val quarters = listOf("Q1 第一季度", "Q2 第二季度", "Q3 第三季度", "Q4 第四季度")

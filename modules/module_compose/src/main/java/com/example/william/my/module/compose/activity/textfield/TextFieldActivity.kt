@@ -56,8 +56,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * TextField — 输入框与软键盘交互示例页
@@ -72,7 +70,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/compose/text/user-input
  */
-@Route(path = RouterPath.Compose.TextField)
 class TextFieldActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,10 +3,8 @@ package com.example.william.my.module.anim.activity.system
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * ObjectAnimator — 对象属性动画
@@ -21,7 +19,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/views/animations/prop-animation
  */
-@Route(path = RouterPath.Anim.ObjectAnimator)
 class ObjectAnimatorActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

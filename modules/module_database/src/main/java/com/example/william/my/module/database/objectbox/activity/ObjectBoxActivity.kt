@@ -1,9 +1,7 @@
 package com.example.william.my.module.database.objectbox.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.database.objectbox.data.ObjectBox
 import com.example.william.my.module.database.objectbox.data.ObjectBoxNote
 import com.google.gson.Gson
@@ -24,7 +22,6 @@ import io.objectbox.query.Query
  * 官方参考：
  * https://github.com/objectbox/objectbox-java
  */
-@Route(path = RouterPath.Database.ObjectBox)
 class ObjectBoxActivity : BasicResponseActivity() {
 
     private lateinit var notesBox: Box<ObjectBoxNote>

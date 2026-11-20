@@ -1,10 +1,8 @@
 package com.example.william.my.module.socket.websocket.java.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.javaws.client.JavaWebSocketClient
 import com.example.william.my.core.javaws.client.JavaWebSocketClientListener
 import org.java_websocket.client.WebSocketClient
@@ -22,7 +20,6 @@ import org.java_websocket.handshake.ServerHandshake
  * 官方参考：
  * https://github.com/TooTallNate/Java-WebSocket
  */
-@Route(path = RouterPath.Socket.JavaWebSocketClient)
 class JavaWebSocketClientActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_WebSocket

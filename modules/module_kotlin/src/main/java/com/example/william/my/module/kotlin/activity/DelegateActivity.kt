@@ -1,9 +1,7 @@
 package com.example.william.my.module.kotlin.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -22,7 +20,6 @@ import kotlin.reflect.KProperty
  *
  * https://kotlinlang.org/docs/delegation.html
  */
-@Route(path = RouterPath.Kotlin.Delegate)
 class DelegateActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

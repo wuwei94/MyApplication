@@ -4,19 +4,18 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.FrameLayout.LayoutParams
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.utils.ResourceUtilsService
 import com.example.william.my.module.widget_thirdparty.data.ProvinceData
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 /**
  * Android-PickerView — 滚动选择器
@@ -31,8 +30,11 @@ import java.util.Locale
  *
  * https://github.com/Bigkoo/Android-PickerView
  */
-@Route(path = RouterPath.WidgetThirdparty.PickerView)
+@AndroidEntryPoint
 class PickerViewActivity : BasicResponseActivity() {
+
+    @Inject
+    lateinit var resourceUtilsService: ResourceUtilsService
 
     private var isLoaded = false
     private val options1Items: MutableList<ProvinceData> = arrayListOf() // 所有省份数组
@@ -77,10 +79,7 @@ class PickerViewActivity : BasicResponseActivity() {
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
          * 关键逻辑在于循环体
          */
-        val service = ARouter.getInstance()
-            .build(RouterPath.Service.ResourceUtilsService)
-            .navigation() as ResourceUtilsService
-        val jsonData = service.getAssets("province.json") // 获取assets目录下的json文件数据
+        val jsonData = resourceUtilsService.getAssets("province.json") // 获取assets目录下的json文件数据
 
         val provinceData = parseData(jsonData)
 

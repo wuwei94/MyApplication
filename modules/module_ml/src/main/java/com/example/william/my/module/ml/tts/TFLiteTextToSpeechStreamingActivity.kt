@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.ml.databinding.MlActivityTextToSpeechStreamingBinding
 import com.example.william.my.module.ml.download.ModelDownloader
@@ -47,7 +45,6 @@ import kotlinx.coroutines.withContext
  *
  * 合成、引擎构建、引擎关闭排在同一条引擎串行队列上；播放单独跑在 IO 线程。
  */
-@Route(path = RouterPath.Ml.TextToSpeechStreaming)
 class TFLiteTextToSpeechStreamingActivity :
     BaseVBActivity<MlActivityTextToSpeechStreamingBinding>(),
     View.OnClickListener {

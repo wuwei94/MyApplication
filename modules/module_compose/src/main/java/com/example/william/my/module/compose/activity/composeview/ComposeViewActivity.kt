@@ -27,8 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.R
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 
@@ -48,7 +46,6 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  *
  * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
-@Route(path = RouterPath.Compose.ComposeView)
 class ComposeViewActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

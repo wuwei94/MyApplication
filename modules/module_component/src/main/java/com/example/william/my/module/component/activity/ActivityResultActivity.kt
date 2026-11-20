@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * ActivityResultContracts — 新版结果回调 API
@@ -31,7 +29,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/training/basics/intents/result
  */
-@Route(path = RouterPath.Component.ActivityResult)
 class ActivityResultActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

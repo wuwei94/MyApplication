@@ -6,9 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.markdown.databinding.MarkdownActivityTypewriterBinding
 import com.example.william.my.module.markdown.engine.MarkdownStreamFixer
 import com.example.william.my.module.markdown.engine.TypewriterEngine
@@ -44,7 +42,6 @@ import kotlinx.coroutines.withContext
  *
  * https://github.com/noties/Markwon
  */
-@Route(path = RouterPath.Markdown.StreamTypewriter)
 class StreamTypewriterActivity : BasicLayoutActivity() {
 
     private lateinit var typewriterBinding: MarkdownActivityTypewriterBinding

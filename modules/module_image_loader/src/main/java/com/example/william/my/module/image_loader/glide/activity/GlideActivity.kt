@@ -1,14 +1,12 @@
 package com.example.william.my.module.image_loader.glide.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Glide — 生命周期感知的 Android 图片加载框架
@@ -22,7 +20,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 官方参考：
  * https://bumptech.github.io/glide/
  */
-@Route(path = RouterPath.ImageLoader.Glide)
 class GlideActivity : BasicImageActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

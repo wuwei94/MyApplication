@@ -1,9 +1,7 @@
 package com.example.william.my.module.bluetooth.rx_ble.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.polidea.rxandroidble3.RxBleClient
 import com.polidea.rxandroidble3.RxBleConnection
 import com.polidea.rxandroidble3.RxBleDevice
@@ -30,7 +28,6 @@ import java.util.UUID
  * 官方参考：
  * https://github.com/Polidea/RxAndroidBle
  */
-@Route(path = RouterPath.Bluetooth.RxConnect)
 class BleRxConnectActivity : BasicResponseActivity() {
 
     private lateinit var rxBleClient: RxBleClient

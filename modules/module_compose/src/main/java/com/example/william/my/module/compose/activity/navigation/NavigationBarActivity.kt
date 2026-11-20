@@ -33,8 +33,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * NavigationBar — 官方强类型底部导航与多返回栈（Multi-BackStack）
@@ -48,7 +46,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/develop/ui/compose/navigation
  */
-@Route(path = RouterPath.Compose.NavigationBar)
 class NavigationBarActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

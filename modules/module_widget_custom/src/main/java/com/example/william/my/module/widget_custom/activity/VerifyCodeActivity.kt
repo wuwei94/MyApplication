@@ -1,8 +1,6 @@
 package com.example.william.my.module.widget_custom.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_custom.databinding.WidgetActivityVerifyCodeBinding
 
@@ -17,7 +15,6 @@ import com.example.william.my.module.widget_custom.databinding.WidgetActivityVer
  * 3. 输入监听：支持输入完成回调
  * 4. 自动聚焦：自动聚焦到第一个输入框
  */
-@Route(path = RouterPath.WidgetCustom.VerifyCode)
 class VerifyCodeActivity : BaseVBActivity<WidgetActivityVerifyCodeBinding>() {
 
     override fun getViewBinding(): WidgetActivityVerifyCodeBinding = WidgetActivityVerifyCodeBinding.inflate(layoutInflater)

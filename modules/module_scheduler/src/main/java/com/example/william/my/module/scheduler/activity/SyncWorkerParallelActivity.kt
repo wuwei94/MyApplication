@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_sync.work.HiltSyncWorker
 import com.example.william.my.basic.basic_sync.work.ServiceLocatorSyncWorker
 import java.util.UUID
@@ -25,7 +23,6 @@ import java.util.UUID
  * 官方参考：
  * https://developer.android.google.cn/training/dependency-injection/hilt-android#workmanager
  */
-@Route(path = RouterPath.Scheduler.SyncWorkerParallel)
 class SyncWorkerParallelActivity : BasicResponseActivity() {
 
     private val workManager by lazy { WorkManager.getInstance(applicationContext) }

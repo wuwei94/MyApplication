@@ -1,6 +1,5 @@
 package com.example.william.my.module.markdown
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -14,7 +13,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 3. 流式打字机与未闭合语法容错引擎
  * 4. AI 聊天完整实战（RecyclerView Payload 局部增量刷新 + 智能吸底）
  */
-@Route(path = RouterPath.Markdown.Main)
 class MarkdownMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

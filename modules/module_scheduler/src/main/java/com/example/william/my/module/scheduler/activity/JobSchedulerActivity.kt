@@ -10,9 +10,7 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.os.PersistableBundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.scheduler.service.MyJobSchedulerService
 import java.lang.ref.WeakReference
@@ -37,7 +35,6 @@ import java.lang.ref.WeakReference
  *
  * https://developer.android.google.cn/reference/android/app/job/JobScheduler
  */
-@Route(path = RouterPath.Scheduler.JobScheduler)
 class JobSchedulerActivity : BasicResponseActivity() {
 
     private var jobId = 0

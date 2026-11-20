@@ -48,8 +48,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.launch
 
 /**
@@ -64,7 +62,6 @@ import kotlinx.coroutines.launch
  *
  * https://developer.android.google.cn/develop/ui/compose/lists#staggered-grid
  */
-@Route(path = RouterPath.Compose.StaggeredGrid)
 class StaggeredGridActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

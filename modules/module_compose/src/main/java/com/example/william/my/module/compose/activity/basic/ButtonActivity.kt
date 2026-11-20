@@ -52,8 +52,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -72,7 +70,6 @@ import kotlinx.coroutines.launch
  *
  * https://developer.android.google.cn/develop/ui/compose/components/button
  */
-@Route(path = RouterPath.Compose.Button)
 class ButtonActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

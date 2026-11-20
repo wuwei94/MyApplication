@@ -1,9 +1,7 @@
 package com.example.william.my.module.systemservice.activity.timezone
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.timezone.LiveTimeZoneMonitor
 import com.example.william.my.core.base.timezone.TimeZoneMonitor
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +29,6 @@ import java.util.TimeZone
  * 官方参考：
  * https://developer.android.google.cn/reference/android/content/Intent#ACTION_TIMEZONE_CHANGED
  */
-@Route(path = RouterPath.SystemService.TimeZoneMonitor)
 class TimeZoneMonitorActivity : BasicResponseActivity() {
 
     private val monitor: TimeZoneMonitor by lazy { LiveTimeZoneMonitor(applicationContext) }

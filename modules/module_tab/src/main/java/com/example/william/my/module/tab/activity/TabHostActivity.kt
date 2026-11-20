@@ -6,10 +6,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.tab.R
@@ -29,7 +27,6 @@ import com.example.william.my.module.tab.databinding.TabActivityTabHostBinding
  *
  * https://developer.android.com/reference/android/widget/TabHost
  */
-@Route(path = RouterPath.Tab.TabHost)
 class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
 
     override fun getViewBinding(): TabActivityTabHostBinding = TabActivityTabHostBinding.inflate(layoutInflater)

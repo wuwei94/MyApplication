@@ -9,9 +9,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.ipc.service.MyMessageService
 import java.lang.ref.WeakReference
 
@@ -32,7 +30,6 @@ import java.lang.ref.WeakReference
  *
  * https://developer.android.com/guide/components/bound-services
  */
-@Route(path = RouterPath.Ipc.Messenger)
 class MessengerActivity : BasicResponseActivity() {
 
     private var serviceMessenger: Messenger? = null

@@ -1,13 +1,11 @@
 package com.example.william.my.module.http.volley.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.example.william.my.basic.basic_repo.bean.LoginData
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.utils.JsonUtils
 import com.example.william.my.core.volley.VolleySingleton
 import com.example.william.my.core.volley.builder.VolleyBuilder
@@ -27,7 +25,6 @@ import org.json.JSONObject
  * 官方参考：
  * https://github.com/google/volley
  */
-@Route(path = RouterPath.Http.Volley)
 class VolleyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -1,8 +1,6 @@
 package com.example.william.my.module.widget.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.adapter.RecyclerAdapter
 import com.example.william.my.module.widget.databinding.UiActivityFlexBoxBinding
@@ -47,7 +45,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
  *
  * https://github.com/google/flexbox-layout
  */
-@Route(path = RouterPath.Widget.FlexBox)
 class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
 
     override fun getViewBinding(): UiActivityFlexBoxBinding = UiActivityFlexBoxBinding.inflate(layoutInflater)

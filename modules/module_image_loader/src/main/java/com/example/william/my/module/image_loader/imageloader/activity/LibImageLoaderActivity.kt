@@ -1,10 +1,8 @@
 package com.example.william.my.module.image_loader.imageloader.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.imageloader.IImageLoader
 import com.example.william.my.core.imageloader.coil.ImageLoader as CoilImageLoader
 import com.example.william.my.core.imageloader.glide.ImageLoader as GlideImageLoader
@@ -17,7 +15,6 @@ import com.example.william.my.core.imageloader.glide.ImageLoader as GlideImageLo
  * 2. 双实现切换：coil 与 glide 两套 ImageLoader 可在运行时替换，同一 View 调用路径保持一致
  * 3. 实现约束：各实现内部需自行处理生命周期取消与主线程回调，封装层不做二次调度
  */
-@Route(path = RouterPath.ImageLoader.LibImageLoader)
 class LibImageLoaderActivity : BasicImageActivity() {
 
     // 默认使用 Glide 实现，列表第一项可切换为 Coil 实现

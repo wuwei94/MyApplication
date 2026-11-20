@@ -23,9 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.exception.HandlerException
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
+import com.example.william.my.basic.basic_shared.navigator.AppNavigator
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
@@ -34,7 +32,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * 展示 Jetpack Compose 基础组件、布局容器、手势交互、导航体系与 Canvas 数据可视化等示例列表。
  */
-@Route(path = RouterPath.Compose.Main)
 class ComposeMainActivity : ComponentActivity() {
 
     private val routerItems: ArrayList<RouterItem> = arrayListOf()
@@ -124,12 +121,8 @@ class ComposeMainActivity : ComponentActivity() {
         ) {
             items(itemsList) { item ->
                 LazyColumnItemExample(item) {
-                    if (!item.routerPath.isNullOrEmpty()) {
-                        try {
-                            ARouter.getInstance().build(item.routerPath).navigation()
-                        } catch (e: HandlerException) {
-                            e.printStackTrace()
-                        }
+                    item.routerPath?.takeIf { it.isNotEmpty() }?.let { path ->
+                        AppNavigator.build(path).navigation(this@ComposeMainActivity)
                     }
                 }
             }

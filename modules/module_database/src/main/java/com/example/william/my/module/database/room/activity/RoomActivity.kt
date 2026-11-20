@@ -2,9 +2,7 @@ package com.example.william.my.module.database.room.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.database.room.data.OAuth
 import com.example.william.my.module.database.room.data.OAuthDao
 import com.example.william.my.module.database.room.data.OAuthDataBase
@@ -29,7 +27,6 @@ import kotlinx.coroutines.withContext
  * 官方参考：
  * https://developer.android.com/training/data-storage/room
  */
-@Route(path = RouterPath.Database.Room)
 class RoomActivity : BasicResponseActivity() {
 
     private val oauthDao: OAuthDao by lazy {

@@ -3,9 +3,7 @@ package com.example.william.my.module.widget_custom.activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.widget.alertdialog.IosAlertDialog
 import com.example.william.my.core.widget.alertdialog.IosAlertItemDialog
 import com.example.william.my.module.widget_custom.dialog.MyBottomSheetDialog
@@ -28,7 +26,6 @@ import com.example.william.my.module.widget_custom.dialog.MyBottomSheetDialog
  *
  * https://developer.android.com/develop/ui/views/components/dialogs
  */
-@Route(path = RouterPath.WidgetCustom.AlertDialog)
 class AlertDialogActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

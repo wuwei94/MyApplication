@@ -1,9 +1,7 @@
 package com.example.william.my.module.systemservice.activity.floatwindow
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.systemservice.R
 import com.lzf.easyfloat.EasyFloat
 
@@ -30,7 +28,6 @@ import com.lzf.easyfloat.EasyFloat
  *
  * https://github.com/princekin-f/EasyFloat
  */
-@Route(path = RouterPath.SystemService.EasyFloat)
 class EasyFloatActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

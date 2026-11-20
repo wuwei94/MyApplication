@@ -10,8 +10,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.databinding.UiActivityWebviewBinding
 
@@ -26,7 +24,6 @@ import com.example.william.my.module.widget.databinding.UiActivityWebviewBinding
  * 3. 缓存机制：支持网页缓存，提升加载速度
  * 4. 安全控制：支持 SSL 证书处理、文件访问控制
  */
-@Route(path = RouterPath.Widget.WebView)
 class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
 
     override fun getViewBinding(): UiActivityWebviewBinding = UiActivityWebviewBinding.inflate(layoutInflater)

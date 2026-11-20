@@ -1,10 +1,8 @@
 package com.example.william.my.module.http.rx_request.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.core.retrofit.exception.ApiException
 import com.example.william.my.core.retrofit.retrofit
@@ -29,7 +27,6 @@ import org.json.JSONObject
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RxRequest)
 class RxRequestActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

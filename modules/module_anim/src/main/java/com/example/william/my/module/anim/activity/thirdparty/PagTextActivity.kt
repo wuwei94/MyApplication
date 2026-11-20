@@ -2,10 +2,8 @@ package com.example.william.my.module.anim.activity.thirdparty
 
 import android.os.Bundle
 import android.widget.Toast
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.anim.R
 import org.libpag.PAGFile
 import org.libpag.PAGScaleMode
@@ -33,7 +31,6 @@ import org.libpag.PAGView
  * 官方参考：
  * https://pag.io/docs/en/editable-text.html
  */
-@Route(path = RouterPath.Anim.PagText)
 class PagTextActivity : BasicLayoutActivity() {
 
     private lateinit var pagView: PAGView

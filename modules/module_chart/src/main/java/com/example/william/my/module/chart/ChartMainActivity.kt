@@ -1,6 +1,5 @@
 package com.example.william.my.module.chart
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -19,7 +18,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *    MarkerView 自定义提示，并通过 `OnChartValueSelectedListener` 联动页面指标看板
  * 2. 全景联动看板：以折线图为控制器，驱动柱状图与饼图随所选时间轴同步重绘
  */
-@Route(path = RouterPath.Chart.Main)
 class ChartMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

@@ -10,13 +10,12 @@ import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.router.service.utils.ImageUtilsService
 import com.example.william.my.basic.basic_shared.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
+import javax.inject.Inject
 
 /**
  * 图片裁剪 — 系统 Intent 调用
@@ -45,8 +44,11 @@ import java.io.File
  *
  * https://developer.android.com/training/camera/photobasics
  */
-@Route(path = RouterPath.Feature.Crop)
+@AndroidEntryPoint
 class CropActivity : BasicImageActivity() {
+
+    @Inject
+    lateinit var imageUtilsService: ImageUtilsService
 
     private var photoCaptureUri: Uri? = null
     private var cropDestinationUri: Uri? = null
@@ -263,10 +265,7 @@ class CropActivity : BasicImageActivity() {
         if (bitmap == null) return null
         val file = File(externalCacheDir, "THUMB_${System.currentTimeMillis()}.jpg")
         return try {
-            val service = ARouter.getInstance()
-                .build(RouterPath.Service.ImageUtilsService)
-                .navigation() as? ImageUtilsService
-            val successful = service?.save(bitmap, file, Bitmap.CompressFormat.JPEG) ?: false
+            val successful = imageUtilsService.save(bitmap, file, Bitmap.CompressFormat.JPEG)
             if (successful) {
                 FileProvider.getUriForFile(this, "$packageName.fileProvider", file)
             } else {

@@ -2,9 +2,7 @@ package com.example.william.my.module.bluetooth.native_ble.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -28,7 +26,6 @@ import kotlin.math.min
  * 官方参考：
  * https://developer.android.com/guide/topics/connectivity/bluetooth-le
  */
-@Route(path = RouterPath.Bluetooth.NativeQueue)
 class BleNativeQueueActivity : BasicResponseActivity() {
 
     // 模拟 BLE 操作请求

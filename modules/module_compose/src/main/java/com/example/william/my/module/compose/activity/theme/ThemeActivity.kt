@@ -41,8 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Theme — Material 3 动态主题与深浅色模式示例页
@@ -57,7 +55,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.google.cn/develop/ui/compose/designsystems/material3
  */
-@Route(path = RouterPath.Compose.Theme)
 class ThemeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -30,9 +30,7 @@ import androidx.compose.ui.input.pointer.PointerEventType.Companion.Move
 import androidx.compose.ui.input.pointer.PointerEventType.Companion.Press
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * GuaguaCard — 刮刮卡涂层擦除效果示例页
@@ -46,7 +44,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://juejin.cn/post/7303075105390133259
  */
-@Route(path = RouterPath.Compose.GuaguaCard)
 class GuaguaCardActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

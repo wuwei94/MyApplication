@@ -1,9 +1,7 @@
 package com.example.william.my.module.di.koin.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.di.koin.model.KoinAnalyticsTracker
 import com.example.william.my.module.di.koin.model.KoinOrderProcessor
 import com.example.william.my.module.di.koin.model.KoinPaymentService
@@ -36,7 +34,6 @@ import org.koin.core.qualifier.named
  * 官方参考：
  * https://insert-koin.io/
  */
-@Route(path = RouterPath.Di.Koin)
 class KoinActivity : BasicResponseActivity() {
 
     // 1. 懒加载注入单例与工厂对象

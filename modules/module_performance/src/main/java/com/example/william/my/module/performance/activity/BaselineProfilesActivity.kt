@@ -3,9 +3,7 @@ package com.example.william.my.module.performance.activity
 import android.os.Bundle
 import androidx.profileinstaller.ProfileInstaller
 import androidx.profileinstaller.ProfileInstaller.DiagnosticsCallback
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.concurrent.Executors
 
 /**
@@ -22,7 +20,6 @@ import java.util.concurrent.Executors
  *
  * https://developer.android.com/topic/performance/baselineprofiles
  */
-@Route(path = RouterPath.Performance.BaselineProfiles)
 class BaselineProfilesActivity : BasicResponseActivity() {
 
     private val executor = Executors.newSingleThreadExecutor()

@@ -2,12 +2,10 @@ package com.example.william.my.module.widget.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.adapter.ViewPagerAdapter
 import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.databinding.UiActivityViewPagerBinding
 
@@ -24,7 +22,6 @@ import com.example.william.my.module.widget.databinding.UiActivityViewPagerBindi
  *
  * https://developer.android.com/develop/ui/views/layout/swipe-viewpager
  */
-@Route(path = RouterPath.Widget.ViewPager)
 class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {
 
     override fun getViewBinding(): UiActivityViewPagerBinding = UiActivityViewPagerBinding.inflate(layoutInflater)

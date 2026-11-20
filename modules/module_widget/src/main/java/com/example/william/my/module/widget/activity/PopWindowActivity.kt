@@ -3,11 +3,9 @@ package com.example.william.my.module.widget.activity
 import android.os.Bundle
 import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.databinding.SharedLayoutResponseBinding
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * PopupWindow — 弹出窗口演示
@@ -22,7 +20,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/reference/android/widget/PopupWindow
  */
-@Route(path = RouterPath.Widget.PopWindow)
 class PopWindowActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

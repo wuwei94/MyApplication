@@ -2,8 +2,6 @@ package com.example.william.my.module.widget.activity
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.adapter.RecyclerNestedAdapter
 import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewNestedBinding
@@ -26,7 +24,6 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewNe
  *
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
-@Route(path = RouterPath.Widget.RecyclerViewNested)
 class RecyclerViewNestedActivity : BaseVBActivity<UiActivityRecyclerViewNestedBinding>() {
 
     override fun getViewBinding(): UiActivityRecyclerViewNestedBinding = UiActivityRecyclerViewNestedBinding.inflate(layoutInflater)

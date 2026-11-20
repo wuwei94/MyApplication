@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.markdown.databinding.MarkdownActivityBasicBinding
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -39,7 +37,6 @@ import io.noties.markwon.image.glide.GlideImagesPlugin
  *
  * https://github.com/noties/Markwon
  */
-@Route(path = RouterPath.Markdown.MarkwonBasic)
 class MarkwonBasicActivity : BasicLayoutActivity() {
 
     private lateinit var markdownBinding: MarkdownActivityBasicBinding

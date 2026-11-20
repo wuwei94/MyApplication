@@ -35,8 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.delay
 
@@ -53,7 +51,6 @@ import kotlinx.coroutines.delay
  *
  * https://developer.android.google.cn/develop/ui/compose/side-effects
  */
-@Route(path = RouterPath.Compose.Effect)
 class EffectActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

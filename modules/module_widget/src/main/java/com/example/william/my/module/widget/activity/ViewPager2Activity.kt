@@ -3,12 +3,10 @@ package com.example.william.my.module.widget.activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.adapter.ViewPagerAdapter2
 import com.example.william.my.basic.basic_shared.adapter.ViewPagerFragmentAdapter2
 import com.example.william.my.basic.basic_shared.fragment.PrimaryDarkFragment
 import com.example.william.my.basic.basic_shared.fragment.PrimaryFragment
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget.databinding.UiActivityViewPager2Binding
 
@@ -28,7 +26,6 @@ import com.example.william.my.module.widget.databinding.UiActivityViewPager2Bind
  *
  * https://developer.android.google.cn/jetpack/androidx/releases/viewpager2
  */
-@Route(path = RouterPath.Widget.ViewPager2)
 class ViewPager2Activity : BaseVBActivity<UiActivityViewPager2Binding>() {
 
     override fun getViewBinding(): UiActivityViewPager2Binding = UiActivityViewPager2Binding.inflate(layoutInflater)

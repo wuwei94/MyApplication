@@ -1,10 +1,8 @@
 package com.example.william.my.module.http.retrofit.activity
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okhttp.okHttpClient
 import com.example.william.my.module.http.retrofit.data.RetrofitParallelApi
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -36,7 +34,6 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
  * 官方参考：
  * https://square.github.io/retrofit
  */
-@Route(path = RouterPath.Http.RetrofitRx)
 class RetrofitRxActivity : BasicResponseActivity() {
 
     private val operations = CompositeDisposable()

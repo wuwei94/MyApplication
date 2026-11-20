@@ -1,6 +1,5 @@
 package com.example.william.my.module.ml
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -36,7 +35,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 推理 API：绝大多数页面用 2.x 的 `CompiledModel`；流式语音合成的两张定长 LSTM 图
  * （predictor / prosody）因官方加载器暂不支持 variable tensors，与官方一样走经典 `Interpreter`。
  */
-@Route(path = RouterPath.Ml.Main)
 class MlMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

@@ -2,9 +2,7 @@ package com.example.william.my.module.kotlin.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.async
@@ -34,7 +32,6 @@ import java.util.concurrent.atomic.AtomicInteger
  *
  * https://kotlinlang.org/docs/shared-mutable-state-and-concurrency.html
  */
-@Route(path = RouterPath.Kotlin.Concurrency)
 class ConcurrencyActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -2,9 +2,7 @@ package com.example.william.my.module.component.activity
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * OnBackPressedDispatcher — 返回键拦截
@@ -23,7 +21,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/guide/navigation/navigation-custom-back
  */
-@Route(path = RouterPath.Component.OnBackPressed)
 class OnBackPressedActivity : BasicResponseActivity() {
 
     private var backCallback: OnBackPressedCallback? = null

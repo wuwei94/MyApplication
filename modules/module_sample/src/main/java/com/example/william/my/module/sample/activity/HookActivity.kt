@@ -2,9 +2,7 @@ package com.example.william.my.module.sample.activity
 
 import android.os.Bundle
 import android.view.View
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.sample.hook.HookHelper
 
 /**
@@ -21,7 +19,6 @@ import com.example.william.my.module.sample.hook.HookHelper
  *
  * https://developer.android.com/reference/java/lang/reflect/Proxy
  */
-@Route(path = RouterPath.Sample.Hook)
 class HookActivity : BasicResponseActivity() {
 
     private lateinit var targetDemoView: View

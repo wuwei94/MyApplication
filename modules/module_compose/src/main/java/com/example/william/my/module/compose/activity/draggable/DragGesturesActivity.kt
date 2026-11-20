@@ -37,8 +37,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.roundToInt
 
 /**
@@ -52,7 +50,6 @@ import kotlin.math.roundToInt
  *
  * https://developer.android.google.cn/develop/ui/compose/touch-input/pointer-input/drag-swipe-fling
  */
-@Route(path = RouterPath.Compose.DragGestures)
 class DragGesturesActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

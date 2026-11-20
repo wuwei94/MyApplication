@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import app.rive.runtime.kotlin.RiveAnimationView
 import app.rive.runtime.kotlin.core.Rive
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicLayoutActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.anim.R
 
 /**
@@ -34,7 +32,6 @@ import com.example.william.my.module.anim.R
  * 官方参考：
  * https://github.com/rive-app/rive-android
  */
-@Route(path = RouterPath.Anim.Rive)
 class RiveActivity : BasicLayoutActivity() {
 
     private lateinit var riveView: RiveAnimationView

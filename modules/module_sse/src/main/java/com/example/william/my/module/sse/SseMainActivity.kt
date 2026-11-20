@@ -1,6 +1,5 @@
 package com.example.william.my.module.sse
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -12,7 +11,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * - OkHttp SSE（普通版本 / RxJava 封装 / Coroutines Flow 封装）
  * - Ktor SSE（普通版本 / Coroutines Flow 封装）
  */
-@Route(path = RouterPath.SSE.Main)
 class SseMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

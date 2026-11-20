@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.widget.dialog.AlertDialogDialogFragment
 import com.example.william.my.module.widget.dialog.CustomViewDialogFragment
 import java.util.Calendar
@@ -35,7 +33,6 @@ import java.util.Calendar
  *
  * https://developer.android.com/develop/ui/views/components/dialogs
  */
-@Route(path = RouterPath.Widget.Dialog)
 class DialogActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> = arrayListOf(

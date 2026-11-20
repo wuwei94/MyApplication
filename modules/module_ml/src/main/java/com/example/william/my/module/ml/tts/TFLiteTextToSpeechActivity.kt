@@ -7,8 +7,6 @@ import android.media.AudioTrack
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.ml.databinding.MlActivityTextToSpeechBinding
 import com.example.william.my.module.ml.download.ModelDownloader
@@ -46,7 +44,6 @@ import kotlin.system.measureNanoTime
  * 引擎构建、推理、关闭全部走同一条引擎串行队列（见 `TFLiteLifecycleSupport`）：
  * `CompiledModel` 的 `run()` / `close()` 没有同步保护，并发会踩到已释放的原生 handle。
  */
-@Route(path = RouterPath.Ml.TextToSpeech)
 class TFLiteTextToSpeechActivity :
     BaseVBActivity<MlActivityTextToSpeechBinding>(),
     View.OnClickListener {

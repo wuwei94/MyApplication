@@ -1,7 +1,5 @@
 package com.example.william.my.module.widget_thirdparty.activity.widget
 
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseVBActivity
 import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpartyActivityShadowLayoutBinding
 
@@ -15,7 +13,6 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  * 官方参考：
  * https://github.com/lihangleo2/ShadowLayout
  */
-@Route(path = RouterPath.WidgetThirdparty.ShadowLayout)
 class ShadowLayoutActivity : BaseVBActivity<WidgetThirdpartyActivityShadowLayoutBinding>() {
 
     override fun getViewBinding(): WidgetThirdpartyActivityShadowLayoutBinding = WidgetThirdpartyActivityShadowLayoutBinding.inflate(layoutInflater)

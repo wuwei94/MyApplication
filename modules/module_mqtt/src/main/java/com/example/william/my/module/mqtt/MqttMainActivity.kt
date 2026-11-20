@@ -1,6 +1,5 @@
 package com.example.william.my.module.mqtt
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -15,7 +14,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * - HiveMQ MQTT Client（依赖 Netty，异步 API）
  * - Eclipse Paho Android Service（MqttAndroidClient，绑定 Service）
  */
-@Route(path = RouterPath.Mqtt.Main)
 class MqttMainActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> {

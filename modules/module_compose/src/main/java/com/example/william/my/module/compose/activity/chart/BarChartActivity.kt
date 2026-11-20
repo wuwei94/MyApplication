@@ -38,8 +38,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.abs
 
 /**
@@ -53,7 +51,6 @@ import kotlin.math.abs
  *
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
-@Route(path = RouterPath.Compose.BarChart)
 class BarChartActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

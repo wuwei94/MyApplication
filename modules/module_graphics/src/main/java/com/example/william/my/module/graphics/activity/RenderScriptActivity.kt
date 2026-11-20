@@ -9,10 +9,8 @@ import android.renderscript.ScriptIntrinsicBlur
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.R
 import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import kotlin.math.max
 import kotlin.math.min
 
@@ -38,7 +36,6 @@ import kotlin.math.min
  * @see RenderEffectActivity RenderEffect 替代方案
  * https://developer.android.com/guide/topics/renderscript/migrate
  */
-@Route(path = RouterPath.Graphics.RenderScript)
 class RenderScriptActivity : BasicImageActivity() {
 
     private var renderScript: RenderScript? = null

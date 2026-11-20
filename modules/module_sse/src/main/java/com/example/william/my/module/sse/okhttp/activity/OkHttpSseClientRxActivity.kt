@@ -2,10 +2,8 @@ package com.example.william.my.module.sse.okhttp.activity
 
 import android.os.Bundle
 import android.widget.EditText
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.constant.Constants
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.okttpsse.OkHttpSseInfo
 import com.example.william.my.core.okttpsse.client.OkHttpSseClientRx
 import com.example.william.my.module.sse.utils.LlmStreamParser
@@ -27,7 +25,6 @@ import io.reactivex.rxjava3.disposables.Disposable
  * 官方参考：
  * https://square.github.io/okhttp/features/sse/
  */
-@Route(path = RouterPath.SSE.OkHttpSseClientRx)
 class OkHttpSseClientRxActivity : BasicResponseActivity() {
 
     private val serverUrl: String = Constants.Url_DeepSeek

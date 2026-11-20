@@ -41,8 +41,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
  * Jetpack Compose — 饼图/环形甜甜圈图 (PieChart)
@@ -55,7 +53,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  *
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
-@Route(path = RouterPath.Compose.PieChart)
 class PieChartActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

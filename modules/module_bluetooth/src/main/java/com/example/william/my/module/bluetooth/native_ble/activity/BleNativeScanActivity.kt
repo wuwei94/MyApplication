@@ -16,9 +16,7 @@ import android.os.Bundle
 import android.os.ParcelUuid
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import java.util.UUID
 
 /**
@@ -37,7 +35,6 @@ import java.util.UUID
  * https://developer.android.com/guide/topics/connectivity/bluetooth-le
  */
 @SuppressLint("MissingPermission")
-@Route(path = RouterPath.Bluetooth.NativeScan)
 class BleNativeScanActivity : BasicResponseActivity() {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
