@@ -2,8 +2,9 @@ package com.example.william.my.application
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.alibaba.android.arouter.launcher.ARouter
+import com.example.william.my.basic.basic_shared.navigator.AppNavigator
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.activity.BaseActivity
 
@@ -65,14 +66,15 @@ class MainActivity : BaseActivity() {
             return
         }
 
-        ARouter.getInstance()
-            .build(RouterPath.Directory_Main)
-            .withTransition(
-                com.example.william.my.core.base.R.anim.base_anim_slide_in_left,
-                com.example.william.my.core.base.R.anim.base_anim_slide_out_right,
-            )
+        val options = ActivityOptionsCompat.makeCustomAnimation(
+            this,
+            com.example.william.my.core.base.R.anim.base_anim_slide_in_left,
+            com.example.william.my.core.base.R.anim.base_anim_slide_out_right,
+        )
+        AppNavigator.build(RouterPath.Directory_Main)
+            .withOptions(options)
             .withString("param_key", "param_value")
-            .navigation()
+            .navigation(this)
 
         finish()
     }

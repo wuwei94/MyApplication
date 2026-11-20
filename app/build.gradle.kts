@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter
 plugins {
     alias(libs.plugins.nowinandroid.android.application)
     alias(libs.plugins.nowinandroid.android.application.compose)
-    alias(libs.plugins.nowinandroid.android.arouter)
     alias(libs.plugins.nowinandroid.android.eventbus)
     alias(libs.plugins.nowinandroid.android.hilt)
     alias(libs.plugins.dependency.guard)
@@ -96,6 +95,7 @@ dependencies {
     implementation(projects.basic.basicDatabase)
     implementation(projects.basic.basicNetwork)
     implementation(projects.basic.basicRepo)
+    implementation(projects.basic.basicServer)
     implementation(projects.basic.basicSync)
 
     // 应用启动与启动页

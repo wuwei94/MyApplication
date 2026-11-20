@@ -1,7 +1,10 @@
 package com.example.william.my.application.app
 
+import android.app.Activity
 import android.app.Application
 import androidx.work.Configuration
+import com.example.william.my.basic.basic_shared.navigator.AppPageRegistry
+import com.example.william.my.basic.basic_shared.navigator.PageInterceptor
 import com.example.william.my.basic.basic_sync.work.SyncWorkerFactory
 import com.example.william.my.core.base.app.hilt.interfaces.IAppInit
 import com.example.william.my.core.base.app.hilt.qualifier.AppInit
@@ -52,6 +55,12 @@ class AppHilt :
     @Inject
     lateinit var syncWorkerFactory: SyncWorkerFactory
 
+    @Inject
+    lateinit var pageRoutes: Map<String, @JvmSuppressWildcards Class<out Activity>>
+
+    @Inject
+    lateinit var pageInterceptors: Set<@JvmSuppressWildcards PageInterceptor>
+
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setWorkerFactory(syncWorkerFactory)
@@ -59,6 +68,9 @@ class AppHilt :
 
     override fun onCreate() {
         super.onCreate()
+
+        AppPageRegistry.registerAll(pageRoutes)
+        pageInterceptors.forEach(AppPageRegistry::addInterceptor)
 
         baseInit.init(this)
 
