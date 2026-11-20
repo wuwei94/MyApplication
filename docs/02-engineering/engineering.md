@@ -157,7 +157,7 @@ sequenceDiagram
 ```
 
 * **commit-msg / pre-push 钩子**：格式规则、安装方式与跳过通道（`--no-verify` / `COMMIT_MSG_DISABLE=1` / `PRE_PUSH_DISABLE=1`）详见 [git.md](../01-rules/git.md)。
-* **pre-push 增量算法**：全量 `spotlessCheck` → `git diff` 计算受影响模块 → 精准执行 `:<module>:lintProdDebug`（纯 JVM 模块执行 `:<module>:lint`，自定义规则模块 `:lint` 自身豁免），并统一传 `-PenableFlutter=false` 关闭 Flutter 集成（`enableFlutter` 默认 `true`，开启时 `:app` 的 Lint 会连带分析 Flutter 产物，单次门禁耗时由分钟级升至十几分钟）。
+* **pre-push 增量算法**：变更文件 `tools/check-style` → 全量 `spotlessCheck` → `git diff` 计算受影响模块 → 精准执行 `:<module>:lintProdDebug`（纯 JVM 模块执行 `:<module>:lint`，自定义规则模块 `:lint` 自身豁免），并统一传 `-PenableFlutter=false` 关闭 Flutter 集成（`enableFlutter` 默认 `true`，开启时 `:app` 的 Lint 会连带分析 Flutter 产物，单次门禁耗时由分钟级升至十几分钟）。
 * **APK 产物基线与权限卫士（Badging）`【已落地】`**：`checkBadging` 通过 AAPT2 dump APK 的 `badging`（`package` / `uses-permission` / `uses-feature` 等）与入库基线 `app/badging/prodRelease.txt` 比对，依赖隐式引入危险权限或元数据漂移时构建失败并输出 diff。刷新基线：`./gradlew updateBadgingBaseline -PenableFlutter=false`。
 * **CI 并行矩阵 `【已落地】`**：`.github/workflows/build.yml` 并行 Job —— `spotlessCheck`、`lintProdDebug`、`testProdDebugUnitTest`、`dependencyGuard`、`assembleProdDebug + assembleProdRelease`、`checkBadging`、GMD 插桩（`pixel6api31aospDemoDebugAndroidTest`）；统一经 `gradle/actions/setup-gradle` 复用 Gradle User Home 缓存，并配置 `concurrency` 取消同分支的过期运行。**拆 Job 的收益以缓存为前提**——缺少缓存时各 Job 冷启动会拉长总时长。`verifyRoborazziProdDebug` 仍属演进规划：需先在 CI 环境重新生成截图基准（基准图与运行环境的字体、渲染相关）。
 

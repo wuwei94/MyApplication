@@ -130,4 +130,4 @@ git log --oneline --before=2026-08-12
 
 - **批量格式化提交**（`style(spotless): ...`）必须将其 hash 追加到 `.git-blame-ignore-revs`，避免 `git blame` 全部指向格式化者
 - **线性历史**：本仓库无 merge commit。多人协作时用 `git pull --rebase`，冲突在本地解决后再推送
-- **pre-push 门禁**：推送前自动执行 `spotlessCheck` 与变更模块的 `lintProdDebug`，两处 Gradle 调用均传 `-PenableFlutter=false`（与 CI 口径一致，Flutter 侧由 `flutter.yml` 独立流水线负责），详见 `tools/pre-push`
+- **pre-push 门禁**：推送前自动执行 `tools/check-style --files`（变更文件风格检查，可通过 `CHECK_STYLE_DISABLE=1` 跳过）、`spotlessCheck` 与变更模块的 `lintProdDebug`，两处 Gradle 调用均传 `-PenableFlutter=false`（与 CI 口径一致，Flutter 侧由 `flutter.yml` 独立流水线负责），详见 `tools/pre-push`

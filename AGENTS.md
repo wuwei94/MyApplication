@@ -49,6 +49,7 @@ git diff --stat           # 变更规模与任务复杂度匹配
 **代码（触碰 Kotlin/Java/Gradle/XML 时）** — 与 pre-push / CI 口径一致，均带 `-PenableFlutter=false`：
 
 ```bash
+bash tools/check-style --changed                # 变更文件注释与实现风格门禁
 ./gradlew :<模块路径>:spotlessApply
 ./gradlew :<模块路径>:spotlessCheck
 ./gradlew :<模块路径>:testDemoDebugUnitTest   # 有测试时；单测变体是 demo
