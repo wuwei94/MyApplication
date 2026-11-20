@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".RouterMainActivity" />
+        <activity android:name=".arouter.activity.ARouterActivity" />
+        <activity android:name=".arouter.activity.ARouterTargetActivity" />
+        <activity android:name=".custom_router.activity.CustomRouterActivity" />
+        <activity android:name=".custom_router.activity.CustomRouterTargetActivity" />
+    </application>
+
+</manifest>

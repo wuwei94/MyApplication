@@ -217,6 +217,8 @@ include(":modules:module_storage")
 include(":modules:module_di")
 // MVP，MVI，MVVM 架构
 include(":modules:module_arch")
+// 组件化路由横评（ARouter vs 自研路由）
+include(":modules:module_router")
 
 // Compose
 include(":modules:module_compose")
