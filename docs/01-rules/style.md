@@ -20,9 +20,12 @@
 
 「工程大驼峰」**仅限** `RouterPath` / `Constants` 等全局 Key 对象；类内与局部常量一律 `UPPER_SNAKE_CASE`，禁止把 `Value_Username` 风格扩散到业务类。资源前缀表见 [structure.md](structure.md)。
 
+- **ViewBinding 边界**：Activity / Fragment 自身 `binding` 已暴露的视图禁止再调用 `findViewById`；Adapter item、Dialog / PopupWindow 自定义布局、无 binding 的自定义 View 内部可继续使用。
+- **异常处理边界**：示例方法优先使用 `runCatching` 配合 `✗` 日志输出；仅在需区分异常类型或需 `finally` 释放资源时使用 `try/catch`。
+
 ## 注释原则
 
-1. **中文优先**：注释默认中文，标识符、类型名与必要专有术语除外。
+1. **中文优先**：注释默认中文，标识符、类型名与必要专有术语除外；禁止整段英文散文注释（`// region`、标识符、URL、简短作用域标记可保留英文）。
 2. **Why > What**：仅解释职责、约束与底层非显而易见的原因；严禁与代码同义反复（如 `// 创建实例` 下紧跟 `init()`）。
 3. **保护既有技术决策**：严禁删除、缩减已有的技术选型对比、架构演进和设计约束注释。
 4. **最小切片与增量追加**：新说明以增量形式追加；严禁将未修改注释块划入替换范围；`git diff` 严禁出现非预期的 `- //` 或 `- *` 行。

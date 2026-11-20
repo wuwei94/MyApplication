@@ -33,9 +33,9 @@
        </application>
    </manifest>
    ```
-5. **创建入口 Activity**
+5. **创建入口 Activity 与页面路由模块**
    - 继承 `RouterRecyclerActivity` 展现子项列表；
-   - 标注 `@Route(path = RouterPath.<模块名大驼峰>.Main)`。
+   - 在 `di/Module<模块名大驼峰>PageModule.kt` 中通过 Hilt `@IntoMap @StringKey(RouterPath.<模块名大驼峰>.Main)` 注册页面路由。
 6. **挂载至 10 大分类导航 (`Category.kt` / `CategoryActivity.kt`)**
    - 将主入口登记到对应的业务领域分类。
 7. **同步架构文档**

@@ -32,7 +32,7 @@
 ## 1. 工程与文件底线
 
 - 换行符 **LF**、缩进 **4 空格**、编码 UTF-8；**禁止文件头 BOM**（若见 `﻿package` 必须去掉）。
-- 每个 Activity 必须有 `@Route(path = RouterPath.Xxx.Yyy)`，路由定义在 `basic_shared/.../RouterPath.kt`。
+- 每个 Activity 须在模块 `XxxPageModule` 中通过 Hilt `@IntoMap @StringKey(RouterPath.Xxx.Yyy)` 注册到 `AppPageRegistry`（`module_router/arouter` 对照包除外），路由定义在 `basic_shared/.../RouterPath.kt`。
 - 资源前缀：见 [structure.md](structure.md)「modules 资源前缀」（新建用域名前缀；`ui_`/`demo_` 为历史例外）；非传递 R 类，跨模块资源写全 R 类路径。
 - 禁止「可能出错」式防御校验、magic number、`postDelayed` 瞎猜、空 catch 兜底（详见 [structure.md](structure.md) 根因治理）。
 - 改代码必须按 [structure.md](structure.md)「文档同步」表更新相关文档。
@@ -195,7 +195,7 @@ Lint 类 KDoc：规则职责、判定标准、避免误报的边界、重要取�
 
 - [ ] 注释符合 showcase.md / style.md 与本文对应章节；未删除既有技术决策注释（`git diff` 无非预期 `-` 注释行）
 - [ ] 无 BOM、无 CRLF、无未使用 import
-- [ ] 资源前缀、`@Route`、Manifest、RouterPath、入口列表已同步
+- [ ] 资源前缀、`XxxPageModule` 注册、Manifest、RouterPath、入口列表已同步
 - [ ] 相关 `docs/` 与必要时根 `README.md` 已按 [structure.md](structure.md)「文档同步」表更新
 - [ ] 触碰 Kotlin/Java/Gradle 源码时：`spotlessApply`（限本次文件）+ `spotlessCheck` 通过；纯文档任务不强制跑 Gradle spotless
 - [ ] Git 提交 Conventional Commits；正文写「为什么」

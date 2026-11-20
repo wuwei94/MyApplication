@@ -17,7 +17,7 @@
 - 离散 `appendLog()`；高频 `updateLog(key, message)`。
 
 ```kotlin
-@Route(path = RouterPath.<模块名>.<页面名>)
+// 在模块 di/Module<模块名>PageModule.kt 中通过 @IntoMap @StringKey(RouterPath.<模块名>.<页面名>) 注册
 class SampleActivity : BasicResponseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
