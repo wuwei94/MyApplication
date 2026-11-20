@@ -32,7 +32,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             apply(plugin = "nowinandroid.android.library")
             apply(plugin = "nowinandroid.android.hilt")
-            apply(plugin = "nowinandroid.android.arouter")
 
             extensions.configure<LibraryExtension> {
                 testOptions.animationsDisabled = true

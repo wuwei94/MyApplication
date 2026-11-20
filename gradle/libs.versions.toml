@@ -872,6 +872,8 @@ nowinandroid-jvm-library = { id = "nowinandroid.jvm.library" }
 
 # 2. 业务 Feature 聚合插件
 nowinandroid-android-feature = { id = "nowinandroid.android.feature" }
+nowinandroid-android-feature-api = { id = "nowinandroid.android.feature.api" }
+nowinandroid-android-feature-impl = { id = "nowinandroid.android.feature.impl" }
 nowinandroid-android-feature-compose = { id = "nowinandroid.android.feature.compose" }
 
 # 3. 架构与中间件插件

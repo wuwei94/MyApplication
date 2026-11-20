@@ -91,6 +91,14 @@ gradlePlugin {
             id = libs.plugins.nowinandroid.android.feature.asProvider().get().pluginId
             implementationClass = "AndroidFeatureConventionPlugin"
         }
+        register("androidFeatureApi") {
+            id = libs.plugins.nowinandroid.android.feature.api.get().pluginId
+            implementationClass = "AndroidFeatureApiConventionPlugin"
+        }
+        register("androidFeatureImpl") {
+            id = libs.plugins.nowinandroid.android.feature.impl.get().pluginId
+            implementationClass = "AndroidFeatureImplConventionPlugin"
+        }
         register("androidFeatureCompose") {
             id = libs.plugins.nowinandroid.android.feature.compose.get().pluginId
             implementationClass = "AndroidFeatureComposeConventionPlugin"
