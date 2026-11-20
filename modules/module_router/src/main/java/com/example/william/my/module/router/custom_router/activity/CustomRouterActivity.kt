@@ -12,7 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- * 自研无插件路由示例（Hilt `@IntoMap` + 责任链拦截器）。
+ * CustomRouter — 自研无插件路由示例（Hilt `@IntoMap` + 责任链拦截器）
+ *
+ * 核心机制与避坑点：
+ * 1. 零插件编译期聚合：通过 Hilt `@IntoMap @StringKey` 将页面 Class 注入 [AppPageRegistry]，无需 KAPT 或字节码插桩
+ * 2. 责任链拦截与服务注入：[AppNavigator] 调度前按优先级执行 [PageInterceptor] 链，跨模块服务直接走 Hilt `@Inject`
  *
  * 对比组：
  * - [com.example.william.my.module.router.arouter.activity.ARouterActivity]（KAPT + @Route + @Autowired + IProvider）

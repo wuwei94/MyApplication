@@ -8,7 +8,11 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 
 /**
- * ARouter 目标接收页，演示 `@Autowired` 自动参数注入。
+ * ARouter 目标接收页 — 演示 `@Autowired` 自动参数注入
+ *
+ * 核心机制与避坑点：
+ * 1. 参数注入前提：需在 `onCreate` / `initView` 中调用 `ARouter.getInstance().inject(this)`
+ * 2. 字段可见性：Kotlin 属性须添加 `@JvmField`，否则 KAPT 生成的注入代码无法直接赋值
  */
 @Route(path = RouterPath.Router.ARouterTarget)
 class ARouterTargetActivity : BasicResponseActivity() {
@@ -28,7 +32,7 @@ class ARouterTargetActivity : BasicResponseActivity() {
         appendLog("✓ 收到 @Autowired 参数: from=$from, code=$code")
     }
 
-    override fun buildList(): ArrayList<String> = arrayListOf("关闭并返回")
+    override fun buildList(): ArrayList<String> = arrayListOf("1. 关闭并返回")
 
     override fun onRecyclerClick(position: Int, string: String) {
         if (position == 0) {

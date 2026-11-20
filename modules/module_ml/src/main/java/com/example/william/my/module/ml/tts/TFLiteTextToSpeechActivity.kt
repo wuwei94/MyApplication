@@ -31,7 +31,7 @@ import kotlin.system.measureNanoTime
  * 文本 → espeak-IPA G2P（词典 + 神经）→ 音素 id → 文本编码器 → 时长展开 → 扩散(Euler ODE)
  * → mel → HiFi-GAN 声码器 → PCM 波形 → AudioTrack 播放。
  *
- * 与官方一致的三点：
+ * 核心机制与避坑点（与官方一致的三点）：
  * 1. **模型不入 APK**：四张图（text encoder / decoder / vocoder / G2P）合计约 88 MB，
  *    官方由 `install_to_device.sh` 推到 `filesDir`，本模块改为首次使用时下载到应用私有目录
  *    （见 [ModelDownloader]）。只有 `emb.bin`、`config.json`、`g2p_meta.json`、

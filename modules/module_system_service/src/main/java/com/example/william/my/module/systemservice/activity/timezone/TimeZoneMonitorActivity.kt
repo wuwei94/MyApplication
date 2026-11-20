@@ -18,11 +18,11 @@ import java.util.TimeZone
 /**
  * 系统时区监视器 — TimeZoneMonitor（Environment Monitors）
  *
- * 与 NetworkMonitor 构成环境监视器平行对：
- * 1. 【契约】：[TimeZoneMonitor.currentTimeZone] 暴露系统时区 Flow；
- * 2. 【生产实现】：[LiveTimeZoneMonitor] 监听 ACTION_TIMEZONE_CHANGED；
- * 3. 【痛点】：不重启 App 时，系统改时区后若 UI 只在启动时读一次 TimeZone，时间戳会漂移；
- * 4. 【消费方式】：收集 Flow，在每次时区变更时用新时区重新格式化时间。
+ * 核心机制与避坑点（与 NetworkMonitor 构成环境监视器平行对）：
+ * 1. 契约：[TimeZoneMonitor.currentTimeZone] 暴露系统时区 Flow
+ * 2. 生产实现：[LiveTimeZoneMonitor] 监听 ACTION_TIMEZONE_CHANGED
+ * 3. 痛点：不重启 App 时，系统改时区后若 UI 只在启动时读一次 TimeZone，时间戳会漂移
+ * 4. 消费方式：收集 Flow，在每次时区变更时用新时区重新格式化时间
  *
  * 操作：进入页面后到系统设置修改时区，观察日志中的时区与格式化时间是否自动更新。
  *

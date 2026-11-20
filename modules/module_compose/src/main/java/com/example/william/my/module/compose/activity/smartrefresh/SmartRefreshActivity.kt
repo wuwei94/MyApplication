@@ -41,28 +41,13 @@ import com.loren.component.view.composesmartrefresh.rememberSmartSwipeRefreshSta
  *
  * 演示在 Jetpack Compose 中使用 SmartSwipeRefresh 实现列表下拉刷新与上拉分页加载。
  *
- * 核心特性：
+ * 核心机制与避坑点：
  * 1. 状态绑定：使用 rememberSmartSwipeRefreshState 驱动刷新与加载中状态
  * 2. 阈值策略：通过 ThresholdScrollStrategy 配置阻尼与回弹阈值
  * 3. 结果标记：通过 SmartSwipeStateFlag 反馈刷新成功/失败状态并自动收起
  *
- * 基本用法：
- * ```kotlin
- * val refreshState = rememberSmartSwipeRefreshState()
- * SmartSwipeRefresh(
- *     state = refreshState,
- *     onRefresh = { viewModel.refresh() },
- *     onLoadMore = { viewModel.loadMore() },
- *     header = { MyRefreshHeader(it) },
- *     footer = { MyRefreshFooter(it) },
- * ) {
- *     LazyColumn { /* 列表条目 */ }
- * }
- * ```
- *
- * 适用场景：
- * - Compose 列表下拉刷新与上拉加载
- * - 自定义刷新动画与状态指示器
+ * 官方参考：
+ * https://github.com/Loren-1997/ComposeSmartRefresh
  *
  * https://github.com/Loren-Yi/SmartSwipeRefresh-Compose
  */

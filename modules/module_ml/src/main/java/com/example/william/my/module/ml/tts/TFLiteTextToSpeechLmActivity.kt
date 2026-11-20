@@ -35,12 +35,12 @@ import org.json.JSONArray
  * | [TFLiteTextToSpeechStreamingActivity] | `text_to_speech_streaming` | 三张动态长度图，逐句流式 | 约 32 MB |
  * | 本页 | `text_to_speech_lm` | talker + MTP + codec 三图由宿主循环串联 | 约 1.67 GB |
  *
- * 与流式页的关键差别：**这里不是流式**。talker 要先自回归把整段文本吐成 12.5 Hz 的帧序列，
- * 再走 codec 分块还原波形，因此「点一次 → 等一段时间 → 一次性播放」，中途无法按句迭代输出。
- * 官方在 Pixel 8a 上实测 RTF ≈ 6.7，所以合成 4 秒音频要等约 28 秒，界面必须把这一点讲清楚。
- *
- * 模型走运行时下载（约 1.67 GB，11 个文件），下载层带断点续传；已下载的不会重下。
- * 推理、引擎构建、引擎关闭共用同一条引擎串行队列（见 [createEngineDispatcher]）。
+ * 核心机制与避坑点：
+ * 1. 非流式架构：与流式页 [TFLiteTextToSpeechStreamingActivity] 不同，talker 须先自回归生成完整帧序列，
+ *    再走 codec 分块还原波形，因此「点一次 → 等一段时间 → 一次性播放」，中途无法按句迭代输出。
+ * 2. 耗时预期：官方在 Pixel 8a 上实测 RTF ≈ 6.7，合成 4 秒音频约需 28 秒，界面需明确提示耗时预期。
+ * 3. 运行时下载与串行队列：模型走运行时下载（约 1.67 GB，11 个文件）并支持断点续传；
+ *    推理、引擎构建、引擎关闭共用同一条引擎串行队列（见 [createEngineDispatcher]）。
  */
 class TFLiteTextToSpeechLmActivity :
     BaseVBActivity<MlActivityTextToSpeechLmBinding>(),

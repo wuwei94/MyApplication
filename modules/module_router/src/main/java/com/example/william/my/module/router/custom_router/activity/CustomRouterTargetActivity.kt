@@ -4,7 +4,10 @@ import android.os.Bundle
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 
 /**
- * 自研无插件路由目标接收页，直接通过标准 Intent 读取参数。
+ * CustomRouter 目标接收页 — 直接通过标准 Intent 读取参数
+ *
+ * 核心机制与避坑点：
+ * 1. 无字节码注入：直接读取 `intent.getStringExtra` / `getIntExtra`，避免注解处理器与 `@JvmField` 约束
  */
 class CustomRouterTargetActivity : BasicResponseActivity() {
 
@@ -18,7 +21,7 @@ class CustomRouterTargetActivity : BasicResponseActivity() {
         appendLog("✓ 收到 Intent 参数: from=$from, code=$code, traceId=$traceId")
     }
 
-    override fun buildList(): ArrayList<String> = arrayListOf("关闭并返回")
+    override fun buildList(): ArrayList<String> = arrayListOf("1. 关闭并返回")
 
     override fun onRecyclerClick(position: Int, string: String) {
         if (position == 0) {

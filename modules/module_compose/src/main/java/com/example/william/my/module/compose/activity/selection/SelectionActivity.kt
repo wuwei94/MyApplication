@@ -86,17 +86,13 @@ class TriStateSelectionState(initialItemsCount: Int = 3) {
  *
  * 全景展示 Compose Material 3 选择组件的用法、状态绑定与无障碍语义联动。
  *
- * 核心特性：
- * 1. 复选框体系：单选 [Checkbox] 与全选/反选三态联动 [TriStateCheckbox]；
- * 2. 状态开关：[Switch] 带状态图标（[thumbContent]）与整行无障碍点击联动；
- * 3. 单选按钮：[RadioButton] 单选列表与互斥选择状态联动；
- * 4. 滑动选择器：连续滑动条 [Slider]、离散刻度分段滑动条（[steps]）与双向区间滑块 [RangeSlider]。
+ * 核心机制与避坑点：
+ * 1. 复选框体系：单选 [Checkbox] 与全选/反选三态联动 [TriStateCheckbox]
+ * 2. 状态开关：[Switch] 带状态图标（[thumbContent]）与整行无障碍点击联动
+ * 3. 单选按钮：[RadioButton] 单选列表与互斥选择状态联动
+ * 4. 滑动选择器：连续滑动条 [Slider]、离散刻度分段滑动条（[steps]）与双向区间滑块 [RangeSlider]
  *
- * 适用场景：
- * - 设置页开关与单选互斥项
- * - 批量选择的全选/半选/全不选
- * - 音量、价格区间等连续/离散取值
- *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/switch
  */
 class SelectionActivity : ComponentActivity() {

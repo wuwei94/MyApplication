@@ -33,7 +33,7 @@ import kotlinx.coroutines.withContext
  *   产出 `act_logits`。官方把选项置信度拆成「主图打分 + 小头校准」两步。
  * - 词表 `tokenizer.json`（约 33 MB，BPE）+ 嵌入表 `token_embeddings_fp16.bin`（约 375 MB）。
  *
- * 移植时与原实现的三处对齐/差异：
+ * 核心机制与避坑点（移植时与原实现的三处对齐/差异）：
  * 1. **命名张量 + 显式签名**：官方用 `createInputBuffer(name, "serving_default")` 而非无序的
  *    `createInputBuffers()`，因为这两个 artifact 的签名顺序与 FlatBuffer 张量顺序并不一致。
  *    此处照搬，未改。

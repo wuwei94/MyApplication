@@ -30,8 +30,7 @@ import kotlinx.coroutines.withContext
 /**
  * LiteRT — 流式语音合成（KittenTTS nano）
  *
- * 对应官方 `samples/litert/text_to_speech_streaming/kotlin_cpu`。与同目录下的 Matcha 示例
- * （[TFLiteTextToSpeechActivity]）是**两个不同的官方任务**，差别不在于换了模型：
+ * 核心机制与避坑点（与同目录下的 Matcha 示例 [TFLiteTextToSpeechActivity] 对比）：
  *
  * 1. **动态序列长度**：三张图都接受任意长度，不做 padding 分桶，算力随文本长度伸缩；
  *    因此每句都要先 `resizeInput` 再跑，而不是固定形状一次算完。

@@ -10,11 +10,18 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.module.router.arouter.service.ARouterDemoService
 
 /**
- * ARouter 组件化路由示例（经典第三方框架对照）。
+ * ARouter — 组件化路由示例（经典第三方框架对照）
+ *
+ * 核心机制与避坑点：
+ * 1. 编译期注解扫描：依赖 KAPT 在编译期扫描 `@Route` / `@Autowired`，生成路由映射表与注入辅助类
+ * 2. 运行期反射/服务发现：通过 `IProvider` 实现跨模块服务查找，需在 Application 初始化 `ARouter.init`
  *
  * 对比组：
  * - [ARouterActivity]（KAPT + @Route + @Autowired + IProvider）
  * - [com.example.william.my.module.router.custom_router.activity.CustomRouterActivity]（自研无插件 + Hilt @IntoMap + 责任链）
+ *
+ * 官方参考：
+ * https://github.com/alibaba/ARouter
  */
 @Route(path = RouterPath.Router.ARouter)
 class ARouterActivity : BasicResponseActivity() {

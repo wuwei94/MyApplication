@@ -41,7 +41,9 @@ import kotlin.time.Duration.Companion.seconds
  * LiteRT — 语音识别（Speech Recognition）
  *
  * 对应官方 `samples/litert/speech_recognition/kotlin_cpu`，是本模块第 9 个、也是最后一个
- * 官方任务页。它与前 8 页有两个结构性差异：
+ * 官方任务页。
+ *
+ * 核心机制与避坑点（与前 8 页的两个结构性差异）：
  *
  * 1. **唯一有两条输入路径的页面**：文件（16 kHz 单声道 WAV）与麦克风。官方支持的所有模型
  *    都**不是流式**的，因此两条路径共用同一套「重叠窗口拼接」——

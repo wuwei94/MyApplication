@@ -13,16 +13,11 @@ import com.example.william.my.module.jetpack.viewmodel.SimpleViewModel
  *
  * 演示 ViewModel 从底层基础到现代 DSL 的多种实例化与作用域共享方式。
  *
- * Activity 层实例化方式：
- * 1. viewModelByDefault: 默认工厂方式（by viewModels()），仅适用于无参构造的 ViewModel（如 [SimpleViewModel]）
- * 2. viewModelByStandardFactory: 标准接口工厂方式（by viewModels { StandardFactory }）
- * 3. viewModelByDslFactory: 现代 DSL 工厂方式（by viewModels { DslFactory }）
+ * 核心机制与避坑点：
+ * 1. Activity 层实例化：无参 ViewModel 使用默认工厂 `by viewModels()`，有参构造须传入自定义标准 Factory 或现代 DSL Factory
+ * 2. Fragment 层作用域共享：支持自身作用域（`by viewModels()`）、宿主 Activity 共享（`by activityViewModels()`）及父子 Fragment 共享（`requireParentFragment()`）
  *
- * Fragment 层实例化与作用域共享方式：
- * 1. viewModelByDefault: Fragment 自身生命周期作用域（by viewModels() + Factory）
- * 2. viewModelByActivity: 与宿主 Activity 共享 ViewModel（by activityViewModels() + Factory）
- * 3. viewModelByParent: 父子 Fragment 间作用域共享（by viewModels({ requireParentFragment() }) + Factory）
- *
+ * 官方参考：
  * https://developer.android.google.cn/topic/libraries/architecture/viewmodel
  */
 class ViewModelActivity : BaseActivity() {
