@@ -665,7 +665,16 @@ class $$DriftTasksTableTableManager
                 updatedAt: updatedAt,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$DriftTasksTable, DriftTask>(table),
+                  BaseReferences<
+                    _$DriftTaskDatabase,
+                    $DriftTasksTable,
+                    DriftTask
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
