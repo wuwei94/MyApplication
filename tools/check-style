@@ -1,0 +1,227 @@
+#!/usr/bin/env bash
+#
+# 代码注释与实现风格静态检查门禁
+#
+# 职责：
+#   对 Android 侧源码与 XML 资源执行机械可判定的风格检查，拦截规范漂移与回潮。
+#
+# 用法：
+#   ./tools/check-style --all              # 扫描全仓（用于存量清查与 CI 全量兜底）
+#   ./tools/check-style --changed          # 仅扫描工作区/暂存区变更文件（默认）
+#   ./tools/check-style --files <f1> ...   # 扫描指定文件列表（由 pre-push 调用）
+#
+# 检查规则：
+#   1. [bom]               禁止 UTF-8 BOM
+#   2. [m-prefix]          禁止自有成员使用 m 前缀（排除 lint 单测样例）
+#   3. [global-scope]      禁止使用 GlobalScope
+#   4. [arouter-residual]  禁止非对照模块使用 @Route（豁免 modules/module_router/）
+#   5. [log-fullwidth]     appendLog/updateLog 实参禁止全角【】装饰或全角标签
+#   6. [show-description]  BasicResponseActivity 子类须调用 showDescription(
+#   7. [build-list-num]    示例页 buildList() 字符串项须以 "N. " 编号开头
+#   8. [activity-header]   示例 Activity 类头须含「核心机制与避坑点」，禁卖点词与自造对比小节
+#
+# 临时跳过：CHECK_STYLE_DISABLE=1 ./tools/check-style ...
+# 退出码：0 通过，1 存在违规。
+
+set -uo pipefail
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if [[ "${CHECK_STYLE_DISABLE:-0}" == "1" ]]; then
+    echo "check-style: CHECK_STYLE_DISABLE=1，跳过风格检查"
+    exit 0
+fi
+
+mode="changed"
+explicit_files=()
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --all)
+            mode="all"
+            shift
+            ;;
+        --changed)
+            mode="changed"
+            shift
+            ;;
+        --files)
+            mode="files"
+            shift
+            explicit_files=("$@")
+            break
+            ;;
+        -h|--help)
+            sed -n '3,26p' "$0" | sed 's/^# \{0,1\}//'
+            exit 0
+            ;;
+        *)
+            echo "check-style: 未知参数 $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+declare -a target_files=()
+
+if [[ "$mode" == "all" ]]; then
+    while IFS= read -r f; do
+        target_files+=("$f")
+    done < <(git ls-files -- 'app/*.kt' 'app/*.java' 'app/*.xml' \
+        'basic/*.kt' 'basic/*.java' 'basic/*.xml' \
+        'libs/*.kt' 'libs/*.java' 'libs/*.xml' \
+        'modules/*.kt' 'modules/*.java' 'modules/*.xml' \
+        'build-logic/*.kt' 'lint/*.kt')
+elif [[ "$mode" == "files" ]]; then
+    target_files=("${explicit_files[@]}")
+else
+    while IFS= read -r f; do
+        [[ -f "$f" ]] && target_files+=("$f")
+    done < <(git diff --name-only --diff-filter=ACMR HEAD 2>/dev/null; git ls-files --others --exclude-standard)
+fi
+
+# 过滤出存在的、非构建产物的源码与 XML 文件
+declare -a all_files=()
+declare -a code_files=()
+for f in "${target_files[@]}"; do
+    [[ -f "$f" ]] || continue
+    case "$f" in
+        */build/*|*/.gradle/*|flutter/*) continue ;;
+        *.kt|*.java)
+            all_files+=("$f")
+            code_files+=("$f")
+            ;;
+        *.xml)
+            all_files+=("$f")
+            ;;
+    esac
+done
+
+if [[ ${#all_files[@]} -eq 0 ]]; then
+    echo "check-style: 无需要检查的目标文件，通过"
+    exit 0
+fi
+
+violations=0
+
+# 1. 批量检查代码规则（单次 awk 扫描全部 Kotlin/Java 文件；CRLF 由 .gitattributes 与 Spotless 统一保障）
+if [[ ${#code_files[@]} -gt 0 ]]; then
+    awk_out="$(printf '%s\0' "${code_files[@]}" | xargs -0 awk '
+        function reset_file(fname) {
+            cur = fname
+            is_lint_test = (cur ~ /^lint\/src\/test\//)
+            is_router_demo = (cur ~ /^modules\/module_router\//)
+            is_basic_resp_base = (cur ~ /\/BasicResponseActivity\.kt$/)
+            is_activity = (cur ~ /Activity\.kt$/)
+            is_sample_act = (cur ~ /^modules\/.*Activity\.kt$/ && cur !~ /MainActivity\.kt$/)
+            has_bom = 0
+            has_m_prefix = 0
+            has_global_scope = 0
+            has_arouter = 0
+            has_log_fullwidth = 0
+            inherits_basic_resp = 0
+            has_show_desc = 0
+            has_header_ok = 0
+            has_banned_words = 0
+            has_bad_build_list = 0
+            in_build_list = 0
+        }
+        function flush_file() {
+            if (cur == "") return
+            if (has_bom) {
+                printf "[bom] %s: 文件头存在 UTF-8 BOM\n", cur; cnt++
+            }
+            if (!is_lint_test && has_m_prefix) {
+                printf "[m-prefix] %s: 自有成员禁止使用 m 前缀（见 style.md）\n", cur; cnt++
+            }
+            if (!is_lint_test && has_global_scope) {
+                printf "[global-scope] %s: 禁止使用 GlobalScope（见 AGENTS.md §2）\n", cur; cnt++
+            }
+            if (!is_lint_test && !is_router_demo && has_arouter) {
+                printf "[arouter-residual] %s: 非对照模块禁止保留 @Route，请使用 XxxPageModule 注册\n", cur; cnt++
+            }
+            if (has_log_fullwidth) {
+                printf "[log-fullwidth] %s: appendLog/updateLog 实参禁止全角【】，请改用半角 [Tag] 或移除结果装饰\n", cur; cnt++
+            }
+            if (is_activity && !is_basic_resp_base && inherits_basic_resp && !has_show_desc) {
+                printf "[show-description] %s: BasicResponseActivity 子类须在 initView 中调用 showDescription(...)\n", cur; cnt++
+            }
+            if (is_sample_act && !has_header_ok) {
+                printf "[activity-header] %s: 示例页类头缺少「核心机制与避坑点」小节（见 showcase.md §2）\n", cur; cnt++
+            }
+            if (is_sample_act && has_banned_words) {
+                printf "[activity-header] %s: 类头包含禁止的卖点词或自造对比小节（见 showcase.md §2.4）\n", cur; cnt++
+            }
+            if (is_sample_act && has_bad_build_list) {
+                printf "[build-list-num] %s: buildList() 存在缺少 \"N. \" 编号的条目\n", cur; cnt++
+            }
+        }
+        FNR == 1 {
+            flush_file()
+            reset_file(FILENAME)
+            if ($0 ~ /^\xef\xbb\xbf/) has_bom = 1
+        }
+        {
+            if ($0 ~ /^[[:space:]]*(private|protected|internal)?[[:space:]]*(lateinit[[:space:]]+)?(var|val)[[:space:]]+m[A-Z][A-Za-z0-9_]*[[:space:]]*[:=]/) {
+                has_m_prefix = 1
+            }
+            if ($0 ~ /\<GlobalScope\>/) {
+                has_global_scope = 1
+            }
+            if ($0 ~ /@Route[[:space:]]*\(/) {
+                has_arouter = 1
+            }
+            if ($0 ~ /(appendLog|updateLog)[[:space:]]*\(.*【[^】]*】/) {
+                has_log_fullwidth = 1
+            }
+            if ($0 ~ /:[[:space:]]*BasicResponseActivity[[:space:]]*\(/) {
+                inherits_basic_resp = 1
+            }
+            if ($0 ~ /showDescription\(/) {
+                has_show_desc = 1
+            }
+            if ($0 ~ /核心机制与避坑点|布局预览|历史参考/) {
+                has_header_ok = 1
+            }
+            if ($0 ~ /高性能|简单易用|代码简洁|特性对比：|库选型定位：/) {
+                has_banned_words = 1
+            }
+            if ($0 ~ /fun[[:space:]]+buildList[[:space:]]*\(/) {
+                in_build_list = 1
+                next
+            }
+            if (in_build_list && $0 ~ /^[[:space:]]*(override[[:space:]]+)?fun[[:space:]]+/) {
+                in_build_list = 0
+            }
+            if (in_build_list && $0 ~ /^[[:space:]]*"/) {
+                line = $0
+                sub(/^[[:space:]]*"/, "", line)
+                if (line !~ /^[0-9]+\.[[:space:]]/ && line !~ /^──/) {
+                    has_bad_build_list = 1
+                }
+            }
+        }
+        END {
+            flush_file()
+            printf "__VIOLATIONS__=%d\n", cnt + 0
+        }
+    ' 2>/dev/null)"
+
+    while IFS= read -r line; do
+        if [[ "$line" == __VIOLATIONS__=* ]]; then
+            v_num="${line#__VIOLATIONS__=}"
+            violations=$((violations + v_num))
+        elif [[ -n "$line" ]]; then
+            printf '%s\n' "$line"
+        fi
+    done <<< "$awk_out"
+fi
+
+echo ""
+if [[ $violations -gt 0 ]]; then
+    echo "check-style: 检查 ${#all_files[@]} 个文件，发现 ${violations} 处风格违规"
+    exit 1
+fi
+
+echo "check-style: 检查 ${#all_files[@]} 个文件，全部通过"
+exit 0
