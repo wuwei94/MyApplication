@@ -7,7 +7,7 @@ import com.google.gson.Gson
 /**
  * Kotlin 内联函数与作用域函数
  *
- * 内联函数是 Kotlin 的重要特性，可提高性能并支持泛型实化。
+ * 内联函数是 Kotlin 的重要特性，可消除 Lambda 对象分配开销并支持泛型实化。
  *
  * 核心机制与避坑点：
  * 1. 作用域函数：with / let / run / also / apply，区分接收者（this 或 it）与返回值（Lambda 结果或对象本身）
