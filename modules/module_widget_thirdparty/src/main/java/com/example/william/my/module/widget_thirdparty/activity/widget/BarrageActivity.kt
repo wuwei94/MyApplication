@@ -99,7 +99,8 @@ class BarrageActivity : BaseVBActivity<WidgetThirdpartyActivityBarrageBinding>()
 
     private fun sendBurst() {
         repeat(8) { i ->
-            binding.barrageTextureView.postDelayed({ sendBarrage() }, i * 120L)
+            // 错开每条弹幕入场时间，避免多条弹幕在同一帧叠在一起
+            binding.barrageTextureView.postDelayed({ sendBarrage() }, i * BURST_INTERVAL_MS)
         }
     }
 
@@ -133,9 +134,10 @@ class BarrageActivity : BaseVBActivity<WidgetThirdpartyActivityBarrageBinding>()
         controller.initOffset()
         binding.barrageDirectionOverlay.text = "方向：$label"
         binding.barrageDirectionOverlay.visibility = View.VISIBLE
+        // 方向提示短暂展示后自动隐藏，避免长期遮挡弹幕画布
         binding.barrageDirectionOverlay.postDelayed({
             binding.barrageDirectionOverlay.visibility = View.GONE
-        }, 800)
+        }, DIRECTION_OVERLAY_DURATION_MS)
         binding.barrageStatusText.text = "方向切换为 $label"
         sendBarrage("方向：$label")
     }
@@ -167,5 +169,10 @@ class BarrageActivity : BaseVBActivity<WidgetThirdpartyActivityBarrageBinding>()
     override fun onDestroy() {
         binding.barrageTextureView.controller?.destroy()
         super.onDestroy()
+    }
+
+    companion object {
+        private const val BURST_INTERVAL_MS = 120L
+        private const val DIRECTION_OVERLAY_DURATION_MS = 800L
     }
 }
