@@ -79,6 +79,7 @@
 | AI 与机器学习 | module_ml | 机器学习（LiteRT） | MlMainActivity | /Ml |
 | 架构与工程 | module_arch | 架构模式 | ArchMainActivity | /Arch |
 | 架构与工程 | module_di | 依赖注入 | DiMainActivity | /Di |
+| 架构与工程 | module_router | 组件化路由（ARouter vs 自研路由） | RouterMainActivity | /Router |
 | 架构与工程 | module_event | 事件总线 | EventMainActivity | /Event |
 | 架构与工程 | module_reactive | 响应式编程 | ReactiveMainActivity | /Reactive |
 | 架构与工程 | module_performance | 性能优化 | PerformanceMainActivity | /Performance |
@@ -550,6 +551,20 @@ VAP 页接入 MIT 开源版（`io.github.tencent:vap`，素材取自官方 demo�
 | DiMainActivity | 模块入口，导航到 Hilt 与 Koin 示例 |
 | HiltActivity | 基于 `BasicResponseActivity` 展示 Hilt 构造注入、接口绑定、第三方构建、限定符、上下文、作用域、ViewModel 及 EntryPoint |
 | KoinActivity | 基于 `BasicResponseActivity` 展示 Koin 4.x DSL 声明、singleOf/factoryOf、接口绑定、具名限定符、动态传参、ViewModel 及 Scope |
+
+---
+
+### module_router（组件化路由）
+
+演示经典第三方路由框架（ARouter）与自研无插件轻量路由（Hilt `@IntoMap` + 责任链拦截器）的同构对比。
+
+| Activity | 功能 |
+|----------|------|
+| RouterMainActivity | 模块入口，导航到 ARouter 与 CustomRouter 横评示例 |
+| ARouterActivity | 演示 ARouter `@Route` 跳转、参数传递与 `IProvider` 服务发现 |
+| ARouterTargetActivity | 演示 ARouter `@Autowired` 参数注入接收 |
+| CustomRouterActivity | 演示自研无插件 `AppNavigator` 跳转、责任链 `PageInterceptor` 与 Hilt 服务注入 |
+| CustomRouterTargetActivity | 演示标准 Intent 参数接收 |
 
 ---
 

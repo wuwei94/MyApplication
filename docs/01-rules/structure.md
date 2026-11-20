@@ -13,7 +13,7 @@
   - Fragment 演示路由：`/Fragment/fragment/primary`、`/Fragment/fragment/primary_dark`、`/Fragment/fragment/basic_recycler`（snake_case 历史路径）
 - 新增路由一律 PascalCase，禁止对齐上述例外；非 Activity 组件（如 Service 演示页）同样走 `/<模块>/<组件名>` Pascal 形态
 - 每个模块有一个 `Main` 路由作为入口 Activity
-- 每个 Activity 必须添加 `@Route` 注解
+- 页面注册方式：全仓底座通过模块级 `XxxPageModule` 使用 Hilt `@IntoMap @StringKey(RouterPath.Xxx.Yyy)` 注册到 `AppPageRegistry` 并由 `AppNavigator` 统一调度（`module_router` 中 `arouter/` 横评包保留 `@Route` 注解作为教材对照）
 
 ## 分层与依赖方向
 

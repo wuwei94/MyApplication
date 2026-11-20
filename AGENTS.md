@@ -23,7 +23,7 @@
 
 - **开工协议**：先将任务收敛为允许触碰的文件白名单；按判型只读 [docs/01-rules/README.md](docs/01-rules/README.md) 路由指向的规范与锚点，禁止无方向通读 `docs/`。
 - **分层单向依赖**：`modules` 互不依赖；`libs` 不依赖 `modules`/`app`/`basic_*`；`basic_model` 保持纯 JVM；数据栈 `basic_*` 可按需依赖更底层 `basic_*` 与 `libs`。依赖用 typesafe accessors（`projects.xxx`）（见 [docs/01-rules/structure.md](docs/01-rules/structure.md)）。
-- **组件规范**：Activity 必须 `@Route(path = RouterPath.Xxx.Yyy)`；资源前缀、包名地图与源码分包见 [docs/01-rules/structure.md](docs/01-rules/structure.md)（兄弟横评模块用能力包→activity/data；控件集合模块用模块级 activity/）；modules 模块依赖 `basic_lib` 与 `basic_shared`。
+- **组件规范**：Activity 须在模块 `XxxPageModule` 中通过 Hilt `@IntoMap @StringKey(RouterPath.Xxx.Yyy)` 注册到 `AppPageRegistry`（`module_router/arouter` 对照包除外）；资源前缀、包名地图与源码分包见 [docs/01-rules/structure.md](docs/01-rules/structure.md)（兄弟横评模块用能力包→activity/data；控件集合模块用模块级 activity/）；modules 模块依赖 `basic_lib` 与 `basic_shared`。
 - **构建约束**：版本只进 `libs.versions.toml`；SDK/flavor/lint/spotless 只走 Convention Plugin；源码落 `src/main/java`；Android 侧本地验证默认 `-PenableFlutter=false`。
 - **示例页架构**：一个 `buildList` 项 ↔ 一个示例方法；`when(position)` 直调库 API；`BasicResponseActivity` 须 `showDescription`（见 [docs/01-rules/showcase.md](docs/01-rules/showcase.md)）。
 - **注释与日志**：中文；Why > What；保护既有技术决策注释；日志 `→ ` / `✓ ` / `✗ `，高频用 `updateLog`，禁止 `【成功】/【失败】` 结果装饰（见 [docs/01-rules/style.md](docs/01-rules/style.md)、[docs/01-rules/showcase.md](docs/01-rules/showcase.md)）。
@@ -60,7 +60,7 @@ git diff --stat           # 变更规模与任务复杂度匹配
 | 触碰 | 必须同步 / 验证 |
 |---|---|
 | 提交落历史（须已获授权） | 粒度按 [docs/01-rules/git.md](docs/01-rules/git.md)；标题/diff 无复盘叙事 |
-| 新增/删除 Activity 或模块 | 四件套（`@Route` + Manifest + `RouterPath` + 入口 `buildRouter()`）；[docs/01-rules/structure.md](docs/01-rules/structure.md)「文档同步」+ `docs/05-catalog/modules.md` + 根 README |
+| 新增/删除 Activity 或模块 | 四件套（`XxxPageModule` 注册 + Manifest + `RouterPath` + 入口 `buildRouter()`）；[docs/01-rules/structure.md](docs/01-rules/structure.md)「文档同步」+ `docs/05-catalog/modules.md` + 根 README |
 | 依赖/版本 | 版本在 `libs.versions.toml`；Dependency Guard 通过或已说明 baseline |
 | 平行组 | 类头按 [docs/01-rules/showcase.md](docs/01-rules/showcase.md) §2.4 同构；入口文案与 `modules.md` 已同步 |
 | AppInit | 手动 `XxxApp` 与 Hilt `XxxInitImpl` 双轨齐全 |

@@ -22,6 +22,8 @@ build-logic/convention/src/main/kotlin/
 ├── AndroidLibraryConventionPlugin.kt           # Library 模块插件 【已落地】
 ├── AndroidApplicationConventionPlugin.kt       # Application 模块插件 【已落地】
 ├── AndroidFeatureConventionPlugin.kt           # Feature 业务功能模块插件 【已落地】
+├── AndroidFeatureApiConventionPlugin.kt        # Feature 对外接口契约层插件 【已落地】
+├── AndroidFeatureImplConventionPlugin.kt       # Feature 实现层插件（Hilt + 无 ARouter） 【已落地】
 ├── AndroidFeatureComposeConventionPlugin.kt   # Feature Compose 业务功能模块插件 【已落地】
 ├── AndroidLibraryComposeConventionPlugin.kt    # Library Compose 插件 【已落地】
 ├── AndroidApplicationComposeConventionPlugin.kt # Application Compose 插件 【已落地】
@@ -39,10 +41,6 @@ build-logic/convention/src/main/kotlin/
 ├── JvmLibraryConventionPlugin.kt               # 纯 Kotlin/JVM 模块插件 【已落地】
 └── RootPlugin.kt                               # 根工程全局管理插件（拓扑图与 Spotless） 【已落地】
 ```
-
-> **架构演进规划中插件 `【演进规划 - 待落地】`**：
-> * `AndroidFeatureApiConventionPlugin.kt`：轻量对外接口契约层模块插件；
-> * `AndroidFeatureImplConventionPlugin.kt`：业务实现层模块插件（内部私有实现 + DI 装配）。
 
 ---
 
