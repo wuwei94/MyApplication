@@ -62,7 +62,7 @@ class BaselineProfilesActivity : BasicResponseActivity() {
         val callback = object : DiagnosticsCallback {
             override fun onDiagnosticReceived(eventCode: Int, data: Any?) {
                 runOnUiThread {
-                    appendLog("【ProfileInstaller 诊断事件】code=$eventCode, data=$data")
+                    appendLog("[ProfileInstaller 诊断事件]code=$eventCode, data=$data")
                 }
             }
 
@@ -79,7 +79,7 @@ class BaselineProfilesActivity : BasicResponseActivity() {
                         ProfileInstaller.RESULT_PARSE_EXCEPTION -> "RESULT_PARSE_EXCEPTION (配置文件解析异常)"
                         else -> "Result Code: $resultCode, Data: $data"
                     }
-                    appendLog("【ProfileInstaller 结果】$resultDesc")
+                    appendLog("[ProfileInstaller 结果]$resultDesc")
                 }
             }
         }

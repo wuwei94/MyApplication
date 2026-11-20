@@ -53,7 +53,7 @@ class IdleHandlerActivity : BasicResponseActivity() {
      * 返回 false 表示该 IdleHandler 执行完一次后自动从队列移除。
      */
     private fun testOneShotIdleHandler() {
-        appendLog("【示例 1】注册单次 IdleHandler（用于延迟初始化次要组件）...")
+        appendLog("[示例 1]注册单次 IdleHandler（用于延迟初始化次要组件）...")
 
         Looper.myQueue().addIdleHandler {
             appendLogAccent("  [IdleHandler 触发] 当前线程：${Thread.currentThread().name}，主线程空闲，执行次要 SDK 延迟初始化！")
@@ -71,7 +71,7 @@ class IdleHandlerActivity : BasicResponseActivity() {
             return
         }
 
-        appendLog("【示例 2】注册持续监听 IdleHandler（返回 true）...")
+        appendLog("[示例 2]注册持续监听 IdleHandler（返回 true）...")
         continuousCount = 0
 
         val handler = MessageQueue.IdleHandler {
@@ -96,7 +96,7 @@ class IdleHandlerActivity : BasicResponseActivity() {
      * 示例 3：发送连续 Handler 消息观察调度时机
      */
     private fun testPostMessagesAndObserveIdle() {
-        appendLog("【示例 3】主线程投递 3 个耗时 100ms 的任务，随后观察空闲回调...")
+        appendLog("[示例 3]主线程投递 3 个耗时 100ms 的任务，随后观察空闲回调...")
 
         for (i in 1..3) {
             mainHandler.post {

@@ -72,7 +72,7 @@ class JetpackPermissionActivity : BasicResponseActivity() {
         currentActionName = actionName
         val availablePerms = permissions.filter { isPermissionAvailable(it) }.toTypedArray()
         if (availablePerms.isEmpty()) {
-            appendLog("【$currentActionName】当前系统版本无需动态申请该权限")
+            appendLog("[$currentActionName]当前系统版本无需动态申请该权限")
             return
         }
 
@@ -81,12 +81,12 @@ class JetpackPermissionActivity : BasicResponseActivity() {
         }
 
         if (deniedPerms.isEmpty()) {
-            appendLog("【$currentActionName】权限已全部授予，无需重复申请")
+            appendLog("[$currentActionName]权限已全部授予，无需重复申请")
             return
         }
 
         appendLog("----------------------------------------")
-        appendLog("【Jetpack】正在发起权限申请：${deniedPerms.joinToString(", ")}")
+        appendLog("[Jetpack]正在发起权限申请：${deniedPerms.joinToString(", ")}")
         requestPermissions.launch(deniedPerms.toTypedArray())
     }
 

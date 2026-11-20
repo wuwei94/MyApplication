@@ -150,11 +150,11 @@ class RxJavaOperatorsActivity : BasicResponseActivity() {
             source
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ item ->
-                    appendLog("【$tag】${format(item)}")
+                    appendLog("[$tag]${format(item)}")
                 }, { error ->
-                    appendLog("【$tag】onError: ${error.message}")
+                    appendLog("[$tag]onError: ${error.message}")
                 }, {
-                    appendLog("【$tag】onComplete 完成")
+                    appendLog("[$tag]onComplete 完成")
                 }),
         )
     }

@@ -62,10 +62,10 @@ class DialogActivity : BasicResponseActivity() {
                     .setTitle("标题")
                     .setMessage("内容")
                     .setPositiveButton("确定") { _, _ ->
-                        appendLog("【普通对话框】点击了确定")
+                        appendLog("[普通对话框]点击了确定")
                     }
                     .setNegativeButton("取消") { _, _ ->
-                        appendLog("【普通对话框】点击了取消")
+                        appendLog("[普通对话框]点击了取消")
                     }
                     .create()
                     .show()
@@ -78,7 +78,7 @@ class DialogActivity : BasicResponseActivity() {
                     .setIcon(R.drawable.shared_ic_launcher)
                     .setTitle("标题")
                     .setItems(items) { _, which ->
-                        appendLog("【列表对话框】选择了：${items[which]}")
+                        appendLog("[列表对话框]选择了：${items[which]}")
                     }
                     .show()
             }
@@ -88,7 +88,7 @@ class DialogActivity : BasicResponseActivity() {
                 val items = arrayOf("item1", "item2")
                 AlertDialog.Builder(this@DialogActivity)
                     .setSingleChoiceItems(items, 0) { _, which ->
-                        appendLog("【单选对话框】选择了：${items[which]}")
+                        appendLog("[单选对话框]选择了：${items[which]}")
                     }
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定") { _, _ -> }
@@ -101,7 +101,7 @@ class DialogActivity : BasicResponseActivity() {
                 DatePickerDialog(
                     this@DialogActivity,
                     { _, year, month, dayOfMonth ->
-                        appendLog("【日期对话框】选择了：$year-${month + 1}-$dayOfMonth")
+                        appendLog("[日期对话框]选择了：$year-${month + 1}-$dayOfMonth")
                     },
                     calendar[Calendar.YEAR],
                     calendar[Calendar.MONTH],
@@ -115,7 +115,7 @@ class DialogActivity : BasicResponseActivity() {
                 TimePickerDialog(
                     this@DialogActivity,
                     { _, hourOfDay, minute ->
-                        appendLog("【时间对话框】选择了：$hourOfDay:$minute")
+                        appendLog("[时间对话框]选择了：$hourOfDay:$minute")
                     },
                     calendar[Calendar.HOUR_OF_DAY],
                     calendar[Calendar.MINUTE],
@@ -151,7 +151,7 @@ class DialogActivity : BasicResponseActivity() {
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT
                 params.height = resources.getDimensionPixelSize(R.dimen.shared_dp_dialog_height)
                 dialog.window!!.attributes = params
-                appendLog("【自定义对话框】setView")
+                appendLog("[自定义对话框]setView")
             }
 
             6 -> {
@@ -186,21 +186,21 @@ class DialogActivity : BasicResponseActivity() {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                 )
-                appendLog("【自定义对话框】setContentView")
+                appendLog("[自定义对话框]setContentView")
             }
 
             7 -> {
                 // AlertDialogDialogFragment（重写 onCreateDialog）
                 val dialogFragment = AlertDialogDialogFragment()
                 dialogFragment.show(supportFragmentManager, dialogFragment.tag)
-                appendLog("【AlertDialogDialogFragment】重写 onCreateDialog")
+                appendLog("[AlertDialogDialogFragment]重写 onCreateDialog")
             }
 
             8 -> {
                 // CustomViewDialogFragment（重写 onCreateView）
                 val dialogFragment = CustomViewDialogFragment()
                 dialogFragment.show(supportFragmentManager, dialogFragment.tag)
-                appendLog("【CustomViewDialogFragment】重写 onCreateView")
+                appendLog("[CustomViewDialogFragment]重写 onCreateView")
             }
 
             else -> {}

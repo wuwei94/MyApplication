@@ -34,7 +34,7 @@ class HookActivity : BasicResponseActivity() {
     private fun setupDemoTarget() {
         targetDemoView = View(this)
         originalClickListener = View.OnClickListener {
-            appendLog("【原始事件】TargetView.OnClickListener.onClick() 执行成功")
+            appendLog("[原始事件]TargetView.OnClickListener.onClick() 执行成功")
         }
         targetDemoView.setOnClickListener(originalClickListener)
     }
@@ -50,7 +50,7 @@ class HookActivity : BasicResponseActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> {
-                appendLog("【触发点击】准备调用 targetDemoView.performClick()...")
+                appendLog("[触发点击]准备调用 targetDemoView.performClick()...")
                 targetDemoView.performClick()
             }
 
@@ -59,7 +59,7 @@ class HookActivity : BasicResponseActivity() {
             }
 
             2 -> {
-                appendLog("【触发点击】准备调用已 Hook 的 targetDemoView.performClick()...")
+                appendLog("[触发点击]准备调用已 Hook 的 targetDemoView.performClick()...")
                 targetDemoView.performClick()
             }
 
@@ -71,23 +71,23 @@ class HookActivity : BasicResponseActivity() {
 
     private fun applyHook(view: View) {
         val success = HookHelper.hookOnClickListener(view) {
-            appendLog("【Hook 拦截】>>> 成功拦截到 onClick() 调用！可在此处做埋点或防重放校验 <<<")
+            appendLog("[Hook 拦截]>>> 成功拦截到 onClick() 调用！可在此处做埋点或防重放校验 <<<")
         }
         if (success) {
             isHooked = true
-            appendLog("【Hook 成功】已使用 Proxy 代理对象替换 ListenerInfo.mOnClickListener")
+            appendLog("✓ [Hook] 已使用 Proxy 代理对象替换 ListenerInfo.mOnClickListener")
         } else {
-            appendLog("【Hook 失败】未找到原始 OnClickListener 或反射失败")
+            appendLog("✗ [Hook] 未找到原始 OnClickListener 或反射失败")
         }
     }
 
     private fun restoreHook(view: View) {
         if (!isHooked) {
-            appendLog("【还原提示】当前未处于 Hook 状态")
+            appendLog("[还原提示]当前未处于 Hook 状态")
             return
         }
         HookHelper.restoreOnClickListener(view, originalClickListener)
         isHooked = false
-        appendLog("【Hook 还原】已恢复原始 OnClickListener")
+        appendLog("[Hook 还原]已恢复原始 OnClickListener")
     }
 }

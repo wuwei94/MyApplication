@@ -49,12 +49,12 @@ class PermissionXActivity : BasicResponseActivity() {
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             appendLog("----------------------------------------")
-            appendLog("【PermissionX】当前系统版本（< Android 13）默认已开启通知权限，无需动态申请")
+            appendLog("[PermissionX]当前系统版本（< Android 13）默认已开启通知权限，无需动态申请")
             return
         }
 
         appendLog("----------------------------------------")
-        appendLog("【PermissionX】正在发起通知权限申请：POST_NOTIFICATIONS")
+        appendLog("[PermissionX]正在发起通知权限申请：POST_NOTIFICATIONS")
 
         PermissionX.init(this)
             .permissions(Manifest.permission.POST_NOTIFICATIONS)
@@ -71,7 +71,7 @@ class PermissionXActivity : BasicResponseActivity() {
         val permissions = getStoragePermissions()
 
         appendLog("----------------------------------------")
-        appendLog("【PermissionX】正在发起多媒体存储权限申请（配置理由解释弹窗）")
+        appendLog("[PermissionX]正在发起多媒体存储权限申请（配置理由解释弹窗）")
 
         PermissionX.init(this)
             .permissions(permissions)
@@ -96,7 +96,7 @@ class PermissionXActivity : BasicResponseActivity() {
         val permissions = getStoragePermissions()
 
         appendLog("----------------------------------------")
-        appendLog("【PermissionX】正在发起多媒体存储权限申请（前置理由解释 + 永久拒绝设置页引导）")
+        appendLog("[PermissionX]正在发起多媒体存储权限申请（前置理由解释 + 永久拒绝设置页引导）")
 
         PermissionX.init(this)
             .permissions(permissions)
@@ -134,7 +134,7 @@ class PermissionXActivity : BasicResponseActivity() {
         permissions.addAll(getStoragePermissions())
 
         appendLog("----------------------------------------")
-        appendLog("【PermissionX】正在发起通用基础权限申请（全流程托管）")
+        appendLog("[PermissionX]正在发起通用基础权限申请（全流程托管）")
 
         PermissionX.init(this)
             .permissions(permissions)

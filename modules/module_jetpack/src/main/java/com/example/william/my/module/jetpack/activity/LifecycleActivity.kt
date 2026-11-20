@@ -36,31 +36,31 @@ class LifecycleActivity : BasicResponseActivity() {
     // 1. 自定义业务观察者：实现 DefaultLifecycleObserver，彻底与 Activity 解耦
     private val customObserver = object : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            appendLog("【组件观察者】onCreate: Activity 正在创建")
+            appendLog("[组件观察者]onCreate: Activity 正在创建")
         }
 
         override fun onResume(owner: LifecycleOwner) {
-            appendLog("【组件观察者】onResume: Activity 进入前台交互状态")
+            appendLog("[组件观察者]onResume: Activity 进入前台交互状态")
         }
 
         override fun onPause(owner: LifecycleOwner) {
-            appendLog("【组件观察者】onPause: Activity 失去焦点")
+            appendLog("[组件观察者]onPause: Activity 失去焦点")
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
             // Activity 销毁时清理资源，避免内存泄漏
-            appendLog("【组件观察者】onDestroy: 自动反注册与清理")
+            appendLog("[组件观察者]onDestroy: 自动反注册与清理")
         }
     }
 
     // 2. 全局应用级别观察者：ProcessLifecycleOwner
     private val appProcessObserver = object : DefaultLifecycleObserver {
         override fun onStart(owner: LifecycleOwner) {
-            appendLog("【应用前后台】App 进入前台 (ProcessLifecycleOwner onStart)")
+            appendLog("[应用前后台]App 进入前台 (ProcessLifecycleOwner onStart)")
         }
 
         override fun onStop(owner: LifecycleOwner) {
-            appendLog("【应用前后台】App 进入后台 (ProcessLifecycleOwner onStop)")
+            appendLog("[应用前后台]App 进入后台 (ProcessLifecycleOwner onStop)")
         }
     }
 
