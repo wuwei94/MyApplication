@@ -14,7 +14,7 @@ import javax.inject.Inject
 import com.example.william.my.basic.basic_shared.R as SharedR
 
 /**
- * Netty — 高性能网络框架（TCP Socket 客户端）
+ * Netty — 基于 NIO 事件驱动的网络框架（TCP Socket 客户端）
  *
  * 核心机制与避坑点：
  * 1. 事件驱动：ChannelHandler 串接入站/出站事件，勿在 Handler 内做阻塞 I/O

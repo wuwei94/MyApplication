@@ -13,7 +13,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * 1. 生命周期感知：自动处理生命周期，避免内存泄漏
  * 2. 优先级控制：支持多个回调，按优先级执行
  * 3. 动态启用/禁用：支持动态启用或禁用回调
- * 4. 代码简洁：无需重写 onBackPressed，代码更简洁
+ * 4. 解耦分发：无需重写 onBackPressed，回调按注册逆序分发
  *
  * 页面逻辑：
  * - 点击「拦截返回键」：注册回调，按返回键时显示 Toast 并关闭页面

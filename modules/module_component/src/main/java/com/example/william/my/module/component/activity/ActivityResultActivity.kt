@@ -16,7 +16,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * 核心机制与避坑点：
  * 1. 类型安全：使用泛型确保输入输出类型安全
  * 2. 生命周期感知：自动处理生命周期，避免内存泄漏
- * 3. 代码简洁：无需重写 onActivityResult，代码更简洁
+ * 3. 解耦注册：无需重写 onActivityResult，注册点与结果回调内聚
  * 4. 自定义 Contract：支持自定义 ActivityResultContract 封装业务逻辑
  *
  * 内置 Contract：

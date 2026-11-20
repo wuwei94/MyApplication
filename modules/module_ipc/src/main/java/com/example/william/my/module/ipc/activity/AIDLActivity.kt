@@ -22,7 +22,7 @@ import com.example.william.my.module.ipc.service.MyAIDLService
  *
  * 与 Messenger 的区别：
  * - AIDL：支持并发调用，功能强大，适合复杂通信；
- * - Messenger：串行处理，简单易用，适合轻量级通信。
+ * - Messenger：Handler 串行排队处理，适合轻量级异步消息通信。
  *
  * https://developer.android.com/guide/components/aidl
  */

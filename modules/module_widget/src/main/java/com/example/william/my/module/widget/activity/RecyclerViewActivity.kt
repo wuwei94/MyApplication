@@ -17,7 +17,7 @@ import com.example.william.my.module.widget.adapter.RecyclerAdapter
 import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBinding
 
 /**
- * RecyclerView — 高性能列表控件
+ * RecyclerView — 可复用滚动列表控件
  *
  * RecyclerView 是 Android 最重要的列表控件，用于展示大量数据。
  *

@@ -5,7 +5,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.tencent.mmkv.MMKV
 
 /**
- * MMKV — 基于 mmap 的高性能键值存储
+ * MMKV — 基于 mmap 内存映射的键值存储
  *
  * 核心机制与避坑点：
  * 1. mmap 映射：读写经内存映射文件完成，进程异常退出后数据仍可从页缓存恢复；写入即时生效无需手动 commit

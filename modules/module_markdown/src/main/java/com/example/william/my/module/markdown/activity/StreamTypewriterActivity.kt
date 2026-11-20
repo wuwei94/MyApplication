@@ -37,7 +37,7 @@ import kotlinx.coroutines.withContext
  * 核心机制与避坑点：
  * 1. TypewriterEngine：动态自适应出字速率控制（积压加速 + 标点呼吸停顿 + 暂停/跳过）
  * 2. MarkdownStreamFixer：实时检测未闭合的 ``` 代码块与行内富文本标签，虚拟闭合防止界面跳动闪烁
- * 3. Prism4j + Markwon：代码块语法着色与原生 Spannable 高性能渲染
+ * 3. Prism4j + Markwon：代码块语法着色与原生 Spannable 增量渲染
  * 4. Channel.CONFLATED 顺序流控：保证单调递增渲染与丝滑吸底
  *
  * https://github.com/noties/Markwon

@@ -19,13 +19,13 @@ import java.lang.ref.WeakReference
  * Messenger 是 Android 提供的轻量级 IPC 方案，基于 Handler 实现。
  *
  * 核心机制与避坑点：
- * 1. 简单易用：基于 Handler，学习成本低
+ * 1. 基于 Handler：底层通过 MessageQueue 调度，无需编写 .aidl 接口
  * 2. 串行处理：消息排队处理，避免并发问题
  * 3. 双向通信：通过 Message.replyTo 实现双向通信
  * 4. 跨进程：支持不同进程间通信
  *
  * 与 AIDL 的区别：
- * - Messenger：串行处理，简单易用，适合轻量级通信
+ * - Messenger：消息排队串行处理，无需处理多线程同步，适合轻量级通信
  * - AIDL：并行处理，功能强大，适合复杂通信
  *
  * https://developer.android.com/guide/components/bound-services
