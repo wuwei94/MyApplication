@@ -48,11 +48,11 @@ class PagingActivity : BasicRecyclerActivity() {
     private var rxDisposable: Disposable? = null
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Mediator (Flow 离线缓存流)",
-        "Mediator (RxJava 离线缓存流)",
-        "Network (Flow 纯网络流)",
-        "Network (RxJava 纯网络流)",
-        "刷新当前列表 (adapter.refresh())",
+        "1. Mediator (Flow 离线缓存流)",
+        "2. Mediator (RxJava 离线缓存流)",
+        "3. Network (Flow 纯网络流)",
+        "4. Network (RxJava 纯网络流)",
+        "5. 刷新当前列表 (adapter.refresh())",
     )
 
     override fun initView(savedInstanceState: Bundle?) {

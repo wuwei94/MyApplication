@@ -48,14 +48,14 @@ class ValueAnimatorActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "LinearInterpolator（线性插值器）",
-        "AccelerateInterpolator（加速插值器）",
-        "DecelerateInterpolator（减速插值器）",
-        "AccelerateDecelerateInterpolator（先加速后减速）",
-        "BounceInterpolator（弹跳插值器）",
-        "OvershootInterpolator（过冲插值器）",
-        "AnticipateInterpolator（回拉插值器）",
-        "ViewPropertyAnimator（链式调用）",
+        "1. LinearInterpolator（线性插值器）",
+        "2. AccelerateInterpolator（加速插值器）",
+        "3. DecelerateInterpolator（减速插值器）",
+        "4. AccelerateDecelerateInterpolator（先加速后减速）",
+        "5. BounceInterpolator（弹跳插值器）",
+        "6. OvershootInterpolator（过冲插值器）",
+        "7. AnticipateInterpolator（回拉插值器）",
+        "8. ViewPropertyAnimator（链式调用）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

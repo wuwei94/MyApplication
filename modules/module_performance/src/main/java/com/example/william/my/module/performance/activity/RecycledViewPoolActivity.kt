@@ -33,9 +33,9 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
     private var tab2BindCount = 0
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "清空全局共享池 (RecycledViewPoolManager.clear())",
-        "重置创建/绑定统计计数",
-        "查看当前池状态及统计",
+        "1. 清空全局共享池 (RecycledViewPoolManager.clear())",
+        "2. 重置创建/绑定统计计数",
+        "3. 查看当前池状态及统计",
     )
 
     override fun initView(savedInstanceState: Bundle?) {

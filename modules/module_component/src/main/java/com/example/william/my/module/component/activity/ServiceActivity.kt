@@ -37,12 +37,12 @@ class ServiceActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "启动 Started Service",
-        "停止 Started Service",
-        "绑定 Bound Service",
-        "解绑 Bound Service",
-        "启动前台服务",
-        "停止前台服务",
+        "1. 启动 Started Service",
+        "2. 停止 Started Service",
+        "3. 绑定 Bound Service",
+        "4. 解绑 Bound Service",
+        "5. 启动前台服务",
+        "6. 停止前台服务",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

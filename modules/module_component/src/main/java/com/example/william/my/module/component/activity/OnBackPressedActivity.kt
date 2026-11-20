@@ -31,8 +31,8 @@ class OnBackPressedActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "拦截返回键",
-        "取消拦截",
+        "1. 拦截返回键",
+        "2. 取消拦截",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

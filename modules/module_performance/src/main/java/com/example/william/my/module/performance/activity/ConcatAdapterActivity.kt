@@ -35,10 +35,10 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
     private var feedItemIndex = 1
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "上线/下架 Banner 模块",
-        "向 Feed 列表新增项 (局部插入)",
-        "局部精准更新 Feed 首条 (notifyItemChanged)",
-        "上线/下架 Footer 模块",
+        "1. 上线/下架 Banner 模块",
+        "2. 向 Feed 列表新增项 (局部插入)",
+        "3. 局部精准更新 Feed 首条 (notifyItemChanged)",
+        "4. 上线/下架 Footer 模块",
     )
 
     override fun initView(savedInstanceState: Bundle?) {

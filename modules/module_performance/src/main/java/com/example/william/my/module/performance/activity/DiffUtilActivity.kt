@@ -27,11 +27,11 @@ class DiffUtilActivity : BasicRecyclerActivity() {
     private lateinit var articleAdapter: ArticleAdapter
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "点赞首项 (Payload 细粒度刷新)",
-        "修改首项标题 (整项重新绑定)",
-        "头部插入新数据 (触发插入动画)",
-        "删除首条数据 (触发移除动画)",
-        "随机乱序 (触发移动动画)",
+        "1. 点赞首项 (Payload 细粒度刷新)",
+        "2. 修改首项标题 (整项重新绑定)",
+        "3. 头部插入新数据 (触发插入动画)",
+        "4. 删除首条数据 (触发移除动画)",
+        "5. 随机乱序 (触发移动动画)",
     )
 
     override fun initView(savedInstanceState: Bundle?) {

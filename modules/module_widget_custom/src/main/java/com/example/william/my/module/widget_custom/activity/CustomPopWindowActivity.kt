@@ -38,8 +38,8 @@ class CustomPopWindowActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "显示 CustomPopWindow",
-        "显示 CustomPopWindow（背景变暗）",
+        "1. 显示 CustomPopWindow",
+        "2. 显示 CustomPopWindow（背景变暗）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

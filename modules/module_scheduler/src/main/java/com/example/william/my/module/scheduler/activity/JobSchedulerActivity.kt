@@ -67,8 +67,8 @@ class JobSchedulerActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "schedule() — 调度任务",
-        "cancelAll() — 取消所有任务",
+        "1. schedule() — 调度任务",
+        "2. cancelAll() — 取消所有任务",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

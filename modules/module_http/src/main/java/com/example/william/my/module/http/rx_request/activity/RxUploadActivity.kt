@@ -51,7 +51,7 @@ class RxUploadActivity : BasicResponseActivity() {
         "1. 单文件上传",
         "2. 多文件上传",
         "3. 取消当前上传",
-        "清理上传临时文件",
+        "4. 清理上传临时文件",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

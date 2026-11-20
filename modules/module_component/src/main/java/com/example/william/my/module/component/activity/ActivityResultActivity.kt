@@ -37,8 +37,8 @@ class ActivityResultActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "StartActivityForResult — 启动目标页并接收回传",
-        "ActivityResultContract — 封装 Intent 构建和结果解析",
+        "1. StartActivityForResult — 启动目标页并接收回传",
+        "2. ActivityResultContract — 封装 Intent 构建和结果解析",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

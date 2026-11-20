@@ -31,7 +31,7 @@ class AsyncTaskActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "execute() — 执行任务",
+        "1. execute() — 执行任务",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

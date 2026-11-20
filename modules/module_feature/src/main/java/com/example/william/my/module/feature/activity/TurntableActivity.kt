@@ -43,11 +43,11 @@ class TurntableActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "随机抽奖（旋转动画）",
-        "指定抽中奖品 1（0°）",
-        "指定抽中奖品 4（108°）",
-        "指定抽中奖品 7（216°）",
-        "重置转盘（恢复 0°）",
+        "1. 随机抽奖（旋转动画）",
+        "2. 指定抽中奖品 1（0°）",
+        "3. 指定抽中奖品 4（108°）",
+        "4. 指定抽中奖品 7（216°）",
+        "5. 重置转盘（恢复 0°）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

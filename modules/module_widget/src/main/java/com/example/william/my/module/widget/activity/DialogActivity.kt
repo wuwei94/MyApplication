@@ -36,15 +36,15 @@ import java.util.Calendar
 class DialogActivity : BasicResponseActivity() {
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "普通对话框",
-        "列表对话框",
-        "单选对话框",
-        "日期对话框",
-        "时间对话框",
-        "自定义对话框 setView",
-        "自定义对话框 setContentView",
-        "AlertDialogDialogFragment",
-        "CustomViewDialogFragment",
+        "1. 普通对话框",
+        "2. 列表对话框",
+        "3. 单选对话框",
+        "4. 日期对话框",
+        "5. 时间对话框",
+        "6. 自定义对话框 setView",
+        "7. 自定义对话框 setContentView",
+        "8. AlertDialogDialogFragment",
+        "9. CustomViewDialogFragment",
     )
 
     override fun initView(savedInstanceState: Bundle?) {

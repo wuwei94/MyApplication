@@ -27,10 +27,10 @@ class ObjectAnimatorActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "Alpha（透明度）",
-        "Rotation（旋转）",
-        "ScaleX（缩放）",
-        "TranslationX（平移）",
+        "1. Alpha（透明度）",
+        "2. Rotation（旋转）",
+        "3. ScaleX（缩放）",
+        "4. TranslationX（平移）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

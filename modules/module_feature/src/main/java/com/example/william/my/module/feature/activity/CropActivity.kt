@@ -123,9 +123,9 @@ class CropActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "从图库选择并裁剪",
-        "拍摄照片并裁剪（缩略图）",
-        "拍摄高清照片并裁剪（原图）",
+        "1. 从图库选择并裁剪",
+        "2. 拍摄照片并裁剪（缩略图）",
+        "3. 拍摄高清照片并裁剪（原图）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

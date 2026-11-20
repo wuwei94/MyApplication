@@ -34,9 +34,9 @@ class AlertDialogActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "IosAlertDialog",
-        "IosAlertItemDialog",
-        "ViewPagerBottomSheetDialog",
+        "1. IosAlertDialog",
+        "2. IosAlertItemDialog",
+        "3. ViewPagerBottomSheetDialog",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

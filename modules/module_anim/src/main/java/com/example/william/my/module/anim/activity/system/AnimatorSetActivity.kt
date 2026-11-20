@@ -30,9 +30,9 @@ class AnimatorSetActivity : BasicImageActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "playSequentially（顺序播放）",
-        "playTogether（同时播放）",
-        "Builder（精细编排）",
+        "1. playSequentially（顺序播放）",
+        "2. playTogether（同时播放）",
+        "3. Builder（精细编排）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

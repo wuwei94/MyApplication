@@ -46,11 +46,11 @@ class WorkManagerActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "提交一次性任务 (带约束与参数)",
-        "提交加急任务 (Expedited Worker)",
-        "提交唯一任务 (UniqueWork REPLACE)",
-        "链式执行任务 (beginWith -> then)",
-        "取消所有任务 (Cancel All)",
+        "1. 提交一次性任务 (带约束与参数)",
+        "2. 提交加急任务 (Expedited Worker)",
+        "3. 提交唯一任务 (UniqueWork REPLACE)",
+        "4. 链式执行任务 (beginWith -> then)",
+        "5. 取消所有任务 (Cancel All)",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

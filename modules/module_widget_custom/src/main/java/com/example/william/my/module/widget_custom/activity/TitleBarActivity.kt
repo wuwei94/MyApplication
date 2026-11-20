@@ -35,11 +35,11 @@ class TitleBarActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "设置主标题与返回键文案",
-        "添加右侧文字菜单（更多）",
-        "修改 TitleBar 背景色",
-        "隐藏返回按钮",
-        "重置 TitleBar 默认状态",
+        "1. 设置主标题与返回键文案",
+        "2. 添加右侧文字菜单（更多）",
+        "3. 修改 TitleBar 背景色",
+        "4. 隐藏返回按钮",
+        "5. 重置 TitleBar 默认状态",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

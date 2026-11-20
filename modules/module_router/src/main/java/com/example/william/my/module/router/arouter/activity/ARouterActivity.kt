@@ -30,8 +30,8 @@ class ARouterActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "页面跳转（ARouter.build + 携带参数）",
-        "跨模块服务发现（IProvider 反射查找）",
+        "1. 页面跳转（ARouter.build + 携带参数）",
+        "2. 跨模块服务发现（IProvider 反射查找）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

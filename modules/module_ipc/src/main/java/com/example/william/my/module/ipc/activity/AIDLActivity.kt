@@ -37,10 +37,10 @@ class AIDLActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "绑定 AIDL Service",
-        "解绑 AIDL Service",
-        "调用 getMessage()",
-        "调用 showToast()",
+        "1. 绑定 AIDL Service",
+        "2. 解绑 AIDL Service",
+        "3. 调用 getMessage()",
+        "4. 调用 showToast()",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

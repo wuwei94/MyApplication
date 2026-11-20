@@ -34,9 +34,9 @@ class CustomRouterActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "页面跳转（AppNavigator + 携带参数）",
-        "注册并触发拦截器链（PageInterceptor）",
-        "跨模块服务发现（Hilt 编译期注入）",
+        "1. 页面跳转（AppNavigator + 携带参数）",
+        "2. 注册并触发拦截器链（PageInterceptor）",
+        "3. 跨模块服务发现（Hilt 编译期注入）",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {

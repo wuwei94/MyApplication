@@ -26,10 +26,10 @@ class SecureKeyActivity : BasicResponseActivity() {
     }
 
     override fun buildList(): ArrayList<String> = arrayListOf(
-        "创建密钥（EC P-256）",
-        "查看密钥信息",
-        "ECDSA 签名",
-        "删除密钥",
+        "1. 创建密钥（EC P-256）",
+        "2. 查看密钥信息",
+        "3. ECDSA 签名",
+        "4. 删除密钥",
     )
 
     override fun onRecyclerClick(position: Int, string: String) {
