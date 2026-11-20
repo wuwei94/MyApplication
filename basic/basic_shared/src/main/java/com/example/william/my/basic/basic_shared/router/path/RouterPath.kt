@@ -545,6 +545,18 @@ object RouterPath {
         const val Koin = "$PATH/Koin"
     }
 
+    // 组件化路由横评（ARouter vs 自研路由）
+    object Router {
+        private const val PATH = "/Router"
+
+        const val Main = "$PATH/Main"
+
+        const val ARouter = "$PATH/ARouter"
+        const val ARouterTarget = "$PATH/ARouterTarget"
+        const val CustomRouter = "$PATH/CustomRouter"
+        const val CustomRouterTarget = "$PATH/CustomRouterTarget"
+    }
+
     // ───────────────────────────────────────────
     // 新 UI 范式（Compose / Flutter）
     // ───────────────────────────────────────────

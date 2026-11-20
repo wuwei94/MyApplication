@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentManager
-import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.core.base.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -17,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /**
  * 通用底部弹窗（BottomSheet）DialogFragment 基类
  *
- * 集成 ARouter 依赖注入与 BottomSheet 属性配置。生命周期顺序：
+ * 集成 BottomSheet 属性配置。生命周期顺序：
  * onAttach -> onCreateDialog -> onCreateView -> onViewCreated -> onStart
  */
 abstract class BaseBottomSheetDialogFragment(
@@ -27,20 +26,10 @@ abstract class BaseBottomSheetDialogFragment(
 
     protected var behavior: BottomSheetBehavior<FrameLayout>? = null
 
-    /**
-     * 在Fragment中，IProvider会在Fragment的生命周期方法onCreateView中被初始化。
-     * 这是因为Fragment的onCreateView方法是在Fragment被创建并添加到视图层次结构中时被调用的。
-     * 因此，当ARouter导航到一个Fragment时，IProvider会被初始化并提供页面所需的数据。
-     * 然而，在DialogFragment中，IProvider并不会在DialogFragment的生命周期方法onCreateView中被初始化。
-     * 这是因为DialogFragment的onCreateView方法是在DialogFragment被创建并显示出来时被调用的。
-     * 因此，当ARouter导航到一个DialogFragment时，IProvider并不会被初始化，因为DialogFragment还没有被显示出来。
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setStyle(STYLE_NORMAL, R.style.base_CustomBottomSheetDialogTheme)
-
-        ARouter.getInstance().inject(this)
     }
 
     override fun onCreateView(

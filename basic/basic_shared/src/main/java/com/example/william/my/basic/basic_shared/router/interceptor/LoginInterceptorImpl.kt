@@ -1,29 +1,23 @@
 package com.example.william.my.basic.basic_shared.router.interceptor
 
-import android.content.Context
-import com.alibaba.android.arouter.facade.Postcard
-import com.alibaba.android.arouter.facade.annotation.Interceptor
-import com.alibaba.android.arouter.facade.callback.InterceptorCallback
-import com.alibaba.android.arouter.facade.template.IInterceptor
+import com.example.william.my.basic.basic_shared.navigator.PageInterceptor
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.basic.basic_shared.utils.Utils
 
 /**
- * 登录拦截器
+ * 登录拦截器（基于自研 [PageInterceptor] 责任链）
  */
-@Interceptor(priority = 1)
-class LoginInterceptorImpl : IInterceptor {
+class LoginInterceptorImpl : PageInterceptor {
 
     private val TAG = "LoginInterceptor"
 
-    override fun process(postcard: Postcard, callback: InterceptorCallback) {
-        if (postcard.extra == RouterPath.PERMISSION_LOGIN) {
-            Utils.logcat(TAG, "需要登录权限，拦截跳转: ${postcard.path}")
-            callback.onInterrupt(RuntimeException("Need login"))
-        } else {
-            callback.onContinue(postcard)
-        }
-    }
+    override val priority: Int = 1
 
-    override fun init(context: Context) {}
+    override fun intercept(chain: PageInterceptor.Chain) {
+        if (chain.request.extras.getInt("extra", 0) == RouterPath.PERMISSION_LOGIN) {
+            Utils.logcat(TAG, "需要登录权限，拦截跳转: ${chain.request.path}")
+            return
+        }
+        chain.proceed(chain.request)
+    }
 }

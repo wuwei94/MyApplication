@@ -5,22 +5,18 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import com.alibaba.android.arouter.exception.HandlerException
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import com.example.william.my.basic.basic_shared.R
+import com.example.william.my.basic.basic_shared.navigator.AppNavigator
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
-import com.example.william.my.basic.basic_shared.router.path.RouterPath
 import com.example.william.my.core.base.ui.recycler.BaseRecyclerFragment
 
 /**
  * 路由列表 Fragment
  *
- * 展示由 [RouterRecyclerActivity] 传入的路由项列表，点击后通过 ARouter 跳转。
+ * 展示由 [RouterRecyclerActivity] 传入的路由项列表，点击后通过 [AppNavigator] 跳转。
  */
-@Route(path = RouterPath.Fragment.FragmentBasicRecycler)
 class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
 
     override fun initRecyclerAdapter(): BaseQuickAdapter<RouterItem, QuickViewHolder> = RouterRecyclerAdapter(arrayListOf())
@@ -48,15 +44,11 @@ class RouterRecyclerFragment : BaseRecyclerFragment<RouterItem>() {
         if (path.isNullOrEmpty()) {
             return
         }
-        try {
-            val postcard = ARouter.getInstance().build(path)
-            item.params.forEach { (key, value) ->
-                postcard.withString(key, value)
-            }
-            postcard.navigation()
-        } catch (e: HandlerException) {
-            e.printStackTrace()
+        val navigator = AppNavigator.build(path)
+        item.params.forEach { (key, value) ->
+            navigator.withString(key, value)
         }
+        navigator.navigation(requireActivity())
     }
 
     class RouterRecyclerAdapter(data: ArrayList<RouterItem>) : BaseQuickAdapter<RouterItem, QuickViewHolder>(data) {

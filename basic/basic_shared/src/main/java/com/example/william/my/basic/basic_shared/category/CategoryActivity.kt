@@ -1,8 +1,6 @@
 package com.example.william.my.basic.basic_shared.category
 
 import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -13,12 +11,9 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 通过 ARouter 传入 category 参数（取值见 [Category]）动态构建模块列表；
  * 页面标题同样取自 [Category.title]，与目录页共用同一份分类定义。
  */
-@Route(path = RouterPath.Category_Main)
 class CategoryActivity : RouterRecyclerActivity() {
 
-    @JvmField
-    @Autowired(name = "category")
-    var category: String = ""
+    private val category: String by lazy { intent.getStringExtra("category").orEmpty() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,6 +157,8 @@ class CategoryActivity : RouterRecyclerActivity() {
         items.add(RouterItem("架构模式", RouterPath.Arch.Main))
         items.add(RouterItem("── 依赖注入 ──", ""))
         items.add(RouterItem("依赖注入", RouterPath.Di.Main))
+        items.add(RouterItem("── 组件化路由 ──", ""))
+        items.add(RouterItem("组件化路由（ARouter vs 自研）", RouterPath.Router.Main))
         items.add(RouterItem("── 事件通信 ──", ""))
         items.add(RouterItem("事件总线", RouterPath.Event.Main))
         items.add(RouterItem("── 响应式编程 ──", ""))

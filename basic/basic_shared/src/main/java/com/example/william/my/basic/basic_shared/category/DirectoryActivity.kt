@@ -1,6 +1,5 @@
 package com.example.william.my.basic.basic_shared.category
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.william.my.basic.basic_shared.router.activity.RouterRecyclerActivity
 import com.example.william.my.basic.basic_shared.router.item.RouterItem
 import com.example.william.my.basic.basic_shared.router.path.RouterPath
@@ -15,7 +14,6 @@ import com.example.william.my.basic.basic_shared.router.path.RouterPath
  * 归类规则：Jetpack 组件有明确主题时归入对应主题模块，无主题架构组件才进 module_jetpack，
  * 详见 docs/01-rules/structure.md#分类判据与模块边界。
  */
-@Route(path = RouterPath.Directory_Main)
 class DirectoryActivity : RouterRecyclerActivity() {
 
     override fun buildRouter(): ArrayList<RouterItem> = ArrayList(

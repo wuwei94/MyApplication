@@ -12,7 +12,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.alibaba.android.arouter.launcher.ARouter
 import com.example.william.my.core.base.utils.DensityAdaptUtils
 
 /**
@@ -42,7 +41,6 @@ open class BaseActivity : AppCompatActivity() {
         initEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        initARouter()
         initEventBus()
 
         initViewBinding()
@@ -54,7 +52,6 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        initARouter()
         setIntent(intent)
     }
 
@@ -144,10 +141,6 @@ open class BaseActivity : AppCompatActivity() {
         if (enableEdgeToEdge()) {
             enableEdgeToEdge(statusBarStyle = getStatusBarStyle())
         }
-    }
-
-    private fun initARouter() {
-        ARouter.getInstance().inject(this)
     }
 
     private fun initEventBus() {
