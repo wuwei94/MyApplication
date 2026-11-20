@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--IosAlertDialogStyle-->
+    <!-- iOS 风格弹窗样式 -->
     <style name="IosAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <!--IosItemAlertDialogStyle-->
+    <!-- iOS 风格弹窗条目样式 -->
     <style name="IosItemAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
