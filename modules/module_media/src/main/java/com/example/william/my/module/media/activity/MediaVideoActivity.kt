@@ -127,6 +127,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 根据录制状态切换录像按钮图标与无障碍描述
+     */
     private fun updateRecordButtonState(isRecording: Boolean) {
         if (isRecording) {
             binding.btnRecord.setImageResource(R.drawable.media_ic_record_stop)
@@ -137,6 +140,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 检查相机与录音权限，已授权则初始化相机，否则发起权限申请
+     */
     private fun checkAndRequestPermissions() {
         val hasCamera = ContextCompat.checkSelfPermission(
             this,
@@ -159,6 +165,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 校验录像文件并展示预览浮层，TextureView 就绪后启动循环回放
+     */
     private fun showVideoPreview(videoFile: File) {
         if (!videoFile.exists() || videoFile.length() == 0L) {
             Utils.toast("录像文件无效")
@@ -175,6 +184,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 创建 MediaPlayer 绑定 Surface 并异步准备循环回放录像文件
+     */
     private fun startTexturePlayer(surface: Surface, videoFile: File) {
         try {
             stopTexturePlayer()
@@ -198,6 +210,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 解析视频宽高与旋转角并计算 CenterCrop 矩阵适配 TextureView
+     */
     private fun adjustTextureTransform(videoFile: File) {
         binding.previewTexture.post {
             val viewWidth = binding.previewTexture.width
@@ -256,6 +271,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 停止并释放 MediaPlayer 实例
+     */
     private fun stopTexturePlayer() {
         try {
             mediaPlayer?.let {
@@ -271,6 +289,9 @@ class MediaVideoActivity :
         }
     }
 
+    /**
+     * 停止回放、重置变换矩阵并隐藏视频预览浮层
+     */
     private fun closePreview() {
         stopTexturePlayer()
         currentVideoFile = null

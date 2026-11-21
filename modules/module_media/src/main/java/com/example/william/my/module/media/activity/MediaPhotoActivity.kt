@@ -85,6 +85,9 @@ class MediaPhotoActivity :
         }
     }
 
+    /**
+     * 检查相机权限，已授权则初始化相机，否则发起权限申请
+     */
     private fun checkAndRequestPermission() {
         val hasCamera = ContextCompat.checkSelfPermission(
             this,
@@ -98,11 +101,17 @@ class MediaPhotoActivity :
         }
     }
 
+    /**
+     * 展示拍照结果 Bitmap 预览浮层
+     */
     private fun showImagePreview(bitmap: Bitmap) {
         binding.previewImage.setImageBitmap(bitmap)
         binding.layoutPreview.visibility = View.VISIBLE
     }
 
+    /**
+     * 隐藏拍照预览浮层并清空预览图引用
+     */
     private fun closePreview() {
         binding.layoutPreview.visibility = View.GONE
         binding.previewImage.setImageBitmap(null)
