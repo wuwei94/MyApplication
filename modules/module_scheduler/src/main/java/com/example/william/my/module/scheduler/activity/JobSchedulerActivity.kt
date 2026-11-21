@@ -47,8 +47,8 @@ class JobSchedulerActivity : BasicResponseActivity() {
         override fun handleMessage(msg: Message) {
             val activity = weakReference.get() ?: return
             when (msg.what) {
-                MSG_COLOR_START -> activity.appendLog("onStartJob — Job ID ${msg.obj}")
-                MSG_COLOR_STOP -> activity.appendLog("onStopJob — Job ID ${msg.obj}")
+                MSG_COLOR_START -> activity.appendLog("→ onStartJob — Job ID ${msg.obj}")
+                MSG_COLOR_STOP -> activity.appendLog("✓ onStopJob — Job ID ${msg.obj}")
             }
         }
     }
@@ -97,14 +97,14 @@ class JobSchedulerActivity : BasicResponseActivity() {
 
         val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
         jobScheduler.schedule(builder.build())
-        appendLog("schedule — 任务已调度，Job ID: ${jobId - 1}")
+        appendLog("→ schedule — 任务已调度，Job ID: ${jobId - 1}")
     }
 
     private fun cancelAllJobs() {
         val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
         jobScheduler.cancelAll()
         Utils.toast("所有任务已取消")
-        appendLog("cancelAll — 所有任务已取消")
+        appendLog("✓ cancelAll — 所有任务已取消")
     }
 
     override fun onDestroy() {

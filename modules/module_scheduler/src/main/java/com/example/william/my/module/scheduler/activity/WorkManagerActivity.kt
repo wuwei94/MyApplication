@@ -85,7 +85,7 @@ class WorkManagerActivity : BasicResponseActivity() {
             .build()
 
         workManager.enqueue(request)
-        appendLog("已提交一次性任务: ${request.id}")
+        appendLog("✓ 已提交一次性任务: ${request.id}")
         observeWork(request.id, "一次性任务")
     }
 
@@ -99,7 +99,7 @@ class WorkManagerActivity : BasicResponseActivity() {
             .build()
 
         workManager.enqueue(request)
-        appendLog("已提交加急任务 (Expedited): ${request.id}")
+        appendLog("✓ 已提交加急任务 (Expedited): ${request.id}")
         observeWork(request.id, "加急任务")
     }
 
@@ -117,7 +117,7 @@ class WorkManagerActivity : BasicResponseActivity() {
             .build()
 
         workManager.beginUniqueWork(UNIQUE_WORK_NAME, ExistingWorkPolicy.REPLACE, request).enqueue()
-        appendLog("已提交唯一任务 (REPLACE): $UNIQUE_WORK_NAME -> ${request.id}")
+        appendLog("✓ 已提交唯一任务 (REPLACE): $UNIQUE_WORK_NAME -> ${request.id}")
         observeWork(request.id, "唯一任务")
     }
 
@@ -144,7 +144,7 @@ class WorkManagerActivity : BasicResponseActivity() {
             .then(taskC)
             .enqueue()
 
-        appendLog("已提交链式任务: [Task A, Task B] -> then Task C")
+        appendLog("✓ 已提交链式任务: [Task A, Task B] -> then Task C")
         observeWork(taskA.id, "Task A")
         observeWork(taskB.id, "Task B")
         observeWork(taskC.id, "Task C")
@@ -170,7 +170,7 @@ class WorkManagerActivity : BasicResponseActivity() {
      */
     private fun cancelWork() {
         workManager.cancelAllWorkByTag(TAG_WORK)
-        appendLog("已取消所有带有 tag [$TAG_WORK] 的任务")
+        appendLog("✓ 已取消所有带有 tag [$TAG_WORK] 的任务")
     }
 
     override fun onDestroy() {
