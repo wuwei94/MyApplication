@@ -48,6 +48,9 @@ class BleNordicTransferActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 演示 Nordic `.split()` 按 MTU 自动切片发送大包的调用模式（原理示意）。
+     */
     private fun demoSplitPrinciple() {
         appendLog("── Nordic .split() 自动分包机制 ──")
         appendLog("代码调用方式：")
@@ -58,6 +61,9 @@ class BleNordicTransferActivity : BasicResponseActivity() {
         appendLog("优势：无需应用层编写任何 while/offset 循环，Nordic 内部自动处理每个切片的 ACK 回调。")
     }
 
+    /**
+     * 演示 Nordic `.merge()` 按自定义帧头/长度组装接收分包的调用模式（原理示意）。
+     */
     private fun demoMergePrinciple() {
         appendLog("── Nordic .merge() 自动拼包机制 ──")
         appendLog("代码调用方式：")
@@ -70,6 +76,9 @@ class BleNordicTransferActivity : BasicResponseActivity() {
         appendLog("优势：彻底解耦分包通信细节，上层业务只需关注完整业务数据帧。")
     }
 
+    /**
+     * 模拟 512 字节数据在 MTU=247 下的分包发送切片与速率测算（原理示意）。
+     */
     private fun simulateHighThroughputTransfer() {
         appendLog("🚀 开始模拟 Nordic 大数据传输测试 (数据大小: 512 字节)...")
         val mtu = 247
@@ -91,6 +100,9 @@ class BleNordicTransferActivity : BasicResponseActivity() {
         appendLog("✓ 512 字节传输完成！耗时: " + duration + "ms, 传输速率: " + speedText + " kbps")
     }
 
+    /**
+     * 输出原生 Android BLE 与 Nordic BleManager 队列状态机模型的架构对比。
+     */
     private fun showArchitectureSummary() {
         appendLog("── Android 原生方案 vs Nordic 库架构对比 ──")
         appendLog("1. 原生 SDK：底层完全暴露，无队列保护，并发操作极易丢包冲突，适合学习底层机制。")

@@ -93,6 +93,9 @@ class BleNordicScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 启动 BLE 扫描，可选按 Nordic UART Service UUID 硬件过滤，结果按 MAC 聚合更新。
+     */
     private fun startScan(isFilter: Boolean) {
         val scanner = bleScanner
         if (scanner == null) {
@@ -130,6 +133,9 @@ class BleNordicScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 停止当前 BLE 扫描并复位扫描状态标志。
+     */
     private fun stopScan() {
         if (!isScanning) {
             appendLog("当前未在扫描")
@@ -144,6 +150,9 @@ class BleNordicScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 输出 Nordic 官方推荐的扫描超时、硬件过滤与功耗优化建议。
+     */
     private fun showNordicBestPractices() {
         appendLog("── Nordic 官方建议的 BLE 扫描最佳实践 ──")
         appendLog("1. 扫描超时：永远不要无限期扫描，建议在 5~10 秒后自动超时关闭以节省电量。")

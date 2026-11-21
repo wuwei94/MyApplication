@@ -102,6 +102,9 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 扫描周围首个 BLE 设备并调用 `bleManager.connect()` 入队重试与超时连接。
+     */
     private fun scanAndConnectNordic() {
         val scanner = bluetoothAdapter?.bluetoothLeScanner
         if (scanner == null) {
@@ -138,6 +141,9 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 Nordic `suspend()` 挂起扩展在 IO 调度器上同步化读取目标特征值。
+     */
     private fun readCharacteristicSuspend() {
         val char = bleManager.targetCharacteristic
         if (char == null || !bleManager.isConnected) {
@@ -161,6 +167,9 @@ class BleNordicConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 Nordic `suspend()` 挂起扩展安全入队并等待特征值写入完成。
+     */
     private fun writeCharacteristicSuspend() {
         val char = bleManager.targetCharacteristic
         if (char == null || !bleManager.isConnected) {
@@ -199,6 +208,9 @@ class BleNordicConnectActivity : BasicResponseActivity() {
             .enqueue()
     }
 
+    /**
+     * 触发 Nordic `bleManager.disconnect().enqueue()` 安全断开当前连接。
+     */
     private fun disconnectNordic() {
         if (bleManager.isConnected) {
             appendLog("正在断开 Nordic BLE 连接...")
