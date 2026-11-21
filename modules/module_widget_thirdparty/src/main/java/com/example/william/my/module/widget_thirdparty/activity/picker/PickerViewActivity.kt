@@ -48,6 +48,9 @@ class PickerViewActivity : BasicResponseActivity() {
         initPickView()
     }
 
+    /**
+     * 在子线程中加载并解析省市区 JSON 数据
+     */
     private fun initPickView() {
         Thread {
             // 子线程中解析省市区数据
@@ -74,8 +77,10 @@ class PickerViewActivity : BasicResponseActivity() {
         }
     }
 
-    private fun initJsonData() { // 解析数据
-
+    /**
+     * 读取 assets 省市区 JSON 并组装三级联动选项集合
+     */
+    private fun initJsonData() {
         /*
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
          * 关键逻辑在于循环体
@@ -127,6 +132,9 @@ class PickerViewActivity : BasicResponseActivity() {
         isLoaded = true
     }
 
+    /**
+     * 使用 Gson 将省市区 JSON 字符串反序列化为实体列表
+     */
     private fun parseData(result: String): ArrayList<ProvinceData> {
         val provinceData = arrayListOf<ProvinceData>()
         try {
@@ -143,6 +151,9 @@ class PickerViewActivity : BasicResponseActivity() {
         return provinceData
     }
 
+    /**
+     * 构建并弹出城市三级联动选择器，选中后输出拼装结果日志
+     */
     private fun showOptionsPickerView() {
         val pvOptions: OptionsPickerView<*> =
             OptionsPickerBuilder(this) { options1, options2, options3, v ->
@@ -176,6 +187,9 @@ class PickerViewActivity : BasicResponseActivity() {
         pvOptions.show()
     }
 
+    /**
+     * 构建并弹出年月日时间选择器，选中后格式化输出时间日志
+     */
     private fun showTimePickerView() {
         val pvTime = TimePickerBuilder(this) { date, v ->
             val time = SimpleDateFormat(
