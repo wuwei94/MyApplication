@@ -56,19 +56,19 @@ class AIDLActivity : BasicResponseActivity() {
 
     private fun bindAIDLService() {
         if (aidlConnection != null) {
-            appendLog("AIDL Service 已绑定")
+            appendLog("✓ AIDL Service 已绑定")
             return
         }
 
         aidlConnection = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, binder: IBinder) {
                 aidlService = IMyAidlInterface.Stub.asInterface(binder)
-                appendLog("AIDL Service 绑定成功：${aidlService?.getMessage()}")
+                appendLog("✓ AIDL Service 绑定成功：${aidlService?.getMessage()}")
             }
 
             override fun onServiceDisconnected(name: ComponentName) {
                 aidlService = null
-                appendLog("AIDL Service 连接断开")
+                appendLog("✗ AIDL Service 连接断开")
             }
         }
 
@@ -77,7 +77,7 @@ class AIDLActivity : BasicResponseActivity() {
             aidlConnection!!,
             BIND_AUTO_CREATE,
         )
-        appendLog("正在绑定 AIDL Service...（result=$result）")
+        appendLog("→ 正在绑定 AIDL Service...（result=$result）")
     }
 
     private fun unbindAIDLService() {
@@ -85,20 +85,20 @@ class AIDLActivity : BasicResponseActivity() {
             unbindService(conn)
             aidlConnection = null
             aidlService = null
-            appendLog("AIDL Service 已解绑")
-        } ?: appendLog("AIDL Service 未绑定")
+            appendLog("✓ AIDL Service 已解绑")
+        } ?: appendLog("✗ AIDL Service 未绑定")
     }
 
     private fun callGetMessage() {
-        aidlService?.let { appendLog("getMessage() 返回：${it.getMessage()}") }
-            ?: appendLog("AIDL Service 未绑定，请先绑定")
+        aidlService?.let { appendLog("✓ getMessage() 返回：${it.getMessage()}") }
+            ?: appendLog("✗ AIDL Service 未绑定，请先绑定")
     }
 
     private fun callShowToast() {
         aidlService?.let {
             it.showToast("来自客户端的 AIDL 调用")
-            appendLog("已调用 showToast()")
-        } ?: appendLog("AIDL Service 未绑定，请先绑定")
+            appendLog("✓ 已调用 showToast()")
+        } ?: appendLog("✗ AIDL Service 未绑定，请先绑定")
     }
 
     override fun onDestroy() {

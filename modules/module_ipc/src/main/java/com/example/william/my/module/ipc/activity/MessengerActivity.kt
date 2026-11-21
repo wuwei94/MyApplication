@@ -46,7 +46,7 @@ class MessengerActivity : BasicResponseActivity() {
             val activity = weakReference.get() ?: return
             if (msg.what == MSG_CODE_SEND_TO_ACTIVITY) {
                 val value = msg.data.getString(MSG_SEND_KEY)
-                activity.appendLog("收到回复：$value")
+                activity.appendLog("✓ 收到回复：$value")
             }
         }
     }
@@ -78,8 +78,8 @@ class MessengerActivity : BasicResponseActivity() {
                 replyTo = clientMessenger
             }
             service.send(message)
-            appendLog("发送消息给 Service")
-        } ?: appendLog("Service 未连接，请稍候")
+            appendLog("→ 发送消息给 Service")
+        } ?: appendLog("✗ Service 未连接，请稍候")
     }
 
     override fun onStart() {
@@ -91,13 +91,13 @@ class MessengerActivity : BasicResponseActivity() {
         serviceConnection = object : ServiceConnection {
             override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
                 serviceMessenger = Messenger(iBinder)
-                appendLog("Service 已连接")
+                appendLog("✓ Service 已连接")
                 sendMessage()
             }
 
             override fun onServiceDisconnected(componentName: ComponentName) {
                 serviceMessenger = null
-                appendLog("Service 连接断开")
+                appendLog("✗ Service 连接断开")
             }
         }
 
