@@ -59,6 +59,9 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
         streamDisposable?.dispose()
     }
 
+    /**
+     * 校验 API Key 并通过 OkHttp SSE RxJava 流订阅 DeepSeek 响应
+     */
     private fun sendDeepSeekPrompt(prompt: String) {
         val apiKey = PromptInputHelper.readApiKey(apiKeyInput)
         if (apiKey.isBlank()) {
@@ -120,6 +123,9 @@ class OkHttpSseClientRxActivity : BasicResponseActivity() {
             )
     }
 
+    /**
+     * 释放当前 RxJava Disposable 并清理动态日志
+     */
     private fun cancelStream() {
         streamDisposable?.dispose()
         removeUpdatingLog("deepseek_response")

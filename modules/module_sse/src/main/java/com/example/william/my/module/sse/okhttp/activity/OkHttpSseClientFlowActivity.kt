@@ -61,6 +61,9 @@ class OkHttpSseClientFlowActivity : BasicResponseActivity() {
         streamJob?.cancel()
     }
 
+    /**
+     * 校验 API Key 并通过 OkHttp SSE Flow 收集 DeepSeek 流式响应
+     */
     private fun sendDeepSeekPrompt(prompt: String) {
         val apiKey = PromptInputHelper.readApiKey(apiKeyInput)
         if (apiKey.isBlank()) {
@@ -116,6 +119,9 @@ class OkHttpSseClientFlowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 取消当前协程 Flow 收集任务并清理动态日志
+     */
     private fun cancelStream() {
         streamJob?.cancel()
         removeUpdatingLog("deepseek_response")

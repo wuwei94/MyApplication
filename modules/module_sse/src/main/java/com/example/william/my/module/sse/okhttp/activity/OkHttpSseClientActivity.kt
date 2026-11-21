@@ -59,6 +59,9 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
         OkHttpSseClient.cancel(serverUrl)
     }
 
+    /**
+     * 校验 API Key 并通过 OkHttp SSE 回调接口流式接收 DeepSeek 回答
+     */
     private fun sendDeepSeekPrompt(prompt: String) {
         val apiKey = PromptInputHelper.readApiKey(apiKeyInput)
         if (apiKey.isBlank()) {
@@ -124,6 +127,9 @@ class OkHttpSseClientActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 主动取消当前 OkHttp SSE 连接并清理动态日志
+     */
     private fun cancelStream() {
         OkHttpSseClient.cancel(serverUrl)
         removeUpdatingLog("deepseek_response")
