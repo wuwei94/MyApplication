@@ -52,17 +52,17 @@ class AlertDialogActivity : BasicResponseActivity() {
                     .setLeftButton(
                         "左",
                         View.OnClickListener {
-                            appendLog("点击了 IosAlertDialog 左按钮")
+                            appendLog("→ 点击了 IosAlertDialog 左按钮")
                         },
                     )
                     .setRightButton(
                         "右",
                         View.OnClickListener {
-                            appendLog("点击了 IosAlertDialog 右按钮")
+                            appendLog("→ 点击了 IosAlertDialog 右按钮")
                         },
                     )
                     .show()
-                appendLog("展示 IosAlertDialog")
+                appendLog("✓ 展示 IosAlertDialog")
             }
 
             1 -> {
@@ -71,25 +71,25 @@ class AlertDialogActivity : BasicResponseActivity() {
                     .setCancelable(false)
                     .setCanceledOnTouchOutside(false)
                     .addAlertItem("ITEM 1") { which ->
-                        appendLog("点击了 IosAlertItemDialog: ITEM 1 (which: $which)")
+                        appendLog("✓ 点击了 IosAlertItemDialog: ITEM 1 (which: $which)")
                     }
                     .addAlertItem("ITEM 2") { which ->
-                        appendLog("点击了 IosAlertItemDialog: ITEM 2 (which: $which)")
+                        appendLog("✓ 点击了 IosAlertItemDialog: ITEM 2 (which: $which)")
                     }
                     .addAlertItem(
                         "ITEM 3",
                         com.example.william.my.basic.basic_shared.R.color.shared_color_primary,
                     ) { which ->
-                        appendLog("点击了 IosAlertItemDialog: ITEM 3 (which: $which)")
+                        appendLog("✓ 点击了 IosAlertItemDialog: ITEM 3 (which: $which)")
                     }
                     .show()
-                appendLog("展示 IosAlertItemDialog")
+                appendLog("✓ 展示 IosAlertItemDialog")
             }
 
             2 -> {
                 val dialogFragment3 = MyBottomSheetDialog()
                 dialogFragment3.show(supportFragmentManager, dialogFragment3.tag)
-                appendLog("展示 ViewPagerBottomSheetDialog")
+                appendLog("✓ 展示 ViewPagerBottomSheetDialog")
             }
         }
     }

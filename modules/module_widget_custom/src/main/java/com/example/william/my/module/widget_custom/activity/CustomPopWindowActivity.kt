@@ -58,11 +58,11 @@ class CustomPopWindowActivity : BasicResponseActivity() {
 
         contentView.findViewById<TextView>(R.id.widget_item_one).setOnClickListener {
             customPopWindow?.dismiss()
-            appendLog("点击了菜单项 1")
+            appendLog("✓ 点击了菜单项 1")
         }
         contentView.findViewById<TextView>(R.id.widget_item_two).setOnClickListener {
             customPopWindow?.dismiss()
-            appendLog("点击了菜单项 2")
+            appendLog("✓ 点击了菜单项 2")
         }
 
         val builder = CustomPopWindow.PopupWindowBuilder(this)
@@ -77,6 +77,6 @@ class CustomPopWindowActivity : BasicResponseActivity() {
         customPopWindow = builder.create()
             .showAsDropDown(binding.basicsResponse, 0, 0)
 
-        appendLog(if (backgroundDark) "展示 CustomPopWindow（背景变暗）" else "展示 CustomPopWindow")
+        appendLog(if (backgroundDark) "→ 展示 CustomPopWindow（背景变暗）" else "→ 展示 CustomPopWindow")
     }
 }

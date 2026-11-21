@@ -48,31 +48,31 @@ class TitleBarActivity : BasicResponseActivity() {
             0 -> {
                 titleBar?.setTitle("自定义主标题")
                 titleBar?.setBackPressed("后退")
-                appendLog("[TitleBar]已更新标题为「自定义主标题」，返回键为「后退」")
+                appendLog("✓ [TitleBar] 已更新标题为「自定义主标题」，返回键为「后退」")
             }
 
             1 -> {
                 titleBar?.setBtnRight("更多") {
-                    appendLog("[TitleBar]点击了右侧「更多」操作菜单")
+                    appendLog("→ [TitleBar] 点击了右侧「更多」操作菜单")
                 }
-                appendLog("[TitleBar]已添加右侧文字菜单「更多」")
+                appendLog("✓ [TitleBar] 已添加右侧文字菜单「更多」")
             }
 
             2 -> {
                 titleBar?.setToolBarColor(R.color.shared_color_primary)
-                appendLog("[TitleBar]已修改 TitleBar 背景色为 PrimaryColor")
+                appendLog("✓ [TitleBar] 已修改 TitleBar 背景色为 PrimaryColor")
             }
 
             3 -> {
                 titleBar?.setBackPressed(false)
-                appendLog("[TitleBar]已隐藏左侧返回按钮")
+                appendLog("✓ [TitleBar] 已隐藏左侧返回按钮")
             }
 
             4 -> {
                 titleBar?.setTitle("TitleBar 演示")
                 titleBar?.setBackPressed("返回")
                 titleBar?.setToolBarColor(android.R.color.transparent)
-                appendLog("[TitleBar]已重置为默认状态")
+                appendLog("✓ [TitleBar] 已重置为默认状态")
             }
         }
     }
