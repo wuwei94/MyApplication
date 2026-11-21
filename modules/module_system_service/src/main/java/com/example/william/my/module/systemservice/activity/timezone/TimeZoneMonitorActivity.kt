@@ -1,14 +1,11 @@
 package com.example.william.my.module.systemservice.activity.timezone
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.example.william.my.core.base.timezone.LiveTimeZoneMonitor
 import com.example.william.my.core.base.timezone.TimeZoneMonitor
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,8 +29,6 @@ import java.util.TimeZone
 class TimeZoneMonitorActivity : BasicResponseActivity() {
 
     private val monitor: TimeZoneMonitor by lazy { LiveTimeZoneMonitor(applicationContext) }
-
-    private val monitorScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private var collectJob: Job? = null
 
@@ -65,7 +60,6 @@ class TimeZoneMonitorActivity : BasicResponseActivity() {
 
     override fun onDestroy() {
         stopObserveTimeZone()
-        monitorScope.cancel()
         super.onDestroy()
     }
 
@@ -80,7 +74,7 @@ class TimeZoneMonitorActivity : BasicResponseActivity() {
             return
         }
         appendLog("→ 开启 TimeZoneMonitor 监听（ACTION_TIMEZONE_CHANGED）...")
-        collectJob = monitorScope.launch {
+        collectJob = lifecycleScope.launch {
             monitor.currentTimeZone.collect { zone ->
                 val formatted = formatNow(zone)
                 appendLog("[TimeZoneMonitor] 时区变更: ${zone.id} | now=$formatted")
