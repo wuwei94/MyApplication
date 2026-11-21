@@ -206,6 +206,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 扫描周围首个 BLE 设备，命中后停止扫描并调用 [connectDevice] 建立 GATT 连接。
+     */
     private fun scanAndConnectFirstDevice() {
         val scanner = bluetoothAdapter?.bluetoothLeScanner
         if (scanner == null) {
@@ -236,6 +239,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 关闭旧连接并通过 `device.connectGatt(..., autoConnect = false, TRANSPORT_LE)` 建立新 GATT 连接。
+     */
     private fun connectDevice(device: BluetoothDevice) {
         disconnectAndClose()
         appendLog("正在建立 GATT 连接 (autoConnect = false)...")
@@ -246,6 +252,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 触发远程服务与特征发现（结果在 `BluetoothGattCallback.onServicesDiscovered` 回调）。
+     */
     private fun discoverServices() {
         val gatt = bluetoothGatt
         if (gatt == null) {
@@ -256,6 +265,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         gatt.discoverServices()
     }
 
+    /**
+     * 请求将当前 GATT 连接的 MTU 协商至 512 字节（需等待 `onMtuChanged` 回调确认）。
+     */
     private fun requestMtu() {
         val gatt = bluetoothGatt
         if (gatt == null) {
@@ -267,6 +279,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         appendLog("发起 requestMtu(512) 结果: ")
     }
 
+    /**
+     * 发起原生特征值异步读取（结果在 `onCharacteristicRead` 回调）。
+     */
     private fun readCharacteristic() {
         val gatt = bluetoothGatt
         val char = readableChar
@@ -278,6 +293,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         gatt.readCharacteristic(char)
     }
 
+    /**
+     * 设置 `WRITE_TYPE_DEFAULT` 并向目标特征值写入测试字节数据。
+     */
     private fun writeCharacteristic() {
         val gatt = bluetoothGatt
         val char = writableChar
@@ -293,6 +311,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         appendLog("发起 writeCharacteristic 结果: ")
     }
 
+    /**
+     * 开启特征值通知：先本地 `setCharacteristicNotification(true)`，再向 CCCD (0x2902) 写入使能值。
+     */
     private fun enableNotification() {
         val gatt = bluetoothGatt
         val char = notifiableChar
@@ -322,6 +343,9 @@ class BleNativeConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 断开并关闭 `BluetoothGatt`，清空本地缓存的特征引用以防底层句柄泄漏。
+     */
     private fun disconnectAndClose() {
         bluetoothGatt?.let { gatt ->
             try {

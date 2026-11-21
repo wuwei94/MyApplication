@@ -122,6 +122,9 @@ class BleNativeScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 适配 Android 12+ (`BLUETOOTH_SCAN`/`CONNECT`) 与旧版定位权限的运行时动态检查与申请。
+     */
     private fun checkAndRequestPermissions() {
         val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             arrayOf(
@@ -147,6 +150,9 @@ class BleNativeScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 查询并输出当前设备蓝牙适配器的开关状态与 `BluetoothLeScanner` 实例可用性。
+     */
     private fun checkBluetoothAdapterState() {
         val adapter = bluetoothAdapter
         if (adapter == null) {
@@ -158,6 +164,9 @@ class BleNativeScanActivity : BasicResponseActivity() {
         appendLog("蓝牙适配器状态: $stateDesc, 扫描器实例: $bleScanner")
     }
 
+    /**
+     * 启动原生低延迟 BLE 扫描，可选按 Service UUID (0x180D) 配置硬件级 `ScanFilter`。
+     */
     private fun startBleScan(isFilter: Boolean) {
         if (bleScanner == null) {
             val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
@@ -204,6 +213,9 @@ class BleNativeScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 停止原生 BLE 扫描并复位扫描状态标志。
+     */
     private fun stopBleScan() {
         if (!isScanning) {
             appendLog("当前未处于扫描状态")
@@ -218,6 +230,9 @@ class BleNativeScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 解析并输出 BLE 广播包（AdvData / ScanRecord）各 AD Type 结构说明（原理示意）。
+     */
     private fun simulateParseScanRecord() {
         appendLog("── BLE 广播包 (AdvData / ScanRecord) 结构说明 ──")
         appendLog("1. Flags (AD Type 0x01): 发现模式与 BR/EDR 支持标志")

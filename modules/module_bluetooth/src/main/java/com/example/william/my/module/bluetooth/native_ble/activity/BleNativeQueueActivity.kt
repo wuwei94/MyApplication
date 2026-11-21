@@ -116,6 +116,9 @@ class BleNativeQueueActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 将单次 GATT 操作封装为带 `CompletableDeferred` 的任务并投递至串行队列，挂起等待执行结果。
+     */
     private fun enqueueOperation(id: Int, type: String, payload: ByteArray) {
         lifecycleScope.launch {
             val deferred = CompletableDeferred<Boolean>()
