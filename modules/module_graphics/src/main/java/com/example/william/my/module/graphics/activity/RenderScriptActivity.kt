@@ -64,17 +64,26 @@ class RenderScriptActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 对原图执行 RenderScript 高斯模糊并刷新预览
+     */
     private fun applyBlur() {
         val blurred = blurWithRenderScript(originalBitmap, 20f)
         showImage(blurred)
         isBlurred = true
     }
 
+    /**
+     * 恢复原始图像显示并重置模糊状态
+     */
     private fun clearBlur() {
         showImage(originalBitmap)
         isBlurred = false
     }
 
+    /**
+     * 使用 RenderScript ScriptIntrinsicBlur 对 Bitmap 执行离屏模糊计算
+     */
     private fun blurWithRenderScript(bitmap: Bitmap, radius: Float): Bitmap {
         renderScript = RenderScript.create(this)
 

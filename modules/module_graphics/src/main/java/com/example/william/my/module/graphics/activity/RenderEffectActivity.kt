@@ -105,6 +105,9 @@ class RenderEffectActivity : BasicImageActivity() {
         currentMethod = "bitmap"
     }
 
+    /**
+     * 清除 View 的 RenderEffect 并恢复原始图像显示
+     */
     @RequiresApi(Build.VERSION_CODES.S)
     private fun clearBlur() {
         binding.basicsImage.setRenderEffect(null)
@@ -113,6 +116,9 @@ class RenderEffectActivity : BasicImageActivity() {
         currentMethod = ""
     }
 
+    /**
+     * 通过 HardwareRenderer 与 RenderNode 离屏应用模糊效果并导出新 Bitmap
+     */
     @RequiresApi(Build.VERSION_CODES.S)
     private fun blurWithHardwareRenderer(bitmap: Bitmap, radius: Float): Bitmap {
         val clampedRadius = max(0.1f, min(25.0f, radius))
