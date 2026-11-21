@@ -33,6 +33,9 @@ class NinePatchActivity : BasicLayoutActivity() {
         initPreviewCard()
     }
 
+    /**
+     * 加载 .9 图预览卡片布局并绑定提示与气泡文本视图
+     */
     private fun initPreviewCard() {
         val previewView = LayoutInflater.from(this)
             .inflate(R.layout.widget_layout_ninepatch_preview, container, false)

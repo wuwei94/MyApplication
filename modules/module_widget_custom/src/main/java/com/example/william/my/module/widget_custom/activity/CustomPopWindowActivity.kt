@@ -50,6 +50,9 @@ class CustomPopWindowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 构建 CustomPopWindow 并按参数配置背景半透明变暗效果
+     */
     private fun showCustomPopWindow(backgroundDark: Boolean) {
         val contentView = layoutInflater.inflate(
             R.layout.widget_layout_custom_pop_window,

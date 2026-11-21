@@ -34,6 +34,9 @@ class MarqueeViewActivity : BaseVBActivity<WidgetActivityMarqueeViewBinding>() {
         initMarqueeView()
     }
 
+    /**
+     * 按每组两条数据构建跑马灯条目视图并注入 MarqueeView
+     */
     private fun initMarqueeView() {
         var i = 0
         while (i < data.size) {

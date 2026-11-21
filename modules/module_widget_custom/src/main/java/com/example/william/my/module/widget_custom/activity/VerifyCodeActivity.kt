@@ -25,6 +25,9 @@ class VerifyCodeActivity : BaseVBActivity<WidgetActivityVerifyCodeBinding>() {
         initVerifyCode()
     }
 
+    /**
+     * 设置验证码输入框默认演示内容
+     */
     private fun initVerifyCode() {
         binding.widgetVerifyCodeView.editContent = "0731"
     }

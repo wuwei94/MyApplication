@@ -28,6 +28,9 @@ class TitleBarActivity : BasicResponseActivity() {
         initTitleBar()
     }
 
+    /**
+     * 构建 TitleBar 实例并设置默认标题与返回键文案
+     */
     private fun initTitleBar() {
         titleBar = TitleBar.build(binding.root)
         titleBar?.setTitle("TitleBar 演示")

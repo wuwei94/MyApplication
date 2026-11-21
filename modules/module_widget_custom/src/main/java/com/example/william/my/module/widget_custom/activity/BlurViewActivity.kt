@@ -34,6 +34,9 @@ class BlurViewActivity : BaseVBActivity<WidgetActivityBlurViewBinding>() {
         initBlurView()
     }
 
+    /**
+     * 初始化 BlurView 示例图与 SeekBar 实时模糊度调节监听
+     */
     private fun initBlurView() {
         binding.widgetBlurSeekBar.max = 100
         binding.widgetBlurView.setImageView(R.drawable.shared_ic_launcher)
