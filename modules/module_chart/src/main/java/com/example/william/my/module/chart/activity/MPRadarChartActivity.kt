@@ -47,6 +47,9 @@ class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() 
         updateMetrics(0)
     }
 
+    /**
+     * 配置能力雷达图网格、维度坐标轴及点击监听并刷新图表
+     */
     private fun initRadarChart() {
         binding.radarChart.apply {
             description.isEnabled = false
@@ -118,6 +121,9 @@ class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() 
         }
     }
 
+    /**
+     * 根据选中维度索引更新能力评分与差距分析面板
+     */
     @SuppressLint("SetTextI18n")
     private fun updateMetrics(index: Int) {
         if (index !in radarDims.indices) return

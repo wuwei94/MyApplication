@@ -52,6 +52,9 @@ class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
         updateMetrics(0)
     }
 
+    /**
+     * 配置环形饼图中心文本、图例、点击联动监听并刷新图表
+     */
     private fun initPieChart() {
         binding.pieChart.apply {
             description.isEnabled = false
@@ -105,6 +108,9 @@ class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {
         }
     }
 
+    /**
+     * 根据选中品类索引更新成本占比明细面板
+     */
     @SuppressLint("SetTextI18n")
     private fun updateMetrics(index: Int) {
         if (index !in pieCategories.indices) return

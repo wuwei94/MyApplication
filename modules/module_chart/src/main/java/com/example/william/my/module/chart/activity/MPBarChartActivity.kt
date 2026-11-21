@@ -48,6 +48,9 @@ class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {
         updateMetrics(2)
     }
 
+    /**
+     * 配置分组柱状图坐标轴、MarkerView 及数据集合并刷新图表
+     */
     private fun initBarChart() {
         binding.barChart.apply {
             description.isEnabled = false
@@ -119,6 +122,9 @@ class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {
         }
     }
 
+    /**
+     * 根据选中季度索引更新业绩达成分析面板
+     */
     @SuppressLint("SetTextI18n")
     private fun updateMetrics(index: Int) {
         if (index !in quarters.indices) return

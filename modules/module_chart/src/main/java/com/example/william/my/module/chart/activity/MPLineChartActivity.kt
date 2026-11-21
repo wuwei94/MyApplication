@@ -47,6 +47,9 @@ class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {
         updateMetrics(5)
     }
 
+    /**
+     * 配置双折线图坐标轴、MarkerView、图例与填充渐变并刷新图表
+     */
     private fun initLineChart() {
         binding.lineChart.apply {
             description.isEnabled = false
@@ -128,6 +131,9 @@ class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {
         }
     }
 
+    /**
+     * 根据选中月份索引更新收支与利润率联动面板
+     */
     @SuppressLint("SetTextI18n")
     private fun updateMetrics(index: Int) {
         if (index !in months.indices) return
