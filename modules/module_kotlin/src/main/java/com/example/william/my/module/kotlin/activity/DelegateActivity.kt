@@ -7,7 +7,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * Kotlin 委托机制
+ * Kotlin 委托机制 — 类委托与属性委托演示
  *
  * 委托是 Kotlin 的重要特性，通过 by 关键字实现代码复用和解耦。
  *

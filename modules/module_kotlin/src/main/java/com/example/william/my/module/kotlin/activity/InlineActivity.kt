@@ -5,7 +5,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
 import com.google.gson.Gson
 
 /**
- * Kotlin 内联函数与作用域函数
+ * Kotlin 内联函数 — 作用域函数与泛型实化演示
  *
  * 内联函数是 Kotlin 的重要特性，可消除 Lambda 对象分配开销并支持泛型实化。
  *
