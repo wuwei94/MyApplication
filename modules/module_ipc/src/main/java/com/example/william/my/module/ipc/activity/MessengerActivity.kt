@@ -68,6 +68,9 @@ class MessengerActivity : BasicResponseActivity() {
         clientMessenger = Messenger(clientHandler)
     }
 
+    /**
+     * 通过 `Messenger.send()` 向服务端发送 `Message`，并携带 `replyTo` 用于接收异步回执。
+     */
     private fun sendMessage() {
         serviceMessenger?.let { service ->
             val message = Message.obtain().apply {
@@ -87,6 +90,9 @@ class MessengerActivity : BasicResponseActivity() {
         bindService()
     }
 
+    /**
+     * 绑定远程 `MyMessageService` 获取服务端 `Messenger` 并触发首次消息发送。
+     */
     private fun bindService() {
         serviceConnection = object : ServiceConnection {
             override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {

@@ -54,6 +54,9 @@ class AIDLActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 绑定独立进程 `MyAIDLService`，连接后通过 `Stub.asInterface()` 转换远程 Binder 代理。
+     */
     private fun bindAIDLService() {
         if (aidlConnection != null) {
             appendLog("✓ AIDL Service 已绑定")
@@ -80,6 +83,9 @@ class AIDLActivity : BasicResponseActivity() {
         appendLog("→ 正在绑定 AIDL Service...（result=$result）")
     }
 
+    /**
+     * 解绑 AIDL 服务并清空远程代理与连接引用。
+     */
     private fun unbindAIDLService() {
         aidlConnection?.let { conn ->
             unbindService(conn)
@@ -89,11 +95,17 @@ class AIDLActivity : BasicResponseActivity() {
         } ?: appendLog("✗ AIDL Service 未绑定")
     }
 
+    /**
+     * 跨进程调用远程 AIDL 接口的 `getMessage()` 同步方法。
+     */
     private fun callGetMessage() {
         aidlService?.let { appendLog("✓ getMessage() 返回：${it.getMessage()}") }
             ?: appendLog("✗ AIDL Service 未绑定，请先绑定")
     }
 
+    /**
+     * 跨进程调用远程 AIDL 接口的 `showToast()` 方法。
+     */
     private fun callShowToast() {
         aidlService?.let {
             it.showToast("来自客户端的 AIDL 调用")
