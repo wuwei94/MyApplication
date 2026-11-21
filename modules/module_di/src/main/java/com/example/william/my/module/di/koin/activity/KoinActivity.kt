@@ -74,15 +74,15 @@ class KoinActivity : BasicResponseActivity() {
                 // 验证单例 vs 工厂
                 val tracker2: KoinAnalyticsTracker = get()
                 val orderProcessor2: KoinOrderProcessor = get()
-                appendLog("[1. 单例 singleOf]")
+                appendLog("→ [1. 单例 singleOf]")
                 appendLog("   • 实例 1 hash=${analyticsTracker.hashCode()}, info=${analyticsTracker.logEvent("click_btn")}")
                 appendLog("   • 实例 2 hash=${tracker2.hashCode()} (相同实例 = ${analyticsTracker === tracker2})")
-                appendLog("[1. 工厂 factoryOf]")
+                appendLog("→ [1. 工厂 factoryOf]")
                 appendLog("   • 实例 1 hash=${orderProcessor.hashCode()}, info=${orderProcessor.processOrder(101)}")
                 appendLog("   • 实例 2 hash=${orderProcessor2.hashCode()} (不同实例 = ${orderProcessor !== orderProcessor2})")
             }
             1 -> {
-                appendLog("[2. 接口与具名限定符]")
+                appendLog("✓ [2. 接口与具名限定符]")
                 appendLog("   • AliPay:   ${aliPayService.pay(88.0)}")
                 appendLog("   • WeChatPay:${weChatPayService.pay(66.0)}")
             }
@@ -90,21 +90,21 @@ class KoinActivity : BasicResponseActivity() {
                 val scopeId = "custom_scope_${System.currentTimeMillis()}"
                 val customScope = getKoin().createScope(scopeId, named("CustomSessionScope"))
                 val scopedSession: KoinScopedSession = customScope.get()
-                appendLog("[3. Scope 作用域] 创建 Scope [id=$scopeId]")
+                appendLog("→ [3. Scope 作用域] 创建 Scope [id=$scopeId]")
                 appendLog("   • 获取 Scoped 实例: hash=${scopedSession.hashCode()}, msg=${scopedSession.info}")
                 customScope.close()
-                appendLog("   • Scope 已关闭并销毁所持实例")
+                appendLog("✓ Scope 已关闭并销毁所持实例")
             }
             3 -> {
                 val count = koinSampleViewModel.incrementAndGet()
-                appendLog("[4. Koin ViewModel] 当前计数 = $count (${koinSampleViewModel.getViewModelInfo()})")
+                appendLog("✓ [4. Koin ViewModel] 当前计数 = $count (${koinSampleViewModel.getViewModelInfo()})")
             }
             4 -> {
                 val userSession: KoinUserProfileSession = get { parametersOf("VIP_User_9527") }
-                appendLog("[5. 动态传参注入] ${userSession.getSessionDetails()}")
+                appendLog("✓ [5. 动态传参注入] ${userSession.getSessionDetails()}")
             }
             5 -> {
-                appendLog("[6. Koin 容器状态]")
+                appendLog("✓ [6. Koin 容器状态]")
                 appendLog("   • Koin 实例: ${getKoin()}")
                 appendLog("   • Tracker: ${analyticsTracker.logEvent("verify_all")}")
                 appendLog("   • ViewModel: ${koinSampleViewModel.getViewModelInfo()}")

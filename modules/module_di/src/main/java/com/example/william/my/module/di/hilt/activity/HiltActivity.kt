@@ -91,35 +91,35 @@ class HiltActivity : BasicResponseActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> {
-                appendLog("[1. 构造函数注入] ${userRepository.getUserInfo(1001)}")
+                appendLog("✓ [1. 构造函数注入] ${userRepository.getUserInfo(1001)}")
             }
             1 -> {
-                appendLog("[2. 接口绑定注入] ${storageService.saveData("key_token", "jwt_sample_value")}")
+                appendLog("✓ [2. 接口绑定注入] ${storageService.saveData("key_token", "jwt_sample_value")}")
             }
             2 -> {
-                appendLog("[3. @Provides 模块构建] ${networkClient.request("/api/v1/profile")}")
+                appendLog("✓ [3. @Provides 模块构建] ${networkClient.request("/api/v1/profile")}")
             }
             3 -> {
-                appendLog("[4. 限定符多实现] Prod: ${prodApiService.fetchData()}")
-                appendLog("[4. 限定符多实现] Dev:  ${devApiService.fetchData()}")
+                appendLog("✓ [4. 限定符多实现] Prod: ${prodApiService.fetchData()}")
+                appendLog("✓ [4. 限定符多实现] Dev:  ${devApiService.fetchData()}")
             }
             4 -> {
-                appendLog("[5. 上下文注入] ${contextHelper.getContextInfo()}")
+                appendLog("✓ [5. 上下文注入] ${contextHelper.getContextInfo()}")
             }
             5 -> {
-                appendLog("[6. 作用域对比]")
+                appendLog("→ [6. 作用域对比]")
                 appendLog("   • 全局单例 (@Singleton): hash=${globalSingleton.hashCode()}, msg=${globalSingleton.info}")
                 appendLog("   • Activity 作用域 (@ActivityScoped): hash=${activityScopedHelper.hashCode()}, msg=${activityScopedHelper.info}")
                 appendLog("   • 无作用域 (每次新建): hash=${transientHelper.hashCode()}, msg=${transientHelper.info}")
             }
             6 -> {
                 val count = hiltViewModel.incrementAndGet()
-                appendLog("[7. Hilt ViewModel] 当前计数值 = $count (${hiltViewModel.getViewModelInfo()})")
+                appendLog("✓ [7. Hilt ViewModel] 当前计数值 = $count (${hiltViewModel.getViewModelInfo()})")
             }
             7 -> {
                 // 演示在非 @AndroidEntryPoint 类（例如工具类或拦截器）中通过 EntryPoint 获取依赖
                 val dynamicHelper = NonHiltComponentHelper(applicationContext)
-                appendLog("[8. @EntryPoint 动态获取] ${dynamicHelper.performTask()}")
+                appendLog("✓ [8. @EntryPoint 动态获取] ${dynamicHelper.performTask()}")
             }
         }
     }
