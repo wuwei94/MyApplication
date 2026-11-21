@@ -33,6 +33,9 @@ class SpinnerActivity : BasicLayoutActivity() {
         initPreviewCard()
     }
 
+    /**
+     * 加载 Spinner 预览卡片布局并绑定锚点点击展开事件
+     */
     private fun initPreviewCard() {
         val previewView = LayoutInflater.from(this)
             .inflate(R.layout.widget_layout_spinner_preview, container, false)
@@ -61,6 +64,9 @@ class SpinnerActivity : BasicLayoutActivity() {
         }
     }
 
+    /**
+     * 构造并展示锚定在选择框下方的 Spinner 下拉列表，选中后回显结果
+     */
     private fun showSpinner() {
         spinner = Spinner(this@SpinnerActivity, data.toList())
         spinner?.width = anchorView.width
@@ -72,6 +78,9 @@ class SpinnerActivity : BasicLayoutActivity() {
         }
     }
 
+    /**
+     * 重置 Spinner 预览文本与选中状态提示
+     */
     private fun resetSpinner() {
         selectedTextView.text = "请选择所属类别..."
         resultTextView.text = "当前状态：已重置为未选择"
