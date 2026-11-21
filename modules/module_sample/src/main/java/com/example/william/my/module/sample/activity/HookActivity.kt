@@ -32,10 +32,13 @@ class HookActivity : BasicResponseActivity() {
         setupDemoTarget()
     }
 
+    /**
+     * 初始化演示目标 View 并绑定原始 `OnClickListener`。
+     */
     private fun setupDemoTarget() {
         targetDemoView = View(this)
         originalClickListener = View.OnClickListener {
-            appendLog("[原始事件]TargetView.OnClickListener.onClick() 执行成功")
+            appendLog("✓ [原始事件] TargetView.OnClickListener.onClick() 执行成功")
         }
         targetDemoView.setOnClickListener(originalClickListener)
     }
@@ -51,7 +54,7 @@ class HookActivity : BasicResponseActivity() {
         super.onRecyclerClick(position, string)
         when (position) {
             0 -> {
-                appendLog("[触发点击]准备调用 targetDemoView.performClick()...")
+                appendLog("→ [触发点击] 准备调用 targetDemoView.performClick()...")
                 targetDemoView.performClick()
             }
 
@@ -60,7 +63,7 @@ class HookActivity : BasicResponseActivity() {
             }
 
             2 -> {
-                appendLog("[触发点击]准备调用已 Hook 的 targetDemoView.performClick()...")
+                appendLog("→ [触发点击] 准备调用已 Hook 的 targetDemoView.performClick()...")
                 targetDemoView.performClick()
             }
 
@@ -70,9 +73,12 @@ class HookActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过反射替换 `ListenerInfo.mOnClickListener` 为 `Proxy` 动态代理实例以拦截点击事件。
+     */
     private fun applyHook(view: View) {
         val success = HookHelper.hookOnClickListener(view) {
-            appendLog("[Hook 拦截]>>> 成功拦截到 onClick() 调用！可在此处做埋点或防重放校验 <<<")
+            appendLog("✓ [Hook 拦截] 成功拦截到 onClick() 调用，可执行埋点或防重放校验")
         }
         if (success) {
             isHooked = true
@@ -82,13 +88,16 @@ class HookActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 恢复目标 View 的原始 `OnClickListener` 引用。
+     */
     private fun restoreHook(view: View) {
         if (!isHooked) {
-            appendLog("[还原提示]当前未处于 Hook 状态")
+            appendLog("✗ [还原提示] 当前未处于 Hook 状态")
             return
         }
         HookHelper.restoreOnClickListener(view, originalClickListener)
         isHooked = false
-        appendLog("[Hook 还原]已恢复原始 OnClickListener")
+        appendLog("✓ [Hook 还原] 已恢复原始 OnClickListener")
     }
 }
