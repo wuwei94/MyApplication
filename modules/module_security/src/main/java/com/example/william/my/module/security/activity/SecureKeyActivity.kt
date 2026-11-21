@@ -45,9 +45,9 @@ class SecureKeyActivity : BasicResponseActivity() {
     private fun createKey() {
         runCatching {
             val keyInfo = SecureKeyDemoUtils.createKeyIfNeeded()
-            appendLog("创建密钥成功（安全级别：${keyInfo.secureLevel}，信任等级：${keyInfo.trustLevel}）")
+            appendLog("✓ 创建密钥成功（安全级别：${keyInfo.secureLevel}，信任等级：${keyInfo.trustLevel}）")
         }.onFailure {
-            appendLog("创建密钥失败：${it.message}")
+            appendLog("✗ 创建密钥失败：${it.message}")
         }
     }
 
@@ -55,12 +55,12 @@ class SecureKeyActivity : BasicResponseActivity() {
         runCatching {
             val keyInfo = SecureKeyDemoUtils.getKeyInfo()
             if (keyInfo == null) {
-                appendLog("当前还没有密钥，请先创建")
+                appendLog("✗ 当前还没有密钥，请先创建")
             } else {
-                appendLog("密钥信息（安全级别：${keyInfo.secureLevel}，硬件保护：${keyInfo.hardwareBacked}）")
+                appendLog("✓ 密钥信息（安全级别：${keyInfo.secureLevel}，硬件保护：${keyInfo.hardwareBacked}）")
             }
         }.onFailure {
-            appendLog("读取密钥失败：${it.message}")
+            appendLog("✗ 读取密钥失败：${it.message}")
         }
     }
 
@@ -68,18 +68,18 @@ class SecureKeyActivity : BasicResponseActivity() {
         runCatching {
             val challenge = "nonce_${System.currentTimeMillis()}"
             val result = SecureKeyDemoUtils.signChallenge(challenge)
-            appendLog("签名成功（算法：${result.algorithm}）")
+            appendLog("✓ 签名成功（算法：${result.algorithm}）")
         }.onFailure {
-            appendLog("签名失败：${it.message}")
+            appendLog("✗ 签名失败：${it.message}")
         }
     }
 
     private fun deleteKey() {
         runCatching {
             SecureKeyDemoUtils.deleteKey()
-            appendLog("密钥已删除")
+            appendLog("✓ 密钥已删除")
         }.onFailure {
-            appendLog("删除失败：${it.message}")
+            appendLog("✗ 删除失败：${it.message}")
         }
     }
 }
