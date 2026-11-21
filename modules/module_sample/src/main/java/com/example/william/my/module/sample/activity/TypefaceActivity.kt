@@ -34,6 +34,9 @@ class TypefaceActivity : BasicLayoutActivity() {
         initPreviewCard()
     }
 
+    /**
+     * 加载字体预览卡片布局并绑定中英文与数字示例视图
+     */
     private fun initPreviewCard() {
         val previewView = LayoutInflater.from(this)
             .inflate(R.layout.sample_layout_typeface_preview, container, false)
@@ -73,6 +76,9 @@ class TypefaceActivity : BasicLayoutActivity() {
         }
     }
 
+    /**
+     * 将指定字体样式应用到预览文本并更新当前字体名称
+     */
     private fun applyTypeface(name: String, typeface: Typeface) {
         nameView.text = "当前字体：$name"
         enView.typeface = typeface
