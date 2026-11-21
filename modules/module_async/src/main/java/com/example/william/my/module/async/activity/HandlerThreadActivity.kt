@@ -35,6 +35,9 @@ class HandlerThreadActivity : BasicResponseActivity() {
         initHandlerThread()
     }
 
+    /**
+     * 启动 HandlerThread 并创建绑定其 Looper 的 Handler 接收消息
+     */
     private fun initHandlerThread() {
         handlerThread = HandlerThread("DemoHandlerThread").apply { start() }
 

@@ -41,6 +41,9 @@ class AsyncTaskActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 取消旧任务并启动新的 AsyncTask 示例
+     */
     private fun executeAsyncTask() {
         asyncTask?.cancel(true)
         asyncTask = MyAsyncTask(this)
