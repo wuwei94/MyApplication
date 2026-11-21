@@ -60,6 +60,9 @@ class BleFastScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 配置 FastBle 全局扫描规则（可选按 0xFFE0 Service UUID 过滤，超时 10 秒）。
+     */
     private fun configScanRule(isFilter: Boolean) {
         val builder = BleScanRuleConfig.Builder()
             .setScanTimeOut(10000)
@@ -77,6 +80,9 @@ class BleFastScanActivity : BasicResponseActivity() {
         BleManager.getInstance().initScanRule(scanRuleConfig)
     }
 
+    /**
+     * 启动 FastBle 扫描，按 MAC 聚合并通过 updateLog 实时刷新设备 RSSI。
+     */
     private fun startFastScan() {
         if (isScanning) {
             appendLog("⚠ 扫描正在进行中")
@@ -114,6 +120,9 @@ class BleFastScanActivity : BasicResponseActivity() {
         })
     }
 
+    /**
+     * 取消正在进行的 FastBle 扫描并复位扫描状态标志。
+     */
     private fun stopFastScan() {
         if (!isScanning) {
             appendLog("当前未在扫描")
@@ -124,6 +133,9 @@ class BleFastScanActivity : BasicResponseActivity() {
         appendLog("✓ 已取消 FastBle 扫描")
     }
 
+    /**
+     * 输出 FastBle 的核心 API 组织方式与封装特点。
+     */
     private fun showFastBleCharacteristics() {
         appendLog("── FastBle 设计特点与核心 API ──")
         appendLog("1. 单例模式：通过 BleManager.getInstance() 全局统一管理，API 上手极快。")

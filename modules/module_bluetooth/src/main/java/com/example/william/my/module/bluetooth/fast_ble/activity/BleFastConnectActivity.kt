@@ -68,6 +68,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 触发临时扫描，命中首个非空 BLE 设备后取消扫描并建立 GATT 连接。
+     */
     private fun scanAndConnect() {
         appendLog("正在临时扫描 4 秒以寻找首个 BLE 设备...")
         BleManager.getInstance().scan(object : BleScanCallback() {
@@ -88,6 +91,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         })
     }
 
+    /**
+     * 通过 FastBle 建立 GATT 连接，连接成功后自动提取首个可用 Service 与 Characteristic UUID。
+     */
     private fun connectDevice(bleDevice: BleDevice) {
         BleManager.getInstance().connect(
             bleDevice,
@@ -122,6 +128,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 请求将当前连接的 MTU 协商为 512 字节，以扩大单包有效载荷。
+     */
     private fun setFastBleMtu() {
         val dev = connectedDevice
         if (dev == null) {
@@ -144,6 +153,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 异步读取目标特征值并同时输出 Hex 与 UTF-8 文本格式。
+     */
     private fun readCharacteristic() {
         val dev = connectedDevice
         val sUuid = targetServiceUuid
@@ -172,6 +184,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 向目标特征值写入测试字节数据，并在回调中观察写入进度。
+     */
     private fun writeCharacteristic() {
         val dev = connectedDevice
         val sUuid = targetServiceUuid
@@ -200,6 +215,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 开启目标特征值的 Notify 通知监听（FastBle 自动写入 CCCD 描述符）。
+     */
     private fun enableNotification() {
         val dev = connectedDevice
         val sUuid = targetServiceUuid
@@ -262,6 +280,9 @@ class BleFastConnectActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 主动断开当前已连接的 FastBle 设备。
+     */
     private fun disconnect() {
         connectedDevice?.let { dev ->
             BleManager.getInstance().disconnect(dev)

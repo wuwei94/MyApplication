@@ -72,6 +72,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 `take(1)` 扫描首个可用 BLE 设备，随后转入响应式连接建立。
+     */
     private fun scanAndEstablishConnection() {
         appendLog("正在临时扫描寻找首个 BLE 设备...")
         val scanSettings = ScanSettings.Builder()
@@ -94,6 +97,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
         disposables.add(scanDisposable)
     }
 
+    /**
+     * 建立共享型 GATT 连接流（`replay(1).refCount()`），连接后串行触发服务发现并提取目标特征 UUID。
+     */
     private fun connect(device: RxBleDevice) {
         disconnect()
 
@@ -126,6 +132,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
             )
     }
 
+    /**
+     * 订阅共享连接流并通过 `requestMtu(512)` 协商扩展 MTU。
+     */
     private fun requestMtu() {
         val connObs = connectionObservable
         if (connObs == null) {
@@ -145,6 +154,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
         disposables.add(d)
     }
 
+    /**
+     * 订阅共享连接流并异步读取目标特征值（输出 Hex 与 UTF-8 文本）。
+     */
     private fun readCharacteristic() {
         val connObs = connectionObservable
         val charUuid = targetCharUuid
@@ -169,6 +181,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
         disposables.add(d)
     }
 
+    /**
+     * 订阅共享连接流并向目标特征值写入测试字节数组。
+     */
     private fun writeCharacteristic() {
         val connObs = connectionObservable
         val charUuid = targetCharUuid
@@ -192,6 +207,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
         disposables.add(d)
     }
 
+    /**
+     * 通过 `setupNotification` 展开双重 Observable 流以持续接收设备主动推送。
+     */
     private fun setupNotification() {
         val connObs = connectionObservable
         val charUuid = targetCharUuid
@@ -242,6 +260,9 @@ class BleRxConnectActivity : BasicResponseActivity() {
         disposables.add(d)
     }
 
+    /**
+     * 释放连接与全部 RxJava 订阅，底层 GATT 连接随之自动关闭。
+     */
     private fun disconnect() {
         connectionDisposable?.dispose()
         connectionDisposable = null

@@ -56,6 +56,9 @@ class BleRxScanActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 启动 RxAndroidBle 响应式扫描，可选通过 RxJava `filter` 按 RSSI 阈值过滤结果。
+     */
     private fun startRxScan(minRssi: Int?) {
         stopRxScan()
 
@@ -93,6 +96,9 @@ class BleRxScanActivity : BasicResponseActivity() {
         appendLog("✓ 已订阅 ScanResult Observable 数据流")
     }
 
+    /**
+     * 通过 `dispose()` 取消扫描订阅，底层自动停止 BLE 扫描。
+     */
     private fun stopRxScan() {
         scanDisposable?.let {
             if (!it.isDisposed) {
@@ -103,6 +109,9 @@ class BleRxScanActivity : BasicResponseActivity() {
         scanDisposable = null
     }
 
+    /**
+     * 输出 RxAndroidBle 的响应式流式设计与资源回收特性。
+     */
     private fun showRxBleAdvantages() {
         appendLog("── RxAndroidBle 响应式设计优势 ──")
         appendLog("1. 一切皆流 (Observable)：扫描、连接、发现、Notify 全部为 Observable 数据流，可无限组合变换。")
