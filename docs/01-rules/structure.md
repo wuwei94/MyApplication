@@ -195,7 +195,7 @@ Showcase 控制台族基类在 `basic_shared`；架构基类（`BaseActivity` / 
 2. **跨生命周期作用域**：
    - **Hilt**：注入 `@ApplicationScope`（`CoroutineScopesModule` 提供 `SupervisorJob + Default`）。
    - **手动 `App`**：仓内尚无对应限定符单例；若模块需要全局作用域，应在 `App`/`BaseApp` 层持有受控 `CoroutineScope(SupervisorJob() + dispatcher)`，禁止 `GlobalScope`。
-3. UI 收集 Flow 必须用 `collectWithLifecycle` / `launchAndRepeatWithLifecycle(STARTED)`（`basic_lib` `LifecycleExtensions`）。
+3. UI 收集 Flow 必须用 `collectWithLifecycle` / `launchAndRepeatWithLifecycle(STARTED)`（`basic_lib` `LifecycleExtensions`）；以 Flow / Channel / SSE / Socket 流式客户端为**被演示主题**的手动启停或单次触发演示，以及 Compose `LaunchedEffect` 收集单次事件除外。
 
 > 锚点类型：`AppDispatchers`（枚举）、`@Dispatcher` / `@ApplicationScope`（Hilt 限定符）——它们不是可直接当调度器/作用域使用的全局对象。
 
