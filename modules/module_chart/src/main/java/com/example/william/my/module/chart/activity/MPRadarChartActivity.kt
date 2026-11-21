@@ -29,6 +29,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  * 3. 顶点触控：setDrawHighlightCircleEnabled + MarkerView 弹窗展示选中顶点
  * 4. 维度联动：OnChartValueSelectedListener 响应顶点选中，刷新底部差距分析
  *
+ * 官方参考：
  * https://github.com/PhilJay/MPAndroidChart
  */
 class MPRadarChartActivity : BaseVBActivity<ChartActivityMpRadarChartBinding>() {

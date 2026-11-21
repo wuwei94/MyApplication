@@ -15,6 +15,7 @@ import com.google.gson.Gson
  * 3. 自定义内联扩展：高阶函数内联消除 Lambda 对象分配开销
  * 4. 内联修饰符：noinline 与 crossinline 控制 Lambda 是否内联及非局部返回行为
  *
+ * 官方参考：
  * https://kotlinlang.org/docs/inline-functions.html
  */
 class InlineActivity : BasicResponseActivity() {

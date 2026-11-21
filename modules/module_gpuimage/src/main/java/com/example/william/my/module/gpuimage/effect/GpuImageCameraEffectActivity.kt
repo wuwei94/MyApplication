@@ -33,6 +33,7 @@ import java.io.File
  * 3. 高质量录像：CameraX VideoCapture + Recorder 自动采集音频、H.264 硬编码与混流
  * 4. 录像回放：内嵌卡片式浮层，MediaPlayer + TextureView 无缝重放 MP4
  *
+ * 官方参考：
  * https://developer.android.com/media/camera/camerax
  * https://github.com/cats-oss/android-gpuimage
  */

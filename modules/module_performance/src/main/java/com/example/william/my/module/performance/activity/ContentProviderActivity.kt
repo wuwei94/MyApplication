@@ -17,6 +17,7 @@ import com.example.william.my.module.performance.provider.AutoInitSdk
  * 2. 冷启动耗时痛点：每个 ContentProvider 在 AMS 与 ActivityThread 层面均存在反射拉起、Binder 绑定与 IPC 开销（单个约 1~5ms），大量 SDK 各自注册 Provider 会导致冷启动白屏明显拉长
  * 3. 演进趋势：由此催生 Jetpack App Startup，通过单个 InitializationProvider 统一聚合管理所有库初始化
  *
+ * 官方参考：
  * https://developer.android.com/guide/components/content-providers
  */
 class ContentProviderActivity : BasicResponseActivity() {

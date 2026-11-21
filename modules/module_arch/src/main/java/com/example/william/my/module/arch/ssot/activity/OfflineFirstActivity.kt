@@ -83,6 +83,7 @@ import java.util.Locale
  * 3. 存储分工：Room 承载文章实体等结构化 SSOT；版本游标等非结构化偏好由 Proto DataStore（SyncPreferencesDataSource）持久化
  * 4. 离线高可用（Offline-First）：优先展现 Room 本地持久化缓存，断网或无网络环境下依然秒开可用；页内同步/插入/清空用于验证数据变更全由 Room 驱动
  *
+ * 官方参考：
  * https://github.com/android/nowinandroid
  */
 class OfflineFirstActivity : BaseActivity() {

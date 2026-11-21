@@ -16,6 +16,7 @@ import com.example.william.my.module.performance.bean.UserProfile
  * 3. entryRemoved(evicted, key, oldValue, newValue)：监听条目被淘汰或移除事件，用于释放下层关联资源
  * 4. evictAll()：清空内存缓存
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/util/LruCache
  */
 class LruCacheActivity : BasicResponseActivity() {

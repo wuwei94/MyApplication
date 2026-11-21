@@ -28,6 +28,7 @@ import java.lang.ref.WeakReference
  * - Messenger：消息排队串行处理，无需处理多线程同步，适合轻量级通信
  * - AIDL：并行处理，功能强大，适合复杂通信
  *
+ * 官方参考：
  * https://developer.android.com/guide/components/bound-services
  */
 class MessengerActivity : BasicResponseActivity() {

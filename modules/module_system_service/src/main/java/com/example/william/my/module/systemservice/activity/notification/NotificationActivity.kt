@@ -23,6 +23,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * 3. 通知构建：通过 NotificationCompat.Builder(context, channelId) 构建通知并绑定渠道
  * 4. 通知发送：NotificationManager.notify(id, notification) 发送通知，相同 id 会替换旧通知
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/notifications
  */
 class NotificationActivity : BasicResponseActivity() {

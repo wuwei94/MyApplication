@@ -25,6 +25,7 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPagerTabBind
  * 3. 自定义样式：支持自定义 Tab 样式
  * 4. 图标支持：支持图标和文字组合
  *
+ * 官方参考：
  * https://developer.android.com/reference/androidx/viewpager/widget/ViewPager
  */
 class ViewPagerTabActivity :

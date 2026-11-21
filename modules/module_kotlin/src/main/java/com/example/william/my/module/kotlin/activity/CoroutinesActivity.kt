@@ -20,6 +20,7 @@ import com.example.william.my.module.kotlin.viewmodel.CoroutinesViewModel
  * 5. 取消与超时：withTimeoutOrNull 超时降级，isActive 协作式响应取消信号
  * 6. 异常处理器：CoroutineExceptionHandler 拦截未捕获异常
  *
+ * 官方参考：
  * https://developer.android.google.cn/kotlin/coroutines
  */
 class CoroutinesActivity : BasicResponseActivity() {

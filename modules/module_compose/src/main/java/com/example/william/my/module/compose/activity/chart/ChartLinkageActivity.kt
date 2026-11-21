@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
  * 2. 状态提升 (State Hoisting) 与跨组件单向数据流分发
  * 3. 中部部门柱状图与底部获客渠道饼图毫秒级响应重组
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/state-hoisting
  */
 class ChartLinkageActivity : ComponentActivity() {

@@ -36,6 +36,7 @@ import java.io.File
  * 3. 硬编码混流：MediaCodec H.264 硬编 + AudioRecord 采样 + MediaMuxer 封装 MP4
  * 4. 录像回放：内嵌卡片式浮层，MediaPlayer + TextureView 无缝重放 MP4
  *
+ * 官方参考：
  * https://github.com/cats-oss/android-gpuimage
  */
 class GpuImageCodecRecordActivity :

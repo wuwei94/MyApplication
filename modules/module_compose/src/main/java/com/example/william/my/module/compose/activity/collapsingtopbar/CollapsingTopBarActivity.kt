@@ -44,8 +44,11 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 4. 滚动状态持久化：[rememberTopAppBarState] 保持滑动偏移与吸顶状态。
  *
  * 官方文档：
+ *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/app-bars
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/components/app-bars
  */
 class CollapsingTopBarActivity : ComponentActivity() {

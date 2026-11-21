@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
  * 3. 中心区域动态显示总额与选中百分比
  * 4. 实时联动品类明细与预算分析
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 class PieChartActivity : ComponentActivity() {

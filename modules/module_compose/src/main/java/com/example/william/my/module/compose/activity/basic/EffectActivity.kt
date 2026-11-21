@@ -49,6 +49,7 @@ import kotlinx.coroutines.delay
  * 3. DisposableEffect：注册广播/传感器/连接等需清理资源，离开组合或 key 变化时触发 [DisposableEffectScope.onDispose] 释放；
  * 4. rememberUpdatedState：长生命周期副作用中引用最新 State/Lambda，避免闭包捕获导致 Stale State Capture。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/side-effects
  */
 class EffectActivity : ComponentActivity() {

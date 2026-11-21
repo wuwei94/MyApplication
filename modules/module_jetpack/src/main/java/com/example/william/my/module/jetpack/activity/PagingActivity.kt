@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
  * 3. Pager：分页器，负责将数据源配置并转化为 PagingData 流
  * 4. PagingDataAdapter：RecyclerView 适配器，配合 DiffUtil 局部增量渲染
  *
+ * 官方参考：
  * https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview
  */
 class PagingActivity : BasicRecyclerActivity() {

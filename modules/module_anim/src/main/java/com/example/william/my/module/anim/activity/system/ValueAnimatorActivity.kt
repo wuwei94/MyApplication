@@ -36,6 +36,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
  * 6. OvershootInterpolator：过冲插值器，超出目标后回弹
  * 7. AnticipateInterpolator：回拉插值器，先回拉再前进
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/views/animations/prop-animation
  */
 class ValueAnimatorActivity : BasicImageActivity() {

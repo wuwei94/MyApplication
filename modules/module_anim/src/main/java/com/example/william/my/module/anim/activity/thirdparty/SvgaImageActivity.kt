@@ -28,6 +28,8 @@ import com.opensource.svgaplayer.SVGAVideoEntity
  *    imageKey 不在 MovieEntity.images 中时替换静默失败
  *
  * 资源来源：
+ *
+ * 官方参考：
  * https://github.com/svga/SVGA-Samples/blob/master/heartbeat.svga
  *
  * 官方参考：

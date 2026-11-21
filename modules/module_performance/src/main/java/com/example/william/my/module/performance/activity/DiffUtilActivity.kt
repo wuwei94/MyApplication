@@ -19,6 +19,7 @@ import com.example.william.my.module.performance.bean.ArticleItem
  * 3. getChangePayload(oldPos, newPos)：提取变化字段的 Payload，用于极细粒度局部刷新，避免整个 ViewHolder 重新绑定
  * 4. dispatchUpdatesTo(adapter)：将增、删、改、移精准定向分发给 Adapter，触发平滑的 ItemAnimator 动画
  *
+ * 官方参考：
  * https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil
  */
 class DiffUtilActivity : BasicRecyclerActivity() {

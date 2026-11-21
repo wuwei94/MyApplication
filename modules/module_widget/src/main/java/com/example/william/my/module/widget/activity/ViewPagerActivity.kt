@@ -20,6 +20,7 @@ import com.example.william.my.module.widget.databinding.UiActivityViewPagerBindi
  * 3. 适配器模式：使用 PagerAdapter 或 FragmentPagerAdapter
  * 4. 缓存机制：支持页面缓存，提升性能
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/layout/swipe-viewpager
  */
 class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {

@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
  * 4. 防抖搜索：debounce + distinctUntilChanged + flatMapLatest 优雅处理输入检索
  * 5. 热流架构：StateFlow（状态持有，replay=1）与 SharedFlow（事件广播，无 replay）
  *
+ * 官方参考：
  * https://developer.android.google.cn/kotlin/flow
  */
 class FlowActivity : BasicResponseActivity() {

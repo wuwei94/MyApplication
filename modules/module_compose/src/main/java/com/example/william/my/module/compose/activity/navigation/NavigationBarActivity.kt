@@ -44,6 +44,7 @@ import androidx.navigation.toRoute
  * 2. 切换 Tab 自动保存状态（`saveState = true`, `restoreState = true`）
  * 3. 支持在特定 Tab 内压入二级子页面，切换其他 Tab 再切回时，二级页面状态完美保持
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/navigation
  */
 class NavigationBarActivity : ComponentActivity() {

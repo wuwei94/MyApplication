@@ -17,6 +17,7 @@ import kotlin.math.hypot
  * 4. 密封接口：sealed interface 构建类型安全层次，when 表达式编译器穷举检查
  * 5. 类型安全 DSL：带接收者的 Lambda（T.() -> Unit）+ @DslMarker 构建声明式 API
  *
+ * 官方参考：
  * https://kotlinlang.org/docs/operator-overloading.html
  * https://kotlinlang.org/docs/type-safe-builders.html
  */

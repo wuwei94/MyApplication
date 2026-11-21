@@ -26,6 +26,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  *    旋转屏幕后需重新添加；getController() 在 Surface 就绪前为 null，必须判空
  * 4. 必须 destroy：onDetachedFromWindow / destroy() 终止 DrawThread，否则线程与 Bitmap 泄漏
  *
+ * 官方参考：
  * https://github.com/xujiaji/Barrage
  */
 class BarrageActivity : BaseVBActivity<WidgetThirdpartyActivityBarrageBinding>() {

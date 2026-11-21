@@ -19,6 +19,7 @@ import com.youth.banner.indicator.CircleIndicator
  * 3. 生命周期感知：自动在 onPause 停止，onResume 恢复
  * 4. 丰富的自定义：支持自定义页面切换动画、指示器样式
  *
+ * 官方参考：
  * https://github.com/youth5201314/banner
  */
 class BannerActivity : BaseVBActivity<WidgetThirdpartyActivityBannerBinding>() {

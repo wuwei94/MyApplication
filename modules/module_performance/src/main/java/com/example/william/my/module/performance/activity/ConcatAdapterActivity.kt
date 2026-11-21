@@ -20,6 +20,7 @@ import com.example.william.my.module.performance.adapter.ConcatHeaderAdapter
  * 3. 独立增量刷新：子 Adapter 调用自身的 notifyItemChanged / notifyItemInserted 时，只在其所属的区间内精准局部刷新
  * 4. 动态插拔模块：支持在运行时使用 addAdapter(index, adapter) / removeAdapter(adapter) 动态上线或下架特定业务模块
  *
+ * 官方参考：
  * https://developer.android.com/reference/androidx/recyclerview/widget/ConcatAdapter
  */
 class ConcatAdapterActivity : BasicRecyclerActivity() {

@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.onEach
  *
  * 本页与同模块 RxJavaOperatorsActivity 分组一一对应，便于对照学习。
  *
+ * 官方参考：
  * https://developer.android.google.cn/kotlin/flow
  */
 class FlowOperatorsActivity : BasicResponseActivity() {

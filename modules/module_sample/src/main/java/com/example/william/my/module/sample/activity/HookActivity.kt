@@ -17,6 +17,7 @@ import com.example.william.my.module.sample.hook.HookHelper
  * 3. 事件拦截：在代理中插入自定义逻辑后转发原始事件
  * 4. 可还原：支持恢复原始 Listener
  *
+ * 官方参考：
  * https://developer.android.com/reference/java/lang/reflect/Proxy
  */
 class HookActivity : BasicResponseActivity() {

@@ -30,6 +30,7 @@ import androidx.constraintlayout.compose.ConstraintSet
  * 3. Chain 链式排列：createHorizontalChain 配合 ChainStyle.SpreadInside 控制多子项分布；
  * 4. 解耦 ConstraintSet：将约束从布局树拆出，可在 BoxWithConstraints 中按横竖屏/屏宽切换约束集。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/layouts/constraintlayout
  */
 class ConstraintLayoutActivity : ComponentActivity() {

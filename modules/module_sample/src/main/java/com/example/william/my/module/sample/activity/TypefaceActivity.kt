@@ -19,6 +19,7 @@ import com.example.william.my.module.sample.R
  * 3. 样式组合：支持 Bold / Italic / BoldItalic 样式叠加
  * 4. 全局字体：支持通过 fontFamily 全局替换应用字体
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/text-and-emoji/fonts-in-xml
  */
 class TypefaceActivity : BasicLayoutActivity() {

@@ -27,6 +27,7 @@ import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
  * 3. 离屏滤镜：GPUImage 离屏渲染管道对原图应用当前选中滤镜，生成全分辨率照片
  * 4. 即时预览：拍摄完成后大图全屏浮层卡片查看，支持返回键拦截关闭
  *
+ * 官方参考：
  * https://github.com/cats-oss/android-gpuimage
  */
 class GpuImagePhotoActivity :

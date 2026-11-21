@@ -49,6 +49,7 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewBi
  *    - LinearSnapHelper：支持快速滑动，像吸附效果
  *    - PagerSnapHelper：一次只能滑动一页，像翻页效果
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
 class RecyclerViewActivity : BaseVBActivity<UiActivityRecyclerViewBinding>() {

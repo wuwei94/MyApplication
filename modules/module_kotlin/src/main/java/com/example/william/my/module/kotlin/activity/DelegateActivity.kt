@@ -18,6 +18,7 @@ import kotlin.reflect.KProperty
  * 4. 属性监听与否决：Delegates.observable 监听变更并接收新旧值；Delegates.vetoable 条件拦截决定是否接受新值
  * 5. Map 映射委托：通过 val property: Type by map 将属性名作为 Key 直接从 Map 读取
  *
+ * 官方参考：
  * https://kotlinlang.org/docs/delegation.html
  */
 class DelegateActivity : BasicResponseActivity() {

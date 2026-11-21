@@ -58,6 +58,7 @@ import kotlinx.coroutines.launch
  * 2. SheetState 状态控制：通过协程调度 `sheetState.show()` 与 `sheetState.hide()`；
  * 3. skipPartiallyExpanded：可跳过半展开锚点，直接全屏或仅全收起两种状态。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/bottom-sheets
  */
 class BottomSheetActivity : ComponentActivity() {

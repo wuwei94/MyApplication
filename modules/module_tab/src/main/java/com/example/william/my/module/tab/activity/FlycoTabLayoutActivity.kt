@@ -20,6 +20,7 @@ import com.example.william.my.module.tab.utils.TabLayoutUtils
  * 3. 与 ViewPager 联动：自动与 ViewPager 同步
  * 4. 动态更新：支持动态添加、删除 Tab
  *
+ * 官方参考：
  * https://github.com/H07000223/FlycoTabLayout
  */
 class FlycoTabLayoutActivity : BaseVBActivity<TabActivityFlycoTabLayoutBinding>() {

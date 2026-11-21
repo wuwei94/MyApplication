@@ -26,6 +26,7 @@ import com.lzf.easyfloat.EasyFloat
  * 其余三种经 PermissionUtils.checkPermission()，未授权时由库内无界面 Fragment 跳转系统授权页申请。
  * 本页沿用默认的 CURRENT_ACTIVITY，演示的是免权限的应用内浮窗。
  *
+ * 官方参考：
  * https://github.com/princekin-f/EasyFloat
  */
 class EasyFloatActivity : BasicResponseActivity() {

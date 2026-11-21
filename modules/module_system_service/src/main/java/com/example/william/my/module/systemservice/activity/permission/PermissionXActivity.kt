@@ -20,6 +20,7 @@ import com.permissionx.guolindev.PermissionX
  * 3. 设置引导：onForwardToSettings 永久拒绝后引导用户跳转系统设置
  * 4. 前置解释：explainReasonBeforeRequest 在首次申请前即展示理由弹窗
  *
+ * 官方参考：
  * https://github.com/guolindev/PermissionX
  */
 class PermissionXActivity : BasicResponseActivity() {

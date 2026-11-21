@@ -20,6 +20,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
  *
  * 单属性基础见 [ObjectAnimatorActivity]。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/views/animations/prop-animation#choreography
  */
 class AnimatorSetActivity : BasicImageActivity() {

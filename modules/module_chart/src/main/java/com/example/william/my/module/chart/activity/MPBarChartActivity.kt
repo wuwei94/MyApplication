@@ -30,6 +30,7 @@ import kotlin.math.abs
  * 3. 触摸高亮：OnChartValueSelectedListener 响应选中，自定义 MarkerView 悬浮提示
  * 4. 数据联动：选中柱体后实时刷新底部达成率、差额与文字分析
  *
+ * 官方参考：
  * https://github.com/PhilJay/MPAndroidChart
  */
 class MPBarChartActivity : BaseVBActivity<ChartActivityMpBarChartBinding>() {

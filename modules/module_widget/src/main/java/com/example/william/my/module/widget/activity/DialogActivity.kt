@@ -31,6 +31,7 @@ import java.util.Calendar
  * 3. TimePickerDialog：时间选择对话框
  * 4. DialogFragment：对话框 Fragment，支持生命周期管理
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/components/dialogs
  */
 class DialogActivity : BasicResponseActivity() {

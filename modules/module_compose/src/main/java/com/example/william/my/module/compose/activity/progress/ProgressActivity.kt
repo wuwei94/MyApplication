@@ -49,6 +49,7 @@ import kotlin.math.roundToInt
  * 2. [CircularProgressIndicator]：圆形环形进度条，展示非确定性转圈与确定性环形闭合；
  * 3. 样式原语定制：轨道背景色 trackColor、圆角端点 [StrokeCap.Round]、线条粗细 strokeWidth。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/progress
  */
 class ProgressActivity : ComponentActivity() {

@@ -24,6 +24,7 @@ import com.example.william.my.module.feature.layoutmanager.MicLayoutManager
  * 3. Invert：获取子 View 新位置，通过 translation 反向偏移回旧位置
  * 4. Play：启动属性动画将 translation 平滑过渡回 0f
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
 class MicAnimationActivity : BaseVBActivity<FeatureActivityMicAnimationBinding>() {

@@ -49,6 +49,7 @@ import kotlin.math.abs
  * 3. 触摸柱体即时高亮响应
  * 4. 实时联动计算差额与达成率分析
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 class BarChartActivity : ComponentActivity() {

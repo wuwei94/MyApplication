@@ -32,6 +32,8 @@ import kotlin.math.min
  * 4. 边缘模式：TileMode.CLAMP（边缘自然过渡，推荐）/ REPEAT / MIRROR
  *
  * @see RenderScriptActivity RenderScript 模糊方案（已废弃）
+ *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/graphics/rendereffects
  */
 class RenderEffectActivity : BasicImageActivity() {

@@ -24,6 +24,7 @@ import com.example.william.my.module.ipc.service.MyAIDLService
  * - AIDL：支持并发调用，功能强大，适合复杂通信；
  * - Messenger：Handler 串行排队处理，适合轻量级异步消息通信。
  *
+ * 官方参考：
  * https://developer.android.com/guide/components/aidl
  */
 class AIDLActivity : BasicResponseActivity() {

@@ -15,6 +15,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  * 3. 多种格式：支持天、时、分、秒、毫秒的自由组合
  * 4. 动态更新：支持动态更新显示时间
  *
+ * 官方参考：
  * https://github.com/iwgang/CountdownView
  */
 class CountdownActivity : BaseVBActivity<WidgetThirdpartyActivityCountdownBinding>() {

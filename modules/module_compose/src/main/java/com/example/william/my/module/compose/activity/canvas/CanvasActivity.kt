@@ -49,6 +49,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 4. 弧线与扇区：[drawArc] 角度跨度与 [useCenter] 闭合形态；
  * 5. 几何路径：[drawPath] 二次贝塞尔曲线与折线几何体。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/graphics/draw/overview
  */
 class CanvasActivity : ComponentActivity() {

@@ -42,8 +42,11 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 3. 渐进式迁移：无需一次性全盘重写，可在既有复杂页面（如 RecyclerView item 或 Fragment 某卡片）安全落地。
  *
  * 官方文档：
+ *
+ * 官方参考：
  * https://developer.android.google.cn/jetpack/compose/migrate/interoperability-apis/views-in-compose
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
 class ComposeViewActivity : ComponentActivity() {

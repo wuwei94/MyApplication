@@ -68,6 +68,7 @@ import kotlinx.coroutines.launch
  * 4. 状态与加载反馈：禁用态（enabled = false）与异步加载态（CircularProgressIndicator 联动）；
  * 5. 形状与定制：胶囊形 (CircleShape)、方圆角等自定义 Shape。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/button
  */
 class ButtonActivity : ComponentActivity() {

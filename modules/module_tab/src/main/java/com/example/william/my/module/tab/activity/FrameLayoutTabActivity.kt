@@ -25,6 +25,7 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  * 3. 自定义样式：支持自定义 Tab 样式
  * 4. 选中状态：支持选中/未选中状态切换
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/widget/RadioGroup
  */
 class FrameLayoutTabActivity :

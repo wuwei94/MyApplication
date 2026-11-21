@@ -47,6 +47,7 @@ import kotlinx.coroutines.launch
  * 2. 程序化跳页：通过 `PagerState.animateScrollToPage()` 支持上一页、下一页及快速定点跳转；
  * 3. 分页指示器：自定义圆点指示器动态响应当前页码与总页数。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/tab-row
  * https://developer.android.google.cn/jetpack/compose/layouts/pager
  */

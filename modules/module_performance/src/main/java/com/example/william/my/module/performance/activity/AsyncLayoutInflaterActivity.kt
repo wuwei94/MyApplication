@@ -23,6 +23,7 @@ import com.example.william.my.basic.basic_shared.R as SharedR
  *    - 进入详情页或点击弹窗时，直接调用 ViewPreloadManager.getView 瞬间取出挂载，实现 0ms 秒开；
  *    - 若池为空，自动降级（Fallback）走常规同步 inflate 加载，保证高可用
  *
+ * 官方参考：
  * https://developer.android.com/reference/androidx/asynclayoutinflater/view/AsyncLayoutInflater
  */
 class AsyncLayoutInflaterActivity : BasicLayoutActivity() {

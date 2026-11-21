@@ -21,6 +21,7 @@ import com.example.william.my.module.widget.databinding.UiActivityViewFlipperBin
  * 4. startFlipping() / stopFlipping()：控制自动翻转
  * 5. showNext() / showPrevious()：手动切换到下一个/上一个 View
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/widget/ViewFlipper
  */
 class ViewFlipperActivity : BaseVBActivity<UiActivityViewFlipperBinding>() {

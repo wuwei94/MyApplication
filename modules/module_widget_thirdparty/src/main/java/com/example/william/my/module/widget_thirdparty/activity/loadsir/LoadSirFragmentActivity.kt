@@ -15,6 +15,7 @@ import com.example.william.my.module.widget_thirdparty.fragment.LoadSirFragment
  * 2. 无侵入包裹：不修改原有 Fragment 业务布局
  * 3. 状态切换：支持加载中 / 错误 / 成功等状态切换
  *
+ * 官方参考：
  * https://github.com/kingja/LoadSir
  */
 class LoadSirFragmentActivity : BaseFragmentActivity() {

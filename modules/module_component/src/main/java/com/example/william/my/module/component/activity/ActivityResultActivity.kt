@@ -27,6 +27,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * 5. TakePicture：拍照并获取原图
  * 6. TakeVideo：录像并获取视频
  *
+ * 官方参考：
  * https://developer.android.com/training/basics/intents/result
  */
 class ActivityResultActivity : BasicResponseActivity() {

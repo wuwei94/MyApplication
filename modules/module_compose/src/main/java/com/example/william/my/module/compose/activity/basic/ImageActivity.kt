@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
  * 2. 形状裁剪与边框：CircleShape 圆形头像、RoundedCornerShape 圆角与 Border 描边；
  * 3. 色彩滤镜与透明度：ColorFilter.tint 矢量着色与 Alpha 透明度调节。
  *
+ * 官方参考：
  * https://developer.android.google.cn/jetpack/compose/graphics/images/loading
  */
 class ImageActivity : ComponentActivity() {

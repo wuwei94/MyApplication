@@ -20,6 +20,7 @@ import com.example.william.my.module.arch.mvp.fragment.MvpFragment
  * 3. 易于测试：Presenter 可独立于 Android 框架测试
  * 4. 灵活性高：可根据需求调整各层职责
  *
+ * 官方参考：
  * https://developer.android.com/topic/architecture
  */
 class MvpActivity : BaseFragmentActivity() {

@@ -23,6 +23,7 @@ import com.example.william.my.module.anim.databinding.AnimActivityTransitionFirs
  * 3. Fade：内容淡入
  * 4. Shared Element：共享元素过渡（View 到 View 的连续动画）
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/views/animations/transitions
  */
 class TransitionFirstActivity :

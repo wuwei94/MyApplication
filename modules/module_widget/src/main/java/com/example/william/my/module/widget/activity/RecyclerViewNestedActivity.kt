@@ -22,6 +22,7 @@ import com.example.william.my.module.widget.databinding.UiActivityRecyclerViewNe
  * 2. 禁用内层 RecyclerView 的嵌套滚动：setNestedScrollingEnabled(false)
  * 3. 使用 NestedScrollView：作为外层容器
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  */
 class RecyclerViewNestedActivity : BaseVBActivity<UiActivityRecyclerViewNestedBinding>() {

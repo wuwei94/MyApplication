@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
  * 3. `pointerInput` 手势拖拽/点击动态吸附十字辅助虚线
  * 4. 响应式联动底部收支/利润/利润率指标卡片
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 class LineChartActivity : ComponentActivity() {

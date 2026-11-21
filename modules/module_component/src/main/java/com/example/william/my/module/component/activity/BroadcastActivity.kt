@@ -30,6 +30,7 @@ import java.lang.ref.WeakReference
  * - 使用 WeakReference 防止内存泄漏
  * - 避免在广播中执行耗时操作
  *
+ * 官方参考：
  * https://developer.android.com/guide/components/broadcasts
  */
 class BroadcastActivity : BasicResponseActivity() {

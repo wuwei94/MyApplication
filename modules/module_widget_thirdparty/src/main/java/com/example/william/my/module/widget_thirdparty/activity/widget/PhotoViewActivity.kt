@@ -16,6 +16,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  * 3. 边界检测：缩放后自动检测边界，防止超出范围
  * 4. 兼容性好：可作为普通 ImageView 使用
  *
+ * 官方参考：
  * https://github.com/chrisbanes/PhotoView
  */
 class PhotoViewActivity : BaseVBActivity<WidgetThirdpartyActivityPhotoViewBinding>() {

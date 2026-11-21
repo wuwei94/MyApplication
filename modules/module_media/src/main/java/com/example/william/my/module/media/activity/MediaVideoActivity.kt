@@ -32,6 +32,7 @@ import java.io.File
  * 3. 视频回放：内置 MediaPlayer 回放录制结果
  * 4. 权限处理：运行时申请 CAMERA 权限
  *
+ * 官方参考：
  * https://developer.android.com/media/camera/camerax/get-started
  */
 class MediaVideoActivity :

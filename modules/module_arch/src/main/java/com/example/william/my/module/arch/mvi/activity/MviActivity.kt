@@ -20,6 +20,7 @@ import com.example.william.my.module.arch.mvi.fragment.MviFragment
  * 3. 响应式编程：基于 Kotlin StateFlow 与 Channel
  * 4. 易于调试：状态变化可追踪，便于调试
  *
+ * 官方参考：
  * https://developer.android.com/topic/architecture
  */
 class MviActivity : BaseFragmentActivity() {

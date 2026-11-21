@@ -20,6 +20,7 @@ import com.example.william.my.module.anim.databinding.AnimActivityTransitionSeco
  *
  * 入口页与四种过渡方式见 [TransitionFirstActivity]。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/views/animations/transitions
  */
 class TransitionSecondActivity : BaseVBActivity<AnimActivityTransitionSecondBinding>() {

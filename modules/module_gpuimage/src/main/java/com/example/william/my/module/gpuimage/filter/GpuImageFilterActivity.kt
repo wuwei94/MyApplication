@@ -28,6 +28,7 @@ import kotlinx.coroutines.withContext
  * 3. 保存结果：capture() 后台线程取回当前帧 Bitmap，存入系统相册
  * 4. 16 种内置滤镜：复用 GpuImageFilterCatalog.FILTERS，含直通滤镜（原图）
  *
+ * 官方参考：
  * https://github.com/cats-oss/android-gpuimage
  */
 class GpuImageFilterActivity :

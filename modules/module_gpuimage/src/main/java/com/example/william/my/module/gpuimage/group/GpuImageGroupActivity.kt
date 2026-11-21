@@ -40,6 +40,7 @@ import kotlinx.coroutines.withContext
  * 3. 两级选择：基础滤镜（模糊/素描等）+ 叠加滤镜（反色/晕影等）
  * 4. 动态重建：切换任一层后重新组装 FilterGroup 并应用到 GPUImageView
  *
+ * 官方参考：
  * https://github.com/cats-oss/android-gpuimage
  */
 class GpuImageGroupActivity : BaseVBActivity<GpuimageActivityGroupBinding>() {

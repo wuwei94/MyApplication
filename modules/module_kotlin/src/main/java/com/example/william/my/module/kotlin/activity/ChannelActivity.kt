@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
  * 3. callbackFlow：传统回调监听器转 Flow 的标准桥梁，配合 awaitClose 安全释放资源
  * 4. channelFlow：支持在流构建器内部并发启动多个子协程进行 send 发射
  *
+ * 官方参考：
  * https://kotlinlang.org/docs/channels.html
  */
 @OptIn(ExperimentalCoroutinesApi::class)

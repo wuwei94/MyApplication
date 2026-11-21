@@ -51,6 +51,7 @@ import kotlin.math.roundToInt
 /**
  * 侧滑操作项状态锚点定义
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/touch-input/pointer-input/drag-swipe-fling
  */
 private enum class DragValue {

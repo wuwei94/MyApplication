@@ -25,6 +25,7 @@ import com.example.william.my.module.tab.databinding.TabActivityTabHostBinding
  * 2. Fragment 内容：addTab(tabSpec, Fragment::class.java, null) 绑定 Fragment
  * 3. 自定义 Tab 视图：通过 inflate 自定义 indicator 布局实现图标+文字样式
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/widget/TabHost
  */
 class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {

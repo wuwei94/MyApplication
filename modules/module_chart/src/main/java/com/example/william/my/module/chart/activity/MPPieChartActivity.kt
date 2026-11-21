@@ -28,6 +28,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  * 3. 百分比格式化：setUsePercentValues + PercentFormatter 按占比显示数值
  * 4. 数据联动：OnChartValueSelectedListener 响应扇区选中，刷新底部品类明细
  *
+ * 官方参考：
  * https://github.com/PhilJay/MPAndroidChart
  */
 class MPPieChartActivity : BaseVBActivity<ChartActivityMpPieChartBinding>() {

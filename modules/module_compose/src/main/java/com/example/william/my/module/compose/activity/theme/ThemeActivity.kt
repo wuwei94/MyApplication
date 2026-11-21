@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
  * 3. Typography 字体排版阶梯：从 Display、Headline、Title、Body 到 Label 的规范展示；
  * 4. 语义化色彩容器：展示 primary、secondary、tertiary 与 surfaceVariant 容器层级映射。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/designsystems/material3
  */
 class ThemeActivity : ComponentActivity() {

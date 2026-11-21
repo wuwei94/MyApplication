@@ -24,6 +24,7 @@ import com.example.william.my.module.widget.databinding.UiActivityViewPager2Bind
  * 注意事项：
  * - ViewPager2 内的 view 布局必须是 match_parent，否则会报错
  *
+ * 官方参考：
  * https://developer.android.google.cn/jetpack/androidx/releases/viewpager2
  */
 class ViewPager2Activity : BaseVBActivity<UiActivityViewPager2Binding>() {

@@ -20,6 +20,7 @@ import com.zaaach.citypicker.model.LocatedCity
  * 3. 定位功能：支持 GPS 定位当前城市
  * 4. 热门城市：支持自定义热门城市列表
  *
+ * 官方参考：
  * https://github.com/zaaach/CityPicker
  */
 class CityPickerActivity : BasicResponseActivity() {

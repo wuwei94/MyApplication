@@ -20,6 +20,7 @@ import com.example.william.my.module.tab.utils.FragmentUtils
  * 3. 图标支持：支持图标和文字组合
  * 4. 选中状态：支持选中/未选中状态切换
  *
+ * 官方参考：
  * https://material.io/components/bottom-navigation/android
  */
 class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBinding>() {

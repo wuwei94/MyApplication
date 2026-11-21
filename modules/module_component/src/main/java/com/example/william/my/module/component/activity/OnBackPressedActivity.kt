@@ -19,6 +19,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * - 点击「拦截返回键」：注册回调，按返回键时显示 Toast 并关闭页面
  * - 点击「取消拦截」：移除回调，按返回键正常返回
  *
+ * 官方参考：
  * https://developer.android.com/guide/navigation/navigation-custom-back
  */
 class OnBackPressedActivity : BasicResponseActivity() {

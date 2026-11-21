@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
  * 3. [repeatOnLifecycle]：协程安全数据流收集，当页面处于非活跃状态（如后台 STOPPED）时自动取消收集并挂起协程，进入活跃状态时自动重启
  * 4. [flowWithLifecycle]：Flow 级别的单流生命周期过滤操作符
  *
+ * 官方参考：
  * https://developer.android.google.cn/topic/libraries/architecture/lifecycle
  */
 class LifecycleActivity : BasicResponseActivity() {

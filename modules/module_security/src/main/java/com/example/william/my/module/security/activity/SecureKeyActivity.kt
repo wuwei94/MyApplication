@@ -16,6 +16,7 @@ import com.example.william.my.module.security.utils.SecureKeyDemoUtils
  * 3. 安全签名：支持 ECDSA、RSA 等签名算法
  * 4. 防重放：支持 challenge-response 机制，防止重放攻击
  *
+ * 官方参考：
  * https://developer.android.com/training/articles/keystore
  */
 class SecureKeyActivity : BasicResponseActivity() {

@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.dp
  * 3. 键盘与动作联动：KeyboardOptions 配置键盘类型与 IME 动作，KeyboardActions 监听回车事件；
  * 4. 视觉转换 VisualTransformation：密码掩码显隐切换、手机号 3-4-4 动态分段格式化。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/text/user-input
  */
 class TextFieldActivity : ComponentActivity() {

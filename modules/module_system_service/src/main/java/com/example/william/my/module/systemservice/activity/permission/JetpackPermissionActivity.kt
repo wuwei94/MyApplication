@@ -21,6 +21,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * 3. 永久拒绝检测：shouldShowRequestPermissionRationale 判断用户是否勾选「不再提示」
  * 4. 版本适配：按 Build.VERSION 动态选择 READ_MEDIA_* 或 READ_EXTERNAL_STORAGE
  *
+ * 官方参考：
  * https://developer.android.com/training/permissions/requesting
  */
 class JetpackPermissionActivity : BasicResponseActivity() {

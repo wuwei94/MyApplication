@@ -34,6 +34,8 @@ import kotlin.math.min
  * - 需要 Bitmap 输出：使用 HardwareRenderer 离屏渲染
  *
  * @see RenderEffectActivity RenderEffect 替代方案
+ *
+ * 官方参考：
  * https://developer.android.com/guide/topics/renderscript/migrate
  */
 class RenderScriptActivity : BasicImageActivity() {

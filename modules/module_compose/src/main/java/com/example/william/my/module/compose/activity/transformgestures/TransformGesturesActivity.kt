@@ -55,6 +55,7 @@ import kotlin.math.roundToInt
  * 3. 约束限制与归一化：为缩放系数（0.5f ~ 5.0f）施加安全边界约束；
  * 4. 实时参数仪表盘：显示缩放比率、旋转弧度与二维平移坐标；支持一键复位。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/touch-input/pointer-input/understand-gestures#multitouch-gestures
  */
 class TransformGesturesActivity : ComponentActivity() {

@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * 3. select 多路复用：竞速模式，监听多个 Deferred 谁先就绪优先响应
  * 4. NonCancellable 上下文：协程取消后保证关键清理/上报逻辑完整执行
  *
+ * 官方参考：
  * https://kotlinlang.org/docs/shared-mutable-state-and-concurrency.html
  */
 class ConcurrencyActivity : BasicResponseActivity() {

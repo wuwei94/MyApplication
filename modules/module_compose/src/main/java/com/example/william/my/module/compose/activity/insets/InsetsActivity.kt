@@ -65,6 +65,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 3. 软键盘避让：[WindowInsets.Companion.ime] 与 [Modifier.imePadding] 监听键盘高度并平滑上推底部控件；
  * 4. 键盘嵌套滚动：[Modifier.imeNestedScroll] 列表滑动连带关闭/驱动软键盘体验。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/layouts/insets
  */
 class InsetsActivity : ComponentActivity() {

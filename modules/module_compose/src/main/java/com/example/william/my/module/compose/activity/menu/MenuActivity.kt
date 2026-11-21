@@ -62,6 +62,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 2. [ExposedDropdownMenuBox]：Material 3 官方推荐表单下拉菜单（取代传统 Android Spinner 控件），
  *    支持只读输入框触发、展开箭头旋转动画及选项高亮状态。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/menus
  */
 class MenuActivity : ComponentActivity() {

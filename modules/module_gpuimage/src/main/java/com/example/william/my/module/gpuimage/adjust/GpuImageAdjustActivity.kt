@@ -37,6 +37,7 @@ import kotlinx.coroutines.withContext
  * 3. 即时生效：GPUImageView 默认逐帧渲染，参数在下一帧即生效
  * 4. 显式重绘：requestRender() 保证 WHEN_DIRTY 渲染模式下也能立即刷新
  *
+ * 官方参考：
  * https://github.com/cats-oss/android-gpuimage
  */
 class GpuImageAdjustActivity :

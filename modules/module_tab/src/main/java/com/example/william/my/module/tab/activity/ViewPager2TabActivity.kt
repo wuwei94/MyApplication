@@ -26,6 +26,7 @@ import com.example.william.my.module.tab.databinding.TabActivityViewPager2TabBin
  * 3. 禁用滑动：支持禁用用户手动滑动
  * 4. 页面同步：支持页面变化同步到 Tab
  *
+ * 官方参考：
  * https://developer.android.com/reference/androidx/viewpager2/widget/ViewPager2
  */
 class ViewPager2TabActivity :

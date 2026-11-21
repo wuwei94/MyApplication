@@ -33,6 +33,7 @@ import java.lang.ref.WeakReference
  * - setRequiresDeviceIdle()：设备空闲要求
  * - setRequiresCharging()：充电状态要求
  *
+ * 官方参考：
  * https://developer.android.google.cn/reference/android/app/job/JobScheduler
  */
 class JobSchedulerActivity : BasicResponseActivity() {

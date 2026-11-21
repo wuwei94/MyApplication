@@ -40,6 +40,7 @@ import kotlinx.coroutines.withContext
  * 3. Prism4j + Markwon：代码块语法着色与原生 Spannable 增量渲染
  * 4. Channel.CONFLATED 顺序流控：保证单调递增渲染与丝滑吸底
  *
+ * 官方参考：
  * https://github.com/noties/Markwon
  */
 class StreamTypewriterActivity : BasicLayoutActivity() {

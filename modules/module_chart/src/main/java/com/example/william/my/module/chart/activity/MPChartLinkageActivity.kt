@@ -33,6 +33,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  * 2. 子图柱状图：中部部门成本柱状图响应所选月份，动态重建 BarData 并播放动画
  * 3. 子图饼图：底部渠道获客饼图响应所选月份，按因子重算占比后重绘
  *
+ * 官方参考：
  * https://github.com/PhilJay/MPAndroidChart
  */
 class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding>() {

@@ -28,6 +28,7 @@ import com.example.william.my.module.systemservice.R
  * 4. 拖拽与吸附：通过 FloatTouchHelper 实现拖拽与边缘自动吸附
  * 5. 授权流程：叠加层无 ActivityResult 契约可用，只能跳转系统授权页由用户手动开启，授权后再次点击本项即可展示
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/view/WindowManager
  */
 class NativeFloatWindowActivity : BasicResponseActivity() {

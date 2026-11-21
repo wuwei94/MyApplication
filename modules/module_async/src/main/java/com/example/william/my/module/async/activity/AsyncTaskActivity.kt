@@ -19,6 +19,7 @@ import java.lang.ref.WeakReference
  *
  * 协程现代替代方案见 [CoroutinesActivity]。
  *
+ * 官方参考：
  * https://developer.android.google.cn/reference/android/os/AsyncTask
  */
 class AsyncTaskActivity : BasicResponseActivity() {

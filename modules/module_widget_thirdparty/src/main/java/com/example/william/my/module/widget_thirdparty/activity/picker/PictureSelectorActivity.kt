@@ -25,6 +25,7 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener
  * 3. 预览功能：支持图片、视频的预览和删除
  * 4. 多种来源：支持相册、拍照、录像等多种来源
  *
+ * 官方参考：
  * https://github.com/LuckSiege/PictureSelector
  */
 class PictureSelectorActivity : BaseVBActivity<WidgetThirdpartyActivityPictureSelectorBinding>() {

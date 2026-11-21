@@ -25,6 +25,7 @@ import com.example.william.my.module.media.utils.ImageCaptureHelper
  * 3. 照片预览：拍照后展示预览，支持关闭返回
  * 4. 权限处理：运行时申请 CAMERA 权限
  *
+ * 官方参考：
  * https://developer.android.com/media/camera/camerax/get-started
  */
 class MediaPhotoActivity :

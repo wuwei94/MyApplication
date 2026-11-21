@@ -24,6 +24,7 @@ import com.example.william.my.module.widget_custom.dialog.MyBottomSheetDialog
  * 3. 动画效果：支持弹出、关闭动画
  * 4. 灵活配置：支持取消、点击外部关闭等配置
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/components/dialogs
  */
 class AlertDialogActivity : BasicResponseActivity() {

@@ -20,6 +20,8 @@ import com.example.william.my.module.widget_custom.databinding.WidgetActivityBlu
  *
  * @see RenderScriptActivity RenderScript 模糊方案（已废弃，API 31 起废弃）
  * @see RenderEffectActivity RenderEffect 模糊方案（推荐，API 31+）
+ *
+ * 官方参考：
  * https://developer.android.com/media/platform/rendereffect
  */
 class BlurViewActivity : BaseVBActivity<WidgetActivityBlurViewBinding>() {

@@ -28,6 +28,7 @@ import javax.inject.Inject
  * 3. 联动选择：支持三级联动选择（如省市区）
  * 4. 农历支持：时间选择器支持农历显示
  *
+ * 官方参考：
  * https://github.com/Bigkoo/Android-PickerView
  */
 @AndroidEntryPoint

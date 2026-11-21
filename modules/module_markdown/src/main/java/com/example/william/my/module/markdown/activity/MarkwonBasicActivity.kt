@@ -35,6 +35,7 @@ import io.noties.markwon.image.glide.GlideImagesPlugin
  * 7. 主题与样式定制 (MarkwonTheme)：引用条颜色/宽度、列表圆点尺寸、代码块背景与文字颜色等
  * 8. 交互拦截：自定义链接点击拦截与自定义事件响应
  *
+ * 官方参考：
  * https://github.com/noties/Markwon
  */
 class MarkwonBasicActivity : BasicLayoutActivity() {

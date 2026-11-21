@@ -44,6 +44,7 @@ import java.util.UUID
  * 4. Prism4j 多语言代码语法着色 + Markdown 富文本排版；
  * 5. 全生命周期管理：支持「发送」与「停止生成」即时切换、消息一键全文复制
  *
+ * 官方参考：
  * https://github.com/noties/Markwon
  */
 class AiChatActivity : BaseVBActivity<MarkdownActivityChatBinding>() {

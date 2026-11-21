@@ -42,6 +42,7 @@ import javax.inject.Inject
  *    「targetSdk M+ 且声明了 CAMERA 却未授权时，调用该 action 会抛 SecurityException」，
  *    拍照路径必须先做运行时申请，否则异常会被 catch 吞成「启动相机失败」的静默失败
  *
+ * 官方参考：
  * https://developer.android.com/training/camera/photobasics
  */
 @AndroidEntryPoint

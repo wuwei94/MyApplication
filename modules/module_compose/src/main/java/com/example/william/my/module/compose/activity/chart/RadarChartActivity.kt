@@ -52,6 +52,7 @@ import kotlin.math.sin
  * 3. 顶点触控即时切换维度高亮
  * 4. 实时联动能力等级判定与差距分析
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/graphics/draw/overview
  */
 class RadarChartActivity : ComponentActivity() {

@@ -36,6 +36,7 @@ import kotlin.system.measureTimeMillis
  *
  * ```
  *
+ * 官方参考：
  * https://github.com/noties/Prism4j
  */
 class MarkwonHighlightActivity : BasicLayoutActivity() {

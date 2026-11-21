@@ -18,6 +18,7 @@ import java.util.concurrent.Executors
  * 3. 流畅度提升：显著降低首次进入复杂页面、滚动列表时的丢帧率（Jank Rate）
  * 4. ProfileInstaller：无缝集成在 APK 内，由 Play Store 分发 Cloud Profile，或通过 profileinstaller 库在本地触发 baseline profile 安装
  *
+ * 官方参考：
  * https://developer.android.com/topic/performance/baselineprofiles
  */
 class BaselineProfilesActivity : BasicResponseActivity() {

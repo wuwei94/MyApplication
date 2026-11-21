@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.ImeAction
  * 3. 读写形态对比：`val` 读值、`by` 委托读写、解构 `(value, setValue)` 三种用法；
  * 4. derivedStateOf：由高频状态派生低频状态，减少不必要重组。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/state-saving
  */
 class RememberActivity : ComponentActivity() {

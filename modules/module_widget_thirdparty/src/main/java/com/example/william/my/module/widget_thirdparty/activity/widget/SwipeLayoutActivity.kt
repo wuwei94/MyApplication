@@ -16,6 +16,7 @@ import com.example.william.my.module.widget_thirdparty.databinding.WidgetThirdpa
  * 3. 与 RecyclerView 集成：完美支持列表滑动操作
  * 4. 动画流畅：平滑的滑动动画效果
  *
+ * 官方参考：
  * https://github.com/daimajia/AndroidSwipeLayout
  */
 class SwipeLayoutActivity : BaseVBActivity<WidgetThirdpartyActivitySwipeLayoutBinding>() {

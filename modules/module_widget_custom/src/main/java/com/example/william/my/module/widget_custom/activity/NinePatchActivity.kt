@@ -20,6 +20,7 @@ import com.example.william.my.module.widget_custom.R
  * 3. 资源优化：减少图片资源数量，适配不同屏幕
  * 4. 系统原生支持：性能开销低，无需额外依赖
  *
+ * 官方参考：
  * https://developer.android.com/guide/topics/graphics/drawables#nine-patch
  */
 class NinePatchActivity : BasicLayoutActivity() {

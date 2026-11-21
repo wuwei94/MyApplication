@@ -18,6 +18,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * 3. 持续监听（返回 true）：执行完毕后仍保留在队列中，每次空闲都会再次触发，常用于分片任务调度与内存清理
  * 4. 显式注销（removeIdleHandler）：在组件销毁时主动移除持续监听的 IdleHandler，避免内存泄漏
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/os/MessageQueue.IdleHandler
  */
 class IdleHandlerActivity : BasicResponseActivity() {

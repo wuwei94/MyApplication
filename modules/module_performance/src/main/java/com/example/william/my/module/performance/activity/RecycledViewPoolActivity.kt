@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  * 3. setMaxRecycledViews(viewType, maxCount)：针对高频 Item 类型调大缓存容量（默认 5，本例调至 15）
  * 4. 生命周期管理：列表退出或数据源销毁时适时调用 RecycledViewPoolManager.clear() 清空池内引用
  *
+ * 官方参考：
  * https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.RecycledViewPool
  */
 class RecycledViewPoolActivity : BasicRecyclerActivity() {

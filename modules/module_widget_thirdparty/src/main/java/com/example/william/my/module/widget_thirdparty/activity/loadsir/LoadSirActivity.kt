@@ -20,6 +20,7 @@ import com.kingja.loadsir.core.LoadSir
  * 3. 重试机制：支持重试点击事件，方便错误恢复
  * 4. 状态转换器：支持自定义状态转换逻辑
  *
+ * 官方参考：
  * https://github.com/kingja/LoadSir
  */
 class LoadSirActivity : BasicLayoutActivity() {

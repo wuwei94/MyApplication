@@ -18,6 +18,7 @@ import com.example.william.my.basic.basic_shared.databinding.SharedLayoutRespons
  * 3. 焦点控制：可设置是否获取焦点、是否可点击外部关闭
  * 4. 动画支持：可自定义显示/隐藏动画
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/widget/PopupWindow
  */
 class PopWindowActivity : BasicResponseActivity() {

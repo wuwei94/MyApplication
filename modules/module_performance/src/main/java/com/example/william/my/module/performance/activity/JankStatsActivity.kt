@@ -25,6 +25,7 @@ import java.util.Locale
  * 3. trace / Trace.beginAsyncSection：写入自定义 trace section，让 System Trace / Perfetto 中
  *    除了系统帧数据外还能看到业务自身的耗时区间
  *
+ * 官方参考：
  * https://developer.android.com/jetpack/androidx/releases/metrics
  */
 class JankStatsActivity : BasicResponseActivity() {

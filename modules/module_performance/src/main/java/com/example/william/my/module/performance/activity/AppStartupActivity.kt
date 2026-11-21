@@ -21,6 +21,7 @@ import com.example.william.my.module.performance.startup.SecuritySdkInitializer
  * 2. 统一拓扑排序：通过 Initializer.dependencies() 自动解析有向无环图（DAG），确保依赖组件严格按序初始化
  * 3. 按需延迟初始化：支持通过 AppInitializer.getInstance(context).initializeComponent(...) 手动延迟触发，实现非核心组件懒加载
  *
+ * 官方参考：
  * https://developer.android.com/topic/libraries/app-startup
  */
 class AppStartupActivity : BasicResponseActivity() {

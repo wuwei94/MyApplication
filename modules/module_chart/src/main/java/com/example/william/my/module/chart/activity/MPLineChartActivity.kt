@@ -29,6 +29,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
  * 3. 面积填充：setDrawFilled + fillAlpha 渐变填充曲线与坐标轴之间区域
  * 4. 触摸联动：自定义 MarkerView 悬浮气泡 + OnChartValueSelectedListener 刷新底部指标
  *
+ * 官方参考：
  * https://github.com/PhilJay/MPAndroidChart
  */
 class MPLineChartActivity : BaseVBActivity<ChartActivityMpLineChartBinding>() {

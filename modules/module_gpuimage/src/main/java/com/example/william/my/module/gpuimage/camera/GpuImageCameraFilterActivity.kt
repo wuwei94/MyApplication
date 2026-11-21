@@ -31,6 +31,7 @@ import com.example.william.my.module.gpuimage.helper.GpuImageFilterCatalog
  * 局限：每帧的 YUV→RGBA 为 CPU 侧转换，分辨率上限控制在 720p；若需生产级实时滤镜
  * （1080p+ / 60fps），应改用相机 OES 纹理直通方案，而非该库的取帧回调路径。
  *
+ * 官方参考：
  * https://github.com/cats-oss/android-gpuimage
  */
 class GpuImageCameraFilterActivity : BaseVBActivity<GpuimageActivityCameraFilterBinding>() {

@@ -25,6 +25,7 @@ import com.example.william.my.module.component.service.MyForegroundService
  * 2. 生命周期管理：系统自动管理，但需注意资源释放
  * 3. 前台服务：Android 8.0+ 需要使用前台服务
  *
+ * 官方参考：
  * https://developer.android.com/guide/components/services
  */
 class ServiceActivity : BasicResponseActivity() {

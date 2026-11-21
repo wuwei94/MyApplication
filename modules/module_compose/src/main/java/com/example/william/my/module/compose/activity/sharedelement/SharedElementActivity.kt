@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.dp
  * 3. Modifier.sharedBounds：卡片容器背景与文本标题在不同层级边界间的平滑形变扩展；
  * 4. 转场连续性：消除传统 Fragment/Activity 页面跳转时的割裂感，保证视觉焦点不中断。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/animation/shared-elements
  */
 class SharedElementActivity : ComponentActivity() {

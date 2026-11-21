@@ -56,6 +56,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 3. 建议芯片 [SuggestionChip]：快速联想推荐与搜索引导；
  * 4. 辅助芯片 [AssistChip]：上下文辅助操作触发项（如“添加到日历”、“一键分享”及 [ElevatedAssistChip]）。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/chip
  */
 class ChipActivity : ComponentActivity() {

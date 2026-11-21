@@ -49,8 +49,10 @@ import kotlin.math.roundToInt
  * - `factory`：只在首次挂载时执行一次，用于实例化原生 View 并完成初始化配置；
  * - `update`：在关联的 Compose State 发生变化引起重组时被反复调用，执行属性更新。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/migrate/interoperability-apis/views-in-compose
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views
  */
 class AndroidViewActivity : ComponentActivity() {

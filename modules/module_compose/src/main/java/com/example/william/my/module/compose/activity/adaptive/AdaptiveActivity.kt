@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
  * 2. List-Detail 模式落地：手机端点击条目覆盖进入详情并支持物理返回键；平板/折叠屏端左右分栏同屏响应，左侧列表常驻、右侧毫秒级切换详情；
  * 3. 内置模拟切换：无需实体平板或旋转屏幕，页面内可手动模拟 Compact、Medium 与 Expanded 视口。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/layouts/adaptive
  */
 class AdaptiveActivity : ComponentActivity() {

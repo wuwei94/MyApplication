@@ -60,6 +60,7 @@ import kotlinx.coroutines.launch
  * 2. 列策略动态切换：支持 2 列、3 列与自适应列宽 (StaggeredGridCells.Adaptive) 实时平滑切换；
  * 3. 状态感知与回到顶部：利用 `rememberLazyStaggeredGridState()` 与 `derivedStateOf` 感知滚动偏移量，控制悬浮返回顶部按钮的显示与平滑滚动。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/lists#staggered-grid
  */
 class StaggeredGridActivity : ComponentActivity() {

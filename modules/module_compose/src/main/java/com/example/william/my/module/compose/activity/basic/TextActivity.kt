@@ -49,6 +49,7 @@ import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
  * 4. 文本溢出与截断控制：[TextOverflow.Ellipsis]、[TextOverflow.Clip] 与行数限制；
  * 5. Material 3 标准排版系统：展示 Typography 各级别文字阶梯。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/text/style-text
  */
 class TextActivity : ComponentActivity() {

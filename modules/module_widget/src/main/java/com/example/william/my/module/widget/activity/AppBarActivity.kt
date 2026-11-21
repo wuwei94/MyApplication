@@ -36,6 +36,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
  * 1. MODE_FIXED：固定均分，所有 Tab 等宽排列，适合少量固定 Tab（3-5 个）
  * 2. MODE_SCROLLABLE：可滚动，Tab 按内容宽度排列，数量多时可左右滑动
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/components/app-bar
  */
 class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {

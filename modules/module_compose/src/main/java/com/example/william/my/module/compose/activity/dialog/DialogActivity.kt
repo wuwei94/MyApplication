@@ -58,6 +58,7 @@ import kotlinx.coroutines.launch
  * 2. 自定义 Dialog：基于 `Dialog` 容器与 `DialogProperties` 自定义复杂卡片交互；
  * 3. Snackbar 浮动提示：集成 `SnackbarHost` 与协程生命周期，支持带操作行动点（Action）的自动消隐提示。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/components/dialog
  * https://developer.android.google.cn/develop/ui/compose/components/snackbar
  */

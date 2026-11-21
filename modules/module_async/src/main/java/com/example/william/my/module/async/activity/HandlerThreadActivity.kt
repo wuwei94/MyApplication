@@ -21,6 +21,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
  * - 普通 Thread：每次任务需创建新线程，无法重复使用
  * - HandlerThread：自带 Looper，可重复发送消息，线程复用
  *
+ * 官方参考：
  * https://developer.android.com/reference/android/os/HandlerThread
  */
 class HandlerThreadActivity : BasicResponseActivity() {

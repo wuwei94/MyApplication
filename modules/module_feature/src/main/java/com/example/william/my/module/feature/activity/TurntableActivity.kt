@@ -20,6 +20,7 @@ import kotlin.random.Random
  * 3. 随机抽奖：支持随机抽奖功能
  * 4. 动画控制：防止重复触发，支持重置
  *
+ * 官方参考：
  * https://developer.android.com/develop/ui/views/animations/prop-animation
  */
 class TurntableActivity : BasicImageActivity() {

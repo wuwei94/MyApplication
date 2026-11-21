@@ -69,6 +69,7 @@ import java.util.Locale
  * 4. 下拉刷新协同：使用 SmartRefresh Compose（[SmartSwipeRefresh]）配合经典样式，完成时序与传统 XML 架构页面（MviActivity）保持完全一致
  * 5. 视觉规范统一：继承 [BaseActivity] 保证沉浸式状态栏与屏幕适配，列表项高度 48dp 且文本居中，与传统 View 架构示例保持视觉完全一致
  *
+ * 官方参考：
  * https://developer.android.google.cn/topic/architecture/ui-layer
  */
 class ComposeMviActivity : BaseActivity() {

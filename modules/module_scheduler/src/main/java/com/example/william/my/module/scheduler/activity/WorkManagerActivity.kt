@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit
  * - JobScheduler：系统级定时 JobService；
  * - HandlerThread / 协程：应用内生命周期相关的轻量异步并发。
  *
+ * 官方参考：
  * https://developer.android.google.cn/topic/libraries/architecture/workmanager
  */
 class WorkManagerActivity : BasicResponseActivity() {

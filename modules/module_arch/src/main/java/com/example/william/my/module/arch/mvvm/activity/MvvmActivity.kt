@@ -20,6 +20,7 @@ import com.example.william.my.module.arch.mvvm.fragment.MvvmFragment
  * 3. 关注点分离：各层职责清晰，便于测试和维护
  * 4. 官方支持：Android Jetpack 提供完整支持
  *
+ * 官方参考：
  * https://developer.android.com/topic/libraries/architecture
  */
 class MvvmActivity : BaseFragmentActivity() {

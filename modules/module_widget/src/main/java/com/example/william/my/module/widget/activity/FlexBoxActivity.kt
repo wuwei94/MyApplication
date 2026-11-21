@@ -43,6 +43,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
  *    - FLEX_END：结束对齐
  *    - STRETCH：拉伸对齐
  *
+ * 官方参考：
  * https://github.com/google/flexbox-layout
  */
 class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {

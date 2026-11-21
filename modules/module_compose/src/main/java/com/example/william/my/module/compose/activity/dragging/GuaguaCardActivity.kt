@@ -42,6 +42,7 @@ import com.example.william.my.basic.basic_shared.R
  * 2. 图层擦除绘制：自定义 [ScrapeLayer] 在 ContentDrawScope 中 saveLayer 后以 Clear 混合模式擦除；
  * 3. 笔触形态：Stroke 描边宽度、Round 端点与圆角连接控制擦除笔迹形状。
  *
+ * 官方参考：
  * https://juejin.cn/post/7303075105390133259
  */
 class GuaguaCardActivity : ComponentActivity() {

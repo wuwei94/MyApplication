@@ -17,6 +17,7 @@ import com.example.william.my.basic.basic_shared.activity.BasicImageActivity
  * 3. 时长可控：`duration` 以毫秒为单位，可与插值器组合
  * 4. 属性覆盖面广：alpha / rotation / scaleX / scaleY / translationX / translationY 等
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/views/animations/prop-animation
  */
 class ObjectAnimatorActivity : BasicImageActivity() {

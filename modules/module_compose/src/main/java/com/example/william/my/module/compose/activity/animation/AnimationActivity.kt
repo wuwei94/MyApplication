@@ -72,6 +72,7 @@ import androidx.compose.ui.unit.dp
  * 4. 值动画 animate*AsState：颜色与尺寸根据布尔状态平滑过渡插值；
  * 5. 无限循环动效 rememberInfiniteTransition：呼吸灯与 360° 无限旋转 Loading 指示器。
  *
+ * 官方参考：
  * https://developer.android.google.cn/develop/ui/compose/animation
  */
 class AnimationActivity : ComponentActivity() {
