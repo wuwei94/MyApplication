@@ -48,13 +48,16 @@ class BroadcastActivity : BasicResponseActivity() {
         sendBroadcast()
     }
 
+    /**
+     * 发送限定本包名的显式应用内广播（Android 8.0+ 需指定包名或显式组件）。
+     */
     private fun sendBroadcast() {
         val intent = Intent(MessageReceiver.ACTION_UPDATE).apply {
             setPackage(packageName)
             putExtra("message", MessageReceiver.ACTION_UPDATE)
         }
         sendBroadcast(intent)
-        appendLog("发送广播：${MessageReceiver.ACTION_UPDATE}")
+        appendLog("→ 发送广播：${MessageReceiver.ACTION_UPDATE}")
     }
 
     override fun onStart() {
@@ -62,6 +65,9 @@ class BroadcastActivity : BasicResponseActivity() {
         registerReceiver()
     }
 
+    /**
+     * 动态注册广播接收器，Android 13+ 使用 `RECEIVER_NOT_EXPORTED` 限制仅接收应用内广播。
+     */
     private fun registerReceiver() {
         messageReceiver = MessageReceiver(this)
 
@@ -78,6 +84,9 @@ class BroadcastActivity : BasicResponseActivity() {
         unregisterReceiver()
     }
 
+    /**
+     * 注销动态广播接收器，防止宿主销毁后泄漏。
+     */
     private fun unregisterReceiver() {
         messageReceiver?.let {
             unregisterReceiver(it)
@@ -94,7 +103,7 @@ class BroadcastActivity : BasicResponseActivity() {
 
         override fun onReceive(context: Context, intent: Intent) {
             weakReference.get()?.let {
-                it.appendLog("收到广播：${intent.getStringExtra("message")}")
+                it.appendLog("✓ 收到广播：${intent.getStringExtra("message")}")
             }
         }
 

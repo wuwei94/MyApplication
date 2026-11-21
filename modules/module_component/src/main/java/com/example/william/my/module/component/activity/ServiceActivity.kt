@@ -57,6 +57,9 @@ class ServiceActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 `startService()` 启动后台服务（生命周期独立于调用方，需显式停止）。
+     */
     private fun startStartedService() {
         val intent = Intent(this, MyBoundService::class.java).apply {
             putExtra(MyBoundService.EXTRA_MESSAGE, "Started Service 收到消息")
@@ -65,11 +68,17 @@ class ServiceActivity : BasicResponseActivity() {
         appendLog("→ 启动 Started Service")
     }
 
+    /**
+     * 调用 `stopService()` 停止正在运行的 Started Service。
+     */
     private fun stopStartedService() {
         stopService(Intent(this, MyBoundService::class.java))
         appendLog("✓ 停止 Started Service")
     }
 
+    /**
+     * 通过 `bindService(..., BIND_AUTO_CREATE)` 绑定本地服务并从 `IBinder` 获取服务实例。
+     */
     private fun bindBoundService() {
         if (boundConnection != null) {
             appendLog("✓ Bound Service 已绑定")
@@ -95,6 +104,9 @@ class ServiceActivity : BasicResponseActivity() {
         appendLog("→ 正在绑定 Bound Service...（result=$result）")
     }
 
+    /**
+     * 调用 `unbindService()` 解绑服务并置空 `ServiceConnection` 引用。
+     */
     private fun unbindBoundService() {
         boundConnection?.let { conn ->
             unbindService(conn)
@@ -103,6 +115,9 @@ class ServiceActivity : BasicResponseActivity() {
         } ?: appendLog("✗ Bound Service 未绑定")
     }
 
+    /**
+     * 启动前台服务（Android 8.0+ 须使用 `startForegroundService()` 并在 5 秒内调用 `startForeground`）。
+     */
     private fun startForegroundService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(Intent(this, MyForegroundService::class.java))
@@ -112,6 +127,9 @@ class ServiceActivity : BasicResponseActivity() {
         appendLog("→ 启动前台服务")
     }
 
+    /**
+     * 停止前台服务并移除常驻通知。
+     */
     private fun stopForegroundService() {
         stopService(Intent(this, MyForegroundService::class.java))
         appendLog("✓ 停止前台服务")
