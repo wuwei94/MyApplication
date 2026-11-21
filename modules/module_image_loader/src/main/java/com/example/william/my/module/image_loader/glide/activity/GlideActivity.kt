@@ -50,12 +50,18 @@ class GlideActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 通过 `Glide.with(this)` 绑定 Activity 生命周期加载默认图片。
+     */
     private fun loadDefault() {
         Glide.with(this)
             .load(Constants.Url_Image1)
             .into(binding.basicsImage)
     }
 
+    /**
+     * 应用 `circleCrop()` 变换将图片裁剪为圆形。
+     */
     private fun loadCircleCrop() {
         Glide.with(this)
             .load(Constants.Url_Image1)
@@ -63,6 +69,9 @@ class GlideActivity : BasicImageActivity() {
             .into(binding.basicsImage)
     }
 
+    /**
+     * 应用 `RoundedCorners(48)` 变换为图片添加圆角。
+     */
     private fun loadRoundedCorners() {
         Glide.with(this)
             .load(Constants.Url_Image1)
@@ -70,6 +79,9 @@ class GlideActivity : BasicImageActivity() {
             .into(binding.basicsImage)
     }
 
+    /**
+     * 应用 `centerCrop()` 缩放裁剪以铺满目标视图。
+     */
     private fun loadCenterCrop() {
         Glide.with(this)
             .load(Constants.Url_Image1)
@@ -77,6 +89,9 @@ class GlideActivity : BasicImageActivity() {
             .into(binding.basicsImage)
     }
 
+    /**
+     * 配置占位图与 `DrawableTransitionOptions.withCrossFade()` 淡入动画。
+     */
     private fun loadWithCrossFade() {
         Glide.with(this)
             .load(Constants.Url_Image2)
@@ -85,6 +100,9 @@ class GlideActivity : BasicImageActivity() {
             .into(binding.basicsImage)
     }
 
+    /**
+     * 传入无效 URL 触发失败分支，验证 `error()` 兜底图展示。
+     */
     private fun loadError() {
         Glide.with(this)
             .load("https://invalid-url.example.com/not_exist.png")
@@ -93,6 +111,9 @@ class GlideActivity : BasicImageActivity() {
             .into(binding.basicsImage)
     }
 
+    /**
+     * 调用 `Glide.with(this).clear()` 取消进行中的请求并释放资源。
+     */
     private fun clearImage() {
         Glide.with(this).clear(binding.basicsImage)
     }

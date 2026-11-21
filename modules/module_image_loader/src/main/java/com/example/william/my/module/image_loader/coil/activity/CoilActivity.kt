@@ -49,14 +49,23 @@ class CoilActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 使用 Coil 扩展函数 `ImageView.load()` 加载默认图片。
+     */
     private fun loadDefault() {
         binding.basicsImage.load(Constants.Url_Image1)
     }
 
+    /**
+     * 切换加载第二张远程图片，用于对比缓存与占位状态切换。
+     */
     private fun loadSecond() {
         binding.basicsImage.load(Constants.Url_Image2)
     }
 
+    /**
+     * 配置 `crossfade(1000)` 启用 1 秒淡入过渡动画。
+     */
     private fun loadWithCrossfade() {
         binding.basicsImage.load(Constants.Url_Image1) {
             crossfade(true)
@@ -64,6 +73,9 @@ class CoilActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 配置加载中占位图（`placeholder`）与失败兜底图（`error`）。
+     */
     private fun loadWithPlaceholder() {
         binding.basicsImage.load(Constants.Url_Image2) {
             placeholder(R.drawable.shared_ic_launcher)
@@ -71,6 +83,9 @@ class CoilActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 传入无效 URL 触发失败分支，验证 `error()` 兜底图展示。
+     */
     private fun loadError() {
         binding.basicsImage.load("https://invalid-url.example.com/not_exist.png") {
             placeholder(R.drawable.shared_ic_launcher)
@@ -78,6 +93,9 @@ class CoilActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 清空当前 ImageView 上显示的 Drawable。
+     */
     private fun clearImage() {
         binding.basicsImage.setImageDrawable(null)
     }

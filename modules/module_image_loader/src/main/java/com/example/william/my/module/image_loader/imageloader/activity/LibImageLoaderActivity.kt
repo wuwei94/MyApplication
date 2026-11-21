@@ -46,35 +46,53 @@ class LibImageLoaderActivity : BasicImageActivity() {
         }
     }
 
+    /**
+     * 在 GlideImageLoader 与 CoilImageLoader 实现间动态切换并重新加载。
+     */
     private fun switchLoader() {
         imageLoader = if (imageLoader === GlideImageLoader) CoilImageLoader else GlideImageLoader
         loadImage()
     }
 
+    /**
+     * 调用统一封装接口 `loadImage()` 加载标准图片。
+     */
     private fun loadImage() {
         with(imageLoader) {
             binding.basicsImage.loadImage(this@LibImageLoaderActivity, Constants.Url_Image1)
         }
     }
 
+    /**
+     * 调用统一封装接口 `loadImageRound()` 加载圆形图片。
+     */
     private fun loadRound() {
         with(imageLoader) {
             binding.basicsImage.loadImageRound(this@LibImageLoaderActivity, Constants.Url_Image2)
         }
     }
 
+    /**
+     * 调用统一封装接口 `loadImageRadius()` 加载指定圆角半径（48px）图片。
+     */
     private fun loadRadius() {
         with(imageLoader) {
             binding.basicsImage.loadImageRadius(this@LibImageLoaderActivity, Constants.Url_Image1, 48)
         }
     }
 
+    /**
+     * 调用统一封装接口 `clear()` 取消并清理视图上的图片加载任务。
+     */
     private fun clear() {
         with(imageLoader) {
             binding.basicsImage.clear(this@LibImageLoaderActivity)
         }
     }
 
+    /**
+     * 传入无效 URL 测试封装层的错误兜底表现。
+     */
     private fun loadError() {
         with(imageLoader) {
             binding.basicsImage.loadImage(this@LibImageLoaderActivity, "https://invalid-url.example.com/not_exist.png")
