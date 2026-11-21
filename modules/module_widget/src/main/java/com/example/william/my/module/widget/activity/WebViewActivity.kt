@@ -56,6 +56,9 @@ class WebViewActivity : BaseVBActivity<UiActivityWebviewBinding>() {
         super.onDestroy()
     }
 
+    /**
+     * 配置 WebView 安全与缩放参数、加载目标页并绑定客户端回调
+     */
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     private fun initWebView() {
         // 隐藏滚动条

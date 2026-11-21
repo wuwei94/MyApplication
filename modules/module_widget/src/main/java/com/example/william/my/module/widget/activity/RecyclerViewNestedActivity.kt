@@ -35,6 +35,9 @@ class RecyclerViewNestedActivity : BaseVBActivity<UiActivityRecyclerViewNestedBi
         initRecycleView()
     }
 
+    /**
+     * 初始化外层纵向 RecyclerView 与嵌套列表适配器
+     */
     private fun initRecycleView() {
         val data = (1..20).map { "POSITION $it" }
 

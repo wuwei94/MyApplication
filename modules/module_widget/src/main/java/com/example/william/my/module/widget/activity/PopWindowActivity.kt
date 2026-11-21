@@ -37,6 +37,9 @@ class PopWindowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 构建自定义内容 PopupWindow 并绑定点击关闭回调
+     */
     private fun showPopWindow() {
         val binding = SharedLayoutResponseBinding.inflate(layoutInflater)
         val popupWindow = PopupWindow(

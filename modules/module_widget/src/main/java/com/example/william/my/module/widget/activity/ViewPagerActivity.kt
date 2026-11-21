@@ -47,6 +47,9 @@ class ViewPagerActivity : BaseVBActivity<UiActivityViewPagerBinding>() {
         initViewPager()
     }
 
+    /**
+     * 分别初始化基于 View 与 Fragment 的 ViewPager 适配器
+     */
     private fun initViewPager() {
         binding.viewpagerView.adapter = ViewPagerAdapter(titles)
 

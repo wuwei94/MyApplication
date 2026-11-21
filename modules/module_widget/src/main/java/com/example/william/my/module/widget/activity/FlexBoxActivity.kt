@@ -68,6 +68,9 @@ class FlexBoxActivity : BaseVBActivity<UiActivityFlexBoxBinding>() {
         initFlexBox()
     }
 
+    /**
+     * 配置 FlexboxLayoutManager 自动换行流式布局并绑定适配器
+     */
     private fun initFlexBox() {
         val manager = FlexboxLayoutManager(this)
         manager.flexDirection = FlexDirection.ROW // 主轴方向

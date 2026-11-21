@@ -63,6 +63,9 @@ class AppBarActivity : BaseVBActivity<UiActivityAppBarBinding>() {
         initAppBar()
     }
 
+    /**
+     * 配置 Toolbar、ViewPager 与 TabLayout 联动样式
+     */
     private fun initAppBar() {
         setSupportActionBar(binding.toolbar)
         binding.toolbarLayout.title = title

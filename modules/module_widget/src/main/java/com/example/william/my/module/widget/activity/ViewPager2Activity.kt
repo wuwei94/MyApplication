@@ -51,6 +51,9 @@ class ViewPager2Activity : BaseVBActivity<UiActivityViewPager2Binding>() {
         initViewPager()
     }
 
+    /**
+     * 分别初始化基于 View 与 Fragment 的水平 ViewPager2 适配器
+     */
     private fun initViewPager() {
         binding.viewpager2View.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         binding.viewpager2View.adapter = ViewPagerAdapter2(titles)
