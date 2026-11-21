@@ -141,25 +141,34 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
         nettyServerService.stopServer(this)
     }
 
+    /**
+     * 启动进程内 Netty 服务端（异步操作，真实就绪事件由服务端 Listener 推送）。
+     */
     private fun startServer() {
         nettyServerService.startServer(this)
         // 启动为异步操作，真实结果由服务端事件（【服务端】已启动）写入控制台
-        appendLog("[操作]已发起启动服务端，等待就绪...")
+        appendLog("→ [操作] 已发起启动服务端，等待就绪...")
     }
 
+    /**
+     * 停止进程内 Netty 服务端。
+     */
     private fun stopServer() {
         nettyServerService.stopServer(this)
         // 停止结果由服务端事件（【服务端】已停止）写入控制台
-        appendLog("[操作]已发起停止服务端...")
+        appendLog("→ [操作] 已发起停止服务端...")
     }
 
+    /**
+     * 在后台线程建立 Netty TCP 客户端连接，连接成功后自动发送 `"heart"` 心跳包。
+     */
     private fun connect() {
         if (!NettyServer.isRunning()) {
-            appendLog("[状态]服务端未启动，请先启动服务端")
+            appendLog("✗ [状态] 服务端未启动，请先启动服务端")
             return
         }
 
-        appendLog("[连接]正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         Thread {
             NettyClient.connect(
                 host = host,
@@ -167,20 +176,20 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
                 listener = object : NettyClientHandler.OnMessageListener {
                     override fun onConnected(remoteAddress: String) {
                         runOnUiThread {
-                            appendLog("[连接]已连接到 $remoteAddress")
+                            appendLog("✓ [连接] 已连接到 $remoteAddress")
                             NettyClient.sendMessage("heart")
                         }
                     }
 
                     override fun onMessage(message: String) {
                         runOnUiThread {
-                            appendLog("[消息]收到：$message")
+                            appendLog("✓ [消息] 收到：$message")
                         }
                     }
 
                     override fun onDisconnected() {
                         runOnUiThread {
-                            appendLog("[关闭]已断开连接")
+                            appendLog("✓ [关闭] 已断开连接")
                         }
                     }
 
@@ -194,28 +203,34 @@ class NettyTcpSocketClientActivity : BasicResponseActivity() {
         }.start()
     }
 
+    /**
+     * 通过已建立的 Netty Channel 向服务端发送测试文本消息。
+     */
     private fun sendMessage() {
         if (!NettyClient.isConnected()) {
-            appendLog("[状态]未连接，无法发送消息")
+            appendLog("✗ [状态] 未连接，无法发送消息")
             return
         }
 
         val message = "Hello from Client!"
         val success = NettyClient.sendMessage(message)
         if (success) {
-            appendLog("[发送]$message")
+            appendLog("✓ [发送] $message")
         } else {
             appendLog("✗ 发送失败")
         }
     }
 
+    /**
+     * 断开 Netty TCP 客户端连接。
+     */
     private fun disconnect() {
         if (!NettyClient.isConnected()) {
-            appendLog("[状态]未连接")
+            appendLog("✗ [状态] 未连接")
             return
         }
 
         NettyClient.disconnect()
-        appendLog("[断开]已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }

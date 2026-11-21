@@ -143,44 +143,53 @@ class NettyTcpSocketClientRxActivity : BasicResponseActivity() {
         nettyServerService.stopServer(this)
     }
 
+    /**
+     * 启动进程内 Netty 服务端（异步操作，真实就绪事件由服务端 Listener 推送）。
+     */
     private fun startServer() {
         nettyServerService.startServer(this)
         // 启动为异步操作，真实结果由服务端事件（【服务端】已启动）写入控制台
-        appendLog("[操作]已发起启动服务端，等待就绪...")
+        appendLog("→ [操作] 已发起启动服务端，等待就绪...")
     }
 
+    /**
+     * 停止进程内 Netty 服务端。
+     */
     private fun stopServer() {
         nettyServerService.stopServer(this)
         // 停止结果由服务端事件（【服务端】已停止）写入控制台
-        appendLog("[操作]已发起停止服务端...")
+        appendLog("→ [操作] 已发起停止服务端...")
     }
 
+    /**
+     * 通过 RxJava3 Observable 订阅 Netty TCP 连接与消息事件流，连接后自动发送 `"heart"`。
+     */
     private fun connect() {
         if (!NettyServer.isRunning()) {
-            appendLog("[状态]服务端未启动，请先启动服务端")
+            appendLog("✗ [状态] 服务端未启动，请先启动服务端")
             return
         }
 
-        appendLog("[连接]正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         NettyClientRx
             .createConnection(host, port)
             .subscribe(object : NettyClientRxObserver() {
                 override fun onConnected(host: String, port: Int) {
                     runOnUiThread {
-                        appendLog("[连接]已连接到 $host:$port")
+                        appendLog("✓ [连接] 已连接到 $host:$port")
                         NettyClientRx.send(host, port, "heart")
                     }
                 }
 
                 override fun onMessage(message: String) {
                     runOnUiThread {
-                        appendLog("[消息]收到：$message")
+                        appendLog("✓ [消息] 收到：$message")
                     }
                 }
 
                 override fun onClosed(reason: String) {
                     runOnUiThread {
-                        appendLog("[关闭]已关闭：$reason")
+                        appendLog("✓ [关闭] 已关闭：$reason")
                     }
                 }
 
@@ -192,24 +201,30 @@ class NettyTcpSocketClientRxActivity : BasicResponseActivity() {
             })
     }
 
+    /**
+     * 校验 Channel 活跃态并向服务端发送测试文本消息。
+     */
     private fun sendMessage() {
         val channel = NettyClientRx.getChannel(host, port)
         if (channel == null || !channel.isActive) {
-            appendLog("[状态]未连接，无法发送消息")
+            appendLog("✗ [状态] 未连接，无法发送消息")
             return
         }
 
         val message = "Hello from Client!"
         val success = NettyClientRx.send(host, port, message)
         if (success) {
-            appendLog("[发送]$message")
+            appendLog("✓ [发送] $message")
         } else {
             appendLog("✗ 发送失败")
         }
     }
 
+    /**
+     * 关闭 Netty TCP 客户端连接。
+     */
     private fun disconnect() {
         NettyClientRx.close(host, port)
-        appendLog("[断开]已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }
