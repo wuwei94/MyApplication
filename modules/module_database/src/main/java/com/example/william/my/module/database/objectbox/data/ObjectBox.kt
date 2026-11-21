@@ -1,7 +1,6 @@
 package com.example.william.my.module.database.objectbox.data
 
 import android.content.Context
-import android.util.Log
 import com.example.william.my.basic.basic_shared.utils.Utils
 import com.example.william.my.module.database.BuildConfig
 import io.objectbox.BoxStore
@@ -33,7 +32,7 @@ object ObjectBox {
         } catch (e: DbException) {
             if (e.javaClass == DbException::class.java || e is FileCorruptException) {
                 // 演示如何处理设备文件系统损坏导致的问题
-                Log.w(TAG, "File corrupt, trying previous data snapshot...", e)
+                Utils.logcat(TAG, "File corrupt, trying previous data snapshot... (${e.message})")
                 return
             } else {
                 // 由于开发者错误导致 BoxStore 构建失败。
