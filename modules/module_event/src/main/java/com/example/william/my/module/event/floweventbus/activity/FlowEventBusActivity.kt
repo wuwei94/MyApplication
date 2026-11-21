@@ -51,6 +51,9 @@ class FlowEventBusActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 订阅全局普通事件与粘性事件流（绑定 `lifecycleScope` + `repeatOnLifecycle`）。
+     */
     private fun observeFlowEventBus() {
         if (isObserving) {
             appendLog("✓ FlowEventBus 已处于监听状态")
@@ -68,6 +71,9 @@ class FlowEventBusActivity : BasicResponseActivity() {
         appendLog("✓ 已开启 FlowEventBus 监听")
     }
 
+    /**
+     * 手动取消普通与粘性事件的订阅协程 Job。
+     */
     private fun unobserveFlowEventBus() {
         if (!isObserving) {
             appendLog("✗ FlowEventBus 当前未监听")
@@ -81,6 +87,9 @@ class FlowEventBusActivity : BasicResponseActivity() {
         appendLog("✓ 已取消 FlowEventBus 监听")
     }
 
+    /**
+     * 发送全局普通事件（仅当前已订阅的观察者可收到）。
+     */
     private fun postGlobalEvent() {
         appendLog("→ 发送普通事件：GlobalEvent")
         FlowEventBus.postEvent(
@@ -89,6 +98,9 @@ class FlowEventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 发送粘性事件（后续新订阅的观察者仍可收到最近一次发射）。
+     */
     private fun postSticky() {
         appendLog("→ 发送粘性事件：StickyEvent")
         FlowEventBus.postEvent(
@@ -97,6 +109,9 @@ class FlowEventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 输出 FlowEventBus 的生命周期绑定策略与当前订阅状态。
+     */
     private fun showLifecyclePolicy() {
         appendLog("→ FlowEventBus.observe 绑定 lifecycleScope + repeatOnLifecycle")
         appendLog("✓ STOP 暂停收集、DESTROY 自动取消 Job；当前监听状态：$isObserving")

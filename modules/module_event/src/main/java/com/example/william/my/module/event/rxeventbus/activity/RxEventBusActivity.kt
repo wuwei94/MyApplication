@@ -50,6 +50,9 @@ class RxEventBusActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 订阅普通与粘性事件流，并将 Disposable 纳入 `CompositeDisposable` 统一管理。
+     */
     private fun observeRxEventBus() {
         if (isObserving) {
             appendLog("✓ RxEventBus 已处于监听状态")
@@ -70,6 +73,9 @@ class RxEventBusActivity : BasicResponseActivity() {
         appendLog("✓ 已开启 RxEventBus 监听")
     }
 
+    /**
+     * 清空 `CompositeDisposable` 以手动取消全部事件订阅。
+     */
     private fun unobserveRxEventBus() {
         if (!isObserving) {
             appendLog("✗ RxEventBus 当前未监听")
@@ -80,6 +86,9 @@ class RxEventBusActivity : BasicResponseActivity() {
         appendLog("✓ 已取消 RxEventBus 监听")
     }
 
+    /**
+     * 发送全局普通事件（仅当前已订阅的观察者可收到）。
+     */
     private fun postGlobalEvent() {
         appendLog("→ 发送普通事件：GlobalEvent")
         RxEventBus.postEvent(
@@ -87,6 +96,9 @@ class RxEventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 发送粘性事件（后续新订阅的观察者仍可收到最近一次事件）。
+     */
     private fun postSticky() {
         appendLog("→ 发送粘性事件：StickyEvent")
         RxEventBus.postStickyEvent(
@@ -94,6 +106,9 @@ class RxEventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 输出 RxEventBus 的生命周期管理策略（无自动感知，须在 `onDestroy` 清理）与当前状态。
+     */
     private fun showLifecyclePolicy() {
         appendLog("→ RxEventBus 不绑定 LifecycleOwner，onDestroy 执行 disposables.clear() 保底")
         appendLog("✓ 当前监听状态：$isObserving")

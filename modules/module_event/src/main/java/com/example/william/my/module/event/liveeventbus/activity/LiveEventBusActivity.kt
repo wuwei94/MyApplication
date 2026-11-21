@@ -51,6 +51,9 @@ class LiveEventBusActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 订阅全局普通事件与粘性事件（内部绑定 `LifecycleOwner`，`DESTROYED` 时自动注销）。
+     */
     private fun observeLiveEventBus() {
         if (isObserving) {
             appendLog("✓ LiveEventBus 已处于监听状态")
@@ -66,6 +69,9 @@ class LiveEventBusActivity : BasicResponseActivity() {
         appendLog("✓ 已开启 LiveEventBus 监听")
     }
 
+    /**
+     * 手动取消观察 Job，实现提前注销订阅。
+     */
     private fun unobserveLiveEventBus() {
         if (!isObserving) {
             appendLog("✗ LiveEventBus 当前未监听")
@@ -79,6 +85,9 @@ class LiveEventBusActivity : BasicResponseActivity() {
         appendLog("✓ 已取消 LiveEventBus 监听")
     }
 
+    /**
+     * 发送全局普通事件（仅当前已订阅的观察者可收到）。
+     */
     private fun postGlobalEvent() {
         appendLog("→ 发送普通事件：GlobalEvent")
         LiveEventBus.postEvent(
@@ -87,6 +96,9 @@ class LiveEventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 发送粘性事件（后续新订阅的观察者仍可收到最近一次事件）。
+     */
     private fun postSticky() {
         appendLog("→ 发送粘性事件：StickyEvent")
         LiveEventBus.postEvent(
@@ -95,6 +107,9 @@ class LiveEventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 输出 LiveEventBus 的生命周期绑定策略与当前订阅状态。
+     */
     private fun showLifecyclePolicy() {
         appendLog("→ LiveEventBus.observe 绑定 LifecycleOwner，DESTROYED 自动取消订阅")
         appendLog("✓ 手动 cancel Job 可提前注销；当前监听状态：$isObserving")

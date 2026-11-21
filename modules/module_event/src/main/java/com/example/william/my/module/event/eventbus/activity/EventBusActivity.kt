@@ -48,15 +48,21 @@ class EventBusActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 向 EventBus 注册当前 Activity，接收 `@Subscribe` 注解的方法回调。
+     */
     private fun registerEventBus() {
         if (EventBusHelper.isRegistered(this)) {
-            appendLog("EventBus 已处于注册状态")
+            appendLog("✓ EventBus 已处于注册状态")
             return
         }
         EventBusHelper.register(this)
         appendLog("✓ EventBus 已注册")
     }
 
+    /**
+     * 从 EventBus 注销当前 Activity，停止接收事件回调。
+     */
     private fun unregisterEventBus() {
         if (!EventBusHelper.isRegistered(this)) {
             appendLog("✗ EventBus 当前未注册")
@@ -66,6 +72,9 @@ class EventBusActivity : BasicResponseActivity() {
         appendLog("✓ EventBus 已注销")
     }
 
+    /**
+     * 发送全局普通事件（仅当前已注册的订阅者可收到）。
+     */
     private fun postGlobalEvent() {
         appendLog("→ 发送普通事件：GlobalEvent")
         EventBusHelper.postEvent(
@@ -73,6 +82,9 @@ class EventBusActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 发送粘性事件（后续新注册的订阅者仍可收到最近一次事件）。
+     */
     private fun postSticky() {
         appendLog("→ 发送粘性事件：StickyEvent")
         EventBusHelper.postStickyEvent(
