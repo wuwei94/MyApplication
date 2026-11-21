@@ -51,6 +51,9 @@ class CustomRouterActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 `AppNavigator` 携带参数跳转至 [CustomRouterTargetActivity]。
+     */
     private fun navigateWithParams() {
         appendLog("→ AppNavigator 发起跳转: ${RouterPath.Router.CustomRouterTarget}")
         val ok = AppNavigator.build(RouterPath.Router.CustomRouterTarget)
@@ -64,6 +67,9 @@ class CustomRouterActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 向 [AppPageRegistry] 注册责任链拦截器并附加 `traceId` 后放行跳转。
+     */
     private fun navigateWithInterceptor() {
         val logInterceptor = object : PageInterceptor {
             override val priority: Int = 10
@@ -83,6 +89,9 @@ class CustomRouterActivity : BasicResponseActivity() {
             .navigation(this)
     }
 
+    /**
+     * 验证通过 Hilt `@Inject` 编译期注入的跨模块服务实例（零反射）。
+     */
     private fun discoverService() {
         appendLog("→ 读取 Hilt 编译期注入服务: ResourceUtilsService")
         appendLog("✓ 注入成功(零反射): ${resourceService::class.java.simpleName}")
