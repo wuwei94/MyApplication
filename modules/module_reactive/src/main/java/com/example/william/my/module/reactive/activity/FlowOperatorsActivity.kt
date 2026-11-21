@@ -84,8 +84,8 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     private fun testCreateOperators() {
         launchAndRepeatWithLifecycle {
-            createFlow().collect { appendLog("[创建操作符 asFlow]onNext: $it") }
-            appendLog("[创建操作符]collect 完成")
+            createFlow().collect { appendLog("→ [创建操作符 asFlow] onNext: $it") }
+            appendLog("✓ [创建操作符] collect 完成")
         }
     }
 
@@ -94,14 +94,14 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     private fun testTransformOperators() {
         launchAndRepeatWithLifecycle {
-            mapFlow(flowOf("apple", "banana")).collect { appendLog("[变换操作符 map]大写转换: $it") }
-            appendLog("[变换操作符]map 完成")
+            mapFlow(flowOf("apple", "banana")).collect { appendLog("→ [变换操作符 map] 大写转换: $it") }
+            appendLog("✓ [变换操作符] map 完成")
 
-            flatMapConcatFlow(flowOf(1, 2)).collect { appendLog("[变换操作符 flatMapConcat]展开结果: $it") }
-            appendLog("[变换操作符]flatMapConcat 完成")
+            flatMapConcatFlow(flowOf(1, 2)).collect { appendLog("→ [变换操作符 flatMapConcat] 展开结果: $it") }
+            appendLog("✓ [变换操作符] flatMapConcat 完成")
 
-            bufferFlow(flowOf(1, 2, 3)).collect { appendLog("[变换操作符 buffer]缓冲接收: $it") }
-            appendLog("[变换操作符]buffer 完成")
+            bufferFlow(flowOf(1, 2, 3)).collect { appendLog("→ [变换操作符 buffer] 缓冲接收: $it") }
+            appendLog("✓ [变换操作符] buffer 完成")
         }
     }
 
@@ -111,8 +111,8 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     private fun testFilterOperators() {
         launchAndRepeatWithLifecycle {
             filterFlow(flowOf(1, 2, 2, 3, 4, 1, 5))
-                .collect { appendLog("[过滤操作符 distinctUntilChanged+filter+take]接收: $it") }
-            appendLog("[过滤操作符]collect 完成")
+                .collect { appendLog("→ [过滤操作符 distinctUntilChanged+filter+take] 接收: $it") }
+            appendLog("✓ [过滤操作符] collect 完成")
         }
     }
 
@@ -122,12 +122,12 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     private fun testCombineOperators() {
         launchAndRepeatWithLifecycle {
             zipFlow(flowOf("Android", "Kotlin"), flowOf("14", "2.0"))
-                .collect { appendLog("[组合操作符 zip]配对结果: $it") }
-            appendLog("[组合操作符]zip 完成")
+                .collect { appendLog("→ [组合操作符 zip] 配对结果: $it") }
+            appendLog("✓ [组合操作符] zip 完成")
 
             combineFlow(flowOf(1, 2, 3), flowOf("a", "b"))
-                .collect { appendLog("[组合操作符 combine]最新组合: $it") }
-            appendLog("[组合操作符]combine 完成")
+                .collect { appendLog("→ [组合操作符 combine] 最新组合: $it") }
+            appendLog("✓ [组合操作符] combine 完成")
         }
     }
 
@@ -138,9 +138,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
         launchAndRepeatWithLifecycle {
             catchFlow(flakySource).collect { value ->
                 val suffix = if (value == FALLBACK_NUMBER) "（catch 已捕获异常并降级）" else ""
-                appendLog("[错误恢复 catch]收到数据: $value$suffix")
+                appendLog("→ [错误恢复 catch] 收到数据: $value$suffix")
             }
-            appendLog("[错误恢复]collect 平稳结束")
+            appendLog("✓ [错误恢复] collect 平稳结束")
         }
     }
 
@@ -150,8 +150,8 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     private fun testRetryOperators() {
         launchAndRepeatWithLifecycle {
             retryFlow(flakySource, RETRY_MAX_ATTEMPTS)
-                .onEach { appendLog("[错误重试 retry]重新订阅后收到: $it") }
-                .catch { appendLog("[错误重试]重试 $RETRY_MAX_ATTEMPTS 次后仍失败: ${it.message}") }
+                .onEach { appendLog("→ [错误重试 retry] 重新订阅后收到: $it") }
+                .catch { appendLog("✗ [错误重试] 重试 $RETRY_MAX_ATTEMPTS 次后仍失败: ${it.message}") }
                 .collect { }
         }
     }
