@@ -37,31 +37,31 @@ class LifecycleActivity : BasicResponseActivity() {
     // 1. 自定义业务观察者：实现 DefaultLifecycleObserver，彻底与 Activity 解耦
     private val customObserver = object : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            appendLog("[组件观察者]onCreate: Activity 正在创建")
+            appendLog("→ [组件观察者] onCreate: Activity 正在创建")
         }
 
         override fun onResume(owner: LifecycleOwner) {
-            appendLog("[组件观察者]onResume: Activity 进入前台交互状态")
+            appendLog("✓ [组件观察者] onResume: Activity 进入前台交互状态")
         }
 
         override fun onPause(owner: LifecycleOwner) {
-            appendLog("[组件观察者]onPause: Activity 失去焦点")
+            appendLog("→ [组件观察者] onPause: Activity 失去焦点")
         }
 
         override fun onDestroy(owner: LifecycleOwner) {
             // Activity 销毁时清理资源，避免内存泄漏
-            appendLog("[组件观察者]onDestroy: 自动反注册与清理")
+            appendLog("✓ [组件观察者] onDestroy: 自动反注册与清理")
         }
     }
 
     // 2. 全局应用级别观察者：ProcessLifecycleOwner
     private val appProcessObserver = object : DefaultLifecycleObserver {
         override fun onStart(owner: LifecycleOwner) {
-            appendLog("[应用前后台]App 进入前台 (ProcessLifecycleOwner onStart)")
+            appendLog("✓ [应用前后台] App 进入前台 (ProcessLifecycleOwner onStart)")
         }
 
         override fun onStop(owner: LifecycleOwner) {
-            appendLog("[应用前后台]App 进入后台 (ProcessLifecycleOwner onStop)")
+            appendLog("→ [应用前后台] App 进入后台 (ProcessLifecycleOwner onStop)")
         }
     }
 
@@ -97,7 +97,7 @@ class LifecycleActivity : BasicResponseActivity() {
             1 -> testRepeatOnLifecycle()
             2 -> testFlowWithLifecycle()
             3 -> {
-                appendLog("当前组件已注册观察者，尝试切换 App 到后台或按返回键观察控制台与日志区回调")
+                appendLog("→ 当前组件已注册观察者，尝试切换 App 到后台或按返回键观察控制台与日志区回调")
             }
         }
     }
@@ -106,12 +106,12 @@ class LifecycleActivity : BasicResponseActivity() {
         val state = lifecycle.currentState
         val isAtLeastStarted = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
         val isAtLeastResumed = lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
-        appendLog("当前生命周期: $state | isAtLeast(STARTED)=$isAtLeastStarted | isAtLeast(RESUMED)=$isAtLeastResumed")
+        appendLog("✓ 当前生命周期: $state | isAtLeast(STARTED)=$isAtLeastStarted | isAtLeast(RESUMED)=$isAtLeastResumed")
     }
 
     private fun testRepeatOnLifecycle() {
         repeatJob?.cancel()
-        appendLog("已启动 repeatOnLifecycle(STARTED) 协程数据流发射（每秒 1 次）...")
+        appendLog("→ 已启动 repeatOnLifecycle(STARTED) 协程数据流发射（每秒 1 次）...")
         repeatJob = lifecycleScope.launch {
             // 当生命周期到达 STARTED 时启动协程，当降至 STOPPED（如按 Home 键切后台）时自动取消
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -131,7 +131,7 @@ class LifecycleActivity : BasicResponseActivity() {
 
     private fun testFlowWithLifecycle() {
         flowWithJob?.cancel()
-        appendLog("已启动 flowWithLifecycle(RESUMED) 操作符数据流...")
+        appendLog("→ 已启动 flowWithLifecycle(RESUMED) 操作符数据流...")
         val tickerFlow = flow {
             var count = 0
             while (true) {
