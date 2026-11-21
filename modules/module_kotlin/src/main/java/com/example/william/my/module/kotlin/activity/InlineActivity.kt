@@ -54,6 +54,9 @@ class InlineActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 1. 作用域函数对比
     // ─────────────────────────────────────────────
+    /**
+     * 对比 `with` / `let` / `run` / `also` / `apply` 五种作用域函数的接收者（`this`/`it`）与返回值差异。
+     */
     private fun testScopeFunctions() {
         val user = UserData("InitUser", 60)
 
@@ -99,6 +102,9 @@ class InlineActivity : BasicResponseActivity() {
 
     private inline fun <reified T> parseJson(json: String): T = Gson().fromJson(json, T::class.java)
 
+    /**
+     * 演示 `inline + reified T` 在运行期直接获取泛型 `T::class.java` 并完成 Gson 反序列化。
+     */
     private fun testReifiedGenerics() {
         appendLog("✓ [reified] ${getTypeName<UserData>()}")
         appendLog("✓ [reified] ${getTypeName<String>()}")
@@ -123,6 +129,9 @@ class InlineActivity : BasicResponseActivity() {
 
     private inline fun <T, R> T.mRun(block: T.() -> R): R = block()
 
+    /**
+     * 调用自定义内联扩展函数，演示高阶函数零对象分配的链式配置。
+     */
     private fun testCustomInlineExtensions() {
         val user = UserData("CustomUser", 50)
             .mApply {
@@ -159,6 +168,9 @@ class InlineActivity : BasicResponseActivity() {
         runnable.run()
     }
 
+    /**
+     * 演示 `noinline`（保留函数对象引用以便存储/返回）与 `crossinline`（允许在嵌套 Runnable 中调用但禁止非局部 return）。
+     */
     private fun testNoinlineAndCrossinline() {
         // noinline 演示
         val (_, savedLambda) = executeWithNoinline(

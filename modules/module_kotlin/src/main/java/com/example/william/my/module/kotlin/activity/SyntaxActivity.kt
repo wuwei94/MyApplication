@@ -76,6 +76,9 @@ class SyntaxActivity : BasicResponseActivity() {
         operator fun invoke(prefix: String): String = "$prefix: Point($x, $y)"
     }
 
+    /**
+     * 演示 `+`、`*`、`[]`、`in`、`()` 等常用操作符重载语法。
+     */
     private fun testOperatorOverloading() {
         val p1 = Point(3, 4)
         val p2 = Point(5, 6)
@@ -98,6 +101,9 @@ class SyntaxActivity : BasicResponseActivity() {
 
     private infix fun String.combineWith(other: String): String = "$this ⇄ $other"
 
+    /**
+     * 演示 `infix` 中缀函数省略点号与括号的自然语言式调用。
+     */
     private fun testInfixFunctions() {
         val p1 = Point(0, 0)
         val p2 = Point(3, 4)
@@ -131,6 +137,9 @@ class SyntaxActivity : BasicResponseActivity() {
         operator fun component2(): Double = longitude
     }
 
+    /**
+     * 演示 `data class`、自定义 `componentN` 与 `Map` 遍历三种解构声明方式。
+     */
     private fun testDestructuring() {
         // Data Class 解构
         val dev = Developer("Alice", 28, "Android Architect")
@@ -174,6 +183,9 @@ class SyntaxActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 遍历 `UiResult` 密封接口各状态分支，验证编译器 `when` 穷举性检查。
+     */
     private fun testSealedInterface() {
         val states = listOf(
             UiResult.Idle,
@@ -232,6 +244,9 @@ class SyntaxActivity : BasicResponseActivity() {
     // DSL 入口函数，接收带有 MenuBuilder 接收者的 Lambda
     private fun menu(init: MenuBuilder.() -> Unit): MenuBuilder = MenuBuilder().apply(init)
 
+    /**
+     * 演示带 `@DslMarker` 作用域隔离的类型安全嵌套 DSL 构建器。
+     */
     private fun testDslBuilder() {
         val menuConfig = menu {
             title = "Kotlin 特性导航菜单"

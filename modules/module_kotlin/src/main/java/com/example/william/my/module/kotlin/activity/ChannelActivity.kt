@@ -57,6 +57,9 @@ class ChannelActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 1. Channel 4 种缓冲模式对比
     // ─────────────────────────────────────────────
+    /**
+     * 对比 `CONFLATED`（丢弃旧值仅保留最新）与 `BUFFERED`（满容量挂起）两种通道缓冲模式。
+     */
     private fun testChannelBufferModes() {
         lifecycleScope.launch {
             appendLog("→ [1. 缓冲模式] 测试 CONFLATED 通道（仅保留最新值，丢弃溢出数据）...")
@@ -91,6 +94,9 @@ class ChannelActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 2. 生产-消费模型 (produce 构建器与多消费者竞争)
     // ─────────────────────────────────────────────
+    /**
+     * 通过 `produce` 构建生产者协程，并启动多个消费者协程竞争接收任务（扇出模式）。
+     */
     private fun testProduceAndConsume() {
         lifecycleScope.launch {
             appendLog("→ [2. 生产-消费] 启动 produce 生产者协程，发射 Task 1..6...")
@@ -158,6 +164,9 @@ class ChannelActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用 `callbackFlow` + `awaitClose` 将传统回调监听桥接为冷流，并在取消收集时自动反注册。
+     */
     private fun testCallbackFlow() {
         val locationManager = MockLocationManager()
 
@@ -203,6 +212,9 @@ class ChannelActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 4. channelFlow 跨子协程并发发射
     // ─────────────────────────────────────────────
+    /**
+     * 使用 `channelFlow` 在内部并发启动多个子协程，安全地从不同源同时发射数据。
+     */
     private fun testChannelFlow() {
         lifecycleScope.launch {
             appendLog("→ [4. channelFlow] 在 channelFlow 内部启动多个子协程并发发射数据...")

@@ -77,6 +77,9 @@ class DelegateActivity : BasicResponseActivity() {
      */
     class DelegatedPrinter(printer: Printer) : Printer by printer
 
+    /**
+     * 演示类委托（`by printer`）：将接口实现无样板地转发给内部持有实例。
+     */
     private fun testClassDelegate() {
         val printer = DelegatedPrinter(RealPrinter())
         appendLog("✓ [类委托] 调用结果: ${printer.printMessage()}")
@@ -107,6 +110,9 @@ class DelegateActivity : BasicResponseActivity() {
         var text: String by StringDelegate()
     }
 
+    /**
+     * 演示实现 `ReadWriteProperty` 的自定义属性委托读写拦截。
+     */
     private fun testAttrDelegate() {
         val holder = CustomDelegateHolder()
         appendLog("→ [属性委托] 读取初始值: ${holder.text}")
@@ -123,6 +129,9 @@ class DelegateActivity : BasicResponseActivity() {
         "LazyComputedResult(count=$lazyInitCount)"
     }
 
+    /**
+     * 验证 `by lazy` 仅在首次访问时求值并缓存结果，后续访问直接复用。
+     */
     private fun testLazyDelegate() {
         appendLog("→ [Lazy委托] 第 1 次访问: $lazyValue")
         appendLog("✓ [Lazy委托] 第 2 次访问: $lazyValue（未重复初始化，计算次数: $lazyInitCount）")
@@ -142,6 +151,9 @@ class DelegateActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 演示 `Delegates.observable` 在属性赋值后触发新旧值变更回调。
+     */
     private fun testObservableDelegate() {
         val user = ObservableUser { appendLog(it) }
         user.name = "Alice"
@@ -164,6 +176,9 @@ class DelegateActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 演示 `Delegates.vetoable` 在属性赋值前进行条件拦截并否决非法值。
+     */
     private fun testVetoableDelegate() {
         val user = VetoableUser { appendLog(it) }
         user.age = 25
@@ -185,6 +200,9 @@ class DelegateActivity : BasicResponseActivity() {
         val version: Int by map
     }
 
+    /**
+     * 演示将属性直接委托给 `Map<String, Any?>` 按属性名读取配置。
+     */
     private fun testMapDelegate() {
         val map = mapOf("title" to "Antigravity App", "version" to 2)
         val config = MapConfig(map)
@@ -209,6 +227,9 @@ class DelegateActivity : BasicResponseActivity() {
         var initializedToken: String by Delegates.notNull()
     }
 
+    /**
+     * 演示属性别名重定向委托（`by this::newFeatureName`）与 `Delegates.notNull()` 非空保护。
+     */
     private fun testPropertyRedirectAndNotNull() {
         val bean = MyMigrationBean()
         appendLog("→ [属性重定向] 读取 oldFeatureName: ${bean.oldFeatureName}")

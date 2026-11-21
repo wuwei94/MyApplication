@@ -60,6 +60,9 @@ class ConcurrencyActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 1. Mutex 非阻塞互斥锁
     // ─────────────────────────────────────────────
+    /**
+     * 对比无锁并发累加与 `Mutex.withLock` 挂起锁保护，验证协程安全与非阻塞特性。
+     */
     private fun testMutex() {
         lifecycleScope.launch(Dispatchers.Default) {
             val mutex = Mutex()
@@ -95,6 +98,9 @@ class ConcurrencyActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 2. Semaphore 信号量限流
     // ─────────────────────────────────────────────
+    /**
+     * 通过 `Semaphore.withPermit` 限制并发任务最大并行度（最多 3 个同时运行）。
+     */
     private fun testSemaphore() {
         lifecycleScope.launch {
             val maxConcurrency = 3
@@ -124,6 +130,9 @@ class ConcurrencyActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 3. select 多路复用竞速
     // ─────────────────────────────────────────────
+    /**
+     * 使用 `select` 多路复用监听本地缓存与网络异步任务，优先采纳最先就绪的结果。
+     */
     private fun testSelect() {
         lifecycleScope.launch {
             appendLog("→ [3. select 竞速] 同时发起 Cache 快速拉取 (耗时 100ms) 与 Network 慢速请求 (耗时 300ms)...")
@@ -155,6 +164,9 @@ class ConcurrencyActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 4. NonCancellable 不可取消资源清理
     // ─────────────────────────────────────────────
+    /**
+     * 演示在协程被取消后的 `finally` 块中切入 `withContext(NonCancellable)` 执行挂起级资源清理。
+     */
     private fun testNonCancellable() {
         lifecycleScope.launch {
             appendLog("→ [4. NonCancellable] 启动一个长生命周期任务并在 150ms 后主动取消它...")
