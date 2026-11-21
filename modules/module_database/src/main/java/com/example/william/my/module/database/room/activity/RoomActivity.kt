@@ -3,6 +3,7 @@ package com.example.william.my.module.database.room.activity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.example.william.my.basic.basic_shared.activity.BasicResponseActivity
+import com.example.william.my.core.base.coroutine.collectWithLifecycle
 import com.example.william.my.module.database.room.data.OAuth
 import com.example.william.my.module.database.room.data.OAuthDao
 import com.example.william.my.module.database.room.data.OAuthDataBase
@@ -71,18 +72,16 @@ class RoomActivity : BasicResponseActivity() {
      * 响应式 Flow 查询：表变更自动重发并上屏
      */
     private fun observeOAuthFlow() {
-        lifecycleScope.launch {
-            oauthDao.getAllOAuthFlow().collect { list: List<OAuth> ->
-                if (list.isEmpty()) {
-                    appendLog("[Room Flow 监听] 当前数据库无数据")
-                } else {
-                    appendLog("[Room Flow 监听] 数据库记录更新（共 ${list.size} 条）：")
-                    list.take(3).forEach { oauth ->
-                        appendLog("  -> ID=${oauth.id}, Token=${oauth.refreshToken}, Expires=${oauth.expires}s")
-                    }
-                    if (list.size > 3) {
-                        appendLog("  -> ... 更多省略")
-                    }
+        oauthDao.getAllOAuthFlow().collectWithLifecycle(this) { list: List<OAuth> ->
+            if (list.isEmpty()) {
+                appendLog("[Room Flow 监听] 当前数据库无数据")
+            } else {
+                appendLog("[Room Flow 监听] 数据库记录更新（共 ${list.size} 条）：")
+                list.take(3).forEach { oauth ->
+                    appendLog("  -> ID=${oauth.id}, Token=${oauth.refreshToken}, Expires=${oauth.expires}s")
+                }
+                if (list.size > 3) {
+                    appendLog("  -> ... 更多省略")
                 }
             }
         }
