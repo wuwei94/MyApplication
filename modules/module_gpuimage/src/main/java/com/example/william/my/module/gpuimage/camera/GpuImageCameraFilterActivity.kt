@@ -81,6 +81,9 @@ class GpuImageCameraFilterActivity : BaseVBActivity<GpuimageActivityCameraFilter
         super.onDestroy()
     }
 
+    /**
+     * 检查相机权限，已授权则启动相机，否则发起权限申请
+     */
     private fun checkAndRequestPermission() {
         val hasCamera = ContextCompat.checkSelfPermission(
             this,
@@ -94,6 +97,9 @@ class GpuImageCameraFilterActivity : BaseVBActivity<GpuimageActivityCameraFilter
         }
     }
 
+    /**
+     * 初始化并启动 GPUImage 相机滤镜预览
+     */
     private fun startCamera() {
         cameraHelper.setup()
         cameraHelper.start()
