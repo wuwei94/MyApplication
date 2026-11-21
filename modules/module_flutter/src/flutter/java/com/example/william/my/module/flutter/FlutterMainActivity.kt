@@ -27,6 +27,9 @@ class FlutterMainActivity : BasicResponseActivity() {
         finish()
     }
 
+    /**
+     * 使用默认 FlutterEngine 启动 FlutterActivity
+     */
     private fun startDefault() {
         startActivity(
             FlutterActivity
@@ -34,6 +37,9 @@ class FlutterMainActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 创建全新 FlutterEngine 实例并指定初始路由启动 FlutterActivity
+     */
     private fun startWithNewEngine() {
         startActivity(
             FlutterActivity
@@ -43,6 +49,9 @@ class FlutterMainActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 复用已预热的缓存 FlutterEngine 启动 FlutterActivity
+     */
     private fun startWithCachedEngine() {
         startActivity(
             FlutterActivity
