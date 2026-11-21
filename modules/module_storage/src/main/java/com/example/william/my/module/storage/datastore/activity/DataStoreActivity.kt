@@ -79,6 +79,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 在 IO 线程原子写入 Preferences DataStore 中的字符串用户名。
+     */
     private fun setPrefUserName() {
         appendLog("→ 写入 Preferences 用户名...")
         lifecycleScope.launch(Dispatchers.IO) {
@@ -90,6 +93,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 Preferences DataStore `updateData` 事务原子自增计数器。
+     */
     private fun incrementPrefCounter() {
         appendLog("→ Preferences Counter updateData 自增...")
         lifecycleScope.launch(Dispatchers.IO) {
@@ -100,6 +106,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 Proto DataStore 单次事务原子更新主题、语言与通知开关多个强类型字段。
+     */
     private fun writeProtoUserPreferences() {
         appendLog("→ Proto 多字段偏好原子写入 (theme/lang/notify)...")
         lifecycleScope.launch(Dispatchers.IO) {
@@ -114,6 +123,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 轮换更新 Proto DataStore 的枚举字段（SYSTEM → LIGHT → DARK）。
+     */
     private fun cycleProtoThemeMode() {
         appendLog("→ Proto 主题模式切换...")
         lifecycleScope.launch(Dispatchers.IO) {
@@ -133,6 +145,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 对 Proto `repeated` 列表字段执行追加或移除特性开关。
+     */
     private fun toggleProtoFeatureFlag() {
         appendLog("→ Proto 功能开关增删 (repeated)...")
         lifecycleScope.launch(Dispatchers.IO) {
@@ -147,6 +162,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用 `Flow.first()` 挂起读取 Preferences 与 Proto DataStore 的当前瞬时快照。
+     */
     private fun readCurrentFlowValues() {
         appendLog("→ 读取 Flow 当前值...")
         lifecycleScope.launch(Dispatchers.IO) {
@@ -164,6 +182,9 @@ class DataStoreActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 清空 Preferences 与 Proto DataStore 中的全部持久化数据。
+     */
     private fun clearAllDataStore() {
         appendLog("→ 清空 Preferences 与 Proto DataStore...")
         lifecycleScope.launch(Dispatchers.IO) {

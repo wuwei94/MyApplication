@@ -26,6 +26,9 @@ class MMKVActivity : BasicResponseActivity() {
         initMMKV()
     }
 
+    /**
+     * 初始化 MMKV 并输出映射文件根目录（通常应在 Application 启动时调用一次）。
+     */
     private fun initMMKV() {
         val rootDir: String = MMKV.initialize(this)
         appendLog("[MMKV 初始化] 存储根目录: $rootDir")
@@ -55,6 +58,9 @@ class MMKVActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 `kv.encode()` 同步写入 String / Int / Boolean / Float 基础类型。
+     */
     private fun writeBasicTypes(kv: MMKV) {
         appendLog("→ 写入基础类型键值...")
         kv.encode("user_name", "Antigravity")
@@ -64,6 +70,9 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("✓ 已写入 user_name, user_age, is_vip, score")
     }
 
+    /**
+     * 通过 `kv.decode*()` 同步读取基础类型键值并指定默认值。
+     */
     private fun readBasicTypes(kv: MMKV) {
         appendLog("→ 读取基础类型键值...")
         val name = kv.decodeString("user_name", "默认用户")
@@ -73,6 +82,9 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("✓ name=$name, age=$age, is_vip=$isVip, score=$score")
     }
 
+    /**
+     * 连续写入多组键值，验证 mmap 即时落盘无需额外 commit。
+     */
     private fun writeBatchKeys(kv: MMKV) {
         appendLog("→ 批量写入多键数据...")
         kv.encode("batch_a", "alpha")
@@ -81,6 +93,9 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("✓ 已批量写入 batch_a, batch_b, batch_c")
     }
 
+    /**
+     * 写入二进制 `ByteArray` 载荷（MMKV 原生支持二进制存储）。
+     */
     private fun writeBinary(kv: MMKV) {
         appendLog("→ 写入 ByteArray...")
         val bytes = "MMKV_BINARY_PAYLOAD".toByteArray()
@@ -88,6 +103,9 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("✓ 写入 ByteArray，字节长度: ${bytes.size}")
     }
 
+    /**
+     * 读取二进制 `ByteArray` 载荷并解码为文本展示。
+     */
     private fun readBinary(kv: MMKV) {
         appendLog("→ 读取 ByteArray...")
         val bytes = kv.decodeBytes("bytes_key")
@@ -95,6 +113,9 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("✓ bytes_key 解析文本: $content")
     }
 
+    /**
+     * 调用 `removeValueForKey()` 删除指定键并回读校验。
+     */
     private fun removeUserName(kv: MMKV) {
         appendLog("→ 删除键 user_name...")
         kv.removeValueForKey("user_name")
@@ -102,6 +123,9 @@ class MMKVActivity : BasicResponseActivity() {
         appendLog("✓ 已删除 user_name，当前读取值: $check")
     }
 
+    /**
+     * 调用 `clearAll()` 清空当前 MMKV 实例的全部键值。
+     */
     private fun clearAll(kv: MMKV) {
         appendLog("→ clearAll 清空存储...")
         kv.clearAll()
