@@ -143,6 +143,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 根据录制状态切换录像按钮图标与无障碍描述
+     */
     private fun updateRecordButton(recording: Boolean) {
         if (recording) {
             binding.btnRecord.setImageResource(R.drawable.gpuimage_ic_record_stop)
@@ -153,6 +156,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 检查相机与录音权限，已授相机权限则启动预览，否则发起权限申请
+     */
     private fun checkAndRequestPermissions() {
         val hasCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
         val hasAudio = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
@@ -167,6 +173,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 初始化并启动 MediaCodec 录制器与相机预览
+     */
     private fun startCamera() {
         codecRecordHelper.setup()
         codecRecordHelper.start()
@@ -182,6 +191,9 @@ class GpuImageCodecRecordActivity :
         super.onPause()
     }
 
+    /**
+     * 展示录制结果浮层，并在 TextureView 就绪后启动循环回放
+     */
     private fun showVideoPreview(videoFile: File) {
         binding.layoutPreview.visibility = View.VISIBLE
 
@@ -193,6 +205,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 创建 MediaPlayer 绑定 Surface 并异步准备循环回放录像文件
+     */
     private fun startTexturePlayer(surface: Surface, videoFile: File) {
         try {
             stopTexturePlayer()
@@ -216,6 +231,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 解析视频宽高与旋转角并计算 CenterCrop 矩阵适配 TextureView
+     */
     private fun adjustTextureTransform(videoFile: File) {
         binding.previewTexture.post {
             val viewWidth = binding.previewTexture.width
@@ -274,6 +292,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 停止并释放 MediaPlayer 实例
+     */
     private fun stopTexturePlayer() {
         try {
             mediaPlayer?.let {
@@ -287,6 +308,9 @@ class GpuImageCodecRecordActivity :
         }
     }
 
+    /**
+     * 停止回放、重置变换矩阵并隐藏视频预览浮层
+     */
     private fun closePreview() {
         stopTexturePlayer()
         currentVideoFile = null

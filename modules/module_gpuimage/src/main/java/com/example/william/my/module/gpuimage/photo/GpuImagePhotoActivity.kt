@@ -99,6 +99,9 @@ class GpuImagePhotoActivity :
         }
     }
 
+    /**
+     * 检查相机权限，已授权则启动相机，否则发起权限申请
+     */
     private fun checkAndRequestPermission() {
         val hasCamera = ContextCompat.checkSelfPermission(
             this,
@@ -112,6 +115,9 @@ class GpuImagePhotoActivity :
         }
     }
 
+    /**
+     * 初始化并启动 GPUImage 相机预览
+     */
     private fun startCamera() {
         photoHelper.setup()
         photoHelper.start()
@@ -133,11 +139,17 @@ class GpuImagePhotoActivity :
         super.onDestroy()
     }
 
+    /**
+     * 展示拍照结果 Bitmap 预览浮层
+     */
     private fun showPhotoPreview(bitmap: Bitmap) {
         binding.previewImage.setImageBitmap(bitmap)
         binding.layoutPreview.visibility = View.VISIBLE
     }
 
+    /**
+     * 隐藏拍照预览浮层并清空预览图引用
+     */
     private fun closePreview() {
         binding.layoutPreview.visibility = View.GONE
         binding.previewImage.setImageBitmap(null)
