@@ -43,10 +43,16 @@ class FlycoTabLayoutActivity : BaseVBActivity<TabActivityFlycoTabLayoutBinding>(
         initTabLayout()
     }
 
+    /**
+     * 初始化各 Tab 标签标题列表
+     */
     private fun intTitles() {
         titles = arrayListOf("primary1", "primaryDark1", "primary2", "primaryDark2")
     }
 
+    /**
+     * 绑定 SlidingTabLayout、CommonTabLayout、SegmentTabLayout 与 ViewPager 的联动
+     */
     private fun initTabLayout() {
         TabLayoutUtils.initSlidingTab(
             binding.slidingTab,
