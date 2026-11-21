@@ -68,6 +68,9 @@ class ViewPager2TabActivity :
         switchTab(0)
     }
 
+    /**
+     * 初始化页面 Fragment 与 ViewPager2 适配器，并注册页面切换回调
+     */
     private fun initFragment() {
         binding.viewPager2.offscreenPageLimit = 4
         binding.viewPager2.adapter =
@@ -84,6 +87,9 @@ class ViewPager2TabActivity :
         })
     }
 
+    /**
+     * 绑定底部 Tab 点击监听并初始化默认选中状态
+     */
     private fun initTab() {
         binding.navigate.setOnCheckedChangeListener(this)
         for (i in 0 until binding.navigate.childCount) {
@@ -119,10 +125,16 @@ class ViewPager2TabActivity :
         }
     }
 
+    /**
+     * 切换底部 Tab 图标与文字选中态，并更新当前索引
+     */
     private fun switchTab(position: Int) {
         binding.navigate.check(tabs[position].id)
     }
 
+    /**
+     * 切换 ViewPager2 当前页并同步更新底部 Tab 状态
+     */
     private fun switchFragment(position: Int) {
         binding.viewPager2.currentItem = position
     }

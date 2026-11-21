@@ -50,6 +50,9 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
         initTab()
     }
 
+    /**
+     * 初始化或按 tag 恢复页面 Fragment，并默认显示首页
+     */
     private fun initFragment(savedInstanceState: Bundle?) {
         FragmentUtils.initFragment(
             savedInstanceState,
@@ -60,6 +63,9 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
         )
     }
 
+    /**
+     * 配置 BottomNavigationView 选中监听以联动切换 Fragment
+     */
     private fun initTab() {
         binding.bottomNav.setOnItemSelectedListener { item ->
             val index = when (item.itemId) {
@@ -74,6 +80,9 @@ class BottomNavigationActivity : BaseVBActivity<TabActivityBottomNavigationBindi
         }
     }
 
+    /**
+     * 按目标索引隐藏当前并显示目标 Fragment，同时更新当前索引
+     */
     private fun switchFragment(position: Int) {
         FragmentUtils.switchFragment(supportFragmentManager, fragments, position)
     }

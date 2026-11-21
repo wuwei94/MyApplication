@@ -61,6 +61,9 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
         initTab()
     }
 
+    /**
+     * 向 FragmentTabHost 注册各 TabSpec 并绑定选中变更监听
+     */
     private fun initTab() {
         binding.tabhost.setup(this, supportFragmentManager, android.R.id.tabcontent)
         binding.tabhost.setOnTabChangedListener {
@@ -76,6 +79,9 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
         updateTabTextBold(titles[0])
     }
 
+    /**
+     * 根据当前选中 Tab 标签更新标题粗体样式
+     */
     private fun updateTabTextBold(selectedTag: String) {
         for (i in fragments.indices) {
             val tabView = binding.tabs.getChildTabViewAt(i)
@@ -85,6 +91,9 @@ class TabHostActivity : BaseVBActivity<TabActivityTabHostBinding>() {
         }
     }
 
+    /**
+     * 构建单个自定义 Tab 视图（包含图标与标题）
+     */
     private fun getTabView(position: Int): View {
         val view = layoutInflater.inflate(R.layout.tab_item_tab_host, binding.tabs, false)
         val textView = view.findViewById<TextView>(R.id.item_tab_text)

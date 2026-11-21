@@ -68,6 +68,9 @@ class FrameLayoutTabActivity :
         switchFragment(0)
     }
 
+    /**
+     * 初始化或按 tag 恢复页面 Fragment，并默认显示首页
+     */
     private fun initFragment(savedInstanceState: Bundle?) {
         FragmentUtils.initFragment(
             savedInstanceState,
@@ -78,6 +81,9 @@ class FrameLayoutTabActivity :
         )
     }
 
+    /**
+     * 绑定底部 Tab 点击监听并初始化默认选中状态
+     */
     private fun initTab() {
         binding.navigate.setOnCheckedChangeListener(this)
         for (i in 0 until binding.navigate.childCount) {
@@ -113,10 +119,16 @@ class FrameLayoutTabActivity :
         }
     }
 
+    /**
+     * 切换底部 Tab 图标与文字选中态，并更新当前索引
+     */
     private fun switchTab(position: Int) {
         binding.navigate.check(tabs[position].id)
     }
 
+    /**
+     * 按目标索引隐藏当前并显示目标 Fragment，同时同步底部 Tab 状态
+     */
     private fun switchFragment(position: Int) {
         FragmentUtils.switchFragment(supportFragmentManager, fragments, position)
     }
