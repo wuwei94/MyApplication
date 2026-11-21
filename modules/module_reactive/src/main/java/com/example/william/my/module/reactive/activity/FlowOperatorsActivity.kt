@@ -82,6 +82,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 1. 创建操作符
     // ─────────────────────────────────────────────
+    /**
+     * 演示 `asFlow` 等创建操作符构建冷数据流并按生命周期收集。
+     */
     private fun testCreateOperators() {
         launchAndRepeatWithLifecycle {
             createFlow().collect { appendLog("→ [创建操作符 asFlow] onNext: $it") }
@@ -92,6 +95,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 2. 变换操作符
     // ─────────────────────────────────────────────
+    /**
+     * 对比 `map`（逐项映射）、`flatMapConcat`（顺序展开）与 `buffer`（背压缓冲）变换操作符。
+     */
     private fun testTransformOperators() {
         launchAndRepeatWithLifecycle {
             mapFlow(flowOf("apple", "banana")).collect { appendLog("→ [变换操作符 map] 大写转换: $it") }
@@ -108,6 +114,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 3. 过滤操作符
     // ─────────────────────────────────────────────
+    /**
+     * 组合 `distinctUntilChanged`、`filter` 与 `take` 实现去重、过滤和限量收集。
+     */
     private fun testFilterOperators() {
         launchAndRepeatWithLifecycle {
             filterFlow(flowOf(1, 2, 2, 3, 4, 1, 5))
@@ -119,6 +128,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 4. 组合操作符
     // ─────────────────────────────────────────────
+    /**
+     * 对比 `zip`（严格成对配对）与 `combine`（任意上游发射即取最新值组合）。
+     */
     private fun testCombineOperators() {
         launchAndRepeatWithLifecycle {
             zipFlow(flowOf("Android", "Kotlin"), flowOf("14", "2.0"))
@@ -134,6 +146,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 5. 错误恢复操作符
     // ─────────────────────────────────────────────
+    /**
+     * 使用 `catch` 操作符捕获上游异常并向下游发射降级默认值。
+     */
     private fun testErrorOperators() {
         launchAndRepeatWithLifecycle {
             catchFlow(flakySource).collect { value ->
@@ -147,6 +162,9 @@ class FlowOperatorsActivity : BasicResponseActivity() {
     // ─────────────────────────────────────────────
     // 6. 错误重试操作符
     // ─────────────────────────────────────────────
+    /**
+     * 使用 `retry` 在上游失败时自动重新订阅，超出重试上限后交由 `catch` 兜底。
+     */
     private fun testRetryOperators() {
         launchAndRepeatWithLifecycle {
             retryFlow(flakySource, RETRY_MAX_ATTEMPTS)
