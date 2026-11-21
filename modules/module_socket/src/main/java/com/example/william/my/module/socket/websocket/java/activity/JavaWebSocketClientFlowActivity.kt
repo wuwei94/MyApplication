@@ -68,25 +68,28 @@ class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
         JavaWebSocketClientFlow.cancel(serverUrl)
     }
 
+    /**
+     * 建立 WebSocket 连接并收集状态/消息 Flow，重连前先取消旧收集协程。
+     */
     private fun connect() {
         connectJob?.cancel()
-        appendLog("[连接]正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         connectJob = lifecycleScope.launch {
             JavaWebSocketClientFlow
                 .createWebSocket(serverUrl)
                 .collect { info ->
                     when (info) {
                         is JavaWebSocketInfo.Open -> {
-                            appendLogAccent("[连接]已连接")
+                            appendLogAccent("✓ [连接] 已连接")
                         }
                         is JavaWebSocketInfo.TextMessage -> {
-                            appendLogAccent("[消息]收到：${info.message}")
+                            appendLogAccent("✓ [消息] 收到：${info.message}")
                         }
                         is JavaWebSocketInfo.BytesMessage -> {
-                            appendLogAccent("[消息]收到字节数据：${info.bytes.size} bytes")
+                            appendLogAccent("✓ [消息] 收到字节数据：${info.bytes.size} bytes")
                         }
                         is JavaWebSocketInfo.Closed -> {
-                            appendLogAccent("[关闭]已关闭：code=${info.code} reason=${info.reason}")
+                            appendLogAccent("✓ [关闭] 已关闭：code=${info.code} reason=${info.reason}")
                         }
                         is JavaWebSocketInfo.Error -> {
                             appendLogAccent("✗ ${info.exception.message}")
@@ -96,19 +99,25 @@ class JavaWebSocketClientFlowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 向已连接的 WebSocket 会话发送文本消息。
+     */
     private fun sendMessage() {
         val message = "Hello from Client (Flow)!"
         val success = JavaWebSocketClientFlow.send(serverUrl, message)
         if (success) {
-            appendLog("[发送]$message")
+            appendLog("✓ [发送] $message")
         } else {
             appendLog("✗ 发送失败")
         }
     }
 
+    /**
+     * 取消收集协程并关闭 WebSocket 连接。
+     */
     private fun disconnect() {
         connectJob?.cancel()
         JavaWebSocketClientFlow.close(serverUrl)
-        appendLog("[断开]已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }

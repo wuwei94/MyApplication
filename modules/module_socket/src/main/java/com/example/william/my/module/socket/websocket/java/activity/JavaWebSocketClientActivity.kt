@@ -63,8 +63,11 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
         JavaWebSocketClient.cancel(serverUrl)
     }
 
+    /**
+     * 建立 Java-WebSocket 客户端连接（内置 `autoReconnect` 断线重连），回调切回主线程输出。
+     */
     private fun connect() {
-        appendLog("[连接]正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         JavaWebSocketClient.connect(
             url = serverUrl,
             autoReconnect = true,
@@ -72,19 +75,19 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
             listener = object : JavaWebSocketClientListener() {
                 override fun onOpen(webSocket: WebSocketClient, handshakedata: ServerHandshake) {
                     runOnUiThread {
-                        appendLogAccent("[连接]已连接")
+                        appendLogAccent("✓ [连接] 已连接")
                     }
                 }
 
                 override fun onMessage(webSocket: WebSocketClient, message: String) {
                     runOnUiThread {
-                        appendLogAccent("[消息]收到：$message")
+                        appendLogAccent("✓ [消息] 收到：$message")
                     }
                 }
 
                 override fun onClose(webSocket: WebSocketClient, code: Int, reason: String?, remote: Boolean) {
                     runOnUiThread {
-                        appendLogAccent("[关闭]已关闭：code=$code reason=$reason")
+                        appendLogAccent("✓ [关闭] 已关闭：code=$code reason=$reason")
                     }
                 }
 
@@ -97,18 +100,24 @@ class JavaWebSocketClientActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 向已连接的 WebSocket 会话发送文本消息。
+     */
     private fun sendMessage() {
         val message = "Hello from Client!"
         val success = JavaWebSocketClient.send(serverUrl, message)
         if (success) {
-            appendLog("[发送]$message")
+            appendLog("✓ [发送] $message")
         } else {
             appendLog("✗ 发送失败")
         }
     }
 
+    /**
+     * 关闭 WebSocket 连接并取消底层重连调度。
+     */
     private fun disconnect() {
         JavaWebSocketClient.close(serverUrl)
-        appendLog("[断开]已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }

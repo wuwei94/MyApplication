@@ -57,6 +57,9 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
         OkHttpWebSocketClientRx.cancel(serverUrl)
     }
 
+    /**
+     * 通过 RxJava3 Observable 订阅 OkHttp WebSocket 连接与消息事件流。
+     */
     private fun connect() {
         appendLog("→ [连接] 正在连接 $serverUrl ...")
         OkHttpWebSocketClientRx
@@ -80,6 +83,9 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
             })
     }
 
+    /**
+     * 向已连接的 OkHttp WebSocket 发送文本消息。
+     */
     private fun sendMessage() {
         val message = "Hello from Client!"
         appendLog("→ [上行] 发送消息...")
@@ -91,6 +97,9 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 复用 send 通道发送应用层心跳探测帧。
+     */
     private fun sendHeartbeat() {
         val heartbeat = "ping ${System.currentTimeMillis()}"
         appendLog("→ [心跳] 发送应用层探测帧...")
@@ -102,6 +111,9 @@ class OkHttpWebSocketClientRxActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 关闭 OkHttp WebSocket 连接。
+     */
     private fun disconnect() {
         OkHttpWebSocketClientRx.close(serverUrl)
         appendLog("✓ [断开] 已断开连接")

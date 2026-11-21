@@ -55,6 +55,9 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
         OkHttpWebSocketClient.cancel(serverUrl)
     }
 
+    /**
+     * 通过 OkHttpWebSocketClientListener 异步建立 WebSocket 连接并挂接下行消息回调。
+     */
     private fun connect() {
         appendLog("→ [连接] 正在连接 $serverUrl ...")
         OkHttpWebSocketClient.connect(
@@ -87,6 +90,9 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 向已连接的 OkHttp WebSocket 发送文本消息。
+     */
     private fun sendMessage() {
         val message = "Hello from Client!"
         appendLog("→ [上行] 发送消息...")
@@ -112,6 +118,9 @@ class OkHttpWebSocketClientActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 发送 RFC 6455 正常关闭帧（1000）断开 WebSocket 连接。
+     */
     private fun disconnect() {
         OkHttpWebSocketClient.close(serverUrl)
         appendLog("✓ [断开] 已断开连接")

@@ -61,6 +61,9 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
         OkHttpWebSocketClientFlow.cancel(serverUrl)
     }
 
+    /**
+     * 建立 OkHttp WebSocket 连接并收集状态/消息 Flow，重连前先取消旧收集协程。
+     */
     private fun connect() {
         connectJob?.cancel()
         appendLog("→ [连接] 正在连接 $serverUrl ...")
@@ -89,6 +92,9 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 向已连接的 OkHttp WebSocket 发送文本消息。
+     */
     private fun sendMessage() {
         val message = "Hello from Client (Flow)!"
         appendLog("→ [上行] 发送消息...")
@@ -100,6 +106,9 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 复用 send 通道发送应用层心跳探测帧。
+     */
     private fun sendHeartbeat() {
         val heartbeat = "ping ${System.currentTimeMillis()}"
         appendLog("→ [心跳] 发送应用层探测帧...")
@@ -111,6 +120,9 @@ class OkHttpWebSocketClientFlowActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 取消收集协程并关闭 OkHttp WebSocket 连接。
+     */
     private fun disconnect() {
         connectJob?.cancel()
         OkHttpWebSocketClientFlow.close(serverUrl)

@@ -64,21 +64,24 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
         JavaWebSocketClientRx.cancel(serverUrl)
     }
 
+    /**
+     * 通过 RxJava3 Observable 订阅 WebSocket 连接与消息事件流。
+     */
     private fun connect() {
-        appendLog("[连接]正在连接 $serverUrl ...")
+        appendLog("→ [连接] 正在连接 $serverUrl ...")
         JavaWebSocketClientRx
             .createWebSocket(serverUrl)
             .subscribe(object : JavaWebSocketRxObserver() {
                 override fun onOpen(webSocket: WebSocketClient) {
-                    appendLogAccent("[连接]已连接")
+                    appendLogAccent("✓ [连接] 已连接")
                 }
 
                 override fun onMessage(webSocket: WebSocketClient, text: String) {
-                    appendLogAccent("[消息]收到：$text")
+                    appendLogAccent("✓ [消息] 收到：$text")
                 }
 
                 override fun onClosed(code: Int, reason: String, remote: Boolean) {
-                    appendLogAccent("[关闭]已关闭：code=$code reason=$reason")
+                    appendLogAccent("✓ [关闭] 已关闭：code=$code reason=$reason")
                 }
 
                 override fun onError(exception: Exception) {
@@ -87,18 +90,24 @@ class JavaWebSocketClientRxActivity : BasicResponseActivity() {
             })
     }
 
+    /**
+     * 向已连接的 WebSocket 会话发送文本消息。
+     */
     private fun sendMessage() {
         val message = "Hello from Client!"
         val success = JavaWebSocketClientRx.send(serverUrl, message)
         if (success) {
-            appendLog("[发送]$message")
+            appendLog("✓ [发送] $message")
         } else {
             appendLog("✗ 发送失败")
         }
     }
 
+    /**
+     * 关闭 WebSocket 连接并停止重连。
+     */
     private fun disconnect() {
         JavaWebSocketClientRx.close(serverUrl)
-        appendLog("[断开]已断开连接")
+        appendLog("✓ [断开] 已断开连接")
     }
 }
