@@ -48,6 +48,9 @@ class ARouterActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 携带参数发起 ARouter 路由跳转并监听路由命中、到达与拦截回调
+     */
     private fun navigateWithParams() {
         appendLog("→ ARouter 发起跳转: ${RouterPath.Router.ARouterTarget}")
         ARouter.getInstance()
@@ -76,6 +79,9 @@ class ARouterActivity : BasicResponseActivity() {
             )
     }
 
+    /**
+     * 通过 ARouter 发现并调用跨模块 ARouterDemoService 实例
+     */
     private fun discoverService() {
         appendLog("→ 查找 ARouter IProvider: ARouterDemoService")
         val service = ARouter.getInstance().navigation(ARouterDemoService::class.java)
