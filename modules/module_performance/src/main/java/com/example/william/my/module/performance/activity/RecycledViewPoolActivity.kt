@@ -48,6 +48,9 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
         initViewPager()
     }
 
+    /**
+     * 初始化共享 RecycledViewPool 的 ViewPager2 与 TabLayout 联动
+     */
     private fun initViewPager() {
         container.removeAllViews()
         poolBinding = PerformanceLayoutPoolPagerBinding.inflate(layoutInflater, container, true)
@@ -99,6 +102,9 @@ class RecycledViewPoolActivity : BasicRecyclerActivity() {
         }
     }
 
+    /**
+     * 汇总并输出当前共享复用池及各 Tab 的创建与绑定统计信息
+     */
     private fun logHudStats(prefix: String = "") {
         val poolCount = RecycledViewPoolManager.getRecycledViewCount(PoolItemAdapter.VIEW_TYPE_CARD)
         val tab2ReuseCount = (tab2BindCount - tab2CreateCount).coerceAtLeast(0)

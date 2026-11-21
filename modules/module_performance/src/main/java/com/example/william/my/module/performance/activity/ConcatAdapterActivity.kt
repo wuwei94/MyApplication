@@ -47,6 +47,9 @@ class ConcatAdapterActivity : BasicRecyclerActivity() {
         initConcatAdapter()
     }
 
+    /**
+     * 组装 Header、Banner、Feed 与 Footer 四个独立 Adapter 并绑定到 RecyclerView
+     */
     private fun initConcatAdapter() {
         val config = ConcatAdapter.Config.Builder()
             .setIsolateViewTypes(true)
