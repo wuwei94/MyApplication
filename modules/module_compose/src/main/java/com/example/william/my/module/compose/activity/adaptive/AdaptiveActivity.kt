@@ -89,6 +89,9 @@ class AdaptiveActivity : ComponentActivity() {
         ArticleItem(5, "Offline-First 离线优先架构实战", "工程基建", "Room + Proto DataStore 游标同步与 SSOT 单一数据源的稳定落地。"),
     )
 
+    /**
+     * 响应式主界面，根据模拟或真实窗口宽度断点切换紧凑单栏与展开双栏布局
+     */
     @Composable
     private fun AdaptiveScreen(modifier: Modifier = Modifier) {
         var simMode by remember { mutableStateOf(SimulationMode.AUTO) }
@@ -219,6 +222,9 @@ class AdaptiveActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 展示文章列表并高亮当前选中项
+     */
     @Composable
     private fun ArticleListView(
         articles: List<ArticleItem>,
@@ -259,6 +265,9 @@ class AdaptiveActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 展示文章详情，在紧凑单栏模式下提供返回列表按钮
+     */
     @Composable
     private fun ArticleDetailView(article: ArticleItem, onBackClick: (() -> Unit)?) {
         Column(modifier = Modifier.fillMaxSize()) {

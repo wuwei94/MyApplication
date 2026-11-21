@@ -123,6 +123,9 @@ class ThemeActivity : ComponentActivity() {
         ),
     }
 
+    /**
+     * 主题切换演练主界面，维护亮暗模式与品牌色板状态并注入 MaterialTheme
+     */
     @Composable
     private fun ThemePlaygroundScreen() {
         var currentMode by remember { mutableStateOf(ThemeMode.SYSTEM) }
@@ -160,6 +163,9 @@ class ThemeActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 主题配置与预览内容区，提供模式切换、色板选择及色彩令牌实时预览
+     */
     @Composable
     private fun ThemePlaygroundContent(
         currentMode: ThemeMode,
@@ -290,6 +296,9 @@ class ThemeActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 单个色彩令牌预览色块
+     */
     @Composable
     private fun ColorChipItem(name: String, bg: Color, fg: Color, modifier: Modifier = Modifier) {
         Box(

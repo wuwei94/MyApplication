@@ -79,6 +79,9 @@ class PerformanceActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 重组性能调优主界面，演示 derivedStateOf 与模型稳定性对重组的影响
+     */
     @Composable
     private fun PerformanceDemoScreen() {
         val listState = rememberLazyListState()
@@ -201,6 +204,9 @@ class PerformanceActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 展示 @Immutable 稳定模型卡片并统计重组次数
+     */
     @Composable
     private fun StableUserCard(user: StableUser) {
         var recomposeCount by remember { mutableIntStateOf(0) }
@@ -239,6 +245,9 @@ class PerformanceActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 展示普通 List 不稳定模型卡片并统计被动重组次数
+     */
     @Composable
     private fun UnstableUserCard(user: UnstableUser) {
         var recomposeCount by remember { mutableIntStateOf(0) }
@@ -277,6 +286,9 @@ class PerformanceActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 通用分组卡片容器
+     */
     @Composable
     private fun SectionCard(
         title: String,

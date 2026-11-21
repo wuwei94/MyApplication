@@ -106,6 +106,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Material 3 选择与滑块控件画廊主界面
+     */
     @Composable
     private fun SelectionGalleryScreen() {
         val scrollState = rememberScrollState()
@@ -135,6 +138,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 Checkbox 与 TriStateCheckbox 父子三态全选联动
+     */
     @Composable
     private fun TriStateCheckboxSection() {
         val selectionState = remember { TriStateSelectionState(3) }
@@ -190,6 +196,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示带图标与普通样式的 Material 3 Switch 状态开关
+     */
     @Composable
     private fun SwitchSection() {
         var isWifiEnabled by remember { mutableStateOf(true) }
@@ -260,6 +269,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 RadioButton 单选按钮组互斥切换
+     */
     @Composable
     private fun RadioButtonSection() {
         val options = listOf("按热度智能推荐", "按发布时间最新", "按评论互动最多")
@@ -290,6 +302,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示连续滑动与离散步进刻度两种 Slider
+     */
     @Composable
     private fun SliderSection() {
         var continuousValue by remember { mutableFloatStateOf(45f) }
@@ -327,6 +342,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 RangeSlider 双向区间价格选择
+     */
     @Composable
     private fun RangeSliderSection() {
         var sliderPosition by remember { mutableStateOf(200f..800f) }
@@ -350,6 +368,9 @@ class SelectionActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 通用分组卡片容器
+     */
     @Composable
     private fun SectionCard(
         title: String,

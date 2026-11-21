@@ -74,6 +74,9 @@ class ChipActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Material 3 Chip 组件画廊主界面，纵向排列四类标签示例
+     */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun ChipGalleryScreen(onToast: (String) -> Unit) {
@@ -101,6 +104,9 @@ class ChipActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 FilterChip 多选过滤标签状态切换
+     */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun FilterChipSection() {
@@ -165,6 +171,9 @@ class ChipActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 InputChip 实体输入与点击右侧关闭图标移除条目
+     */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun InputChipSection(onToast: (String) -> Unit) {
@@ -215,6 +224,9 @@ class ChipActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 SuggestionChip 智能推荐与联想词标签
+     */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun SuggestionChipSection(onToast: (String) -> Unit) {
@@ -236,6 +248,9 @@ class ChipActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 AssistChip 与 ElevatedAssistChip 辅助操作指令
+     */
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun AssistChipSection(onToast: (String) -> Unit) {
@@ -272,6 +287,9 @@ class ChipActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 通用分组卡片容器
+     */
     @Composable
     private fun SectionCard(
         title: String,
