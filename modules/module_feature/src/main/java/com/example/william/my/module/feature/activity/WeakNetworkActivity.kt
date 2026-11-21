@@ -128,6 +128,9 @@ class WeakNetworkActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 输出当前由 `NetworkMonitor` 维护的在线/离线状态。
+     */
     private fun observeNetworkStatus() {
         appendLog("→ [NetworkMonitor] 当前 isOnline 订阅始终随生命周期生效")
         val online = lastOnline
@@ -138,6 +141,9 @@ class WeakNetworkActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用常规超时与缓存客户端发起正常网络请求，成功时刷新内存兜底缓存。
+     */
     private fun requestNormal() {
         appendLog("→ [Normal] 发起请求（timeout=${NORMAL_TIMEOUT_SECONDS}s + cache alive=${CACHE_ALIVE_SECONDS}s）...")
         enqueue(cacheClient, buildArticleRequest(cacheAliveSeconds = CACHE_ALIVE_SECONDS), TAG_NORMAL) { body ->
@@ -145,6 +151,9 @@ class WeakNetworkActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用短超时且关闭自动重试的客户端发起请求，模拟弱网快速失败场景。
+     */
     private fun requestShortTimeout() {
         appendLog("→ [ShortTimeout] 发起请求（callTimeout=${SHORT_TIMEOUT_SECONDS}s，关闭连接失败重试）...")
         val request = Request.Builder()
@@ -154,6 +163,9 @@ class WeakNetworkActivity : BasicResponseActivity() {
         enqueue(shortTimeoutClient, request, TAG_SHORT_TIMEOUT)
     }
 
+    /**
+     * 在协程中执行指数退避重试（最多 `MAX_RETRY` 次），全部失败后提示挂起网络恢复重试。
+     */
     private fun requestWithBackoffRetry() {
         if (backoffJobRunning) {
             appendLog("→ [Retry] 退避重试进行中...")
@@ -188,6 +200,9 @@ class WeakNetworkActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 先读取最近一次内存成功响应兜底，再向磁盘缓存（离线时 `FORCE_CACHE`）发起请求。
+     */
     private fun readOfflineFallback() {
         val cached = lastSuccessBody
         if (cached == null) {
@@ -207,6 +222,9 @@ class WeakNetworkActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 挂起待恢复重试标记，等待 `NetworkMonitor` 捕获断网重连边沿信号后自动触发请求。
+     */
     private fun armRecoveryRetry() {
         if (lastOnline == true) {
             appendLog("→ [Recovery] 当前在线，直接发起请求")
