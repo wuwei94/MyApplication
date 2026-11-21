@@ -7,7 +7,6 @@ import com.example.william.my.module.widget_custom.activity.AlertDialogActivity
 import com.example.william.my.module.widget_custom.activity.BlurViewActivity
 import com.example.william.my.module.widget_custom.activity.CustomPopWindowActivity
 import com.example.william.my.module.widget_custom.activity.InfiniteImageActivity
-import com.example.william.my.module.widget_custom.activity.LinearProgressActivity
 import com.example.william.my.module.widget_custom.activity.MarqueeViewActivity
 import com.example.william.my.module.widget_custom.activity.NinePatchActivity
 import com.example.william.my.module.widget_custom.activity.Sensor3DActivity
@@ -47,11 +46,6 @@ object ModuleWidgetCustomPageModule {
     @IntoMap
     @StringKey(RouterPath.WidgetCustom.InfiniteImage)
     fun provideInfiniteImageActivity(): Class<out Activity> = InfiniteImageActivity::class.java
-
-    @Provides
-    @IntoMap
-    @StringKey(RouterPath.WidgetCustom.LinearProgress)
-    fun provideLinearProgressActivity(): Class<out Activity> = LinearProgressActivity::class.java
 
     @Provides
     @IntoMap
