@@ -69,16 +69,25 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
         rxRetrofit { baseUrl(Constants.Url_Base) },
     )
 
+    /**
+     * 发起 GET 请求（rxRetrofit DSL + RxJava3 Single）。
+     */
     private fun getSingle() {
         appendLog("→ [GET] 发起请求...")
         subscribe(defaultApi().getSingle(0), "[GET]")
     }
 
+    /**
+     * 通过 @FormUrlEncoded + Single 提交表单登录请求。
+     */
     private fun postFormSingle(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
         subscribe(defaultApi().postFormSingle(username, password), "[Form]")
     }
 
+    /**
+     * 通过 @Body RequestBody + Single 提交 application/json 请求体。
+     */
     private fun postJsonSingle(username: String, password: String) {
         appendLog("→ [JSON] 发起请求...")
         val body = JSONObject()
@@ -89,6 +98,9 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
         subscribe(defaultApi().postJsonSingle(body), "[JSON]")
     }
 
+    /**
+     * 通过 @Body RequestBody + Single 提交 text/plain 原始文本请求体。
+     */
     private fun postRawSingle(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
@@ -96,11 +108,17 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
         subscribe(defaultApi().postRawSingle(body), "[Raw]")
     }
 
+    /**
+     * 通过 @Multipart + Single 提交 multipart/form-data 表单数据。
+     */
     private fun postMultipartSingle(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
         subscribe(defaultApi().postMultipartSingle(username, password), "[Multipart]")
     }
 
+    /**
+     * 通过 rxRetrofit { client(okHttpClient { ... }) } 嵌套 DSL 定制超时与日志配置。
+     */
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
         val api = createRxApi(
@@ -118,6 +136,9 @@ class RetrofitRxDslActivity : BasicResponseActivity() {
         subscribe(api.getSingle(0), "[DSL]")
     }
 
+    /**
+     * 统一在 IO 线程订阅 Single 并在主线程回调，同时加入 CompositeDisposable 管理生命周期。
+     */
     private fun subscribe(single: Single<ResponseBody>, tag: String) {
         operations.add(
             single

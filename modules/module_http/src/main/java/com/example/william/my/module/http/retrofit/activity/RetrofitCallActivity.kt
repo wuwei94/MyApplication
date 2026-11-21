@@ -63,11 +63,19 @@ class RetrofitCallActivity : BasicResponseActivity() {
         .baseUrl(Constants.Url_Base)
         .build()
 
+    /**
+     * 发起 GET 请求（Call 异步入队）。
+     *
+     * 构建流程：Retrofit.create() → getCall(page) → enqueue()
+     */
     private fun getCall() {
         appendLog("→ [GET] 发起请求...")
         enqueue(createApi(defaultRetrofit()).getCall(0), "[GET]")
     }
 
+    /**
+     * 通过 @FormUrlEncoded + @Field 提交表单登录请求。
+     */
     private fun postFormCall(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
         enqueue(
@@ -76,6 +84,9 @@ class RetrofitCallActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 通过 @Body RequestBody 提交 application/json 格式请求体。
+     */
     private fun postJsonCall(username: String, password: String) {
         appendLog("→ [JSON] 发起请求...")
         val body = JSONObject()
@@ -89,6 +100,9 @@ class RetrofitCallActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 通过 @Body RequestBody 提交 text/plain 原始文本请求体。
+     */
     private fun postRawCall(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
@@ -99,6 +113,9 @@ class RetrofitCallActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 通过 @Multipart + @Part 提交 multipart/form-data 表单数据。
+     */
     private fun postMultipartCall(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
         enqueue(
@@ -107,6 +124,9 @@ class RetrofitCallActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 演示为 Retrofit 挂载经由 DSL 定制超时与日志级别的 OkHttpClient。
+     */
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
         val retrofit = Retrofit.Builder()
@@ -121,6 +141,9 @@ class RetrofitCallActivity : BasicResponseActivity() {
         enqueue(createApi(retrofit).getCall(0), "[DSL]")
     }
 
+    /**
+     * 统一执行 Call.enqueue 异步回调，Retrofit 2 默认将 onResponse/onFailure 切回主线程。
+     */
     private fun enqueue(call: Call<ResponseBody>, tag: String) {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

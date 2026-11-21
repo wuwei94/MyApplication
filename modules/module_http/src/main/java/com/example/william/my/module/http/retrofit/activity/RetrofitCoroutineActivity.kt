@@ -61,11 +61,17 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
         .baseUrl(Constants.Url_Base)
         .build()
 
+    /**
+     * 发起 GET 请求（suspend 挂起函数直接返回 ResponseBody）。
+     */
     private fun getSuspend() {
         appendLog("→ [GET] 发起请求...")
         launchSuspend("[GET]") { api -> api.getSuspend(0).string() }
     }
 
+    /**
+     * 通过 suspend @FormUrlEncoded 提交表单登录请求。
+     */
     private fun postFormSuspend(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
         launchSuspend("[Form]") { api ->
@@ -73,6 +79,9 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 suspend @Body RequestBody 提交 application/json 请求体。
+     */
     private fun postJsonSuspend(username: String, password: String) {
         appendLog("→ [JSON] 发起请求...")
         val body = JSONObject()
@@ -83,6 +92,9 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
         launchSuspend("[JSON]") { api -> api.postJsonSuspend(body).string() }
     }
 
+    /**
+     * 通过 suspend @Body RequestBody 提交 text/plain 原始文本请求体。
+     */
     private fun postRawSuspend(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
@@ -90,6 +102,9 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
         launchSuspend("[Raw]") { api -> api.postRawSuspend(body).string() }
     }
 
+    /**
+     * 通过 suspend @Multipart 提交 multipart/form-data 表单数据。
+     */
     private fun postMultipartSuspend(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
         launchSuspend("[Multipart]") { api ->
@@ -97,6 +112,9 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 演示为协程 Retrofit 挂载经由 DSL 定制超时与日志级别的 OkHttpClient。
+     */
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
         val retrofit = Retrofit.Builder()
@@ -111,6 +129,9 @@ class RetrofitCoroutineActivity : BasicResponseActivity() {
         launchSuspend("[DSL]", retrofit) { api -> api.getSuspend(0).string() }
     }
 
+    /**
+     * 在 lifecycleScope 中执行挂起请求并捕获异常，页面销毁时自动取消协程。
+     */
     private fun launchSuspend(
         tag: String,
         retrofit: Retrofit = defaultRetrofit(),

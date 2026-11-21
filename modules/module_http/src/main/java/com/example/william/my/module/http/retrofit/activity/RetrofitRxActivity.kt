@@ -73,11 +73,17 @@ class RetrofitRxActivity : BasicResponseActivity() {
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build()
 
+    /**
+     * 发起 GET 请求（RxJava3 Single 响应式流）。
+     */
     private fun getSingle() {
         appendLog("→ [GET] 发起请求...")
         subscribe(createApi(defaultRetrofit()).getSingle(0), "[GET]")
     }
 
+    /**
+     * 通过 @FormUrlEncoded + Single 提交表单登录请求。
+     */
     private fun postFormSingle(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
         subscribe(
@@ -86,6 +92,9 @@ class RetrofitRxActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 通过 @Body RequestBody + Single 提交 application/json 请求体。
+     */
     private fun postJsonSingle(username: String, password: String) {
         appendLog("→ [JSON] 发起请求...")
         val body = JSONObject()
@@ -96,6 +105,9 @@ class RetrofitRxActivity : BasicResponseActivity() {
         subscribe(createApi(defaultRetrofit()).postJsonSingle(body), "[JSON]")
     }
 
+    /**
+     * 通过 @Body RequestBody + Single 提交 text/plain 原始文本请求体。
+     */
     private fun postRawSingle(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
@@ -103,6 +115,9 @@ class RetrofitRxActivity : BasicResponseActivity() {
         subscribe(createApi(defaultRetrofit()).postRawSingle(body), "[Raw]")
     }
 
+    /**
+     * 通过 @Multipart + Single 提交 multipart/form-data 表单数据。
+     */
     private fun postMultipartSingle(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
         subscribe(
@@ -111,6 +126,9 @@ class RetrofitRxActivity : BasicResponseActivity() {
         )
     }
 
+    /**
+     * 演示为 RxJava Retrofit 挂载经由 DSL 定制超时与日志级别的 OkHttpClient。
+     */
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
         val retrofit = Retrofit.Builder()
@@ -126,6 +144,9 @@ class RetrofitRxActivity : BasicResponseActivity() {
         subscribe(createApi(retrofit).getSingle(0), "[DSL]")
     }
 
+    /**
+     * 统一在 IO 线程订阅 Single 并在主线程回调，同时加入 CompositeDisposable 管理生命周期。
+     */
     private fun subscribe(single: Single<ResponseBody>, tag: String) {
         operations.add(
             single

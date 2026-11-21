@@ -62,16 +62,25 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
         retrofit { baseUrl(Constants.Url_Base) },
     )
 
+    /**
+     * 发起 GET 请求（DSL 构建的 Retrofit + Call 异步入队）。
+     */
     private fun getCall() {
         appendLog("→ [GET] 发起请求...")
         enqueue(defaultApi().getCall(0), "[GET]")
     }
 
+    /**
+     * 通过 @FormUrlEncoded + @Field 提交表单登录请求。
+     */
     private fun postFormCall(username: String, password: String) {
         appendLog("→ [Form] 发起请求...")
         enqueue(defaultApi().postFormCall(username, password), "[Form]")
     }
 
+    /**
+     * 通过 @Body RequestBody 提交 application/json 格式请求体。
+     */
     private fun postJsonCall(username: String, password: String) {
         appendLog("→ [JSON] 发起请求...")
         val body = JSONObject()
@@ -82,6 +91,9 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
         enqueue(defaultApi().postJsonCall(body), "[JSON]")
     }
 
+    /**
+     * 通过 @Body RequestBody 提交 text/plain 原始文本请求体。
+     */
     private fun postRawCall(username: String, password: String) {
         appendLog("→ [Raw] 发起请求...")
         val body = "${Constants.Key_Username}=$username&${Constants.Key_Password}=$password"
@@ -89,11 +101,17 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
         enqueue(defaultApi().postRawCall(body), "[Raw]")
     }
 
+    /**
+     * 通过 @Multipart + @Part 提交 multipart/form-data 表单数据。
+     */
     private fun postMultipartCall(username: String, password: String) {
         appendLog("→ [Multipart] 发起请求...")
         enqueue(defaultApi().postMultipartCall(username, password), "[Multipart]")
     }
 
+    /**
+     * 通过 retrofit { client(okHttpClient { ... }) } 嵌套 DSL 定制超时与日志配置。
+     */
     private fun getWithConfiguredClient() {
         appendLog("→ [DSL] 使用配置后的 Client 发起请求...")
         val api = createApi(
@@ -111,6 +129,9 @@ class RetrofitCallDslActivity : BasicResponseActivity() {
         enqueue(api.getCall(0), "[DSL]")
     }
 
+    /**
+     * 统一执行 Call.enqueue 异步回调，Retrofit 2 默认将回调切回主线程。
+     */
     private fun enqueue(call: Call<ResponseBody>, tag: String) {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
