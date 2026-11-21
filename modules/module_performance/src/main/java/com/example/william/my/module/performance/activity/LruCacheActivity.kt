@@ -70,7 +70,7 @@ class LruCacheActivity : BasicResponseActivity() {
      * 示例 1 & 2：标准的 Cache-Aside 回源加载模式
      */
     private fun fetchUserWithCache(userId: String) {
-        appendLog("[请求用户 $userId]")
+        appendLog("→ [请求用户 $userId]")
         // 1. 尝试从 LruCache 中读取
         val cached = userProfileCache.get(userId)
         if (cached != null) {
@@ -89,7 +89,7 @@ class LruCacheActivity : BasicResponseActivity() {
      * 示例 3：演示容量超出时的 LRU 淘汰
      */
     private fun testCapacityEviction() {
-        appendLog("[示例 3]连续写入 user_201, user_202, user_203, user_204（最大容量为 3）...")
+        appendLog("→ [示例 3] 连续写入 user_201, user_202, user_203, user_204（最大容量为 3）...")
         for (i in 201..204) {
             val key = "user_$i"
             val user = UserProfile(id = key, name = "User $i", level = i % 10)

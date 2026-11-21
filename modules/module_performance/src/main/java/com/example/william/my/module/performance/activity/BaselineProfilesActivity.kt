@@ -58,29 +58,29 @@ class BaselineProfilesActivity : BasicResponseActivity() {
      * 1. 触发 ProfileInstaller 诊断与基线配置写入
      */
     private fun triggerProfileInstaller() {
-        appendLog("── 开始调用 ProfileInstaller.writeProfile ──")
+        appendLog("→ 开始调用 ProfileInstaller.writeProfile")
 
         val callback = object : DiagnosticsCallback {
             override fun onDiagnosticReceived(eventCode: Int, data: Any?) {
                 runOnUiThread {
-                    appendLog("[ProfileInstaller 诊断事件]code=$eventCode, data=$data")
+                    appendLog("→ [ProfileInstaller 诊断事件] code=$eventCode, data=$data")
                 }
             }
 
             override fun onResultReceived(resultCode: Int, data: Any?) {
                 runOnUiThread {
                     val resultDesc = when (resultCode) {
-                        ProfileInstaller.RESULT_INSTALL_SUCCESS -> "RESULT_INSTALL_SUCCESS (基线配置写入成功)"
-                        ProfileInstaller.RESULT_ALREADY_INSTALLED -> "RESULT_ALREADY_INSTALLED (已存在安装配置，无需重复安装)"
-                        ProfileInstaller.RESULT_UNSUPPORTED_ART_VERSION -> "RESULT_UNSUPPORTED_ART_VERSION (当前 Android 版本不支持)"
-                        ProfileInstaller.RESULT_NOT_WRITABLE -> "RESULT_NOT_WRITABLE (目标目录不可写)"
-                        ProfileInstaller.RESULT_DESIRED_FORMAT_UNSUPPORTED -> "RESULT_DESIRED_FORMAT_UNSUPPORTED (不支持的文件格式)"
-                        ProfileInstaller.RESULT_BASELINE_PROFILE_NOT_FOUND -> "RESULT_BASELINE_PROFILE_NOT_FOUND (APK assets/dexopt 中未内置 baseline.prof，常见于 Debug 包)"
-                        ProfileInstaller.RESULT_IO_EXCEPTION -> "RESULT_IO_EXCEPTION (I/O 读写异常)"
-                        ProfileInstaller.RESULT_PARSE_EXCEPTION -> "RESULT_PARSE_EXCEPTION (配置文件解析异常)"
+                        ProfileInstaller.RESULT_INSTALL_SUCCESS -> "✓ RESULT_INSTALL_SUCCESS (基线配置写入成功)"
+                        ProfileInstaller.RESULT_ALREADY_INSTALLED -> "✓ RESULT_ALREADY_INSTALLED (已存在安装配置，无需重复安装)"
+                        ProfileInstaller.RESULT_UNSUPPORTED_ART_VERSION -> "✗ RESULT_UNSUPPORTED_ART_VERSION (当前 Android 版本不支持)"
+                        ProfileInstaller.RESULT_NOT_WRITABLE -> "✗ RESULT_NOT_WRITABLE (目标目录不可写)"
+                        ProfileInstaller.RESULT_DESIRED_FORMAT_UNSUPPORTED -> "✗ RESULT_DESIRED_FORMAT_UNSUPPORTED (不支持的文件格式)"
+                        ProfileInstaller.RESULT_BASELINE_PROFILE_NOT_FOUND -> "✗ RESULT_BASELINE_PROFILE_NOT_FOUND (APK assets/dexopt 中未内置 baseline.prof，常见于 Debug 包)"
+                        ProfileInstaller.RESULT_IO_EXCEPTION -> "✗ RESULT_IO_EXCEPTION (I/O 读写异常)"
+                        ProfileInstaller.RESULT_PARSE_EXCEPTION -> "✗ RESULT_PARSE_EXCEPTION (配置文件解析异常)"
                         else -> "Result Code: $resultCode, Data: $data"
                     }
-                    appendLog("[ProfileInstaller 结果]$resultDesc")
+                    appendLog("[ProfileInstaller 结果] $resultDesc")
                 }
             }
         }
