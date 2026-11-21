@@ -112,6 +112,9 @@ class KoinActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 确保 Koin 容器已启动并加载当前示例所需的依赖模块
+     */
     private fun ensureKoinInitialized() {
         if (GlobalContext.getOrNull() == null) {
             startKoin {
