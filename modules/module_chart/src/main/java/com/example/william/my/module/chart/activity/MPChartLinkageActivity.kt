@@ -62,6 +62,9 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
         updateSubCharts(5)
     }
 
+    /**
+     * 初始化主折线图并绑定点击选中监听，选中月份节点后联动更新下方柱状图与饼图。
+     */
     private fun initMasterLineChart() {
         binding.lineChart.apply {
             description.isEnabled = false
@@ -118,6 +121,9 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
         }
     }
 
+    /**
+     * 初始化从属柱状图（展示各部门成本支出）。
+     */
     private fun initBarChart() {
         binding.barChart.apply {
             description.isEnabled = false
@@ -138,6 +144,9 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
         }
     }
 
+    /**
+     * 初始化从属环形饼图（展示收入来源占比）。
+     */
     private fun initPieChart() {
         binding.pieChart.apply {
             description.isEnabled = false
@@ -154,6 +163,9 @@ class MPChartLinkageActivity : BaseVBActivity<ChartActivityMpChartLinkageBinding
         }
     }
 
+    /**
+     * 根据主图选中的月份索引重新计算并刷新从属柱状图与饼图数据。
+     */
     @SuppressLint("SetTextI18n")
     private fun updateSubCharts(monthIdx: Int) {
         if (monthIdx !in months.indices) return
