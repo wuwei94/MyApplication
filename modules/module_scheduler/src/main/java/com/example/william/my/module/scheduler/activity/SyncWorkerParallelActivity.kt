@@ -51,6 +51,9 @@ class SyncWorkerParallelActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 通过 `WorkManager.enqueueUniqueWork(REPLACE)` 入队手动装配的 [ServiceLocatorSyncWorker] 并监听状态。
+     */
     private fun enqueueServiceLocatorSyncWorker() {
         val request = ServiceLocatorSyncWorker.buildOneTimeWorkRequest()
         workManager.enqueueUniqueWork(
@@ -62,6 +65,9 @@ class SyncWorkerParallelActivity : BasicResponseActivity() {
         observeWork(request.id, "ServiceLocatorSyncWorker")
     }
 
+    /**
+     * 通过 `@HiltWorker` 方案入队 [HiltSyncWorker] 并观察唯一任务状态流。
+     */
     private fun enqueueHiltSyncWorker() {
         HiltSyncWorker.enqueueOneTime(applicationContext)
         appendLog("→ HiltSyncWorker 已入队 name=${HiltSyncWorker.SYNC_WORK_NAME}")
@@ -73,6 +79,9 @@ class SyncWorkerParallelActivity : BasicResponseActivity() {
             }
     }
 
+    /**
+     * 同时查询两套并行方案（ServiceLocator 与 Hilt）当前 `WorkInfo` 状态。
+     */
     private fun queryBothWorkInfo() {
         workManager.getWorkInfosForUniqueWorkLiveData(ServiceLocatorSyncWorker.SYNC_WORK_NAME)
             .observe(this) { infos ->
@@ -88,6 +97,9 @@ class SyncWorkerParallelActivity : BasicResponseActivity() {
             }
     }
 
+    /**
+     * 取消两组唯一同步任务。
+     */
     private fun cancelBoth() {
         workManager.cancelUniqueWork(ServiceLocatorSyncWorker.SYNC_WORK_NAME)
         workManager.cancelUniqueWork(HiltSyncWorker.SYNC_WORK_NAME)

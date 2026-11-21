@@ -59,6 +59,9 @@ class JobSchedulerActivity : BasicResponseActivity() {
         startService()
     }
 
+    /**
+     * 启动后台 `MyJobSchedulerService` 并传入客户端 `Messenger` 以便接收任务启停回调。
+     */
     private fun startService() {
         val messenger = Messenger(JobSchedulerHandler(this))
         val intent = Intent(this, MyJobSchedulerService::class.java).apply {
@@ -79,6 +82,9 @@ class JobSchedulerActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 构建带网络、充电与空闲约束的 `JobInfo` 并交由 `JobScheduler.schedule()` 调度。
+     */
     private fun scheduleJob() {
         val jobService = ComponentName(this, MyJobSchedulerService::class.java)
 
@@ -100,6 +106,9 @@ class JobSchedulerActivity : BasicResponseActivity() {
         appendLog("→ schedule — 任务已调度，Job ID: ${jobId - 1}")
     }
 
+    /**
+     * 调用 `jobScheduler.cancelAll()` 取消当前应用注册的全部调度任务。
+     */
     private fun cancelAllJobs() {
         val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
         jobScheduler.cancelAll()
