@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.example.william.my.module.compose.ui.theme.MyApplicationTheme
 
 /**
- * CompositionLocal 是通过组合隐式向下传递数据的工具
+ * CompositionLocal — 组合树隐式数据传递
  *
  * 核心机制与避坑点：
  * 1. [compositionLocalOf]：细粒度重组追踪。当提供的数值改变时，只有实际读取了 [Local.current] 的可组合项会发生重组，

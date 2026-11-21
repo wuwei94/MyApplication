@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 /**
- * ScrollableTabRow 与 HorizontalPager 双向联动示例页
+ * ScrollableTabRow — 可滚动标签栏与 HorizontalPager 双向联动
  *
  * 聚合展示 Compose 中可滚动标签栏与水平分页容器的深度协同。
  *
