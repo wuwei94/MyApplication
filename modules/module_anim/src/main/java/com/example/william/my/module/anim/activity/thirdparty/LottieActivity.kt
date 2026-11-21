@@ -23,6 +23,9 @@ class LottieActivity : BasicLayoutActivity() {
         // 布局已配置 lottie_autoPlay；需要结束/取消回调时再挂 AnimatorListener
     }
 
+    /**
+     * 加载 Lottie 动画预览布局并挂载到内容容器
+     */
     private fun initPreview() {
         val previewView = layoutInflater.inflate(
             com.example.william.my.module.anim.R.layout.anim_layout_lottie_preview,
