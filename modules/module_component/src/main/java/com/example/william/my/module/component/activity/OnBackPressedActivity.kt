@@ -43,6 +43,9 @@ class OnBackPressedActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 注册 OnBackPressedCallback 拦截系统返回键事件
+     */
     private fun interceptBackPress() {
         if (backCallback != null) {
             appendLog("✓ 返回键已处于拦截状态")
@@ -58,6 +61,9 @@ class OnBackPressedActivity : BasicResponseActivity() {
         appendLog("✓ 已拦截返回键，按返回键试试")
     }
 
+    /**
+     * 停用并移除返回键拦截回调以恢复默认返回行为
+     */
     private fun cancelIntercept() {
         backCallback?.let {
             it.isEnabled = false

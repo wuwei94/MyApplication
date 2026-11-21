@@ -49,6 +49,9 @@ class ActivityResultActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用标准 StartActivityForResult 启动目标页并等待回传
+     */
     private fun startForResult() {
         val intent = Intent(this, ActivityResultActivity2::class.java).apply {
             putExtra("input", "来自 StartActivityForResult")
@@ -65,6 +68,9 @@ class ActivityResultActivity : BasicResponseActivity() {
             }
         }
 
+    /**
+     * 使用自定义 ActivityResultContract 启动目标页并解析结果
+     */
     private fun startWithCustomContract() {
         customContract.launch("来自 ActivityResultContract")
     }
