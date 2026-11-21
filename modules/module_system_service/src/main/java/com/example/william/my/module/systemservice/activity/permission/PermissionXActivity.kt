@@ -47,15 +47,18 @@ class PermissionXActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 申请 Android 13+ 通知权限（`POST_NOTIFICATIONS`），低版本系统默认已开启并直接返回。
+     */
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             appendLog("----------------------------------------")
-            appendLog("[PermissionX]当前系统版本（< Android 13）默认已开启通知权限，无需动态申请")
+            appendLog("✓ [PermissionX] 当前系统版本（< Android 13）默认已开启通知权限，无需动态申请")
             return
         }
 
         appendLog("----------------------------------------")
-        appendLog("[PermissionX]正在发起通知权限申请：POST_NOTIFICATIONS")
+        appendLog("→ [PermissionX] 正在发起通知权限申请：POST_NOTIFICATIONS")
 
         PermissionX.init(this)
             .permissions(Manifest.permission.POST_NOTIFICATIONS)
@@ -68,11 +71,14 @@ class PermissionXActivity : BasicResponseActivity() {
             }
     }
 
+    /**
+     * 申请多媒体存储权限，并通过 `onExplainRequestReason` 弹窗解释申请理由。
+     */
     private fun requestStorageWithExplainReason() {
         val permissions = getStoragePermissions()
 
         appendLog("----------------------------------------")
-        appendLog("[PermissionX]正在发起多媒体存储权限申请（配置理由解释弹窗）")
+        appendLog("→ [PermissionX] 正在发起多媒体存储权限申请（配置理由解释弹窗）")
 
         PermissionX.init(this)
             .permissions(permissions)
@@ -93,11 +99,14 @@ class PermissionXActivity : BasicResponseActivity() {
             }
     }
 
+    /**
+     * 申请多媒体存储权限，串联 `explainReasonBeforeRequest` 前置解释与永久拒绝后跳转系统设置引导。
+     */
     private fun requestStorageWithForwardToSettings() {
         val permissions = getStoragePermissions()
 
         appendLog("----------------------------------------")
-        appendLog("[PermissionX]正在发起多媒体存储权限申请（前置理由解释 + 永久拒绝设置页引导）")
+        appendLog("→ [PermissionX] 正在发起多媒体存储权限申请（前置理由解释 + 永久拒绝设置页引导）")
 
         PermissionX.init(this)
             .permissions(permissions)
@@ -127,6 +136,9 @@ class PermissionXActivity : BasicResponseActivity() {
             }
     }
 
+    /**
+     * 一次性申请通知与多媒体存储全部基础权限，由 PermissionX 全流程托管。
+     */
     private fun requestAllBasePermissions() {
         val permissions = mutableListOf<String>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -135,7 +147,7 @@ class PermissionXActivity : BasicResponseActivity() {
         permissions.addAll(getStoragePermissions())
 
         appendLog("----------------------------------------")
-        appendLog("[PermissionX]正在发起通用基础权限申请（全流程托管）")
+        appendLog("→ [PermissionX] 正在发起通用基础权限申请（全流程托管）")
 
         PermissionX.init(this)
             .permissions(permissions)

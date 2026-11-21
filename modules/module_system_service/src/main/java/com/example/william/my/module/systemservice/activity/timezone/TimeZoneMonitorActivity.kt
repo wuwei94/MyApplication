@@ -63,11 +63,17 @@ class TimeZoneMonitorActivity : BasicResponseActivity() {
         super.onDestroy()
     }
 
+    /**
+     * 读取并输出当前系统默认时区与 UTC 偏移量（瞬时值）。
+     */
     private fun appendCurrentTimeZoneOnce() {
         val zone = TimeZone.getDefault()
         appendLog("→ 当前系统时区: ${zone.id} (offset=${zone.getOffset(Date().time) / 60_000}min)")
     }
 
+    /**
+     * 启动协程收集 [TimeZoneMonitor.currentTimeZone] 流，系统切换时区时自动刷新输出。
+     */
     private fun startObserveTimeZone() {
         if (collectJob?.isActive == true) {
             appendLog("监听已在运行，请到系统设置切换时区观察推流")
@@ -83,6 +89,9 @@ class TimeZoneMonitorActivity : BasicResponseActivity() {
         appendLog("✓ 监听已开启，切换系统时区后观察日志")
     }
 
+    /**
+     * 取消正在运行的时区变更监听协程。
+     */
     private fun stopObserveTimeZone() {
         if (collectJob?.isActive != true) {
             appendLog("监听未在运行")
@@ -93,6 +102,9 @@ class TimeZoneMonitorActivity : BasicResponseActivity() {
         appendLog("✓ 已停止时区变更监听")
     }
 
+    /**
+     * 使用当前系统时区格式化此刻时间戳。
+     */
     private fun formatTimestampWithSystemZone() {
         val zone = TimeZone.getDefault()
         appendLog("→ 使用系统时区 ${zone.id} 格式化: ${formatNow(zone)}")

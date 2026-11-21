@@ -69,6 +69,9 @@ class JetpackPermissionActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 过滤当前系统版本适用且尚未授予的权限，通过 `ActivityResultContracts.RequestMultiplePermissions` 发起申请。
+     */
     private fun requestPermissionsDirectly(actionName: String, permissions: Array<String>) {
         currentActionName = actionName
         val availablePerms = permissions.filter { isPermissionAvailable(it) }.toTypedArray()
