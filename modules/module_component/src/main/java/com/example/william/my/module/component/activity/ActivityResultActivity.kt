@@ -59,9 +59,9 @@ class ActivityResultActivity : BasicResponseActivity() {
     private val startActivityForResult =
         registerForActivityResult(StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
-                appendLog("StartActivityForResult 收到回传")
+                appendLog("✓ StartActivityForResult 收到回传")
             } else {
-                appendLog("StartActivityForResult 用户取消")
+                appendLog("✗ StartActivityForResult 用户取消")
             }
         }
 
@@ -72,9 +72,9 @@ class ActivityResultActivity : BasicResponseActivity() {
     private val customContract =
         registerForActivityResult(CustomResultContract()) { result ->
             if (result != null) {
-                appendLog("ActivityResultContract 收到回传")
+                appendLog("✓ ActivityResultContract 收到回传")
             } else {
-                appendLog("ActivityResultContract 用户取消")
+                appendLog("✗ ActivityResultContract 用户取消")
             }
         }
 

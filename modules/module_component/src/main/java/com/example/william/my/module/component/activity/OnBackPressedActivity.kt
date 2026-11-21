@@ -45,25 +45,25 @@ class OnBackPressedActivity : BasicResponseActivity() {
 
     private fun interceptBackPress() {
         if (backCallback != null) {
-            appendLog("返回键已处于拦截状态")
+            appendLog("✓ 返回键已处于拦截状态")
             return
         }
 
         backCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                appendLog("返回键被拦截")
+                appendLog("→ 返回键被拦截")
             }
         }
         onBackPressedDispatcher.addCallback(this, backCallback!!)
-        appendLog("已拦截返回键，按返回键试试")
+        appendLog("✓ 已拦截返回键，按返回键试试")
     }
 
     private fun cancelIntercept() {
         backCallback?.let {
             it.isEnabled = false
             backCallback = null
-            appendLog("已取消拦截")
-        } ?: appendLog("当前未拦截返回键")
+            appendLog("✓ 已取消拦截")
+        } ?: appendLog("✗ 当前未拦截返回键")
     }
 
     override fun onDestroy() {

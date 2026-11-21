@@ -62,28 +62,28 @@ class ServiceActivity : BasicResponseActivity() {
             putExtra(MyBoundService.EXTRA_MESSAGE, "Started Service 收到消息")
         }
         startService(intent)
-        appendLog("启动 Started Service")
+        appendLog("→ 启动 Started Service")
     }
 
     private fun stopStartedService() {
         stopService(Intent(this, MyBoundService::class.java))
-        appendLog("停止 Started Service")
+        appendLog("✓ 停止 Started Service")
     }
 
     private fun bindBoundService() {
         if (boundConnection != null) {
-            appendLog("Bound Service 已绑定")
+            appendLog("✓ Bound Service 已绑定")
             return
         }
 
         boundConnection = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName, binder: IBinder) {
                 val service = (binder as MyBoundService.LocalBinder).getService()
-                appendLog("Bound Service 绑定成功：${service.getMessage()}")
+                appendLog("✓ Bound Service 绑定成功：${service.getMessage()}")
             }
 
             override fun onServiceDisconnected(name: ComponentName) {
-                appendLog("Bound Service 连接断开")
+                appendLog("✗ Bound Service 连接断开")
             }
         }
 
@@ -92,15 +92,15 @@ class ServiceActivity : BasicResponseActivity() {
             boundConnection!!,
             BIND_AUTO_CREATE,
         )
-        appendLog("正在绑定 Bound Service...（result=$result）")
+        appendLog("→ 正在绑定 Bound Service...（result=$result）")
     }
 
     private fun unbindBoundService() {
         boundConnection?.let { conn ->
             unbindService(conn)
             boundConnection = null
-            appendLog("Bound Service 已解绑")
-        } ?: appendLog("Bound Service 未绑定")
+            appendLog("✓ Bound Service 已解绑")
+        } ?: appendLog("✗ Bound Service 未绑定")
     }
 
     private fun startForegroundService() {
@@ -109,12 +109,12 @@ class ServiceActivity : BasicResponseActivity() {
         } else {
             startService(Intent(this, MyForegroundService::class.java))
         }
-        appendLog("启动前台服务")
+        appendLog("→ 启动前台服务")
     }
 
     private fun stopForegroundService() {
         stopService(Intent(this, MyForegroundService::class.java))
-        appendLog("停止前台服务")
+        appendLog("✓ 停止前台服务")
     }
 
     override fun onDestroy() {
