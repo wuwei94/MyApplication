@@ -102,6 +102,9 @@ class LifecycleActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 查询当前 `lifecycle.currentState` 状态及 `isAtLeast(STARTED / RESUMED)` 判定结果。
+     */
     private fun checkLifecycleState() {
         val state = lifecycle.currentState
         val isAtLeastStarted = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
@@ -109,6 +112,9 @@ class LifecycleActivity : BasicResponseActivity() {
         appendLog("✓ 当前生命周期: $state | isAtLeast(STARTED)=$isAtLeastStarted | isAtLeast(RESUMED)=$isAtLeastResumed")
     }
 
+    /**
+     * 使用 `repeatOnLifecycle(STARTED)` 收集周期数据流（退至 STOPPED 时自动取消，回到 STARTED 时重启）。
+     */
     private fun testRepeatOnLifecycle() {
         repeatJob?.cancel()
         appendLog("→ 已启动 repeatOnLifecycle(STARTED) 协程数据流发射（每秒 1 次）...")
@@ -129,6 +135,9 @@ class LifecycleActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用 `flowWithLifecycle(RESUMED)` 操作符仅在 RESUMED 态活跃收集单条流。
+     */
     private fun testFlowWithLifecycle() {
         flowWithJob?.cancel()
         appendLog("→ 已启动 flowWithLifecycle(RESUMED) 操作符数据流...")
