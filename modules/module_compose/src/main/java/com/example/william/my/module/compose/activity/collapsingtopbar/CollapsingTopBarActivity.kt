@@ -107,6 +107,9 @@ class CollapsingTopBarActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 LargeTopAppBar 联动列表滚动的折叠效果
+     */
     @Composable
     private fun CollapsingContent(innerPadding: PaddingValues) {
         LazyColumn(

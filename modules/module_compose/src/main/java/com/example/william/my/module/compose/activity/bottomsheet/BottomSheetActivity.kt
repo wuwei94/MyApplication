@@ -77,6 +77,9 @@ class BottomSheetActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
+    /**
+     * 演示 ModalBottomSheet 弹出与收起交互
+     */
     @Composable
     private fun BottomSheetContent(modifier: Modifier = Modifier) {
         var showModalSheet by remember { mutableStateOf(false) }
@@ -205,6 +208,9 @@ class BottomSheetActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 底部弹窗内单个操作行条目
+     */
     @Composable
     private fun ActionRowItem(
         icon: ImageVector,

@@ -84,6 +84,9 @@ class InsetsActivity : ComponentActivity() {
     }
 }
 
+/**
+ * 演示 WindowInsets 状态栏、导航栏与软键盘避让
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun InsetsScreen() {

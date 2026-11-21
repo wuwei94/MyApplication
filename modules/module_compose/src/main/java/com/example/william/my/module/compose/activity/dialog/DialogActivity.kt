@@ -75,6 +75,9 @@ class DialogActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 AlertDialog 与自定义 Dialog 状态切换
+     */
     @Composable
     private fun DialogContentScreen() {
         val snackbarHostState = remember { SnackbarHostState() }

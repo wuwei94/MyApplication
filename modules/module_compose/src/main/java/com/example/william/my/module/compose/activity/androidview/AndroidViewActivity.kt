@@ -70,6 +70,9 @@ class AndroidViewActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示在 Compose 中嵌入传统 Android View（AndroidView）
+     */
     @Composable
     private fun AndroidViewContent(modifier: Modifier = Modifier) {
         var progress by remember { mutableFloatStateOf(45f) }

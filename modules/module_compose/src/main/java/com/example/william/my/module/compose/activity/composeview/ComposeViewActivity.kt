@@ -73,6 +73,9 @@ class ComposeViewActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 供传统 View 宿主通过 ComposeView 嵌入的示例内容
+     */
     @Composable
     private fun ComposeContent(onCounterChanged: (Int) -> Unit) {
         var count by remember { mutableIntStateOf(0) }

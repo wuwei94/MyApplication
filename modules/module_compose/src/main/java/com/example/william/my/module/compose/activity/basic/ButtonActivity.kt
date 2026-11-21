@@ -87,6 +87,9 @@ class ButtonActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalLayoutApi::class)
+    /**
+     * Material 3 Button 组件画廊主界面
+     */
     @Composable
     private fun ButtonGalleryScreen(onToast: (String) -> Unit) {
         val scrollState = rememberScrollState()
@@ -277,6 +280,9 @@ class ButtonActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 通用分组卡片容器
+     */
     @Composable
     private fun SectionCard(
         title: String,

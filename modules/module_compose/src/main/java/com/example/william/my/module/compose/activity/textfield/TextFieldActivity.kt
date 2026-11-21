@@ -86,6 +86,9 @@ class TextFieldActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 TextField 与 OutlinedTextField 输入状态与校验
+     */
     @Composable
     private fun TextFieldContent(modifier: Modifier = Modifier) {
         val focusManager = LocalFocusManager.current

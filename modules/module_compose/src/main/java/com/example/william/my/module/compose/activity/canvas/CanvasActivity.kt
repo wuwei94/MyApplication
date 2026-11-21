@@ -63,6 +63,9 @@ class CanvasActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Compose Canvas 自定义绘图画廊主界面
+     */
     @Composable
     private fun CanvasGalleryScreen() {
         val scrollState = rememberScrollState()
@@ -246,6 +249,9 @@ class CanvasActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 通用分组卡片容器
+     */
     @Composable
     private fun SectionCard(
         title: String,

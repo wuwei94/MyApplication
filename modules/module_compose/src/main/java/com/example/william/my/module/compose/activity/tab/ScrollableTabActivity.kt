@@ -66,6 +66,9 @@ class ScrollableTabActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 ScrollableTabRow 与 HorizontalPager 联动切换
+     */
     @Composable
     private fun ScrollableTabPagerContent(modifier: Modifier = Modifier) {
         val tabs = listOf("推荐", "热门", "科技", "数码", "影视娱乐", "生活旅行", "知识精选", "关于我们")

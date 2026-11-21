@@ -117,6 +117,9 @@ class SharedElementActivity : ComponentActivity() {
     )
 
     @OptIn(ExperimentalSharedTransitionApi::class)
+    /**
+     * 演示 SharedTransitionLayout 共享元素转场动画
+     */
     @Composable
     private fun SharedElementScreen() {
         var selectedItem by remember { mutableStateOf<DestinationItem?>(null) }

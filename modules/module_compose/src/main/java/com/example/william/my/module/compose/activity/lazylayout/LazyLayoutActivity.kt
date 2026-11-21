@@ -82,6 +82,9 @@ class LazyLayoutActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalFoundationApi::class)
+    /**
+     * 演示 LazyColumn / LazyRow / LazyVerticalGrid 延迟列表布局
+     */
     @Composable
     private fun LazyLayoutScreen() {
         var nextId by remember { mutableStateOf(100) }

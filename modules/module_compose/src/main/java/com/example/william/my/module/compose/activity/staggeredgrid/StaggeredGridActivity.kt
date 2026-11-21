@@ -98,6 +98,9 @@ class StaggeredGridActivity : ComponentActivity() {
         GridCardItem(10, "复古胶片颗粒感调色 Lightroom 预设分享", 190.dp, "后期调色", Color(0xFF607D8B), 1870),
     )
 
+    /**
+     * 演示 LazyVerticalStaggeredGrid 瀑布流网格布局
+     */
     @Composable
     private fun StaggeredGridScreen() {
         var columnCount by remember { mutableIntStateOf(2) }
@@ -201,6 +204,9 @@ class StaggeredGridActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 瀑布流单个不等高内容卡片
+     */
     @Composable
     private fun WaterfallCard(item: GridCardItem) {
         Card(

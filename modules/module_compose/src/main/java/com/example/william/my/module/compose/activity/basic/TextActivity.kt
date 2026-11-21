@@ -67,6 +67,9 @@ class TextActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Material 3 Text 排版与富文本样式画廊主界面
+     */
     @Composable
     private fun TextGalleryScreen(onToast: (String) -> Unit) {
         val scrollState = rememberScrollState()
@@ -192,6 +195,9 @@ class TextActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 通用分组卡片容器
+     */
     @Composable
     private fun SectionCard(
         title: String,

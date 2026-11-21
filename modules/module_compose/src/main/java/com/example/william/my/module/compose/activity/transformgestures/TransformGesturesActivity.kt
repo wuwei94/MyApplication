@@ -69,6 +69,9 @@ class TransformGesturesActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 detectTransformGestures 双指缩放、平移与旋转手势
+     */
     @Composable
     private fun TransformGesturesScreen() {
         var scale by remember { mutableFloatStateOf(1f) }

@@ -90,6 +90,9 @@ class AnimationActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 Compose 动画 API 与状态过渡效果
+     */
     @Composable
     private fun AnimationContent(modifier: Modifier = Modifier) {
         var isVisible by remember { mutableStateOf(true) }

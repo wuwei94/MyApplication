@@ -63,6 +63,9 @@ class ImageActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 演示 Image 裁剪形状与 ContentScale 缩放模式
+     */
     @Composable
     private fun ImageContent(modifier: Modifier = Modifier) {
         Column(
@@ -233,6 +236,9 @@ class ImageActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 展示单个 ContentScale 缩放效果预览项
+     */
     @Composable
     private fun ScaleItem(name: String, scale: ContentScale) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

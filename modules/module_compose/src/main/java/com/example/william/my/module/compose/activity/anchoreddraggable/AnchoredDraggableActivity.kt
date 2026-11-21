@@ -85,6 +85,9 @@ class AnchoredDraggableActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalFoundationApi::class)
+    /**
+     * 演示 AnchoredDraggable 锚点吸附手势拖拽卡片
+     */
     @Composable
     private fun AnchoredDraggableDemo() {
         val density = LocalDensity.current

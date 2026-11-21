@@ -52,6 +52,9 @@ class ComposeMainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * 构建 Compose 模块路由入口列表
+     */
     private fun buildRouterItems() {
         routerItems.add(RouterItem("── 基础 UI 组件与互操作 ──", ""))
         routerItems.add(RouterItem("ComposeView（View 宿主中嵌入 Compose：老工程/XML 渐进式接入）", RouterPath.Compose.ComposeView))
