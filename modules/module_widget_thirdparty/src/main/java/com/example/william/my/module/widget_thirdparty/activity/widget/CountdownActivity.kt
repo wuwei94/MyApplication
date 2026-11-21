@@ -28,6 +28,9 @@ class CountdownActivity : BaseVBActivity<WidgetThirdpartyActivityCountdownBindin
         initCountdownView()
     }
 
+    /**
+     * 启动 CountdownView 倒计时演示
+     */
     private fun initCountdownView() {
         binding.countdownView.start(995550000) // Millisecond
         for (time in 0..999) {

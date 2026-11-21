@@ -29,6 +29,9 @@ class PhotoViewActivity : BaseVBActivity<WidgetThirdpartyActivityPhotoViewBindin
         showPhotoView()
     }
 
+    /**
+     * 为可缩放 PhotoView 设置示例图片资源
+     */
     private fun showPhotoView() {
         binding.photoView.setImageResource(R.drawable.shared_ic_launcher)
     }

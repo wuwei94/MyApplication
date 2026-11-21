@@ -32,6 +32,9 @@ class LoadSirActivity : BasicLayoutActivity() {
         initTargetContent()
     }
 
+    /**
+     * 注册 LoadSir 状态页包装目标视图并绑定点击重试回调
+     */
     private fun initTargetContent() {
         val targetContentView = LayoutInflater.from(this)
             .inflate(R.layout.widget_thirdparty_layout_loadsir_target, container, false)

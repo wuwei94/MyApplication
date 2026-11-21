@@ -29,6 +29,9 @@ class SwipeLayoutActivity : BaseVBActivity<WidgetThirdpartyActivitySwipeLayoutBi
         initRecycleView()
     }
 
+    /**
+     * 生成测试列表数据并绑定侧滑删除适配器
+     */
     private fun initRecycleView() {
         val data = arrayListOf<String>()
         for (i in 0..19) {

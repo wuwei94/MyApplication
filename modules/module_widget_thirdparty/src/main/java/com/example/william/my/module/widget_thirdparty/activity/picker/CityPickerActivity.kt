@@ -44,6 +44,9 @@ class CityPickerActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 构建并弹出 CityPicker 城市选择器，处理选择、取消与定位回调
+     */
     private fun showCityPicker() {
         CityPicker.from(this@CityPickerActivity)
             .enableAnimation(true) // 启用动画

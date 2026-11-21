@@ -32,6 +32,9 @@ class BannerActivity : BaseVBActivity<WidgetThirdpartyActivityBannerBinding>() {
         initBanner()
     }
 
+    /**
+     * 配置 Banner 图片适配器、圆形指示器并绑定生命周期观察者
+     */
     private fun initBanner() {
         binding.banner.setAdapter(object :
             BannerImageAdapter<String>(arrayListOf("1", "2", "3", "4")) {
