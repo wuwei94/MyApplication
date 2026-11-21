@@ -44,6 +44,9 @@ class NotificationActivity : BasicResponseActivity() {
         sendNotification()
     }
 
+    /**
+     * 在 Android O 及以上创建高优先级通知渠道并配置角标与描述
+     */
     private fun createChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
@@ -58,6 +61,9 @@ class NotificationActivity : BasicResponseActivity() {
         notificationManager?.createNotificationChannel(channel)
     }
 
+    /**
+     * 构建通知并调用 NotificationManager 发送递增 ID 通知
+     */
     private fun sendNotification() {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.shared_ic_launcher)

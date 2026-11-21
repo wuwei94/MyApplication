@@ -56,6 +56,9 @@ class EasyFloatActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 构建并展示自定义布局的 EasyFloat 悬浮窗
+     */
     private fun showEasyFloat() {
         EasyFloat.with(this)
             .setLayout(R.layout.systemservice_layout_float)
