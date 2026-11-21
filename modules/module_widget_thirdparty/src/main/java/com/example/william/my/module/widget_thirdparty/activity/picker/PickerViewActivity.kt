@@ -64,7 +64,7 @@ class PickerViewActivity : BasicResponseActivity() {
                 if (isLoaded) {
                     showOptionsPickerView()
                 } else {
-                    appendLog("正在解析城市数据，请稍候...")
+                    appendLog("→ 正在解析城市数据，请稍候...")
                 }
             }
 
@@ -150,7 +150,7 @@ class PickerViewActivity : BasicResponseActivity() {
                 val options = options1Items[options1].pickerViewText +
                     options2Items[options1][options2] +
                     options3Items[options1][options2][options3]
-                appendLog("选中城市: $options")
+                appendLog("✓ 选中城市: $options")
             }
                 .setDecorView(window.decorView.findViewById(android.R.id.content)) // 防止被虚拟按键遮挡
                 .setSubmitText("确定") // 确定按钮文字
@@ -182,7 +182,7 @@ class PickerViewActivity : BasicResponseActivity() {
                 "yyyy-MM-dd HH:mm:ss",
                 Locale.CHINA,
             ).format(date)
-            appendLog("选中时间: $time")
+            appendLog("✓ 选中时间: $time")
         }
             .setType(booleanArrayOf(true, true, true, false, false, false))
             .setCancelText("Cancel") // 取消按钮文字

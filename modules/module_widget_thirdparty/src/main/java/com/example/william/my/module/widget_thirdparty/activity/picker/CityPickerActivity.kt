@@ -52,11 +52,11 @@ class CityPickerActivity : BasicResponseActivity() {
             // .setHotCities(hotCities)//指定热门城市
             .setOnPickListener(object : OnPickListener {
                 override fun onPick(position: Int, data: City) {
-                    appendLog("选中城市: ${data.name}，城市代码: ${data.code}")
+                    appendLog("✓ 选中城市: ${data.name}，城市代码: ${data.code}")
                 }
 
                 override fun onCancel() {
-                    appendLog("取消选择城市")
+                    appendLog("✗ 取消选择城市")
                 }
 
                 override fun onLocate() {
@@ -73,6 +73,6 @@ class CityPickerActivity : BasicResponseActivity() {
                 }
             })
             .show()
-        appendLog("打开城市选择器")
+        appendLog("→ 打开城市选择器")
     }
 }
