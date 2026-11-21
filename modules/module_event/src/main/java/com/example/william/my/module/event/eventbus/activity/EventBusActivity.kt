@@ -54,27 +54,27 @@ class EventBusActivity : BasicResponseActivity() {
             return
         }
         EventBusHelper.register(this)
-        appendLog("EventBus 已注册")
+        appendLog("✓ EventBus 已注册")
     }
 
     private fun unregisterEventBus() {
         if (!EventBusHelper.isRegistered(this)) {
-            appendLog("EventBus 当前未注册")
+            appendLog("✗ EventBus 当前未注册")
             return
         }
         EventBusHelper.unregister(this)
-        appendLog("EventBus 已注销")
+        appendLog("✓ EventBus 已注销")
     }
 
     private fun postGlobalEvent() {
-        appendLog("发送普通事件：GlobalEvent")
+        appendLog("→ 发送普通事件：GlobalEvent")
         EventBusHelper.postEvent(
             GlobalEvent("EventBus post by Activity"),
         )
     }
 
     private fun postSticky() {
-        appendLog("发送粘性事件：StickyEvent")
+        appendLog("→ 发送粘性事件：StickyEvent")
         EventBusHelper.postStickyEvent(
             StickyEvent("EventBus postSticky by Activity"),
         )
@@ -84,18 +84,18 @@ class EventBusActivity : BasicResponseActivity() {
      * EventBus 无 LifecycleOwner 绑定，销毁时必须手动 unregister。
      */
     private fun showLifecyclePolicy() {
-        appendLog("EventBus 不绑定 LifecycleOwner，onDestroy 执行 unregister 保底")
-        appendLog("当前注册状态：${EventBusHelper.isRegistered(this)}")
+        appendLog("→ EventBus 不绑定 LifecycleOwner，onDestroy 执行 unregister 保底")
+        appendLog("✓ 当前注册状态：${EventBusHelper.isRegistered(this)}")
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onGlobalEvent(event: GlobalEvent) {
-        appendLog("收到普通事件：${event.message}")
+        appendLog("✓ 收到普通事件：${event.message}")
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onStickyEvent(event: StickyEvent) {
-        appendLog("收到粘性事件：${event.message}")
+        appendLog("✓ 收到粘性事件：${event.message}")
     }
 
     override fun onDestroy() {

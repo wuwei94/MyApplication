@@ -53,22 +53,22 @@ class LiveEventBusActivity : BasicResponseActivity() {
 
     private fun observeLiveEventBus() {
         if (isObserving) {
-            appendLog("LiveEventBus 已处于监听状态")
+            appendLog("✓ LiveEventBus 已处于监听状态")
             return
         }
         globalJob = LiveEventBus.observeEvent<GlobalEvent>(this) {
-            appendLog("收到普通事件：${it.message}")
+            appendLog("✓ 收到普通事件：${it.message}")
         }
         stickyJob = LiveEventBus.observeEvent<StickyEvent>(this, isSticky = true) {
-            appendLog("收到粘性事件：${it.message}")
+            appendLog("✓ 收到粘性事件：${it.message}")
         }
         isObserving = true
-        appendLog("已开启 LiveEventBus 监听")
+        appendLog("✓ 已开启 LiveEventBus 监听")
     }
 
     private fun unobserveLiveEventBus() {
         if (!isObserving) {
-            appendLog("LiveEventBus 当前未监听")
+            appendLog("✗ LiveEventBus 当前未监听")
             return
         }
         globalJob?.cancel()
@@ -76,11 +76,11 @@ class LiveEventBusActivity : BasicResponseActivity() {
         globalJob = null
         stickyJob = null
         isObserving = false
-        appendLog("已取消 LiveEventBus 监听")
+        appendLog("✓ 已取消 LiveEventBus 监听")
     }
 
     private fun postGlobalEvent() {
-        appendLog("发送普通事件：GlobalEvent")
+        appendLog("→ 发送普通事件：GlobalEvent")
         LiveEventBus.postEvent(
             this,
             GlobalEvent("LiveEventBus post by Activity"),
@@ -88,7 +88,7 @@ class LiveEventBusActivity : BasicResponseActivity() {
     }
 
     private fun postSticky() {
-        appendLog("发送粘性事件：StickyEvent")
+        appendLog("→ 发送粘性事件：StickyEvent")
         LiveEventBus.postEvent(
             this,
             StickyEvent("LiveEventBus postSticky by Activity"),
@@ -96,8 +96,8 @@ class LiveEventBusActivity : BasicResponseActivity() {
     }
 
     private fun showLifecyclePolicy() {
-        appendLog("LiveEventBus.observe 绑定 LifecycleOwner，DESTROYED 自动取消订阅")
-        appendLog("手动 cancel Job 可提前注销；当前监听状态：$isObserving")
+        appendLog("→ LiveEventBus.observe 绑定 LifecycleOwner，DESTROYED 自动取消订阅")
+        appendLog("✓ 手动 cancel Job 可提前注销；当前监听状态：$isObserving")
     }
 
     override fun onDestroy() {

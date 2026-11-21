@@ -53,24 +53,24 @@ class FlowEventBusActivity : BasicResponseActivity() {
 
     private fun observeFlowEventBus() {
         if (isObserving) {
-            appendLog("FlowEventBus 已处于监听状态")
+            appendLog("✓ FlowEventBus 已处于监听状态")
             return
         }
         globalJob?.cancel()
         stickyJob?.cancel()
         globalJob = FlowEventBus.observeEvent<GlobalEvent>(this) {
-            appendLog("收到普通事件：${it.message}")
+            appendLog("✓ 收到普通事件：${it.message}")
         }
         stickyJob = FlowEventBus.observeEvent<StickyEvent>(this, isSticky = true) {
-            appendLog("收到粘性事件：${it.message}")
+            appendLog("✓ 收到粘性事件：${it.message}")
         }
         isObserving = true
-        appendLog("已开启 FlowEventBus 监听")
+        appendLog("✓ 已开启 FlowEventBus 监听")
     }
 
     private fun unobserveFlowEventBus() {
         if (!isObserving) {
-            appendLog("FlowEventBus 当前未监听")
+            appendLog("✗ FlowEventBus 当前未监听")
             return
         }
         globalJob?.cancel()
@@ -78,11 +78,11 @@ class FlowEventBusActivity : BasicResponseActivity() {
         globalJob = null
         stickyJob = null
         isObserving = false
-        appendLog("已取消 FlowEventBus 监听")
+        appendLog("✓ 已取消 FlowEventBus 监听")
     }
 
     private fun postGlobalEvent() {
-        appendLog("发送普通事件：GlobalEvent")
+        appendLog("→ 发送普通事件：GlobalEvent")
         FlowEventBus.postEvent(
             this,
             GlobalEvent("FlowEventBus post by Activity"),
@@ -90,7 +90,7 @@ class FlowEventBusActivity : BasicResponseActivity() {
     }
 
     private fun postSticky() {
-        appendLog("发送粘性事件：StickyEvent")
+        appendLog("→ 发送粘性事件：StickyEvent")
         FlowEventBus.postEvent(
             this,
             StickyEvent("FlowEventBus postSticky by Activity"),
@@ -98,8 +98,8 @@ class FlowEventBusActivity : BasicResponseActivity() {
     }
 
     private fun showLifecyclePolicy() {
-        appendLog("FlowEventBus.observe 绑定 lifecycleScope + repeatOnLifecycle")
-        appendLog("STOP 暂停收集、DESTROY 自动取消 Job；当前监听状态：$isObserving")
+        appendLog("→ FlowEventBus.observe 绑定 lifecycleScope + repeatOnLifecycle")
+        appendLog("✓ STOP 暂停收集、DESTROY 自动取消 Job；当前监听状态：$isObserving")
     }
 
     override fun onDestroy() {
