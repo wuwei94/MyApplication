@@ -42,6 +42,9 @@ class SecureKeyActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 在 Android KeyStore（优先 StrongBox / TEE 硬件背书）中按需生成签名密钥对。
+     */
     private fun createKey() {
         runCatching {
             val keyInfo = SecureKeyDemoUtils.createKeyIfNeeded()
@@ -51,6 +54,9 @@ class SecureKeyActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 查询当前 KeyStore 密钥的安全级别、信任等级与硬件保护状态。
+     */
     private fun getKeyInfo() {
         runCatching {
             val keyInfo = SecureKeyDemoUtils.getKeyInfo()
@@ -64,6 +70,9 @@ class SecureKeyActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 使用 KeyStore 私钥对随机 nonce 挑战串执行数字签名。
+     */
     private fun signChallenge() {
         runCatching {
             val challenge = "nonce_${System.currentTimeMillis()}"
@@ -74,6 +83,9 @@ class SecureKeyActivity : BasicResponseActivity() {
         }
     }
 
+    /**
+     * 从 Android KeyStore 中删除当前演示密钥。
+     */
     private fun deleteKey() {
         runCatching {
             SecureKeyDemoUtils.deleteKey()
