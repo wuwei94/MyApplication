@@ -81,8 +81,6 @@ androidx.vectordrawable:vectordrawable:1.1.0
 androidx.versionedparcelable:versionedparcelable:1.1.1
 androidx.viewpager2:viewpager2:1.1.0
 androidx.viewpager:viewpager:1.0.0
-com.alibaba:arouter-annotation:1.0.6
-com.alibaba:arouter-api:1.5.2
 com.blankj:utilcodex:1.31.1
 com.contrarywind:Android-PickerView:4.1.9
 com.contrarywind:wheelview:4.1.0

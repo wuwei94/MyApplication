@@ -89,8 +89,6 @@ androidx.viewpager2:viewpager2:1.1.0
 androidx.viewpager:viewpager:1.0.0
 androidx.work:work-runtime-ktx:2.11.1
 androidx.work:work-runtime:2.11.1
-com.alibaba:arouter-annotation:1.0.6
-com.alibaba:arouter-api:1.5.2
 com.blankj:utilcodex:1.31.1
 com.github.AppDevNext.Logcat:LogcatCoreLib:3.4
 com.github.hannesa2:paho.mqtt.android:4.5
